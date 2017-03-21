@@ -145,6 +145,7 @@
                     emptyCriterianDataNew.criterionId = criterionArrayEl.criterionId;
                     if (emptyCriterianDataNew.description) emptyCriterianDataNew.description = $sce.trustAsHtml(emptyCriterianDataNew.description);
 
+                    console.log(el.criteria);
                     _.map(el.criteria, function(elCriterionIdObj) {
                         if (elCriterionIdObj.criterionId === criterionArrayEl.criterionId) {
                             emptyCriterianDataNew = elCriterionIdObj;

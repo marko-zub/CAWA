@@ -48,7 +48,7 @@
                 return resp;
             },
             responseError: function(rejection) {
-                // console.log(rejection);
+                console.log(rejection);
                 return rejection;
             }
         };
