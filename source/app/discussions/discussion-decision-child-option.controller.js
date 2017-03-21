@@ -60,7 +60,7 @@
             // TODO: optimize, in resolver some bugs with state
             // // Add slug for child decision
             if (vm.discussion.childCriterion) {
-                $state.go('decisions.single.discussions.child.option', {
+                $state.go('decisions.single.matrix.child.option', {
                     critOrCharId: $stateParams.critOrCharId,
                     critOrCharSlug: vm.discussion.childCriterion.nameSlug
                 }, {
@@ -68,7 +68,7 @@
                     reload: false
                 });
             } else if (vm.discussion.childCharacteristic) {
-                $state.go('decisions.single.discussions.child.option', {
+                $state.go('decisions.single.matrix.child.option', {
                     critOrCharId: $stateParams.critOrCharId,
                     critOrCharSlug: vm.discussion.childCharacteristic.nameSlug
                 }, {
@@ -90,7 +90,7 @@
                 link: 'decisions.single.matrix'
             }, {
                 title: vm.discussion.childDecision.name,
-                link: 'decisions.single.discussions.child'
+                link: 'decisions.single.matrix.child'
             }, {
                 title: critOrCharTitle,
                 link: null
@@ -102,7 +102,7 @@
         function goToDiscussion(discussionId, critOrCharId) {
             params.discussionId = discussionId;
             params.critOrCharId = critOrCharId;
-            $state.go('decisions.single.discussions.child.option', params);
+            $state.go('decisions.single.matrix.child.option', params);
         }
 
     }

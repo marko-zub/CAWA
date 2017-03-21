@@ -10,18 +10,7 @@
 
     function configuration($stateProvider) {
         $stateProvider
-            .state('decisions.single.discussions', {
-                url: '/discussions',
-                abstract: true,
-                views: {
-                    "@": {
-                        templateUrl: 'app/discussions/discussion-decision.html',
-                        controller: 'DiscussionDecisionController',
-                        controllerAs: 'vm',
-                    }
-                },
-            })
-            .state('decisions.single.discussions.child', {
+            .state('decisions.single.matrix.child', {
                 url: '/:discussionId/{discussionSlug}',
                 views: {
                     "@": {
@@ -37,7 +26,7 @@
                     }
                 }
             })
-            .state('decisions.single.discussions.child.option', {
+            .state('decisions.single.matrix.child.option', {
                 url: '/:critOrCharId/{critOrCharSlug}',
                 views: {
                     "@": {

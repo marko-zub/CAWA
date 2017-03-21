@@ -489,7 +489,7 @@
                 'discussionSlug': decision.nameSlug,
                 'critOrCharId': critOrCharId
             };
-            $state.go('decisions.single.discussions.child.option', params);
+            $state.go('decisions.single.matrix.child.option', params);
         }
     }
 })();

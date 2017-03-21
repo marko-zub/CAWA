@@ -83,7 +83,7 @@
                 if ($stateParams.discussionId &&
                     !$stateParams.discussionSlug &&
                     !$stateParams.critOrCharId) {
-                    $state.go('decisions.single.discussions.child', {
+                    $state.go('decisions.single.matrix.child', {
                         discussionId: $stateParams.discussionId,
                         discussionSlug: result.nameSlug
                     }, {
