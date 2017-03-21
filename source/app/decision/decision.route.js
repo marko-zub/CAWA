@@ -127,7 +127,7 @@
                             title: result.name,
                             link: 'decisions.single'
                         }, {
-                            title: 'Analysis',
+                            title: 'Comparison Matrix',
                             link: null
                         }];
 

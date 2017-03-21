@@ -100,7 +100,7 @@
                     title: vm.decision.name,
                     link: 'decisions.single'
                 }, {
-                    title: 'Analysis',
+                    title: 'Comparison Matrix',
                     link: 'decisions.single.matrix'
                 }, {
                     title: result.name,

@@ -86,7 +86,7 @@
                 title: vm.discussion.decision.name,
                 link: 'decisions.single'
             }, {
-                title: 'Analysis',
+                title: 'Comparison Matrix',
                 link: 'decisions.single.matrix'
             }, {
                 title: vm.discussion.childDecision.name,
