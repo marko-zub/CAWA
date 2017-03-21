@@ -12,10 +12,11 @@
         var
             vm = this,
             isInitedSorters = false,
-            defaultDecisionCount = 10;
-
-        var criteriaIds = [];
-        var characteristicsIds = [];
+            defaultDecisionCount = 10,
+            criteriaIds = [],
+            characteristicsIds = [],
+            criteriaArray = [],
+            characteristicsArray = [];
 
         vm.decisionId = $stateParams.id;
         vm.decision = decisionBasicInfo || {};
@@ -27,8 +28,12 @@
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
                 vm.criteriaGroups = result;
-                criteriaIds = _.map(result["0"].criteria, function(el) {
-                    return el.criterionId;
+                criteriaIds = [];
+                _.map(result, function(resultEl) {
+                    _.map(resultEl.criteria, function(el) {
+                        criteriaIds.push(el.criterionId);
+                        criteriaArray.push(el);
+                    });
                 });
             });
         }
@@ -37,9 +42,13 @@
             // Characteristicts
             return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
                 vm.characteristicGroups = result;
+                characteristicsIds = [];
 
-                characteristicsIds = _.map(result["0"].characteristics, function(el) {
-                    return el.characteristicId;
+                _.map(result, function(resultEl) {
+                    _.map(resultEl.characteristics, function(el) {
+                        characteristicsIds.push(el.characteristicId);
+                        characteristicsArray.push(el);
+                    });
                 });
             });
         }
@@ -120,7 +129,6 @@
         function createMatrixContent(criteriaIds, characteristicsIds, decisionMatrixList) {
 
             var matrixContent = [];
-
             var i = 0;
             matrixContent = _.map(decisionMatrixList, function(el) {
                 // New element with empty characteristics and criteria
@@ -132,12 +140,13 @@
                 newEl.decision.description = $sce.trustAsHtml(newEl.decision.description);
 
                 // Fill empty criteria
-                newEl.criteria = _.map(criteriaIds, function(criterionId) {
+                newEl.criteria = _.map(criteriaArray, function(criterionArrayEl) {
                     var emptyCriterianDataNew = _.clone(emptyCriterianData);
-                    emptyCriterianDataNew.criterionId = criterionId;
-                    if(emptyCriterianDataNew.description) emptyCriterianDataNew.description = $sce.trustAsHtml(emptyCriterianDataNew.description);
+                    emptyCriterianDataNew.criterionId = criterionArrayEl.criterionId;
+                    if (emptyCriterianDataNew.description) emptyCriterianDataNew.description = $sce.trustAsHtml(emptyCriterianDataNew.description);
+
                     _.map(el.criteria, function(elCriterionIdObj) {
-                        if (elCriterionIdObj.criterionId === criterionId) {
+                        if (elCriterionIdObj.criterionId === criterionArrayEl.criterionId) {
                             emptyCriterianDataNew = elCriterionIdObj;
                         }
                     });
@@ -149,7 +158,7 @@
                 newEl.characteristics = _.map(characteristicsIds, function(characteristicId) {
                     var emptyCharacteristicDataNew = _.clone(emptyCharacteristicData);
                     emptyCharacteristicDataNew.characteristicId = characteristicId;
-                    if(emptyCharacteristicDataNew.description) emptyCharacteristicDataNew.description = $sce.trustAsHtml(emptyCharacteristicDataNew.description);
+                    if (emptyCharacteristicDataNew.description) emptyCharacteristicDataNew.description = $sce.trustAsHtml(emptyCharacteristicDataNew.description);
                     _.map(el.characteristics, function(elCharacteristicObj) {
                         if (elCharacteristicObj.characteristicId === characteristicId) {
                             emptyCharacteristicDataNew = elCharacteristicObj;
@@ -473,7 +482,8 @@
 
         vm.goToDiscussion = goToDiscussion;
 
-        function goToDiscussion(decision, critOrCharId) {
+        function goToDiscussion(decision, critOrCharId, criteria_item) {
+            // debugger
             var params = {
                 'discussionId': decision.decisionId,
                 'discussionSlug': decision.nameSlug,

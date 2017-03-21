@@ -6,9 +6,9 @@
         .module('app.discussions')
         .controller('DiscussionDecisionChildController', DiscussionDecisionChildController);
 
-    DiscussionDecisionChildController.$inject = ['decisionBasicInfo', 'DiscussionsDataService', '$stateParams', '$rootScope', 'DecisionDataService', '$q', '$state'];
+    DiscussionDecisionChildController.$inject = ['decisionBasicInfo', 'DiscussionsDataService', '$stateParams', '$rootScope', 'DecisionDataService', '$q', '$state', '$sce'];
 
-    function DiscussionDecisionChildController(decisionBasicInfo, DiscussionsDataService, $stateParams, $rootScope, DecisionDataService, $q, $state) {
+    function DiscussionDecisionChildController(decisionBasicInfo, DiscussionsDataService, $stateParams, $rootScope, DecisionDataService, $q, $state, $sce) {
         var vm = this;
         vm.decision = decisionBasicInfo || {}; //Parent Decision
 
@@ -77,11 +77,20 @@
             DecisionDataService.getDecisionInfo($stateParams.discussionId).then(function(result) {
                 vm.decisionChild = result;
 
+                vm.decisionChild.description = $sce.trustAsHtml(vm.decisionChild.description);
+
                 // Add slug for child decision
-                if($stateParams.discussionId && 
+                if ($stateParams.discussionId &&
                     !$stateParams.discussionSlug &&
                     !$stateParams.critOrCharId) {
-                    $state.go('decisions.single.discussions.child', {discussionId: $stateParams.discussionId, discussionSlug: result.nameSlug}, {notify:false, reload:false});
+                    $state.go('decisions.single.discussions.child', {
+                        discussionId: $stateParams.discussionId,
+                        discussionSlug: result.nameSlug
+                    }, {
+                        notify: false,
+                        reload: false,
+                        location: 'replace'
+                    });
                 }
 
                 $rootScope.breadcrumbs = [{
@@ -91,8 +100,8 @@
                     title: vm.decision.name,
                     link: 'decisions.single'
                 }, {
-                    title: 'Discussions',
-                    link: 'decisions.single.discussions'
+                    title: 'Analysis',
+                    link: 'decisions.single.matrix'
                 }, {
                     title: result.name,
                     link: null

@@ -49,27 +49,32 @@
                 templateUrl: 'app/decision/decision.html',
                 controller: 'DecisionController',
                 controllerAs: 'vm',
-            })
-            .state('decisions.single.list', {
-                url: '/list',
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision.html',
-                        controller: 'DecisionController',
-                        controllerAs: 'vm',
-                    }
-                },
-                resolve: {
-                    decisionBasicInfo: DecisionResolver
-                },
-            })
-            .state('decisions.single.list.analysis', {
-                url: '/analysis/:analysisId',
-                abstract: true,
                 resolve: {
                     decisionBasicInfo: DecisionResolver
                 },
             });
+
+            // Not use now
+            // .state('decisions.single.list', {
+            //     url: '/list',
+            //     views: {
+            //         "@": {
+            //             templateUrl: 'app/decision/decision.html',
+            //             controller: 'DecisionController',
+            //             controllerAs: 'vm',
+            //         }
+            //     },
+            //     resolve: {
+            //         decisionBasicInfo: DecisionResolver
+            //     },
+            // })
+            // .state('decisions.single.list.analysis', {
+            //     url: '/analysis/:analysisId',
+            //     abstract: true,
+            //     resolve: {
+            //         decisionBasicInfo: DecisionResolver
+            //     },
+            // });
     }
 
     // Decision Data
@@ -122,21 +127,12 @@
                             title: result.name,
                             link: 'decisions.single'
                         }, {
-                            title: 'Matrix',
+                            title: 'Analysis',
                             link: null
                         }];
 
                     } else if ($state.current.name === 'decisions.single.list') {
-                        $rootScope.breadcrumbs = [{
-                            title: 'Decisions',
-                            link: 'decisions'
-                        }, {
-                            title: result.name,
-                            link: 'decisions.single'
-                        }, {
-                            title: 'List',
-                            link: null
-                        }];
+
 
                     }
                     //unsubscribe event listener
@@ -175,6 +171,7 @@
                 }
                 // Set analysis obj
                 DecisionSharedService.setFilterObject(resp);
+
                 return resp;
             }, function(req) {
                 console.log(req);

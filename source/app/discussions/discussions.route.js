@@ -12,6 +12,7 @@
         $stateProvider
             .state('decisions.single.discussions', {
                 url: '/discussions',
+                abstract: true,
                 views: {
                     "@": {
                         templateUrl: 'app/discussions/discussion-decision.html',

@@ -7,15 +7,17 @@
     </div>
     <div class="col-sm-6">
         <div class="pull-right">
-            <div class="btn-group btn-group-sm btns-view">
-                <a ui-sref="decisions.single.list({id: vm.decision.decisionId})" ui-sref-active="btn-primary" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> List</a>
-                <a ui-sref="decisions.single.matrix({id: vm.decision.decisionId})" ui-sref-active="btn-primary" class="btn btn-default"><span class="glyphicon glyphicon-th"></span> Matrix</a>
-            </div>
             <a href class="btn btn-primary btn-sm">Ask for Decision</a>
         </div>
     </div>
 </div>
 <div class="app-container-sm">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="app-description" ng-bind-html="vm.decisionChild.description"></div>
+        </div>
+    </div>
+    <hr>
     <div class="row">
         <div class="col-sm-12">
             <!--             <strong>{{vm.discussion.childDecision.name}} discussions:</strong> -->

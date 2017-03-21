@@ -8,10 +8,6 @@
         </div>
         <div class="col-sm-6">
             <div class="pull-right">
-                <div class="btn-group btn-group-sm btns-view">
-                    <a ui-sref="decisions.single.list({id: vm.decisionId})" ui-sref-active="btn-primary" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> List</a>
-                    <a ui-sref="decisions.single.matrix({id: vm.decisionId})" ui-sref-active="btn-primary" class="btn btn-default"><span class="glyphicon glyphicon-th"></span> Matrix</a>
-                </div>
                 <a href class="btn btn-primary btn-sm">Ask for Decision</a>
             </div>
         </div>
@@ -129,7 +125,7 @@
                             <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
                                 <div class="matrix-table-row" id="decision-row-{{item.decision.decisionId}}">
                                     <!-- Criteria Content -->
-                                    <div class="matrix-table-col matrix-criteria-group" ng-repeat="criteria_item in item.criteria | orderBy:'criterionId'" ng-click="vm.goToDiscussion(item.decision, criteria_item.criterionId)">
+                                    <div class="matrix-table-col matrix-criteria-group" ng-repeat="criteria_item in item.criteria | orderBy:'criterionId'" ng-click="vm.goToDiscussion(item.decision, criteria_item.criterionId, criteria_item)">
                                         <div class="matrix-table-col-content">
                                             <div ng-if="criteria_item.totalVotes">
                                                 <rating-star class="text-left" value="criteria_item.weight" total-votes="criteria_item.totalVotes" ng-show="criteria_item.weight"></rating-star>
