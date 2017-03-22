@@ -15,7 +15,7 @@
 <div class="app-container-sm">
     <ul class="discussions-list">
         <li ng-repeat="decision in vm.decisions track by $index">
-            <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug})">
+            <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
                 <div class="clearfix">
                     <div class="pull-left">
                         {{decision.name}}
