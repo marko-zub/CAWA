@@ -6,9 +6,11 @@
         .module('app.core')
         .config(configuration);
 
-    configuration.$inject = ['$stateProvider', '$urlRouterProvider', '$compileProvider', 'Config', '$locationProvider'];
+    configuration.$inject = ['$urlMatcherFactoryProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', 'Config', '$locationProvider'];
 
-    function configuration($stateProvider, $urlRouterProvider, $compileProvider, Config, $locationProvider) {
+    function configuration($urlMatcherFactoryProvider, $stateProvider, $urlRouterProvider, $compileProvider, Config, $locationProvider) {
+
+        $urlMatcherFactoryProvider.strictMode(false);
 
         $stateProvider
             .state('404', {
