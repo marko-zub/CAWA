@@ -1,6 +1,44 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
+<div class="row app-top-panel">
+    <div class="col-sm-6">
+        <h4 class="app-header-sub-title pull-left">
+            Decission Top {{vm.pagination.pageSize}} {{vm.decision.name}}
+        </h4>
+        <rating-star class="text-left pull-left" value="vm.discussion.votes.weight" total-votes="vm.discussion.votes.totalVotes" ng-show="vm.discussion.votes.weight"></rating-star>
+    </div>
+    <div class="col-sm-6">
+        <div class="pull-right">
+            <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+        </div>
+    </div>
+</div>
 <div class="app-container-sm">
-    <h3 class="app-title">
-      Decission Top 10
-    </h3>
+    <ul class="discussions-list">
+        <li ng-repeat="decision in vm.decisions track by $index">
+            <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug})">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        {{decision.name}}
+                    </div>
+                    <div class="pull-right app-rating-inline">
+                        <rating-star class="text-left pull-left" value="decision.weight" total-votes="decision.totalVotes" ng-show="decision.weight"></rating-star>
+                    </div>
+                </div>
+                <div ng-show="decision.criteriaCompliancePercentage >= 0">
+                    <small>
+                        Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:0}}</strong>% 
+                    </small>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <!-- TODO: use as component -->
+    <div class="row app-pagination clearfix">
+        <div class="col-md-10 col-sm-10 paginator">
+            <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
+        </div>
+        <div class="col-md-2 col-sm-2 counter">
+            <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+        </div>
+    </div>
 </div>

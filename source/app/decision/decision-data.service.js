@@ -39,6 +39,16 @@
                 }
             }),
 
+            decisionsNominations = $resource(Config.endpointUrl + 'decisions/:id/nominations/hall-of-fame/decisions', {
+                id: '@id'
+            }, {
+                searchDecisionNomination: {
+                    method: 'POST',
+                    isArray: false
+                }
+            }),
+
+
             decisionInfo = $resource(decisionUrl),
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
                 id: '@id',
@@ -51,6 +61,7 @@
                 decisionId: '@decisionId'
             }, {});
 
+
         var service = {
             searchDecision: searchDecision,
             searchDecisionMatrix: searchDecisionMatrix,
@@ -59,7 +70,8 @@
             getDecisionInfo: getDecisionInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
-            getDecisionAnalysis: getDecisionAnalysis
+            getDecisionAnalysis: getDecisionAnalysis,
+            searchDecisionNomination: searchDecisionNomination
         };
 
         return service;
@@ -112,6 +124,12 @@
                 criterionId: criterionId,
                 decisionId: decisionId
             }).$promise;
+        }
+
+        function searchDecisionNomination(id, data) {
+            return decisionsNominations.searchDecisionNomination({
+                id: id
+            }, data).$promise;
         }
     }
 })();

@@ -11,13 +11,13 @@
             controllerAs: 'vm'
         });
 
-    PaginatorController.$inject = ['DecisionSharedService', 'DecisionNotificationService'];
+    PaginatorController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'PaginatorConstant'];
 
-    function PaginatorController(DecisionSharedService, DecisionNotificationService) {
+    function PaginatorController(DecisionSharedService, DecisionNotificationService, PaginatorConstant) {
         var vm = this;
 
         vm.pagination = DecisionSharedService.filterObject.pagination;
-        vm.itemsPerPage = [5, 10, 20, 50, 100];
+        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
 
         vm.changePage = changePage;
         vm.changePageSize = changePageSize;

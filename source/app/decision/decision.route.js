@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('decisions.single', {
-                url: '/:id/{slug}',
+                url: '/:id/{slug}?page&size',
                 abstract: false,
                 views: {
                     "@": {
@@ -22,9 +22,18 @@
                 },
                 resolve: {
                     decisionBasicInfo: DecisionResolver,
+                    decisionStateInfo: DecisionStateResolver
                 },
                 params: {
                     slug: {
+                        value: null,
+                        squash: true
+                    },
+                    page: {
+                        value: null,
+                        squash: true
+                    },
+                    size: {
                         value: null,
                         squash: true
                     }
@@ -40,7 +49,7 @@
                     }
                 },
                 resolve: {
-                    decisionBasicInfo: DecisionResolver,
+                    decisionStateInfo: DecisionStateResolver,
                     decisionAnalysisInfo: DecisionAanalysisResolver
                 },
             })
@@ -50,31 +59,103 @@
                 controller: 'DecisionController',
                 controllerAs: 'vm',
                 resolve: {
-                    decisionBasicInfo: DecisionResolver
-                },
+                    decisionStateInfo: DecisionStateResolver
+                },                
             });
 
-            // Not use now
-            // .state('decisions.single.list', {
-            //     url: '/list',
-            //     views: {
-            //         "@": {
-            //             templateUrl: 'app/decision/decision.html',
-            //             controller: 'DecisionController',
-            //             controllerAs: 'vm',
-            //         }
-            //     },
-            //     resolve: {
-            //         decisionBasicInfo: DecisionResolver
-            //     },
-            // })
-            // .state('decisions.single.list.analysis', {
-            //     url: '/analysis/:analysisId',
-            //     abstract: true,
-            //     resolve: {
-            //         decisionBasicInfo: DecisionResolver
-            //     },
-            // });
+        // Not use now
+        // .state('decisions.single.list', {
+        //     url: '/list',
+        //     views: {
+        //         "@": {
+        //             templateUrl: 'app/decision/decision.html',
+        //             controller: 'DecisionController',
+        //             controllerAs: 'vm',
+        //         }
+        //     },
+        //     resolve: {
+        //         decisionBasicInfo: DecisionResolver
+        //     },
+        // })
+        // .state('decisions.single.list.analysis', {
+        //     url: '/analysis/:analysisId',
+        //     abstract: true,
+        //     resolve: {
+        //         decisionBasicInfo: DecisionResolver
+        //     },
+        // });
+    }
+
+
+    // Decision State Data
+    DecisionStateResolver.$inject = ['decisionBasicInfo', '$stateParams', '$state', '$rootScope', '$location'];
+
+    function DecisionStateResolver(decisionBasicInfo, $stateParams, $state, $rootScope, $location) {
+
+        var result = decisionBasicInfo;
+        // SLUG for Decision page firt time call
+        var decisionSlug = result.nameSlug ? result.nameSlug : '';
+
+        if ($stateParams.slug === null ||
+            $stateParams.slug === 'matrix' ||
+            $stateParams.slug === 'list') {
+            $stateParams.slug = result.nameSlug;
+        }
+
+
+        var stateListener = $rootScope.$on('$stateChangeSuccess',
+            function(event, toState, toParams, fromState, fromParams) {
+                var
+                    currentState,
+                    decisionSlug;
+
+                currentState = $state.current.name;
+
+                // SLUG for Decision page
+                // Always set correct slug from server
+                // Just added new slug
+                if (toState.name === 'decisions.single') {
+
+                    $state.go(currentState, {
+                        notify: false,
+                        reload: false,
+                        location: 'replace'
+                    });
+                }
+
+                // TODO: fix it
+                // BreadCrumbs
+                if ($state.current.name === 'decisions.single.matrix' ||
+                    $state.current.name === 'decisions.single.matrix.analysis') {
+                    $rootScope.breadcrumbs = [{
+                        title: 'Decisions',
+                        link: 'decisions'
+                    }, {
+                        title: result.name,
+                        link: 'decisions.single'
+                    }, {
+                        title: 'Comparison Matrix',
+                        link: null
+                    }];
+
+                }
+
+                // TODO: find better way
+                // Remove size & page params
+                if ($state.current.name !== 'decisions.single') {
+                    $state.go($state.current.name, {
+                        page: null,
+                        size: null
+                    }, {
+                        notify: false,
+                        reload: false,
+                        location: 'replace'
+                    });
+                }
+
+                //unsubscribe event listener
+                stateListener();
+            });
     }
 
     // Decision Data
@@ -87,57 +168,6 @@
                 $state.go('404');
             }
 
-            // SLUG for Decision page firt time call
-            var decisionSlug = result.nameSlug ? result.nameSlug : '';
-
-            if ($stateParams.slug === null ||
-                $stateParams.slug === 'matrix' ||
-                $stateParams.slug === 'list') {
-                $stateParams.slug = result.nameSlug;
-            }
-
-
-            var stateListener = $rootScope.$on('$stateChangeSuccess',
-                function(event, toState, toParams, fromState, fromParams) {
-                    var
-                        currentState,
-                        decisionSlug;
-
-                    currentState = $state.current.name;
-
-                    // SLUG for Decision page
-                    // Always set correct slug from server
-                    // Just added new slug
-                    if (
-                        // toState.name === 'decisions.single.matrix' ||
-                        // toState.name === 'decisions.single.list' ||
-                        toState.name === 'decisions.single') {
-
-                        $state.go(currentState, {notify:false, reload:false});
-                    }
-
-                    // TODO: fix it
-                    // BreadCrumbs
-                    if ($state.current.name === 'decisions.single.matrix' ||
-                        $state.current.name === 'decisions.single.matrix.analysis') {
-                        $rootScope.breadcrumbs = [{
-                            title: 'Decisions',
-                            link: 'decisions'
-                        }, {
-                            title: result.name,
-                            link: 'decisions.single'
-                        }, {
-                            title: 'Comparison Matrix',
-                            link: null
-                        }];
-
-                    } else if ($state.current.name === 'decisions.single.list') {
-
-
-                    }
-                    //unsubscribe event listener
-                    stateListener();
-                });
             return result;
         }).catch(function() {
             $state.go('404');
