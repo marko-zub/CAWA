@@ -60,7 +60,7 @@
                 controllerAs: 'vm',
                 resolve: {
                     decisionStateInfo: DecisionStateResolver
-                },                
+                },
             });
 
         // Not use now
@@ -88,9 +88,9 @@
 
 
     // Decision State Data
-    DecisionStateResolver.$inject = ['decisionBasicInfo', '$stateParams', '$state', '$rootScope', '$location'];
+    DecisionStateResolver.$inject = ['decisionBasicInfo', '$stateParams', '$state', '$rootScope'];
 
-    function DecisionStateResolver(decisionBasicInfo, $stateParams, $state, $rootScope, $location) {
+    function DecisionStateResolver(decisionBasicInfo, $stateParams, $state, $rootScope) {
 
         var result = decisionBasicInfo;
         // SLUG for Decision page firt time call
@@ -159,9 +159,9 @@
     }
 
     // Decision Data
-    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', '$rootScope', '$location'];
+    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state'];
 
-    function DecisionResolver(DecisionDataService, $stateParams, $state, $rootScope, $location) {
+    function DecisionResolver(DecisionDataService, $stateParams, $state) {
         return DecisionDataService.getDecisionInfo($stateParams.id).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);

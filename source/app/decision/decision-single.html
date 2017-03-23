@@ -22,21 +22,19 @@
                     </div>
                     <div class="pull-left">
                         {{decision.name}}
-
                         <div>
                             <small>
                                 Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:0}}</strong>%
+                                 | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{decision.totalVotes}}
                             </small>
                         </div>
                     </div>
-<!--                     <div class="pull-right app-rating-inline">
+                    <!--                     <div class="pull-right app-rating-inline">
                         <rating-star class="text-left pull-left" value="decision.weight" total-votes="decision.totalVotes" ng-show="decision.weight"></rating-star>
                     </div> -->
                 </div>
             </a>
-            <div class="discussions-list-description">
-                {{decision.description}}
-            </div>
+            <div class="discussions-list-description" ng-bind-html="decision.description"></div>
         </li>
     </ul>
     <!-- TODO: use as component -->

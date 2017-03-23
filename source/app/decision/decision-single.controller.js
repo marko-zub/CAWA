@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionSingleController', DecisionSingleController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state'];
+    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce'];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, $stateParams, DecisionSharedService, PaginatorConstant, $state) {
+    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce) {
         var
             vm = this,
             isInitedSorters = false,
@@ -48,9 +48,16 @@
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.searchDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = result.decisions;
+                vm.decisions = descriptionTrustHtml(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
                 // console.log(result);
+            });
+        }
+
+        function descriptionTrustHtml(list) {
+            return _.map(list, function(el) {
+                el.description = $sce.trustAsHtml(el.description);
+               return el;
             });
         }
 
