@@ -39,6 +39,7 @@
             console.log('Decision Single Controller');
             setPagination();
             searchDecisionNomimations($stateParams.id);
+            getCriteriaGroupsById($stateParams.id);
         }
 
         function searchDecisionNomimations(id) {
@@ -57,7 +58,7 @@
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 el.description = $sce.trustAsHtml(el.description);
-               return el;
+                return el;
             });
         }
 
@@ -91,6 +92,20 @@
                 location: 'replace'
             });
         }
+
+
+        // TODO: move to service
+        function getCriteriaGroupsById(decisionId) {
+            // Criteria
+            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+                vm.criteriaGroups = descriptionTrustHtml(result);
+                _.map(result, function(resultEl) {
+                    descriptionTrustHtml(resultEl.criteria);
+                });
+            });
+        }
+
+
 
     }
 })();
