@@ -97,11 +97,15 @@
                                 <div class="matrix-table-row" id="decision-name-row-{{item.decision.decisionId}}">
                                     <div class="matrix-table-col matrix-table-col-name" data-col-id="col-name">
                                         <div class="matrix-table-col-content matrix-content-name">
-                                            <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">{{item.decision.name}}</a>
+                                            <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
+                                            <div class="img-container img-sm">
+                                                <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
+                                            </div>
+                                            {{item.decision.name}}</a>
                                             <div class="text-right" ng-if="item.decision.description">
 
                                                 <!-- Ui popover -->
-                                                <a href class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'"  tabindex="0"></a>
+                                                <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'"  tabindex="0"></aspan
                                                 <!-- End Ui popover -->
 
                                             </div>

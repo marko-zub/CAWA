@@ -17,19 +17,26 @@
         <li ng-repeat="decision in vm.decisions track by $index">
             <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
                 <div class="clearfix">
+                    <div class="img-container">
+                        <img ng-src="{{decision.imageUrl}}" class="img-responsive">
+                    </div>
                     <div class="pull-left">
                         {{decision.name}}
+
+                        <div>
+                            <small>
+                                Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:0}}</strong>%
+                            </small>
+                        </div>
                     </div>
-                    <div class="pull-right app-rating-inline">
+<!--                     <div class="pull-right app-rating-inline">
                         <rating-star class="text-left pull-left" value="decision.weight" total-votes="decision.totalVotes" ng-show="decision.weight"></rating-star>
-                    </div>
-                </div>
-                <div ng-show="decision.criteriaCompliancePercentage >= 0">
-                    <small>
-                        Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:0}}</strong>% 
-                    </small>
+                    </div> -->
                 </div>
             </a>
+            <div class="discussions-list-description">
+                {{decision.description}}
+            </div>
         </li>
     </ul>
     <!-- TODO: use as component -->
