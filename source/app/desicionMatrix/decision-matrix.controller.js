@@ -247,6 +247,11 @@
 
             var sendData = DecisionSharedService.getFilterObject();
             sendData.persistent = true; //Enable analysis
+
+            if($stateParams.analysisId === 'hall-of-fame') {
+                console.log('hall-of-fame');
+            }
+
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 var resultdecisionMatrixs = result.decisionMatrixs;
                 initSorters(result.totalDecisionMatrixs);
