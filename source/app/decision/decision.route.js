@@ -43,7 +43,7 @@
                 url: '/matrix',
                 views: {
                     "@": {
-                        templateUrl: 'app/desicionMatrix/decision-matrix.html',
+                        templateUrl: 'app/desicion/decision-matrix.html',
                         controller: 'DecisionMatrixController',
                         controllerAs: 'vm',
                     }
@@ -68,7 +68,7 @@
         //     url: '/list',
         //     views: {
         //         "@": {
-        //             templateUrl: 'app/decision/decision.html',
+        //             templateUrl: 'app/decision/decision-list.html',
         //             controller: 'DecisionController',
         //             controllerAs: 'vm',
         //         }
