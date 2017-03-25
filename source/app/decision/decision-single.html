@@ -8,7 +8,6 @@
     </div>
     <div class="col-sm-6">
         <div class="pull-right">
-
             <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
             <a href class="btn btn-primary btn-sm">Ask for Decision</a>
         </div>
@@ -38,6 +37,15 @@
                     <div class="discussions-list-description" ng-bind-html="decision.description"></div>
                 </li>
             </ul>
+            <!-- TODO: use as component -->
+            <div class="row app-pagination clearfix">
+                <div class="col-md-10 col-sm-10 paginator">
+                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
+                </div>
+                <div class="col-md-2 col-sm-2 counter">
+                    <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+                </div>
+            </div>
         </div>
         <!-- Criteria -->
         <!-- TODO: make as component -->
@@ -57,11 +65,9 @@
                                     <div class="pull-right app-rating-inline">
                                         <rating-star class="text-left" value="criteria.weight" total-votes="criteria.totalVotes" ng-show="criteria.weight"></rating-star>
                                     </div>
-
                                     <div class="text-right" ng-if="criteria.description">
                                         <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{criteria.name}}" uib-popover-html="criteria.description" popover-placement="left" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- </a> -->
@@ -71,14 +77,5 @@
             </div>
         </div>
         <!-- End Criteria -->
-    </div>
-    <!-- TODO: use as component -->
-    <div class="row app-pagination clearfix">
-        <div class="col-md-10 col-sm-10 paginator">
-            <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
-        </div>
-        <div class="col-md-2 col-sm-2 counter">
-            <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
-        </div>
     </div>
 </div>

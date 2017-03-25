@@ -83,6 +83,10 @@
                 vm.decisionsSpinner = true;
                 searchDecisionMatrix(vm.decisionId);
             });
+            DecisionNotificationService.subscribeChildDecisionExclusion(function() {
+                vm.decisionsSpinner = true;
+                searchDecisionMatrix(vm.decisionId);
+            });
             DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
                 data.detailsSpinner = true;
                 DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
@@ -247,10 +251,6 @@
 
             var sendData = DecisionSharedService.getFilterObject();
             sendData.persistent = true; //Enable analysis
-
-            if($stateParams.analysisId === 'hall-of-fame') {
-                console.log('hall-of-fame');
-            }
 
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 var resultdecisionMatrixs = result.decisionMatrixs;
@@ -499,16 +499,73 @@
 
         // inclusion/exclusion criteria
 
-        var inclusionArray = [];
-        var exclusionArray = [];
+        vm.inclusionArray = DecisionSharedService.filterObject.includeChildDecisionIds || [];
+        vm.exclusionArray = DecisionSharedService.filterObject.excludeChildDecisionIds || [];
+        var allChildDecisionsId = vm.decision.childDecisionIds;
 
-        function addItemToIncExFilter(elId, array) {
-            if(!elId) return;
+        function toggleIclusionToArray(exclusionArray, inclusionArray) {
+            // TODO: optimize or fin new way
+            return _.filter(allChildDecisionsId, function(item) {
+                if(!_.includes(exclusionArray, item)) return item;
+            });
+        }
+        vm.showInclusionList = showInclusionList;
+        vm.showExclusionList = showExclusionList;
+        vm.addToExclusionList = addToExclusionList;
+        vm.removeFromExclusionList = removeFromExclusionList;
+
+        function showInclusionList() {
+            var _fo = DecisionSharedService.filterObject;
+            _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
+            _fo.includeChildDecisionIds = [];
+
+            $scope.$emit('decisionExclusionChanged', _fo);
+        }
+
+        function showExclusionList() {
+            var _fo = DecisionSharedService.filterObject;
+            _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
+            _fo.excludeChildDecisionIds = [];
+
+            $scope.$emit('decisionExclusionChanged', _fo);
+        }
+
+        function removeFromExclusionList(id) {
+            removeItemFromArray(parseInt(id), vm.exclusionArray);
+            toggleIclusionToArray(vm.exclusionArray, inclusionArray);
+            // console.log(vm.inclusionArray);
+            // console.log(vm.exclusionArray);
+
+            // TODO: clean up optimize
+            var _fo = DecisionSharedService.filterObject;
+            _fo.excludeChildDecisionIds = vm.exclusionArray;
+
+            $scope.$emit('decisionExclusionChanged', _fo);
+        }
+
+        function addToExclusionList(id) {
+            addItemToArray(parseInt(id), vm.exclusionArray);
+            // console.log(vm.exclusionArray);
+
+            // TODO: clean up optimize
+            var _fo = DecisionSharedService.filterObject;
+            _fo.excludeChildDecisionIds = vm.exclusionArray;
+
+            $scope.$emit('decisionExclusionChanged', _fo);
+        }
+
+        function addItemToArray(elId, array) {
+            if(!elId || _.includes(array, elId)) return;
             array.push(elId);
         }
-        function removetemToIncExFilter(elId, array) {
+        function removeItemFromArray(elId, array) {
             if(!elId) return;
-            array.splice(elId, 1);
+            // console.log(array);
+            var index = array.indexOf(elId);
+            if(array.indexOf(elId) > -1) {
+                array.splice(index, 1);
+            }
+            // console.log(array);
         }
     }
 })();

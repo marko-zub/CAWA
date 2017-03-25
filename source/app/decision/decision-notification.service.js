@@ -20,13 +20,15 @@
             subscribeGetDetailedCharacteristics: subscribeGetDetailedCharacteristics,
             subscribeCharacteristicsGroups: subscribeCharacteristicsGroups,
             subscribePageChanged: subscribePageChanged,
+            subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
             notifyGetDetailedCharacteristics: notifyGetDetailedCharacteristics,
             notifySelectCriterion: notifySelectCriterion,
             notifySelectDecision: notifySelectDecision,
             notifySelectCharacteristic: notifySelectCharacteristic,
             notifyCharacteristicsGroups: notifyCharacteristicsGroups,
             notifyPageChanged: notifyPageChanged,
-            notifyInitSorter: notifyInitSorter
+            notifyInitSorter: notifyInitSorter,
+            notifyChildDecisionExclusion: notifyChildDecisionExclusion
         };
 
         return service;
@@ -76,6 +78,10 @@
             subscribe('pageChanged', callback);
         }
 
+        function subscribeChildDecisionExclusion(callback) {
+            subscribe('decisionExclusionChanged', callback);
+        }
+
         //Emitters
         function notifyGetDetailedCharacteristics(data) {
             emit('getDetailedCharacteristics', data);
@@ -103,6 +109,10 @@
 
         function notifyInitSorter(data) {
             broadcast('initSorter', data);
+        }
+
+        function notifyChildDecisionExclusion(callback) {
+            emit('decisionExclusionChanged', callback);
         }
 
     }

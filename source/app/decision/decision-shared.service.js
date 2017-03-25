@@ -38,7 +38,9 @@
             selectedDecision: {
                 decisionsIds: []
             },
-            persistent: true
+            persistent: true,
+            includeChildDecisionIds: [],
+            excludeChildDecisionIds: []
         };
 
         //allias
@@ -66,7 +68,9 @@
                 sortDecisionPropertyDirection: _fo.sorters.sortByDecisionProperty.order,
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
-                persistent: true
+                persistent: true,
+                includeChildDecisionIds: _fo.includeChildDecisionIds,
+                excludeChildDecisionIds: _fo.excludeChildDecisionIds
             };
         };
 
@@ -101,6 +105,8 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
+                includeChildDecisionIds: obj.includeChildDecisionIds || [],
+                excludeChildDecisionIds: obj.excludeChildDecisionIds || [],
                 persistent: true
             };
 

@@ -23,6 +23,14 @@
                         <div class="matrix-table-col matrix-table-group-name">
                             <div class="matrix-table-group-title">
                                 <!-- Empty Header -->
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-sm" ng-click="vm.showInclusionList()">inclusion 
+                                    <!-- <span class="badge">{{vm.decision.childDecisionIds.length - vm.exclusionArray.length}}</span> -->
+                                    </span>
+                                    <span class="btn btn-default btn-sm" ng-click="vm.showExclusionList()">exclusion 
+                                    <!-- <span class="badge">{{vm.inclusionArray.length}}</span> -->
+                                    </span>
+                                </span>                                
                             </div>
                             <div class="matrix-table-row">
                                 <div class="matrix-table-col matrix-table-group" data-col-id="col-name">
@@ -98,22 +106,35 @@
                                     <div class="matrix-table-col matrix-table-col-name" data-col-id="col-name">
                                         <div class="matrix-table-col-content matrix-content-name">
                                             <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
-                                            <div class="img-container img-sm">
-                                                <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
-                                            </div>
-                                            {{item.decision.name}}</a>
-                                            <div class="text-right" ng-if="item.decision.description">
+                                                <div class="clearfix">
+                                                    <div class="img-container img-sm">
+                                                        <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
+                                                    </div>
+                                                    {{item.decision.name}}</a>
+                                                    <div class="text-right" ng-if="item.decision.description">
 
-                                                <!-- Ui popover -->
-                                                <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'"  tabindex="0"></span>
-                                                <!-- End Ui popover -->
+                                                        <!-- Ui popover -->
+                                                        <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'"  tabindex="0"></span>
+                                                        <!-- End Ui popover -->
 
-                                            </div>
-                                            <div ng-show="item.decision.criteriaCompliancePercentage >= 0">
-                                                <small>
-                                                    Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
-                                                    <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{item.decision.totalVotes}}
-                                                </small>
+                                                    </div>
+                                                    <div ng-show="item.decision.criteriaCompliancePercentage >= 0">
+                                                        <small>
+                                                            Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
+                                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{item.decision.totalVotes}}
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                            <div class="app-panel-wrapper">
+                                                <div class="app-panel-controls">
+                                                    <span tabindex="0" ng-click="vm.addToExclusionList(item.decision.decisionId)" class="app-control">
+                                                        <i class="glyphicon glyphicon-eye-close"></i>
+                                                    </span tabindex="0">
+                            <!--                         <span tabindex="0" ng-click="vm.removeFromExclusionList(item.decision.decisionId)" class="app-control">
+                                                        <i class="glyphicon glyphicon glyphicon-eye-open"></i>
+                                                    </span tabindex="0"> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
