@@ -24,6 +24,8 @@
 
         init();
 
+        var _fo = DecisionSharedService.filterObject;
+
         function getCriteriaGroupsById(decisionId) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
@@ -97,8 +99,8 @@
             });
             DecisionNotificationService.subscribeSelectSorter(function(event, data) {
                 vm.decisionsSpinner = true;
-                DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
-                vm.fo = DecisionSharedService.filterObject.sorters;
+                _fo.sorters[data.mode] = data.sort;
+                vm.fo = _fo.sorters;
                 searchDecisionMatrix(vm.decisionId);
             });
 
@@ -181,8 +183,6 @@
 
         //Init sorters, when directives loaded
         function initSorters(total) {
-
-            var _fo = DecisionSharedService.filterObject;
             _fo.pagination.totalDecisions = total;
             vm.fo = _fo.sorters;
 
@@ -406,7 +406,7 @@
             });
         }
 
-        var foSelectedCriteria = DecisionSharedService.filterObject.selectedCriteria;
+        var foSelectedCriteria = _fo.selectedCriteria;
         vm.selectCriterion = selectCriterion;
         //Set decions percent(% criterion match)
         function setDecisionMatchPercent(list) {
@@ -485,6 +485,7 @@
         });
 
 
+        // TODO: make as simple link <a ui-sref>
         vm.goToDiscussion = goToDiscussion;
 
         function goToDiscussion(decision, critOrCharId, criteria_item) {
@@ -497,75 +498,82 @@
         }
 
 
-        // inclusion/exclusion criteria
+        // Inclusion/Exclusion criteria
+        vm.changeMatrixMode = changeMatrixMode;
+        vm.updateExclusionList = updateExclusionList;
 
-        vm.inclusionArray = DecisionSharedService.filterObject.includeChildDecisionIds || [];
-        vm.exclusionArray = DecisionSharedService.filterObject.excludeChildDecisionIds || [];
-        var allChildDecisionsId = vm.decision.childDecisionIds;
+        vm.inclusionItemsLength = 0;
+        vm.exclusionItemsLength = 0;
 
-        function toggleIclusionToArray(exclusionArray, inclusionArray) {
-            // TODO: optimize or fin new way
-            return _.filter(allChildDecisionsId, function(item) {
-                if(!_.includes(exclusionArray, item)) return item;
-            });
-        }
-        vm.showInclusionList = showInclusionList;
-        vm.showExclusionList = showExclusionList;
-        vm.addToExclusionList = addToExclusionList;
-        vm.removeFromExclusionList = removeFromExclusionList;
+        initMatrixMode();
 
-        function showInclusionList() {
-            var _fo = DecisionSharedService.filterObject;
-            _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
-            _fo.includeChildDecisionIds = [];
-
-            $scope.$emit('decisionExclusionChanged', _fo);
+        function initMatrixMode() {
+            vm.matrixMode = (_fo.includeChildDecisionIds.length > 0) ? 'exclusion' : 'inclucion';
         }
 
-        function showExclusionList() {
-            var _fo = DecisionSharedService.filterObject;
-            _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
-            _fo.excludeChildDecisionIds = [];
+        // function toggleIclusionToArray(exclusionArray, inclusionArray) {
+        //     // TODO: optimize or fin new way
+        //     var allChildDecisionsId = vm.decision.childDecisionIds;
+        //     return _.filter(allChildDecisionsId, function(item) {
+        //         if (!_.includes(exclusionArray, item)) return item;
+        //     });
+        // }
 
-            $scope.$emit('decisionExclusionChanged', _fo);
+        function changeMatrixMode(mode) {
+            var allowMode = ['inclucion', 'exclusion'];
+            if (_.includes(allowMode, mode)) {
+
+                if (mode === 'inclucion') {
+                    _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
+                    _fo.includeChildDecisionIds = [];
+                    vm.inclusionItemsLength = vm.decision.childDecisionIds.lenght - _fo.excludeChildDecisionIds.length;
+                } else if (mode === 'exclusion') {
+                    _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
+                    _fo.excludeChildDecisionIds = [];
+                     vm.exclusionItemsLength = _fo.includeChildDecisionIds.length || 0;
+                }
+       
+                DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+                vm.matrixMode = mode;
+            }
         }
 
-        function removeFromExclusionList(id) {
-            removeItemFromArray(parseInt(id), vm.exclusionArray);
-            toggleIclusionToArray(vm.exclusionArray, inclusionArray);
-            // console.log(vm.inclusionArray);
-            // console.log(vm.exclusionArray);
+        function updateExclusionList(id) {
+            if (!id) return;
 
-            // TODO: clean up optimize
-            var _fo = DecisionSharedService.filterObject;
+            if (vm.matrixMode === 'inclucion') {
+                addItemToArray(parseInt(id), vm.exclusionArray);
+                vm.inclusionItemsLength = vm.decision.childDecisionIds.lenght - _fo.excludeChildDecisionIds.length;
+            } else {
+                removeItemFromArray(parseInt(id), vm.exclusionArray);
+                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length || 0;
+            }
+
             _fo.excludeChildDecisionIds = vm.exclusionArray;
-
-            $scope.$emit('decisionExclusionChanged', _fo);
+            DecisionNotificationService.notifyChildDecisionExclusion(_fo);
         }
 
-        function addToExclusionList(id) {
-            addItemToArray(parseInt(id), vm.exclusionArray);
-            // console.log(vm.exclusionArray);
-
-            // TODO: clean up optimize
-            var _fo = DecisionSharedService.filterObject;
-            _fo.excludeChildDecisionIds = vm.exclusionArray;
-
-            $scope.$emit('decisionExclusionChanged', _fo);
+        function addItemToArray(itemId, array) {
+            if (!itemId || _.includes(array, itemId)) return;
+            array.push(itemId);
         }
 
-        function addItemToArray(elId, array) {
-            if(!elId || _.includes(array, elId)) return;
-            array.push(elId);
-        }
-        function removeItemFromArray(elId, array) {
-            if(!elId) return;
-            // console.log(array);
-            var index = array.indexOf(elId);
-            if(array.indexOf(elId) > -1) {
+        function removeItemFromArray(itemId, array) {
+            if (!itemId) return;
+
+            var index = array.indexOf(itemId);
+            if (array.indexOf(itemId) > -1) {
                 array.splice(index, 1);
             }
-            // console.log(array);
         }
+
+        // Analysis Hall of Fame
+        $rootScope.$on('$stateChangeSuccess',
+            function(event, toState, toParams, fromState, fromParams) {
+                if ($stateParams.analysisId === 'hall-of-fame') {
+                    // console.log('hall-of-fame');
+                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                }
+            });
     }
 })();

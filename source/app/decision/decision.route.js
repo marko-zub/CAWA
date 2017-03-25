@@ -140,10 +140,6 @@
 
                 }
 
-                if ($stateParams.analysisId === 'hall-of-fame') {
-                    // console.log('hall-of-fame');
-                }
-
                 // TODO: find better way
                 // Remove size & page params
                 if ($state.current.name !== 'decisions.single') {

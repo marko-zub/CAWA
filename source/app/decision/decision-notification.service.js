@@ -111,8 +111,8 @@
             broadcast('initSorter', data);
         }
 
-        function notifyChildDecisionExclusion(callback) {
-            emit('decisionExclusionChanged', callback);
+        function notifyChildDecisionExclusion(data) {
+            emit('decisionExclusionChanged', data);
         }
 
     }
