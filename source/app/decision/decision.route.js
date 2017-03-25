@@ -43,7 +43,7 @@
                 url: '/matrix',
                 views: {
                     "@": {
-                        templateUrl: 'app/desicion/decision-matrix.html',
+                        templateUrl: 'app/decision/decision-matrix.html',
                         controller: 'DecisionMatrixController',
                         controllerAs: 'vm',
                     }

@@ -488,13 +488,27 @@
         vm.goToDiscussion = goToDiscussion;
 
         function goToDiscussion(decision, critOrCharId, criteria_item) {
-            // debugger
             var params = {
                 'discussionId': decision.decisionId,
                 'discussionSlug': decision.nameSlug,
                 'critOrCharId': critOrCharId
             };
             $state.go('decisions.single.matrix.child.option', params);
+        }
+
+
+        // inclusion/exclusion criteria
+
+        var inclusionArray = [];
+        var exclusionArray = [];
+
+        function addItemToIncExFilter(elId, array) {
+            if(!elId) return;
+            array.push(elId);
+        }
+        function removetemToIncExFilter(elId, array) {
+            if(!elId) return;
+            array.splice(elId, 1);
         }
     }
 })();
