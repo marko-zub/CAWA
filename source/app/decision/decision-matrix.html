@@ -8,12 +8,12 @@
         </div>
         <div class="col-sm-3">
             <span class="input-group-btn">
-                <span class="btn btn-default btn-sm" ng-class="{'btn-primary':vm.matrixMode === 'inclucion'}" ng-click="vm.changeMatrixMode('inclusion')">inclusion
-                <span class="label">{{vm.inclusionItemsLength}}</span>
-                </span>
-                <span class="btn btn-default btn-sm" ng-class="{'btn-primary':vm.matrixMode === 'exclusion'}" ng-click="vm.changeMatrixMode('exclusion')">exclusion
-                <span class="label">{{vm.exclusionItemsLength}}</span>
-                </span>
+                <button class="btn btn-default btn-sm" ng-class="{'btn-primary':vm.matrixMode === 'inclusion'}" ng-click="vm.changeMatrixMode('inclusion')">inclusion
+                <span class="badge">{{vm.inclusionItemsLength}}</span>
+                </button>
+                <button class="btn btn-default btn-sm" ng-class="{'btn-primary':vm.matrixMode === 'exclusion'}" ng-click="vm.changeMatrixMode('exclusion')" ng-disabled="!vm.exclusionItemsLength">exclusion
+                <span class="badge">{{vm.exclusionItemsLength}}</span>
+                </button>
             </span>
         </div>
         <div class="col-sm-3">
@@ -129,10 +129,10 @@
                                                 </small>
                                             </div>
 
-                                            <div class="app-panel-wrapper">
+                                            <div class="app-panel-wrapper text-right">
                                                 <div class="app-panel-controls">
                                                     <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                        <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclucion', 'glyphicon glyphicon-eye-open: vm.matrixMode === 'exclusion'}"></i>
+                                                        <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclusion', 'glyphicon glyphicon-eye-open': vm.matrixMode === 'exclusion'}"></i>
                                                     </span>
                                                 </div>
                                             </div>

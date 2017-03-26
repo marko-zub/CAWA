@@ -368,6 +368,7 @@
             var criteriaGroupsCount,
                 characteristicGroupsCount;
 
+            // TODO: include groups
             criteriaGroupsCount = vm.criteriaGroups[0].criteria.length || 0;
             characteristicGroupsCount = vm.characteristicGroups[0].characteristics.length || 0;
             vm.tableWidth = (criteriaGroupsCount + characteristicGroupsCount) * 120 + 60 + 'px';
@@ -501,55 +502,46 @@
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
-
-        vm.inclusionItemsLength = 0;
-        vm.exclusionItemsLength = 0;
-
         initMatrixMode();
 
         function initMatrixMode() {
-            vm.matrixMode = (_fo.includeChildDecisionIds.length > 0) ? 'exclusion' : 'inclucion';
+            vm.matrixMode = 'inclusion';
+            vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+            if(vm.decision && vm.decision.childDecisionIds)
+                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
         }
 
-        // function toggleIclusionToArray(exclusionArray, inclusionArray) {
-        //     // TODO: optimize or fin new way
-        //     var allChildDecisionsId = vm.decision.childDecisionIds;
-        //     return _.filter(allChildDecisionsId, function(item) {
-        //         if (!_.includes(exclusionArray, item)) return item;
-        //     });
-        // }
-
         function changeMatrixMode(mode) {
-            var allowMode = ['inclucion', 'exclusion'];
+            var allowMode = ['inclusion', 'exclusion'];
             if (_.includes(allowMode, mode)) {
-
-                if (mode === 'inclucion') {
+                vm.matrixMode = mode;
+                if (mode === 'inclusion') {
                     _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                     _fo.includeChildDecisionIds = [];
-                    vm.inclusionItemsLength = vm.decision.childDecisionIds.lenght - _fo.excludeChildDecisionIds.length;
+                    vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
                 } else if (mode === 'exclusion') {
                     _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
                     _fo.excludeChildDecisionIds = [];
-                     vm.exclusionItemsLength = _fo.includeChildDecisionIds.length || 0;
+                    vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
                 }
-       
                 DecisionNotificationService.notifyChildDecisionExclusion(_fo);
-                vm.matrixMode = mode;
             }
         }
 
         function updateExclusionList(id) {
             if (!id) return;
 
-            if (vm.matrixMode === 'inclucion') {
-                addItemToArray(parseInt(id), vm.exclusionArray);
-                vm.inclusionItemsLength = vm.decision.childDecisionIds.lenght - _fo.excludeChildDecisionIds.length;
+            if (vm.matrixMode === 'inclusion') {
+                addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
+                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
             } else {
-                removeItemFromArray(parseInt(id), vm.exclusionArray);
-                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length || 0;
+                removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
+                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
+                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
+                if (!vm.exclusionItemsLength) vm.matrixMode = 'inclusion';
             }
-
-            _fo.excludeChildDecisionIds = vm.exclusionArray;
+            console.log(_fo.excludeChildDecisionIds.length);
             DecisionNotificationService.notifyChildDecisionExclusion(_fo);
         }
 
