@@ -22,12 +22,14 @@
                     <span class="badge">{{vm.inclusionItemsLength}}</span>
                     </a>
                     </li>
-                    <li ng-class="{'active':vm.matrixMode === 'exclusion', 'disabled':!vm.exclusionItemsLength}">
+                    <li ng-class="{'active':vm.matrixMode === 'exclusion'}">
                         <a ng-click="vm.changeMatrixMode('exclusion')">Other
                     <span class="badge">{{vm.exclusionItemsLength}}</span>
                     </a>
                     </li>
                 </ul>
+
+                div
             </div>
         </div>
 
@@ -122,13 +124,11 @@
                                                         <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                     </div>
                                                     {{item.decision.name}}
+                                                    <div class="pull-right">
+                                                        <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                                    </div>
                                                 </div>
                                             </a>
-                                            <div class="text-right" ng-if="item.decision.description">
-                                                <!-- Ui popover -->
-                                                <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                                <!-- End Ui popover -->
-                                            </div>
                                             <div ng-show="item.decision.criteriaCompliancePercentage >= 0">
                                                 <small>
                                                     Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |

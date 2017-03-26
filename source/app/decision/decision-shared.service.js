@@ -69,8 +69,8 @@
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
-                includeChildDecisionIds: _fo.includeChildDecisionIds,
-                excludeChildDecisionIds: _fo.excludeChildDecisionIds
+                includeChildDecisionIds: !_.isEmpty(_fo.includeChildDecisionIds) ? _fo.includeChildDecisionIds : null,
+                excludeChildDecisionIds: !_.isEmpty(_fo.excludeChildDecisionIds) ? _fo.excludeChildDecisionIds : null
             };
         };
 

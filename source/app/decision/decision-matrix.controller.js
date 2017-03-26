@@ -225,7 +225,7 @@
 
                 el = matrixCols[i];
                 asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
-                asideElH = parseInt(asideEl.outerHeight());
+                asideElH = asideEl.outerHeight();
                 newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
                 // Set new height
@@ -528,6 +528,9 @@
                     _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
                     vm.exclusionItemsLength = _fo.includeChildDecisionIds ? _fo.includeChildDecisionIds.length : 0;
                     _fo.excludeChildDecisionIds = null;
+                    if(vm.exclusionItemsLengt === 0) {
+                        _fo.includeChildDecisionIds = [];
+                    }
                 }
 
                 var send_fo = _fo;
