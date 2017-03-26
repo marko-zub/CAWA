@@ -258,7 +258,7 @@ body {
 .matrix-table-col {
     display: table-cell;
     min-width: 105px;
-    height: 100%;
+    // height: 100%;
     border-left: 1px solid transparent;
     border-right: 1px solid @gray-light;
     background: #FFF;
@@ -291,6 +291,7 @@ body {
         position: relative;
         min-height: 10px;
         line-height: 1;
+        padding: 1px 0;
         &.empty {
             &:after {
                 left: 0;
@@ -479,7 +480,7 @@ body {
             vertical-align: middle;
             & > .matrix-table-group-title {
                 padding: 0 4px;
-                // min-height: 36px; // TODO: not use it!!!
+                line-height: 1;
             }
             & > .matrix-table-title {
                 padding: 4px 4px;

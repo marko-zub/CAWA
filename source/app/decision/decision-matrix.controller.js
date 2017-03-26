@@ -59,15 +59,19 @@
         function init() {
             console.log('Decision Matrix Controller');
 
-            // TODO: merge to one array with titles
 
-            //Get data for decision panel (main)
             vm.decisionsSpinner = true;
-
 
             // Get criteria and characteristic
             $q.all([getCriteriaGroupsById(vm.decisionId), getCharacteristictsGroupsById(vm.decisionId)])
                 .then(function(values) {
+
+                    // Analysis Hall of Fame
+                    if ($state.params.analysisId === 'hall-of-fame') {
+                        console.log('hall-of-fame');
+                        _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                        _fo.persistent = false;
+                    }
 
                     setMatrixTableWidth();
                     searchDecisionMatrix(vm.decisionId);
@@ -81,14 +85,15 @@
                 vm.decisionMatrixList = createMatrixContent(criteriaIds, characteristicsIds, resultdecisionMatrixs);
                 renderMatrix();
             });
+
             DecisionNotificationService.subscribePageChanged(function() {
-                vm.decisionsSpinner = true;
                 searchDecisionMatrix(vm.decisionId);
             });
+
             DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-                vm.decisionsSpinner = true;
                 searchDecisionMatrix(vm.decisionId);
             });
+
             DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
                 data.detailsSpinner = true;
                 DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
@@ -97,8 +102,8 @@
                     data.detailsSpinner = false;
                 });
             });
+
             DecisionNotificationService.subscribeSelectSorter(function(event, data) {
-                vm.decisionsSpinner = true;
                 _fo.sorters[data.mode] = data.sort;
                 vm.fo = _fo.sorters;
                 searchDecisionMatrix(vm.decisionId);
@@ -250,12 +255,9 @@
             vm.decisionsSpinner = true;
 
             var sendData = DecisionSharedService.getFilterObject();
-            // sendData.persistent = true;
-
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
-                var resultdecisionMatrixs = result.decisionMatrixs;
                 initSorters(result.totalDecisionMatrixs);
-                vm.decisionMatrixList = createMatrixContent(criteriaIds, characteristicsIds, resultdecisionMatrixs);
+                vm.decisionMatrixList = createMatrixContent(criteriaIds, characteristicsIds, result.decisionMatrixs);
 
                 renderMatrix();
             });
@@ -433,7 +435,9 @@
             }
             formDataForSearchRequest(criterion, coefCall);
 
-            DecisionDataService.searchDecisionMatrix(vm.decisionId, DecisionSharedService.getFilterObject()).then(function(result) {
+            var send_fo = _fo;
+            send_fo.persistent = true;
+            DecisionDataService.searchDecisionMatrix(vm.decisionId, send_fo).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }
@@ -481,8 +485,6 @@
 
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
             console.log(data);
-            // vm.decisionsSpinner = true;
-            // searchDecisionMatrix(vm.decisionId);
         });
 
 
@@ -519,19 +521,18 @@
             var allowMode = ['inclusion', 'exclusion'];
             if (_.includes(allowMode, mode)) {
                 vm.matrixMode = mode;
-                // console.log(_fo);
                 if (mode === 'inclusion') {
                     _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                     vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
                     _fo.includeChildDecisionIds = null;
-                    if(_fo.excludeChildDecisionIds.length === 0) {
+                    if (_fo.excludeChildDecisionIds.length === 0) {
                         _fo.excludeChildDecisionIds = null;
-                    }                    
+                    }
                 } else if (mode === 'exclusion') {
                     _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
                     vm.exclusionItemsLength = _fo.includeChildDecisionIds ? _fo.includeChildDecisionIds.length : 0;
                     _fo.excludeChildDecisionIds = null;
-                    if(vm.exclusionItemsLength === 0) {
+                    if (vm.exclusionItemsLength === 0) {
                         _fo.includeChildDecisionIds = [];
                     }
                 }
@@ -550,16 +551,12 @@
                 addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
 
-            } else {
+            } else if(vm.matrixMode === 'exclusion') {
                 removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-                // if (!vm.exclusionItemsLength) {
-                //     changeMatrixMode('inclusion');
-                // }
             }
             vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
 
-            // TODO: make to not rewrite link
             var send_fo = _fo;
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
@@ -579,13 +576,5 @@
             }
         }
 
-        // Analysis Hall of Fame
-        $rootScope.$on('$stateChangeSuccess',
-            function(event, toState, toParams, fromState, fromParams) {
-                if ($stateParams.analysisId === 'hall-of-fame') {
-                    console.log('hall-of-fame');
-                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
-                }
-            });
     }
 })();

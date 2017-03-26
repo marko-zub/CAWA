@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="matrix-table-wrapper">
-        
+
         <div class="row">
             <div class="col-sm-12">
                 <ul class="nav nav-tabs nav-tabs-sm">
@@ -122,16 +122,18 @@
                                                         <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                     </div>
                                                     {{item.decision.name}}
-                                                    <div class="pull-right">
-                                                        <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                                    </div>
                                                 </div>
                                             </a>
-                                            <div ng-show="item.decision.criteriaCompliancePercentage >= 0">
-                                                <small>
-                                                    Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
-                                                    <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{item.decision.totalVotes}}
-                                                </small>
+                                            <div class="clearfix">
+                                                <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
+                                                    <small>
+                                                        Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
+                                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{item.decision.totalVotes}}
+                                                    </small>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                                </div>                                                  
                                             </div>
                                             <div class="app-panel-wrapper text-right">
                                                 <div class="app-panel-controls">
