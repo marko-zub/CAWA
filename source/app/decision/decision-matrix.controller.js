@@ -506,9 +506,14 @@
 
         function initMatrixMode() {
             vm.matrixMode = 'inclusion';
-            vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
-            if(vm.decision && vm.decision.childDecisionIds)
-                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
+            
+            if(_fo.includeChildDecisionIds.length > 0) {
+                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
+            }
+            else {
+                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+            }
+            vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
         }
 
         function changeMatrixMode(mode) {
@@ -534,14 +539,13 @@
             if (vm.matrixMode === 'inclusion') {
                 addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
-                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
+                
             } else {
                 removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-                vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
                 if (!vm.exclusionItemsLength) vm.matrixMode = 'inclusion';
             }
-            console.log(_fo.excludeChildDecisionIds.length);
+            vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
             DecisionNotificationService.notifyChildDecisionExclusion(_fo);
         }
 
