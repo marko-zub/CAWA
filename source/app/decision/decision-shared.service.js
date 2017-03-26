@@ -80,7 +80,7 @@
             // Set new values
             var sortObjAnalysis = {
                 selectedCriteria: {
-                    sortCriteriaIds: obj.sortCriteriaIds || [],
+                    sortCriteriaIds: obj.sortCriteriaIds || null,
                     sortCriteriaCoefficients: obj.sortCriteriaCoefficients || {}
                 },
                 pagination: {

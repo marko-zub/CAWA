@@ -76,9 +76,8 @@
 
                     // Analysis Hall of Fame
                     if ($state.params.analysisId === 'hall-of-fame') {
-                        console.log('hall-of-fame');
-                        // _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
-                        // _fo.persistent = false;
+                        _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                        _fo.persistent = false;
                     }
 
                     setMatrixTableWidth();
@@ -458,13 +457,17 @@
             }
             formDataForSearchRequest(criterion, coefCall);
 
-            DecisionSharedService.filterObject.persistent = true;
-            DecisionDataService.searchDecisionMatrix(vm.decisionId, DecisionSharedService.filterObject).then(function(result) {
+            var sendData = DecisionSharedService.getFilterObject();
+            sendData.persistent = true;
+            DecisionDataService.searchDecisionMatrix(vm.decisionId, sendData).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }
 
         function formDataForSearchRequest(criterion, coefCall) {
+            if(_.isNull(foSelectedCriteria.sortCriteriaIds)) {
+                foSelectedCriteria.sortCriteriaIds = [];
+            }
             var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.criterionId);
             //select criterion
             if (position === -1) {

@@ -78,7 +78,7 @@
                                             </div>
 
 
-                                            <a href ng-if="criteria.description" class="link-secondary glyphicon glyphicon-question-sign title-descr" uib-popover-html="criteria.description" popover-placement="bottom" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                            <a href ng-if="criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="bottom" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                                     </small>
                                                 </div>
                                                 <div class="pull-right">
-                                                    <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                                    <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                                 </div>
                                             </div>
                                             <div class="app-panel-wrapper text-right">
@@ -163,7 +163,7 @@
                             <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
                                 <div class="matrix-table-row" id="decision-row-{{item.decision.decisionId}}">
                                     <!-- Criteria Content -->
-                                    <div class="matrix-table-col matrix-criteria-group" ng-repeat="criteria_item in item.criteria | orderBy:'criterionId'" ng-click="vm.goToDiscussion(item.decision, criteria_item.criterionId, criteria_item)">
+                                    <a class="matrix-table-col matrix-criteria-group" ng-repeat="criteria_item in item.criteria | orderBy:'criterionId'" ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: criteria_item.criterionId, critOrCharSlug: criteria_item.nameSlug })">
                                         <div class="matrix-table-col-content">
                                             <div ng-if="criteria_item.totalVotes">
                                                 <rating-star class="text-left" value="criteria_item.weight" total-votes="criteria_item.totalVotes" ng-show="criteria_item.weight"></rating-star>
@@ -177,12 +177,12 @@
                                                 <div class="app-item-comments">
                                                     <span class="glyphicon glyphicon-comment"></span>0
                                                     <!-- Ui popover -->
-                                                    <!-- <a href ng-if="criteria_item.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="criteria_item.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
+                                                    <!-- <a href ng-if="criteria_item.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" uib-popover-html="criteria_item.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
                                                     <!-- End Ui popover -->
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                     <!-- End Criteria Content -->
                                     <!-- Characteristics Content -->
                                     <div class="matrix-table-col" ng-repeat="characteristic in item.characteristics track by $index" ng-click="vm.goToDiscussion(item.decision, characteristic.characteristicId)">
@@ -192,7 +192,7 @@
                                                 <div class="app-item-comments">
                                                     <span class="glyphicon glyphicon-comment"></span>0
                                                     <!-- Ui popover -->
-                                                    <!-- <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="characteristic.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
+                                                    <!-- <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" uib-popover-html="characteristic.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
                                                     <!-- End Ui popover -->
                                                 </div>
                                             </div>
