@@ -29,13 +29,17 @@
         function getCriteriaGroupsById(decisionId) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
-                vm.criteriaGroups = result;
+                // vm.criteriaGroups = result;
                 criteriaIds = [];
-                _.map(result, function(resultEl) {
+                vm.criteriaGroups = _.map(result, function(resultEl) {
                     _.map(resultEl.criteria, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
                         criteriaIds.push(el.criterionId);
                         criteriaArray.push(el);
+                        return el;
                     });
+
+                    return resultEl;
                 });
             });
         }
@@ -43,14 +47,18 @@
         function getCharacteristictsGroupsById(decisionId) {
             // Characteristicts
             return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
-                vm.characteristicGroups = result;
+                // vm.characteristicGroups = result;
                 characteristicsIds = [];
 
-                _.map(result, function(resultEl) {
+                vm.characteristicGroups =_.map(result, function(resultEl) {
                     _.map(resultEl.characteristics, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
                         characteristicsIds.push(el.characteristicId);
                         characteristicsArray.push(el);
+
+                        return el;
                     });
+                    return resultEl;
                 });
             });
         }
@@ -69,8 +77,8 @@
                     // Analysis Hall of Fame
                     if ($state.params.analysisId === 'hall-of-fame') {
                         console.log('hall-of-fame');
-                        _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
-                        _fo.persistent = false;
+                        // _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                        // _fo.persistent = false;
                     }
 
                     setMatrixTableWidth();
@@ -106,6 +114,7 @@
             DecisionNotificationService.subscribeSelectSorter(function(event, data) {
                 _fo.sorters[data.mode] = data.sort;
                 vm.fo = _fo.sorters;
+                DecisionSharedService.filterObject.persistent = true;
                 searchDecisionMatrix(vm.decisionId);
             });
 
@@ -118,7 +127,6 @@
             return isValueDate;
         }
 
-        // Fill matrix data for View
         var emptyCriterianData = {
             // "criterionId": null,
             "weight": null,
@@ -152,17 +160,28 @@
 
                 // Fill empty criteria
                 newEl.criteria = _.map(criteriaArray, function(criterionArrayEl) {
-                    var emptyCriterianDataNew = _.clone(emptyCriterianData);
-                    emptyCriterianDataNew.criterionId = criterionArrayEl.criterionId;
-                    if (emptyCriterianDataNew.description) emptyCriterianDataNew.description = $sce.trustAsHtml(emptyCriterianDataNew.description);
+                    // console.log(criterionArrayEl);
+
+                    var criterionArrayElClone = _.clone(criterionArrayEl);
+                    // criterionArrayElClone.description = $sce.trustAsHtml(criterionArrayElClone.description);
+                    // console.log(criterionArrayEl);
 
                     _.map(el.criteria, function(elCriterionIdObj) {
-                        if (elCriterionIdObj.criterionId === criterionArrayEl.criterionId) {
-                            emptyCriterianDataNew = elCriterionIdObj;
+                        // console.log(elCriterionIdObj);
+                        if (elCriterionIdObj.criterionId === criterionArrayElClone.criterionId) {
+
+                            // TODO: merge
+                            criterionArrayElClone.criterionId = elCriterionIdObj.criterionId;
+                            criterionArrayElClone.likeSum = elCriterionIdObj.likeSum;
+                            criterionArrayElClone.totalDislikes = elCriterionIdObj.totalDislikes;
+                            criterionArrayElClone.totalLikes = elCriterionIdObj.totalLikes;
+                            criterionArrayElClone.totalVotes = elCriterionIdObj.totalVotes;
+                            criterionArrayElClone.weight = elCriterionIdObj.weight;
+                            // console.log(elCriterionIdObj);
                         }
                     });
 
-                    return emptyCriterianDataNew;
+                    return criterionArrayElClone;
                 });
 
                 // Fill empty characteristics
@@ -425,7 +444,11 @@
             });
         }
 
-        function selectCriterion(criterion, coefCall) {
+        function selectCriterion(event, criterion, coefCall) {
+
+            // if($event.target ===)
+            if($(event.target).hasClass('title-descr')) return;
+
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
                 return;
@@ -435,9 +458,8 @@
             }
             formDataForSearchRequest(criterion, coefCall);
 
-            var send_fo = _fo;
-            send_fo.persistent = true;
-            DecisionDataService.searchDecisionMatrix(vm.decisionId, send_fo).then(function(result) {
+            DecisionSharedService.filterObject.persistent = true;
+            DecisionDataService.searchDecisionMatrix(vm.decisionId, DecisionSharedService.filterObject).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }

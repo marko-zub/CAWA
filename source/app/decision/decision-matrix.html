@@ -19,13 +19,13 @@
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-class="{'active':vm.matrixMode === 'inclusion'}">
                         <a ng-click="vm.changeMatrixMode('inclusion')">{{vm.decision.name}}
-                    <span class="badge">{{vm.inclusionItemsLength}}</span>
-                    </a>
+                            <span class="badge">{{vm.inclusionItemsLength}}</span>
+                        </a>
                     </li>
                     <li ng-class="{'active':vm.matrixMode === 'exclusion'}">
                         <a ng-click="vm.changeMatrixMode('exclusion')">Other
-                    <span class="badge">{{vm.exclusionItemsLength}}</span>
-                    </a>
+                            <span class="badge">{{vm.exclusionItemsLength}}</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +64,7 @@
                                     <span class="group-title-line">{{group.name}}</span>
                                 </div>
                                 <div class="matrix-table-row">
-                                    <div class="matrix-table-col criteria-col" ng-repeat="criteria in group.criteria | orderBy:'criterionId'" data-col-id="criteria-{{criteria.criterionId}}" ng-click="vm.selectCriterion(criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                    <div class="matrix-table-col criteria-col" ng-repeat="criteria in group.criteria | orderBy:'criterionId'" data-col-id="criteria-{{criteria.criterionId}}" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
                                         <div class="matrix-table-title-wrapper">
                                             <div class="matrix-table-title app-sorter-wrapper">
                                                 {{criteria.name}}
@@ -76,6 +76,10 @@
                                                 <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order === 'ASC'}"></span>
                                                 <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order === 'DESC'}"></span>
                                             </div>
+
+
+                                            <a href ng-if="criteria.description" class="link-secondary glyphicon glyphicon-question-sign title-descr" uib-popover-html="criteria.description" popover-placement="bottom" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -99,6 +103,9 @@
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'ASC'}"></span>
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'DESC'}"></span>
                                             </div>
+
+                                            <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="characteristic.description" popover-placement="bottom" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +140,7 @@
                                                 </div>
                                                 <div class="pull-right">
                                                     <span  ng-if="item.decision.description" class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                                </div>                                                  
+                                                </div>
                                             </div>
                                             <div class="app-panel-wrapper text-right">
                                                 <div class="app-panel-controls">
@@ -170,7 +177,7 @@
                                                 <div class="app-item-comments">
                                                     <span class="glyphicon glyphicon-comment"></span>0
                                                     <!-- Ui popover -->
-                                                    <a href ng-if="criteria_item.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="criteria_item.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <!-- <a href ng-if="criteria_item.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="criteria_item.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
                                                     <!-- End Ui popover -->
                                                 </div>
                                             </div>
@@ -185,7 +192,7 @@
                                                 <div class="app-item-comments">
                                                     <span class="glyphicon glyphicon-comment"></span>0
                                                     <!-- Ui popover -->
-                                                    <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="characteristic.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <!-- <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-question-sign" uib-popover-html="characteristic.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
                                                     <!-- End Ui popover -->
                                                 </div>
                                             </div>

@@ -23,10 +23,12 @@
         vm.changePageSize = changePageSize;
 
         function changePage() {
+            DecisionSharedService.filterObject.persistent = false;
             DecisionNotificationService.notifyPageChanged();
         }
 
         function changePageSize() {
+            DecisionSharedService.filterObject.persistent = false;
             DecisionSharedService.filterObject.pagination.pageNumber = 1;
             DecisionNotificationService.notifyPageChanged();
         }
