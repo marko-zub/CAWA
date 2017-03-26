@@ -22,8 +22,8 @@
                     <span class="badge">{{vm.inclusionItemsLength}}</span>
                     </a>
                     </li>
-                    <li ng-class="{'active':vm.matrixMode === 'exclusion'}">
-                        <a ng-click="vm.changeMatrixMode('exclusion')" ng-disabled="!vm.exclusionItemsLength">Other
+                    <li ng-class="{'active':vm.matrixMode === 'exclusion', 'disabled':!vm.exclusionItemsLength}">
+                        <a ng-click="vm.changeMatrixMode('exclusion')">Other
                     <span class="badge">{{vm.exclusionItemsLength}}</span>
                     </a>
                     </li>
@@ -138,7 +138,7 @@
                                             <div class="app-panel-wrapper text-right">
                                                 <div class="app-panel-controls">
                                                     <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                        <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclusion', 'glyphicon glyphicon-eye-open': vm.matrixMode === 'exclusion'}"></i>
+                                                        <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclusion', 'glyphicon-eye-open': vm.matrixMode === 'exclusion'}"></i>
                                                     </span>
                                                 </div>
                                             </div>

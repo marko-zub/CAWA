@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$compile', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $compile, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce) {
         var
             vm = this,
             isInitedSorters = false,
@@ -250,7 +250,7 @@
             vm.decisionsSpinner = true;
 
             var sendData = DecisionSharedService.getFilterObject();
-            sendData.persistent = true; //Enable analysis
+            // sendData.persistent = true;
 
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 var resultdecisionMatrixs = result.decisionMatrixs;
@@ -506,11 +506,10 @@
 
         function initMatrixMode() {
             vm.matrixMode = 'inclusion';
-            
-            if(_fo.includeChildDecisionIds.length > 0) {
+            vm.exclusionItemsLength = 0;
+            if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-            }
-            else {
+            } else if (_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length > 0) {
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
             }
             vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
@@ -520,16 +519,20 @@
             var allowMode = ['inclusion', 'exclusion'];
             if (_.includes(allowMode, mode)) {
                 vm.matrixMode = mode;
+                // console.log(_fo);
                 if (mode === 'inclusion') {
                     _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
-                    _fo.includeChildDecisionIds = [];
                     vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
+                    _fo.includeChildDecisionIds = null;
                 } else if (mode === 'exclusion') {
                     _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
-                    _fo.excludeChildDecisionIds = [];
-                    vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
+                    vm.exclusionItemsLength = _fo.includeChildDecisionIds ? _fo.includeChildDecisionIds.length : 0;
+                    _fo.excludeChildDecisionIds = null;
                 }
-                DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+
+                var send_fo = _fo;
+                send_fo.persistent = false;
+                DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
             }
         }
 
@@ -537,16 +540,24 @@
             if (!id) return;
 
             if (vm.matrixMode === 'inclusion') {
+                _fo.excludeChildDecisionIds = _fo.excludeChildDecisionIds ? _fo.excludeChildDecisionIds : [];
                 addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
-                
+
             } else {
                 removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-                if (!vm.exclusionItemsLength) vm.matrixMode = 'inclusion';
+                if (!vm.exclusionItemsLength) {
+                    changeMatrixMode('inclusion');
+                    _fo.includeChildDecisionIds = null;
+                }
             }
             vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
-            DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+
+            // TODO: make to not rewrite link
+            var send_fo = _fo;
+            send_fo.persistent = true;
+            DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
         }
 
         function addItemToArray(itemId, array) {
@@ -567,7 +578,7 @@
         $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
                 if ($stateParams.analysisId === 'hall-of-fame') {
-                    // console.log('hall-of-fame');
+                    console.log('hall-of-fame');
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                 }
             });

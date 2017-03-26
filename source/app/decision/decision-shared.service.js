@@ -39,8 +39,8 @@
                 decisionsIds: []
             },
             persistent: true,
-            includeChildDecisionIds: [],
-            excludeChildDecisionIds: []
+            includeChildDecisionIds: null,
+            excludeChildDecisionIds: null
         };
 
         //allias
@@ -68,7 +68,7 @@
                 sortDecisionPropertyDirection: _fo.sorters.sortByDecisionProperty.order,
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
-                persistent: true,
+                persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds
             };
@@ -105,9 +105,9 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildDecisionIds: obj.includeChildDecisionIds || [],
-                excludeChildDecisionIds: obj.excludeChildDecisionIds || [],
-                persistent: true
+                includeChildDecisionIds: obj.includeChildDecisionIds || null,
+                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
+                persistent: obj.persistent === false ? obj.persistent : true
             };
 
             service.filterObject = sortObjAnalysis;
