@@ -524,11 +524,14 @@
                     _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                     vm.inclusionItemsLength = vm.decision.childDecisionIds.length - _fo.excludeChildDecisionIds.length;
                     _fo.includeChildDecisionIds = null;
+                    if(_fo.excludeChildDecisionIds.length === 0) {
+                        _fo.excludeChildDecisionIds = null;
+                    }                    
                 } else if (mode === 'exclusion') {
                     _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
                     vm.exclusionItemsLength = _fo.includeChildDecisionIds ? _fo.includeChildDecisionIds.length : 0;
                     _fo.excludeChildDecisionIds = null;
-                    if(vm.exclusionItemsLengt === 0) {
+                    if(vm.exclusionItemsLength === 0) {
                         _fo.includeChildDecisionIds = [];
                     }
                 }
@@ -550,10 +553,9 @@
             } else {
                 removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-                if (!vm.exclusionItemsLength) {
-                    changeMatrixMode('inclusion');
-                    _fo.includeChildDecisionIds = null;
-                }
+                // if (!vm.exclusionItemsLength) {
+                //     changeMatrixMode('inclusion');
+                // }
             }
             vm.inclusionItemsLength = vm.decision.childDecisionIds.length - vm.exclusionItemsLength;
 

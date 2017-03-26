@@ -69,8 +69,8 @@
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
-                includeChildDecisionIds: !_.isEmpty(_fo.includeChildDecisionIds) ? _fo.includeChildDecisionIds : null,
-                excludeChildDecisionIds: !_.isEmpty(_fo.excludeChildDecisionIds) ? _fo.excludeChildDecisionIds : null
+                includeChildDecisionIds: _fo.includeChildDecisionIds,
+                excludeChildDecisionIds: _fo.excludeChildDecisionIds
             };
         };
 
@@ -105,8 +105,8 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildDecisionIds: obj.includeChildDecisionIds || null,
-                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
+                includeChildDecisionIds: !_.isEmpty(obj.includeChildDecisionIds) ? obj.includeChildDecisionIds : null,
+                excludeChildDecisionIds: !_.isEmpty(obj.excludeChildDecisionIds) ? obj.excludeChildDecisionIds : null,
                 persistent: obj.persistent === false ? obj.persistent : true
             };
 
