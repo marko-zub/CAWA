@@ -50,7 +50,7 @@
                 // vm.characteristicGroups = result;
                 characteristicsIds = [];
 
-                vm.characteristicGroups =_.map(result, function(resultEl) {
+                vm.characteristicGroups = _.map(result, function(resultEl) {
                     _.map(resultEl.characteristics, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
                         characteristicsIds.push(el.characteristicId);
@@ -399,6 +399,7 @@
         vm.editCriteriaCoefficient = editCriteriaCoefficient;
 
         function editCriteriaCoefficient(event, criteria) {
+            if (!criteria) return;
             event.preventDefault();
             event.stopPropagation();
             var modalInstance = $uibModal.open({
@@ -446,7 +447,7 @@
         function selectCriterion(event, criterion, coefCall) {
 
             // if($event.target ===)
-            if($(event.target).hasClass('title-descr')) return;
+            if ($(event.target).hasClass('title-descr')) return;
 
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
@@ -464,7 +465,15 @@
             });
         }
 
+        // TODO: move to Utils
+        function removeEmptyFromArray(array) {
+            return _.filter(array, function(el) {
+                if (el) return el; //can use just if(el); !_.isNull(el) && !_.isUndefined(el) && !_.isNaN(el)
+            });
+        }
+
         function formDataForSearchRequest(criterion, coefCall) {
+            if (!criterion.criterionId) return;
             var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.criterionId);
             //select criterion
             if (position === -1) {
@@ -481,6 +490,7 @@
                 foSelectedCriteria.sortCriteriaIds.splice(position, 1);
                 delete foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId];
             }
+            foSelectedCriteria.sortCriteriaIds = removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
 
         // TODO: dontrepit yourself!!!
@@ -573,7 +583,7 @@
                 addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
 
-            } else if(vm.matrixMode === 'exclusion') {
+            } else if (vm.matrixMode === 'exclusion') {
                 removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
             }
