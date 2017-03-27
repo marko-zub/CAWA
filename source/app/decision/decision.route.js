@@ -199,8 +199,15 @@
                     console.log(resp.error);
                     return;
                 }
+
+                // Fix for inclusion tab first time call
+                var _fo = resp;
+                if((_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length) > 0 && !_fo.includeChildDecisionIds) {
+                    _fo.includeChildDecisionIds = [];
+                }
+
                 // Set analysis obj
-                DecisionSharedService.setFilterObject(resp);
+                DecisionSharedService.setFilterObject(_fo);
 
                 return resp;
             }, function(req) {
