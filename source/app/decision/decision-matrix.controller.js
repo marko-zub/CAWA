@@ -111,9 +111,9 @@
             });
 
             DecisionNotificationService.subscribeSelectSorter(function(event, data) {
-                _fo.sorters[data.mode] = data.sort;
-                vm.fo = _fo.sorters;
+                DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
                 DecisionSharedService.filterObject.persistent = true;
+                vm.fo = DecisionSharedService.filterObject.sorters;
                 searchDecisionMatrix(vm.decisionId);
             });
 
@@ -422,7 +422,7 @@
                     criterionId: result.criterionId
                 });
                 vm.criteriaGroups[groupIndex].criteria[criteriaIndex] = result;
-                selectCriterion(result, criteria.isSelected);
+                selectCriterion(event, result, criteria.isSelected);
                 vm.decisionsSpinner = false;
             });
         }
@@ -465,9 +465,6 @@
         }
 
         function formDataForSearchRequest(criterion, coefCall) {
-            if(_.isNull(foSelectedCriteria.sortCriteriaIds)) {
-                foSelectedCriteria.sortCriteriaIds = [];
-            }
             var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.criterionId);
             //select criterion
             if (position === -1) {
