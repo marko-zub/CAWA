@@ -6,9 +6,13 @@
         .module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', 
+    '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 
+    'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, 
+        $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, 
+        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter) {
         var
             vm = this,
             isInitedSorters = false,
@@ -170,6 +174,8 @@
 
                     // characteristicsArrayElClone.description = $sce.trustAsHtml(characteristicsArrayElClone.description);
 
+
+                    // $filter('date')(item.date, "yyyy-MM-dd"); 
                     _.filter(el.characteristics, function(elCharacteristicObj) {
                         if (elCharacteristicObj.characteristicId === characteristicsArrayElClone.characteristicId) {
 
@@ -184,9 +190,11 @@
 
                         }
                     });
+                    
+                    
+                    // console.log(characteristicsArrayElClone);
 
-
-                    return characteristicsArrayElClone;
+                    return typeFormater(characteristicsArrayElClone);
                 });
 
                 return newEl;
@@ -194,6 +202,31 @@
 
 
             return matrixContent;
+        }
+
+        function typeFormater(item) {
+            // CASE
+            switch(item.valueType) {
+                case "STRING":
+                    stringFullDescr(item);
+                    break;
+                case "DATETIME":
+                    item.value = $filter('date')(new Date(item.value), "dd/MM/yyyy");
+                    break;
+            }
+            // debugger
+
+            return item;
+        }
+
+        function stringFullDescr(item) {
+            if(item.value && item.value.length >= 40) {
+                item.descriptionFull = item.value;
+                item.value = item.value.substring(0,40);
+                item.value += '...';
+            }
+            // debugger
+            return item;
         }
 
         //Init sorters, when directives loaded
