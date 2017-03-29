@@ -176,16 +176,13 @@
                                             <div class="app-item-additional-wrapper">
                                                 <div class="app-item-comments">
                                                     <span class="glyphicon glyphicon-comment"></span>0
-                                                    <!-- Ui popover -->
-                                                    <!-- <a href ng-if="criteria_item.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" uib-popover-html="criteria_item.description" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a> -->
-                                                    <!-- End Ui popover -->
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
                                     <!-- End Criteria Content -->
                                     <!-- Characteristics Content -->
-                                    <div class="matrix-table-col" ng-repeat="characteristic in item.characteristics track by $index" ng-click="vm.goToDiscussion(item.decision, characteristic.characteristicId)">
+                                    <a class="matrix-table-col" ng-repeat="characteristic in item.characteristics track by $index" ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: characteristic.characteristicId, critOrCharSlug: characteristic.nameSlug })">
                                         <div class="matrix-table-col-content" data-characteristic-id="{{characteristic.characteristicId}}">
                                             {{characteristic.value}}
                                             <div class="app-item-additional-wrapper">
@@ -197,7 +194,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                     <!-- End Characteristics Content -->
                                 </div>
                             </div>

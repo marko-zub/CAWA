@@ -126,23 +126,6 @@
             return isValueDate;
         }
 
-        var emptyCriterianData = {
-            // "criterionId": null,
-            "weight": null,
-            "totalVotes": null
-        };
-
-        var emptyCharacteristicData = {
-            // "characteristicId": null,
-            "valueType": null,
-            "visualMode": null,
-            "sortable": false,
-            "filterable": false,
-            "value": null,
-            "options": []
-        };
-
-
         // TODO: try to optimize it
         function createMatrixContent(criteriaIds, characteristicsIds, decisionMatrixList) {
 
@@ -163,20 +146,18 @@
 
                     var criterionArrayElClone = _.clone(criterionArrayEl);
                     // criterionArrayElClone.description = $sce.trustAsHtml(criterionArrayElClone.description);
-                    // console.log(criterionArrayEl);
 
                     _.map(el.criteria, function(elCriterionIdObj) {
-                        // console.log(elCriterionIdObj);
+
                         if (elCriterionIdObj.criterionId === criterionArrayElClone.criterionId) {
 
-                            // TODO: merge
+                            // TODO: merge in other way
                             criterionArrayElClone.criterionId = elCriterionIdObj.criterionId;
                             criterionArrayElClone.likeSum = elCriterionIdObj.likeSum;
                             criterionArrayElClone.totalDislikes = elCriterionIdObj.totalDislikes;
                             criterionArrayElClone.totalLikes = elCriterionIdObj.totalLikes;
                             criterionArrayElClone.totalVotes = elCriterionIdObj.totalVotes;
                             criterionArrayElClone.weight = elCriterionIdObj.weight;
-                            // console.log(elCriterionIdObj);
                         }
                     });
 
@@ -184,17 +165,28 @@
                 });
 
                 // Fill empty characteristics
-                newEl.characteristics = _.map(characteristicsIds, function(characteristicId) {
-                    var emptyCharacteristicDataNew = _.clone(emptyCharacteristicData);
-                    emptyCharacteristicDataNew.characteristicId = characteristicId;
-                    if (emptyCharacteristicDataNew.description) emptyCharacteristicDataNew.description = $sce.trustAsHtml(emptyCharacteristicDataNew.description);
-                    _.map(el.characteristics, function(elCharacteristicObj) {
-                        if (elCharacteristicObj.characteristicId === characteristicId) {
-                            emptyCharacteristicDataNew = elCharacteristicObj;
+                newEl.characteristics = _.map(characteristicsArray, function(characteristicsArrayEl) {
+                    var characteristicsArrayElClone = _.clone(characteristicsArrayEl);
+
+                    // characteristicsArrayElClone.description = $sce.trustAsHtml(characteristicsArrayElClone.description);
+
+                    _.filter(el.characteristics, function(elCharacteristicObj) {
+                        if (elCharacteristicObj.characteristicId === characteristicsArrayElClone.characteristicId) {
+
+                            characteristicsArrayElClone.filterable = elCharacteristicObj.filterable;
+                            characteristicsArrayElClone.likeSum = elCharacteristicObj.likeSum;
+                            characteristicsArrayElClone.sortable = elCharacteristicObj.sortable;
+                            characteristicsArrayElClone.totalDislikes = elCharacteristicObj.totalDislikes;
+                            characteristicsArrayElClone.totalLikes = elCharacteristicObj.totalLikes;
+                            characteristicsArrayElClone.value = elCharacteristicObj.value;
+                            characteristicsArrayElClone.valueType = elCharacteristicObj.valueType;
+                            characteristicsArrayElClone.visualMode = elCharacteristicObj.visualMode;
+
                         }
                     });
 
-                    return emptyCharacteristicDataNew;
+
+                    return characteristicsArrayElClone;
                 });
 
                 return newEl;
@@ -518,19 +510,6 @@
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
             console.log(data);
         });
-
-
-        // TODO: make as simple link <a ui-sref>
-        vm.goToDiscussion = goToDiscussion;
-
-        function goToDiscussion(decision, critOrCharId, criteria_item) {
-            var params = {
-                'discussionId': decision.decisionId,
-                'discussionSlug': decision.nameSlug,
-                'critOrCharId': critOrCharId
-            };
-            $state.go('decisions.single.matrix.child.option', params);
-        }
 
 
         // Inclusion/Exclusion criteria
