@@ -10,7 +10,7 @@
     appInterceptor.$inject = ['$injector'];
 
     function appInterceptor($injector) {
-        var analysisCallsArr = [];
+        // var analysisCallsArr = [];
         return {
             request: function(config) {
                 // console.log(config);
@@ -30,8 +30,12 @@
                     resp.data && (resp.data.decisionMatrixs || resp.data.decisions) &&
                     resp.data.decisionAnalysisId) {
 
+                    // Save only second call to avoid big array 
+                    // TODO: check if we still need this code
+                    // if (analysisCallsArr.length === 0 && $stateParams.analysisId) analysisCallsArr.push(decisionAnalysisId);
+
                     var decisionAnalysisId = resp.data.decisionAnalysisId;
-                    if (!$stateParams.analysisId || analysisCallsArr.length !== 0) {
+                    // if (analysisCallsArr.length !== 0) {
 
                         var decisionAnalysisStateParams = {
                             'id': $stateParams.id,
@@ -40,10 +44,8 @@
                             'analysisId': decisionAnalysisId
                         };
                         $state.transitionTo('decisions.single.matrix.analysis', decisionAnalysisStateParams);
-                    }
+                    // }
 
-                    // Save only second call to avoid big array
-                    if (analysisCallsArr.length === 0 && $stateParams.analysisId) analysisCallsArr.push(decisionAnalysisId);
                 }
                 return resp;
             },

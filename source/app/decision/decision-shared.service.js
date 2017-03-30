@@ -77,6 +77,14 @@
         service.setFilterObject = function(obj) {
             if (!obj) return;
 
+            // Fix for inclusion tab first time call
+            if((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
+                obj.includeChildDecisionIds = null;
+            } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
+                obj.excludeChildDecisionIds = obj.includeChildDecisionIds;
+                obj.includeChildDecisionIds = null;
+            }
+
             // Set new values
             var sortObjAnalysis = {
                 selectedCriteria: {
@@ -105,9 +113,9 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildDecisionIds: !_.isEmpty(obj.includeChildDecisionIds) ? obj.includeChildDecisionIds : null,
-                excludeChildDecisionIds: !_.isEmpty(obj.excludeChildDecisionIds) ? obj.excludeChildDecisionIds : null,
-                persistent: obj.persistent === false ? obj.persistent : true
+                includeChildDecisionIds: obj.includeChildDecisionIds || null,
+                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
+                persistent: obj.persistent || false
             };
 
             service.filterObject = sortObjAnalysis;

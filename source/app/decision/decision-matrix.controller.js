@@ -6,12 +6,12 @@
         .module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', 
-    '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
+    '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
     'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, 
-        $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, 
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
+        $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
         DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter) {
         var
             vm = this,
@@ -93,7 +93,7 @@
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 setDecisionMatchPercent(data);
                 var resultdecisionMatrixs = data;
-                vm.decisionMatrixList = createMatrixContent(criteriaIds, characteristicsIds, resultdecisionMatrixs);
+                vm.decisionMatrixList = createMatrixContent(resultdecisionMatrixs);
                 renderMatrix();
             });
 
@@ -131,7 +131,7 @@
         }
 
         // TODO: try to optimize it
-        function createMatrixContent(criteriaIds, characteristicsIds, decisionMatrixList) {
+        function createMatrixContent(decisionMatrixList) {
 
             var matrixContent = [];
             var i = 0;
@@ -146,22 +146,12 @@
 
                 // Fill empty criteria
                 newEl.criteria = _.map(criteriaArray, function(criterionArrayEl) {
-                    // console.log(criterionArrayEl);
 
                     var criterionArrayElClone = _.clone(criterionArrayEl);
-                    // criterionArrayElClone.description = $sce.trustAsHtml(criterionArrayElClone.description);
-
                     _.map(el.criteria, function(elCriterionIdObj) {
 
                         if (elCriterionIdObj.criterionId === criterionArrayElClone.criterionId) {
-
-                            // TODO: merge in other way
-                            criterionArrayElClone.criterionId = elCriterionIdObj.criterionId;
-                            criterionArrayElClone.likeSum = elCriterionIdObj.likeSum;
-                            criterionArrayElClone.totalDislikes = elCriterionIdObj.totalDislikes;
-                            criterionArrayElClone.totalLikes = elCriterionIdObj.totalLikes;
-                            criterionArrayElClone.totalVotes = elCriterionIdObj.totalVotes;
-                            criterionArrayElClone.weight = elCriterionIdObj.weight;
+                            _.extend(criterionArrayElClone, elCriterionIdObj);
                         }
                     });
 
@@ -172,27 +162,11 @@
                 newEl.characteristics = _.map(characteristicsArray, function(characteristicsArrayEl) {
                     var characteristicsArrayElClone = _.clone(characteristicsArrayEl);
 
-                    // characteristicsArrayElClone.description = $sce.trustAsHtml(characteristicsArrayElClone.description);
-
-
-                    // $filter('date')(item.date, "yyyy-MM-dd"); 
                     _.filter(el.characteristics, function(elCharacteristicObj) {
                         if (elCharacteristicObj.characteristicId === characteristicsArrayElClone.characteristicId) {
-
-                            characteristicsArrayElClone.filterable = elCharacteristicObj.filterable;
-                            characteristicsArrayElClone.likeSum = elCharacteristicObj.likeSum;
-                            characteristicsArrayElClone.sortable = elCharacteristicObj.sortable;
-                            characteristicsArrayElClone.totalDislikes = elCharacteristicObj.totalDislikes;
-                            characteristicsArrayElClone.totalLikes = elCharacteristicObj.totalLikes;
-                            characteristicsArrayElClone.value = elCharacteristicObj.value;
-                            characteristicsArrayElClone.valueType = elCharacteristicObj.valueType;
-                            characteristicsArrayElClone.visualMode = elCharacteristicObj.visualMode;
-
+                            _.extend(characteristicsArrayElClone, elCharacteristicObj);
                         }
                     });
-                    
-                    
-                    // console.log(characteristicsArrayElClone);
 
                     return typeFormater(characteristicsArrayElClone);
                 });
@@ -300,7 +274,7 @@
             var sendData = DecisionSharedService.getFilterObject();
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 initSorters(result.totalDecisionMatrixs);
-                vm.decisionMatrixList = createMatrixContent(criteriaIds, characteristicsIds, result.decisionMatrixs);
+                vm.decisionMatrixList = createMatrixContent(result.decisionMatrixs);
 
                 renderMatrix();
             });
@@ -548,6 +522,7 @@
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
+
         initMatrixMode();
 
         function initMatrixMode() {
