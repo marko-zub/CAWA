@@ -8,11 +8,11 @@
 
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
     '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
-    'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter'];
+    'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile'];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
         $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
-        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter) {
+        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile) {
         var
             vm = this,
             isInitedSorters = false,
@@ -234,27 +234,27 @@
 
         function calcMatrixRowHeight() {
             // TODO: optimize
-            var matrixAside,
-                matrixCols;
+            // var matrixAside,
+            //     matrixCols;
 
-            matrixAside = document.getElementById('matrix-table-aside');
-            matrixCols = document.getElementsByClassName('matrix-table-item-content');
-            for (var i = 0; i < matrixCols.length; i++) {
-                var el,
-                    asideEl,
-                    asideElH,
-                    newH;
+            // matrixAside = document.getElementById('matrix-table-aside');
+            // matrixCols = document.getElementsByClassName('matrix-table-item-content');
+            // for (var i = 0; i < matrixCols.length; i++) {
+            //     var el,
+            //         asideEl,
+            //         asideElH,
+            //         newH;
 
-                el = matrixCols[i];
-                asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
-                asideElH = asideEl[0].clientHeight;
-                newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
+            //     el = matrixCols[i];
+            //     asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
+            //     asideElH = asideEl[0].clientHeight;
+            //     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
-                // Set new height
-                el.style.height = newH + 'px';
-                asideEl[0].style.height = newH + 'px';
+            //     // Set new height
+            //     el.style.height = newH + 'px';
+            //     asideEl[0].style.height = newH + 'px';
 
-            }
+            // }
         }
 
         // TODO: drop settimeout and apply
@@ -275,10 +275,82 @@
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 initSorters(result.totalDecisionMatrixs);
                 vm.decisionMatrixList = createMatrixContent(result.decisionMatrixs);
-
+                createHtmlMatrixContent(vm.decisionMatrixList);
                 renderMatrix();
             });
         }
+        // TODO: check performance for html Matrix
+        function createHtmlMatrixContent(matrix) {
+             console.log(matrix);
+             $('#matrix-table-content-render').html('');
+             var html = '';
+             _.map(matrix, function(matrixEl){
+
+                var criteriaHtml = createHtmlMatrixContentCriteria(matrixEl.criteria, matrixEl.decision);
+                var characteristicsHtml = createHtmlMatrixContentCharacteristic(matrixEl.characteristics, matrixEl.decision);
+
+                html += '<div class="matrix-table-item matrix-table-item-content">';
+                html += '    <div class="matrix-table-row">';
+                html += criteriaHtml;
+                html += characteristicsHtml;
+                html += '    </div>';
+                html += '</div>';
+
+                
+             });
+
+             $('#matrix-table-content-render').html($compile(html)($rootScope));
+             // return $sce.trustAsHtml(html);
+        }
+
+        function createHtmlMatrixContentCriteria(criteriaList, decision) {
+            var html = '';
+            // console.log(criteriaList, decision);
+            _.map(criteriaList, function(criteriaListEl){
+                html += '<a class="matrix-table-col matrix-criteria-group" ui-sref="decisions.single.matrix.child.option({discussionId: ' + decision.decisionId + ', discussionSlug: \''+decision.nameSlug +'\', critOrCharId: ' + criteriaListEl.criterionId + ', critOrCharSlug: \'' + criteriaListEl.nameSlug +'\'})">';
+                html += '    <div class="matrix-table-col-content">';
+                // html += '        <div ng-if="criteriaListEl.totalVotes">';
+                html += criteriaListEl.weight ? '            <rating-star class="text-left" value="' + criteriaListEl.weight + '" total-votes="' + criteriaListEl.totalVotes + '"></rating-star>': '';
+                // html += '        </div>';
+                // html += '        <div ng-if="::!criteriaListEl.totalVotes">';
+                // html += '            <div class="app-rating-votes">';
+                // html += '                <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>';
+                // html += '            </div>';
+                // html += '        </div>';
+                // html += '        <div class="app-item-additional-wrapper">';
+                // html += '            <div class="app-item-comments">';
+                // html += '                <span class="glyphicon glyphicon-comment"></span>0';
+                // html += '            </div>';
+                // html += '        </div>';
+                html += '    </div>';
+                html += '</a>';
+            });
+
+            return html;
+
+        }
+
+        function  createHtmlMatrixContentCharacteristic(characteristicList) {
+            var html = '';
+            _.map(characteristicList, function(characteristicListEl){
+                html += '<div class="matrix-table-col">';
+                html += '    <div class="matrix-table-col-content">';
+                html +=  characteristicListEl.value ? characteristicListEl.value : '';
+                html += '        <div class="app-item-additional-wrapper">';
+                html += '            <div class="app-item-comments">';
+                html += '                <span class="glyphicon glyphicon-comment"></span>0';
+                html += characteristicListEl.decision ? '<span class="link-secondary" uib-popover="'+characteristicListEl.decision+'" popover-placement="top" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0">Read more</span>' : '';
+                html += '            </div>';
+                html += '        </div>';
+                html += '        <a ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: characteristic.characteristicId, critOrCharSlug: characteristic.nameSlug })" class="link-full"></a>';
+                html += '    </div>';
+                html += '</div>';   
+                });
+
+            return html;
+        }
+        // TODO: End check performance for html Matrix
+
 
         // TODO: make as in sorter directive
         vm.orderByDecisionProperty = orderByDecisionProperty;

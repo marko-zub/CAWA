@@ -119,7 +119,7 @@
                     <!-- Table Aside -->
                     <div id="matrix-table-aside" class="matrix-table-aside">
                         <div id="matrix-table-aside-content" class="matrix-table-aside-content">
-                            <div class="matrix-table-item" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
+                            <div class="matrix-table-item" ng-repeat="item in vm.decisionMatrixList track by $index">
                                 <div class="matrix-table-row" id="decision-name-row-{{::item.decision.decisionId}}">
                                     <div class="matrix-table-col matrix-table-col-name">
                                         <div class="matrix-table-col-content matrix-content-name">
@@ -157,54 +157,16 @@
                     </div>
                     <!-- End Table Aside -->
                     <!-- Table Body -->
-                    <div id="matrix-table-body" class="matrix-table-body">
-                        <!-- Table Content -->
-                        <div id="matrix-table-content" class="matrix-table-content" ng-style="{'width': vm.tableWidth}">
-                            <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
-                                <div class="matrix-table-row" id="decision-row-{{::item.decision.decisionId}}">
-                                    <!-- Criteria Content -->
-                                    <a class="matrix-table-col matrix-criteria-group" ng-repeat="criteria_item in ::item.criteria | orderBy:'criterionId'" ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: criteria_item.criterionId, critOrCharSlug: criteria_item.nameSlug })">
-                                        <div class="matrix-table-col-content">
-                                            <div ng-if="criteria_item.totalVotes">
-                                                <rating-star class="text-left" value="::criteria_item.weight" total-votes="::criteria_item.totalVotes" ng-show="::criteria_item.weight"></rating-star>
-                                            </div>
-                                            <div ng-if="::!criteria_item.totalVotes">
-                                                <div class="app-rating-votes">
-                                                    <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
-                                                </div>
-                                            </div>
-                                            <div class="app-item-additional-wrapper">
-                                                <div class="app-item-comments">
-                                                    <span class="glyphicon glyphicon-comment"></span>0
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- End Criteria Content -->
-                                    <!-- Characteristics Content -->
-                                    <div class="matrix-table-col" ng-repeat="characteristic in ::item.characteristics track by $index">
-                                        <div class="matrix-table-col-content">
-                                            {{::characteristic.value}}
-                                            <div class="app-item-additional-wrapper">
-                                                <div class="app-item-comments">
-                                                    <span class="glyphicon glyphicon-comment"></span>0
-                                                    <!-- Ui popover -->
-                                                    <span  ng-if="::characteristic.descriptionFull" class="link-secondary" uib-popover="{{::characteristic.descriptionFull}}" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0">Read more</span>
-                                                    <!-- End Ui popover -->
-                                                </div>
-                                            </div>
-                                            <a ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: characteristic.characteristicId, critOrCharSlug: characteristic.nameSlug })" class="link-full">
-                                                
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- End Characteristics Content -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Table Content -->
-                    </div>
+
                     <!-- End Table Body -->
+
+                    <!-- Table Content -->
+                    <div id="matrix-table-body" class="matrix-table-body" >
+                        <div id="matrix-table-content-render" class="matrix-table-content" ng-style="{'width': vm.tableWidth}">
+                        </div>
+                    </div>
+                    <!-- HTML Table Content -->
+
                 </div>
             </div>
         </div>
