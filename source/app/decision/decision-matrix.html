@@ -118,7 +118,7 @@
                     <!-- End Header -->
                     <!-- Table Aside -->
                     <div id="matrix-table-aside" class="matrix-table-aside">
-                        <div id="matrix-table-aside-content" class="matrix-table-aside-content" ng-class="{'app-visible-hidden' : vm.decisionsSpinner}">
+                        <div id="matrix-table-aside-content" class="matrix-table-aside-content">
                             <div class="matrix-table-item" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
                                 <div class="matrix-table-row" id="decision-name-row-{{::item.decision.decisionId}}">
                                     <div class="matrix-table-col matrix-table-col-name">
@@ -134,8 +134,8 @@
                                             <div class="clearfix">
                                                 <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
                                                     <small>
-                                                        Criteria compliance: <strong>{{::item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
-                                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::item.decision.totalVotes}}
+                                                        Criteria compliance: <strong>{{item.decision.criteriaCompliancePercentage | number:0}}</strong>% |
+                                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{item.decision.totalVotes}}
                                                     </small>
                                                 </div>
                                                 <div class="pull-right">
@@ -159,7 +159,7 @@
                     <!-- Table Body -->
                     <div id="matrix-table-body" class="matrix-table-body">
                         <!-- Table Content -->
-                        <div id="matrix-table-content" class="matrix-table-content" ng-style="{'width': vm.tableWidth}" ng-class="{'app-visible-hidden' : vm.decisionsSpinner}">
+                        <div id="matrix-table-content" class="matrix-table-content" ng-style="{'width': vm.tableWidth}">
                             <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
                                 <div class="matrix-table-row" id="decision-row-{{::item.decision.decisionId}}">
                                     <!-- Criteria Content -->
