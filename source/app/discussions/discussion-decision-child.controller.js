@@ -52,33 +52,18 @@
                 vm.characteristicGroups = _.map(result, function(resultEl) {
                     _.map(resultEl.characteristics, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
-                        characteristicsIds.push(el.characteristicId);
-                        characteristicsArray.push(el);
 
-                        return el;
+                        var elEqual = _.find(characteristicsArray, {
+                            characteristicId: el.characteristicId
+                        });
+
+                        if (elEqual) return _.merge(el, elEqual);
                     });
                     return resultEl;
                 });
             });
         }
         // END TODO
-
-        function fillRating(decisionMatrixList) {
-            _.map(vm.criteriaGroups, function(group) {
-                _.map(group.criteria, function(criteria) {
-
-                    var criteriaNew = _.clone(criteria);
-                    _.map(decisionMatrixList.criteria, function(criteriaMatrix) {
-                        if (criteriaMatrix.criterionId === criteriaNew.criterionId) {
-                            criteria.totalDislikes = criteriaMatrix.totalDislikes;
-                            criteria.totalLikes = criteriaMatrix.totalLikes;
-                            criteria.totalVotes = criteriaMatrix.totalVotes;
-                            criteria.weight = criteriaMatrix.weight;
-                        }
-                    });
-                });
-            });
-        }
 
         function init() {
             console.log('Discussion Decision controller');
@@ -93,7 +78,6 @@
             DecisionDataService.searchDecisionMatrix(vm.decision.decisionId, sendData).then(function(result) {
                 getCriteriaGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].criteria);
                 getCharacteristictsGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].characteristics);
-                fillRating(result.decisionMatrixs[0]);
             });
 
 

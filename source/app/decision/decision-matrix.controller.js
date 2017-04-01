@@ -247,12 +247,12 @@
 
                 el = matrixCols[i];
                 asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
-                asideElH = asideEl.outerHeight();
+                asideElH = asideEl[0].clientHeight;
                 newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
                 // Set new height
                 el.style.height = newH + 'px';
-                asideEl.get(0).style.height = newH + 'px';
+                asideEl[0].style.height = newH + 'px';
 
             }
         }
