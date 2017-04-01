@@ -742,3 +742,95 @@ a {
 .app-visible-hidden {
     visibility: hidden;
 }
+
+
+// Matrix new
+.matrix.matrix-new {
+    .matrix-table-group-criteria .matrix-table-col {
+        min-width: auto;
+        max-width: none;
+        display: block;
+    }
+    .matrix-table-group-title .group-title-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        -webkit-transform: translate(0, 0) rotate(-90deg);
+           -moz-transform: translate(0, 0) rotate(-90deg);
+            -ms-transform: translate(0, 0) rotate(-90deg);
+             -o-transform: translate(0, 0) rotate(-90deg);
+                transform: translate(0, 0) rotate(-90deg);
+        left: -23px;
+        top: 13px;
+        &:after {
+            position: absolute;
+            content: '';
+            height: 100%;
+            right: 96%;
+            margin: 0 5px;
+            bottom: 3px;
+            width: 5000px;
+            background: #EBEBEB;
+            display: none !important;
+            border: 0;
+        }
+    }
+    .matrix-table-aside {
+        padding: 0 0 0 15px;
+    }
+    .matrix-table-title-wrapper {
+        max-width: none;
+        display: block;
+    }
+    .matrix-table-col.matrix-table-group {
+        border-right: 1px solid #ebebeb;
+        .matrix-table-col-content & > a {
+            margin-right: 10px;
+        }
+        .app-panel-controls {
+            right: 3px;
+            top: 2px;
+            bottom: auto;
+            left: auto;
+            display: inline-block;
+        }
+    }
+    .matrix-table-title-wrapper {
+        height: 100%;
+    }
+    .matrix-table-item {
+        border-bottom: 1px solid @gray-light;
+        cursor: pointer;
+        &:hover {
+            background-color: @gray-light;
+        }
+        &.selected {
+            background-color: @basic-active-light;
+        }
+        .app-sorter {
+            height: 44px;
+        }
+    }
+    .matrix-table-block {
+        border-bottom: 1px solid @gray-light;
+        height: 50px;
+    }
+    // .matrix-content-name,
+    .matrix-table-col-name {
+        width: 199px;
+        max-width: 199px;
+        height: 50px;
+        display: table-cell;
+        border-right: 1px solid @gray-light;
+        vertical-align: top;
+    }
+    .matrix-table-item {
+        height: 50px;
+    }
+    .matrix-table-col-content {
+        width: auto;
+    }
+    .matrix-table-group {
+        position: relative;
+    }
+}

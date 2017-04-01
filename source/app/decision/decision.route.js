@@ -53,6 +53,20 @@
                     decisionAnalysisInfo: DecisionAanalysisResolver
                 },
             })
+            .state('decisions.single.matrixOld', {
+                url: '/matrix-old',
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-matrix-old.html',
+                        controller: 'DecisionMatrixControllerOld',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve: {
+                    decisionStateInfo: DecisionStateResolver,
+                    decisionAnalysisInfo: DecisionAanalysisResolver
+                },
+            })            
             .state('decisions.single.matrix.analysis', {
                 url: '/analysis/:analysisId',
                 templateUrl: 'app/decision/decision.html',

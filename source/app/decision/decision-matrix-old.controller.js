@@ -4,13 +4,13 @@
 
     angular
         .module('app.decision')
-        .controller('DecisionMatrixController', DecisionMatrixController);
+        .controller('DecisionMatrixControllerOld', DecisionMatrixControllerOld);
 
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
+    DecisionMatrixControllerOld.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
     '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
     'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
+    function DecisionMatrixControllerOld(DecisionDataService, DecisionSharedService, $state,
         $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
         DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter) {
         var
@@ -84,6 +84,7 @@
                         _fo.persistent = false;
                     }
 
+                    setMatrixTableWidth();
                     searchDecisionMatrix(vm.decisionId);
                 });
 
@@ -172,8 +173,8 @@
 
                 return newEl;
             });
-            // console.log(matrixContent);
-        
+
+
             return matrixContent;
         }
 
@@ -273,9 +274,8 @@
             var sendData = DecisionSharedService.getFilterObject();
             DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 initSorters(result.totalDecisionMatrixs);
-                // vm.decisionMatrixList = result.decisionMatrixs;
                 vm.decisionMatrixList = createMatrixContent(result.decisionMatrixs);
-                setMatrixTableWidth(vm.decisionMatrixList);
+
                 renderMatrix();
             });
         }
@@ -383,8 +383,14 @@
             }
         }
 
-        function setMatrixTableWidth(array) {
-            vm.tableWidth = array.length * 200 + 'px';
+        function setMatrixTableWidth() {
+            var criteriaGroupsCount,
+                characteristicGroupsCount;
+
+            // TODO: include groups
+            criteriaGroupsCount = vm.criteriaGroups[0].criteria.length || 0;
+            characteristicGroupsCount = vm.characteristicGroups[0].characteristics.length || 0;
+            vm.tableWidth = (criteriaGroupsCount + characteristicGroupsCount) * 120 + 60 + 'px';
         }
 
         // TODO: make as a separeted component
