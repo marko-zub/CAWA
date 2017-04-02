@@ -21,14 +21,14 @@
                     <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
                         <div class="clearfix">
                             <div class="img-container">
-                                <img ng-src="{{::decision.imageUrl}}" class="img-responsive">
+                                <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                             </div>
                             <div class="pull-left">
                                 {{decision.name}}
                                 <div>
                                     <small>
-                                        Criteria compliance: <strong>{{::decision.criteriaCompliancePercentage | number:0}}</strong>%
-                                         | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                                        Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:0}}</strong>%
+                                         | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{decision.totalVotes}}
                                     </small>
                                 </div>
                             </div>
