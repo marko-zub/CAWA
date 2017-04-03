@@ -101,9 +101,7 @@
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 setDecisionMatchPercent(data);
-                var resultdecisionMatrixs = data;
-                // vm.decisionMatrixList = createMatrixContent(resultdecisionMatrixs);
-                renderMatrix();
+                initMatrix(data);
             });
 
             DecisionNotificationService.subscribePageChanged(function() {
@@ -195,7 +193,6 @@
             var decisionMatrixsClone = _.clone(decisionMatrixs);
             characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
             vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
-                // console.log(characteristictsList);
                 _.map(characteristictsList.characteristics, function(characteristictsListEl) {
                     return characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
                 });
@@ -205,7 +202,6 @@
 
 
         // TODO: try to optimize it can be removed
-
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 el.description = $sce.trustAsHtml(el.description);
@@ -311,6 +307,7 @@
 
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
+                console.log(result.decisionMatrixs);
                 vm.decisionMatrixList = descriptionTrustHtml(result.decisionMatrixs);
                 return result;
             });

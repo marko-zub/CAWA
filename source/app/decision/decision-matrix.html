@@ -52,7 +52,7 @@
                         <!-- End Make Sticky -->
                         <!-- Decisions Header -->
                         <div id="matrix-table-scroll-group" class="scroll-group">
-                            <div class="matrix-table-col matrix-table-col-name matrix-table-group" ng-repeat="item in vm.decisionMatrixList  track by $index">
+                            <div class="matrix-table-col matrix-table-col-name matrix-table-group" ng-repeat="item in vm.decisionMatrixList track by $index">
                                 <div class="matrix-table-col-content matrix-content-name">
                                         <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                             <div class="clearfix">
@@ -77,13 +77,11 @@
                                                 <span ng-if="item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{item.decision.name}}" uib-popover-html="item.decision.description" popover-placement="bottom" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                             </div>
                                         </div>
-                                        <!-- <div class="app-panel-wrapper text-right"> -->
-                                            <div class="app-panel-controls">
-                                                <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                    <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclusion', 'glyphicon-eye-open': vm.matrixMode === 'exclusion'}"></i>
-                                                </span>
-                                            </div>
-                                        <!-- </div> -->
+                                        <div class="app-panel-controls">
+                                            <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
+                                                <i class="glyphicon" ng-class="{'glyphicon-eye-close' : vm.matrixMode === 'inclusion', 'glyphicon-eye-open': vm.matrixMode === 'exclusion'}"></i>
+                                            </span>
+                                        </div>
                                     </div>
                             </div>
                         </div>
@@ -100,14 +98,14 @@
                                 <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
                                     <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                         <div class="matrix-table-group-title">
-                                            <span class="group-title-line">{{::group.name}}</span>
+                                            <span class="group-title-line">{{group.name}}</span>
                                         </div>
                                     </div>
                                     <div class="matrix-table-item" ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
 
                                             <div class="matrix-table-title-wrapper">
                                                 <div class="matrix-table-title app-sorter-wrapper">
-                                                    {{::criteria.name}}
+                                                    {{criteria.name}}
                                                 </div>
                                                 <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                                     <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
@@ -130,14 +128,14 @@
                                 <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
                                     <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                         <div class="matrix-table-group-title">
-                                            <span class="group-title-line">{{::group.name}}</span>
+                                            <span class="group-title-line">{{group.name}}</span>
                                         </div>
                                     </div>
 
                                     <div class="matrix-table-item"  ng-repeat="characteristic in group.characteristics track by $index">
                                         <div class="matrix-table-title-wrapper">
                                             <div class="matrix-table-title app-sorter-wrapper">
-                                                {{::characteristic.name}}
+                                                {{characteristic.name}}
                                                 <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>
                                                     <i class="glyphicon glyphicon-filter"></i>
                                                 </div>
@@ -168,7 +166,7 @@
                             <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaListMatrix track by $index">
                                 <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                     <div class="matrix-table-group-title">
-                                        <!-- <span class="group-title-line">{{::group.name}}</span> -->
+                                        <!-- <span class="group-title-line">{{group.name}}</span> -->
                                     </div>
                                 </div>
                                 <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.criteria track by $index">
@@ -179,7 +177,7 @@
                                                 <div ng-if="decisionCol.criteria.totalVotes">
                                                     <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
                                                 </div>
-                                                <div ng-if="::!decisionCol.criteria.totalVotes">
+                                                <div ng-if="!decisionCol.criteria.totalVotes">
                                                     <div class="app-rating-votes">
                                                         <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
                                                     </div>
@@ -201,7 +199,7 @@
                             <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristictsListMatrix track by $index">
                                 <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                     <div class="matrix-table-group-title">
-                                        <!-- <span class="group-title-line">{{::group.name}}</span> -->
+                                        <!-- <span class="group-title-line">{{group.name}}</span> -->
                                     </div>
                                 </div>
                                 <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.characteristics track by $index">
