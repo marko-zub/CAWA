@@ -9,10 +9,13 @@
     DecisionDataService.$inject = ['$resource', 'Config'];
 
     function DecisionDataService($resource, Config) {
+        // TODO: clean up
         var
             decisionUrl = Config.endpointUrl + 'decisions/:id',
 
-            decisions = $resource(decisionUrl + '/decisions/list', {
+            decisions = $resource(Config.endpointUrl + 'decisions'),
+
+            decision = $resource(decisionUrl + '/decisions/list', {
                 id: '@id'
             }, {
                 searchDecisionById: {
@@ -64,6 +67,7 @@
 
         var service = {
             searchDecision: searchDecision,
+            geDecisions: geDecisions,
             searchDecisionMatrix: searchDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristictsGroupsById: getCharacteristictsGroupsById,
@@ -77,9 +81,13 @@
         return service;
 
         function searchDecision(id, data) {
-            return decisions.searchDecisionById({
+            return decision.searchDecisionById({
                 id: id
             }, data).$promise;
+        }
+
+        function geDecisions() {
+            return decisions.get().$promise;
         }
 
         function searchDecisionMatrix(id, data) {

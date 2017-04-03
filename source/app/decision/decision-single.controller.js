@@ -40,6 +40,10 @@
             setPagination();
             searchDecisionNomimations($stateParams.id);
             getCriteriaGroupsById($stateParams.id);
+
+            DecisionDataService.getDecisions().then(function(result){
+                console.log(result);
+            });
         }
 
         function searchDecisionNomimations(id) {

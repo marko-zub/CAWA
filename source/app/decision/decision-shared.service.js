@@ -105,8 +105,8 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildDecisionIds: !_.isEmpty(obj.includeChildDecisionIds) ? obj.includeChildDecisionIds : null,
-                excludeChildDecisionIds: !_.isEmpty(obj.excludeChildDecisionIds) ? obj.excludeChildDecisionIds : null,
+                includeChildDecisionIds: obj.includeChildDecisionIds || null,
+                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
                 persistent: obj.persistent === false ? obj.persistent : true
             };
 
