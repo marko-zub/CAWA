@@ -744,6 +744,7 @@ a {
 
 
 // Matrix new
+// TODO: clean up avoide fixed heights
 .matrix.matrix-new {
     .matrix-table-group-title .group-title-line {
         position: absolute;
@@ -809,6 +810,11 @@ a {
         border-bottom: 1px solid @gray-light;
         height: 48px;
     }
+    .matrix-table-col {
+        width: 199px;
+        max-width: 199px;
+        min-width: 199px;
+    }
     .matrix-table-col-name {
         width: 199px;
         max-width: 199px;
@@ -819,7 +825,7 @@ a {
         height: 100%;
     }
     .matrix-table-item {
-        min-height: 45px;
+        min-height: 50px;
         min-width: 100%;
         &.matrix-table-group-item {
             height: 14px !important;
@@ -832,6 +838,9 @@ a {
     }
     .matrix-table-group {
         position: relative;
+    }
+    .matrix-table-col-content {
+        min-height: 49px;
     }
     .matrix-table-aside {
         width: @matrix-aside-width - 1px;

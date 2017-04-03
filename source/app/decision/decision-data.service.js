@@ -67,7 +67,7 @@
 
         var service = {
             searchDecision: searchDecision,
-            geDecisions: geDecisions,
+            getDecisions: getDecisions,
             searchDecisionMatrix: searchDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristictsGroupsById: getCharacteristictsGroupsById,
@@ -86,7 +86,7 @@
             }, data).$promise;
         }
 
-        function geDecisions() {
+        function getDecisions() {
             return decisions.get().$promise;
         }
 

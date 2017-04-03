@@ -40,10 +40,6 @@
             setPagination();
             searchDecisionNomimations($stateParams.id);
             getCriteriaGroupsById($stateParams.id);
-
-            DecisionDataService.getDecisions().then(function(result){
-                console.log(result);
-            });
         }
 
         function searchDecisionNomimations(id) {
@@ -59,6 +55,7 @@
             });
         }
 
+        // TODO: move to utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 el.description = $sce.trustAsHtml(el.description);
