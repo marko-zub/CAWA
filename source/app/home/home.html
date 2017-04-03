@@ -12,7 +12,11 @@
                 <div class="search-results text-left" ng-show="vm.showTrigger">
                     <h3>RESULTS for {{vm.searchText}}</h3>
                     <ul class="list-group search-results-list">
-                        <li class="list-group-item"><a href ui-sref="decisions.single.matrix({id: vm.searchText || 204})">Comparison Matrix</a></li>
+                        <li class="list-group-item">
+                            <a href ui-sref="decisions.single.matrix({id: vm.searchText || 222})">Comparison Matrix</a>
+                             | 
+                            <a href ui-sref="decisions.single.matrixOld({id: vm.searchText || 222})">Comparison Matrix Old</a>
+                        </li>
                     </ul>
                 </div>
             </div>

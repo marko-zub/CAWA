@@ -53,6 +53,20 @@
                     decisionAnalysisInfo: DecisionAanalysisResolver
                 },
             })
+            .state('decisions.single.matrixOld', {
+                url: '/matrix-old',
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-matrix-old.html',
+                        controller: 'DecisionMatrixControllerOld',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve: {
+                    decisionStateInfo: DecisionStateResolver,
+                    decisionAnalysisInfo: DecisionAanalysisResolver
+                },
+            })            
             .state('decisions.single.matrix.analysis', {
                 url: '/analysis/:analysisId',
                 templateUrl: 'app/decision/decision.html',
@@ -200,14 +214,8 @@
                     return;
                 }
 
-                // Fix for inclusion tab first time call
-                var _fo = resp;
-                if((_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length) > 0 && !_fo.includeChildDecisionIds) {
-                    _fo.includeChildDecisionIds = [];
-                }
-
                 // Set analysis obj
-                DecisionSharedService.setFilterObject(_fo);
+                DecisionSharedService.setFilterObject(resp);
 
                 return resp;
             }, function(req) {

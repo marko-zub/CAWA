@@ -16,7 +16,8 @@ var gulp = require('gulp'),
     argv = require('yargs').argv,
     del = require('del'),
     inject = require('gulp-inject'),
-    jeditor = require('gulp-json-editor');
+    jeditor = require('gulp-json-editor'),
+    ngAnnotate = require('gulp-ng-annotate');
 
 //=======config
 
@@ -96,7 +97,7 @@ gulp.task('configFile', function() {
             return json;
         }), jeditor(function(json) {
             json.mode = 'dev';
-            return json;         
+            return json;
         })))
         .pipe(gulp.dest(config.release));
 });
@@ -139,7 +140,8 @@ gulp.task('js', ['jshint', 'templates'], function() {
     return gulp.src(jsSources)
         .pipe(gconcat('app.js'))
         .pipe(rev())
-        // .pipe(gulpIf(argv.prod, uglify())) // Some problem with uglify
+        .pipe(ngAnnotate())
+        .pipe(gulpIf(argv.prod, uglify()))
         .pipe(gulp.dest(config.temp));
 });
 
