@@ -31,7 +31,7 @@
 
         var _fo = DecisionSharedService.filterObject;
 
-        function perpareCriteriaGroups(array) {
+        function prepareCriteriaGroups(array) {
             criteriaIds = [];
             criteriaArray = [];
             return _.map(array, function(resultEl) {
@@ -39,6 +39,7 @@
                     el.description = $sce.trustAsHtml(el.description);
                     criteriaIds.push(el.criterionId);
                     criteriaArray.push(el);
+                    console.log(el);
                     return el;
                 });
 
@@ -48,7 +49,7 @@
 
         function getCriteriaGroupsById(decisionId) {
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
-                vm.criteriaGroups = perpareCriteriaGroups(result);
+                vm.criteriaGroups = prepareCriteriaGroups(result);
                 return vm.criteriaGroups;
             });
         }
@@ -95,13 +96,15 @@
                         _fo.persistent = false;
                     }
                     initMatrix(values[0].decisionMatrixs);
+                }, function (error) {
+                    console.log(error);
                 });
 
 
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 vm.decisionMatrixList = data;
-                 vm.decisionsSpinner = false;
+                vm.decisionsSpinner = false;
                 // console.log(vm.decisionMatrixList)
                 setDecisionMatchPercent(data);
                 initMatrix(vm.decisionMatrixList);
@@ -245,12 +248,12 @@
             vm.fo = _fo.sorters;
 
             // Set Criteria
+
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
 
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.criterionId)) {
                         el.isSelected = true;
-
                         // Set criterion coefficient el.coefficient.
                         _.map(_fo.selectedCriteria.sortCriteriaCoefficients, function(value, key) {
                             if (el.isSelected && parseInt(key) === el.criterionId) {
@@ -278,22 +281,27 @@
 
             matrixAside = document.getElementById('matrix-table-aside');
             matrixCols = document.getElementsByClassName('matrix-table-item-content');
-            // for (var i = 0; i < matrixCols.length; i++) {
-            //     var el,
-            //         asideEl,
-            //         asideElH,
-            //         newH;
 
-            //     el = matrixCols[i];
-            //     asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
-            //     asideElH = asideEl[0].clientHeight;
-            //     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
+            for (var i = 0; i < matrixCols.length; i++) {
+                var el,
+                    asideEl,
+                    asideElH,
+                    newH;
 
-            //     // Set new height
-            //     el.style.height = newH + 'px';
-            //     asideEl[0].style.height = newH + 'px';
+                el = matrixCols[i];
 
-            // }
+                asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
+
+                if(asideEl[0]) {
+                    asideElH = asideEl[0].clientHeight;
+                    newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
+
+                    // Set new height
+                    el.style.height = newH + 'px';
+                    asideEl[0].style.height = newH + 'px';
+                }
+
+            }
         }
 
         // TODO: drop settimeout and apply
@@ -313,16 +321,15 @@
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisionMatrixList = result.decisionMatrixs;
-
-                _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
-                    decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
-                });
                 vm.decisionMatrixsData = result;
                 return result;
             });
         }
 
         function initMatrix(data) {
+            _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
+                decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
+            });
             initSorters(vm.decisionMatrixsData.totalDecisionMatrixs);
             createMatrixContentCriteia(data);
             createMatrixContentCharacteristicts(data);

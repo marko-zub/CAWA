@@ -1,6 +1,6 @@
-<div class="app-rating-star-wrapper" ng-if="vm.showRating">
+<div class="app-rating-star-wrapper">
     <div class="app-rating-star">
-        <span class="bar" style="width: {{vm.rating}}"></span>
+        <span class="bar" ng-style="{'width':vm.rating}"></span>
     </div>
     <div class="app-rating-votes">
       <span class="app-rating-votes-weight">{{vm.value}}</span>

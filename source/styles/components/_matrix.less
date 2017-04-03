@@ -153,9 +153,16 @@ body {
     display: block;
     position: relative;
     z-index: 1;
-    &.selcted {
-        border-color: @basic-active;
-    }
+}
+
+.matrix-control {
+    cursor: pointer;
+    &:hover {
+        background-color: @gray-light;
+    }    
+    &.selected {
+        background-color: @basic-active-light;
+    }    
     & > .matrix-table-row {
         border-bottom: 1px solid @gray-light;
     }
@@ -447,7 +454,7 @@ a {
 
 
 // Scrollable table
-@matrix-aside-width: 203px;
+@matrix-aside-width: 200px;
 .matrix-table-aside {
     left: 0;
     width: @matrix-aside-width;
@@ -787,18 +794,11 @@ a {
     .matrix-table-aside {
         .matrix-table-item {
             border-bottom: 1px solid @gray-light;
-            cursor: pointer;
-            &:hover {
-                background-color: @gray-light;
-            }
-            &.selected {
-                background-color: @basic-active-light;
-            }
-            .app-sorter {
-                height: 44px;
-            }
         }
     }
+    .app-sorter {
+        height: 40px;
+    }    
     .matrix-table-content .matrix-table-col {
         min-height: 30px;
         &.matrix-table-group-item {
@@ -811,16 +811,12 @@ a {
         height: 48px;
     }
     .matrix-table-col {
-        width: 199px;
-        max-width: 199px;
-        min-width: 199px;
+        width: 200px;
+        max-width: 200px;
+        min-width: 200px;
+        border-bottom: 1px solid @gray-light;
     }
     .matrix-table-col-name {
-        width: 199px;
-        max-width: 199px;
-        min-height: 30px;
-        display: table-cell;
-        border-right: 1px solid @gray-light;
         vertical-align: top;
         height: 100%;
     }
@@ -830,7 +826,7 @@ a {
         &.matrix-table-group-item {
             height: 14px !important;
             min-height: 14px;
-            background-color: @gray-light;
+            background-color: lighten(@gray-light, 5%);
         }
     }
     .matrix-table-col-content {
@@ -843,10 +839,10 @@ a {
         min-height: 49px;
     }
     .matrix-table-aside {
-        width: 198px;
+        width: 200px;
     }
     .matrix-table-body {
-        left: 198px;
+        left: 200px;
     }
     .info {
         position: absolute;
@@ -868,5 +864,43 @@ a {
             display: inline-block;
             line-height: 16px;
         }
+    }
+    .matrix-table-title {
+        width: 140px;
+        max-width: 140px;
+    }
+    .main-panel {
+        height: calc(~"100vh - 212px");
+    }
+    .nav-tabs-wrapper {
+        border-bottom: 1px solid #ddd;
+    }
+    .nav-tabs {
+        float: left;
+        border-bottom: 0;
+    }
+    .popover-content {
+        max-height: 400px;
+        overflow: auto;
+    }
+}
+
+.group-wrapper {
+    position: relative;
+    padding-left: 12px;
+    .title {
+        position: absolute;
+        font-size: 10px;
+        // color: #ddd;
+        opacity: 0.5;
+        position: absolute;
+        top: 15px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        right: 100%;
+        -webkit-transform-origin: top right 0;
+        transform-origin: top right 0;
+        -webkit-transform: rotate( 270deg );
+        transform: rotate( 270deg );
     }
 }
