@@ -50,7 +50,7 @@
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
                 vm.criteriaGroups = perpareCriteriaGroups(result);
                 return vm.criteriaGroups;
-            });;
+            });
         }
 
 
@@ -94,25 +94,28 @@
                         _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                         _fo.persistent = false;
                     }
-                    initMatrix(values[0]);
-                })
+                    initMatrix(values[0].decisionMatrixs);
+                });
 
 
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
+                vm.decisionMatrixList = data;
+                 vm.decisionsSpinner = false;
+                // console.log(vm.decisionMatrixList)
                 setDecisionMatchPercent(data);
-                initMatrix(data);
+                initMatrix(vm.decisionMatrixList);
             });
 
             DecisionNotificationService.subscribePageChanged(function() {
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result);
+                    initMatrix(result.decisionMatrixs);
                 });
             });
 
             DecisionNotificationService.subscribeChildDecisionExclusion(function() {
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result);
+                    initMatrix(result.decisionMatrixs);
                 });
             });
 
@@ -130,7 +133,7 @@
                 DecisionSharedService.filterObject.persistent = true;
                 vm.fo = DecisionSharedService.filterObject.sorters;
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result);
+                    initMatrix(result.decisionMatrixs);
                 });
             });
 
@@ -165,7 +168,8 @@
             ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
             vm.criteriaListMatrix = _.map(ctiteriaList, function(ctiteriaList) {
                 _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
-                    return ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(decisionMatrixsClone, ctiteriaListEl.criterionId);
+                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(decisionMatrixsClone, ctiteriaListEl.criterionId);
+                    return ctiteriaListEl;
                 });
                 return ctiteriaList;
             });
@@ -194,7 +198,8 @@
             characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
             vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
                 _.map(characteristictsList.characteristics, function(characteristictsListEl) {
-                    return characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
+                    characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
+                    return characteristictsListEl;
                 });
                 return characteristictsList;
             });
@@ -255,7 +260,7 @@
                         });
                     }
                 });
-            })
+            });
 
         }
 
@@ -307,17 +312,21 @@
 
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
-                console.log(result.decisionMatrixs);
-                vm.decisionMatrixList = descriptionTrustHtml(result.decisionMatrixs);
+                vm.decisionMatrixList = result.decisionMatrixs;
+
+                _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
+                    decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
+                });
+                vm.decisionMatrixsData = result;
                 return result;
             });
         }
 
         function initMatrix(data) {
-            initSorters(data.totalDecisionMatrixs);
-            createMatrixContentCriteia(data.decisionMatrixs);
-            createMatrixContentCharacteristicts(data.decisionMatrixs);
-            setMatrixTableWidth(data.decisionMatrixs);
+            initSorters(vm.decisionMatrixsData.totalDecisionMatrixs);
+            createMatrixContentCriteia(data);
+            createMatrixContentCharacteristicts(data);
+            setMatrixTableWidth(data);
             renderMatrix();
         }
 
