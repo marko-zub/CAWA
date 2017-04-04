@@ -27,17 +27,25 @@
             console.log('Decisions controller');
 
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
-            getDecisions();
+
+            var data = vm.pagination;
+
+            // TODO: pick allowed values
+            if($stateParams.sort) data.sort = $stateParams.sort;
+            data.sortDirection = $stateParams.sortDirection || 'DESC';
+
+            getDecisions(data);
         }
 
         function getDecisions(data) {
-
+            vm.decisionsSpinner = true;
             var pagination = _.clone(vm.pagination);
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
                 vm.decisionsList = descriptionTrustHtml(result.decisions);
                 initPagination(result.totalDecisions);
+                vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
             });
