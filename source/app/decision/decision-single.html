@@ -1,15 +1,19 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
-<div class="row app-top-panel">
-    <div class="col-sm-6">
-        <h4 class="app-header-sub-title pull-left">
-            Decission Top {{::vm.pagination.pageSize}} {{::vm.decision.name}}
-        </h4>
-        <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" value="::vm.discussion.votes.weight" total-votes="::vm.discussion.votes.totalVotes"></rating-star>
-    </div>
-    <div class="col-sm-6">
-        <div class="pull-right">
-            <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
-            <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+<div class="app-top-panel">
+    <div class="app-container-sm">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="app-header-sub-title pull-left">
+                    Decission Top {{::vm.pagination.pageSize}} {{::vm.decision.name}}
+                </h4>
+                <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" value="::vm.discussion.votes.weight" total-votes="::vm.discussion.votes.totalVotes"></rating-star>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right">
+                    <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
+                    <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,15 +1,18 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
-
-<div class="row app-top-panel">
-    <div class="col-sm-6">
-        <h4 class="app-header-sub-title pull-left">
-            {{vm.title}}
-        </h4>
-        <rating-star class="text-left pull-left" value="vm.discussion.votes.weight" total-votes="vm.discussion.votes.totalVotes" ng-show="vm.discussion.votes.weight"></rating-star>
-    </div>
-    <div class="col-sm-6">
-        <div class="pull-right">
-            <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+<div class="app-top-panel">
+    <div class="app-container-sm">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="app-header-sub-title pull-left">
+                    {{vm.title}}
+                </h4>
+                <rating-star class="text-left pull-left" value="vm.discussion.votes.weight" total-votes="vm.discussion.votes.totalVotes" ng-show="vm.discussion.votes.weight"></rating-star>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right">
+                    <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

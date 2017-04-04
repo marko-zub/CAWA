@@ -159,10 +159,10 @@ body {
     cursor: pointer;
     &:hover {
         background-color: @gray-light;
-    }    
+    }
     &.selected {
         background-color: @basic-active-light;
-    }    
+    }
     & > .matrix-table-row {
         border-bottom: 1px solid @gray-light;
     }
@@ -496,7 +496,7 @@ a {
 }
 
 
-@matrix-table-header: 52px;
+@matrix-table-header: 80px;
 .matrix-table-header {
     position: absolute;
     z-index: 2;
@@ -798,11 +798,12 @@ a {
     }
     .app-sorter {
         height: 40px;
-    }    
+    }
     .matrix-table-content .matrix-table-col {
         min-height: 30px;
         &.matrix-table-group-item {
-            height: 14px;
+            height: 24px;
+            line-height: 24px;
             background-color: @gray-light;
         }
     }
@@ -824,9 +825,11 @@ a {
         min-height: 50px;
         min-width: 100%;
         &.matrix-table-group-item {
-            height: 14px !important;
-            min-height: 14px;
+            height: 24px !important;
+            min-height: 24px;
+            line-height: 24px;
             background-color: lighten(@gray-light, 5%);
+            border-bottom: 1px solid @gray-light;
         }
     }
     .matrix-table-col-content {
@@ -852,7 +855,7 @@ a {
     }
     .matrix-table-header .matrix-table-col-content {
         padding: 4px;
-        height: 52px;
+        height: 80px;
     }
     .app-title-inline {
         display: inline-block;
@@ -883,6 +886,9 @@ a {
         max-height: 400px;
         overflow: auto;
     }
+    .matrix-table-group-title {
+        font-size: 13px;
+    }
 }
 
 .group-wrapper {
@@ -894,7 +900,7 @@ a {
         // color: #ddd;
         opacity: 0.5;
         position: absolute;
-        top: 15px;
+        top: 24px;
         letter-spacing: 0.3em;
         text-transform: uppercase;
         right: 100%;

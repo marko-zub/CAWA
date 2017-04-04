@@ -1,17 +1,27 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
-<div class="app-container-sm">
-    <h3 class="app-title">
-      Decisions
-    </h3>
-    <div class="row top-panel">
-        <div class="btn-group btn-group-sm btns-view">
-            <a ui-sref="decisions({sort: 'createDate'})" ui-sref-active="btn-primary" class="btn btn-default">Newest</a>
-            <a ui-sref="decisions({sort: 'updateDate'})" ui-sref-active="btn-primary" class="btn btn-default">Active</a>
-            <a ui-sref="decisions({sort: 'totalVotes'})" ui-sref-active="btn-primary" class="btn btn-default">Votes</a>
+<div class="app-top-panel">
+    <div class="app-container-sm">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="app-header-sub-title pull-left">
+                    Decisions
+                </h4>
+                <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" value="::vm.discussion.votes.weight" total-votes="::vm.discussion.votes.totalVotes"></rating-star>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right">
+                    <div class="btn-group btn-group-sm btns-view">
+                        <a ui-sref="decisions({sort: 'createDate'})" ui-sref-active="btn-primary" class="btn btn-default">Newest</a>
+                        <a ui-sref="decisions({sort: 'updateDate'})" ui-sref-active="btn-primary" class="btn btn-default">Active</a>
+                        <a ui-sref="decisions({sort: 'totalVotes'})" ui-sref-active="btn-primary" class="btn btn-default">Votes</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="app-content">
+</div>
+<div class="app-container-sm">
+    <div class="app-main-panel main-panel">
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         <div class="row">
             <div class="col-sm-8">
@@ -46,5 +56,5 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
