@@ -20,7 +20,7 @@
                 <li ng-repeat="decision in vm.decisions track by $index">
                     <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
                         <div class="clearfix">
-                            <div class="img-container">
+                            <div class="img-container" ng-if="decision.imageUrl">
                                 <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                             </div>
                             <div class="pull-left">

@@ -9,7 +9,7 @@
                 <li ng-repeat="decision in vm.decisionsList track by $index">
                     <a ui-sref="decisions.single({id:decision.decisionId, slug:decision.nameSlug, size: null, page: null})">
                         <div class="clearfix">
-                            <div class="img-container">
+                            <div class="img-container" ng-if="decision.imageUrl">
                                 <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                             </div>
                             <div class="pull-left">
@@ -27,7 +27,7 @@
                 </li>
             </ul>
             <!-- TODO: use as component -->
-            <div class="row app-pagination clearfix hide">
+            <div class="row app-pagination clearfix">
                 <div class="col-md-10 col-sm-10 paginator">
                     <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
                 </div>

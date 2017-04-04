@@ -18,7 +18,7 @@
 
             <div class="pull-right">
                 <a href class="btn btn-primary btn-sm">Ask for Decision</a>
-            </div>                
+            </div>
         </div>
 
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
@@ -46,7 +46,7 @@
                                 <div class="matrix-table-col-content matrix-content-name">
                                         <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                             <div class="clearfix">
-                                                <div class="img-container img-sm">
+                                                <div class="img-container img-sm" ng-if="item.decision.imageUrl">
                                                     <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                 </div>
                                                 <div class="app-title-inline">
@@ -123,7 +123,7 @@
                                 <div class="criteria-list group-wrapper">
                                     <div class="title">
                                         Characteristics
-                                    </div>                                
+                                    </div>
                                     <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
                                         <div class="matrix-table-item matrix-table-group-item">
                                             <div class="matrix-table-group-title">

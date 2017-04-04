@@ -13,7 +13,12 @@
         var
             decisionUrl = Config.endpointUrl + 'decisions/:id',
 
-            decisions = $resource(Config.endpointUrl + 'decisions'),
+            decisions = $resource(Config.endpointUrl + 'decisions', {}, {
+                searchDecisions: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),
 
             decision = $resource(decisionUrl + '/decisions/list', {
                 id: '@id'
@@ -86,8 +91,8 @@
             }, data).$promise;
         }
 
-        function getDecisions() {
-            return decisions.get().$promise;
+        function getDecisions(data) {
+            return decisions.searchDecisions(data).$promise;
         }
 
         function searchDecisionMatrix(id, data) {

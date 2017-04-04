@@ -37,7 +37,7 @@
 
         function init() {
             console.log('Decision Single Controller');
-            setPagination();
+            initPagination();
             searchDecisionNomimations($stateParams.id);
             getCriteriaGroupsById($stateParams.id);
         }
@@ -63,6 +63,7 @@
             });
         }
 
+        // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
             searchDecisionNomimations($stateParams.id);
@@ -74,7 +75,7 @@
             updateStateParams();
         }
 
-        function setPagination() {
+        function initPagination() {
             vm.pagination = {
                 pageNumber: parseInt($stateParams.page) || 1,
                 pageSize: parseInt($stateParams.size) || 10,
