@@ -6,14 +6,15 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams'];
+    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant'];
 
-    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams) {
+    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant) {
         var
             vm = this;
 
         vm.changePageSize = changePageSize;
         vm.changePage = changePage;
+        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
 
         vm.pagination = {
             pageNumber: parseInt($stateParams.page) || 1,
