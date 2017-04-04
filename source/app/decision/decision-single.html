@@ -18,6 +18,24 @@
     </div>
 </div>
 <div class="app-container-sm">
+
+    <p class="app-content-description">
+        {{::vm.decision.description}}
+    </p>
+
+    <div class="app-content-nav">
+        <div class="row" ng-if="::vm.decision.parentDecisionIds.length">
+            <div class="col-sm-5 col-md-6">
+                <div class="input-group top-panel-title">
+                   <h5>Parent decision: </h5>
+                   <div class="btn-group btn-group-sm btns-view">
+                        <a ui-sref="decisions.single({id:parentDecision})" ui-sref-active="btn-primary" class="btn btn-default" ng-repeat="parentDecision in vm.decision.parentDecisionIds track by $index">{{parentDecision | json}}</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-8">
             <ul class="discussions-list">
@@ -42,7 +60,7 @@
                 </li>
             </ul>
             <!-- TODO: use as component -->
-            <div class="row app-pagination clearfix">
+            <div class="row app-pagination clearfix" ng-if="vm.decision.totalChildDecisions > 0">
                 <div class="col-md-10 col-sm-10 paginator">
                     <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
                 </div>
@@ -54,7 +72,7 @@
         <!-- Criteria -->
         <!-- TODO: make as component -->
         <div class="col-sm-4">
-            <div class="app-list-panel" ng-if="vm.criteriaGroups">
+            <div class="app-list-panel" ng-if="vm.criteriaGroups.lenght">
                 <h4>Criteria</h4>
                 <div class="app-list-group" ng-repeat="group in ::vm.criteriaGroups track by $index">
                     <h5>{{::group.name}}</h5>

@@ -39,7 +39,7 @@
                     el.description = $sce.trustAsHtml(el.description);
                     criteriaIds.push(el.criterionId);
                     criteriaArray.push(el);
-                    console.log(el);
+                    // console.log(el);
                     return el;
                 });
 
