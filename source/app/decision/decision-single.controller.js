@@ -86,11 +86,13 @@
 
         function updateStateParams() {
             $state.go($state.current.name, {
-                page: vm.pagination.pageNumber,
-                size: vm.pagination.pageSize
+                id: vm.decision.decisionId,
+                slug: vm.decision.nameSlug,
+                page: vm.pagination.pageNumber.toString(),
+                size: vm.pagination.pageSize.toString()
             }, {
-                notify: false,
-                reload: false,
+                notify: true,
+                reload: true,
                 location: 'replace'
             });
         }

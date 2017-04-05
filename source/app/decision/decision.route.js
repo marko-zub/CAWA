@@ -66,7 +66,7 @@
                     decisionStateInfo: DecisionStateResolver,
                     decisionAnalysisInfo: DecisionAanalysisResolver
                 },
-            })            
+            })
             .state('decisions.single.matrix.analysis', {
                 url: '/analysis/:analysisId',
                 templateUrl: 'app/decision/decision.html',
@@ -108,34 +108,29 @@
 
         var result = decisionBasicInfo;
         // SLUG for Decision page firt time call
-        var decisionSlug = result.nameSlug ? result.nameSlug : '';
-
-        if ($stateParams.slug === null ||
-            $stateParams.slug === 'matrix' ||
-            $stateParams.slug === 'list') {
-            $stateParams.slug = result.nameSlug;
-        }
-
 
         var stateListener = $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
                 var
-                    currentState,
-                    decisionSlug;
+                    currentState;
 
                 currentState = $state.current.name;
 
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
-                if (toState.name === 'decisions.single') {
+                if ($stateParams.slug === null ||
+                    $stateParams.slug === 'matrix' ||
+                    $stateParams.slug === 'list') {
+                    $stateParams.slug = result.nameSlug || '';
 
-                    $state.go(currentState, {
+                    $state.go(currentState, $stateParams, {
                         notify: false,
                         reload: false,
-                        location: 'replace'
+                        location: false
                     });
                 }
+
 
                 // TODO: fix it
                 // BreadCrumbs
@@ -163,7 +158,7 @@
                     }, {
                         notify: false,
                         reload: false,
-                        location: 'replace'
+                        location: false
                     });
                 }
 
