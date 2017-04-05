@@ -35,15 +35,16 @@
             criteriaIds = [];
             criteriaArray = [];
             return _.map(array, function(resultEl) {
-                _.map(resultEl.criteria, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-                    criteriaIds.push(el.criterionId);
-                    criteriaArray.push(el);
-                    // console.log(el);
-                    return el;
-                });
+                if (resultEl.criteria.length > 0) { //Hide empty group
+                    _.map(resultEl.criteria, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+                        criteriaIds.push(el.criterionId);
+                        criteriaArray.push(el);
+                        return el;
+                    });
 
-                return resultEl;
+                    return resultEl;
+                }
             });
         }
 
@@ -58,15 +59,16 @@
         function perpareCharacteristictsGroups(array) {
             characteristicsIds = [];
             characteristicsArray = [];
-            return _.map(array, function(resultEl) {
-                _.map(resultEl.characteristics, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-                    characteristicsIds.push(el.characteristicId);
-                    characteristicsArray.push(el);
-
-                    return el;
-                });
-                return resultEl;
+            return _.filter(array, function(resultEl) {
+                if (resultEl.characteristics.length > 0) { //Hide empty group
+                    _.map(resultEl.characteristics, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+                        characteristicsIds.push(el.characteristicId);
+                        characteristicsArray.push(el);
+                        return el;
+                    });
+                    return resultEl;
+                }
             });
         }
 
@@ -96,7 +98,7 @@
                         _fo.persistent = false;
                     }
                     initMatrix(values[0].decisionMatrixs);
-                }, function (error) {
+                }, function(error) {
                     console.log(error);
                 });
 
@@ -292,7 +294,7 @@
 
                 asideEl = $('#matrix-table-aside .matrix-table-item').eq(i);
 
-                if(asideEl[0]) {
+                if (asideEl[0]) {
                     asideElH = asideEl[0].clientHeight;
                     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
