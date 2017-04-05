@@ -130,7 +130,7 @@
                 // Just added new slug
                 if (toState.name === 'decisions.single') {
 
-                    $state.go(currentState, $stateParams, {
+                    $state.go(currentState, toParams, {
                         notify: false,
                         reload: false,
                         location: 'replace'

@@ -85,16 +85,16 @@
         }
 
         function updateStateParams() {
-            $state.go($state.current.name, {
-                id: vm.decision.decisionId,
-                slug: vm.decision.nameSlug,
-                page: vm.pagination.pageNumber.toString(),
-                size: vm.pagination.pageSize.toString()
-            }, {
-                notify: true,
-                reload: true,
-                location: 'replace'
-            });
+            // $state.go($state.current.name, {
+            //     id: vm.decision.decisionId,
+            //     slug: vm.decision.nameSlug,
+            //     page: vm.pagination.pageNumber.toString(),
+            //     size: vm.pagination.pageSize.toString()
+            // }, {
+            //     notify: true,
+            //     reload: true,
+            //     location: 'replace'
+            // });
         }
 
 
