@@ -26,6 +26,7 @@
 
         function onChanges() {
             if (vm.value) value = vm.value.toString();
+            vm.value = Number((vm.value).toFixed(1));
             vm.rating = value;
             if (!vm.totalVotes) vm.totalVotes = 0;
             // calc default rating widthout %

@@ -62,7 +62,7 @@
             <!-- TODO: use as component -->
             <div class="row app-pagination clearfix" ng-if="vm.decision.totalChildDecisions > 0">
                 <div class="col-md-10 col-sm-10 paginator">
-                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></div>
+                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="10"></div>
                 </div>
                 <div class="col-md-2 col-sm-2 counter">
                     <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>

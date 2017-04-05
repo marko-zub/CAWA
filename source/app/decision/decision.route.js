@@ -108,29 +108,34 @@
 
         var result = decisionBasicInfo;
         // SLUG for Decision page firt time call
+        var decisionSlug = result.nameSlug ? result.nameSlug : '';
+
+        if ($stateParams.slug === null ||
+            $stateParams.slug === 'matrix' ||
+            $stateParams.slug === 'list') {
+            $stateParams.slug = result.nameSlug;
+        }
+
 
         var stateListener = $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
                 var
-                    currentState;
+                    currentState,
+                    decisionSlug;
 
                 currentState = $state.current.name;
 
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
-                if ($stateParams.slug === null ||
-                    $stateParams.slug === 'matrix' ||
-                    $stateParams.slug === 'list') {
-                    $stateParams.slug = result.nameSlug || '';
+                if (toState.name === 'decisions.single') {
 
                     $state.go(currentState, $stateParams, {
                         notify: false,
                         reload: false,
-                        location: false
+                        location: 'replace'
                     });
                 }
-
 
                 // TODO: fix it
                 // BreadCrumbs
@@ -158,7 +163,7 @@
                     }, {
                         notify: false,
                         reload: false,
-                        location: false
+                        location: 'replace'
                     });
                 }
 

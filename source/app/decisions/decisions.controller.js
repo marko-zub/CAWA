@@ -66,14 +66,15 @@
         }
 
         function updateStateParams() {
-            $state.go($state.current.name, {
-                page: vm.pagination.pageNumber,
-                size: vm.pagination.pageSize
-            }, {
-                notify: false,
-                reload: false,
-                location: 'replace'
-            });
+            //TODO: change page loop bug
+            // $state.go($state.current.name, {
+            //     page: vm.pagination.pageNumber,
+            //     size: vm.pagination.pageSize
+            // }, {
+            //     notify: false,
+            //     reload: false,
+            //     location: 'replace'
+            // });
         }
 
         function checkStateParams(stateParams) {

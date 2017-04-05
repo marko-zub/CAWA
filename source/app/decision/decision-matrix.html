@@ -43,10 +43,10 @@
                         <!-- Decisions Header -->
                         <div id="matrix-table-scroll-group" class="scroll-group">
                             <div class="matrix-table-col matrix-table-col-name matrix-table-group" ng-repeat="item in vm.decisionMatrixList track by $index">
-                                <div class="matrix-table-col-content matrix-content-name">
+                                <div class="matrix-table-col-content matrix-content-name decision-matrix-col">
                                         <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                             <div class="clearfix">
-                                                <div class="img-container img-sm" ng-if="item.decision.imageUrl">
+                                                <div class="matrix-img-container img-sm" ng-if="item.decision.imageUrl">
                                                     <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                 </div>
                                                 <div class="app-title-inline">
