@@ -29,7 +29,7 @@
                 <div class="input-group top-panel-title">
                    <h5>Parent decision: </h5>
                    <div class="btn-group btn-group-sm btns-view">
-                        <a ui-sref="decisions.single({id:parentDecision})" ui-sref-active="btn-primary" class="btn btn-default" ng-repeat="parentDecision in vm.decision.parentDecisionIds track by $index">{{parentDecision | json}}</a>
+                        <a ui-sref="decisions.single({id:parentDecision})" ui-sref-active="btn-primary" class="btn btn-default" ng-repeat="parentDecision in vm.decision.parentDecisionIds track by $index">{{parentDecision}}</a>
                         </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
         <!-- Criteria -->
         <!-- TODO: make as component -->
         <div class="col-sm-4">
-            <div class="app-list-panel" ng-if="vm.criteriaGroups.lenght">
+            <div class="app-list-panel" ng-if="vm.criteriaGroups[0].criteria.length > 0">
                 <h4>Criteria</h4>
                 <div class="app-list-group" ng-repeat="group in ::vm.criteriaGroups track by $index">
                     <h5>{{::group.name}}</h5>

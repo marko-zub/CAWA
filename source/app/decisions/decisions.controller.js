@@ -27,13 +27,7 @@
             console.log('Decisions controller');
 
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
-
-            var data = vm.pagination;
-
-            // TODO: pick allowed values
-            if($stateParams.sort) data.sort = $stateParams.sort;
-            data.sortDirection = $stateParams.sortDirection || 'DESC';
-
+            data = checkStateParams($stateParams);
             getDecisions(data);
         }
 
@@ -80,6 +74,41 @@
                 reload: false,
                 location: 'replace'
             });
+        }
+
+        function checkStateParams(stateParams) {
+            if (!stateParams) return;
+            var data, allowedSortParams;
+            data = vm.pagination;
+            allowedSortParams = [{
+                key: 'createDate',
+                value: 'createDate'
+            }, {
+                key: 'updateDate',
+                value: 'updateDate'
+            }, {
+                key: 'totalVotes',
+                value: 'totalVotes'
+            }];
+
+            data.sortDirection = stateParams.sortDirection || 'DESC';
+            if (stateParams.sort) {
+                var checkObj, allowed;
+
+                checkObj = {
+                    key: stateParams.sort
+                };
+                allowed = _.find(allowedSortParams, checkObj);
+                if (_.isObject(allowed)) {
+                    data.sort = allowed.value;
+                } else {
+                    $state.go($state.current.name, {
+                        sort: null,
+                        location: 'replace'
+                    });
+                }
+            }
+            return data;
         }
 
         function initPagination(total) {
