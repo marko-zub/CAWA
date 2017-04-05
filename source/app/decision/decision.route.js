@@ -76,28 +76,6 @@
                     decisionStateInfo: DecisionStateResolver
                 },
             });
-
-        // Not use now
-        // .state('decisions.single.list', {
-        //     url: '/list',
-        //     views: {
-        //         "@": {
-        //             templateUrl: 'app/decision/decision-list.html',
-        //             controller: 'DecisionController',
-        //             controllerAs: 'vm',
-        //         }
-        //     },
-        //     resolve: {
-        //         decisionBasicInfo: DecisionResolver
-        //     },
-        // })
-        // .state('decisions.single.list.analysis', {
-        //     url: '/analysis/:analysisId',
-        //     abstract: true,
-        //     resolve: {
-        //         decisionBasicInfo: DecisionResolver
-        //     },
-        // });
     }
 
 
@@ -156,10 +134,12 @@
 
                 // TODO: find better way
                 // Remove size & page params
-                if ($state.current.name !== 'decisions.single') {
+                if ($state.current.name !== 'decisions' ||
+                    $state.current.name !== 'decisions.single') {
                     $state.go($state.current.name, {
                         page: null,
-                        size: null
+                        size: null,
+                        sort: null
                     }, {
                         notify: false,
                         reload: false,
