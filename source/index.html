@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width">
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../bower_components/textAngular/dist/textAngular.css" />
     <!-- endbower -->
     <!-- inject:css -->
     <link rel="stylesheet" href="/styles/styles.css">
@@ -33,14 +35,23 @@
 <script src="../bower_components/ngstorage/ngStorage.js"></script>
 <script src="../bower_components/angular-jwt/dist/angular-jwt.js"></script>
 <script src="../bower_components/iscroll/build/iscroll-probe.js"></script>
+<script src="../bower_components/rangy/rangy-core.js"></script>
+<script src="../bower_components/rangy/rangy-classapplier.js"></script>
+<script src="../bower_components/rangy/rangy-highlighter.js"></script>
+<script src="../bower_components/rangy/rangy-selectionsaverestore.js"></script>
+<script src="../bower_components/rangy/rangy-serializer.js"></script>
+<script src="../bower_components/rangy/rangy-textrange.js"></script>
+<script src="../bower_components/textAngular/dist/textAngular.js"></script>
+<script src="../bower_components/textAngular/dist/textAngular-sanitize.js"></script>
+<script src="../bower_components/textAngular/dist/textAngularSetup.js"></script>
 <!-- endbower -->
 <!-- inject:js -->
 <script src="/app/app.js"></script>
 <script src="/app/components/components.module.js"></script>
 <script src="/app/core/core.module.js"></script>
 <script src="/app/decision/decision.module.js"></script>
-<script src="/app/discussions/discussions.module.js"></script>
 <script src="/app/home/home.module.js"></script>
+<script src="/app/discussions/discussions.module.js"></script>
 <script src="/app/login/login.module.js"></script>
 <script src="/app/app.run.js"></script>
 <script src="/app/core/core.config.js"></script>
@@ -54,31 +65,31 @@
 <script src="/app/decision/decision.route.js"></script>
 <script src="/app/decisions/decisions.controller.js"></script>
 <script src="/app/decisions/decisions.route.js"></script>
+<script src="/app/home/home.controller.js"></script>
+<script src="/app/home/home.route.js"></script>
 <script src="/app/discussions/discussion-decision-child-option.controller.js"></script>
 <script src="/app/discussions/discussion-decision-child.controller.js"></script>
 <script src="/app/discussions/discussions-data.servise.js"></script>
 <script src="/app/discussions/discussions.controller.js"></script>
 <script src="/app/discussions/discussions.route.js"></script>
-<script src="/app/home/home.controller.js"></script>
-<script src="/app/home/home.route.js"></script>
 <script src="/app/login/auth.controller.js"></script>
 <script src="/app/login/login.directive.js"></script>
 <script src="/app/login/login.route.js"></script>
 <script src="/app/login/login.service.js"></script>
-<script src="/app/components/appHeader/app-header.component.js"></script>
 <script src="/app/components/appFooter/app-footer.component.js"></script>
+<script src="/app/components/appHeader/app-header.component.js"></script>
 <script src="/app/components/appPaginator/app-paginator.constant.js"></script>
 <script src="/app/components/appPaginator/app-paginator.js"></script>
 <script src="/app/components/breadcrumbs/breadcrumbs.component.js"></script>
 <script src="/app/components/criteriaCoefficientIndicator/criteria-coefficient-indicator.component.js"></script>
-<script src="/app/components/decisionCharacteristics/decision-characteristics.component.js"></script>
 <script src="/app/components/decisionCriteria/criteria-coefficient-popup.controller.js"></script>
 <script src="/app/components/decisionCriteria/decision-criteria.component.js"></script>
 <script src="/app/components/decisionCriteria/decision-criteria.constant.js"></script>
+<script src="/app/components/decisionCharacteristics/decision-characteristics.component.js"></script>
 <script src="/app/components/decisionSorter/decision-sorter.directive.js"></script>
+<script src="/app/components/popover/pop-over.directive.js"></script>
 <script src="/app/components/ratingStar/rating-star.component.js"></script>
 <script src="/app/components/ratingStar/rating-star.constant.js"></script>
-<script src="/app/components/popover/pop-over.directive.js"></script>
 <!-- endinject -->
 
 </html>

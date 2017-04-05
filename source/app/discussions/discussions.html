@@ -56,7 +56,16 @@
     </div>
 
     <div class="comment-form">
-        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+        <!-- <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea> -->
+        <text-angular
+                id="dicussion-comment"
+                ng-model="comment"
+                ta-maxlength="500"
+                ta-default-wrap="span"
+                name="comment"
+                placeholder="Comment...">
+                </text-angular>
+
         <button class="btn btn-primary">Send</button>
     </div>
 </div>

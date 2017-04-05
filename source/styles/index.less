@@ -56,3 +56,21 @@
 .app-no-animations {
   .transition(all 0 ease 0;);
 }
+
+.comment-form  {
+  .focussed {
+  .ta-editor.ta-html,
+  .ta-scroll-window.form-control{
+      min-height: 200px;
+      height: 200px;
+      // overflow: auto;
+    }
+  }
+  .ta-editor.ta-html,
+  .ta-scroll-window.form-control{
+    min-height: 40px;
+    .transition(all 0.2s ease;);
+    height: 40px;
+    // overflow: hidden;
+  }
+}

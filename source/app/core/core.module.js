@@ -8,7 +8,8 @@
 			'ui.bootstrap',
 			'ngAnimate',
 			'ngStorage',
-			'angular-jwt'
+			'angular-jwt',
+			'textAngular'
 		]);
 
 })();
