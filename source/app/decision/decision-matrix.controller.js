@@ -153,11 +153,9 @@
 
         // TODO: optimize
         // Criteia content for Matrix
-        function findDecisonMatrixCriteriaById(decisionMatrixs, criterionId) {
-            return _.map(decisionMatrixs, function(decisionMatrixEl) {
-                var decisionCriteriaFind = {};
-                decisionCriteriaFind.decision = decisionMatrixEl.decision;
-                decisionCriteriaFind.criteria = null;
+        function findDecisonMatrixCriteriaById(criterionId) {
+            return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
+                var decisionCriteriaFind = _.pick(decisionMatrixEl, 'decision');
 
                 _.find(decisionMatrixEl.criteria, function(decisionCriteria) {
                     if (decisionCriteria.criterionId === criterionId) {
@@ -168,25 +166,23 @@
             });
         }
 
-        function createMatrixContentCriteia(decisionMatrixs, ctiteriaList) {
-            var decisionMatrixsClone = _.clone(decisionMatrixs);
-            ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
-            vm.criteriaListMatrix = _.map(ctiteriaList, function(ctiteriaList) {
-                _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
-                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(decisionMatrixsClone, ctiteriaListEl.criterionId);
-                    return ctiteriaListEl;
-                });
-                return ctiteriaList;
-            });
-        }
+        // function createMatrixContentCriteia(decisionMatrixs, ctiteriaList) {
+        //     var decisionMatrixsClone = _.clone(decisionMatrixs);
+        //     ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
+        //     vm.criteriaListMatrix = _.map(ctiteriaList, function(ctiteriaList) {
+        //         _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
+        //             ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(decisionMatrixsClone, ctiteriaListEl.criterionId);
+        //             return ctiteriaListEl;
+        //         });
+        //         return ctiteriaList;
+        //     });
+        // }
 
         // TODO: can be moved in loop with Criteia content for Matrix
         // Characteristicts content for Matrix
-        function findDecisonMatrixCharacteristictsById(decisionMatrixs, characteristicId) {
-            return _.map(decisionMatrixs, function(decisionMatrixEl) {
-                var decisionCharacteristicFind = {};
-                decisionCharacteristicFind.decision = decisionMatrixEl.decision;
-                decisionCharacteristicFind.characteristics = null;
+        function findDecisonMatrixCharacteristictsById(characteristicId) {
+            return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
+                var decisionCharacteristicFind = _.pick(decisionMatrixEl, 'decision');
 
                 _.find(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
                     descriptionTrustHtml(decisionMatrixEl.characteristics);
@@ -198,12 +194,35 @@
             });
         }
 
-        function createMatrixContentCharacteristicts(decisionMatrixs, characteristictsList) {
-            var decisionMatrixsClone = _.clone(decisionMatrixs);
+        // function createMatrixContentCharacteristicts(decisionMatrixs, characteristictsList) {
+        //     var decisionMatrixsClone = _.clone(decisionMatrixs);
+        //     characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
+        //     vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
+        //         _.map(characteristictsList.characteristics, function(characteristictsListEl) {
+        //             characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
+        //             return characteristictsListEl;
+        //         });
+        //         return characteristictsList;
+        //     });
+        // }
+
+        // All content 
+        function createMatrixContent(decisionMatrixs, ctiteriaList, characteristictsList) {
+            // var vm.decisionMatrixList = _.clone(decisionMatrixs);
+            // Ctiteria 
+            ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
+            vm.criteriaListMatrix = _.filter(ctiteriaList, function(ctiteriaList) {
+                _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
+                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
+                    return ctiteriaListEl;
+                });
+                return ctiteriaList;
+            });
+            // Characteristic
             characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
             vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
                 _.map(characteristictsList.characteristics, function(characteristictsListEl) {
-                    characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
+                    characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(characteristictsListEl.characteristicId);
                     return characteristictsListEl;
                 });
                 return characteristictsList;
@@ -214,12 +233,15 @@
         // TODO: try to optimize it can be removed
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
-                el.description = $sce.trustAsHtml(el.description);
+                if (el.description) {
+                    el.description = $sce.trustAsHtml(el.description);
+                }
                 return el;
             });
         }
 
         function typeFormater(item) {
+            if(!item) return;
             // CASE
             switch (item.valueType) {
                 case "STRING":
@@ -333,9 +355,8 @@
                 decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
             });
             initSorters(vm.decisionMatrixsData.totalDecisionMatrixs);
-            createMatrixContentCriteia(data);
-            createMatrixContentCharacteristicts(data);
-            setMatrixTableWidth(data);
+            createMatrixContent();
+            setMatrixTableWidth(data.length);
             renderMatrix();
         }
 
@@ -442,8 +463,8 @@
             }
         }
 
-        function setMatrixTableWidth(array) {
-            vm.tableWidth = array.length * 200 + 'px';
+        function setMatrixTableWidth(total) {
+            vm.tableWidth = total * 200 + 'px';
         }
 
         // TODO: make as a separeted component

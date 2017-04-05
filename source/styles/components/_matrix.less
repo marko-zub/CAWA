@@ -496,7 +496,7 @@ a {
 }
 
 
-@matrix-table-header: 100px;
+@matrix-table-header: 120px;
 .matrix-table-header {
     position: absolute;
     z-index: 2;
@@ -819,7 +819,7 @@ a {
     }
     .matrix-table-col-name {
         vertical-align: top;
-        height: 100%;
+        height: @matrix-table-header;
     }
     .matrix-table-item {
         min-height: 50px;
@@ -860,8 +860,9 @@ a {
         display: inline-block;
         line-height: 17px;
         vertical-align: middle;
-        width: 80%;
-        // height: 30px;
+        width: 100%;
+        padding: 0 4px;
+        height: 30px;
         span {
             display: inline-block;
             line-height: 16px;
@@ -921,6 +922,7 @@ a {
 .matrix-img-container {
     display: block;
     height: 60px;
+    margin: 0 0 5px;
     text-align: center;
     .img-responsive {
         max-height: 100%;

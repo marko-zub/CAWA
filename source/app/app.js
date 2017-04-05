@@ -10,19 +10,28 @@
         'app.discussions'
     ]);
 
-    $.get({
-    	dataType: "json",
-        url: 'app.config'
-    }).done(function(result) {
-    	angular.module('app.core').constant('Config', {
-            baseUrl: result.baseUrl,
-    		authUrl: result.authUrl,
-    		endpointUrl: result.endpointUrl,
-            mode: result.mode
-    	});
-    }).always(function() {
-        angular.element(function() {
-	        angular.bootstrap(document, ['app']);
-	    });
-    });
+    var initInjector = angular.injector(["ng"]),
+        $http = initInjector.get("$http"),
+        $sce = initInjector.get("$sce");
+
+    // Changed because want to avoid jQuery
+    // Now we use jQuery Slim without Ajax functionality
+    $http.get($sce.trustAsResourceUrl('app.config'))
+        .then(function(result) {
+            if (!result.data.baseUrl) return;
+            angular.module('app.core').constant('Config', {
+                baseUrl: result.data.baseUrl,
+                authUrl: result.data.authUrl,
+                endpointUrl: result.data.endpointUrl,
+                mode: result.data.mode
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        })
+        .finally(function() {
+            angular.element(function() {
+                angular.bootstrap(document, ['app']);
+            });
+        });
 })();

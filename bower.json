@@ -36,6 +36,11 @@
             "main": [
                 "./css/font-awesome.min.css"
             ]
+        },
+        "jquery": {
+            "main": [
+                "./dist/jquery.slim.js"
+            ]
         }
     }
 }
