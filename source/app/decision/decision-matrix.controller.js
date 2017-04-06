@@ -19,82 +19,30 @@
             isInitedSorters = false,
             defaultDecisionCount = 10,
             criteriaIds = [],
-            characteristicsIds = [],
-            criteriaArray = [],
-            characteristicsArray = [];
+            _fo = DecisionSharedService.filterObject;
 
+        vm.loadingComplete = false;
         vm.decisionId = $stateParams.id;
         vm.decision = decisionBasicInfo || {};
         $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
         init();
 
-        var _fo = DecisionSharedService.filterObject;
-
-        function prepareCriteriaGroups(array) {
-            criteriaIds = [];
-            criteriaArray = [];
-            return _.map(array, function(resultEl) {
-                if (resultEl.criteria.length > 0) { //Hide empty group
-                    _.map(resultEl.criteria, function(el) {
-                        el.description = $sce.trustAsHtml(el.description);
-                        criteriaIds.push(el.criterionId);
-                        criteriaArray.push(el);
-                        return el;
-                    });
-
-                    return resultEl;
-                }
-            });
-        }
-
-        function getCriteriaGroupsById(decisionId) {
-            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
-                vm.criteriaGroups = prepareCriteriaGroups(result);
-                return vm.criteriaGroups;
-            });
-        }
-
-
-        function perpareCharacteristictsGroups(array) {
-            characteristicsIds = [];
-            characteristicsArray = [];
-            return _.filter(array, function(resultEl) {
-                if (resultEl.characteristics.length > 0) { //Hide empty group
-                    _.map(resultEl.characteristics, function(el) {
-                        el.description = $sce.trustAsHtml(el.description);
-                        characteristicsIds.push(el.characteristicId);
-                        characteristicsArray.push(el);
-                        return el;
-                    });
-                    return resultEl;
-                }
-            });
-        }
-
-        function getCharacteristictsGroupsById(decisionId) {
-            // Characteristicts
-            return DecisionDataService.getCharacteristictsGroupsById(decisionId)
-                .then(function(result) {
-                    vm.characteristicGroups = perpareCharacteristictsGroups(result);
-                    return vm.characteristicGroups;
-                });
-        }
-
-
         function init() {
             console.log('Decision Matrix Controller');
 
             // Get matrix data
             vm.decisionsSpinner = true;
-            $q.all([
-                    searchDecisionMatrix(vm.decisionId),
-                    getCriteriaGroupsById(vm.decisionId),
-                    getCharacteristictsGroupsById(vm.decisionId)
-                ])
-                .then(function(values) {
-                    initMatrixScroller();
 
+
+            // TODO: render as separeted patrs
+            $q.all([
+                searchDecisionMatrix(vm.decisionId),
+                getCriteriaGroupsById(vm.decisionId),
+                getCharacteristictsGroupsById(vm.decisionId)
+            ]).then(function(values) {
+
+                    initMatrixScroller();
                     // Fill all criterias
                     if ($state.params.analysisId === 'hall-of-fame') {
                         _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
@@ -102,8 +50,9 @@
                     }
 
                     // Render html matrix
-                    initMatrix(values[0].decisionMatrixs);
-                }, function(error) {
+                    initMatrix(values[0]);
+                },
+                function(error) {
                     console.log(error);
                 });
 
@@ -149,6 +98,49 @@
 
         }
 
+        function prepareCriteriaGroups(array) {
+            criteriaIds = [];
+            return _.map(array, function(resultEl) {
+                if (resultEl.criteria.length > 0) { //Hide empty group
+                    _.map(resultEl.criteria, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+                        criteriaIds.push(el.criterionId);
+                        return el;
+                    });
+
+                    return resultEl;
+                }
+            });
+        }
+
+        function getCriteriaGroupsById(decisionId) {
+            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+                vm.criteriaGroups = prepareCriteriaGroups(result);
+                return result;
+            });
+        }
+
+
+        function perpareCharacteristictsGroups(array) {
+            return _.filter(array, function(resultEl) {
+                if (resultEl.characteristics.length > 0) { //Hide empty group
+                    _.map(resultEl.characteristics, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+                        return el;
+                    });
+                    return resultEl;
+                }
+            });
+        }
+
+        function getCharacteristictsGroupsById(decisionId) {
+            // Characteristicts
+            return DecisionDataService.getCharacteristictsGroupsById(decisionId)
+                .then(function(result) {
+                    vm.characteristicGroups = perpareCharacteristictsGroups(result);
+                    return result;
+                });
+        }
 
         // TODO: move to utils
         function isDate(date) {
@@ -162,7 +154,7 @@
             return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 var decisionCriteriaFind = _.pick(decisionMatrixEl, 'decision');
 
-                _.find(decisionMatrixEl.criteria, function(decisionCriteria) {
+                _.findLast(decisionMatrixEl.criteria, function(decisionCriteria) {
                     if (decisionCriteria.criterionId === criterionId) {
                         decisionCriteriaFind.criteria = decisionCriteria;
                     }
@@ -171,17 +163,17 @@
             });
         }
 
-        // function createMatrixContentCriteia(decisionMatrixs, ctiteriaList) {
-        //     var decisionMatrixsClone = _.clone(decisionMatrixs);
-        //     ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
-        //     vm.criteriaListMatrix = _.map(ctiteriaList, function(ctiteriaList) {
-        //         _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
-        //             ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(decisionMatrixsClone, ctiteriaListEl.criterionId);
-        //             return ctiteriaListEl;
-        //         });
-        //         return ctiteriaList;
-        //     });
-        // }
+        function createMatrixContentCriteia(decisionMatrixs, ctiteriaList) {
+            // Ctiteria
+            ctiteriaList = vm.criteriaGroups;
+            vm.criteriaListMatrix = _.filter(ctiteriaList, function(ctiteriaListItem) {
+                _.map(ctiteriaListItem.criteria, function(ctiteriaListEl) {
+                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
+                    return ctiteriaListEl;
+                });
+                return ctiteriaListItem;
+            });
+        }
 
         // TODO: can be moved in loop with Criteia content for Matrix
         // Characteristicts content for Matrix
@@ -189,7 +181,7 @@
             return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 var decisionCharacteristicFind = _.pick(decisionMatrixEl, 'decision');
 
-                _.find(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
+                _.findLast(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
                     descriptionTrustHtml(decisionMatrixEl.characteristics);
                     if (decisionCharacteristic.characteristicId === characteristicId) {
                         decisionCharacteristicFind.characteristics = typeFormater(decisionCharacteristic);
@@ -199,39 +191,26 @@
             });
         }
 
-        // function createMatrixContentCharacteristicts(decisionMatrixs, characteristictsList) {
-        //     var decisionMatrixsClone = _.clone(decisionMatrixs);
-        //     characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
-        //     vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
-        //         _.map(characteristictsList.characteristics, function(characteristictsListEl) {
-        //             characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(decisionMatrixsClone, characteristictsListEl.characteristicId);
-        //             return characteristictsListEl;
-        //         });
-        //         return characteristictsList;
-        //     });
-        // }
-
-        // All content
-        function createMatrixContent(decisionMatrixs, ctiteriaList, characteristictsList) {
-            // var vm.decisionMatrixList = _.clone(decisionMatrixs);
-            // Ctiteria
-            ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
-            vm.criteriaListMatrix = _.filter(ctiteriaList, function(ctiteriaList) {
-                _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
-                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
-                    return ctiteriaListEl;
-                });
-                return ctiteriaList;
-            });
+        function createMatrixContentCharacteristicts() {
             // Characteristic
-            characteristictsList = characteristictsList ? characteristictsList : vm.characteristicGroups;
-            vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsList) {
-                _.map(characteristictsList.characteristics, function(characteristictsListEl) {
+            characteristictsList = vm.characteristicGroups;
+            vm.characteristictsListMatrix = _.map(characteristictsList, function(characteristictsListItem) {
+                _.map(characteristictsListItem.characteristics, function(characteristictsListEl) {
                     characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(characteristictsListEl.characteristicId);
                     return characteristictsListEl;
                 });
-                return characteristictsList;
+                return characteristictsListItem;
             });
+        }
+
+        // All content
+        function createMatrixContent() {
+            // var vm.decisionMatrixList = _.clone(decisionMatrixs);
+            // Ctiteria
+            createMatrixContentCriteia();
+
+            // Characteristic
+            createMatrixContentCharacteristicts();
         }
 
 
@@ -247,6 +226,7 @@
 
         // TODO: move to another component
         function typeFormaterArray(str) {
+            if (_.isObject(str)) return str;
             var html = '',
                 array = JSON.parse(str);
 
@@ -322,13 +302,15 @@
             });
         }
 
-        function calcMatrixRowHeight() {
-            // TODO: optimize
-            var matrixAside,
-                matrixCols;
 
-            matrixAside = document.getElementById('matrix-table-aside');
-            matrixCols = document.getElementsByClassName('matrix-table-item-content');
+        // TODO: optimize
+        var matrixAside,
+            matrixCols;
+
+        matrixAside = document.getElementById('matrix-table-aside');
+        matrixCols = document.getElementsByClassName('matrix-table-item-content');
+
+        function calcMatrixRowHeight() {
 
             for (var i = 0; i < matrixCols.length; i++) {
                 var el,
@@ -345,12 +327,10 @@
                     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
                     // Set new height
-                    if (el.clientHeight != newH) {
-                        el.style.height = newH + 'px';
-                    }
-                    if (asideElH != newH) {
-                        asideEl[0].style.height = newH + 'px';
-                    }
+
+                    el.style.height = newH + 'px';
+                    asideEl[0].style.height = newH + 'px';
+
                 }
 
             }
@@ -373,17 +353,16 @@
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisionMatrixList = result.decisionMatrixs;
-                vm.decisionMatrixsData = result;
+                initSorters(result.totalDecisionMatrixs);
                 return result;
             });
         }
 
         function initMatrix(data) {
+            createMatrixContent();
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
             });
-            initSorters(vm.decisionMatrixsData.totalDecisionMatrixs);
-            createMatrixContent();
             setMatrixTableWidth(data.length);
             renderMatrix();
         }
