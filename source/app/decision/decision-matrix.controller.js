@@ -93,10 +93,15 @@
                     getCharacteristictsGroupsById(vm.decisionId)
                 ])
                 .then(function(values) {
+                    initMatrixScroller();
+
+                    // Fill all criterias
                     if ($state.params.analysisId === 'hall-of-fame') {
                         _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                         _fo.persistent = false;
                     }
+
+                    // Render html matrix
                     initMatrix(values[0].decisionMatrixs);
                 }, function(error) {
                     console.log(error);
@@ -206,10 +211,10 @@
         //     });
         // }
 
-        // All content 
+        // All content
         function createMatrixContent(decisionMatrixs, ctiteriaList, characteristictsList) {
             // var vm.decisionMatrixList = _.clone(decisionMatrixs);
-            // Ctiteria 
+            // Ctiteria
             ctiteriaList = ctiteriaList ? ctiteriaList : vm.criteriaGroups;
             vm.criteriaListMatrix = _.filter(ctiteriaList, function(ctiteriaList) {
                 _.map(ctiteriaList.criteria, function(ctiteriaListEl) {
@@ -241,7 +246,7 @@
         }
 
         function typeFormater(item) {
-            if(!item) return;
+            if (!item) return;
             // CASE
             switch (item.valueType) {
                 case "STRING":
@@ -321,8 +326,12 @@
                     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
                     // Set new height
-                    el.style.height = newH + 'px';
-                    asideEl[0].style.height = newH + 'px';
+                    if (el.clientHeight != newH) {
+                        el.style.height = newH + 'px';
+                    }
+                    if (asideElH != newH) {
+                        asideEl[0].style.height = newH + 'px';
+                    }
                 }
 
             }
@@ -439,21 +448,25 @@
         }
 
         // Custom scroll
-        var wrapper = document.getElementById('matrix-table-body');
-        var martrixScroll = new IScroll(wrapper, {
-            scrollbars: true,
-            scrollX: true,
-            scrollY: true,
-            mouseWheel: true,
-            interactiveScrollbars: true,
-            shrinkScrollbars: 'scale',
-            fadeScrollbars: false,
-            probeType: 3,
-            useTransition: true,
-            disablePointer: true,
-            disableTouch: false,
-            disableMouse: false
-        });
+        var martrixScroll;
+
+        function initMatrixScroller() {
+            var wrapper = document.getElementById('matrix-table-body');
+            martrixScroll = new IScroll(wrapper, {
+                scrollbars: true,
+                scrollX: true,
+                scrollY: true,
+                mouseWheel: true,
+                interactiveScrollbars: true,
+                shrinkScrollbars: 'scale',
+                fadeScrollbars: false,
+                probeType: 3,
+                useTransition: true,
+                disablePointer: true,
+                disableTouch: false,
+                disableMouse: false
+            });
+        }
 
         function reinitMatrixScroller() {
             if (martrixScroll) {

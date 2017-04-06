@@ -29,6 +29,7 @@ var config = {
     allCssFiles: 'source/styles/*.css',
     allHtmlFiles: 'source/app/**/*.html',
     bootstrapFonts: 'bower_components/bootstrap/fonts',
+    fontAwesome: 'bower_components/font-awesome/fonts',
     allJsOrdered: ['source/app/app.js', 'source/app/**/*.module.js', 'source/app/**/*.js'],
     index: 'source/app/index.tpl.html',
     images: 'source/images',
@@ -85,7 +86,9 @@ gulp.task('inject', ['jshint', 'less'], function() {
 //======= build tasks
 gulp.task('fonts', function() {
     log('Copying fonts');
-    return gulp.src(config.bootstrapFonts + '/*')
+    return gulp.src([
+        config.bootstrapFonts + '/*',
+        config.fontAwesome + '/*'])
         .pipe(gulp.dest(config.release + '/fonts'));
 });
 
