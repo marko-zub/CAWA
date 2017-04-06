@@ -207,7 +207,8 @@
                                     <div class="matrix-table-row">
                                         <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by $index" ui-sref="decisions.single.matrix.child.option({discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.characteristicId, critOrCharSlug: item.nameSlug })">
                                             <div class="matrix-table-col-content">
-                                                {{decisionCol.characteristics.value}} <span  ng-if="decisionCol.characteristics.descriptionFull" class="link-secondary" uib-popover="{{decisionCol.characteristics.descriptionFull}}" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0">Read more</span>
+                                                <div ng-bind-html="decisionCol.characteristics.value"></div>
+                                                <span  ng-if="decisionCol.characteristics.descriptionFull" class="link-secondary" uib-popover="{{decisionCol.characteristics.descriptionFull}}" popover-placement="top" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0">Read more</span>
                                                 <div class="app-item-additional-wrapper">
                                                     <div class="app-item-comments">
                                                         <span class="glyphicon glyphicon-comment"></span>0

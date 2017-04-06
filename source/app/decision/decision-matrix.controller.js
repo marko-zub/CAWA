@@ -245,6 +245,19 @@
             });
         }
 
+        function typeFormaterArray(str) {
+            var html = '';
+            var array = JSON.parse(str);
+            // console.log(array);
+            html += '<ul class="app-list-sm">';
+            _.map(array, function(el) {
+                html += '<li>' + el + '</li>';
+            });
+            html += '</ul>';
+            return $sce.trustAsHtml(html);
+        }
+
+
         function typeFormater(item) {
             if (!item) return;
             // CASE
@@ -255,8 +268,13 @@
                 case "DATETIME":
                     item.value = $filter('date')(new Date(item.value), "dd/MM/yyyy");
                     break;
+                case "STRINGARRAY":
+                    item.value = typeFormaterArray(item.value);
+                    break;
+                case "INTEGERARRAY":
+                    item.value = typeFormaterArray(item.value);
+                    break;
             }
-            // debugger
 
             return item;
         }
