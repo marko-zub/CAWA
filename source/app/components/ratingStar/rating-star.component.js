@@ -39,9 +39,6 @@
                 vm.totalVotes = 0;
                 $($element).find('.js-rating-rate').addClass('hide');
                 $($element).find('.js-total-votes').addClass('hide');
-            } else {
-                $($element).find('.js-rating-rate').removeClass('hide');
-                $($element).find('.js-total-votes').removeClass('hide');
             }
             // calc default rating widthout %
             if (value && value.indexOf('%') === -1) {
