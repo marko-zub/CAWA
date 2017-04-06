@@ -245,10 +245,11 @@
             });
         }
 
+        // TODO: move to another component
         function typeFormaterArray(str) {
-            var html = '';
-            var array = JSON.parse(str);
-            // console.log(array);
+            var html = '',
+                array = JSON.parse(str);
+
             html += '<ul class="app-list-sm">';
             _.map(array, function(el) {
                 html += '<li>' + el + '</li>';
@@ -259,9 +260,9 @@
 
 
         function typeFormater(item) {
-            if (!item) return;
+            if (!item || !item.valueType) return item;
             // CASE
-            switch (item.valueType) {
+            switch (item.valueType.toUpperCase()) {
                 case "STRING":
                     stringFullDescr(item);
                     break;

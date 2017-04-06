@@ -22,7 +22,7 @@
     function taOptions(taRegisterTool, taOptions) {
         // $delegate is the taOptions we are decorating
         taOptions.toolbar = [
-            ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+            ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
             ['html', 'insertImage', 'insertLink', 'insertVideo']
         ];
 
