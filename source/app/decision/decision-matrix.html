@@ -17,6 +17,7 @@
             </ul>
 
             <div class="pull-right">
+                <a href class="btn btn-sm" ng-click="vm.getComments()">Commnets</a>
                 <a href class="btn btn-primary btn-sm">Ask for Decision</a>
             </div>
         </div>
@@ -236,6 +237,16 @@
         </div>
     </div>
 </div>
+
+
+<!-- Comments -->
+<pageslide class="sidebar" ps-size="500px" ps-open="vm.isGetCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
+    <h4>
+        Comments
+    </h4>
+</pageslide>
+<!-- End Comments -->
+
 <!-- Characteristics Filters -->
 <!-- <div ng-repeat="group in vm.characteristicGroups track by $index">
     <div ng-repeat="characteristic in group.characteristics track by $index" data-pop-over-content-id="{{characteristic.characteristicId}}" class="hide app-pop-over-content">

@@ -682,5 +682,14 @@
             }
         }
 
+
+        // Discussions
+        vm.isGetCommentsOpen = false;
+        vm.getComments = getComments;
+
+        function getComments() {
+            vm.isGetCommentsOpen = true;
+        }
+
     }
 })();

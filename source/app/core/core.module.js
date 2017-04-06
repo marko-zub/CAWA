@@ -9,6 +9,7 @@
 			'ngAnimate',
 			'ngStorage',
 			'angular-jwt',
+			'pageslide-directive',
 			'textAngular'
 		]);
 
