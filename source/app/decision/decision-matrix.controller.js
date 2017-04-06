@@ -50,7 +50,7 @@
                     }
 
                     // Render html matrix
-                    initMatrix(values[0]);
+                    initMatrix(values[0].decisionMatrixs);
                 },
                 function(error) {
                     console.log(error);
