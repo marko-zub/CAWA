@@ -8,12 +8,12 @@
 
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
         '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
-        'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter'
+        'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
         $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
-        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter) {
+        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile) {
         var
             vm = this,
             isInitedSorters = false,
@@ -182,12 +182,11 @@
                 var decisionCharacteristicFind = _.pick(decisionMatrixEl, 'decision');
 
                 _.findLast(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
-                    descriptionTrustHtml(decisionMatrixEl.characteristics);
                     if (decisionCharacteristic.characteristicId === characteristicId) {
-                        decisionCharacteristicFind.characteristics = typeFormater(decisionCharacteristic);
+                        decisionCharacteristicFind.characteristics = decisionCharacteristic;
                     }
                 });
-                return typeFormater(decisionCharacteristicFind);
+                return decisionCharacteristicFind;
             });
         }
 
@@ -205,7 +204,6 @@
 
         // All content
         function createMatrixContent() {
-            // var vm.decisionMatrixList = _.clone(decisionMatrixs);
             // Ctiteria
             createMatrixContentCriteia();
 
@@ -222,52 +220,6 @@
                 }
                 return el;
             });
-        }
-
-        // TODO: move to another component
-        function typeFormaterArray(str) {
-            if (_.isObject(str)) return str;
-            var html = '',
-                array = JSON.parse(str);
-
-            html += '<ul class="app-list-sm">';
-            _.map(array, function(el) {
-                html += '<li>' + el + '</li>';
-            });
-            html += '</ul>';
-            return $sce.trustAsHtml(html);
-        }
-
-
-        function typeFormater(item) {
-            if (!item || !item.valueType) return item;
-            // CASE
-            switch (item.valueType.toUpperCase()) {
-                case "STRING":
-                    stringFullDescr(item);
-                    break;
-                case "DATETIME":
-                    item.value = $filter('date')(new Date(item.value), "dd/MM/yyyy");
-                    break;
-                case "STRINGARRAY":
-                    item.value = typeFormaterArray(item.value);
-                    break;
-                case "INTEGERARRAY":
-                    item.value = typeFormaterArray(item.value);
-                    break;
-            }
-
-            return item;
-        }
-
-        function stringFullDescr(item) {
-            if (item.value && item.value.length >= 40) {
-                item.descriptionFull = item.value;
-                item.value = item.value.substring(0, 40);
-                item.value += '...';
-            }
-            // debugger
-            return item;
         }
 
         //Init sorters, when directives loaded
@@ -304,14 +256,15 @@
 
 
         // TODO: optimize
-        var matrixAside,
-            matrixCols;
-
-        matrixAside = document.getElementById('matrix-table-aside');
-        matrixCols = document.getElementsByClassName('matrix-table-item-content');
 
         function calcMatrixRowHeight() {
+            var matrixAside,
+                matrixCols;
 
+            matrixAside = document.getElementById('matrix-table-aside');
+            matrixCols = document.getElementsByClassName('matrix-table-item-content');
+
+            $('.matrix-table-item').css('height', '');
             for (var i = 0; i < matrixCols.length; i++) {
                 var el,
                     asideEl,
