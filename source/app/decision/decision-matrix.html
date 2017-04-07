@@ -50,9 +50,7 @@
                                                     <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                 </div>
                                                 <div class="app-title-inline">
-                                                    <span>
-                                                        {{item.decision.name}}
-                                                    </span>
+                                                    <span ng-bind="item.decision.name"></span>
                                                 </div>
                                             </div>
                                         </a>
@@ -92,13 +90,14 @@
                                     <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
                                         <div class="matrix-table-item matrix-table-group-item">
                                             <div class="matrix-table-group-title">
-                                                <span class="group-title-line">{{group.name}}</span>
+                                                <span class="group-title-line" ng-bind="group.name"></span>
                                             </div>
                                         </div>
-                                        <div class="matrix-table-item matrix-control" ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                        <div class="matrix-table-item matrix-control" ng-repeat="criteria in group.criteria track by $index " ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
 
                                                 <div class="matrix-table-title-wrapper">
                                                     <div class="matrix-table-title app-sorter-wrapper">
+                                                        <!-- {{criteria.criterionId}} -->
                                                         {{criteria.name}}
                                                     </div>
                                                     <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
@@ -127,7 +126,7 @@
                                     <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
                                         <div class="matrix-table-item matrix-table-group-item">
                                             <div class="matrix-table-group-title">
-                                                <span class="group-title-line">{{group.name}}</span>
+                                                <span class="group-title-line" ng-bind="group.name"></span>
                                             </div>
                                         </div>
 
@@ -174,6 +173,8 @@
 
                                         <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by $index"  ng-click="vm.getComments()">
                                             <div class="matrix-table-col-content">
+<!--                                                 {{item.criterionId}}
+                                                {{decisionCol.criteria.criterionId}} -->
                                                 <div ng-if="decisionCol.criteria.totalVotes">
                                                     <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
                                                 </div>

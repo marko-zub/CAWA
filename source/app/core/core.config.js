@@ -6,13 +6,19 @@
         .module('app.core')
         .config(configuration);
 
-    configuration.$inject = ['$animateProvider', '$provide'];
+    configuration.$inject = ['$animateProvider', '$provide', '$httpProvider', '$compileProvider'];
 
-    function configuration($animateProvider, $provide) {
+    function configuration($animateProvider, $provide, $httpProvider, $compileProvider) {
         // Enable ngAnimation for specific class
         $animateProvider.classNameFilter(/angular-animate/);
 
         $provide.decorator('taOptions', taOptions);
+
+        // Call $digest after all request finshed
+        $httpProvider.useApplyAsync(true);
+
+        // TODO: disable only on prod Disable
+        $compileProvider.debugInfoEnabled(false);
     }
 
 

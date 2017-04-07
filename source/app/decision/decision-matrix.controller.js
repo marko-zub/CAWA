@@ -31,10 +31,6 @@
         function init() {
             console.log('Decision Matrix Controller');
 
-            // Get matrix data
-            vm.decisionsSpinner = true;
-
-
             // TODO: render as separeted patrs
             $q.all([
                 searchDecisionMatrix(vm.decisionId),
@@ -60,8 +56,6 @@
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 vm.decisionMatrixList = data;
-                vm.decisionsSpinner = false;
-                // console.log(vm.decisionMatrixList)
                 setDecisionMatchPercent(data);
                 initMatrix(vm.decisionMatrixList);
             });
@@ -107,7 +101,6 @@
                         criteriaIds.push(el.criterionId);
                         return el;
                     });
-
                     return resultEl;
                 }
             });
@@ -153,12 +146,15 @@
         function findDecisonMatrixCriteriaById(criterionId) {
             return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 var decisionCriteriaFind = _.pick(decisionMatrixEl, 'decision');
+                // console.log(decisionMatrixEl);
 
-                _.findLast(decisionMatrixEl.criteria, function(decisionCriteria) {
+                _.find(decisionMatrixEl.criteria, function(decisionCriteria) {
                     if (decisionCriteria.criterionId === criterionId) {
                         decisionCriteriaFind.criteria = decisionCriteria;
                     }
                 });
+
+                // console.log(criterionId, decisionCriteriaFind);
                 return decisionCriteriaFind;
             });
         }
@@ -166,9 +162,10 @@
         function createMatrixContentCriteia(decisionMatrixs, ctiteriaList) {
             // Ctiteria
             ctiteriaList = vm.criteriaGroups;
-            vm.criteriaListMatrix = _.filter(ctiteriaList, function(ctiteriaListItem) {
+            vm.criteriaListMatrix = _.map(ctiteriaList, function(ctiteriaListItem) {
                 _.map(ctiteriaListItem.criteria, function(ctiteriaListEl) {
                     ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
+                    // console.log(ctiteriaListEl.decisionsRow);
                     return ctiteriaListEl;
                 });
                 return ctiteriaListItem;
@@ -181,7 +178,7 @@
             return _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 var decisionCharacteristicFind = _.pick(decisionMatrixEl, 'decision');
 
-                _.findLast(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
+                _.find(decisionMatrixEl.characteristics, function(decisionCharacteristic) {
                     descriptionTrustHtml(decisionMatrixEl.characteristics);
                     if (decisionCharacteristic.characteristicId === characteristicId) {
                         decisionCharacteristicFind.characteristics = typeFormater(decisionCharacteristic);
@@ -205,7 +202,6 @@
 
         // All content
         function createMatrixContent() {
-            // var vm.decisionMatrixList = _.clone(decisionMatrixs);
             // Ctiteria
             createMatrixContentCriteia();
 
@@ -327,12 +323,9 @@
                     newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
 
                     // Set new height
-
                     el.style.height = newH + 'px';
                     asideEl[0].style.height = newH + 'px';
-
                 }
-
             }
         }
 

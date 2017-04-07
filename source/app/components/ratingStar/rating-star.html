@@ -3,8 +3,8 @@
         <span class="bar" ng-style="{'width':vm.rating}"></span>
     </div>
     <div class="app-rating-votes">
-      <span class="app-rating-votes-weight">{{vm.value}}</span>
-      <span class="js-total-votes"><span class="app-icon glyphicon glyphicon-thumbs-up"></span>{{vm.totalVotes}}
+      <span class="app-rating-votes-weight" ng-bind="vm.value"></span>
+      <span class="js-total-votes"><span class="app-icon glyphicon glyphicon-thumbs-up" ng-bind="vm.totalVotes"></span>
     </div>
     <a class="js-rating-rate hide" href>Rate it first</a>
 </div>
