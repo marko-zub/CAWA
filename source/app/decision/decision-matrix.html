@@ -119,7 +119,7 @@
                                 <!-- End Criteria Aside -->
 
                                 <!-- Characteristic Aside -->
-                                <div class="criteria-list group-wrapper">
+                                <div class="criteria-list group-wrapper" >
                                     <div class="title">
                                         Characteristics
                                     </div>
@@ -136,7 +136,7 @@
                                                     <!-- <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>
                                                         <i class="glyphicon glyphicon-filter"></i>
                                                     </div> -->
-                                                <filter-control item="characteristic"></filter-control>
+                                                <!-- <filter-control item="characteristic"></filter-control> -->
                                                 <div class="app-sorter" ng-if="characteristic.valueType !== 'STRINGARRAY' && characteristic.valueType !== 'INTEGERARRAY'">
                                                     <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'ASC'}"></span>
                                                     <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'DESC'}"></span>
@@ -161,7 +161,7 @@
                         <div id="matrix-table-content" class="matrix-table-content">
 
                             <!-- Criteria Content -->
-                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index" ng-if="vm.criteriaGroups">
+                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
                                 <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                     <div class="matrix-table-group-title">
                                         <!-- <span class="group-title-line">{{group.name}}</span> -->
@@ -196,7 +196,7 @@
                             <!-- End Criteria Content -->
 
                             <!-- Characteristic Content -->
-                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index" ng-if="vm.characteristicGroups">
+                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
                                 <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
                                     <div class="matrix-table-group-title">
                                         <!-- <span class="group-title-line">{{group.name}}</span> -->

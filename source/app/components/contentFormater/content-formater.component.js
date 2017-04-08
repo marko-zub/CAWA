@@ -27,12 +27,10 @@
         // init();
 
         function init() {
-            if (vm.item) {
-                vm.item = _.pick(vm.item, 'value', 'valueType');
-                var renderContent = typeFormater(vm.item);
-                $element.html(renderContent.value);
-                $compile($element.contents())($scope);
-            }
+            vm.item = _.pick(vm.item, 'value', 'valueType');
+            var renderContent = typeFormater(vm.item);
+            $element.html(renderContent.value);
+            if (vm.item) $compile($element.contents())($scope);
         }
 
         function onChanges() {

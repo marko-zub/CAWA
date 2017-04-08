@@ -34,23 +34,24 @@
             // Get matrix data
             vm.decisionsSpinner = true;
 
-
             // TODO: render as separeted patrs
             $q.all([
-                searchDecisionMatrix(vm.decisionId),
                 getCriteriaGroupsById(vm.decisionId),
                 getCharacteristictsGroupsById(vm.decisionId)
             ]).then(function(values) {
 
-                    initMatrixScroller();
-
-                    // Render html matrix
-                    initMatrix(values[0].decisionMatrixs, values[1], values[2], values[0].totalDecisionMatrixs);
                     // Fill all criterias
                     if ($state.params.analysisId === 'hall-of-fame') {
                         _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                         _fo.persistent = false;
                     }
+
+                    // Render html matrix
+                    searchDecisionMatrix(vm.decisionId).then(function(result) {
+                        initMatrix(result.decisionMatrixs, values[0], values[1], result.totalDecisionMatrixs);
+                        initMatrixScroller();
+                    });
+
                 },
                 function(error) {
                     console.log(error);
@@ -61,7 +62,6 @@
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 vm.decisionMatrixList = data;
                 vm.decisionsSpinner = false;
-                // console.log(vm.decisionMatrixList)
                 setDecisionMatchPercent(data);
                 initMatrix(vm.decisionMatrixList);
             });
@@ -98,8 +98,21 @@
 
         }
 
+        function createCriteriaIds(array) {
+            criteriaIds = [];
+            _.map(array, function(resultEl) {
+                _.map(resultEl.criteria, function(el) {
+                    criteriaIds.push(el.criterionId);
+                });
+            });
+        }
+
+
         function getCriteriaGroupsById(decisionId) {
-            return DecisionDataService.getCriteriaGroupsById(decisionId);
+            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+                createCriteriaIds(result);
+                return result;
+            });
         }
 
 
@@ -131,13 +144,11 @@
 
         function createMatrixContentCriteia(ctiteriaList) {
             // Ctiteria
-            criteriaIds = [];
             ctiteriaList = ctiteriaList || _.clone(vm.criteriaGroups); //TODO: optimize clean up
             vm.criteriaGroups = _.filter(ctiteriaList, function(ctiteriaListItem) {
                 if (ctiteriaListItem.criteria.length > 0) {
                     _.map(ctiteriaListItem.criteria, function(ctiteriaListEl) {
                         ctiteriaListEl.description = $sce.trustAsHtml(ctiteriaListEl.description);
-                        criteriaIds.push(ctiteriaListEl.criterionId);
 
                         ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
                         return ctiteriaListEl;
@@ -182,12 +193,47 @@
             // console.log(decisions);
             var criteriaGroupsCopy = _.clone(criteriaGroups);
             var characteristicGroupsCopy = _.clone(characteristicGroups);
-            _.map(decisions, function(decision) {
+            _.map(decisions, function(item, itemIndex) {
                 // console.log(decision.criteria);
-                console.log(decision.characteristics);
+                var decisionSend = _.pick(item.decision, 'decisionId', 'nameSlug');
+                _.map(item.criteria, function(decisionCriteria) {
+                        // console.log(decisionCriteria.criterionId);
+                        findCriteriaIndexById(criteriaGroupsCopy, decisionCriteria, decisionSend, itemIndex, decisions.length);
+                    });
+                    // console.log(decision.characteristics);
             });
-            // console.log( criteriaGroups);
-            console.log(characteristicGroups);
+            console.log(criteriaGroupsCopy);
+            // console.log(characteristicGroups);
+        }
+
+        function findCriteriaIndexById(array, criteria, decision, decisionIndex, decisionsLegth) {
+            _.map(array, function(resultEl) {
+                _.map(resultEl.criteria, function(criteriaItem) {
+
+                    criteriaItem.decisionsRowNew = [];
+                    for (var i = 0; i < decisionsLegth; i++) {
+                        criteriaItem.decisionsRowNew[i] = {
+                            criteria: i
+                        };
+                    }
+                    // criteriaItem.decisionsRowNew = Array(decisionsLegth || 10);
+                    // criteriaItem.decisionsRowNew[8] = 10;
+                    if (criteriaItem.criterionId === criteria.criterionId) {
+                        // console.log(array, criteria, decision, decisionIndex, decisionsLegth);
+                        // criteriaItem.decisionsRowNew[3].criteria = criteria;
+                        // console.log(criteriaItem.decisionsRowNew[decisionIndex], decisionIndex);
+                        // criteriaItem.decisionsRowNew[decisionIndex] = decision;
+                        // criteriaItem.decisionsRowNew[decisionIndex].criteria = criteria;
+                        // console.log(criteriaItem.decisionsRowNew[decisionIndex]);
+
+                    }
+
+                });
+
+
+                // console.log(id, index);
+            });
+
         }
 
         // All content
@@ -213,13 +259,13 @@
 
         //Init sorters, when directives loaded
         function initSorters() {
+
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
 
             // Set Criteria
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
-
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.criterionId)) {
                         el.isSelected = true;
                         // Set criterion coefficient el.coefficient.
@@ -300,7 +346,6 @@
         }
 
         function initMatrix(data, criteriaGroups, characteristicGroups) {
-            initSorters();
             // createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
             createMatrixContent(criteriaGroups, characteristicGroups);
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
@@ -308,6 +353,7 @@
             });
             setMatrixTableWidth(data.length);
             renderMatrix();
+            initSorters();
         }
 
         // TODO: make as in sorter directive

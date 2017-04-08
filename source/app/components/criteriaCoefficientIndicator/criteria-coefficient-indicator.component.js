@@ -21,15 +21,16 @@
         var vm = this;
 
         vm.$doCheck = doCheck;
+        vm.$onChanges = onChanges;
+
 
         init();
 
         function setCoefficientIndicator(coefficient) {
-            if (!coefficient) {
-                return;
-            }
+            if (!coefficient) return;
+
             // set color of indicator
-            _.forEach(vm.coefficientList, function(c) {
+            _.map(vm.coefficientList, function(c) {
                 c.class = '';
                 if (c.value <= coefficient.value) {
                     c.class = coefficient.name.toLowerCase();
@@ -47,5 +48,10 @@
         function doCheck() {
             setCoefficientIndicator(vm.coefficient);
         }
+
+        function onChanges() {
+            init();
+        }
+ 
     }
 })();

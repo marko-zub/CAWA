@@ -186,8 +186,8 @@
         analysisId = urlParams[urlParams.length - 1];
         analysisSlug = urlParams[urlParams.length - 2];
 
-        // console.log(analysisSlug, analysisId);
-        if (analysisSlug === 'analysis' && analysisId) {
+        // console.log(analysisSlug, analysisId); 
+        if (analysisSlug === 'analysis' && analysisId && analysisId !== 'hall-of-fame') {
             return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
                 if (resp.error) {
                     console.log(resp.error);
