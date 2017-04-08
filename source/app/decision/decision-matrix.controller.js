@@ -132,16 +132,18 @@
         function createMatrixContentCriteia(ctiteriaList) {
             // Ctiteria
             criteriaIds = [];
-            ctiteriaList = ctiteriaList || vm.criteriaGroups;
+            ctiteriaList = ctiteriaList || _.clone(vm.criteriaGroups); //TODO: optimize clean up
             vm.criteriaGroups = _.filter(ctiteriaList, function(ctiteriaListItem) {
-                _.map(ctiteriaListItem.criteria, function(ctiteriaListEl) {
-                    ctiteriaListEl.description = $sce.trustAsHtml(ctiteriaListEl.description);
-                    criteriaIds.push(ctiteriaListEl.criterionId);
+                if (ctiteriaListItem.criteria.length > 0) {
+                    _.map(ctiteriaListItem.criteria, function(ctiteriaListEl) {
+                        ctiteriaListEl.description = $sce.trustAsHtml(ctiteriaListEl.description);
+                        criteriaIds.push(ctiteriaListEl.criterionId);
 
-                    ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
-                    return ctiteriaListEl;
-                });
-                return ctiteriaListItem;
+                        ctiteriaListEl.decisionsRow = findDecisonMatrixCriteriaById(ctiteriaListEl.criterionId);
+                        return ctiteriaListEl;
+                    });
+                    return ctiteriaListItem;
+                }
             });
         }
 
@@ -162,14 +164,16 @@
         }
 
         function createMatrixContentCharacteristicts(characteristicGroups) {
-            characteristicGroups = characteristicGroups || vm.characteristicGroups;
-            vm.characteristicGroups =_.map(characteristicGroups, function(characteristictsListItem) {
-                characteristictsListItem.description = $sce.trustAsHtml(characteristictsListItem.description);
-                _.map(characteristictsListItem.characteristics, function(characteristictsListEl) {
-                    characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(characteristictsListEl.characteristicId);
-                    return characteristictsListEl;
-                });
-                return characteristictsListItem;
+            characteristicGroups = characteristicGroups || _.clone(vm.characteristicGroups); //TODO: optimize clean up
+            vm.characteristicGroups = _.filter(characteristicGroups, function(characteristictsListItem) {
+                if (characteristictsListItem.characteristics.length > 0) {
+                    characteristictsListItem.description = $sce.trustAsHtml(characteristictsListItem.description);
+                    _.map(characteristictsListItem.characteristics, function(characteristictsListEl) {
+                        characteristictsListEl.decisionsRow = findDecisonMatrixCharacteristictsById(characteristictsListEl.characteristicId);
+                        return characteristictsListEl;
+                    });
+                    return characteristictsListItem;
+                }
             });
         }
 
@@ -208,12 +212,11 @@
         }
 
         //Init sorters, when directives loaded
-        function initSorters(total) {
-            _fo.pagination.totalDecisions = total;
+        function initSorters() {
+            _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
 
             // Set Criteria
-
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
 
@@ -241,11 +244,11 @@
 
 
         // TODO: optimize
-            var matrixAside,
-                matrixCols;
+        var matrixAside,
+            matrixCols;
 
-            matrixAside = document.getElementById('matrix-table-aside');
-            matrixCols = document.getElementsByClassName('matrix-table-item-content');
+        matrixAside = document.getElementById('matrix-table-aside');
+        matrixCols = document.getElementsByClassName('matrix-table-item-content');
 
         function calcMatrixRowHeight() {
 
@@ -274,6 +277,7 @@
         }
 
         // TODO: drop settimeout and apply
+        // Need only for first time load
         function renderMatrix() {
             setTimeout(function() {
                 calcMatrixRowHeight();
@@ -290,12 +294,13 @@
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisionMatrixList = result.decisionMatrixs;
+                vm.decisions = result;
                 return result;
             });
         }
 
-        function initMatrix(data, criteriaGroups, characteristicGroups, total) {
-            initSorters(total);
+        function initMatrix(data, criteriaGroups, characteristicGroups) {
+            initSorters();
             // createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
             createMatrixContent(criteriaGroups, characteristicGroups);
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
