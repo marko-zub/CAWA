@@ -24,11 +24,11 @@
 
         // TODO: optmize it
         // All this staff for reduce count of angular wathcers
-
-        init();
+        // init();
 
         function init() {
             if (vm.item) {
+                vm.item = _.pick(vm.item, 'value', 'valueType');
                 var renderContent = typeFormater(vm.item);
                 $element.html(renderContent.value);
                 $compile($element.contents())($scope);
@@ -79,7 +79,7 @@
                 var itemCopy = _.clone(item);
                 itemCopy.value = itemCopy.value.substring(0, 40);
                 itemCopy.value += '...';
-                itemCopy.value += '<span class="link-secondary" uib-popover="' + item.value + '" popover-placement="top" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0">Read more</span>';
+                itemCopy.value += '<span class="link-secondary" uib-popover="' + item.value + '" popover-placement="top" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0">read more</span>';
                 itemCopy.compile = true;
                 item = itemCopy;
             }
