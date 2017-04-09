@@ -33,7 +33,7 @@
             $compile($element.contents())($scope);
         }
 
-        init();
+        // init();
 
         function onChanges() {
             init();

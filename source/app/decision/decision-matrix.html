@@ -4,12 +4,12 @@
 
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-class="{'active':vm.matrixMode === 'inclusion'}">
+                <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
                     <a ng-click="vm.changeMatrixMode('inclusion')">{{::vm.decision.name}}
                         <span class="badge" ng-bind="vm.inclusionItemsLength"></span>
                     </a>
                 </li>
-                <li ng-class="{'active':vm.matrixMode === 'exclusion'}">
+                <li ng-class="{'active':vm.matrixMode == 'exclusion'}">
                     <a ng-click="vm.changeMatrixMode('exclusion')">Other
                         <span class="badge" ng-bind="vm.exclusionItemsLength"></span>
                     </a>
@@ -33,8 +33,8 @@
                                 <div class="matrix-table-title app-sorter-wrapper matrix-content-name">Name
                                 </div>
                                 <div class="app-sorter">
-                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id === 'name' && vm.fo.sortByDecisionProperty.order === 'ASC'}"></span>
-                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-click="vm.orderByDecisionProperty('name', 'DESC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id === 'name' && vm.fo.sortByDecisionProperty.order === 'DESC'}"></span>
+                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'ASC'}"></span>
+                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-click="vm.orderByDecisionProperty('name', 'DESC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'DESC'}"></span>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 <div class="matrix-table-col-content matrix-content-name decision-matrix-col">
                                         <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                             <div class="clearfix">
-                                                <div class="matrix-img-container img-sm" ng-if="item.decision.imageUrl">
+                                                <div class="matrix-img-container img-sm" >
                                                     <img ng-src="{{item.decision.imageUrl}}" class="img-responsive">
                                                 </div>
                                                 <div class="app-title-inline">
@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="app-panel-controls">
                                             <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode === 'inclusion', 'fa-eye': vm.matrixMode === 'exclusion'}"></i>
+                                                <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode == 'inclusion', 'fa-eye': vm.matrixMode == 'exclusion'}"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -104,8 +104,8 @@
                                                         <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                                     </div>
                                                     <div class="app-sorter">
-                                                        <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order === 'ASC'}"></span>
-                                                        <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order === 'DESC'}"></span>
+                                                        <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order == 'ASC'}"></span>
+                                                        <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order == 'DESC'}"></span>
                                                     </div>
 
 
@@ -136,10 +136,10 @@
                                                     <!-- <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>
                                                         <i class="glyphicon glyphicon-filter"></i>
                                                     </div> -->
-                                                <filter-control item="characteristic" ng-if="characteristic.valueType === 'STRINGARRAY'"></filter-control>
+                                                <filter-control item="characteristic" ng-if="characteristic.valueType == 'STRINGARRAY'"></filter-control>
                                                 <div class="app-sorter" ng-if="characteristic.valueType !== 'STRINGARRAY' && characteristic.valueType !== 'INTEGERARRAY'">
-                                                    <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'ASC'}"></span>
-                                                    <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id === characteristic.characteristicId && vm.fo.sortByCharacteristic.order === 'DESC'}"></span>
+                                                    <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'ASC'}"></span>
+                                                    <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>
                                                 </div>
 
                                                 <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
