@@ -946,3 +946,40 @@ a {
         }
     }
 }
+
+.filter-item {
+    overflow: auto;
+    position: absolute;
+    top: 30px;
+    bottom: 5px;
+    min-height: 100px;
+    label {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 1.2;
+        vertical-align: top;
+        margin-top: 0px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+        margin: 0;
+        vertical-align: top;
+    }
+    .filter-item-checkbox {
+        vertical-align: top;
+        display: block;
+        line-height: 1;
+        .clearfix;
+        margin-bottom: 8px;
+        input[type="radio"], input[type="checkbox"] {
+            float: left;
+            // width: 15%;
+            margin-right: 5px;
+        }
+        label {
+            float: left;
+            // cursor: pointer;
+            width: 85%;
+            padding-right: 5px;
+        }
+    }
+}

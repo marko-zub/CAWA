@@ -29,9 +29,11 @@
         function init() {
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = typeFormater(vm.item);
-            $element.html(renderContent.value);
-            if (vm.item) $compile($element.contents())($scope);
+            $element.html(renderContent.value || '');
+            $compile($element.contents())($scope);
         }
+
+        init();
 
         function onChanges() {
             init();
@@ -67,6 +69,8 @@
                 case "INTEGERARRAY":
                     item.value = typeFormaterArray(item.value);
                     break;
+                default:
+                    item.value = item.value || '';
             }
 
             return item;
