@@ -188,53 +188,85 @@
             });
         }
 
-        // TODO: finlaize it
+        // TODO: finlaize it & clean up
         function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
             // console.log(decisions);
-            var criteriaGroupsCopy = _.clone(criteriaGroups);
-            var characteristicGroupsCopy = _.clone(characteristicGroups);
+            var criteriaGroupsCopy = _.clone(criteriaGroups) || vm.criteriaGroups;
+            var characteristicGroupsCopy = _.clone(characteristicGroups) || vm.characteristicGroups;
+
+            // Fill criteria empty decisions
+            _.map(criteriaGroupsCopy, function(resultEl) {
+                _.map(resultEl.criteria, function(criteriaItem) {
+                    criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
+                    // criteriaItem.decisionsRow = Array(decisions.length || 10);
+                    criteriaItem.decisionsRow = [];
+                    // TODO: clean up
+                    for (var i = 0; i < decisions.length; i++) {
+                        criteriaItem.decisionsRow[i] = {
+                            criteria: null
+                        };
+                    }
+                });
+            });
+
+            // Fill characteristics empty decisions
+            _.map(characteristicGroupsCopy, function(resultEl) {
+                _.map(resultEl.characteristics, function(characteristicsItem) {
+                    characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+                    characteristicsItem.decisionsRow = [];
+                    // TODO: clean up
+                    for (var i = 0; i < decisions.length; i++) {
+                        characteristicsItem.decisionsRow[i] = {
+                            characteristics: null
+                        };
+                    }
+                });
+            });
+
+
             _.map(decisions, function(item, itemIndex) {
                 // console.log(decision.criteria);
                 var decisionSend = _.pick(item.decision, 'decisionId', 'nameSlug');
+
+                // criteria
                 _.map(item.criteria, function(decisionCriteria) {
-                        // console.log(decisionCriteria.criterionId);
-                        findCriteriaIndexById(criteriaGroupsCopy, decisionCriteria, decisionSend, itemIndex, decisions.length);
-                    });
-                    // console.log(decision.characteristics);
-            });
-            console.log(criteriaGroupsCopy);
-            // console.log(characteristicGroups);
-        }
-
-        function findCriteriaIndexById(array, criteria, decision, decisionIndex, decisionsLegth) {
-            _.map(array, function(resultEl) {
-                _.map(resultEl.criteria, function(criteriaItem) {
-
-                    criteriaItem.decisionsRowNew = [];
-                    for (var i = 0; i < decisionsLegth; i++) {
-                        criteriaItem.decisionsRowNew[i] = {
-                            criteria: i
-                        };
-                    }
-                    // criteriaItem.decisionsRowNew = Array(decisionsLegth || 10);
-                    // criteriaItem.decisionsRowNew[8] = 10;
-                    if (criteriaItem.criterionId === criteria.criterionId) {
-                        // console.log(array, criteria, decision, decisionIndex, decisionsLegth);
-                        // criteriaItem.decisionsRowNew[3].criteria = criteria;
-                        // console.log(criteriaItem.decisionsRowNew[decisionIndex], decisionIndex);
-                        // criteriaItem.decisionsRowNew[decisionIndex] = decision;
-                        // criteriaItem.decisionsRowNew[decisionIndex].criteria = criteria;
-                        // console.log(criteriaItem.decisionsRowNew[decisionIndex]);
-
-                    }
-
+                    // console.log(decisionCriteria.criterionId);
+                    findCriteriaIndexById(criteriaGroupsCopy, decisionCriteria, decisionSend, itemIndex);
                 });
 
-
-                // console.log(id, index);
+                // characteristics
+                _.map(item.characteristics, function(characteristic) {
+                    findCharacteristicsIndexById(characteristicGroupsCopy, characteristic, decisionSend, itemIndex);
+                });
             });
 
+            vm.criteriaGroups = criteriaGroupsCopy;
+            vm.characteristicGroups = characteristicGroupsCopy;
+
+            // console.log(characteristicGroupsCopy);
         }
+
+        function findCriteriaIndexById(array, criteria, decision, decisionIndex) {
+            _.map(array, function(resultEl) {
+                _.map(resultEl.criteria, function(criteriaItem) {
+                    if (criteriaItem.criterionId === criteria.criterionId) {
+                        criteriaItem.decisionsRow[decisionIndex].criteria = criteria;
+                    }
+                });
+            });
+        }
+
+        function findCharacteristicsIndexById(array, characteristics, decision, decisionIndex) {
+            _.map(array, function(resultEl) {
+                _.map(resultEl.characteristics, function(characteristicItem) {
+                    if (characteristicItem.characteristicId === characteristics.characteristicId) {
+                        characteristicItem.decisionsRow[decisionIndex].characteristics = characteristics;
+                    }
+                });
+            });
+        }
+
+
 
         // All content
         function createMatrixContent(criteriaGroups, characteristicGroups) {
@@ -346,8 +378,8 @@
         }
 
         function initMatrix(data, criteriaGroups, characteristicGroups) {
-            // createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
-            createMatrixContent(criteriaGroups, characteristicGroups);
+            createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
+            // createMatrixContent(criteriaGroups, characteristicGroups);
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
             });
