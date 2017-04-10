@@ -40,7 +40,8 @@
             },
             persistent: true,
             includeChildDecisionIds: null,
-            excludeChildDecisionIds: null
+            excludeChildDecisionIds: null,
+            filterQueries: null
         };
 
         //allias
@@ -70,7 +71,8 @@
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
-                excludeChildDecisionIds: _fo.excludeChildDecisionIds
+                excludeChildDecisionIds: _fo.excludeChildDecisionIds,
+                filterQueriefilterQueries: _fo.filterQueries
             };
         };
 
@@ -115,7 +117,8 @@
                 },
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
-                persistent: obj.persistent || false
+                persistent: obj.persistent || false,
+                filterQueries: obj.filterQueries || null
             };
 
             service.filterObject = sortObjAnalysis;

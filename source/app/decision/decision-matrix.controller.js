@@ -8,12 +8,12 @@
 
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
         '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
-        'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile'
+        'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
         $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
-        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile) {
+        DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
         var
             vm = this,
             isInitedSorters = false,
@@ -88,6 +88,7 @@
             });
 
             DecisionNotificationService.subscribeSelectSorter(function(event, data) {
+                // TODO: clean up DecisionSharedService in controller maake one object
                 DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
                 DecisionSharedService.filterObject.persistent = true;
                 vm.fo = DecisionSharedService.filterObject.sorters;
@@ -95,6 +96,16 @@
                     initMatrix(result.decisionMatrixs);
                 });
             });
+
+            DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
+                if(!data.filterQueries) return;
+                DecisionSharedService.filterObject.persistent = true;
+                DecisionSharedService.filterObject.filterQueries = data.filterQueries;
+                searchDecisionMatrix(vm.decisionId).then(function(result) {
+                    initMatrix(result.decisionMatrixs);
+                });
+            });
+
 
         }
 
@@ -601,23 +612,6 @@
             YEARPICKER: 'app/components/decisionCharacteristics/decision-characteristics-yearpicker-partial.html'
         };
 
-
-        vm.getControl = getControl;
-        vm.selectCharacteristic = selectCharacteristic;
-
-        function getControl(characteristic) {
-            return controls[characteristic.visualMode];
-        }
-
-        function selectCharacteristic(characteristic) {
-            DecisionNotificationService.notifySelectCharacteristic(characteristic);
-        }
-
-        DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-            console.log(data);
-        });
-
-
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
@@ -664,11 +658,11 @@
 
             if (vm.matrixMode === 'inclusion') {
                 _fo.excludeChildDecisionIds = _fo.excludeChildDecisionIds ? _fo.excludeChildDecisionIds : [];
-                addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
+                Utils.addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
 
             } else if (vm.matrixMode === 'exclusion') {
-                removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
+                Utils.removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
             }
             vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - vm.exclusionItemsLength;
@@ -677,21 +671,6 @@
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
         }
-
-        function addItemToArray(itemId, array) {
-            if (!itemId || _.includes(array, itemId)) return;
-            array.push(itemId);
-        }
-
-        function removeItemFromArray(itemId, array) {
-            if (!itemId) return;
-
-            var index = array.indexOf(itemId);
-            if (array.indexOf(itemId) > -1) {
-                array.splice(index, 1);
-            }
-        }
-
 
         // Discussions
         vm.isGetCommentsOpen = false;
