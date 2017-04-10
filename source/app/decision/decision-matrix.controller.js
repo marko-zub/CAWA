@@ -98,23 +98,29 @@
             });
 
             DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-                if(!data.filterQueries) return;
+                // if (!data.filterQueries) return;
                 DecisionSharedService.filterObject.persistent = true;
-                //TODO: get old value
-
+                //TODO: Clean up code
                 if (!DecisionSharedService.filterObject.filterQueries) {
                     DecisionSharedService.filterObject.filterQueries = [];
                 }
+
 
                 var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
                     return filterQuery.characteristicId == data.filterQueries.characteristicId;
                 });
                 if (find >= 0) {
-                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                    if (_.isEmpty(data.filterQueries.value)) {
+                        DecisionSharedService.filterObject.filterQueries.splice(find, 1);
+                    } else {
+                        DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                    }
                 } else {
                     DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
                 }
 
+                if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
+                // console.log(DecisionSharedService.filterObject.filterQueries);
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs);
                 });
@@ -162,69 +168,6 @@
 
 
         // TODO: native for
-        // function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
-        //     // console.log(decisions);
-        //     if (criteriaGroups) vm.criteriaGroups = criteriaGroups;
-        //     if (characteristicGroups) vm.characteristicGroups = characteristicGroups;
-
-        //     emptyRow = createEmtyObjList(decisions.length);
-
-        //     // Fill criteria empty decisions
-        //     for (var i = vm.criteriaGroups.length - 1; i >= 0; i--) {
-        //         for (var j = vm.criteriaGroups[i].criteria.length - 1; j >= 0; j--) {
-        //             var criteriaItem = vm.criteriaGroups[i].criteria[j];
-        //             if (criteriaItem.description && !_.isObject(criteriaItem.description)) {
-        //                 criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
-        //             }
-        //             criteriaItem.decisionsRow = createEmtyObjList(decisions.length);
-        //         }
-        //     }
-
-        //     // Fill characteristics empty decisions
-        //     for (var l = vm.characteristicGroups.length - 1; l >= 0; l--) {
-        //         if (vm.characteristicGroups[l].characteristics.length) {
-        //             for (var k = vm.characteristicGroups[l].characteristics.length - 1; k >= 0; k--) {
-        //                 var characteristicsItem = vm.characteristicGroups[l].characteristics[k];
-        //                 if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
-        //                     characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
-        //                 }
-        //                 characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
-        //             }
-        //         }
-        //     }
-
-        //     for (var x = decisions.length - 1; x >= 0; x--) {
-        //         var decisionItem = decisions[x];
-
-        //         var decisionSend = _.pick(decisionItem.decision, 'decisionId', 'nameSlug');
-
-        //         // criteria
-        //         for (var p = decisionItem.criteria.length - 1; p >= 0; p--) {
-        //             var decisionCriteria = decisionItem.criteria[p];
-        //             returnValueIndexByProperty(vm.criteriaGroups, decisionCriteria, 'criteria' , decisionSend, x);
-        //         }
-        //         // characteristics
-        //         for (var z = decisionItem.characteristics.length - 1; z >= 0; z--) {
-        //             var characteristic = decisionItem.characteristics[z];
-        //             returnValueIndexByProperty(vm.characteristicGroups, characteristic, 'characteristics', decisionSend, x);
-        //         }
-        //     }
-
-        // }
-
-        // function returnValueIndexByProperty(array, saveValue, savePropery, decision, decisionIndex) {
-        //     for (var i = array.length - 1; i >= 0; i--) {
-        //         var resultEl = array[i];
-        //         if(resultEl[savePropery] && resultEl[savePropery].length) {
-        //             for (var j = resultEl[savePropery].length - 1; j >= 0; j--) {
-        //                 var criteriaItem = resultEl[savePropery][j];
-        //                 criteriaItem.decisionsRow[decisionIndex][savePropery] = saveValue;
-        //             }
-        //         }
-        //     }
-        // }
-
-        // TODO: finlaize it & clean up
         function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
             // console.log(decisions);
             if (criteriaGroups) vm.criteriaGroups = criteriaGroups;
@@ -233,41 +176,111 @@
             emptyRow = createEmtyObjList(decisions.length);
 
             // Fill criteria empty decisions
-            _.map(vm.criteriaGroups, function(resultEl) {
-                _.map(resultEl.criteria, function(criteriaItem) {
+            for (var i = vm.criteriaGroups.length - 1; i >= 0; i--) {
+                for (var j = vm.criteriaGroups[i].criteria.length - 1; j >= 0; j--) {
+                    var criteriaItem = vm.criteriaGroups[i].criteria[j];
                     if (criteriaItem.description && !_.isObject(criteriaItem.description)) {
                         criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
                     }
                     criteriaItem.decisionsRow = createEmtyObjList(decisions.length);
-                });
-            });
+                }
+            }
 
             // Fill characteristics empty decisions
-            _.map(vm.characteristicGroups, function(resultEl) {
-                _.map(resultEl.characteristics, function(characteristicsItem) {
-                    if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
-                        characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+            for (var l = vm.characteristicGroups.length - 1; l >= 0; l--) {
+                if (vm.characteristicGroups[l].characteristics.length) {
+                    for (var k = vm.characteristicGroups[l].characteristics.length - 1; k >= 0; k--) {
+                        var characteristicsItem = vm.characteristicGroups[l].characteristics[k];
+                        if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
+                            characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+                        }
+                        characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
                     }
-                    characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
-                });
-            });
+                }
+            }
 
-            _.map(decisions, function(item, itemIndex) {
-                // console.log(decision.criteria);
-                var decisionSend = _.pick(item.decision, 'decisionId', 'nameSlug');
+            for (var x = decisions.length - 1; x >= 0; x--) {
+                var decisionItem = decisions[x];
+
+                var decisionSend = _.pick(decisionItem.decision, 'decisionId', 'nameSlug');
 
                 // criteria
-                _.map(item.criteria, function(decisionCriteria) {
-                    // console.log(decisionCriteria.criterionId);
-                    findCriteriaIndexById(vm.criteriaGroups, decisionCriteria, decisionSend, itemIndex);
-                });
+                if (decisionItem.criteria) {
+                    for (var p = decisionItem.criteria.length - 1; p >= 0; p--) {
+                        var decisionCriteria = decisionItem.criteria[p];
+                        returnValueIndexByProperty(vm.criteriaGroups, decisionCriteria, 'criteria', decisionSend, x, 'criterionId');
+                    }
+                }
 
                 // characteristics
-                _.map(item.characteristics, function(characteristic) {
-                    findCharacteristicsIndexById(vm.characteristicGroups, characteristic, decisionSend, itemIndex);
-                });
-            });
+                if (decisionItem.characteristics) {
+                    for (var z = decisionItem.characteristics.length - 1; z >= 0; z--) {
+                        var characteristic = decisionItem.characteristics[z];
+                        findCharacteristicsIndexById(vm.characteristicGroups, characteristic, decisionSend, x, 'characteristicId');
+                    }
+                }
+            }
+
         }
+
+        function returnValueIndexByProperty(array, saveValue, savePropery, decision, decisionIndex, compareProperty) {
+            for (var i = array.length - 1; i >= 0; i--) {
+                var resultEl = array[i];
+                if (resultEl[savePropery] && resultEl[savePropery].length) {
+                    for (var j = resultEl[savePropery].length - 1; j >= 0; j--) {
+                        var criteriaItem = resultEl[savePropery][j];
+                        if (criteriaItem[compareProperty] === saveValue[compareProperty]) {
+                            criteriaItem.decisionsRow[decisionIndex][savePropery] = saveValue;
+                        }
+                    }
+                }
+            }
+        }
+
+        // TODO: finlaize it & clean up
+        // function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
+        //     // console.log(decisions);
+        //     if (criteriaGroups) vm.criteriaGroups = criteriaGroups;
+        //     if (characteristicGroups) vm.characteristicGroups = characteristicGroups;
+
+        //     emptyRow = createEmtyObjList(decisions.length);
+
+        //     // Fill criteria empty decisions
+        //     _.map(vm.criteriaGroups, function(resultEl) {
+        //         _.map(resultEl.criteria, function(criteriaItem) {
+        //             if (criteriaItem.description && !_.isObject(criteriaItem.description)) {
+        //                 criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
+        //             }
+        //             criteriaItem.decisionsRow = createEmtyObjList(decisions.length);
+        //         });
+        //     });
+
+        //     // Fill characteristics empty decisions
+        //     _.map(vm.characteristicGroups, function(resultEl) {
+        //         _.map(resultEl.characteristics, function(characteristicsItem) {
+        //             if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
+        //                 characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+        //             }
+        //             characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
+        //         });
+        //     });
+
+        //     _.map(decisions, function(item, itemIndex) {
+        //         // console.log(decision.criteria);
+        //         var decisionSend = _.pick(item.decision, 'decisionId', 'nameSlug');
+
+        //         // criteria
+        //         _.map(item.criteria, function(decisionCriteria) {
+        //             // console.log(decisionCriteria.criterionId);
+        //             findCriteriaIndexById(vm.criteriaGroups, decisionCriteria, decisionSend, itemIndex);
+        //         });
+
+        //         // characteristics
+        //         _.map(item.characteristics, function(characteristic) {
+        //             findCharacteristicsIndexById(vm.characteristicGroups, characteristic, decisionSend, itemIndex);
+        //         });
+        //     });
+        // }
 
         function findCriteriaIndexById(array, criteria, decision, decisionIndex) {
             _.map(array, function(resultEl) {
@@ -616,7 +629,7 @@
             foSelectedCriteria.sortCriteriaIds = removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
 
-        // TODO: dontrepit yourself!!!
+        // TODO: don't repit yourself!!!
         // Characteristics
         controls = {
             CHECKBOX: '',

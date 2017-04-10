@@ -22,16 +22,10 @@
             vm = this,
             value;
 
+        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
 
-        // TODO: optimize it
-        function onChanges() {
-            init();
-        }
-
-        init();
-
-        function init() {
+        function onInit() {
             if (vm.value) value = vm.value.toString();
             vm.value = vm.value ? Number((vm.value).toFixed(1)) : null;
             vm.rating = value;
@@ -47,6 +41,10 @@
                 vm.rating = parseFloat(vm.value) / AppRatingStarConstant.MAX_RATING * 100 + '%' || 0;
                 vm.value = vm.value || 0;
             }
+        }
+
+        function onChanges() {
+            onInit();
         }
     }
 })();

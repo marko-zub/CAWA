@@ -21,10 +21,7 @@
         var vm = this;
 
         vm.$doCheck = doCheck;
-        vm.$onChanges = onChanges;
-
-
-        init();
+        vm.$onInit = onInit;
 
         function setCoefficientIndicator(coefficient) {
             if (!coefficient) return;
@@ -38,7 +35,7 @@
             });
         }
 
-        function init() {
+        function onInit() {
             if (!vm.coefficient) {
                 vm.coefficient = DecisionCriteriaConstant.COEFFICIENT_DEFAULT;
             }
@@ -49,9 +46,6 @@
             setCoefficientIndicator(vm.coefficient);
         }
 
-        function onChanges() {
-            init();
-        }
  
     }
 })();

@@ -21,10 +21,9 @@
             vm = this;
 
         vm.$onChanges = onChanges;
+        vm.$onInit = onInit;
 
-        // init();
-
-        function init() {
+        function onInit() {
             if (vm.item.options) {
                 // console.log(vm.item.valueType, vm.item);
                 vm.item = _.pick(vm.item, 'valueType', 'visualMode', 'filterable', 'options', 'characteristicId');
@@ -45,7 +44,7 @@
 
 
                 var checkedValues = [];
-                $element.on('change', '.filter-item-checkbox input', function() {
+                $element.find('.filter-item-checkbox input').on('change', function() {
                     var checkbox,
                         value;
 
@@ -71,7 +70,7 @@
         }
 
         function onChanges() {
-            init();
+            onInit();
         }
 
 
@@ -82,6 +81,7 @@
                 'characteristicId': data.characteristicId || null,
                 'value': data.value || null
             };
+
             var sendData = {
                 'filterQueries': filterQueries
             };

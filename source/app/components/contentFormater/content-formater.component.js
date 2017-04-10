@@ -20,23 +20,16 @@
         var
             vm = this;
 
-        vm.$onChanges = onChanges;
+        vm.$onInit = onInit;
 
         // TODO: optmize it
         // All this staff for reduce count of angular wathcers
-        // init();
 
-        function init() {
+        function onInit() {
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = typeFormater(vm.item);
             $element.html(renderContent.value || '');
             $compile($element.contents())($scope);
-        }
-
-        // init();
-
-        function onChanges() {
-            init();
         }
 
         function typeFormaterArray(str) {
