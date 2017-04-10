@@ -348,7 +348,7 @@
             var t0 = performance.now();
             createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
             var t1 = performance.now();
-            console.log("Call to doWork took " + (t1 - t0) + " milliseconds.")
+            console.log("Call create matrix" + (t1 - t0) + " milliseconds.");
             // createMatrixContent(criteriaGroups, characteristicGroups);
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
