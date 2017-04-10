@@ -100,7 +100,21 @@
             DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
                 if(!data.filterQueries) return;
                 DecisionSharedService.filterObject.persistent = true;
-                DecisionSharedService.filterObject.filterQueries = data.filterQueries;
+                //TODO: get old value
+
+                if (!DecisionSharedService.filterObject.filterQueries) {
+                    DecisionSharedService.filterObject.filterQueries = [];
+                }
+
+                var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
+                    return filterQuery.characteristicId == data.filterQueries.characteristicId;
+                });
+                if (find >= 0) {
+                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                } else {
+                    DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
+                }
+
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs);
                 });
@@ -213,15 +227,15 @@
         // TODO: finlaize it & clean up
         function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
             // console.log(decisions);
-            if(criteriaGroups) vm.criteriaGroups = criteriaGroups;
-            if(characteristicGroups) vm.characteristicGroups = characteristicGroups;
+            if (criteriaGroups) vm.criteriaGroups = criteriaGroups;
+            if (characteristicGroups) vm.characteristicGroups = characteristicGroups;
 
-             emptyRow = createEmtyObjList(decisions.length);
+            emptyRow = createEmtyObjList(decisions.length);
 
             // Fill criteria empty decisions
             _.map(vm.criteriaGroups, function(resultEl) {
                 _.map(resultEl.criteria, function(criteriaItem) {
-                    if(criteriaItem.description && !_.isObject(criteriaItem.description)) {
+                    if (criteriaItem.description && !_.isObject(criteriaItem.description)) {
                         criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
                     }
                     criteriaItem.decisionsRow = createEmtyObjList(decisions.length);
@@ -231,7 +245,7 @@
             // Fill characteristics empty decisions
             _.map(vm.characteristicGroups, function(resultEl) {
                 _.map(resultEl.characteristics, function(characteristicsItem) {
-                    if(characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
+                    if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                         characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
                     }
                     characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
