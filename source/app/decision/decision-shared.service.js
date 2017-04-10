@@ -72,7 +72,7 @@
                 persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds,
-                filterQueriefilterQueries: _fo.filterQueries
+                filterQueries: _fo.filterQueries
             };
         };
 
