@@ -187,6 +187,18 @@
 
         // }
 
+        // function returnValueIndexByProperty(array, saveValue, savePropery, decision, decisionIndex) {
+        //     for (var i = array.length - 1; i >= 0; i--) {
+        //         var resultEl = array[i];
+        //         if(resultEl[savePropery] && resultEl[savePropery].length) {
+        //             for (var j = resultEl[savePropery].length - 1; j >= 0; j--) {
+        //                 var criteriaItem = resultEl[savePropery][j];
+        //                 criteriaItem.decisionsRow[decisionIndex][savePropery] = saveValue;
+        //             }
+        //         }
+        //     }
+        // }
+
         // TODO: finlaize it & clean up
         function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
             // console.log(decisions);
@@ -222,26 +234,34 @@
                 // criteria
                 _.map(item.criteria, function(decisionCriteria) {
                     // console.log(decisionCriteria.criterionId);
-                    returnValueIndexByProperty(vm.criteriaGroups, decisionCriteria, 'criteria' , decisionSend, itemIndex);
+                    findCriteriaIndexById(vm.criteriaGroups, decisionCriteria, decisionSend, itemIndex);
                 });
 
                 // characteristics
                 _.map(item.characteristics, function(characteristic) {
-                    returnValueIndexByProperty(vm.characteristicGroups, characteristic, 'characteristics', decisionSend, itemIndex);
+                    findCharacteristicsIndexById(vm.characteristicGroups, characteristic, decisionSend, itemIndex);
                 });
             });
         }
 
-        function returnValueIndexByProperty(array, saveValue, savePropery, decision, decisionIndex) {
-            for (var i = array.length - 1; i >= 0; i--) {
-                var resultEl = array[i];
-                if(resultEl[savePropery] && resultEl[savePropery].length) {
-                    for (var j = resultEl[savePropery].length - 1; j >= 0; j--) {
-                        var criteriaItem = resultEl[savePropery][j];
-                        criteriaItem.decisionsRow[decisionIndex][savePropery] = saveValue;
+        function findCriteriaIndexById(array, criteria, decision, decisionIndex) {
+            _.map(array, function(resultEl) {
+                _.map(resultEl.criteria, function(criteriaItem) {
+                    if (criteriaItem.criterionId === criteria.criterionId) {
+                        criteriaItem.decisionsRow[decisionIndex].criteria = criteria;
                     }
-                }
-            }
+                });
+            });
+        }
+
+        function findCharacteristicsIndexById(array, characteristics, decision, decisionIndex) {
+            _.map(array, function(resultEl) {
+                _.map(resultEl.characteristics, function(characteristicItem) {
+                    if (characteristicItem.characteristicId === characteristics.characteristicId) {
+                        characteristicItem.decisionsRow[decisionIndex].characteristics = characteristics;
+                    }
+                });
+            });
         }
 
         // All content
@@ -348,7 +368,7 @@
             var t0 = performance.now();
             createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
             var t1 = performance.now();
-            console.log("Call create matrix" + (t1 - t0) + " milliseconds.");
+            console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             // createMatrixContent(criteriaGroups, characteristicGroups);
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
