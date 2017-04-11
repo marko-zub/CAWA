@@ -38,7 +38,7 @@
         }
 
         function typeFormaterArray(str) {
-            if ((!str && !str.length) || _.isObject(str)) return;
+            if (_.isObject(str) || (!str && !str.length)) return;
             var html = '',
                 array = JSON.stringify(str);
                 array = JSON.parse(str);

@@ -19,6 +19,8 @@
 
         // TODO: disable only on prod Disable
         $compileProvider.debugInfoEnabled(false);
+        $compileProvider.commentDirectivesEnabled(false);
+        $compileProvider.cssClassDirectivesEnabled(false);
     }
 
 
