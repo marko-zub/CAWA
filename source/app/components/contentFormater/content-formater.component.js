@@ -20,21 +20,27 @@
         var
             vm = this;
 
-        vm.$onInit = onInit;
+        // vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
         // TODO: optmize it
         // All this staff for reduce count of angular wathcers
 
         function onInit() {
             vm.item = _.pick(vm.item, 'value', 'valueType');
-            var renderContent = typeFormater(vm.item);
-            $element.html(renderContent.value || '');
-            $compile($element.contents())($scope);
+            var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
+            $element.html(renderContent.value);
+            if(renderContent.value) $compile($element.contents())($scope);
+        }
+
+        function onChanges() {
+            onInit();
         }
 
         function typeFormaterArray(str) {
-            if (_.isObject(str)) return str;
+            if ((!str && !str.length) || _.isObject(str)) return;
             var html = '',
+                array = JSON.stringify(str);
                 array = JSON.parse(str);
 
             html += '<ul class="app-list-sm">';
