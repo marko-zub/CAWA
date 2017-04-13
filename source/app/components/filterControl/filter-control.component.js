@@ -24,23 +24,60 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            if (vm.item.options) {
+           
                 // console.log(vm.item.valueType, vm.item);
                 vm.item = _.pick(vm.item, 'valueType', 'visualMode', 'filterable', 'options', 'characteristicId');
                 // var html = '<span class="link-secondary" uib-popover="' + vm.item + '" popover-placement="right" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0"><i class="glyphicon glyphicon-filter"></i></span>';
+                typeFormaterFilter(vm.item);
 
+            function typeFormaterFilter(item) {
+                if (!item || !item.valueType) return;
+                // CASE
+                switch (item.valueType.toUpperCase()) {
+                    case "STRING":
+                        // item = stringFullDescr(item);
+                        break;
+                    case "DATETIME":
+                        var datePicker = createDatePicker(item);
+                        renderHtml(datePicker);
+                        break;
+                    case "STRINGARRAY":
+                        // item.value = typeFormaterArray(item.value);
+                        break;
+                    case "INTEGERARRAY":
+                        // item.value = typeFormaterArray(item.value);
+                        break;
+                    default:
+                        item.value = item.value || '';
+                }
+            }
 
+            function createDatePicker(item) {
+                // console.log(item);
+                var html = '';
+                // html += '<input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="dt" close-text="Close" />';
+                html += '<i class="fa fa-calendar" aria-hidden="true"></i>';
+                return html;
+            }
+    
+
+            function renderHtml(html) {
+                $element.html(html);
+                $compile($element.contents())($scope);                
+            }
+             // 
+             if (vm.item.options) {
                 // String Array type
                 var html = '<div class="filter-item">';
-                _.map(vm.item.options, function(option) {
+                var options = _.sortBy(vm.item.options, 'name');
+                _.map(options, function(option) {
                     html += '<div class="filter-item-checkbox"><input type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '"> ';
                     html += '<label for="option-' + option.characteristicOptionId + '">' + option.name + '</label>';
                     html += '</div>';
                 });
                 html += '</div>';
 
-                $element.html(html);
-                $compile($element.contents())($scope);
+                renderHtml(html);
 
 
                 var checkedValues = [];

@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ContentFormaterController.$inject = ['$element', '$sce', '$compile', '$scope'];
+    ContentFormaterController.$inject = ['$element', '$sce', '$compile', '$scope', '$filter'];
 
-    function ContentFormaterController($element, $sce, $compile, $scope) {
+    function ContentFormaterController($element, $sce, $compile, $scope, $filter) {
         var
             vm = this;
 
