@@ -6,12 +6,12 @@
         .module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state',
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$timeout',
         '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q',
         'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'
     ];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state,
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $timeout,
         $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q,
         DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
         var
@@ -48,8 +48,6 @@
                     }
 
                     // Render html matrix
-
-                    initMatrixMode();
                     initMatrix(values[0].decisionMatrixs, true, values[1], values[2], values[0].totalDecisionMatrixs);
                 },
                 function(error) {
@@ -243,7 +241,8 @@
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                         characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
-                    }characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
+                    }
+                    characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
                     return characteristicsItem;
                 });
                 return resultEl;
@@ -251,8 +250,18 @@
         }
 
         function createDecisionsRow(array, id, keyId, property) {
-            arrayCopy = _.clone(array);
-            return _.map(arrayCopy, function(item) {
+            // arrayCopy = _.clone(array);
+            // for (var i = arrayCopy.length - 1; i >= 0; i--) {
+            //     var item = arrayCopy[i];
+            //     var obj = _.pick(item, 'decision');
+            //     obj.decision = _.pick(item.decision, 'decisionId', 'nameSlug');
+            //     obj[property] = _.find(item[property], function(findEl) {
+            //         return findEl[keyId] === id;
+            //     });
+            //     arrayCopy[i] = obj;                
+            // }
+            // return arrayCopy;
+            return _.map(array, function(item) {
                 var obj = _.pick(item, 'decision');
                 obj.decision = _.pick(item.decision, 'decisionId', 'nameSlug');
                 obj[property] = _.find(item[property], function(findEl) {
@@ -298,31 +307,26 @@
         var matrixAside,
             matrixCols;
 
-        matrixAside = document.getElementById('matrix-table-aside');
-        matrixCols = document.getElementsByClassName('matrix-table-item-content');
+        matrixAsideRow = document.getElementsByClassName('js-item-aside');
+        matrixRows = document.getElementsByClassName('matrix-table-item-content');
 
         function calcMatrixRowHeight() {
 
             angular.element('.matrix-table-item').css('height', '');
-            for (var i = matrixCols.length - 1; i >= 0; i--) {
+            for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
-                    asideEl,
                     asideElH,
                     newH;
 
-                el = matrixCols[i];
+                el = matrixRows[i];
 
-                asideEl = angular.element('#matrix-table-aside .matrix-table-item').eq(i);
-
-                if (asideEl[0]) {
-                    asideElH = asideEl[0].clientHeight;
-                    newH = (asideElH > el.clientHeight) ? asideElH : el.clientHeight;
+                if (matrixAsideRow[i]) {
+                    newH = (matrixAsideRow[i].clientHeight > el.clientHeight) ? matrixAsideRow[i].clientHeight : el.clientHeight;
 
                     // Set new height
 
                     el.style.height = newH + 'px';
-                    asideEl[0].style.height = newH + 'px';
-
+                    matrixAsideRow[i].style.height = newH + 'px';
                 }
             }
         }
@@ -330,13 +334,13 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            setTimeout(function() {
+            $timeout(function () { 
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
                 $scope.$applyAsync(function() {
                     vm.decisionsSpinner = false;
                 });
-            }, 0);
+            }, 0, false);
         }
 
         function searchDecisionMatrix(id) {
@@ -351,20 +355,19 @@
         }
 
         function initMatrix(data, calcHeight, criteriaGroups, characteristicGroups) {
+            initMatrixMode();
+            setMatrixTableWidth(data.length);
+            renderMatrix(calcHeight);
             var performance = window.performance;
             var t0 = performance.now();
             createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
-            // createMatrixContentFast(data, criteriaGroups, characteristicGroups);
             var t1 = performance.now();
             console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
-            // createMatrixContent(criteriaGroups, characteristicGroups);
+            initSorters();
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
                 if (decisionMatrixEl.decision.description) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
-            });
-            setMatrixTableWidth(data.length);
-            renderMatrix(calcHeight);
-            initSorters();
+            });            
         }
         // TODO: make as in sorter directive
         vm.orderByDecisionProperty = orderByDecisionProperty;
