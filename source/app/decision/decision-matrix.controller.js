@@ -264,9 +264,11 @@
             return _.map(array, function(item) {
                 var obj = _.pick(item, 'decision');
                 obj.decision = _.pick(item.decision, 'decisionId', 'nameSlug');
+
                 obj[property] = _.find(item[property], function(findEl) {
                     return findEl[keyId] === id;
                 });
+                obj.uuid = parseInt(id.toString() + obj.decision.decisionId.toString());
                 return obj;
             });
         }
@@ -356,13 +358,15 @@
 
         function initMatrix(data, calcHeight, criteriaGroups, characteristicGroups) {
             initMatrixMode();
-            setMatrixTableWidth(data.length);
+            setMatrixTableWidth(data.length || vm.decisions.decisionMatrixs.length);
             renderMatrix(calcHeight);
+
             var performance = window.performance;
             var t0 = performance.now();
             createMatrixContentOnce(data, criteriaGroups, characteristicGroups);
             var t1 = performance.now();
             console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
+            
             initSorters();
             _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
