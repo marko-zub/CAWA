@@ -13,7 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "3.3.4",
+    "bootstrap": "3.3.7",
     "lodash": "^4.17.2",
     "angular": "1.6.3",
     "angular-ui-router": "^0.3.2",
@@ -28,6 +28,11 @@
     "angular-pageslide-directive": "^2.1.4"
   },
   "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ]
+    },
     "iscroll": {
       "main": [
         "./build/iscroll-probe.js"

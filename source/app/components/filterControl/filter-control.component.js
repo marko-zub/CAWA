@@ -12,8 +12,19 @@
 
     function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils) {
         var vm = this;
-        vm.$onChanges = onChanges;
+        // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
+
+
+            var selectAllObj = { 
+                characteristicId: null,
+                characteristicOptionId: '*',
+                createDate: null,
+                description: null,
+                name: 'All',
+                value: null
+            };
+
 
         function onInit() {
             // console.log(vm.item.valueType, vm.item.visualMode);
@@ -72,9 +83,10 @@
             function renderSelect(item) {
                 var html = '<div class="filter-item-wrapper">';
                 var options = _.sortBy(item.options, 'name');
+                options.unshift(selectAllObj);
                 html += '<select class="form-control input-sm">';
                 _.map(options, function(option) {
-                    html += '<option value="' + option.characteristicOptionId +'">' + option.name + '</option>';
+                    html += '<option value="' + option.characteristicOptionId + '">' + option.name + '</option>';
                 });
                 html += '</select>';
                 html += '</div>';
