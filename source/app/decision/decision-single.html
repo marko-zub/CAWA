@@ -49,7 +49,7 @@
                                 {{decision.name}}
                                 <div>
                                     <small>
-                                        Criteria compliance: <strong>{{decision.criteriaCompliancePercentage | number:2}}</strong>%
+                                        Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>%
                                          | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{decision.totalVotes}}
                                     </small>
                                 </div>

@@ -28,6 +28,11 @@
     "angular-pageslide-directive": "^2.1.4"
   },
   "overrides": {
+    "fastdom": {
+      "main": [
+        "fastdom.min.js"
+      ]
+    },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css"

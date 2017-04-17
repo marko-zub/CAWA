@@ -57,7 +57,7 @@
                                         <div class="clearfix">
                                             <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
                                                 <small>
-                                                    Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage | number:2"></strong>% |
+                                                    Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage"></strong>% |
                                                     <span class="app-icon glyphicon glyphicon-thumbs-up"></span>
                                                     <span ng-bind="item.decision.totalVotes"></span>
                                                 </small>
@@ -89,12 +89,12 @@
                                         Criteria
                                     </div>
                                     <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
-                                        <div class="matrix-table-item js-item-aside matrix-table-group-item">
+                                        <div class="matrix-table-item matrix-table-group-item">
                                             <div class="matrix-table-group-title">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
                                             </div>
                                         </div>
-                                        <div class="matrix-table-item js-item-aside matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                        <div class="matrix-table-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
 
                                                 <div class="matrix-table-title-wrapper">
                                                     <div class="matrix-table-title app-sorter-wrapper" ng-bind="::criteria.name">
@@ -124,7 +124,7 @@
                                         Characteristics
                                     </div>
                                     <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
-                                        <div class="matrix-table-item js-item-aside matrix-table-group-item">
+                                        <div class="matrix-table-item  matrix-table-group-item">
                                             <div class="matrix-table-group-title">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
                                             </div>
@@ -159,74 +159,10 @@
                     <div id="matrix-table-body" class="matrix-table-body">
                         <!-- Table Content -->
                         <div id="matrix-table-content" class="matrix-table-content">
-<!--                                     <pre>
-                                        {{vm.criteriaGroups | json}}
-                                    </pre> -->
-                            <!-- Criteria Content -->
-                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroupsContent track by $index">
-                                <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
-                                    <div class="matrix-table-group-title">
-                                        <!-- <span class="group-title-line">{{group.name}}</span> -->
-                                    </div>
-                                </div>
-                                <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.criteria track by item.criterionId">
-                                    <div class="matrix-table-row">
 
-                                        <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
-                                            <div class="matrix-table-col-content">
-
-                                                <div ng-if="decisionCol.criteria.totalVotes">
-                                                    <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
-                                                </div>
-                                                <div ng-if="!decisionCol.criteria.totalVotes">
-                                                    <div class="app-rating-votes">
-                                                        <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="app-item-additional-wrapper">
-                                                    <a class="app-item-comments link-secondary" ui-sref="decisions.single.matrix.child.option({discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })">
-                                                        <span class="glyphicon glyphicon-comment"></span>0
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Criteria Content -->
-
-                            <!-- Characteristic Content -->
-                            <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroupsContent track by $index">
-                                <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
-                                    <div class="matrix-table-group-title">
-                                        <!-- <span class="group-title-line">{{group.name}}</span> -->
-                                    </div>
-                                </div>
-                                <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.characteristics track by item.characteristicId">
-                                    <div class="matrix-table-row">
-                                        <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
-                                            <div class="matrix-table-col-content">
-                                                <content-formater item="::decisionCol.characteristics"></content-formater>
-                                                <div class="app-item-additional-wrapper">
-                                                    <div class="app-item-comments">
-                                                        <span class="glyphicon glyphicon-comment"></span>0
-                                                    </div>
-                                                </div>
-                                               <!--  <a ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: decisionCol.characteristics.decisionCol.characteristicsId, critOrCharSlug: decisionCol.characteristics.nameSlug })" class="link-full">
-                                            }
-                                    }
- -->
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Characteristic Content -->
-
-
+                            <matrix-criteria list="vm.criteriaGroupsContent"></matrix-criteria>
+                        
+                            <matrix-characteristics list="vm.characteristicGroupsContent"></matrix-characteristics>
 
                         </div>
                         <!-- End Table Content -->

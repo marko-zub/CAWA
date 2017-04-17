@@ -59,6 +59,7 @@
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 el.description = $sce.trustAsHtml(el.description);
+                if(el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 return el;
             });
         }

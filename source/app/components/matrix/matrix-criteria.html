@@ -1,0 +1,34 @@
+<!-- Criteria Content -->
+<div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.list track by $index">
+    <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
+        <div class="matrix-table-group-title">
+            <!-- <span class="group-title-line">{{group.name}}</span> -->
+        </div>
+    </div>
+    <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.criteria track by item.criterionId">
+        <div class="matrix-table-row">
+
+            <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
+                <div class="matrix-table-col-content">
+
+                    <div ng-if="decisionCol.criteria.totalVotes">
+                        <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
+                    </div>
+                    <div ng-if="!decisionCol.criteria.totalVotes">
+                        <div class="app-rating-votes">
+                            <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
+                        </div>
+                    </div>
+
+                    <div class="app-item-additional-wrapper">
+                        <a class="app-item-comments link-secondary" ui-sref="decisions.single.matrix.child.option({discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })">
+                            <span class="glyphicon glyphicon-comment"></span>0
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Criteria Content -->

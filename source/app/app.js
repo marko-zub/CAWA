@@ -30,7 +30,7 @@
             console.log(error);
         })
         .finally(function() {
-            angular.element(document).ready(function() {
+            $(document).ready(function() {
                 angular.bootstrap(document, ['app']);
             });
         });

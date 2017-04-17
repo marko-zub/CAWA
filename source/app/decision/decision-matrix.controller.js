@@ -1,39 +1,30 @@
 (function() {
     'user strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$timeout', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $timeout, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
         var vm = this,
-            isInitedSorters = false,
-            defaultDecisionCount = 10,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
-        vm.loadingComplete = false;
+
+
         vm.decisionId = $stateParams.id;
         vm.decision = decisionBasicInfo || {};
         $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
+        
         init();
 
         function init() {
             // console.log('Decision Matrix Controller');
-            // Get matrix data
             vm.decisionsSpinner = true;
-            // TODO: render as separeted patrs
             $q.all([
+                searchDecisionMatrix(vm.decisionId),
                 getCriteriaGroupsById(vm.decisionId),
                 getCharacteristictsGroupsById(vm.decisionId)
             ]).then(function(values) {
-                // Fill all criterias
-                if ($state.params.analysisId === 'hall-of-fame') {
-                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
-                    _fo.persistent = false;
-                }
-
                 // Render html matrix
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs, true);
-                });
+                initMatrix(values[0].decisionMatrixs, true);
             }, function(error) {
                 console.log(error);
             });
@@ -98,23 +89,21 @@
             });
         }
 
-        function createCriteriaIds(array) {
-            criteriaIds = [];
-            _.map(array, function(resultEl) {
-                _.map(resultEl.criteria, function(el) {
-                    criteriaIds.push(el.criterionId);
-                });
-            });
-        }
-
         function getCriteriaGroupsById(decisionId) {
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
-                createCriteriaIds(result);
+                criteriaIds = [];
+                // Fill all criterias
+                if ($state.params.analysisId === 'hall-of-fame') {
+                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                    _fo.persistent = false;
+                }
+
                 vm.criteriaGroups = _.map(result, function(criteriaItem) {
                     _.map(criteriaItem.criteria, function(criteria) {
                         if (criteria.description && !_.isObject(criteria.description)) {
                             criteria.description = $sce.trustAsHtml(criteria.description);
                         }
+                        criteriaIds.push(criteria.criterionId);
                         return criteria;
                     });
                     return criteriaItem;
@@ -199,6 +188,8 @@
         // }
         function createMatrixContentOnce(decisions) {
             // TODO: Clean up
+
+            // Criteria
             vm.criteriaGroupsContent = _.map(vm.criteriaGroups, function(criteriaItem) {
                 _.map(criteriaItem.criteria, function(criteria) {
                     criteria.decisionsRow = createDecisionsRow(decisions, criteria.criterionId, 'criterionId', 'criteria');
@@ -254,45 +245,69 @@
                 return record.value == valueSearch;
             });
         }
-        // TODO: optimize
+
+        // TODO: optimize avoid Reflow!
         var matrixAside,
             matrixCols;
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
-        matrixRows = document.getElementsByClassName('matrix-table-item-content');
+        matrixRows = document.getElementsByClassName('js-matrix-table-item-content');
 
         function calcMatrixRowHeight() {
-            angular.element('.matrix-table-item').css('height', '');
+            $('.js-item-aside').css('height', '');
+            $('.js-matrix-table-item-content').css('height', '');
+
+            var asideArray = [], contentArray = [];
             for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
-                    asideElH,
+                    elH,
+                    elAside,
                     newH;
                 el = matrixRows[i];
-                if (matrixAsideRow[i]) {
-                    newH = (matrixAsideRow[i].clientHeight > el.clientHeight) ? matrixAsideRow[i].clientHeight : el.clientHeight;
-                    // Set new height
-                    el.style.height = newH + 'px';
-                    matrixAsideRow[i].style.height = newH + 'px';
-                }
+                elH = el.clientHeight;
+                elAside = matrixAsideRow[i];
+                elAsideH = elAside.clientHeight;
+
+                // asideArray.push(elAsideH);
+                // contentArray.push(elH);
+
+                newH = (elAsideH >= elH) ? elAsideH : elH;
+                // Set new height
+                el.style.height = newH + 'px';
+                elAside.style.height = newH + 'px';
+
             }
+
+            // console.log(asideArray, contentArray);
+
         }
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            $timeout(function() {
+            $(document).ready(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
                 $scope.$applyAsync(function() {
                     vm.decisionsSpinner = false;
+                    // $scope.$digest();
                 });
-            }, 0, false);
+            });
         }
 
         function searchDecisionMatrix(id) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
-                vm.decisionMatrixList = result.decisionMatrixs;
                 vm.decisions = result;
+
+                vm.decisionMatrixList = _.map(result.decisionMatrixs, function(decisionMatrixEl) {
+                    if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
+                    if (decisionMatrixEl.decision.description) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
+                    if (decisionMatrixEl.decision.criteriaCompliancePercentage) {
+                        decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
+                    }
+                    return decisionMatrixEl;
+                });
+
                 return result;
             });
         }
@@ -307,10 +322,6 @@
             var t1 = performance.now();
             console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
-            _.map(vm.decisionMatrixList, function(decisionMatrixEl) {
-                if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
-                if (decisionMatrixEl.decision.description) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
-            });
         }
         // TODO: make as in sorter directive
         vm.orderByDecisionProperty = orderByDecisionProperty;
@@ -570,13 +581,6 @@
             var send_fo = _fo;
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
-        }
-        // Discussions
-        vm.isGetCommentsOpen = false;
-        vm.getComments = getComments;
-
-        function getComments() {
-            vm.isGetCommentsOpen = true;
         }
     }
 })();

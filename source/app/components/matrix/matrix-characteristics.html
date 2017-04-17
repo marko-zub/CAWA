@@ -1,0 +1,28 @@
+<!-- Characteristic Content -->
+<div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.list track by $index">
+    <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
+        <div class="matrix-table-group-title">
+            <!-- <span class="group-title-line">{{group.name}}</span> -->
+        </div>
+    </div>
+    <div class="matrix-table-item matrix-table-item-content js-matrix-table-item-content" ng-repeat="item in group.characteristics track by item.characteristicId">
+        <div class="matrix-table-row">
+            <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
+                <div class="matrix-table-col-content">
+                    <content-formater item="::decisionCol.characteristics"></content-formater>
+                    <div class="app-item-additional-wrapper">
+                        <div class="app-item-comments">
+                            <span class="glyphicon glyphicon-comment"></span>0
+                        </div>
+                    </div>
+                   <!--  <a ui-sref="decisions.single.matrix.child.option({discussionId: item.decision.decisionId, discussionSlug: item.decision.nameSlug, critOrCharId: decisionCol.characteristics.decisionCol.characteristicsId, critOrCharSlug: decisionCol.characteristics.nameSlug })" class="link-full">
+                }
+        }
+-->
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Characteristic Content -->
