@@ -12,7 +12,7 @@
         vm.decisionId = $stateParams.id;
         vm.decision = decisionBasicInfo || {};
         $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
-        
+
         init();
 
         function init() {
@@ -30,10 +30,8 @@
             });
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
-                vm.decisionMatrixList = data;
-                vm.decisionsSpinner = false;
-                setDecisionMatchPercent(data);
-                initMatrix(vm.decisionMatrixList);
+                vm.decisionMatrixList = prepareMatrixData(data);
+                initMatrix(data);
             });
             DecisionNotificationService.subscribePageChanged(function() {
                 searchDecisionMatrix(vm.decisionId).then(function(result) {
@@ -256,7 +254,8 @@
             $('.js-item-aside').css('height', '');
             $('.js-matrix-table-item-content').css('height', '');
 
-            var asideArray = [], contentArray = [];
+            var asideArray = [],
+                contentArray = [];
             for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
                     elH,
@@ -298,30 +297,33 @@
             var sendData = DecisionSharedService.getFilterObject();
             return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
-
-                vm.decisionMatrixList = _.map(result.decisionMatrixs, function(decisionMatrixEl) {
-                    if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
-                    if (decisionMatrixEl.decision.description) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
-                    if (decisionMatrixEl.decision.criteriaCompliancePercentage) {
-                        decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
-                    }
-                    return decisionMatrixEl;
-                });
-
+                vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
                 return result;
             });
         }
 
         function initMatrix(data, calcHeight) {
+            // var performance = window.performance;
+            // var t0 = performance.now();            
+            createMatrixContentOnce(data);
+            // var t1 = performance.now();
+            // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
+
             initMatrixMode();
             setMatrixTableWidth(data.length || vm.decisions.decisionMatrixs.length);
             renderMatrix(calcHeight);
-            var performance = window.performance;
-            var t0 = performance.now();
-            createMatrixContentOnce(data);
-            var t1 = performance.now();
-            console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
+        }
+
+        function prepareMatrixData(data) {
+            return _.map(data, function(decisionMatrixEl) {
+                if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
+                if (decisionMatrixEl.decision.description && !_.isObject(decisionMatrixEl.decision.description)) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
+                if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
+                    decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
+                }
+                return decisionMatrixEl;
+            });
         }
         // TODO: make as in sorter directive
         vm.orderByDecisionProperty = orderByDecisionProperty;
@@ -460,19 +462,6 @@
         }
         var foSelectedCriteria = _fo.selectedCriteria;
         vm.selectCriterion = selectCriterion;
-        //Set decions percent(% criterion match)
-        function setDecisionMatchPercent(list) {
-            var percent;
-            _.forEach(list, function(initItem) {
-                percent = parseFloat(initItem.criteriaCompliancePercentage);
-                if (_.isNaN(percent)) {
-                    percent = 0;
-                } else if (!_.isInteger(percent)) {
-                    percent = percent.toFixed(2);
-                }
-                initItem.criteriaCompliancePercentage = percent + '%';
-            });
-        }
 
         function selectCriterion(event, criterion, coefCall) {
             // if($event.target ===)

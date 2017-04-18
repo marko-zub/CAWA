@@ -999,5 +999,35 @@ a {
 
 filter-control {
     display: block;
-    min-height: 80px;
+     min-height: 80px;
+    .checkbox-list {
+        min-height: 80px;
+    }
+}
+
+
+.rzslider {
+    margin: 0;
+    .rz-pointer {
+        top: -4px;
+        z-index: 3;
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+        background-color: @basic-active;
+        border-radius: 16px;
+        &.rz-active:after {
+            background-color: @basic-active-hover;
+        }
+        &:after {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 4px;
+            content: '';
+        }
+    }    
 }

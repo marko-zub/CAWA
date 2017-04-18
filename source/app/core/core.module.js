@@ -10,6 +10,8 @@
 			'ngStorage',
 			'angular-jwt',
 			'pageslide-directive',
+			'rzModule',
+			'daterangepicker',
 			'textAngular'
 		]);
 
