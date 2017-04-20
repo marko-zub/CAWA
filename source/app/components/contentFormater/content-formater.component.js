@@ -2,6 +2,8 @@
 
     'use strict';
 
+    var projector = maquette.createProjector({});
+
     angular
         .module('app.components')
         .controller('ContentFormaterController', ContentFormaterController)
@@ -20,17 +22,47 @@
         var
             vm = this;
 
-        // vm.$onInit = onInit;
+        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
 
         // TODO: optmize it
         // All this staff for reduce count of angular wathcers
+        var h = maquette.h;
+
+
 
         function onInit() {
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
-            $element.html(renderContent.value);
-            if(renderContent.value) $compile($element.contents())($scope);
+            // console.log(renderContent.value);
+            // var projector = maquette.createProjector({});
+            // var renderMaquette = function() {
+            //     return renderContent.value;
+            // };
+
+
+         //    var items = [{ name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }, { name: "a" }, { name: "b" }, { name: "c" }];
+         //    var renderMaquette = function () {
+         //      return h("div#container", items.map(
+         //        function (item, index) {
+         //          return h("input", { key: index, value: item.name });
+         //        }
+         //      ));
+         //    };
+            function render() {
+                return h('div', renderContent.value);
+            }
+         //    projector.append($element, renderMaquette);
+
+            // projector.append($element, renderMaquette);
+            // $element.append(renderContent.value);
+
+
+            $element.html( maquette.createProjector().merge($element[0], render));
+
+
+            // if(render)
+            $compile($element.contents())($scope);
         }
 
         function onChanges() {
@@ -40,17 +72,18 @@
         function typeFormaterArray(str) {
             if (_.isObject(str) || (!str && !str.length)) return;
             var html = '',
-                array = JSON.stringify(str);
-                array = JSON.parse(str);
+                array = JSON.stringify(str); //TODO: avoid
+            array = JSON.parse(str);
 
-            html += '<ul class="app-list-sm">';
-            _.map(array, function(el) {
-                html += '<li>' + el + '</li>';
-            });
-            html += '</ul>';
-            return html;
+            var vdom = h("ul.app-list-sm",
+                [_.map(array, function(el, index) {
+                    return h('li', {key: index}, el);
+                })]
+            );
+            // console.log(vdom);
+
+            return vdom;
         }
-
 
         function typeFormater(item) {
             if (!item || !item.valueType) return item;
@@ -69,7 +102,7 @@
                     item.value = typeFormaterArray(item.value);
                     break;
                 default:
-                    item.value = item.value || '';
+                    item.value = item.value || null;
             }
 
             return item;

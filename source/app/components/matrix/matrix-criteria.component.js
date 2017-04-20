@@ -26,7 +26,7 @@
 
         function getComments() {
             vm.isGetCommentsOpen = true;
-        }        
+        }
     }
 
 })();

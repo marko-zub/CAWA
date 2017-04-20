@@ -48,7 +48,7 @@
                         break;
                     case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):
                         renderRangeSlider(item);
-                        break; 
+                        break;
                     case ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')):
                         renderCheckboxes(item);
                         break;
@@ -60,7 +60,7 @@
                         break;
                     case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
                         renderRadiogroup(item);
-                        break;                        
+                        break;
                     default:
                         //Empty
                 }
@@ -98,7 +98,7 @@
                 html += '{{vm.radio}}';
                 html += '</small></div>';
                 renderHtml(html);
-            }            
+            }
 
             function renderSelect(item) {
                 var html = '<div class="filter-item-wrapper">';
@@ -161,7 +161,7 @@
         }
 
         // TODO: move to Data Filter servise
-        function createFilterQuery(data) {
+        function createFilterQuery(data, queryType) {
             // Make constructor for Filter Query
             var filterQueries = {
                 'type': data.type || 'AllInQuery',
