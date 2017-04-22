@@ -6,18 +6,17 @@
         .module('app.components')
         .controller('RatingStarController', RatingStarController)
         .component('ratingStar', {
-            templateUrl: 'app/components/ratingStar/rating-star.html',
+            // templateUrl: 'app/components/ratingStar/rating-star.html',
             bindings: {
-                value: '<',
-                totalVotes: '<'
+                item: '<',
             },
             controller: 'RatingStarController',
             controllerAs: 'vm'
         });
 
-    RatingStarController.$inject = ['$element', 'AppRatingStarConstant'];
+    RatingStarController.$inject = ['$element', 'AppRatingStarConstant', '$scope', '$compile'];
 
-    function RatingStarController($element, AppRatingStarConstant) {
+    function RatingStarController($element, AppRatingStarConstant, $scope, $compile) {
         var
             vm = this,
             value;
@@ -26,21 +25,39 @@
         vm.$onChanges = onChanges;
 
         function onInit() {
-            if (vm.value) value = vm.value.toString();
-            vm.value = vm.value ? Number((vm.value).toFixed(1)) : null;
+            var votes = '';
+            if (vm.item.weight) value = vm.item.weight.toString();
+            vm.item.weight = vm.item.weight ? Number((vm.item.weight).toFixed(1)) : null;
             vm.rating = value;
-            if (!vm.totalVotes) {
-                vm.totalVotes = 0;
-                $($element).find('.js-rating-rate').addClass('hide');
-                $($element).find('.js-total-votes').addClass('hide');
+
+            if (!vm.item.totalVotes) {
+                vm.item.totalVotes = 0;
+                votes = '<a class="js-rating-rate" href>Rate it first</a>';
             } else {
-                $($element).find('.js-total-votes').removeClass('hide');
+                votes = [
+                    '<div class="app-rating-votes">',
+                    '<span class="app-rating-votes-weight">' + vm.item.weight + '</span>',
+                    '<span class="js-total-votes"><span class="app-icon glyphicon glyphicon-thumbs-up">' + vm.item.totalVotes + '</span>',
+                    '</div>'
+                ].join('\n');
             }
             // calc default rating widthout %
             if (value && value.indexOf('%') === -1) {
-                vm.rating = parseFloat(vm.value) / AppRatingStarConstant.MAX_RATING * 100 + '%' || 0;
-                vm.value = vm.value || 0;
+                vm.rating = parseFloat(vm.item.weight) / AppRatingStarConstant.MAX_RATING * 100 + '%' || 0;
+                vm.item.weight = vm.item.weight || 0;
             }
+
+            var html = [
+                '<div class="app-rating-star-wrapper">',
+                '<div class="app-rating-star">',
+                '<span class="bar" style="width:' + vm.rating + '"></span>',
+                '</div>',
+                votes,
+                '</div>',
+            ].join('\n');
+
+            $element.html(html);
+            $compile($element.contents())($scope);
         }
 
         function onChanges() {

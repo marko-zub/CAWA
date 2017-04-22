@@ -15,6 +15,7 @@
         // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
         vm.callRangeSlider = callRangeSlider;
+        vm.selectRadio = selectRadio;
 
 
         var selectAllObj = {
@@ -25,7 +26,7 @@
             name: 'All',
             value: null
         };
-
+        // TODO: global clean up and optimize
 
         function onInit() {
             // console.log(vm.item.valueType, vm.item.visualMode);
@@ -40,7 +41,6 @@
             if (!item || !item.valueType || !item.visualMode) return;
             item.valueType = item.valueType.toUpperCase();
             item.visualMode = item.visualMode.toUpperCase();
-
 
             switch (true) {
                 case ((item.valueType === 'STRING') && (item.visualMode === 'SELECT')):
@@ -113,12 +113,12 @@
             };
 
             // 
-            filterQueriesCharacteristicAdd(vm.item.characteristicId, query);
+            filterQueriesCharacteristicChange(vm.item.characteristicId, query);
         }
 
-        function filterQueriesCharacteristicAdd(characteristicId, query) {
-            if(!characteristicId || !query) return;
-            var filterQueries, 
+        function filterQueriesCharacteristicChange(characteristicId, query) {
+            if (!characteristicId || !query) return;
+            var filterQueries,
                 findIndex,
                 sendData;
 
@@ -130,22 +130,49 @@
             //     filterQueries[findIndex] = query;
             // }
 
-            sendData = { 'filterQueries': query };
+            sendData = {
+                'filterQueries': query
+            };
             // console.log(sendData);
             DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 
         function renderRadiogroup(item) {
-            vm.radio = 'Yes';
 
+            var options = [{
+                value: 'null',
+                label: 'Uncheck'
+            }, {
+                value: true,
+                label: 'Yes'
+            }, {
+                value: false,
+                label: 'No'
+            }];
+
+            vm.radio = options.value;
+            // console.log(item);
+
+            var content = _.map(options, function(option) {
+                return ['<label class="filter-list-item">',
+                '<input "ng-model-options"="{ debounce: 100 }" ng-change="vm.selectRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
+                '</label>'].join('\n');
+            }).join('\n');
             var html = [
-                '<div class="filter-item-wrapper"><small>',
-                '<input name="radio" type="radio" ng-model="vm.radio" value="Yes"> Yes<br/>',
-                '<input name="radio" type="radio" ng-model="vm.radio" value="No"> No<br/>',
-                '{{vm.radio}}',
-                '</small></div>',
+                '<div class="filter-item-wrapper filter-list">',
+                content,
+                '</div>'
             ].join('\n');
             renderHtml(html);
+        }
+
+        function selectRadio(model) {
+            var sendObj = {
+                "type": "EqualQuery",
+                "characteristicId": vm.item.characteristicId,
+                "value": model,
+            };
+            createFilterQuery(sendObj);
         }
 
         function renderSelect(item) {
@@ -222,13 +249,14 @@
         // TODO: move to Data Filter servise
         function createFilterQuery(data) {
             // Make constructor for Filter Query
+            var sendVal = (data.value === false || data.value) ? data.value : null;
             var query = {
                 'type': data.type || 'AllInQuery',
                 'characteristicId': data.characteristicId || null,
-                'value': data.value || null
+                'value': sendVal
             };
 
-            filterQueriesCharacteristicAdd(data.characteristicId, query);
+            filterQueriesCharacteristicChange(data.characteristicId, query);
         }
     }
 })();

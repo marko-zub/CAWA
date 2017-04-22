@@ -64,14 +64,22 @@
                 // if (!data.filterQueries) return;
                 DecisionSharedService.filterObject.persistent = true;
                 //TODO: Clean up code
-                if (!DecisionSharedService.filterObject.filterQueries) {
+                if (!DecisionSharedService.filterObject.filterQueries)
                     DecisionSharedService.filterObject.filterQueries = [];
-                }
+
                 var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
                     return filterQuery.characteristicId == data.filterQueries.characteristicId;
                 });
                 if (find >= 0) {
-                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                    // TODO: find better solution
+                    if (_.isNull(data.filterQueries.value) ||
+                        (_.isEmpty(data.filterQueries.value) && 
+                        data.filterQueries.value !== false && 
+                        !data.filterQueries.queries)) {
+                        DecisionSharedService.filterObject.filterQueries.splice(find, 1);
+                    } else {
+                        DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                    }
                 } else {
                     DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
                 }
@@ -254,37 +262,34 @@
                 contentArray = [];
             for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
-                    elH,
                     elAside,
                     newH;
+
                 el = matrixRows[i];
-                elH = el.clientHeight;
                 elAside = matrixAsideRow[i];
-                elAsideH = elAside.clientHeight;
 
                 // asideArray.push(elAsideH);
                 // contentArray.push(elH);
 
-                newH = (elAsideH >= elH) ? elAsideH : elH;
+                newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
-                el.style.height = newH + 'px';
-                elAside.style.height = newH + 'px';
+                var newHpx = newH + 'px';
+                el.style.height = newHpx;
+                elAside.style.height = newHpx;
 
             }
-
-            // console.log(asideArray, contentArray);
-
         }
+
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
             $(document).ready(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                $scope.$applyAsync(function() {
-                    vm.decisionsSpinner = false;
-                    // $scope.$digest();
-                });
+                // $scope.$apply(function() {
+                vm.decisionsSpinner = false;
+                $scope.$digest();
+                // });
             });
         }
 
