@@ -27,14 +27,10 @@
     "font-awesome": "fontawesome#^4.7.0",
     "angular-pageslide-directive": "^2.1.4",
     "angularjs-slider": "^6.1.1",
-    "angular-daterangepicker": "^0.2.2"
+    "angular-daterangepicker": "^0.2.2",
+    "moment": "^2.18.1"
   },
   "overrides": {
-    "fastdom": {
-      "main": [
-        "fastdom.min.js"
-      ]
-    },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css"

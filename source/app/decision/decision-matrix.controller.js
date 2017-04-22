@@ -71,11 +71,7 @@
                     return filterQuery.characteristicId == data.filterQueries.characteristicId;
                 });
                 if (find >= 0) {
-                    if (_.isEmpty(data.filterQueries.value)) {
-                        DecisionSharedService.filterObject.filterQueries.splice(find, 1);
-                    } else {
-                        DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
-                    }
+                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
                 } else {
                     DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
                 }

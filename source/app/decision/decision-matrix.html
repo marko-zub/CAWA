@@ -104,12 +104,13 @@
                                                         <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                                     </div>
                                                     <div class="app-sorter">
+                                                        <!-- TODO: make as to toogle to avoid 2 ng-click event -->
                                                         <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order == 'ASC'}"></span>
                                                         <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order == 'DESC'}"></span>
                                                     </div>
 
 
-                                                    <a href ng-if="criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <a href ng-if="::criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                                 </div>
 
@@ -123,7 +124,7 @@
                                     <div class="title">
                                         Characteristics
                                     </div>
-                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
+                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in ::vm.characteristicGroups track by $index">
                                         <div class="matrix-table-item  matrix-table-group-item">
                                             <div class="matrix-table-group-title">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
