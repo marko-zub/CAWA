@@ -11,11 +11,11 @@
             <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
                 <div class="matrix-table-col-content">
                     
-                    <div ng-switch="decisionCol.criteria.totalVotes">
-                        <div ng-switch-when=="decisionCol.criteria.totalVotes">
+                    <div ng-switch="!decisionCol.criteria.totalVotes">
+                        <div ng-switch-when="false">
                             <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
                         </div>
-                        <div ng-switch-when=="!decisionCol.criteria.totalVotes">
+                        <div ng-switch-when="true">
                             <div class="app-rating-votes">
                                 <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
                             </div>
