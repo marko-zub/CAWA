@@ -3,17 +3,28 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="search-box">
                 <div class="input-group search-bar">
-                    <input class="form-control" type="text" ng-model="vm.searchText" placeholder="Search..." />
+                    <input 
+                    class="form-control" 
+                    type="text" 
+                    ng-model="vm.searchVal" 
+                    ng-model-options="vm.searchOptions" 
+                    uib-typeahead="decision as decision.name for decision in vm.searchSuggestedDecisions($viewValue)" 
+                    placeholder="Search..." 
+                    typeahead-select-on-exact="true" 
+                    typeahead-on-select="vm.selectSuggestedDecisions($item)" 
+                    typeahead-append-to-body="true">
                     <span class="input-group-btn">
                             <a href class="btn btn-default btn-primary" ng-click="vm.search()">
                             <span class="glyphicon glyphicon-search"></span></a>
                     </span>
                 </div>
+
+
                 <div class="search-results text-left" ng-show="vm.showTrigger">
                     <h3>RESULTS for {{vm.searchText}}</h3>
                     <ul class="list-group search-results-list">
                         <li class="list-group-item">
-                            <a href ui-sref="decisions.single.matrix({id: vm.searchText || 1340583})">Comparison Matrix</a>
+                            <a href ui-sref="decisions.single.matrix({id: vm.searchText || 415406})">Comparison Matrix</a>
                         </li>
                     </ul>
                 </div>

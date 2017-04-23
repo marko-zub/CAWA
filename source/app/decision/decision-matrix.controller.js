@@ -19,7 +19,7 @@
             // console.log('Decision Matrix Controller');
             vm.decisionsSpinner = true;
             $q.all([
-                searchDecisionMatrix(vm.decisionId),
+                getDecisionMatrix(vm.decisionId),
                 getCriteriaGroupsById(vm.decisionId),
                 getCharacteristictsGroupsById(vm.decisionId)
             ]).then(function(values) {
@@ -34,12 +34,12 @@
                 initMatrix(data);
             });
             DecisionNotificationService.subscribePageChanged(function() {
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
+                getDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs);
                 });
             });
             DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
+                getDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs);
                 });
             });
@@ -56,7 +56,7 @@
                 DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
                 DecisionSharedService.filterObject.persistent = true;
                 vm.fo = DecisionSharedService.filterObject.sorters;
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
+                getDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs);
                 });
             });
@@ -83,7 +83,7 @@
                 }
                 if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
                 // console.log(DecisionSharedService.filterObject.filterQueries);
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
+                getDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs, false);
                 });
             });
@@ -295,10 +295,10 @@
             });
         }
 
-        function searchDecisionMatrix(id) {
+        function getDecisionMatrix(id) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
-            return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
+            return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
                 return result;
@@ -479,7 +479,7 @@
             formDataForSearchRequest(criterion, coefCall);
             var sendData = DecisionSharedService.getFilterObject();
             sendData.persistent = true;
-            DecisionDataService.searchDecisionMatrix(vm.decisionId, sendData).then(function(result) {
+            DecisionDataService.getDecisionMatrix(vm.decisionId, sendData).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }

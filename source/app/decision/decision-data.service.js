@@ -14,7 +14,7 @@
             decisionUrl = Config.endpointUrl + 'decisions/:id',
 
             decisions = $resource(Config.endpointUrl + 'decisions', {}, {
-                searchDecisions: {
+                getDecisions: {
                     method: 'GET',
                     isArray: false
                 }
@@ -23,7 +23,7 @@
             decision = $resource(decisionUrl + '/decisions/list', {
                 id: '@id'
             }, {
-                searchDecisionById: {
+                getDecisionById: {
                     method: 'POST',
                     isArray: false
                 }
@@ -32,7 +32,7 @@
             decisionsMatrix = $resource(decisionUrl + '/decisions/matrix', {
                 id: '@id'
             }, {
-                searchDecisionById: {
+                getDecisionById: {
                     method: 'POST',
                     isArray: false
                 }
@@ -50,12 +50,33 @@
             decisionsNominations = $resource(Config.endpointUrl + 'decisions/:id/nominations/hall-of-fame/decisions', {
                 id: '@id'
             }, {
-                searchDecisionNomination: {
+                getDecisionNomination: {
                     method: 'POST',
                     isArray: false
                 }
             }),
 
+            decisionsSearch = $resource(Config.endpointUrl + 'search/decisions', {
+                query: '@query',
+                pageNumber: '@pageNumber',
+                pageSize: '@pageSize'                
+            }, {
+                search: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),
+
+            decisionsSuggestions = $resource(Config.endpointUrl + 'search/decisions/suggestions', {
+                query: '@query',
+                pageNumber: '@pageNumber',
+                pageSize: '@pageSize'                
+            }, {
+                search: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),            
 
             decisionInfo = $resource(decisionUrl),
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
@@ -71,32 +92,34 @@
 
 
         var service = {
-            searchDecision: searchDecision,
+            getDecision: getDecision,
             getDecisions: getDecisions,
-            searchDecisionMatrix: searchDecisionMatrix,
+            getDecisionMatrix: getDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristictsGroupsById: getCharacteristictsGroupsById,
             getDecisionInfo: getDecisionInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
             getDecisionAnalysis: getDecisionAnalysis,
-            searchDecisionNomination: searchDecisionNomination
+            getDecisionNomination: getDecisionNomination,
+            searchDecisions: searchDecisions,
+            searchSuggestedDecisions: searchSuggestedDecisions
         };
 
         return service;
 
-        function searchDecision(id, data) {
-            return decision.searchDecisionById({
+        function getDecision(id, data) {
+            return decision.getDecisionById({
                 id: id
             }, data).$promise;
         }
 
         function getDecisions(data) {
-            return decisions.searchDecisions(data).$promise;
+            return decisions.getDecisions(data).$promise;
         }
 
-        function searchDecisionMatrix(id, data) {
-            return decisionsMatrix.searchDecisionById({
+        function getDecisionMatrix(id, data) {
+            return decisionsMatrix.getDecisionById({
                 id: id
             }, data).$promise;
         }
@@ -139,10 +162,18 @@
             }).$promise;
         }
 
-        function searchDecisionNomination(id, data) {
-            return decisionsNominations.searchDecisionNomination({
+        function getDecisionNomination(id, data) {
+            return decisionsNominations.getDecisionNomination({
                 id: id
             }, data).$promise;
+        }
+
+        function searchDecisions(data) {
+            return decisionsSearch.search({}, data).$promise;
+        }        
+
+        function searchSuggestedDecisions(data) {
+            return decisionsSuggestions.search({}, data).$promise;
         }
     }
 })();

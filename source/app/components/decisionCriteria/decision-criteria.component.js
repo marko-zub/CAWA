@@ -45,7 +45,7 @@
                 criterion.isSelected = !criterion.isSelected;
             }
             formDataForSearchRequest(criterion, coefCall);
-            DecisionDataService.searchDecision(vm.decisionId, DecisionSharedService.getFilterObject()).then(function(result) {
+            DecisionDataService.getDecision(vm.decisionId, DecisionSharedService.getFilterObject()).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisions);
             });
         }
