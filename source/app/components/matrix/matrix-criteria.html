@@ -1,17 +1,17 @@
 <!-- Criteria Content -->
-<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by $index">
+<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">
     <div class="matrix-item matrix-g-item matrix-item-content">
         <div class="matrix-g-title">
             <!-- <span class="group-title-line">{{group.name}}</span> -->
         </div>
     </div>
-    <div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId">
+    <div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{'hide': group.isClosed}">
         <div class="matrix-row">
 
             <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
                 <div class="matrix-col-content">
                     
-                    <div ng-switch="decisionCol.criteria.totalVotes >= 0">
+                    <div ng-switch="decisionCol.criteria.totalVotes > 0">
                         <div ng-switch-when="true">
                             <rating-star class="text-left" item="decisionCol.criteria"></rating-star>
                         </div>

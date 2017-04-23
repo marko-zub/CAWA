@@ -1065,3 +1065,27 @@ filter-control {
 .app-visibility-hidden {
     visibility: hidden;
 }
+
+
+.matrix-aside-content {
+    .matrix-g-title {
+        cursor: pointer;
+        position: relative;
+        &.closed {
+            .fa {
+                .transform(rotate(180deg));
+            }
+        }
+        .controls {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin: 0px 4px;
+            font-size: 19px;
+            color: @gray-mid;
+            &:hover {
+                color: @basic-active;
+            }
+        }
+    }
+}

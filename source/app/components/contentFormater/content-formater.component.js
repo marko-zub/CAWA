@@ -8,7 +8,7 @@
         .component('contentFormater', {
             // templateUrl: 'app/components/contentFormater/content-formater.html',
             bindings: {
-                item: '<',
+                item: '=',
             },
             controller: 'ContentFormaterController',
             controllerAs: 'vm'
@@ -20,7 +20,7 @@
         var
             vm = this;
 
-        // vm.$onInit = onInit;
+        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
 
         // TODO: optmize it

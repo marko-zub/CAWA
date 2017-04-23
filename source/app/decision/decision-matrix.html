@@ -88,13 +88,16 @@
                                     <div class="title">
                                         Criteria
                                     </div>
-                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
+                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criterionGroupId">
                                         <div class="matrix-item matrix-g-item">
-                                            <div class="matrix-g-title">
+                                            <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'criterion')">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
+                                                <div class="controls">
+                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                        <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
 
                                                 <div class="matrix-title-wrapper">
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name">
@@ -124,14 +127,17 @@
                                     <div class="title">
                                         Characteristics
                                     </div>
-                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in ::vm.characteristicGroups track by $index">
+                                    <div class="matrix-g matrix-g-characteristics" ng-repeat="group in ::vm.characteristicGroups track by group.characteristicGroupId">
                                         <div class="matrix-item  matrix-g-item">
-                                            <div class="matrix-g-title">
+                                            <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'characteristics')">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
+                                                <div class="controls">
+                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index">
+                                        <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index" ng-class="{'hide': group.isClosed}">
                                             <div class="matrix-title-wrapper">
                                                 <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                     <!-- <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>

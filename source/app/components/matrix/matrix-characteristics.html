@@ -1,10 +1,10 @@
-<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by $index">
+<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by group.characteristicGroupId">
     <div class="matrix-item matrix-g-item matrix-item-content">
         <div class="matrix-g-title">
             <!-- <span class="group-title-line">{{group.name}}</span> -->
         </div>
     </div>
-    <div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.characteristicId">
+    <div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.characteristicId" ng-class="{'hide': group.isClosed}">
         <div class="matrix-row">
             <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
                 <div class="matrix-col-content">

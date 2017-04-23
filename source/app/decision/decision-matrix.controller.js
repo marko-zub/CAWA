@@ -574,5 +574,28 @@
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
         }
+
+        // Toggle:
+        vm.toggleGroupName = toggleGroupName;
+
+        function toggleGroupName(id, type) {
+            // console.log(id, type, vm.criteriaGroups[id]);
+            // TODO: optimize
+            var flag;
+            if(type === 'criterion') {
+                flag = vm.criteriaGroups[id].isClosed ? vm.criteriaGroups[id].isClosed : false;
+                vm.criteriaGroups[id].isClosed = !flag;
+                vm.criteriaGroupsContent[id].isClosed = !flag;
+            } else if( 'characteristics') {
+                flag = vm.characteristicGroups[id].isClosed ? vm.characteristicGroups[id].isClosed : false;
+                vm.characteristicGroups[id].isClosed = !flag;
+                vm.characteristicGroupsContent[id].isClosed = !flag;
+            }
+
+            // Incorect height calc
+            setTimeout(function() {
+                reinitMatrixScroller();
+            }, 0);
+        }
     }
 })();
