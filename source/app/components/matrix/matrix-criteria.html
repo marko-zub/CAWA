@@ -1,15 +1,15 @@
 <!-- Criteria Content -->
-<div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.list track by $index">
-    <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
-        <div class="matrix-table-group-title">
+<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by $index">
+    <div class="matrix-item matrix-g-item matrix-item-content">
+        <div class="matrix-g-title">
             <!-- <span class="group-title-line">{{group.name}}</span> -->
         </div>
     </div>
-    <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.criteria track by item.criterionId">
-        <div class="matrix-table-row">
+    <div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId">
+        <div class="matrix-row">
 
-            <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
-                <div class="matrix-table-col-content">
+            <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
+                <div class="matrix-col-content">
                     
                     <div ng-switch="decisionCol.criteria.totalVotes >= 0">
                         <div ng-switch-when="true">

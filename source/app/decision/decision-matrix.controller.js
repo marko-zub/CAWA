@@ -72,10 +72,8 @@
                 });
                 if (find >= 0) {
                     // TODO: find better solution
-                    if (_.isNull(data.filterQueries.value) ||
-                        (_.isEmpty(data.filterQueries.value) && 
-                        data.filterQueries.value !== false && 
-                        !data.filterQueries.queries)) {
+                    if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
+                        !data.filterQueries.queries) {
                         DecisionSharedService.filterObject.filterQueries.splice(find, 1);
                     } else {
                         DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
@@ -192,15 +190,19 @@
             // TODO: Clean up
 
             // Criteria
-            vm.criteriaGroupsContent = _.map(vm.criteriaGroups, function(criteriaItem) {
+            var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
+
+            vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
                 _.map(criteriaItem.criteria, function(criteria) {
                     criteria.decisionsRow = createDecisionsRow(decisions, criteria.criterionId, 'criterionId', 'criteria');
                     return criteria;
                 });
                 return criteriaItem;
             });
+
             // characteristics
-            vm.characteristicGroupsContent = _.map(vm.characteristicGroups, function(resultEl) {
+            var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
+            vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
                     return characteristicsItem;
@@ -252,11 +254,11 @@
         var matrixAside,
             matrixCols;
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
-        matrixRows = document.getElementsByClassName('js-matrix-table-item-content');
+        matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
             $('.js-item-aside').css('height', '');
-            $('.js-matrix-table-item-content').css('height', '');
+            $('.js-matrix-item-content').css('height', '');
 
             var asideArray = [],
                 contentArray = [];
@@ -286,9 +288,9 @@
             $(document).ready(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                // $scope.$apply(function() {
-                vm.decisionsSpinner = false;
-                $scope.$digest();
+                // $scope.$applyAsync(function() {
+                    vm.decisionsSpinner = false;
+                    $scope.$digest();
                 // });
             });
         }
@@ -376,15 +378,15 @@
             var _this = martrixScroll || this;
             scrollHandler(_this.y, _this.x);
             // TODO: avoid JQuery
-            $('.matrix-table-group .app-control').toggleClass('selected', false);
+            $('.matrix-g .app-control').toggleClass('selected', false);
             $('.app-pop-over-content').toggleClass('hide', true);
         }
         // Table scroll
         var tableBody,
             tableHeader,
             tableAside;
-        tableAside = $('#matrix-table-aside-content');
-        tableHeader = $('#matrix-table-scroll-group');
+        tableAside = $('#matrix-aside-content');
+        tableHeader = $('#matrix-scroll-group');
 
         function scrollHandler(scrollTop, scrollLeft) {
             $(tableAside).css({
@@ -399,7 +401,7 @@
         var martrixScroll;
 
         function initMatrixScroller() {
-            var wrapper = document.getElementById('matrix-table-body');
+            var wrapper = document.getElementById('matrix-body');
             martrixScroll = new IScroll(wrapper, {
                 scrollbars: true,
                 scrollX: true,
@@ -427,7 +429,7 @@
         function setMatrixTableWidth(total) {
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
-            $('#matrix-table-content').css('width', tableWidth);
+            $('#matrix-content').css('width', tableWidth);
         }
         // TODO: make as a separeted component
         // Criteria header

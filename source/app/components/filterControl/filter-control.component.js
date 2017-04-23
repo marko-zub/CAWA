@@ -8,15 +8,20 @@
         controller: 'FilterControlController',
         controllerAs: 'vm'
     });
-    FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils', 'DecisionSharedService'];
+    FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils'];
 
-    function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils, DecisionSharedService) {
-        var vm = this;
+    function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils) {
+        var vm = this,
+            controlOptions;
         // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
         vm.callRangeSlider = callRangeSlider;
-        vm.selectRadio = selectRadio;
+        vm.changeRadio = changeRadio;
+        vm.changeSelect = changeSelect;
 
+        vm.controlOptions = {
+            debounce: 100
+        };
 
         var selectAllObj = {
             characteristicId: null,
@@ -24,14 +29,13 @@
             createDate: null,
             description: null,
             name: 'All',
-            value: null
+            value: 'null'
         };
         // TODO: global clean up and optimize
 
         function onInit() {
             // console.log(vm.item.valueType, vm.item.visualMode);
-            // vm.item = _.pick(vm.item, 'valueType', 'visualMode', 'filterable', 'options', 'characteristicId');
-            // var html = '<span class="link-secondary" uib-popover="' + vm.item + '" popover-placement="right" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0"><i class="glyphicon glyphicon-filter"></i></span>';
+            // vm.item = _.pick(vm.item, 'valueType', 'visualMode', 'filterable', 'options', 'characteristicId', 'min', 'max');
             chooseValueType(vm.item);
         }
 
@@ -85,7 +89,8 @@
                 }
             };
 
-            var html = ['<div class="filter-item-wrapper">',
+            var html = [
+                '<div class="filter-item-wrapper">',
                 '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
                 '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
                 '</div>'
@@ -122,26 +127,19 @@
                 findIndex,
                 sendData;
 
-            // filterQueries = DecisionSharedService.getFilterObject().filterQueries || [];
-            // findIndex = _.findIndex(filterQueries, {'characteristicId': vm.item.characteristicId});
-            // if(findIndex < 0) {
-            //     filterQueries.push(query);
-            // } else {
-            //     filterQueries[findIndex] = query;
-            // }
-
             sendData = {
                 'filterQueries': query
             };
-            // console.log(sendData);
             DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 
+
+        // Contorl RADIOGROUP
         function renderRadiogroup(item) {
 
             var options = [{
-                value: 'null',
-                label: 'Uncheck'
+                value: null,
+                label: 'All'
             }, {
                 value: true,
                 label: 'Yes'
@@ -150,14 +148,16 @@
                 label: 'No'
             }];
 
-            vm.radio = options.value;
-            // console.log(item);
-
+            vm.radio = options[0].value;
             var content = _.map(options, function(option) {
-                return ['<label class="filter-list-item">',
-                '<input "ng-model-options"="{ debounce: 100 }" ng-change="vm.selectRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
-                '</label>'].join('\n');
+
+                return [
+                    '<label class="filter-list-item">',
+                    '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
+                    '</label>'
+                ].join('\n');
             }).join('\n');
+
             var html = [
                 '<div class="filter-item-wrapper filter-list">',
                 content,
@@ -166,7 +166,37 @@
             renderHtml(html);
         }
 
-        function selectRadio(model) {
+        function changeRadio(model) {
+            var sendObj = {
+                "type": "EqualQuery",
+                "characteristicId": vm.item.characteristicId,
+                "value": model
+            };
+            createFilterQuery(sendObj);
+        }
+
+        // Contorl SELECT
+        function renderSelect(item) {
+            vm.select = 'null';
+            var options = _.sortBy(item.options, 'name');
+            options.unshift(selectAllObj);
+            var content = _.map(options, function(option) {
+                option = '<option value="' + option.value + '">' + option.name + '</option>';
+                return option;
+            }).join('\n');
+
+            var html = [
+                '<div class="filter-item-wrapper">',
+                '<select class="form-control input-sm" ng-model="vm.select" ng-model-options="vm.controlOptions" ng-change="vm.changeSelect(vm.select)">',
+                content,
+                '</select>',
+                '</div>'
+            ].join('\n');
+            renderHtml(html);
+        }
+
+        function changeSelect(model) {
+            if (model === 'null') model = null;
             var sendObj = {
                 "type": "EqualQuery",
                 "characteristicId": vm.item.characteristicId,
@@ -175,24 +205,8 @@
             createFilterQuery(sendObj);
         }
 
-        function renderSelect(item) {
-            var options = _.sortBy(item.options, 'name');
-            options.unshift(selectAllObj);
-            var content = _.map(options, function(option) {
-                option = '<option value="' + option.characteristicOptionId + '">' + option.name + '</option>';
-                return option;
-            }).join('\n');
 
-            var html = [
-                '<div class="filter-item-wrapper">',
-                '<select class="form-control input-sm">',
-                content,
-                '</select>',
-                '</div>'
-            ].join('\n');
-            renderHtml(html);
-        }
-
+        // Control DATERANGEPICKER
         function createDateRangePicker(item) {
             vm.date = new Date();
             var html = '<input date-range-picker class="form-control input-sm date-picker" type="text" ng-model="vm.date" min="\'2014-02-23\'" max="\'2015-02-25\'" />';
@@ -226,7 +240,7 @@
 
             renderHtml(html);
 
-            // Pick value
+            // Change value
             var checkedValues = [];
             $element.find('.filter-item-checkbox input').on('change', function() {
                 var checkbox,

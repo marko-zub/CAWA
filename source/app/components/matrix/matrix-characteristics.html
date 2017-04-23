@@ -1,14 +1,13 @@
-<!-- Characteristic Content -->
-<div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.list track by $index">
-    <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
-        <div class="matrix-table-group-title">
+<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by $index">
+    <div class="matrix-item matrix-g-item matrix-item-content">
+        <div class="matrix-g-title">
             <!-- <span class="group-title-line">{{group.name}}</span> -->
         </div>
     </div>
-    <div class="matrix-table-item matrix-table-item-content js-matrix-table-item-content" ng-repeat="item in group.characteristics track by item.characteristicId">
-        <div class="matrix-table-row">
-            <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
-                <div class="matrix-table-col-content">
+    <div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.characteristicId">
+        <div class="matrix-row">
+            <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
+                <div class="matrix-col-content">
                     <content-formater item="::decisionCol.characteristics"></content-formater>
                     <div class="app-item-additional-wrapper">
                         <div class="app-item-comments">
@@ -25,4 +24,3 @@
         </div>
     </div>
 </div>
-<!-- End Characteristic Content -->

@@ -1,6 +1,6 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
 <div class="decision matrix matrix-new">
-    <div class="matrix-table-wrapper">
+    <div class="matrix-wrapper">
 
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
@@ -23,14 +23,14 @@
 
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
-            <div id="panel" class="app-panel matrix-table-panel">
+            <div id="panel" class="app-panel matrix-panel">
                 <!-- Header -->
-                <div class="matrix-table-header">
-                    <div class="matrix-table-row">
+                <div class="matrix-header">
+                    <div class="matrix-row">
 
-                        <div class="matrix-table-col matrix-table-group-name">
-                            <div class="matrix-table-title-wrapper">
-                                <div class="matrix-table-title app-sorter-wrapper matrix-content-name">Name
+                        <div class="matrix-col matrix-g-name">
+                            <div class="matrix-title-wrapper">
+                                <div class="matrix-title app-sorter-wrapper matrix-content-name">Name
                                 </div>
                                 <div class="app-sorter">
                                     <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'ASC'}"></span>
@@ -41,9 +41,9 @@
 
                         <!-- End Make Sticky -->
                         <!-- Decisions Header -->
-                        <div id="matrix-table-scroll-group" class="scroll-group">
-                            <div class="matrix-table-col matrix-table-col-name matrix-table-group" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
-                                <div class="matrix-table-col-content matrix-content-name decision-matrix-col">
+                        <div id="matrix-scroll-group" class="scroll-group">
+                            <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
+                                <div class="matrix-col-content matrix-content-name decision-matrix-col">
                                         <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                             <div class="clearfix">
                                                 <div class="matrix-img-container img-sm" >
@@ -77,27 +77,27 @@
                         <!-- End Decisions Header -->
                     </div>
                 </div>
-                <div class="matrix-table-body-wrapper">
+                <div class="matrix-body-wrapper">
                     <!-- End Header -->
                     <!-- Table Aside -->
-                    <div id="matrix-table-aside" class="matrix-table-aside">
-                        <div id="matrix-table-aside-content" class="matrix-table-aside-content">
+                    <div id="matrix-aside" class="matrix-aside">
+                        <div id="matrix-aside-content" class="matrix-aside-content">
 
                                 <!-- Criteria Aside -->
                                 <div class="criteria-list group-wrapper">
                                     <div class="title">
                                         Criteria
                                     </div>
-                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
-                                        <div class="matrix-table-item matrix-table-group-item">
-                                            <div class="matrix-table-group-title">
+                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
+                                        <div class="matrix-item matrix-g-item">
+                                            <div class="matrix-g-title">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
                                             </div>
                                         </div>
-                                        <div class="matrix-table-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                        <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
 
-                                                <div class="matrix-table-title-wrapper">
-                                                    <div class="matrix-table-title app-sorter-wrapper" ng-bind="::criteria.name">
+                                                <div class="matrix-title-wrapper">
+                                                    <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name">
                                                         <!-- {{criteria.criterionId}} -->
                                                     </div>
                                                     <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
@@ -120,20 +120,20 @@
                                 <!-- End Criteria Aside -->
 
                                 <!-- Characteristic Aside -->
-                                <div class="criteria-list group-wrapper" >
+                                <div id="characteristic-content-aside" class="criteria-list group-wrapper">
                                     <div class="title">
                                         Characteristics
                                     </div>
-                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in ::vm.characteristicGroups track by $index">
-                                        <div class="matrix-table-item  matrix-table-group-item">
-                                            <div class="matrix-table-group-title">
+                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in ::vm.characteristicGroups track by $index">
+                                        <div class="matrix-item  matrix-g-item">
+                                            <div class="matrix-g-title">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
                                             </div>
                                         </div>
 
-                                        <div class="matrix-table-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index">
-                                            <div class="matrix-table-title-wrapper">
-                                                <div class="matrix-table-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
+                                        <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index">
+                                            <div class="matrix-title-wrapper">
+                                                <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                     <!-- <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>
                                                         <i class="glyphicon glyphicon-filter"></i>
                                                     </div> -->
@@ -157,9 +157,9 @@
                     </div>
                     <!-- End Table Aside -->
                     <!-- Table Body -->
-                    <div id="matrix-table-body" class="matrix-table-body">
+                    <div id="matrix-body" class="matrix-body">
                         <!-- Table Content -->
-                        <div id="matrix-table-content" class="matrix-table-content">
+                        <div id="matrix-content" class="matrix-content">
 
                             <matrix-criteria list="vm.criteriaGroupsContent"></matrix-criteria>
                         

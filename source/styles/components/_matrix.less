@@ -47,8 +47,8 @@ body {
     }
 }
 
-.matrix-table-group-criteria {
-    .matrix-table-col {
+.matrix-g-criteria {
+    .matrix-col {
         cursor: pointer;
         &:hover {
             background-color: @gray-light;
@@ -59,7 +59,7 @@ body {
     }
 }
 
-.matrix-table-col-name {
+.matrix-col-name {
     background: #FFF;
 }
 
@@ -125,31 +125,32 @@ body {
     height: 46px;
 }
 
-.matrix .matrix-table-col.matrix-table-group {
+.matrix .matrix-col.matrix-g {
     border-right: 0;
     border-left: 0;
 }
 
-.matrix-table-content {
-    position: relative;
-    .matrix-table-col {
+.matrix-content {
+    // position: relative;
+    position: absolute;
+    .matrix-col {
         cursor: pointer;
         &:hover {
             background-color: @gray-light;
         }
-        &.matrix-table-group {
+        &.matrix-g {
             border-right: 0;
             border-left: 0;
         }
     }
-    .matrix-table-item {
+    .matrix-item {
         &:first-child {
             margin-top: 0;
         }
     }
 }
 
-.matrix-table-item {
+.matrix-item {
     display: block;
     position: relative;
     z-index: 1;
@@ -163,14 +164,14 @@ body {
     &.selected {
         background-color: @basic-active-light;
     }
-    & > .matrix-table-row {
+    & > .matrix-row {
         border-bottom: 1px solid @gray-light;
     }
 }
 
 .target-hover {
-    .matrix-table-item {
-        & > .matrix-table-row {
+    .matrix-item {
+        & > .matrix-row {
             &:hover {
                 border-color: @basic-active;
                 z-index: 2;
@@ -179,17 +180,18 @@ body {
     }
 }
 
-.matrix-table-row {
+.matrix-row {
     display: table;
+    // table-layout: fixed;
     width: 100%;
     height: 100%;
 
-    .matrix-table-col {
+    .matrix-col {
         border-right: 1px solid @gray-light;
     }
-    .matrix-table-group {
+    .matrix-g {
         &:last-child {
-            .matrix-table-col {
+            .matrix-col {
                 &:last-child {
                     border-right: 0;
                 }
@@ -204,7 +206,7 @@ body {
 }
 
 // Colors
-.matrix-table-col-content {
+.matrix-col-content {
     font-size: 13px;
     &.color-1 {
         background-color: @coefficientLower;
@@ -238,7 +240,7 @@ body {
     z-index: 12;
 }
 
-.matrix-table-col-content {
+.matrix-col-content {
     padding: 2px 4px 24px 4px;
     width: 120px; // TODO: avoid
     position: relative;
@@ -253,7 +255,7 @@ body {
 }
 
 .matrix-criteria-group {
-    .matrix-table-col {
+    .matrix-col {
         &.empty {
             .app-item-additional-wrapper {
                 // top: 15px;
@@ -273,12 +275,12 @@ body {
 }
 
 a {
-    &.matrix-table-col {
+    &.matrix-col {
         color: #333;
     }
 }
 
-.matrix-table-col {
+.matrix-col {
     display: table-cell;
     min-width: 105px;
     // height: 100%;
@@ -305,7 +307,7 @@ a {
     }
 }
 
-.matrix-table-group-title {
+.matrix-g-title {
     font-size: 11px;
     overflow: hidden;
     // border-bottom: 1px solid @gray-light;
@@ -334,7 +336,7 @@ a {
     }
 }
 
-.matrix-table-title {
+.matrix-title {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.2;
@@ -455,7 +457,7 @@ a {
 
 // Scrollable table
 @matrix-aside-width: 200px;
-.matrix-table-aside {
+.matrix-aside {
     left: 0;
     width: @matrix-aside-width;
     box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
@@ -467,9 +469,9 @@ a {
     height: 100%;
 }
 
-.matrix-table-aside-content{
-    position: relative;
-    .matrix-table-col-content {
+.matrix-aside-content{
+    position: absolute;
+    .matrix-col-content {
         padding-top: 4px;
         padding-bottom: 2px;
         .img-container.img-sm {
@@ -488,19 +490,19 @@ a {
     bottom: 0;
 }
 
-.matrix-table-content {
+.matrix-content {
 }
 
-.matrix-table-panel {
+.matrix-panel {
     height: 100%;
 }
 
 
-@matrix-table-header: 120px;
-.matrix-table-header {
+@matrix-header: 120px;
+.matrix-header {
     position: absolute;
     z-index: 2;
-    height: @matrix-table-header;
+    height: @matrix-header;
     top: 0;
     overflow: hidden;
     z-index: 3;
@@ -511,17 +513,17 @@ a {
     color: @title-color;
     border-bottom: 0;
 
-    .matrix-table-row {
+    .matrix-row {
         // height: 36px;
         vertical-align: top;
-        .matrix-table-col {
+        .matrix-col {
             padding: 0;
             vertical-align: middle;
-            & > .matrix-table-group-title {
+            & > .matrix-g-title {
                 padding: 0 4px;
                 line-height: 1;
             }
-            & > .matrix-table-title {
+            & > .matrix-title {
                 padding: 4px 4px;
             }
             .app-sorter-wrapper {
@@ -529,23 +531,23 @@ a {
             }
         }
     }
-    & > .matrix-table-row {
+    & > .matrix-row {
         position: relative;
         padding-left: @matrix-aside-width;
-        .matrix-table-col {
+        .matrix-col {
             vertical-align: top;
         }
     }
-    .matrix-table-group-name {
+    .matrix-g-name {
         position: absolute;
         left: 0;
         top: 0;
         z-index: 2;
         width: @matrix-aside-width - 1px;
         overflow: hidden;
-        height: @matrix-table-header; //TODO: fix height
+        height: @matrix-header; //TODO: fix height
         box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
-        .matrix-table-title-wrapper {
+        .matrix-title-wrapper {
             max-width: @matrix-aside-width - 1px;
         }
     }
@@ -553,26 +555,26 @@ a {
         position: relative;
         z-index: 1;
         overflow: hidden;
-        height: @matrix-table-header; //TODO: fix height
+        height: @matrix-header; //TODO: fix height
     }
 }
 
-.matrix-table-body-wrapper {
+.matrix-body-wrapper {
     position: absolute;
-    top: @matrix-table-header;
+    top: @matrix-header;
     bottom: -1px;
     width: 100%;
     z-index: 1;
 }
 
-.matrix-table-body {
+.matrix-body {
     left:  @matrix-aside-width;
     right: 0;
     overflow: hidden;
     height: 100%;
     position: absolute;
     z-index: 1;
-    .matrix-table-aside {
+    .matrix-aside {
         position: absolute;
         left: 0;
         top: 0;
@@ -580,22 +582,22 @@ a {
         width: @matrix-aside-width;
         margin-left: 0;
     }
-    .matrix-table-content {
+    .matrix-content {
         top: 0;
         padding: 0 10px 0 0;
     }
 }
 
-.matrix-table-aside-content {
+.matrix-aside-content {
     position: relative;
 }
 
-.matrix-table-wrapper {
+.matrix-wrapper {
     position: relative;
     overflow: hidden;
 }
 
-.matrix-table-body-scroll {
+.matrix-body-scroll {
     overflow: scroll;
     width: 100%;
     height: 100%;
@@ -675,7 +677,7 @@ a {
     }
 }
 
-.matrix-table-title-wrapper {
+.matrix-title-wrapper {
     height: 100%;
     position: relative;
     display: inline-block;
@@ -685,8 +687,8 @@ a {
     max-width: 120px;
 }
 
-.matrix-table-group-criteria {
-    .matrix-table-title-wrapper {
+.matrix-g-criteria {
+    .matrix-title-wrapper {
         padding-left: 11px;
     }
 }
@@ -753,7 +755,7 @@ a {
 // Matrix new
 // TODO: clean up avoide fixed heights
 .matrix.matrix-new {
-    .matrix-table-group-title .group-title-line {
+    .matrix-g-title .group-title-line {
         position: absolute;
         left: 0;
         top: 0;
@@ -771,13 +773,13 @@ a {
             border: 0;
         }
     }
-    .matrix-table-title-wrapper {
+    .matrix-title-wrapper {
         max-width: none;
         display: block;
     }
-    .matrix-table-col.matrix-table-group {
+    .matrix-col.matrix-g {
         border-right: 1px solid #ebebeb;
-        .matrix-table-col-content & > a {
+        .matrix-col-content & > a {
             margin-right: 10px;
         }
         .app-panel-controls {
@@ -788,43 +790,43 @@ a {
             display: inline-block;
         }
     }
-    .matrix-table-title-wrapper {
+    .matrix-title-wrapper {
         height: 100%;
     }
-    .matrix-table-aside {
-        .matrix-table-item {
+    .matrix-aside {
+        .matrix-item {
             border-bottom: 1px solid @gray-light;
         }
     }
     .app-sorter {
         height: 40px;
     }
-    .matrix-table-content .matrix-table-col {
+    .matrix-content .matrix-col {
         min-height: 30px;
-        &.matrix-table-group-item {
+        &.matrix-g-item {
             height: 24px;
             line-height: 24px;
             background-color: @gray-light;
         }
     }
-    .matrix-table-block {
+    .matrix-block {
         border-bottom: 1px solid @gray-light;
         height: 48px;
     }
-    .matrix-table-col {
+    .matrix-col {
         width: 200px;
         max-width: 200px;
         min-width: 200px;
         border-bottom: 1px solid @gray-light;
     }
-    .matrix-table-col-name {
+    .matrix-col-name {
         vertical-align: top;
-        height: @matrix-table-header;
+        height: @matrix-header;
     }
-    .matrix-table-item {
+    .matrix-item {
         min-height: 50px;
         min-width: 100%;
-        &.matrix-table-group-item {
+        &.matrix-g-item {
             height: 24px !important;
             min-height: 24px;
             line-height: 24px;
@@ -832,19 +834,19 @@ a {
             border-bottom: 1px solid @gray-light;
         }
     }
-    .matrix-table-col-content {
+    .matrix-col-content {
         width: auto;
     }
-    .matrix-table-group {
+    .matrix-g {
         position: relative;
     }
-    .matrix-table-col-content {
+    .matrix-col-content {
         min-height: 49px;
     }
-    .matrix-table-aside {
+    .matrix-aside {
         width: 200px;
     }
-    .matrix-table-body {
+    .matrix-body {
         left: 200px;
     }
     .info {
@@ -853,7 +855,7 @@ a {
         bottom: 0;
         margin: 35px 4px;
     }
-    .matrix-table-header .matrix-table-col-content {
+    .matrix-header .matrix-col-content {
         padding: 5px;
     }
     .app-title-inline {
@@ -882,7 +884,7 @@ a {
         max-height: 400px;
         overflow: auto;
     }
-    .matrix-table-group-title {
+    .matrix-g-title {
         font-size: 13px;
     }
 }
@@ -1058,4 +1060,8 @@ filter-control {
 
 .color-light-red {
     color: #ff6666;
+}
+
+.app-visibility-hidden {
+    visibility: hidden;
 }
