@@ -149,7 +149,7 @@
                                                     <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>
                                                 </div>
 
-                                                <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                             </div>
                                         </div>
@@ -169,7 +169,10 @@
 
                             <matrix-criteria list="vm.criteriaGroupsContent"></matrix-criteria>
 
-                            <matrix-characteristics list="vm.characteristicGroupsContent"></matrix-characteristics>
+                            <div class="characteristic-groups-content">
+                                <matrix-characteristics list="vm.characteristicGroupsContent"></matrix-characteristics>
+                                <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                            </div>
 
                         </div>
                         <!-- End Table Content -->

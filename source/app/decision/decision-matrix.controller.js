@@ -21,6 +21,7 @@
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
+            vm.characteristicGroupsContentLoader = true;
             $q.all([
                 getDecisionMatrix(vm.decisionId),
                 getCriteriaGroupsById(vm.decisionId)
@@ -40,11 +41,13 @@
                     // 3. Render characteristicts
                     createMatrixContentCharacteristics(decisionMatrixs);
                     renderMatrix(true);
+                    vm.characteristicGroupsContentLoader = false;
                 });
 
             }, function(error) {
                 console.log(error);
             });
+
             //Subscribe to notification events
             DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
                 vm.decisionMatrixList = prepareMatrixData(data);
@@ -146,24 +149,12 @@
                     return resultEl;
                 });
 
-                setMatrixTableHeight(total);
+                // setMatrixTableHeight(total);
                 return result;
             });
         }
-        // TODO: move to utils
-        function isDate(date) {
-            var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
-            return isValueDate;
-        }
-        // TODO: clean up optimize
-        function createEmtyObjList(total) {
-            var array = [];
-            for (var i = total - 1; i >= 0; i--) {
-                array[i] = {};
-            }
-            return array;
-        }
 
+        // TODO: try to optimize it
         function createMatrixContentCriteria(decisions) {
             // Criteria
             var decisionsCopy = angular.copy(decisions);
@@ -191,7 +182,6 @@
             });
         }
 
-
         function createDecisionsRow(array, id, keyId, property) {
             return _.map(array, function(item) {
                 var obj = _.pick(item, 'decision');
@@ -203,6 +193,8 @@
                 return obj;
             });
         }
+        // END TODO: try to optimize it
+
         //Init sorters, when directives loaded
         function initSorters() {
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
@@ -251,9 +243,6 @@
                 el = matrixRows[i];
                 elAside = matrixAsideRow[i];
 
-                // asideArray.push(elAsideH);
-                // contentArray.push(elH);
-
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
                 var newHpx = newH + 'px';
@@ -270,8 +259,8 @@
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
                 // $scope.$applyAsync(function() {
-                    vm.decisionsSpinner = false;
-                    $scope.$digest();
+                vm.decisionsSpinner = false;
+                $scope.$digest();
                 // });
             });
         }
@@ -294,6 +283,8 @@
             createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
+            initSorters(); //Hall of fame
+            initMatrixMode();
 
             renderMatrix(calcHeight);
         }
@@ -414,7 +405,7 @@
 
         function setMatrixTableHeight(total) {
             var tableH = total * 112 + 'px';
-            $('#matrix-content').css('min-height', tableH);
+            $('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
         }
         // TODO: make as a separeted component
         // Criteria header
@@ -468,12 +459,7 @@
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }
-        // TODO: move to Utils
-        function removeEmptyFromArray(array) {
-            return _.filter(array, function(el) {
-                if (el) return el; //can use just if(el); !_.isNull(el) && !_.isUndefined(el) && !_.isNaN(el)
-            });
-        }
+
 
         function formDataForSearchRequest(criterion, coefCall) {
             if (!criterion.criterionId) return;
@@ -493,7 +479,7 @@
                 foSelectedCriteria.sortCriteriaIds.splice(position, 1);
                 delete foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId];
             }
-            foSelectedCriteria.sortCriteriaIds = removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
+            foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
         // TODO: don't repit yourself!!!
         // Characteristics
@@ -567,11 +553,11 @@
             // console.log(id, type, vm.criteriaGroups[id]);
             // TODO: optimize
             var flag;
-            if(type === 'criterion') {
+            if (type === 'criterion') {
                 flag = vm.criteriaGroups[id].isClosed ? vm.criteriaGroups[id].isClosed : false;
                 vm.criteriaGroups[id].isClosed = !flag;
                 vm.criteriaGroupsContent[id].isClosed = !flag;
-            } else if( 'characteristics') {
+            } else if ('characteristics') {
                 flag = vm.characteristicGroups[id].isClosed ? vm.characteristicGroups[id].isClosed : false;
                 vm.characteristicGroups[id].isClosed = !flag;
                 vm.characteristicGroupsContent[id].isClosed = !flag;
