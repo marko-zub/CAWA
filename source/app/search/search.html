@@ -13,18 +13,19 @@
 <div class="app-container-sm">
     <div class="app-main-panel main-panel">
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
-        <div class="row">
+        <div ng-show="vm.noResult">
+            <h4>Nothing found!</h4>
+        </div>
+        <div class="row" ng-show="!vm.noResult">
             <div class="col-sm-8">
                 <ul class="discussions-list">
-                    <li ng-repeat="decision in vm.decisionsList track by $index">
+                    <li ng-repeat="decision in vm.decisions track by $index">
                         <a ui-sref="decisions.single({id:decision.decisionId, slug:decision.nameSlug, size: null, page: null})">
                             <div class="clearfix">
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                                 </div>
-                                <div class="pull-left">
-                                    {{decision.name}}
-                                </div>
+                                <div class="pull-left" ng-bind="decision.name"></div>
                             </div>
                         </a>
                         <div class="discussions-list-description" ng-bind-html="decision.description"></div>

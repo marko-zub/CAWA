@@ -19,16 +19,6 @@
             vm.showTrigger = true;
         }
 
-        // var searchData = {
-        //     query: 'antivirus',
-        //     pageNumber: 0,
-        //     pageSize: 10
-        // };
-
-        // DecisionDataService.searchDecisions(searchData).then(function(resp){
-        //     console.log(resp);
-        // });
-
         vm.searchOptions = {
             debounce: 300
         };

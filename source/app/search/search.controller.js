@@ -4,14 +4,40 @@
 
     angular
         .module('app.discussions')
-        .controller('DiscussionsController', DiscussionsController);
+        .controller('searchController', searchController);
 
-    DiscussionsController.$inject = ['$rootScope', '$stateParams'];
+    searchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService'];
 
-    function DiscussionsController($rootScope, $stateParams) {
+    function searchController($rootScope, $state, $stateParams, DecisionDataService) {
         var vm = this;
+        vm.noResult = false;
 
-        console.log('Search controller');
+        init();
+
+        function init() {
+        	console.log('Search controller');
+        	console.log($stateParams);
+        	if($stateParams.query) getSearch($stateParams.query);
+        }
+
+        function getSearch(query) {
+        	if(!query) vm.noResult = true;
+        	query = query.toString();
+	        var searchData = {
+	            query: query,
+	            pageNumber: 0,
+	            pageSize: 10
+	        };
+
+	        DecisionDataService.searchDecisions(searchData).then(function(resp){
+	            console.log(resp);
+	            vm.decisions = resp.decisions;
+	            vm.noResult = !vm.decisions.length;
+	            console.log(vm.noResult);
+	        }, function(err) {
+	        	console.log(err);
+	        });
+        }
 
     }
 })();

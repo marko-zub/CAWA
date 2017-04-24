@@ -6,7 +6,6 @@
                 <h4 class="app-header-sub-title pull-left">
                     Decisions
                 </h4>
-                <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" value="::vm.discussion.votes.weight" total-votes="::vm.discussion.votes.totalVotes"></rating-star>
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
@@ -32,9 +31,7 @@
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                                 </div>
-                                <div class="pull-left">
-                                    {{decision.name}}
-                                </div>
+                                <div class="pull-left" ng-bind="decision.name"></div>
                             </div>
                         </a>
                         <div class="discussions-list-description" ng-bind-html="decision.description"></div>
