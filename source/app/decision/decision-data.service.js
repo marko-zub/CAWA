@@ -59,7 +59,7 @@
             decisionsSearch = $resource(Config.endpointUrl + 'search/decisions', {
                 query: '@query',
                 pageNumber: '@pageNumber',
-                pageSize: '@pageSize'                
+                pageSize: '@pageSize'
             }, {
                 search: {
                     method: 'GET',
@@ -70,13 +70,13 @@
             decisionsSuggestions = $resource(Config.endpointUrl + 'search/decisions/suggestions', {
                 query: '@query',
                 pageNumber: '@pageNumber',
-                pageSize: '@pageSize'                
+                pageSize: '@pageSize'
             }, {
                 search: {
                     method: 'GET',
                     isArray: false
                 }
-            }),            
+            }),
 
             decisionInfo = $resource(decisionUrl),
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
@@ -170,7 +170,7 @@
 
         function searchDecisions(data) {
             return decisionsSearch.search({}, data).$promise;
-        }        
+        }
 
         function searchSuggestedDecisions(data) {
             return decisionsSuggestions.search({}, data).$promise;
