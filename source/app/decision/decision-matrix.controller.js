@@ -18,13 +18,30 @@
         function init() {
             // console.log('Decision Matrix Controller');
             vm.decisionsSpinner = true;
+
+            // First call
+            // 1. Render criteria and decisions for fast delivery info for user
             $q.all([
                 getDecisionMatrix(vm.decisionId),
-                getCriteriaGroupsById(vm.decisionId),
-                getCharacteristictsGroupsById(vm.decisionId)
+                getCriteriaGroupsById(vm.decisionId)
             ]).then(function(values) {
                 // Render html matrix
-                initMatrix(values[0].decisionMatrixs, true);
+
+                var decisionMatrixs = values[0].decisionMatrixs;
+                // 2. render list of criterias
+                createMatrixContentCriteria(decisionMatrixs);
+                renderMatrix(true);
+
+                // Init only first time
+                initSorters(); //Hall of fame
+                initMatrixMode();
+
+                getCharacteristictsGroupsById(vm.decisionId).then(function(resp) {
+                    // 3. Render characteristicts
+                    createMatrixContentCharacteristics(decisionMatrixs);
+                    renderMatrix(true);
+                });
+
             }, function(error) {
                 console.log(error);
             });
@@ -108,6 +125,8 @@
                     });
                     return criteriaItem;
                 });
+
+                // TOOD: check if work correct
                 return result;
             });
         }
@@ -186,20 +205,22 @@
         //         }
         //     }
         // }
-        function createMatrixContentOnce(decisions) {
-            // TODO: Clean up
-
+        function createMatrixContentCriteria(decisions) {
             // Criteria
+            var decisionsCopy = angular.copy(decisions);
             var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
 
             vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
                 _.map(criteriaItem.criteria, function(criteria) {
-                    criteria.decisionsRow = createDecisionsRow(decisions, criteria.criterionId, 'criterionId', 'criteria');
+                    criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
                     return criteria;
                 });
                 return criteriaItem;
             });
+        }
 
+        function createMatrixContentCharacteristics(decisions) {
+            var decisionsCopy = angular.copy(decisions);
             // characteristics
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
             vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
@@ -210,6 +231,7 @@
                 return resultEl;
             });
         }
+
 
         function createDecisionsRow(array, id, keyId, property) {
             return _.map(array, function(item) {
@@ -226,7 +248,7 @@
         function initSorters() {
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
-            // Set Criteria
+            // Set Criteria for Hall of fame
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.criterionId)) {
@@ -251,8 +273,8 @@
         }
 
         // TODO: optimize avoid Reflow!
-        var matrixAside,
-            matrixCols;
+        var matrixAsideRow,
+            matrixRows;
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
@@ -301,21 +323,20 @@
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
+                setMatrixTableWidth(vm.decisionMatrixList.length);
                 return result;
             });
         }
 
         function initMatrix(data, calcHeight) {
             // var performance = window.performance;
-            // var t0 = performance.now();            
-            createMatrixContentOnce(data);
+            // var t0 = performance.now();
+            createMatrixContentCriteria(data);
+            createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
 
-            initMatrixMode();
-            setMatrixTableWidth(data.length || vm.decisions.decisionMatrixs.length);
             renderMatrix(calcHeight);
-            initSorters();
         }
 
         function prepareMatrixData(data) {
@@ -512,7 +533,7 @@
         }
         // TODO: don't repit yourself!!!
         // Characteristics
-        controls = {
+        var controls = {
             CHECKBOX: '',
             SLIDER: '',
             SELECT: 'app/components/decisionCharacteristics/decision-characteristics-select-partial.html',
