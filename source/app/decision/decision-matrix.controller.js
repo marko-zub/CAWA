@@ -318,6 +318,7 @@
         }
 
         function orderByCriteriaProperty(order, $event) {
+            var sortObj;
             order = order || 'DESC';
             sortObj = {
                 sort: {

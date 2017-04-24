@@ -1,4 +1,4 @@
-<div class="decision-criteria">
+<rating-star<div class="decision-criteria">
     <div class="criteria-header scroll-wrapper-header">
         <div class="col-md-6 col-sm-6">
             <h4>Criteria</h4>
@@ -18,7 +18,7 @@
                 <div class="criteria-item" ng-repeat="criterion in group.criteria track by $index" ng-click="vm.selectCriterion(criterion)" ng-class="{'selected' : criterion.isSelected}">
                     <div class="criteria-item-left">
                         {{criterion.criterionId}} {{criterion.name}}
-                        <rating-star value="criterion.weight" total-votes="criterion.totalVotes" ng-show="criterion.weight"></rating-star>
+                        <rating-star item="criterion.weight" ng-show="criterion.weight"></rating-star>
                     </div>
                     <div class="criteria-item-right">
                         <button class="btn btn-default btn-sm pull-right" ng-click="vm.editCriteriaCoefficient($event, criterion)">
