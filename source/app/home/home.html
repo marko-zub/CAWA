@@ -3,19 +3,10 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="search-box">
                 <div class="input-group search-bar">
-                    <input 
-                    class="form-control" 
-                    type="text" 
-                    ng-model="vm.searchVal" 
-                    ng-model-options="vm.searchOptions" 
-                    uib-typeahead="decision as decision.name for decision in vm.searchSuggestedDecisions($viewValue)" 
-                    placeholder="Search..." 
-                    typeahead-select-on-exact="true" 
-                    typeahead-on-select="vm.selectSuggestedDecisions($item)" 
-                    typeahead-append-to-body="true">
+                    <search-bar placeholder="Search..."></search-bar>
                     <span class="input-group-btn">
-                            <a href class="btn btn-default btn-primary" ng-click="vm.search()">
-                            <span class="glyphicon glyphicon-search"></span></a>
+                        <a href class="btn btn-default btn-primary" ng-click="vm.search()">
+                        <span class="glyphicon glyphicon-search"></span></a>
                     </span>
                 </div>
 

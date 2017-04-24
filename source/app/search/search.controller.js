@@ -12,6 +12,8 @@
         var vm = this;
         vm.noResult = false;
 
+        $rootScope.pageTitle = 'Search' + ' | DecisionWanted';
+
         init();
 
         function init() {
