@@ -50,6 +50,12 @@
       "main": [
         "./dist/jquery.slim.js"
       ]
+    },
+    "angular-bootstrap": {
+      "main": [
+        "./ui-bootstrap-tpls.js",
+        "./ui-bootstrap-csp.css"
+      ]
     }
   }
 }

@@ -3,9 +3,14 @@
 
     angular
         .module('app.core')
-        .config(function($httpProvider) {
-            $httpProvider.interceptors.push(appInterceptor);
-        });
+        .config(configuration);
+
+
+    configuration.$inject = ['$httpProvider'];
+
+    function configuration($httpProvider) {
+        $httpProvider.interceptors.push(appInterceptor);
+    }
 
     appInterceptor.$inject = ['$injector'];
 
@@ -30,20 +35,20 @@
                     resp.data && (resp.data.decisionMatrixs || resp.data.decisions) &&
                     resp.data.decisionAnalysisId) {
 
-                    // Save only second call to avoid big array 
+                    // Save only second call to avoid big array
                     // TODO: check if we still need this code
                     // if (analysisCallsArr.length === 0 && $stateParams.analysisId) analysisCallsArr.push(decisionAnalysisId);
 
                     var decisionAnalysisId = resp.data.decisionAnalysisId;
                     // if (analysisCallsArr.length !== 0) {
 
-                        var decisionAnalysisStateParams = {
-                            'id': $stateParams.id,
-                            'slug': $stateParams.slug,
-                            'criteria': $stateParams.criteria,
-                            'analysisId': decisionAnalysisId
-                        };
-                        $state.transitionTo('decisions.single.matrix.analysis', decisionAnalysisStateParams);
+                    var decisionAnalysisStateParams = {
+                        'id': $stateParams.id,
+                        'slug': $stateParams.slug,
+                        'criteria': $stateParams.criteria,
+                        'analysisId': decisionAnalysisId
+                    };
+                    $state.transitionTo('decisions.single.matrix.analysis', decisionAnalysisStateParams);
                     // }
 
                 }

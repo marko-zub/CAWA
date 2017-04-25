@@ -159,8 +159,8 @@
             // Criteria
             var decisionsCopy = angular.copy(decisions);
             var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
-            console.log(decisionsCopy);
-            console.log(criteriaGroupsCopy);
+            // console.log(decisionsCopy);
+            // console.log(criteriaGroupsCopy);
 
             vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
                 _.map(criteriaItem.criteria, function(criteria) {
