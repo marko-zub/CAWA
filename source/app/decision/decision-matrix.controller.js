@@ -1,9 +1,9 @@
 (function() {
     'use strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -102,7 +102,6 @@
                     DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
                 }
                 if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
-                // console.log(DecisionSharedService.filterObject.filterQueries);
                 getDecisionMatrix(vm.decisionId).then(function(result) {
                     initMatrix(result.decisionMatrixs, false);
                 });
@@ -220,7 +219,7 @@
 
         function findCoefNameByValue(valueSearch) {
             valueSearch = valueSearch;
-            return _.find(DecisionCriteriaConstant.COEFFICIENT_LIST, function(record) {
+            return _.find(DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST, function(record) {
                 return record.value == valueSearch;
             });
         }
@@ -337,6 +336,7 @@
 
         function orderByCharacteristicProperty(field, order) {
             if (!field) return;
+            var sortObj;
             order = order || 'DESC';
             sortObj = {
                 sort: {
@@ -446,7 +446,6 @@
         vm.selectCriterion = selectCriterion;
 
         function selectCriterion(event, criterion, coefCall) {
-            // if($event.target ===)
             if ($(event.target).hasClass('title-descr')) return;
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
@@ -471,11 +470,11 @@
             if (position === -1) {
                 foSelectedCriteria.sortCriteriaIds.push(criterion.criterionId);
                 //don't add default coefficient
-                if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaConstant.COEFFICIENT_DEFAULT.value) {
+                if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                     foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
                 }
                 //add only coefficient (but not default)
-            } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaConstant.COEFFICIENT_DEFAULT.value) {
+            } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                 foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
                 //unselect criterion
             } else {
@@ -484,15 +483,7 @@
             }
             foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
-        // TODO: don't repit yourself!!!
-        // Characteristics
-        var controls = {
-            CHECKBOX: '',
-            SLIDER: '',
-            SELECT: 'app/components/decisionCharacteristics/decision-characteristics-select-partial.html',
-            RADIOGROUP: '',
-            YEARPICKER: 'app/components/decisionCharacteristics/decision-characteristics-yearpicker-partial.html'
-        };
+
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;

@@ -19,13 +19,15 @@
     function RatingStarController($element, AppRatingStarConstant, $scope, $compile) {
         var
             vm = this,
+            prevItem,
             value;
 
         vm.$onInit = onInit;
-        vm.$onChanges = onChanges;
+        vm.$doCheck = doCheck;
 
         function onInit() {
             var votes = '';
+            if(!vm.item) return;
             if (vm.item.weight) value = vm.item.weight.toString();
             vm.item.weight = vm.item.weight ? Number((vm.item.weight).toFixed(1)) : null;
             vm.rating = value;
@@ -56,11 +58,20 @@
                 '</div>',
             ].join('\n');
 
+            prevItem = vm.item;
+
             $element.html(html);
             $compile($element.contents())($scope);
         }
 
-        function onChanges() {
+        function doCheck() {
+            if (!angular.equals(vm.item, prevItem)) {
+                handleChange();
+                prevItem = angular.copy(vm.item);
+            }
+        }
+
+        function handleChange() {
             onInit();
         }
     }

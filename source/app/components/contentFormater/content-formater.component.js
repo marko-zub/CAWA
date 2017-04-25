@@ -8,7 +8,7 @@
         .component('contentFormater', {
             // templateUrl: 'app/components/contentFormater/content-formater.html',
             bindings: {
-                item: '=',
+                item: '<',
             },
             controller: 'ContentFormaterController',
             controllerAs: 'vm'
@@ -21,20 +21,15 @@
             vm = this;
 
         vm.$onInit = onInit;
-        vm.$onChanges = onChanges;
-
-        // TODO: optmize it
-        // All this staff for reduce count of angular wathcers
 
         function onInit() {
+            // console.log('init');
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
-            $element.html(renderContent);
-            if (renderContent) $compile($element.contents())($scope);
-        }
-
-        function onChanges() {
-            onInit();
+            if (renderContent) {
+                $element.html(renderContent);
+                $compile($element.contents())($scope);
+            };
         }
 
         function typeFormaterArray(str) {

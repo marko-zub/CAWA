@@ -1,7 +1,0 @@
-<ul class="btn-group btn-group-sm decision-sorter">
-    <li class="btn btn-default" ng-repeat="sorter in sorters track by $index" ng-click="selectSorter(sorter)" ng-class="{'selected btn-primary': sorter.order}">
-        <span>{{sorter.name}}</span>
-        <span ng-show="sorter.order === 'DESC'" class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
-        <span ng-show="sorter.order === 'ASC'" class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
-    </li>
-</ul>

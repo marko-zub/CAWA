@@ -1093,10 +1093,6 @@ filter-control {
 .characteristic-groups-content {
     position: relative;
     .app-loader-small {
-        // position: fixed
-        // top: auto;
-        // bottom: 0;
-        // width: 100%;
         left: -200px;
         width: 100vw;
     }
@@ -1114,5 +1110,28 @@ body {
     & > .dropdown-menu {
         max-height: 700px;
         overflow-y: auto;
+    }
+}
+
+.home {
+    .search-bar {
+        padding-right: 40px;
+        width: 100%;
+        .search-input-icon {
+            left: auto;
+            right: 0;
+            top: 0;
+            width: 40px;
+            color: #fff;
+            cursor: pointer;
+            height: 100%;
+            background-color: @basic-active;
+            padding: 0;
+            text-align: center;
+            line-height: 40px;
+            &:hover {
+                background: @basic-active-hover;
+            }
+        }
     }
 }

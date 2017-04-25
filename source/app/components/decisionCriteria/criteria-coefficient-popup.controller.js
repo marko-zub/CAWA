@@ -6,9 +6,9 @@
         .module('app.components')
         .controller('CriteriaCoefficientPopupController', CriteriaCoefficientPopupController);
 
-    CriteriaCoefficientPopupController.$inject = ['$uibModalInstance', 'criteria', 'DecisionCriteriaConstant'];
+    CriteriaCoefficientPopupController.$inject = ['$uibModalInstance', 'criteria', 'DecisionCriteriaCoefficientsConstant'];
 
-    function CriteriaCoefficientPopupController($uibModalInstance, criteria, DecisionCriteriaConstant) {
+    function CriteriaCoefficientPopupController($uibModalInstance, criteria, DecisionCriteriaCoefficientsConstant) {
         var vm = this;
 
         vm.apply = apply;
@@ -26,7 +26,7 @@
 
         function init() {
             vm.criteria = angular.copy(criteria);
-            vm.coefficientList = DecisionCriteriaConstant.COEFFICIENT_LIST;
+            vm.coefficientList = DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST;
         }
     }
 })();

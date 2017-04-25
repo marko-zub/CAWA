@@ -15,6 +15,7 @@
             controlOptions;
         // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
+        vm.$onDestroy = onDestroy;
         vm.callRangeSlider = callRangeSlider;
         vm.changeRadio = changeRadio;
         vm.changeSelect = changeSelect;
@@ -271,6 +272,11 @@
             };
 
             filterQueriesCharacteristicChange(data.characteristicId, query);
+        }
+
+        function onDestroy() {
+            //onDestroy all js event
+            $element.find('.filter-item-checkbox input').off('change');
         }
     }
 })();
