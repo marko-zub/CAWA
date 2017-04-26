@@ -8,6 +8,7 @@
         controller: 'FilterControlController',
         controllerAs: 'vm'
     });
+    
     FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils'];
 
     function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils) {

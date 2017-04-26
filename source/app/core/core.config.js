@@ -6,9 +6,9 @@
         .module('app.core')
         .config(configuration);
 
-    configuration.$inject = ['$animateProvider', '$provide', '$httpProvider', '$compileProvider'];
+    configuration.$inject = ['$animateProvider', '$provide', '$httpProvider', '$compileProvider', 'Config'];
 
-    function configuration($animateProvider, $provide, $httpProvider, $compileProvider) {
+    function configuration($animateProvider, $provide, $httpProvider, $compileProvider, Config) {
         // Enable ngAnimation for specific class
         $animateProvider.classNameFilter(/angular-animate/);
 
@@ -18,9 +18,10 @@
         $httpProvider.useApplyAsync(true);
 
         // TODO: disable only on prod Disable
-        $compileProvider.debugInfoEnabled(false);
-        $compileProvider.commentDirectivesEnabled(false);
-        $compileProvider.cssClassDirectivesEnabled(false);
+        // $compileProvider.debugInfoEnabled(false);
+        $compileProvider.debugInfoEnabled(Config.mode === 'dev');
+        $compileProvider.commentDirectivesEnabled(Config.mode === 'dev');
+        $compileProvider.cssClassDirectivesEnabled(Config.mode === 'dev');
     }
 
 

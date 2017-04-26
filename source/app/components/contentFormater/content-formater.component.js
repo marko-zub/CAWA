@@ -16,11 +16,11 @@
         });
 
 
-    renderTemplate.$inject = ['$element', '$attrs'];
+    // renderTemplate.$inject = ['$element', '$attrs'];
 
-    function renderTemplate($element, $attrs) {
-        return '<div ng-bind-html="::vm.html"></div>';
-    }
+    // function renderTemplate($element, $attrs) {
+    //     return '<div ng-bind-html="::vm.html"></div>';
+    // }
 
     ContentFormaterController.$inject = ['$element', '$sce', '$compile', '$scope', '$filter'];
 
@@ -35,7 +35,7 @@
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
             if (renderContent) {
-                // vm.html = $sce.trustAsHtml(renderContent);;
+                // vm.html = renderContent;
                 $element.html(renderContent);
                 $compile($element.contents())($scope);
             }

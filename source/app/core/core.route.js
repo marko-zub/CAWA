@@ -6,9 +6,9 @@
         .module('app.core')
         .config(configuration);
 
-    configuration.$inject = ['$urlMatcherFactoryProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', 'Config', '$locationProvider'];
+    configuration.$inject = ['$urlMatcherFactoryProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-    function configuration($urlMatcherFactoryProvider, $stateProvider, $urlRouterProvider, $compileProvider, Config, $locationProvider) {
+    function configuration($urlMatcherFactoryProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
 
         $urlMatcherFactoryProvider.strictMode(false);
 
@@ -23,11 +23,8 @@
 
         $urlRouterProvider.otherwise('/404');
 
-        $compileProvider.debugInfoEnabled(Config.mode === 'dev');
-
         $locationProvider.html5Mode({
             enabled: true,
-            // requireBase: false
         });
 
         $locationProvider.hashPrefix('!');

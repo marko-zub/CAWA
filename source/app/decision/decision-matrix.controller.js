@@ -152,6 +152,14 @@
                         if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                             characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
                         }
+
+
+                        if (characteristicsItem.valueType === 'STRINGARRAY' || 
+                            characteristicsItem.valueType === 'INTEGERARRAY') {
+                            characteristicsItem.isSortable = false;
+                        } else {
+                            characteristicsItem.isSortable = true;
+                        }
                         return characteristicsItem;
                     });
                     return resultEl;
@@ -191,7 +199,7 @@
                 });
                 return _.omit(resultEl, 'description', 'createDate', 'name');
             });
-
+            // console.log(vm.characteristicGroupsContent);
         }
 
         function createDecisionsRow(array, id, keyId, property) {
