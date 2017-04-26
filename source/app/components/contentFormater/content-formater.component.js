@@ -11,8 +11,16 @@
                 item: '<',
             },
             controller: 'ContentFormaterController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            // template: renderTemplate
         });
+
+
+    renderTemplate.$inject = ['$element', '$attrs'];
+
+    function renderTemplate($element, $attrs) {
+        return '<div ng-bind-html="::vm.html"></div>';
+    }
 
     ContentFormaterController.$inject = ['$element', '$sce', '$compile', '$scope', '$filter'];
 
@@ -27,6 +35,7 @@
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
             if (renderContent) {
+                // vm.html = $sce.trustAsHtml(renderContent);;
                 $element.html(renderContent);
                 $compile($element.contents())($scope);
             }
@@ -53,27 +62,28 @@
 
         function typeFormater(item) {
             if (!item || !item.valueType) return item;
+            var itemCopy = angular.copy(item);
             // CASE
             // console.log(item.valueType);
             var result = '';
-            switch (item.valueType.toUpperCase()) {
+            switch (itemCopy.valueType.toUpperCase()) {
                 case "STRING":
-                    result = stringFullDescr(item.value);
+                    result = stringFullDescr(itemCopy.value);
                     break;
                 case "DATETIME":
-                    result = $filter('date')(new Date(item.value), "dd/MM/yyyy");
+                    result = $filter('date')(new Date(itemCopy.value), "dd/MM/yyyy");
                     break;
                 case "STRINGARRAY":
-                    result = typeFormaterArray(item.value);
+                    result = typeFormaterArray(itemCopy.value);
                     break;
                 case "INTEGERARRAY":
-                    result = typeFormaterArray(item.value);
+                    result = typeFormaterArray(itemCopy.value);
                     break;
                 case "BOOLEAN":
-                    result = typeFormaterBool(item.value);
+                    result = typeFormaterBool(itemCopy.value);
                     break;
                 default:
-                    result = item.value || '';
+                    result = itemCopy.value || '';
             }
 
             return result;

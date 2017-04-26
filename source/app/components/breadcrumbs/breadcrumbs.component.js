@@ -8,7 +8,7 @@
         .component('breadcrumbs', {
             templateUrl: 'app/components/breadcrumbs/breadcrumbs.html',
             bindings: {
-                items: '='
+                items: '<'
             },
             controller: 'BreadcrumbsController',
             controllerAs: 'vm'

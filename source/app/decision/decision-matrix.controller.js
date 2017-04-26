@@ -173,9 +173,9 @@
             vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
                 _.map(criteriaItem.criteria, function(criteria) {
                     criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
-                    return criteria;
+                    return _.omit(criteria, 'description');
                 });
-                return criteriaItem;
+                return _.omit(criteriaItem, 'description', 'createDate', 'name');
             });
         }
 
@@ -183,13 +183,15 @@
             var decisionsCopy = angular.copy(decisions);
             // characteristics
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
+
             vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
-                    return characteristicsItem;
+                    return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
-                return resultEl;
+                return _.omit(resultEl, 'description', 'createDate', 'name');
             });
+
         }
 
         function createDecisionsRow(array, id, keyId, property) {

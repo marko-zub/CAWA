@@ -1,4 +1,4 @@
-<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by group.characteristicGroupId">
+<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by group.characteristicGroupId" ng-if="vm.listReady">
     <div class="matrix-item matrix-g-item matrix-item-content">
         <div class="matrix-g-title">
             <!-- <span class="group-title-line">{{group.name}}</span> -->

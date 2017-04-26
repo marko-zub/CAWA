@@ -19,6 +19,19 @@
 
     function MatrixCharacteristicsController() {
         var vm = this;
+
+        // vm.$onInit = onInit;
+        // function onInit() {
+        //     console.log('init');
+        //     console.log(vm.list);
+        // }
+        vm.listReady = false;
+        vm.$onChanges = onChanges;
+        function onChanges() {
+
+            // console.log(vm.list);
+            if(vm.list && vm.list.length) vm.listReady = true;
+        }
     }
 
 })();

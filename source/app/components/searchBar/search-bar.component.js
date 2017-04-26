@@ -37,7 +37,7 @@
         }
 
         function shouldSelectSuggestedDecisions($event) {
-            console.log($event);
+            // console.log($event);
             // return true;
             var code = $event.keyCode;
             console.log(code);

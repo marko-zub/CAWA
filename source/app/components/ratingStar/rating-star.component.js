@@ -11,8 +11,15 @@
                 item: '<',
             },
             controller: 'RatingStarController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            template: renderTemplate
         });
+
+    renderTemplate.$inject = ['$element', '$attrs'];
+
+    function renderTemplate($element, $attrs) {
+        return '<div ng-bind-html="::vm.html"></div>';
+    }
 
     RatingStarController.$inject = ['$element', 'AppRatingStarConstant', '$scope', '$compile'];
 
@@ -59,9 +66,9 @@
             ].join('\n');
 
             prevItem = vm.item;
-
-            $element.html(html);
-            $compile($element.contents())($scope);
+            vm.html = html;
+            // $element.html(html);
+            // $compile($element.contents())($scope);
         }
 
         function doCheck() {
