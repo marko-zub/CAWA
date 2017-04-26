@@ -15,7 +15,7 @@
                 views: {
                     "@": {
                         templateUrl: 'app/search/search.html',
-                        controller: 'searchController',
+                        controller: 'SearchController',
                         controllerAs: 'vm'
                     }
                 },

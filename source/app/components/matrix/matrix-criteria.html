@@ -10,7 +10,7 @@
 
             <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
                 <div class="matrix-col-content">
-                    
+
                     <div ng-switch="decisionCol.criteria.totalVotes > 0">
                         <div ng-switch-when="true">
                             <rating-star class="text-left" item="decisionCol.criteria"></rating-star>
@@ -19,7 +19,7 @@
                             <div class="app-rating-votes">
                                 <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
 
                     <div class="app-item-additional-wrapper">

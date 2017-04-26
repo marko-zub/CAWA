@@ -15,6 +15,15 @@
 
         init();
 
+        // Digest
+        // var nbDigest = 0;
+        // console.log(nbDigest);
+        // $rootScope.$watch(function() {
+        //   nbDigest++;
+        //   console.log(nbDigest);
+        // });
+        // End Digest
+
         function init() {
             // console.log('Decision Matrix Controller');
             vm.decisionsSpinner = true;

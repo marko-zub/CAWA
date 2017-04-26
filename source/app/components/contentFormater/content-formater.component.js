@@ -29,7 +29,7 @@
             if (renderContent) {
                 $element.html(renderContent);
                 $compile($element.contents())($scope);
-            };
+            }
         }
 
         function typeFormaterArray(str) {

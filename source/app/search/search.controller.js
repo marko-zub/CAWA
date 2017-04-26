@@ -4,11 +4,11 @@
 
     angular
         .module('app.discussions')
-        .controller('searchController', searchController);
+        .controller('SearchController', SearchController);
 
-    searchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService'];
+    SearchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService'];
 
-    function searchController($rootScope, $state, $stateParams, DecisionDataService) {
+    function SearchController($rootScope, $state, $stateParams, DecisionDataService) {
         var vm = this;
         vm.noResult = false;
 

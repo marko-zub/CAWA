@@ -24,6 +24,7 @@
         vm.search = search;
         vm.searchSuggestedDecisions = searchSuggestedDecisions;
         vm.selectSuggestedDecisions = selectSuggestedDecisions;
+        vm.shouldSelectSuggestedDecisions = shouldSelectSuggestedDecisions;
         // console.log(vm.placeholder);
 
         vm.searchOptions = {
@@ -35,14 +36,27 @@
             $state.go('search', {query: vm.searchQuery.toString()});
         }
 
+        function shouldSelectSuggestedDecisions($event) {
+            console.log($event);
+            // return true;
+            var code = $event.keyCode;
+            console.log(code);
+            if(code === 13) {
+                selectSuggestedDecisions(vm.searchQuery);
+                $event.preventDefault();
+            }
+        }
+
         function selectSuggestedDecisions($item, $model) {
             // console.log($item, $model)
             $state.go('search', {query: $item.name});
         }
 
-        function searchSuggestedDecisions(value) {
+        function searchSuggestedDecisions(query) {
+            if (!query) vm.noResult = true;
+            query = cleanQuery(query);
             var searchData = {
-                query: value,
+                query: query,
                 pageNumber: 0,
                 pageSize: 20
             };
@@ -53,8 +67,11 @@
             });
         }
 
-
+        function cleanQuery(val) {
+            val = val.toString();
+            return window.encodeURIComponent(val);
+        }
 
     }
-})();        
+})();
 
