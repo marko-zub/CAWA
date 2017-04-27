@@ -2,19 +2,10 @@
 <div class="app-top-panel">
     <div class="app-container-sm">
         <div class="row">
-            <div class="col-sm-6">
-                <h4 class="app-header-sub-title pull-left">
-                    Decisions
-                </h4>
-            </div>
-            <div class="col-sm-6">
-                <div class="pull-right">
-                    <div class="btn-group btn-group-sm btns-view">
-                        <a ui-sref="decisions({sort: 'createDate'})" ui-sref-active="btn-primary" class="btn btn-default">Newest</a>
-                        <a ui-sref="decisions({sort: 'updateDate'})" ui-sref-active="btn-primary" class="btn btn-default">Active</a>
-                        <a ui-sref="decisions({sort: 'totalVotes'})" ui-sref-active="btn-primary" class="btn btn-default">Votes</a>
-                    </div>
-                </div>
+            <div class="col-sm-12">
+                <h1 class="app-header-sub-title pull-left">
+                    Search
+                </h1>
             </div>
         </div>
     </div>
@@ -22,10 +13,13 @@
 <div class="app-container-sm">
     <div class="app-main-panel main-panel">
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
-        <div class="row">
+        <div ng-show="vm.noResult">
+            <h4>Nothing found!</h4>
+        </div>
+        <div class="row" ng-show="!vm.noResult">
             <div class="col-sm-8">
                 <ul class="discussions-list">
-                    <li ng-repeat="decision in vm.decisionsList track by $index">
+                    <li ng-repeat="decision in vm.decisions track by $index">
                         <a ui-sref="decisions.single({id:decision.decisionId, slug:decision.nameSlug, size: null, page: null})">
                             <div class="clearfix">
                                 <div class="img-container" ng-if="decision.imageUrl">

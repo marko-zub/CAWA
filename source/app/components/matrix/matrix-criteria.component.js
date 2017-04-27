@@ -15,17 +15,17 @@
         });
 
 
-    MatrixCriteriaController.$inject = [];
+    MatrixCriteriaController.$inject = ['DiscussionsNotificationService'];
 
-    function MatrixCriteriaController() {
+    function MatrixCriteriaController(DiscussionsNotificationService) {
         var vm = this;
 
         // Discussions
-        vm.isGetCommentsOpen = false;
         vm.getComments = getComments;
 
-        function getComments() {
-            vm.isGetCommentsOpen = true;
+        function getComments($event) {
+            DiscussionsNotificationService.notifyOpenDiscussion('data');
+            $event.preventDefault();
         }
     }
 

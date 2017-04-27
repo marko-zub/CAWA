@@ -1,22 +1,21 @@
 <!-- Criteria Content -->
-<div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.list track by $index">
-    <div class="matrix-table-item matrix-table-group-item matrix-table-item-content">
-        <div class="matrix-table-group-title">
-            <!-- <span class="group-title-line">{{group.name}}</span> -->
-        </div>
+<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">
+    <div class="matrix-item matrix-g-item matrix-item-content">
     </div>
-    <div class="matrix-table-item matrix-table-item-content" ng-repeat="item in group.criteria track by item.criterionId">
-        <div class="matrix-table-row">
+    <div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{'hide': group.isClosed}">
+        <div class="matrix-row">
 
-            <div class="matrix-table-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments()">
-                <div class="matrix-table-col-content">
+            <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">
+                <div class="matrix-col-content">
 
-                    <div ng-if="decisionCol.criteria.totalVotes">
-                        <rating-star class="text-left" value="decisionCol.criteria.weight" total-votes="decisionCol.criteria.totalVotes" ng-show="decisionCol.criteria.weight"></rating-star>
-                    </div>
-                    <div ng-if="!decisionCol.criteria.totalVotes">
-                        <div class="app-rating-votes">
-                            <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
+                    <div ng-switch="decisionCol.criteria.totalVotes > 0">
+                        <div ng-switch-when="true">
+                            <rating-star class="text-left" item="decisionCol.criteria"></rating-star>
+                        </div>
+                        <div ng-switch-when="false">
+                            <div class="app-rating-votes">
+                                <span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>
+                            </div>
                         </div>
                     </div>
 

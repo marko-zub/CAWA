@@ -19,7 +19,7 @@
                 if ($stateParams.data.pageTitle) {
                     $rootScope.pageTitle = $stateParams.data.pageTitle + ' | ' + pageTitle;
                 }
-                
+
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
             }
         });

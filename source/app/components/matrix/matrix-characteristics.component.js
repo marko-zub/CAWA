@@ -15,10 +15,19 @@
         });
 
 
-    MatrixCharacteristicsController.$inject = [];
+    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService'];
 
-    function MatrixCharacteristicsController() {
-        var vm = this;
+    function MatrixCharacteristicsController(DiscussionsNotificationService) {
+        var vm = this, prevList;
+        
+        // Discussions
+        vm.getComments = getComments;
+
+        function getComments($event) {
+            vm.isGetCommentsOpen = true;
+            DiscussionsNotificationService.notifyOpenDiscussion('data');
+            $event.preventDefault();
+        }
     }
 
 })();

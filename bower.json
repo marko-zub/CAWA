@@ -31,11 +31,6 @@
     "maquette": "^2.4.5"
   },
   "overrides": {
-    "fastdom": {
-      "main": [
-        "fastdom.min.js"
-      ]
-    },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css"
@@ -54,6 +49,12 @@
     "jquery": {
       "main": [
         "./dist/jquery.slim.js"
+      ]
+    },
+    "angular-bootstrap": {
+      "main": [
+        "./ui-bootstrap-tpls.js",
+        "./ui-bootstrap-csp.css"
       ]
     }
   }

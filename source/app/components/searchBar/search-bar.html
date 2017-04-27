@@ -1,0 +1,14 @@
+<input
+    class="form-control"
+    type="text"
+    ng-model="vm.searchQuery"
+    typeahead-editable="true"
+    ng-model-options="vm.searchOptions"
+    uib-typeahead="decision as decision.name for decision in vm.searchSuggestedDecisions($viewValue)"
+    placeholder="{{vm.placeholder}}"
+    typeahead-select-on-exact="true"
+    typeahead-focus-first="false"
+    ng-keyup="vm.shouldSelectSuggestedDecisions($event, vm.searchQuery)"
+    typeahead-on-select="vm.selectSuggestedDecisions($item)"
+    typeahead-append-to-body="true">
+<span class="fa fa-search glyphicon glyphicon-search search-input-icon" ng-click="vm.search()" tabindex="0"></span>

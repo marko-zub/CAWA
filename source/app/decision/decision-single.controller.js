@@ -1,6 +1,6 @@
 (function() {
 
-    'user strict';
+    'use strict';
 
     angular
         .module('app.decision')
@@ -38,17 +38,17 @@
         function init() {
             console.log('Decision Single Controller');
             initPagination();
-            searchDecisionNomimations($stateParams.id);
+            getDecisionNomimations($stateParams.id);
             getCriteriaGroupsById($stateParams.id);
         }
 
-        function searchDecisionNomimations(id) {
+        function getDecisionNomimations(id) {
             if (!id) return;
 
             var pagination = _.clone(vm.pagination);
             pagination.pageNumber = pagination.pageNumber - 1;
 
-            DecisionDataService.searchDecisionNomination(id, pagination).then(function(result) {
+            DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
                 vm.decisions = descriptionTrustHtml(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
                 // console.log(result);
@@ -67,12 +67,12 @@
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
-            searchDecisionNomimations($stateParams.id);
+            getDecisionNomimations($stateParams.id);
             updateStateParams();
         }
 
         function changePage() {
-            searchDecisionNomimations($stateParams.id);
+            getDecisionNomimations($stateParams.id);
             updateStateParams();
         }
 

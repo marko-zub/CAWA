@@ -6,7 +6,7 @@
                 <h4 class="app-header-sub-title pull-left">
                     Decission Top {{::vm.pagination.pageSize}} {{::vm.decision.name}}
                 </h4>
-                <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" value="::vm.discussion.votes.weight" total-votes="::vm.discussion.votes.totalVotes"></rating-star>
+                <rating-star ng-if="::vm.discussion.votes.weight" class="text-left pull-left" item="::vm.discussion.votes"></rating-star>
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
@@ -85,7 +85,7 @@
                                         {{::criteria.name}}
                                     </div>
                                     <div class="pull-right app-rating-inline">
-                                        <rating-star class="text-left" value="criteria.weight" total-votes="criteria.totalVotes" ng-show="criteria.weight"></rating-star>
+                                        <rating-star class="text-left" item="criteria" ng-show="criteria.weight"></rating-star>
                                     </div>
                                     <div class="text-right" ng-if="criteria.description">
                                         <span class="link-secondary glyphicon glyphicon-question-sign" popover-title="{{::criteria.name}}" uib-popover-html="::criteria.description" popover-placement="left" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>

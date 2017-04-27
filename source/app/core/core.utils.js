@@ -6,6 +6,7 @@
 		.service('Utils', Utils);
 
 	function Utils() {
+
 		function addItemToArray(itemId, array) {
 			if (!itemId || _.includes(array, itemId)) return;
 			array.push(itemId);
@@ -20,9 +21,21 @@
 			}
 		}
 
+        function removeEmptyFromArray(array) {
+            return _.filter(array, function(el) {
+                if (el) return el; //can use just if(el); !_.isNull(el) && !_.isUndefined(el) && !_.isNaN(el)
+            });
+        }
+
+        // function isDate(date) {
+        //     var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
+        //     return isValueDate;
+        // }
+
 		return {
 			addItemToArray: addItemToArray,
-			removeItemFromArray: removeItemFromArray
+			removeItemFromArray: removeItemFromArray,
+			removeEmptyFromArray: removeEmptyFromArray
 		};
 	}
 })();

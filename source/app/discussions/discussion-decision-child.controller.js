@@ -1,6 +1,6 @@
 (function() {
 
-    'user strict';
+    'use strict';
 
     angular
         .module('app.discussions')
@@ -75,7 +75,7 @@
             };
 
             sendData.includeChildDecisionIds.push($stateParams.discussionId);
-            DecisionDataService.searchDecisionMatrix(vm.decision.decisionId, sendData).then(function(result) {
+            DecisionDataService.getDecisionMatrix(vm.decision.decisionId, sendData).then(function(result) {
                 getCriteriaGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].criteria);
                 getCharacteristictsGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].characteristics);
             });

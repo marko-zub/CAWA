@@ -1,22 +1,22 @@
 (function() {
 
-    'user strict';
+    'use strict';
 
     angular
         .module('app.home')
         .controller('HomeController', HomeController);
 
-        HomeController.$inject = [];
+    HomeController.$inject = [];
 
-        function HomeController() {
-            var vm = this;
+    function HomeController() {
+        var vm = this;
 
-            console.log('Home controller');
+        console.log('Home controller');
 
-            vm.search = search;
+        vm.search = search;
 
-            function search() {
-                vm.showTrigger = true;
-            }
+        function search() {
+            vm.showTrigger = true;
         }
+    }
 })();

@@ -1,11 +1,12 @@
 <breadcrumbs items="breadcrumbs"></breadcrumbs>
 <div class="decision matrix matrix-new">
-    <div class="matrix-table-wrapper">
+    <div class="matrix-wrapper">
 
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
-                    <a ng-click="vm.changeMatrixMode('inclusion')">{{::vm.decision.name}}
+                    <a ng-click="vm.changeMatrixMode('inclusion')">
+                        <span ng-bind="::vm.decision.name"></span>
                         <span class="badge" ng-bind="vm.inclusionItemsLength"></span>
                     </a>
                 </li>
@@ -23,14 +24,14 @@
 
         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
-            <div id="panel" class="app-panel matrix-table-panel">
+            <div id="panel" class="app-panel matrix-panel">
                 <!-- Header -->
-                <div class="matrix-table-header">
-                    <div class="matrix-table-row">
+                <div class="matrix-header">
+                    <div class="matrix-row">
 
-                        <div class="matrix-table-col matrix-table-group-name">
-                            <div class="matrix-table-title-wrapper">
-                                <div class="matrix-table-title app-sorter-wrapper matrix-content-name">Name
+                        <div class="matrix-col matrix-g-name">
+                            <div class="matrix-title-wrapper">
+                                <div class="matrix-title app-sorter-wrapper matrix-content-name">Name
                                 </div>
                                 <div class="app-sorter">
                                     <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'ASC'}"></span>
@@ -41,75 +42,77 @@
 
                         <!-- End Make Sticky -->
                         <!-- Decisions Header -->
-                        <div id="matrix-table-scroll-group" class="scroll-group">
-                            <div class="matrix-table-col matrix-table-col-name matrix-table-group" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
-                                <div class="matrix-table-col-content matrix-content-name decision-matrix-col">
-                                        <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
-                                            <div class="clearfix">
-                                                <div class="matrix-img-container img-sm" >
-                                                    <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive">
-                                                </div>
-                                                <div class="app-title-inline">
-                                                    <span ng-bind="::item.decision.name"></span>
-                                                </div>
-                                            </div>
-                                        </a>
+                        <div id="matrix-scroll-group" class="scroll-group">
+                            <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
+                                <div class="matrix-col-content matrix-content-name decision-matrix-col">
+                                    <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                         <div class="clearfix">
-                                            <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
-                                                <small>
-                                                    Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage"></strong>% |
-                                                    <span class="app-icon glyphicon glyphicon-thumbs-up"></span>
-                                                    <span ng-bind="item.decision.totalVotes"></span>
-                                                </small>
+                                            <div class="matrix-img-container img-sm" >
+                                                <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive">
                                             </div>
-                                            <div class="info">
-                                                <span ng-if="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <div class="app-title-inline">
+                                                <span ng-bind="::item.decision.name"></span>
                                             </div>
                                         </div>
-                                        <div class="app-panel-controls">
-                                            <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode == 'inclusion', 'fa-eye': vm.matrixMode == 'exclusion'}"></i>
-                                            </span>
+                                    </a>
+                                    <div class="clearfix">
+                                        <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
+                                            <small>
+                                                Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage"></strong>% |
+                                                <span class="app-icon glyphicon glyphicon-thumbs-up"></span>
+                                                <span ng-bind="item.decision.totalVotes"></span>
+                                            </small>
+                                        </div>
+                                        <div class="info">
+                                            <span ng-if="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
+                                    <div class="app-panel-controls">
+                                        <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
+                                            <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode == 'inclusion', 'fa-eye': vm.matrixMode == 'exclusion'}"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- End Decisions Header -->
                     </div>
                 </div>
-                <div class="matrix-table-body-wrapper">
+                <div class="matrix-body-wrapper">
                     <!-- End Header -->
                     <!-- Table Aside -->
-                    <div id="matrix-table-aside" class="matrix-table-aside">
-                        <div id="matrix-table-aside-content" class="matrix-table-aside-content">
+                    <div id="matrix-aside" class="matrix-aside">
+                        <div id="matrix-aside-content" class="matrix-aside-content">
 
                                 <!-- Criteria Aside -->
                                 <div class="criteria-list group-wrapper">
                                     <div class="title">
                                         Criteria
                                     </div>
-                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.criteriaGroups track by $index">
-                                        <div class="matrix-table-item matrix-table-group-item">
-                                            <div class="matrix-table-group-title">
+                                    <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criterionGroupId">
+                                        <div class="matrix-item matrix-g-item">
+                                            <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'criterion')">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
+                                                <div class="controls">
+                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="matrix-table-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected}">
+                                        <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
 
-                                                <div class="matrix-table-title-wrapper">
-                                                    <div class="matrix-table-title app-sorter-wrapper" ng-bind="::criteria.name">
-                                                        <!-- {{criteria.criterionId}} -->
-                                                    </div>
+                                                <div class="matrix-title-wrapper">
+                                                    <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name"></div>
                                                     <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                                         <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                                     </div>
                                                     <div class="app-sorter">
+                                                        <!-- TODO: make as to toogle to avoid 2 ng-click event -->
                                                         <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order == 'ASC'}"></span>
                                                         <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order == 'DESC'}"></span>
                                                     </div>
 
 
-                                                    <a href ng-if="criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <a href ng-if="::criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                                 </div>
 
@@ -119,30 +122,33 @@
                                 <!-- End Criteria Aside -->
 
                                 <!-- Characteristic Aside -->
-                                <div class="criteria-list group-wrapper" >
+                                <div id="characteristic-content-aside" class="criteria-list group-wrapper">
                                     <div class="title">
                                         Characteristics
                                     </div>
-                                    <div class="matrix-table-group matrix-table-group-criteria" ng-repeat="group in vm.characteristicGroups track by $index">
-                                        <div class="matrix-table-item  matrix-table-group-item">
-                                            <div class="matrix-table-group-title">
+                                    <div class="matrix-g matrix-g-characteristics" ng-repeat="group in ::vm.characteristicGroups track by group.characteristicGroupId">
+                                        <div class="matrix-item  matrix-g-item">
+                                            <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'characteristics')">
                                                 <span class="group-title-line" ng-bind="::group.name"></span>
+                                                <div class="controls">
+                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="matrix-table-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index">
-                                            <div class="matrix-table-title-wrapper">
-                                                <div class="matrix-table-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
+                                        <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by $index" ng-class="{'hide': group.isClosed}">
+                                            <div class="matrix-title-wrapper">
+                                                <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                     <!-- <div class="app-control app-sm-filter" content-id="characteristic.characteristicId" pop-over>
                                                         <i class="glyphicon glyphicon-filter"></i>
                                                     </div> -->
                                                 <filter-control item="::characteristic"></filter-control>
-                                                <div class="app-sorter" ng-if="characteristic.valueType !== 'STRINGARRAY' && characteristic.valueType !== 'INTEGERARRAY'">
+                                                <div class="app-sorter" ng-if="::characteristic.isSortable">
                                                     <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'ASC'}"></span>
                                                     <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>
                                                 </div>
 
-                                                <a href ng-if="characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                             </div>
                                         </div>
@@ -156,13 +162,16 @@
                     </div>
                     <!-- End Table Aside -->
                     <!-- Table Body -->
-                    <div id="matrix-table-body" class="matrix-table-body">
+                    <div id="matrix-body" class="matrix-body">
                         <!-- Table Content -->
-                        <div id="matrix-table-content" class="matrix-table-content">
+                        <div id="matrix-content" class="matrix-content">
 
                             <matrix-criteria list="vm.criteriaGroupsContent"></matrix-criteria>
 
-                            <matrix-characteristics list="vm.characteristicGroupsContent"></matrix-characteristics>
+                            <div class="characteristic-groups-content">
+                                <matrix-characteristics list="vm.characteristicGroupsContent"></matrix-characteristics>
+                                <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                            </div>
 
                         </div>
                         <!-- End Table Content -->
@@ -179,11 +188,9 @@
 
 
 <!-- Comments -->
-<pageslide class="sidebar" ps-size="500px" ps-open="vm.isGetCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
+<pageslide class="sidebar" ps-size="500px" ps-open="vm.isCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
     <div class="sidebar-content">
-    <h4>
-        Comments
-    </h4>
+        <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriterion.criterionId"></comments>
     </div>
 </pageslide>
 <!-- End Comments -->

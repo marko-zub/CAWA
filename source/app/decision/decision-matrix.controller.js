@@ -1,9 +1,14 @@
 (function() {
-    'user strict';
+    'use strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
+        'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant',
+        '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils', 'DiscussionsNotificationService'
+    ];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
+        DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant,
+        $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -13,79 +18,118 @@
         vm.decision = decisionBasicInfo || {};
         $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
+        // TODO: simplify conttoller and move to different componnts
         init();
+
+        // Digest
+        var nbDigest = 0;
+        console.log(nbDigest);
+        $rootScope.$watch(function() {
+            nbDigest++;
+            console.log(nbDigest);
+        });
+        // End Digest
 
         function init() {
             // console.log('Decision Matrix Controller');
             vm.decisionsSpinner = true;
+
+            // First call
+            // 1. Render criteria and decisions for fast delivery info for user
+            vm.characteristicGroupsContentLoader = true;
             $q.all([
-                searchDecisionMatrix(vm.decisionId),
-                getCriteriaGroupsById(vm.decisionId),
-                getCharacteristictsGroupsById(vm.decisionId)
+                getDecisionMatrix(vm.decisionId),
+                getCriteriaGroupsById(vm.decisionId)
             ]).then(function(values) {
                 // Render html matrix
-                initMatrix(values[0].decisionMatrixs, true);
+
+                var decisionMatrixs = values[0].decisionMatrixs;
+                // 2. render list of criterias
+                createMatrixContentCriteria(decisionMatrixs);
+                renderMatrix(true);
+
+                // Init only first time
+                initSorters(); //Hall of fame
+                initMatrixMode();
+
+                getCharacteristictsGroupsById(vm.decisionId).then(function(resp) {
+                    // 3. Render characteristicts
+                    createMatrixContentCharacteristics(decisionMatrixs);
+                    renderMatrix(true);
+                    vm.characteristicGroupsContentLoader = false;
+                });
+
             }, function(error) {
                 console.log(error);
             });
-            //Subscribe to notification events
-            DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
-                vm.decisionMatrixList = prepareMatrixData(data);
-                initMatrix(data);
-            });
-            DecisionNotificationService.subscribePageChanged(function() {
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
-                data.detailsSpinner = true;
-                DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
-                    data.characteristics = prepareDataToDisplay(result);
-                }).finally(function() {
-                    data.detailsSpinner = false;
-                });
-            });
-            DecisionNotificationService.subscribeSelectSorter(function(event, data) {
-                // TODO: clean up DecisionSharedService in controller maake one object
-                DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
-                DecisionSharedService.filterObject.persistent = true;
-                vm.fo = DecisionSharedService.filterObject.sorters;
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-                // if (!data.filterQueries) return;
-                DecisionSharedService.filterObject.persistent = true;
-                //TODO: Clean up code
-                if (!DecisionSharedService.filterObject.filterQueries) {
-                    DecisionSharedService.filterObject.filterQueries = [];
-                }
-                var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
-                    return filterQuery.characteristicId == data.filterQueries.characteristicId;
-                });
-                if (find >= 0) {
-                    if (_.isEmpty(data.filterQueries.value)) {
-                        DecisionSharedService.filterObject.filterQueries.splice(find, 1);
-                    } else {
-                        DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
-                    }
-                } else {
-                    DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
-                }
-                if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
-                // console.log(DecisionSharedService.filterObject.filterQueries);
-                searchDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs, false);
-                });
-            });
         }
+
+        //Subscribe to notification events
+        DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
+            vm.decisionMatrixList = prepareMatrixData(data);
+            initMatrix(data);
+        });
+        DecisionNotificationService.subscribePageChanged(function() {
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeChildDecisionExclusion(function() {
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
+            data.detailsSpinner = true;
+            DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
+                data.characteristics = prepareDataToDisplay(result);
+            }).finally(function() {
+                data.detailsSpinner = false;
+            });
+        });
+        DecisionNotificationService.subscribeSelectSorter(function(event, data) {
+            // TODO: clean up DecisionSharedService in controller maake one object
+            DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
+            DecisionSharedService.filterObject.persistent = true;
+            vm.fo = DecisionSharedService.filterObject.sorters;
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
+            // if (!data.filterQueries) return;
+            DecisionSharedService.filterObject.persistent = true;
+            //TODO: Clean up code
+            if (!DecisionSharedService.filterObject.filterQueries)
+                DecisionSharedService.filterObject.filterQueries = [];
+
+            var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
+                return filterQuery.characteristicId == data.filterQueries.characteristicId;
+            });
+            if (find >= 0) {
+                // TODO: find better solution
+                if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
+                    !data.filterQueries.queries) {
+                    DecisionSharedService.filterObject.filterQueries.splice(find, 1);
+                } else {
+                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                }
+            } else {
+                DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
+            }
+            if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs, false);
+            });
+        });
+
+        // Discussions Subscrive
+        vm.isCommentsOpen = false;
+        DiscussionsNotificationService.subscribeOpenDiscussion(function(event, data) {
+            console.log(data);
+            vm.isCommentsOpen = true;
+        });
+
 
         function getCriteriaGroupsById(decisionId) {
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
@@ -106,6 +150,8 @@
                     });
                     return criteriaItem;
                 });
+
+                // TOOD: check if work correct
                 return result;
             });
         }
@@ -113,96 +159,61 @@
         function getCharacteristictsGroupsById(decisionId) {
             return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
                 // characteristics
+                var total = 0;
                 vm.characteristicGroups = _.map(result, function(resultEl) {
+                    total += resultEl.characteristics.length;
                     _.map(resultEl.characteristics, function(characteristicsItem) {
                         if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                             characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+                        }
+
+
+                        if (characteristicsItem.valueType === 'STRINGARRAY' ||
+                            characteristicsItem.valueType === 'INTEGERARRAY') {
+                            characteristicsItem.isSortable = false;
+                        } else {
+                            characteristicsItem.isSortable = true;
                         }
                         return characteristicsItem;
                     });
                     return resultEl;
                 });
-            });
-        }
-        // TODO: move to utils
-        function isDate(date) {
-            var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
-            return isValueDate;
-        }
-        // TODO: clean up optimize
-        function createEmtyObjList(total) {
-            var array = [];
-            for (var i = total - 1; i >= 0; i--) {
-                array[i] = {};
-            }
-            return array;
-        }
-        // // TODO: native for
-        // function createMatrixContentOnce(decisions, criteriaGroups, characteristicGroups) {
-        //     // console.log(decisions);
-        //     if (criteriaGroups) vm.criteriaGroups = criteriaGroups;
-        //     if (characteristicGroups) vm.characteristicGroups = characteristicGroups;
-        //     emptyRow = createEmtyObjList(decisions.length);
-        //     // Fill criteria empty decisions
-        //     for (var i = vm.criteriaGroups.length - 1; i >= 0; i--) {
-        //         for (var j = vm.criteriaGroups[i].criteria.length - 1; j >= 0; j--) {
-        //             var criteriaItem = vm.criteriaGroups[i].criteria[j];
-        //             if (criteriaItem.description && !_.isObject(criteriaItem.description)) {
-        //                 criteriaItem.description = $sce.trustAsHtml(criteriaItem.description);
-        //             }
-        //             criteriaItem.decisionsRow = createEmtyObjList(decisions.length);
-        //         }
-        //     }
-        //     // Fill characteristics empty decisions
-        //     for (var l = vm.characteristicGroups.length - 1; l >= 0; l--) {
-        //         if (vm.characteristicGroups[l].characteristics.length) {
-        //             for (var k = vm.characteristicGroups[l].characteristics.length - 1; k >= 0; k--) {
-        //                 var characteristicsItem = vm.characteristicGroups[l].characteristics[k];
-        //                 if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
-        //                     characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
-        //                 }
-        //                 characteristicsItem.decisionsRow = createEmtyObjList(decisions.length);
-        //             }
-        //         }
-        //     }
-        //     for (var x = decisions.length - 1; x >= 0; x--) {
-        //         var decisionItem = decisions[x];
-        //         var decisionSend = _.pick(decisionItem.decision, 'decisionId', 'nameSlug');
-        //         // criteria
-        //         if (decisionItem.criteria) {
-        //             for (var p = decisionItem.criteria.length - 1; p >= 0; p--) {
-        //                 var decisionCriteria = decisionItem.criteria[p];
-        //                 returnValueIndexByProperty(vm.criteriaGroups, decisionCriteria, 'criteria', decisionSend, x, 'criterionId');
-        //             }
-        //         }
-        //         // characteristics
-        //         if (decisionItem.characteristics) {
-        //             for (var z = decisionItem.characteristics.length - 1; z >= 0; z--) {
-        //                 var characteristic = decisionItem.characteristics[z];
-        //                 findCharacteristicsIndexById(vm.characteristicGroups, characteristic, decisionSend, x, 'characteristicId');
-        //             }
-        //         }
-        //     }
-        // }
-        function createMatrixContentOnce(decisions) {
-            // TODO: Clean up
 
-            // Criteria
-            vm.criteriaGroupsContent = _.map(vm.criteriaGroups, function(criteriaItem) {
-                _.map(criteriaItem.criteria, function(criteria) {
-                    criteria.decisionsRow = createDecisionsRow(decisions, criteria.criterionId, 'criterionId', 'criteria');
-                    return criteria;
-                });
-                return criteriaItem;
+                // setMatrixTableHeight(total);
+                return result;
             });
+        }
+
+        // TODO: try to optimize it
+        function createMatrixContentCriteria(decisions) {
+            // Criteria
+            var decisionsCopy = angular.copy(decisions);
+            var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
+            // console.log(decisionsCopy);
+            // console.log(criteriaGroupsCopy);
+
+            vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
+                _.map(criteriaItem.criteria, function(criteria) {
+                    criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
+                    return _.omit(criteria, 'description');
+                });
+                return _.omit(criteriaItem, 'description', 'createDate', 'name');
+            });
+        }
+
+        function createMatrixContentCharacteristics(decisions) {
+            var decisionsCopy = angular.copy(decisions);
             // characteristics
-            vm.characteristicGroupsContent = _.map(vm.characteristicGroups, function(resultEl) {
+            var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
+
+            vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
-                    return characteristicsItem;
+                    return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
-                return resultEl;
+                return _.omit(resultEl, 'description', 'createDate', 'name');
             });
+            // console.log(vm.characteristicGroupsContent);
         }
 
         function createDecisionsRow(array, id, keyId, property) {
@@ -216,11 +227,13 @@
                 return obj;
             });
         }
+        // END TODO: try to optimize it
+
         //Init sorters, when directives loaded
         function initSorters() {
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
-            // Set Criteria
+            // Set Criteria for Hall of fame
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.criterionId)) {
@@ -239,46 +252,40 @@
 
         function findCoefNameByValue(valueSearch) {
             valueSearch = valueSearch;
-            return _.find(DecisionCriteriaConstant.COEFFICIENT_LIST, function(record) {
+            return _.find(DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST, function(record) {
                 return record.value == valueSearch;
             });
         }
 
         // TODO: optimize avoid Reflow!
-        var matrixAside,
-            matrixCols;
+        var matrixAsideRow,
+            matrixRows;
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
-        matrixRows = document.getElementsByClassName('js-matrix-table-item-content');
+        matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
             $('.js-item-aside').css('height', '');
-            $('.js-matrix-table-item-content').css('height', '');
+            $('.js-matrix-item-content').css('height', '');
 
             var asideArray = [],
                 contentArray = [];
             for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
-                    elH,
                     elAside,
                     newH;
+
                 el = matrixRows[i];
-                elH = el.clientHeight;
                 elAside = matrixAsideRow[i];
-                elAsideH = elAside.clientHeight;
 
-                // asideArray.push(elAsideH);
-                // contentArray.push(elH);
-
-                newH = (elAsideH >= elH) ? elAsideH : elH;
+                newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
-                el.style.height = newH + 'px';
-                elAside.style.height = newH + 'px';
+                var newHpx = newH + 'px';
+                el.style.height = newHpx;
+                elAside.style.height = newHpx;
 
             }
-
-            // console.log(asideArray, contentArray);
-
         }
+
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
@@ -292,27 +299,28 @@
             });
         }
 
-        function searchDecisionMatrix(id) {
+        function getDecisionMatrix(id) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
-            return DecisionDataService.searchDecisionMatrix(id, sendData).then(function(result) {
+            return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
+                setMatrixTableWidth(vm.decisionMatrixList.length);
                 return result;
             });
         }
 
         function initMatrix(data, calcHeight) {
             // var performance = window.performance;
-            // var t0 = performance.now();            
-            createMatrixContentOnce(data);
+            // var t0 = performance.now();
+            createMatrixContentCriteria(data);
+            createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
-
+            initSorters(); //Hall of fame
             initMatrixMode();
-            setMatrixTableWidth(data.length || vm.decisions.decisionMatrixs.length);
+
             renderMatrix(calcHeight);
-            initSorters();
         }
 
         function prepareMatrixData(data) {
@@ -344,6 +352,7 @@
         }
 
         function orderByCriteriaProperty(order, $event) {
+            var sortObj;
             order = order || 'DESC';
             sortObj = {
                 sort: {
@@ -360,6 +369,7 @@
 
         function orderByCharacteristicProperty(field, order) {
             if (!field) return;
+            var sortObj;
             order = order || 'DESC';
             sortObj = {
                 sort: {
@@ -375,15 +385,15 @@
             var _this = martrixScroll || this;
             scrollHandler(_this.y, _this.x);
             // TODO: avoid JQuery
-            $('.matrix-table-group .app-control').toggleClass('selected', false);
+            $('.matrix-g .app-control').toggleClass('selected', false);
             $('.app-pop-over-content').toggleClass('hide', true);
         }
         // Table scroll
         var tableBody,
             tableHeader,
             tableAside;
-        tableAside = $('#matrix-table-aside-content');
-        tableHeader = $('#matrix-table-scroll-group');
+        tableAside = $('#matrix-aside-content');
+        tableHeader = $('#matrix-scroll-group');
 
         function scrollHandler(scrollTop, scrollLeft) {
             $(tableAside).css({
@@ -398,7 +408,7 @@
         var martrixScroll;
 
         function initMatrixScroller() {
-            var wrapper = document.getElementById('matrix-table-body');
+            var wrapper = document.getElementById('matrix-body');
             martrixScroll = new IScroll(wrapper, {
                 scrollbars: true,
                 scrollX: true,
@@ -426,7 +436,12 @@
         function setMatrixTableWidth(total) {
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
-            $('#matrix-table-content').css('width', tableWidth);
+            $('#matrix-content').css('width', tableWidth);
+        }
+
+        function setMatrixTableHeight(total) {
+            var tableH = total * 112 + 'px';
+            $('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
         }
         // TODO: make as a separeted component
         // Criteria header
@@ -464,7 +479,6 @@
         vm.selectCriterion = selectCriterion;
 
         function selectCriterion(event, criterion, coefCall) {
-            // if($event.target ===)
             if ($(event.target).hasClass('title-descr')) return;
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
@@ -476,16 +490,11 @@
             formDataForSearchRequest(criterion, coefCall);
             var sendData = DecisionSharedService.getFilterObject();
             sendData.persistent = true;
-            DecisionDataService.searchDecisionMatrix(vm.decisionId, sendData).then(function(result) {
+            DecisionDataService.getDecisionMatrix(vm.decisionId, sendData).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }
-        // TODO: move to Utils
-        function removeEmptyFromArray(array) {
-            return _.filter(array, function(el) {
-                if (el) return el; //can use just if(el); !_.isNull(el) && !_.isUndefined(el) && !_.isNaN(el)
-            });
-        }
+
 
         function formDataForSearchRequest(criterion, coefCall) {
             if (!criterion.criterionId) return;
@@ -494,28 +503,20 @@
             if (position === -1) {
                 foSelectedCriteria.sortCriteriaIds.push(criterion.criterionId);
                 //don't add default coefficient
-                if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaConstant.COEFFICIENT_DEFAULT.value) {
+                if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                     foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
                 }
                 //add only coefficient (but not default)
-            } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaConstant.COEFFICIENT_DEFAULT.value) {
+            } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                 foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
                 //unselect criterion
             } else {
                 foSelectedCriteria.sortCriteriaIds.splice(position, 1);
                 delete foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId];
             }
-            foSelectedCriteria.sortCriteriaIds = removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
+            foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
-        // TODO: don't repit yourself!!!
-        // Characteristics
-        controls = {
-            CHECKBOX: '',
-            SLIDER: '',
-            SELECT: 'app/components/decisionCharacteristics/decision-characteristics-select-partial.html',
-            RADIOGROUP: '',
-            YEARPICKER: 'app/components/decisionCharacteristics/decision-characteristics-yearpicker-partial.html'
-        };
+
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
@@ -570,6 +571,29 @@
             var send_fo = _fo;
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
+        }
+
+        // Toggle:
+        vm.toggleGroupName = toggleGroupName;
+
+        function toggleGroupName(id, type) {
+            // console.log(id, type, vm.criteriaGroups[id]);
+            // TODO: optimize
+            var flag;
+            if (type === 'criterion') {
+                flag = vm.criteriaGroups[id].isClosed ? vm.criteriaGroups[id].isClosed : false;
+                vm.criteriaGroups[id].isClosed = !flag;
+                vm.criteriaGroupsContent[id].isClosed = !flag;
+            } else if ('characteristics') {
+                flag = vm.characteristicGroups[id].isClosed ? vm.characteristicGroups[id].isClosed : false;
+                vm.characteristicGroups[id].isClosed = !flag;
+                vm.characteristicGroupsContent[id].isClosed = !flag;
+            }
+
+            // Incorect height calc
+            setTimeout(function() {
+                reinitMatrixScroller();
+            }, 0);
         }
     }
 })();
