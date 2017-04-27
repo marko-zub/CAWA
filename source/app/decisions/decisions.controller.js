@@ -27,7 +27,7 @@
             console.log('Decisions controller');
 
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
-            data = checkStateParams($stateParams);
+            var data = checkStateParams($stateParams);
             getDecisions(data);
         }
 
@@ -80,7 +80,9 @@
 
         function checkStateParams(stateParams) {
             if (!stateParams) return;
-            var data, allowedSortParams;
+            var data,
+                allowedSortParams;
+
             data = vm.pagination;
             allowedSortParams = [{
                 key: 'createDate',

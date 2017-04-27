@@ -1,9 +1,13 @@
 (function() {
     'use strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
-    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams', 'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant', '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils'];
+    DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
+    'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant',
+    '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils', 'DiscussionsNotificationService'];
 
-    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams, DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant, $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils) {
+    function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
+        DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant,
+        $uibModal, decisionAnalysisInfo, $sce, $filter, $compile, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -13,6 +17,7 @@
         vm.decision = decisionBasicInfo || {};
         $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
+        // TODO: simplify conttoller and move to different componnts
         init();
 
         // Digest
@@ -56,66 +61,74 @@
             }, function(error) {
                 console.log(error);
             });
-
-            //Subscribe to notification events
-            DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
-                vm.decisionMatrixList = prepareMatrixData(data);
-                initMatrix(data);
-            });
-            DecisionNotificationService.subscribePageChanged(function() {
-                getDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-                getDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
-                data.detailsSpinner = true;
-                DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
-                    data.characteristics = prepareDataToDisplay(result);
-                }).finally(function() {
-                    data.detailsSpinner = false;
-                });
-            });
-            DecisionNotificationService.subscribeSelectSorter(function(event, data) {
-                // TODO: clean up DecisionSharedService in controller maake one object
-                DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
-                DecisionSharedService.filterObject.persistent = true;
-                vm.fo = DecisionSharedService.filterObject.sorters;
-                getDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs);
-                });
-            });
-            DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-                // if (!data.filterQueries) return;
-                DecisionSharedService.filterObject.persistent = true;
-                //TODO: Clean up code
-                if (!DecisionSharedService.filterObject.filterQueries)
-                    DecisionSharedService.filterObject.filterQueries = [];
-
-                var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
-                    return filterQuery.characteristicId == data.filterQueries.characteristicId;
-                });
-                if (find >= 0) {
-                    // TODO: find better solution
-                    if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
-                        !data.filterQueries.queries) {
-                        DecisionSharedService.filterObject.filterQueries.splice(find, 1);
-                    } else {
-                        DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
-                    }
-                } else {
-                    DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
-                }
-                if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
-                getDecisionMatrix(vm.decisionId).then(function(result) {
-                    initMatrix(result.decisionMatrixs, false);
-                });
-            });
         }
+
+        //Subscribe to notification events
+        DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
+            vm.decisionMatrixList = prepareMatrixData(data);
+            initMatrix(data);
+        });
+        DecisionNotificationService.subscribePageChanged(function() {
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeChildDecisionExclusion(function() {
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
+            data.detailsSpinner = true;
+            DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
+                data.characteristics = prepareDataToDisplay(result);
+            }).finally(function() {
+                data.detailsSpinner = false;
+            });
+        });
+        DecisionNotificationService.subscribeSelectSorter(function(event, data) {
+            // TODO: clean up DecisionSharedService in controller maake one object
+            DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
+            DecisionSharedService.filterObject.persistent = true;
+            vm.fo = DecisionSharedService.filterObject.sorters;
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs);
+            });
+        });
+        DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
+            // if (!data.filterQueries) return;
+            DecisionSharedService.filterObject.persistent = true;
+            //TODO: Clean up code
+            if (!DecisionSharedService.filterObject.filterQueries)
+                DecisionSharedService.filterObject.filterQueries = [];
+
+            var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
+                return filterQuery.characteristicId == data.filterQueries.characteristicId;
+            });
+            if (find >= 0) {
+                // TODO: find better solution
+                if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
+                    !data.filterQueries.queries) {
+                    DecisionSharedService.filterObject.filterQueries.splice(find, 1);
+                } else {
+                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                }
+            } else {
+                DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
+            }
+            if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
+            getDecisionMatrix(vm.decisionId).then(function(result) {
+                initMatrix(result.decisionMatrixs, false);
+            });
+        });
+
+        // Discussions Subscrive
+        vm.isCommentsOpen = false;
+        DiscussionsNotificationService.subscribeOpenDiscussion(function(event, data) {
+            console.log(data);
+            vm.isCommentsOpen = true;
+        });
+
 
         function getCriteriaGroupsById(decisionId) {
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
@@ -154,7 +167,7 @@
                         }
 
 
-                        if (characteristicsItem.valueType === 'STRINGARRAY' || 
+                        if (characteristicsItem.valueType === 'STRINGARRAY' ||
                             characteristicsItem.valueType === 'INTEGERARRAY') {
                             characteristicsItem.isSortable = false;
                         } else {

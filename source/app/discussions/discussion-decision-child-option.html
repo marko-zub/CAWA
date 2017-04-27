@@ -3,10 +3,9 @@
     <div class="app-container-sm">
         <div class="row">
             <div class="col-sm-6">
-                <h4 class="app-header-sub-title pull-left">
-                    {{vm.title}}
+                <h4 class="app-header-sub-title pull-left" ng-bind="::vm.title">
                 </h4>
-                <rating-star class="text-left pull-left" item="vm.discussion.votes" ng-show="vm.discussion.votes.weight"></rating-star>
+                <rating-star class="text-left pull-left" item="::vm.discussion.votes" ng-show="::vm.discussion.votes.weight"></rating-star>
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
@@ -20,133 +19,7 @@
 <div class="app-container-sm app-content">
     <div class="row">
         <div class="col-sm-12">
-            <div class="comment-form clearfix">
-                <text-angular
-                        id="dicussion-comment"
-                        ng-model="comment"
-                        ta-maxlength="500"
-                        ta-default-wrap="span"
-                        name="comment"
-                        placeholder="Comment...">
-                        </text-angular>
-
-                                <button class="btn btn-primary pull-right">Send</button>
-
-            </div>
-            <!-- Comments list -->
-            <div class="comments-list">
-                <div class="media">
-                    <div id="#12" class="comment">
-                        <div class="clearfix">
-                            <div class="comment-aside">
-                                <div class="comment-votes">
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-up icon"></i>
-                                    </a>
-                                    <div> 12 </div>
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-down icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="comment-body">
-                                <div class="comment-header">
-                                    <span class="label label-info">#12314</span> Author: Xame
-                                    <div class="comment-time text-muted time">1 minute ago</div>
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-footer">
-                            <a herf>add a comment</a>
-                        </div>
-                    </div>
-                    <div class="comment lvl-2">
-                        <div class="clearfix">
-                            <div class="comment-aside">
-                                <div class="comment-votes">
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-up icon"></i>
-                                    </a>
-                                    <div> 12 </div>
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-down icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="comment-body">
-                                <div class="comment-header">
-                                    <span class="label label-info">#12314</span> Author: Xame
-                                    <div class="comment-time text-muted time">1 minute ago</div>
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit ametfacilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-footer">
-                            <a herf>add a comment</a>
-                        </div>
-                    </div>
-                    <div class="comment lvl-3">
-                        <div class="clearfix">
-                            <div class="comment-aside">
-                                <div class="comment-votes">
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-up icon"></i>
-                                    </a>
-                                    <div> 12 </div>
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-down icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="comment-body">
-                                <div class="comment-header">
-                                    <span class="label label-info">#12314</span> Author: Xame
-                                    <div class="comment-time text-muted time">1 minute ago</div>
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate,
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-footer">
-                            <a herf>add a comment</a>
-                        </div>
-                    </div>
-                    <div class="comment lvl-3">
-                        <div class="clearfix">
-                            <div class="comment-aside">
-                                <div class="comment-votes">
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-up icon"></i>
-                                    </a>
-                                    <div> 12 </div>
-                                    <a href="#" class="btn-sm btn btn-default">
-                                        <i class="glyphicon glyphicon-arrow-down icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="comment-body">
-                                <div class="comment-header">
-                                    <span class="label label-info">#12314</span> Author: Xame
-                                    <div class="comment-time text-muted time">1 minute ago</div>
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-footer">
-                            <a herf>add a comment</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Comments list -->
+            <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriterion.criterionId"></comments>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
     </div>
     <div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.characteristicId" ng-class="{'hide': group.isClosed}">
         <div class="matrix-row">
-            <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid">
+            <div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">
                 <div class="matrix-col-content">
                     <content-formater item="::decisionCol.characteristics"></content-formater>
                     <div class="app-item-additional-wrapper">

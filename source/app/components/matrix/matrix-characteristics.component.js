@@ -15,9 +15,9 @@
         });
 
 
-    MatrixCharacteristicsController.$inject = [];
+    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService'];
 
-    function MatrixCharacteristicsController() {
+    function MatrixCharacteristicsController(DiscussionsNotificationService) {
         var vm = this;
 
         // vm.$onInit = onInit;
@@ -31,6 +31,15 @@
 
             // console.log(vm.list);
             if(vm.list && vm.list.length) vm.listReady = true;
+        }
+
+        // Discussions
+        vm.getComments = getComments;
+
+        function getComments($event) {
+            vm.isGetCommentsOpen = true;
+            DiscussionsNotificationService.notifyOpenDiscussion('data');
+            $event.preventDefault();
         }
     }
 

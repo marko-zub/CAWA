@@ -49,6 +49,7 @@
         function init() {
             console.log('Discussion Child Option Controller');
 
+            console.log(vm.discussion);
             vm.title = pageTitle;
 
             // getCriteriaGroupsById(vm.discussion.decision.decisionId);

@@ -49,7 +49,7 @@
             $rootScope.$emit(event, data);
         }
 
-        //Listeners
+        // Listeners
         function subscribeSelectSorter(callback) {
             subscribe('selectSorter', callback);
         }
@@ -82,7 +82,7 @@
             subscribe('decisionExclusionChanged', callback);
         }
 
-        //Emitters
+        // Emitters
         function notifyGetDetailedCharacteristics(data) {
             emit('getDetailedCharacteristics', data);
         }
