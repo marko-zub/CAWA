@@ -6,35 +6,41 @@
         .module('app.components')
         .controller('CriteriaCoefficientIndicatorController', CriteriaCoefficientIndicatorController)
         .component('criteriaCoefficientIndicator', {
-            templateUrl: 'app/components/criteriaCoefficientIndicator/criteria-coefficient-indicator.html',
+            // templateUrl: 'app/components/criteriaCoefficientIndicator/criteria-coefficient-indicator.html',
             bindings: {
                 coefficient: '<'
             },
             controller: 'CriteriaCoefficientIndicatorController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            template: renderTemplate
         });
 
+
+    renderTemplate.$inject = ['$element', '$attrs'];
+    
+    function renderTemplate($element, $attrs) {
+        return '<div ng-bind-html="vm.html" class="criteria-coefficient-indicator"></div>';
+    }
 
     CriteriaCoefficientIndicatorController.$inject = ['$element', '$scope', 'DecisionCriteriaCoefficientsConstant', '$compile'];
 
     function CriteriaCoefficientIndicatorController($element, $scope, DecisionCriteriaCoefficientsConstant, $compile) {
-        var vm = this,
-            prevCoef;
+        var vm = this;
 
-        vm.$doCheck = doCheck;
+        vm.$onChanges = onChanges;
         vm.$onInit = onInit;
 
         function setCoefficientIndicator(coefficient) {
             if (!coefficient) return;
 
             // set color of indicator
-            _.map(vm.coefficientList, function(c) {
+            _.forEach(vm.coefficientList, function(c) {
                 c.class = '';
                 if (c.value <= coefficient.value) {
                     c.class = coefficient.name.toLowerCase();
                 }
             });
-            // renderComponent();
+            renderComponent(vm.coefficientList);
         }
 
         function onInit() {
@@ -42,36 +48,23 @@
                 vm.coefficient = DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT;
             }
             vm.coefficientList = angular.copy(DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST);
-            prevCoef = angular.copy(vm.coefficient);
             setCoefficientIndicator(vm.coefficient);
         }
 
-        function doCheck() {
-            if (!angular.equals(vm.coefficient, prevCoef)) {
-                handleChange();
-                prevCoef = angular.copy(vm.coefficient);
+        function onChanges(changesObj) {
+            if (!angular.equals(vm.coefficient, changesObj.coefficient.currentValue)) {
+                setCoefficientIndicator(vm.coefficient);
             }
         }
 
-        function handleChange() {
-            setCoefficientIndicator(vm.coefficient);
+        function renderComponent(coefficientList) {
+            // TODO: optimize loop
+            var html = _(coefficientList).chain().map(function(coefficient) {
+                return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
+            }).sortBy('value').reverse().value().join('\n');
+
+            vm.html = html;
         }
-
-        // function renderComponent(vm.coefficientList) {
-        //     var content = _.map(vm.coefficientList, function(coefficient) {
-        //         return '<div class="criteria-coefficient-item" ng-class="' + coefficient.class + '"></div>';
-        //     }).join('\n');
-
-        //     var renderContent = [
-        //         '<div class="criteria-coefficient-indicator">',
-        //         content,
-        //         '</div>'
-        //     ].join('\n');
-
-
-        //     $element.html(renderContent);
-        //     $compile($element.contents())($scope);
-        // }
 
 
     }

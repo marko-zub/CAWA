@@ -2,8 +2,9 @@
     'use strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
-    'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant',
-    '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils', 'DiscussionsNotificationService'];
+        'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant',
+        '$uibModal', 'decisionAnalysisInfo', '$sce', '$filter', '$compile', 'Utils', 'DiscussionsNotificationService'
+    ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant,
@@ -21,12 +22,12 @@
         init();
 
         // Digest
-        // var nbDigest = 0;
-        // console.log(nbDigest);
-        // $rootScope.$watch(function() {
-        //   nbDigest++;
-        //   console.log(nbDigest);
-        // });
+        var nbDigest = 0;
+        console.log(nbDigest);
+        $rootScope.$watch(function() {
+            nbDigest++;
+            console.log(nbDigest);
+        });
         // End Digest
 
         function init() {
@@ -291,10 +292,10 @@
             $(document).ready(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                // $scope.$applyAsync(function() {
-                vm.decisionsSpinner = false;
-                $scope.$digest();
-                // });
+                $scope.$applyAsync(function() {
+                    vm.decisionsSpinner = false;
+                    // $scope.$digest();
+                });
             });
         }
 
