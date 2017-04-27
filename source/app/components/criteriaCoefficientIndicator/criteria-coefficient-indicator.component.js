@@ -52,9 +52,10 @@
         }
 
         function onChanges(changesObj) {
-            if (!angular.equals(vm.coefficient, changesObj.coefficient.currentValue)) {
+            // console.log(changesObj.coefficient);
+            // if (!angular.equals(vm.coefficient, changesObj.coefficient.currentValue)) {
                 setCoefficientIndicator(vm.coefficient);
-            }
+            // }
         }
 
         function renderComponent(coefficientList) {

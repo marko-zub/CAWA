@@ -22,12 +22,12 @@
         init();
 
         // Digest
-        var nbDigest = 0;
-        console.log(nbDigest);
-        $rootScope.$watch(function() {
-            nbDigest++;
-            console.log(nbDigest);
-        });
+        // var nbDigest = 0;
+        // console.log(nbDigest);
+        // $rootScope.$watch(function() {
+        //     nbDigest++;
+        //     console.log(nbDigest);
+        // });
         // End Digest
 
         function init() {
@@ -341,7 +341,7 @@
         function orderByDecisionProperty(field, order) {
             if (!field) return;
             order = order || 'DESC';
-            sortObj = {
+            var sortObj = {
                 sort: {
                     id: field,
                     order: order
