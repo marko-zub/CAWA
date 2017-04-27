@@ -32,16 +32,17 @@
             };
 
             DecisionDataService.searchDecisions(searchData).then(function(resp){
-                console.log(resp);
+                // console.log(resp);
                 vm.decisions = resp.decisions;
                 vm.noResult = !vm.decisions.length;
-                console.log(vm.noResult);
+                // console.log(vm.noResult);
             }, function(err) {
                 console.log(err);
             });
         }
 
         function cleanQuery(val) {
+            if(!val) return;
             val = val.toString();
             return window.encodeURIComponent(val);
         }

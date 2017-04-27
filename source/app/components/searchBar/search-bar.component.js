@@ -36,13 +36,13 @@
             $state.go('search', {query: vm.searchQuery.toString()});
         }
 
-        function shouldSelectSuggestedDecisions($event) {
+        function shouldSelectSuggestedDecisions($event, model) {
             // console.log($event);
             // return true;
             var code = $event.keyCode;
-            console.log(code);
             if(code === 13) {
-                selectSuggestedDecisions(vm.searchQuery);
+                var query = cleanQuery(vm.searchQuery);
+                $state.go('search', {query: query});
                 $event.preventDefault();
             }
         }
@@ -68,6 +68,7 @@
         }
 
         function cleanQuery(val) {
+            if(!val) return;
             val = val.toString();
             return window.encodeURIComponent(val);
         }

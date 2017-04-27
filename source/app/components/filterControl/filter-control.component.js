@@ -8,7 +8,7 @@
         controller: 'FilterControlController',
         controllerAs: 'vm'
     });
-    
+
     FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils'];
 
     function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils) {
@@ -17,6 +17,7 @@
         // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
         vm.$onDestroy = onDestroy;
+
         vm.callRangeSlider = callRangeSlider;
         vm.changeRadio = changeRadio;
         vm.changeSelect = changeSelect;
@@ -119,7 +120,7 @@
                 }]
             };
 
-            // 
+            //
             filterQueriesCharacteristicChange(vm.item.characteristicId, query);
         }
 
@@ -152,7 +153,6 @@
 
             vm.radio = options[0].value;
             var content = _.map(options, function(option) {
-
                 return [
                     '<label class="filter-list-item">',
                     '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
@@ -211,6 +211,11 @@
         // Control DATERANGEPICKER
         function createDateRangePicker(item) {
             vm.date = new Date();
+
+            // vm.dateRangeOptions = {
+
+            // }
+            // console.log(item);
             var html = '<input date-range-picker class="form-control input-sm date-picker" type="text" ng-model="vm.date" min="\'2014-02-23\'" max="\'2015-02-25\'" />';
             renderHtml(html);
         }

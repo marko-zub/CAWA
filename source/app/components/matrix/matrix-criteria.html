@@ -1,9 +1,6 @@
 <!-- Criteria Content -->
 <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">
     <div class="matrix-item matrix-g-item matrix-item-content">
-        <div class="matrix-g-title">
-            <!-- <span class="group-title-line">{{group.name}}</span> -->
-        </div>
     </div>
     <div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{'hide': group.isClosed}">
         <div class="matrix-row">

@@ -5,7 +5,8 @@
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
-                    <a ng-click="vm.changeMatrixMode('inclusion')">{{::vm.decision.name}}
+                    <a ng-click="vm.changeMatrixMode('inclusion')">
+                        <span ng-bind="::vm.decision.name"></span>
                         <span class="badge" ng-bind="vm.inclusionItemsLength"></span>
                     </a>
                 </li>
@@ -44,34 +45,34 @@
                         <div id="matrix-scroll-group" class="scroll-group">
                             <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.decisionId">
                                 <div class="matrix-col-content matrix-content-name decision-matrix-col">
-                                        <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
-                                            <div class="clearfix">
-                                                <div class="matrix-img-container img-sm" >
-                                                    <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive">
-                                                </div>
-                                                <div class="app-title-inline">
-                                                    <span ng-bind="::item.decision.name"></span>
-                                                </div>
-                                            </div>
-                                        </a>
+                                    <a href ui-sref="decisions.single.matrix.child({discussionId:item.decision.decisionId, discussionSlug:item.decision.nameSlug})">
                                         <div class="clearfix">
-                                            <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
-                                                <small>
-                                                    Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage"></strong>% |
-                                                    <span class="app-icon glyphicon glyphicon-thumbs-up"></span>
-                                                    <span ng-bind="item.decision.totalVotes"></span>
-                                                </small>
+                                            <div class="matrix-img-container img-sm" >
+                                                <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive">
                                             </div>
-                                            <div class="info">
-                                                <span ng-if="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <div class="app-title-inline">
+                                                <span ng-bind="::item.decision.name"></span>
                                             </div>
                                         </div>
-                                        <div class="app-panel-controls">
-                                            <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
-                                                <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode == 'inclusion', 'fa-eye': vm.matrixMode == 'exclusion'}"></i>
-                                            </span>
+                                    </a>
+                                    <div class="clearfix">
+                                        <div ng-show="item.decision.criteriaCompliancePercentage >= 0" class="pull-left">
+                                            <small>
+                                                Criteria compliance: <strong ng-bind="item.decision.criteriaCompliancePercentage"></strong>% |
+                                                <span class="app-icon glyphicon glyphicon-thumbs-up"></span>
+                                                <span ng-bind="item.decision.totalVotes"></span>
+                                            </small>
+                                        </div>
+                                        <div class="info">
+                                            <span ng-if="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
+                                    <div class="app-panel-controls">
+                                        <span ng-click="vm.updateExclusionList(item.decision.decisionId)" class="app-control">
+                                            <i class="fa" ng-class="{'fa-eye-slash' : vm.matrixMode == 'inclusion', 'fa-eye': vm.matrixMode == 'exclusion'}"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- End Decisions Header -->
