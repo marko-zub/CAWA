@@ -6,25 +6,24 @@
         .module('app.components')
         .controller('CriteriaCoefficientIndicatorController', CriteriaCoefficientIndicatorController)
         .component('criteriaCoefficientIndicator', {
-            // templateUrl: 'app/components/criteriaCoefficientIndicator/criteria-coefficient-indicator.html',
+            template: renderTemplate,
             bindings: {
                 coefficient: '<'
             },
             controller: 'CriteriaCoefficientIndicatorController',
             controllerAs: 'vm',
-            template: renderTemplate
         });
 
 
-    renderTemplate.$inject = ['$element', '$attrs'];
+    renderTemplate.$inject = [];
 
-    function renderTemplate($element, $attrs) {
+    function renderTemplate() {
         return '<div ng-bind-html="vm.html" class="criteria-coefficient-indicator"></div>';
     }
 
-    CriteriaCoefficientIndicatorController.$inject = ['$element', '$scope', 'DecisionCriteriaCoefficientsConstant', '$compile'];
+    CriteriaCoefficientIndicatorController.$inject = ['DecisionCriteriaCoefficientsConstant'];
 
-    function CriteriaCoefficientIndicatorController($element, $scope, DecisionCriteriaCoefficientsConstant, $compile) {
+    function CriteriaCoefficientIndicatorController(DecisionCriteriaCoefficientsConstant) {
         var vm = this;
 
         vm.$onChanges = onChanges;

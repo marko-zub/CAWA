@@ -6,18 +6,17 @@
         .module('app.components')
         .controller('RatingStarController', RatingStarController)
         .component('ratingStar', {
-            // templateUrl: 'app/components/ratingStar/rating-star.html',
+            template: renderTemplate,
             bindings: {
                 item: '<',
             },
             controller: 'RatingStarController',
-            controllerAs: 'vm',
-            template: renderTemplate
+            controllerAs: 'vm'
         });
 
-    renderTemplate.$inject = ['$element', '$attrs'];
+    renderTemplate.$inject = [];
 
-    function renderTemplate($element, $attrs) {
+    function renderTemplate() {
         return '<div ng-bind-html="::vm.html"></div>';
     }
 

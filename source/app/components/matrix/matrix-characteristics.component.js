@@ -6,20 +6,18 @@
         .module('app.components')
         .controller('MatrixCharacteristicsController', MatrixCharacteristicsController)
         .component('matrixCharacteristics', {
-            // templateUrl: 'app/components/matrix/matrix-characteristics.html',
+            template: renderTemplate,
             bindings: {
-                decisionsIds: '<',
                 list: '<'
             },
             controller: 'MatrixCharacteristicsController',
-            controllerAs: 'vm',
-            template: renderTemplate
+            controllerAs: 'vm'
         });
 
 
-    renderTemplate.$inject = ['$element', '$attrs'];
+    renderTemplate.$inject = [];
 
-    function renderTemplate($element, $attrs) {
+    function renderTemplate() {
         return [
             '<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.listDisplay track by group.characteristicGroupId">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
@@ -28,7 +26,7 @@
                     '<div class="matrix-row">',
                         '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
-                                '<content-formater item="::decisionCol.characteristics"></content-formater>',
+                                '<content-formater ng-if="::decisionCol.characteristics" item="::decisionCol.characteristics"></content-formater>',
                                 '<div class="app-item-additional-wrapper">',
                                     '<div class="app-item-comments">',
                                         '<span class="glyphicon glyphicon-comment"></span>0',
@@ -44,9 +42,9 @@
     }
 
 
-    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService', '$element', '$compile', '$scope'];
+    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService'];
 
-    function MatrixCharacteristicsController(DiscussionsNotificationService, $element, $compile, $scope) {
+    function MatrixCharacteristicsController(DiscussionsNotificationService) {
         var vm = this,
             decisionsIds, decisionsIdsPrev;
 
