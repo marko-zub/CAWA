@@ -18,10 +18,9 @@
         $httpProvider.useApplyAsync(true);
 
         // TODO: disable only on prod Disable
-        // $compileProvider.debugInfoEnabled(false);
-        $compileProvider.debugInfoEnabled(Config.mode === 'dev');
-        $compileProvider.commentDirectivesEnabled(Config.mode === 'dev');
-        $compileProvider.cssClassDirectivesEnabled(Config.mode === 'dev');
+        $compileProvider.debugInfoEnabled(false);
+        $compileProvider.commentDirectivesEnabled(false);
+        $compileProvider.cssClassDirectivesEnabled(false);
     }
 
 

@@ -46,7 +46,10 @@
                 var decisionMatrixs = values[0].decisionMatrixs;
                 // 2. render list of criterias
                 createMatrixContentCriteria(decisionMatrixs);
-                renderMatrix();
+                initMatrixScroller();
+                vm.decisionsSpinner = false;
+
+                // renderMatrix();
 
                 // Init only first time
                 initSorters(); //Hall of fame
@@ -197,27 +200,30 @@
                     criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
                     return _.omit(criteria, 'description');
                 });
-                return _.omit(criteriaItem, 'description', 'createDate', 'name');
+                return _.pick(criteriaItem, 'criterionGroupId', 'criteria');
             });
+            // console.log(vm.criteriaGroupsContent);
+            // console.log(_.compact(vm.criteriaGroupsContent));
         }
 
+        // TODO: clean obj
         function createMatrixContentCharacteristics(decisions) {
             var decisionsCopy = angular.copy(decisions);
             // characteristics
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
-
             vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
                     return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
-                return _.omit(resultEl, 'description', 'createDate', 'name');
+                return _.pick(resultEl, 'characteristicGroupId', 'characteristics');
             });
             // console.log(vm.characteristicGroupsContent);
         }
 
         function createDecisionsRow(array, id, keyId, property) {
-            return _.map(array, function(item) {
+            var arrayCopy = _.clone(array);
+            return _.map(arrayCopy, function(item) {
                 var obj = _.pick(item, 'decision');
                 obj.decision = _.pick(item.decision, 'decisionId', 'nameSlug');
                 obj[property] = _.find(item[property], function(findEl) {
@@ -264,8 +270,10 @@
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
-            $('.js-item-aside').css('height', '');
-            $('.js-matrix-item-content').css('height', '');
+            $('#matrix-table .js-item-aside').removeAttr('style');
+            $('#matrix-table .js-matrix-item-content').removeAttr('style');
+            // $('#matrix-table .js-item-aside').css('height', '');
+            // $('#matrix-table .js-matrix-item-content').css('height', '');
 
             var asideArray = [],
                 contentArray = [];
@@ -289,14 +297,13 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            $(document).ready(function() {
+            setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                // $scope.$applyAsync(function() {
+                $scope.$applyAsync(function() {
                     vm.decisionsSpinner = false;
-                    $scope.$digest();
-                // });
-            });
+                });
+            }, 0);
         }
 
         function getDecisionMatrix(id) {
@@ -404,32 +411,41 @@
             });
         }
         // Custom scroll
-        initMatrixScroller();
         var martrixScroll;
 
         function initMatrixScroller() {
-            var wrapper = document.getElementById('matrix-body');
-            martrixScroll = new IScroll(wrapper, {
-                scrollbars: true,
-                scrollX: true,
-                scrollY: true,
-                mouseWheel: true,
-                interactiveScrollbars: true,
-                shrinkScrollbars: 'scale',
-                fadeScrollbars: false,
-                probeType: 3,
-                useTransition: true,
-                disablePointer: true,
-                disableTouch: false,
-                disableMouse: false
-            });
+            // Init first time then reinit once
+            // try to remove setTimeout
+            // setTimeout works better than: 
+            // $timeout, document ready and viewContentLoaded
+            setTimeout(function() {
+                var wrapper = document.getElementById('matrix-body');
+                martrixScroll = new IScroll(wrapper, {
+                    scrollbars: true,
+                    scrollX: true,
+                    scrollY: true,
+                    mouseWheel: true,
+                    interactiveScrollbars: true,
+                    shrinkScrollbars: 'scale',
+                    fadeScrollbars: false,
+                    probeType: 3,
+                    useTransition: true,
+                    disablePointer: true,
+                    disableTouch: false,
+                    disableMouse: false
+                });
+                martrixScroll.on('scroll', updatePosition);
+                updatePosition(martrixScroll);
+
+                // $scope.$applyAsync(function() {
+                //     vm.decisionsSpinner = false;
+                // });
+            }, 0);
         }
 
         function reinitMatrixScroller() {
             if (martrixScroll) {
                 martrixScroll.refresh();
-                martrixScroll.on('scroll', updatePosition);
-                updatePosition(martrixScroll);
             }
         }
 

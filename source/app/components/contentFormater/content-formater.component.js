@@ -6,25 +6,24 @@
         .module('app.components')
         .controller('ContentFormaterController', ContentFormaterController)
         .component('contentFormater', {
-            // templateUrl: 'app/components/contentFormater/content-formater.html',
+            template: renderTemplate,
             bindings: {
                 item: '<',
             },
             controller: 'ContentFormaterController',
-            controllerAs: 'vm',
-            // template: renderTemplate
+            controllerAs: 'vm'
         });
 
 
-    // renderTemplate.$inject = ['$element', '$attrs'];
+    renderTemplate.$inject = [];
 
-    // function renderTemplate($element, $attrs) {
-    //     return '<div ng-bind-html="::vm.html"></div>';
-    // }
+    function renderTemplate() {
+        return '<div ng-bind-html="::vm.html"></div>';
+    }
 
-    ContentFormaterController.$inject = ['$element', '$sce', '$compile', '$scope', '$filter'];
+    ContentFormaterController.$inject = ['$filter'];
 
-    function ContentFormaterController($element, $sce, $compile, $scope, $filter) {
+    function ContentFormaterController($filter) {
         var
             vm = this;
 
@@ -35,9 +34,9 @@
             vm.item = _.pick(vm.item, 'value', 'valueType');
             var renderContent = vm.item && vm.item.value ? typeFormater(vm.item) : '';
             if (renderContent) {
-                // vm.html = renderContent;
-                $element.html(renderContent);
-                $compile($element.contents())($scope);
+                vm.html = renderContent;
+                // $element.html(renderContent);
+                // $compile($element.contents())($scope);
             }
         }
 
