@@ -48,7 +48,11 @@
                         'criteria': $stateParams.criteria,
                         'analysisId': decisionAnalysisId
                     };
-                    $state.transitionTo('decisions.single.matrix.analysis', decisionAnalysisStateParams);
+                    $state.go('decisions.single.matrix.analysis', decisionAnalysisStateParams, {
+                        notify: false,
+                        reload: false,
+                        location: 'replace'
+                    });
                     // }
 
                 }

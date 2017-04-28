@@ -46,7 +46,7 @@
                 var decisionMatrixs = values[0].decisionMatrixs;
                 // 2. render list of criterias
                 createMatrixContentCriteria(decisionMatrixs);
-                renderMatrix(true);
+                renderMatrix();
 
                 // Init only first time
                 initSorters(); //Hall of fame
@@ -292,10 +292,10 @@
             $(document).ready(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                $scope.$applyAsync(function() {
+                // $scope.$applyAsync(function() {
                     vm.decisionsSpinner = false;
-                    // $scope.$digest();
-                });
+                    $scope.$digest();
+                // });
             });
         }
 

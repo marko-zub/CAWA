@@ -7,10 +7,6 @@
     padding-right: @resizer-width;
 }
 
-body {
-    background-color: @gray-light-extra;
-}
-
 .btns-view {
     margin: 5px 0;
     & + .btn {
@@ -955,8 +951,8 @@ a {
     top: 30px;
     bottom: 5px;
     width: auto;
-    left: 10px;
-    right: 10px;  
+    left: 0px;
+    right: 10px;
 }
 
 .filter-item {
@@ -966,7 +962,7 @@ a {
     bottom: 5px;
     //min-height: 100px;
     width: auto;
-    left: 10px;
+    left: 0;
     right: 0;
     label {
         font-weight: 500;
@@ -1016,7 +1012,7 @@ a {
         line-height: 1.2;
         vertical-align: top;
         margin-top: 0px;
-    }    
+    }
 }
 
 filter-control {
@@ -1051,7 +1047,7 @@ filter-control {
             border-radius: 4px;
             content: '';
         }
-    }    
+    }
 }
 
 .color-green {
@@ -1092,46 +1088,12 @@ filter-control {
 
 .characteristic-groups-content {
     position: relative;
+    min-height: 100px;
+    overflow: hidden;
     .app-loader-small {
         left: -200px;
         width: 100vw;
-    }
-}
-
-.characteristic-groups-content {
-    min-height: 100px;
-}
-
-.app-search-bar {
-
-}
-
-body {
-    & > .dropdown-menu {
-        max-height: 700px;
-        overflow-y: auto;
-    }
-}
-
-.home {
-    .search-bar {
-        padding-right: 40px;
-        width: 100%;
-        .search-input-icon {
-            left: auto;
-            right: 0;
-            top: 0;
-            width: 40px;
-            color: #fff;
-            cursor: pointer;
-            height: 100%;
-            background-color: @basic-active;
-            padding: 0;
-            text-align: center;
-            line-height: 40px;
-            &:hover {
-                background: @basic-active-hover;
-            }
-        }
+        position: absolute;
+        top: 0;
     }
 }

@@ -17,7 +17,7 @@
 
 
     renderTemplate.$inject = ['$element', '$attrs'];
-    
+
     function renderTemplate($element, $attrs) {
         return '<div ng-bind-html="vm.html" class="criteria-coefficient-indicator"></div>';
     }

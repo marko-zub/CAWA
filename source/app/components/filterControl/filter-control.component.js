@@ -23,7 +23,7 @@
         vm.changeSelect = changeSelect;
 
         vm.controlOptions = {
-            debounce: 100
+            debounce: 50
         };
 
         var selectAllObj = {
