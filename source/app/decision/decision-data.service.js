@@ -84,7 +84,9 @@
                 childId: '@childId'
             }, {}),
             criteriasGroups = $resource(decisionUrl + '/criteriongroups'),
-            characteristictsGroups = $resource(decisionUrl + '/characteristicgroups'),
+            characteristictsGroups = $resource(decisionUrl + '/characteristicgroups', {
+                options: '@options'
+            }),
             criteriaByDecision = $resource(decisionUrl + '/:decisionId/decisions/:criterionId/criteria', {
                 criterionId: '@criterionId',
                 decisionId: '@decisionId'
@@ -130,10 +132,10 @@
             }).$promise;
         }
 
-        function getCharacteristictsGroupsById(id) {
+        function getCharacteristictsGroupsById(id, data) {
             return characteristictsGroups.query({
                 id: id
-            }).$promise;
+            }, data).$promise;
         }
 
         function getDecisionInfo(id) {

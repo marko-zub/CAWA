@@ -28,9 +28,6 @@
                 vm.criteriaGroups = _.filter(result, function(resultEl) {
                     _.filter(resultEl.criteria, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
-                        // criteriaIds.push(el.criterionId);
-                        // criteriaArray.push(el);
-
                         var elEqual = _.find(criteriaArray, {
                             criterionId: el.criterionId
                         });
@@ -45,7 +42,7 @@
 
         function getCharacteristictsGroupsById(decisionId, characteristicsArray) {
             // Characteristicts
-            return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
+            return DecisionDataService.getCharacteristictsGroupsById(decisionId, {options: false}).then(function(result) {
                 // vm.characteristicGroups = result;
                 characteristicsIds = [];
 

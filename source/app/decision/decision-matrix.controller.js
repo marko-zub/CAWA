@@ -46,10 +46,7 @@
                 var decisionMatrixs = values[0].decisionMatrixs;
                 // 2. render list of criterias
                 createMatrixContentCriteria(decisionMatrixs);
-                initMatrixScroller();
-                vm.decisionsSpinner = false;
-
-                // renderMatrix();
+                renderMatrix(true);
 
                 // Init only first time
                 initSorters(); //Hall of fame
@@ -270,10 +267,8 @@
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
-            $('#matrix-table .js-item-aside').removeAttr('style');
-            $('#matrix-table .js-matrix-item-content').removeAttr('style');
-            // $('#matrix-table .js-item-aside').css('height', '');
-            // $('#matrix-table .js-matrix-item-content').css('height', '');
+            $('.js-item-aside').css('height', '');
+            $('.js-matrix-item-content').css('height', '');
 
             var asideArray = [],
                 contentArray = [];
@@ -300,9 +295,10 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                $scope.$applyAsync(function() {
+                // $scope.$applyAsync(function() {
                     vm.decisionsSpinner = false;
-                });
+                    $rootScope.$digest();
+                // });
             }, 0);
         }
 
@@ -411,41 +407,32 @@
             });
         }
         // Custom scroll
+        initMatrixScroller();
         var martrixScroll;
 
         function initMatrixScroller() {
-            // Init first time then reinit once
-            // try to remove setTimeout
-            // setTimeout works better than: 
-            // $timeout, document ready and viewContentLoaded
-            setTimeout(function() {
-                var wrapper = document.getElementById('matrix-body');
-                martrixScroll = new IScroll(wrapper, {
-                    scrollbars: true,
-                    scrollX: true,
-                    scrollY: true,
-                    mouseWheel: true,
-                    interactiveScrollbars: true,
-                    shrinkScrollbars: 'scale',
-                    fadeScrollbars: false,
-                    probeType: 3,
-                    useTransition: true,
-                    disablePointer: true,
-                    disableTouch: false,
-                    disableMouse: false
-                });
-                martrixScroll.on('scroll', updatePosition);
-                updatePosition(martrixScroll);
-
-                // $scope.$applyAsync(function() {
-                //     vm.decisionsSpinner = false;
-                // });
-            }, 0);
+            var wrapper = document.getElementById('matrix-body');
+            martrixScroll = new IScroll(wrapper, {
+                scrollbars: true,
+                scrollX: true,
+                scrollY: true,
+                mouseWheel: true,
+                interactiveScrollbars: true,
+                shrinkScrollbars: 'scale',
+                fadeScrollbars: false,
+                probeType: 3,
+                useTransition: true,
+                disablePointer: true,
+                disableTouch: false,
+                disableMouse: false
+            });
         }
 
         function reinitMatrixScroller() {
             if (martrixScroll) {
                 martrixScroll.refresh();
+                martrixScroll.on('scroll', updatePosition);
+                updatePosition(martrixScroll);
             }
         }
 

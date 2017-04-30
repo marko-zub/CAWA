@@ -23,7 +23,7 @@
 
         vm.$onInit = onInit;
         function onInit() {
-            console.log(vm);
+            // console.log(vm);
             // searchCommentableVotesWeight();
         }
 

@@ -188,7 +188,7 @@
 
 
 <!-- Comments -->
-<pageslide ng-if="vm.isCommentsOpen" class="sidebar" ps-size="500px" ps-open="vm.isCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
+<pageslide ng-show="vm.isCommentsOpen" class="sidebar" ps-size="500px" ps-open="vm.isCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
     <div class="sidebar-content">
         <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriterion.criterionId"></comments>
     </div>
