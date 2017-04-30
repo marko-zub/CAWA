@@ -19,16 +19,16 @@
 
     function renderTemplate() {
         return [
-            '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">',
+            '<div class="matrix-g matrix-g-criteria" ng-repeat="group in :refresh2:vm.list track by group.criterionGroupId">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
-                '<div class="matrix-item matrix-item-content" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
+                '<div class="matrix-item matrix-item-content" ng-repeat="item in :refresh2:group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
                     '<div class="matrix-row">',
-                        '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
+                        '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in :refresh2:item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
-                                '<div ng-switch="decisionCol.criteria.totalVotes > 0">',
+                                '<div ng-switch=":refresh2:decisionCol.criteria.totalVotes > 0">',
                                     '<div ng-switch-when="true">',
-                                        '<rating-star class="text-left" item="decisionCol.criteria"></rating-star>',
+                                        '<rating-star class="text-left" item=":refresh2:decisionCol.criteria"></rating-star>',
                                     '</div>',
                                     '<div ng-switch-when="false">',
                                         '<div class="app-rating-votes">',
@@ -49,13 +49,18 @@
         ].join('\n');
     }
 
-    MatrixCriteriaController.$inject = ['DiscussionsNotificationService'];
+    MatrixCriteriaController.$inject = ['DiscussionsNotificationService', '$scope'];
 
-    function MatrixCriteriaController(DiscussionsNotificationService) {
+    function MatrixCriteriaController(DiscussionsNotificationService, $scope) {
         var vm = this;
 
         // Discussions
         vm.getComments = getComments;
+        vm.$onChanges = onChanges;
+
+        function onChanges(changes) {
+            $scope.$broadcast('$$rebind::refresh2');
+        }
 
         function getComments($event) {
             vm.isGetCommentsOpen = true;

@@ -31,6 +31,12 @@
     "moment": "^2.18.1"
   },
   "overrides": {
+    "angular": {
+      "main": [
+        "./angular.js",
+        "./angular-csp.css"
+      ]
+    },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css"
@@ -44,11 +50,6 @@
     "font-awesome": {
       "main": [
         "./css/font-awesome.min.css"
-      ]
-    },
-    "jquery": {
-      "main": [
-        "./dist/jquery.slim.js"
       ]
     },
     "angular-bootstrap": {

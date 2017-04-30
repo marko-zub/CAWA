@@ -54,6 +54,7 @@
 
                 getCharacteristictsGroupsById(vm.decisionId).then(function(resp) {
                     // 3. Render characteristicts
+                    prepareCharacteristictsGroups(resp);
                     createMatrixContentCharacteristics(decisionMatrixs);
                     renderMatrix(true);
                     vm.characteristicGroupsContentLoader = false;
@@ -159,29 +160,29 @@
         function getCharacteristictsGroupsById(decisionId) {
             return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
                 // characteristics
-                var total = 0;
-                vm.characteristicGroups = _.map(result, function(resultEl) {
-                    total += resultEl.characteristics.length;
-                    _.map(resultEl.characteristics, function(characteristicsItem) {
-                        if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
-                            characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
-                        }
-
-
-                        if (characteristicsItem.valueType === 'STRINGARRAY' ||
-                            characteristicsItem.valueType === 'INTEGERARRAY') {
-                            characteristicsItem.isSortable = false;
-                        } else {
-                            characteristicsItem.isSortable = true;
-                        }
-                        return characteristicsItem;
-                    });
-                    return resultEl;
-                });
-
-                // setMatrixTableHeight(total);
                 return result;
             });
+        }
+
+        function prepareCharacteristictsGroups(result) {
+            var total = 0;
+            vm.characteristicGroups = _.map(result, function(resultEl) {
+                total += resultEl.characteristics.length;
+                _.map(resultEl.characteristics, function(characteristicsItem) {
+                    if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
+                        characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
+                    }
+
+                    if (characteristicsItem.valueType === 'STRINGARRAY' ||
+                        characteristicsItem.valueType === 'INTEGERARRAY') {
+                        characteristicsItem.isSortable = false;
+                    } else {
+                        characteristicsItem.isSortable = true;
+                    }
+                    return characteristicsItem;
+                });
+                return resultEl;
+            });            
         }
 
         // TODO: try to optimize it
@@ -189,11 +190,9 @@
             // Criteria
             var decisionsCopy = angular.copy(decisions);
             var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
-            // console.log(decisionsCopy);
-            // console.log(criteriaGroupsCopy);
 
             vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
-                _.map(criteriaItem.criteria, function(criteria) {
+                criteriaItem.criteria = _.map(criteriaItem.criteria, function(criteria) {
                     criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
                     return _.omit(criteria, 'description');
                 });
@@ -209,7 +208,7 @@
             // characteristics
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
             vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
-                _.map(resultEl.characteristics, function(characteristicsItem) {
+                resultEl.characteristics = _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
                     return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
@@ -226,6 +225,7 @@
                 obj[property] = _.find(item[property], function(findEl) {
                     return findEl[keyId] === id;
                 });
+                obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
                 obj.uuid = parseInt(id.toString() + obj.decision.decisionId.toString());
                 return obj;
             });
@@ -267,8 +267,8 @@
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
-            $('.js-item-aside').css('height', '');
-            $('.js-matrix-item-content').css('height', '');
+            angular.element('.js-item-aside').css('height', 'auto');
+            angular.element('.js-matrix-item-content').css('height', 'auto');
 
             var asideArray = [],
                 contentArray = [];
@@ -296,8 +296,8 @@
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
                 // $scope.$applyAsync(function() {
-                    vm.decisionsSpinner = false;
-                    $rootScope.$digest();
+                vm.decisionsSpinner = false;
+                $scope.$digest();
                 // });
             }, 0);
         }
@@ -364,7 +364,7 @@
                 mode: "sortByCriteria"
             };
             $scope.$emit('selectSorter', sortObj);
-            var parentCriteria = $($event.target).parents('.criteria-col');
+            var parentCriteria = angular.element($event.target).parents('.criteria-col');
             if (parentCriteria.hasClass('selected')) {
                 $event.stopPropagation();
             }
@@ -388,23 +388,19 @@
             var _this = martrixScroll || this;
             scrollHandler(_this.y, _this.x);
             // TODO: avoid JQuery
-            $('.matrix-g .app-control').toggleClass('selected', false);
-            $('.app-pop-over-content').toggleClass('hide', true);
+            angular.element('.matrix-g .app-control').toggleClass('selected', false);
+            angular.element('.app-pop-over-content').toggleClass('hide', true);
         }
         // Table scroll
         var tableBody,
             tableHeader,
             tableAside;
-        tableAside = $('#matrix-aside-content');
-        tableHeader = $('#matrix-scroll-group');
+        tableAside = document.getElementById('matrix-aside-content');
+        tableHeader = document.getElementById('matrix-scroll-group');
 
         function scrollHandler(scrollTop, scrollLeft) {
-            $(tableAside).css({
-                'top': scrollTop,
-            });
-            $(tableHeader).css({
-                'left': scrollLeft
-            });
+            tableAside.style.top = scrollTop + 'px';
+            tableHeader.style.left = scrollLeft + 'px';
         }
         // Custom scroll
         initMatrixScroller();
@@ -439,12 +435,13 @@
         function setMatrixTableWidth(total) {
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
-            $('#matrix-content').css('width', tableWidth);
+            var table = document.getElementById('matrix-content');
+            table.style.width = tableWidth;
         }
 
         function setMatrixTableHeight(total) {
             var tableH = total * 112 + 'px';
-            $('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
+            angular.element('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
         }
         // TODO: make as a separeted component
         // Criteria header
@@ -482,7 +479,7 @@
         vm.selectCriterion = selectCriterion;
 
         function selectCriterion(event, criterion, coefCall) {
-            if ($(event.target).hasClass('title-descr')) return;
+            if (angular.element(event.target).hasClass('title-descr')) return;
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
                 return;
