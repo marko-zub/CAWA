@@ -321,8 +321,6 @@
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters(); //Hall of fame
-            initMatrixMode();
-
             renderMatrix(calcHeight);
         }
 
@@ -520,7 +518,7 @@
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
-
+        var totalDecisionMatrixs = 0;
         function initMatrixMode() {
             vm.matrixMode = 'inclusion';
             vm.exclusionItemsLength = 0;
@@ -529,7 +527,9 @@
             } else if (_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length > 0) {
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
             }
-            vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - vm.exclusionItemsLength;
+
+            totalDecisionMatrixs = vm.decisions.totalDecisionMatrixs;
+            vm.inclusionItemsLength = totalDecisionMatrixs - vm.exclusionItemsLength;
         }
 
         function changeMatrixMode(mode) {
@@ -538,7 +538,7 @@
                 vm.matrixMode = mode;
                 if (mode === 'inclusion') {
                     _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
-                    vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - _fo.excludeChildDecisionIds.length;
+                    vm.inclusionItemsLength = totalDecisionMatrixs - _fo.excludeChildDecisionIds.length;
                     _fo.includeChildDecisionIds = null;
                     if (_fo.excludeChildDecisionIds.length === 0) {
                         _fo.excludeChildDecisionIds = null;

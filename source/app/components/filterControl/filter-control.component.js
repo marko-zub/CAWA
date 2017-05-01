@@ -105,19 +105,23 @@
         function callRangeSlider(sliderId, min, max, type) {
             // console.log('call range ', sliderId, vm.slider.value, vm.item.characteristicId, vm.slider);
             // TOOD: make some builder for queries
+            var queries = [{
+                "type": "GreaterOrEqualQuery",
+                "characteristicId": vm.item.characteristicId,
+                "value": min
+            }, {
+                "type": "LessOrEqualQuery",
+                "characteristicId": vm.item.characteristicId,
+                "value": max
+            }];
+            if (min == vm.item.minValue && max == vm.item.maxValue) {
+                queries = null;
+            }
             var query = {
                 "type": "CompositeQuery",
                 "characteristicId": vm.item.characteristicId,
                 "operator": "AND",
-                "queries": [{
-                    "type": "GreaterOrEqualQuery",
-                    "characteristicId": vm.item.characteristicId,
-                    "value": min
-                }, {
-                    "type": "LessOrEqualQuery",
-                    "characteristicId": vm.item.characteristicId,
-                    "value": max
-                }]
+                "queries": queries
             };
 
             //
