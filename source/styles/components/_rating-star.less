@@ -5,7 +5,10 @@
     }
 
     span {
-        vertical-align: middle;
+        display: inline-block;
+    }
+    .app-rating-votes-weight {
+        margin-right: 10px;
         display: inline-block;
     }
 }
@@ -13,7 +16,7 @@
 .app-rating-star {
     position: relative;
     display: inline-block;
-    margin: 0 5px 0 0;
+    margin: 0;
     line-height: 1;
     &:before {
         content: '\e007\e007\e007\e007\e007'; //TODO: maybe make as repeater in rating component

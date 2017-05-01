@@ -59,6 +59,7 @@
 
         function getComments($event) {
             vm.isGetCommentsOpen = true;
+            console.log($event);
             DiscussionsNotificationService.notifyOpenDiscussion('data');
             $event.preventDefault();
         }

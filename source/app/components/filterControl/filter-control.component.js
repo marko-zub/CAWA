@@ -214,21 +214,63 @@
 
         // Control DATERANGEPICKER
         function createDateRangePicker(item) {
-            vm.date = new Date();
+            vm.dateRange = {
+                startDate: null,
+                endDate: null
+            };
+            vm.dateRangeOptions = {
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+                eventHandlers: {
+                    'apply.daterangepicker': function() {
+                        changeDate(vm.dateRange, item);
+                    }
+                }
+            };
 
-            // vm.dateRangeOptions = {
-
-            // }
-            // console.log(item);
-            var html = '<input date-range-picker class="form-control input-sm date-picker" type="text" ng-model="vm.date" min="\'2014-02-23\'" max="\'2015-02-25\'" />';
+            var html = '<input date-range-picker options="vm.dateRangeOptions" class="form-control input-sm date-picker" type="text" ng-model="vm.dateRange" />';
             renderHtml(html);
         }
 
-        function renderHtml(html) {
-            $element.html(html);
-            $compile($element.contents())($scope);
+        function dateToDB(date) {
+            var momentDate = Date(date);
+            return moment(momentDate).valueOf();
         }
 
+        function changeDate(model, item) {
+            if (!item.characteristicId) return;
+            if (model === 'null') model = null;
+
+            var queries;
+            if (!model.startDate && !model.endDate) {
+                queries = null;
+            } else {
+                var startDate = parseInt(model.startDate.valueOf());
+                var endDate = parseInt(model.endDate.valueOf());
+                queries = [{
+                    "type": "GreaterOrEqualQuery",
+                    "characteristicId": item.characteristicId,
+                    "value": startDate
+                }, {
+                    "type": "LessOrEqualQuery",
+                    "characteristicId": item.characteristicId,
+                    "value": endDate
+                }];
+            }
+
+            var query = {
+                "type": "CompositeQuery",
+                "characteristicId": item.characteristicId,
+                "operator": "AND",
+                "queries": queries
+            };
+            // console.log(queries);
+            filterQueriesCharacteristicChange(item.characteristicId, query);
+        }
+        // END Control DATERANGEPICKER
+
+        // Control Checkboxes
         function renderCheckboxes(item) {
             // String Array type
             var options = _.sortBy(item.options, 'name');
@@ -271,6 +313,9 @@
                 createFilterQuery(sendObj);
             });
         }
+        // END Control Checkboxes
+
+
         // TODO: move to Data Filter servise
         function createFilterQuery(data) {
             // Make constructor for Filter Query
@@ -287,6 +332,11 @@
         function onDestroy() {
             //onDestroy all js event
             $element.find('.filter-item-checkbox input').off('change');
+        }
+
+        function renderHtml(html) {
+            $element.html(html);
+            $compile($element.contents())($scope);
         }
     }
 })();

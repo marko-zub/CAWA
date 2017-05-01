@@ -21,15 +21,6 @@
         // TODO: simplify conttoller and move to different componnts
         init();
 
-        // Digest
-        // var nbDigest = 0;
-        // console.log(nbDigest);
-        // $rootScope.$watch(function() {
-        //     nbDigest++;
-        //     console.log(nbDigest);
-        // });
-        // End Digest
-
         function init() {
             // console.log('Decision Matrix Controller');
             vm.decisionsSpinner = true;
@@ -321,7 +312,6 @@
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
-            initMatrixMode();
             renderMatrix(calcHeight);
         }
 
@@ -384,9 +374,8 @@
         }
 
         function updatePosition(martrixScroll) {
-            var _this = martrixScroll || this;
+            var _this = martrixScroll;
             scrollHandler(_this.y, _this.x);
-            // TODO: avoid JQuery
             angular.element('.matrix-g .app-control').toggleClass('selected', false);
             angular.element('.app-pop-over-content').toggleClass('hide', true);
         }
@@ -529,18 +518,15 @@
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
             }
 
-            vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - vm.exclusionItemsLength;
+            vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
         }
 
         function setMatrixModeCounters(mode) {
+            // TODO: minimize code
+            var inclusionItemsLength = vm.inclusionItemsLength >= 0 ? vm.inclusionItemsLength : vm.decisions.totalDecisionMatrixs;
             _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
                 _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
-                if (_.isArray(_fo.excludeChildDecisionIds)) {
-                    vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - _fo.excludeChildDecisionIds.length;                 
-                } else {
-                    vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
-                }
                 if (_.isEmpty(_fo.excludeChildDecisionIds)) {
                     _fo.excludeChildDecisionIds = null;                  
                 }
@@ -553,6 +539,7 @@
                     _fo.includeChildDecisionIds = [];
                 }
             }
+             vm.inclusionItemsLength = inclusionItemsLength;
         }
 
         function changeMatrixMode(mode) {
@@ -573,11 +560,13 @@
                 _fo.excludeChildDecisionIds = _fo.excludeChildDecisionIds ? _fo.excludeChildDecisionIds : [];
                 Utils.addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+                vm.inclusionItemsLength--;
             } else if (vm.matrixMode === 'exclusion') {
                 Utils.removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
+                vm.inclusionItemsLength++;
             }
-            vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs - vm.exclusionItemsLength;
+            
             var send_fo = _fo;
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);

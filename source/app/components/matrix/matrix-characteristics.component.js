@@ -83,6 +83,7 @@
         // }
 
         function getComments($event) {
+            // if(!$($event.target).hasClass('link-secondary')) {
             vm.isGetCommentsOpen = true;
             DiscussionsNotificationService.notifyOpenDiscussion('data');
             $event.preventDefault();
