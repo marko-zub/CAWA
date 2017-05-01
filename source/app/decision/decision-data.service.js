@@ -17,7 +17,7 @@
                 getDecisions: {
                     method: 'GET',
                     isArray: false
-                }
+                },
             }),
 
             decision = $resource(decisionUrl + '/decisions/list', {
@@ -28,6 +28,15 @@
                     isArray: false
                 }
             }),
+
+            decisionParents = $resource(decisionUrl + '/parents', {
+                id: '@id'
+            }, {
+                getDecisionParentById: {
+                    method: 'GET',
+                    isArray: true
+                }
+            }),            
 
             decisionsMatrix = $resource(decisionUrl + '/decisions/matrix', {
                 id: '@id'
@@ -95,6 +104,7 @@
 
         var service = {
             getDecision: getDecision,
+            getDecisionParents: getDecisionParents,
             getDecisions: getDecisions,
             getDecisionMatrix: getDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
@@ -114,6 +124,12 @@
             return decision.getDecisionById({
                 id: id
             }, data).$promise;
+        }
+
+        function getDecisionParents(id) {
+            return decisionParents.getDecisionParentById({
+                id: id
+            }).$promise;            
         }
 
         function getDecisions(data) {

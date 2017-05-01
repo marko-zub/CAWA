@@ -40,6 +40,8 @@
             initPagination();
             getDecisionNomimations($stateParams.id);
             getCriteriaGroupsById($stateParams.id);
+
+            getDecisionParents($stateParams.id);
         }
 
         function getDecisionNomimations(id) {
@@ -52,6 +54,19 @@
                 vm.decisions = descriptionTrustHtml(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
                 // console.log(result);
+            });
+        }
+
+        function getDecisionParents(id) {
+            DecisionDataService.getDecisionParents(id).then(function(result) {
+                // console.log(result);
+                vm.decisionParents = result;
+
+                if(vm.decision.totalChildDecisions) {
+                    var decisionCopy = angular.copy(vm.decision);
+                    decisionCopy.isActive = true;
+                    vm.decisionParents.unshift(decisionCopy);
+                }
             });
         }
 

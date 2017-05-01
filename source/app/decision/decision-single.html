@@ -19,9 +19,40 @@
 </div>
 <div class="app-container-sm">
 
-    <p class="app-content-description">
-        {{::vm.decision.description}}
-    </p>
+<!--     <pre>
+        {{vm.decision | json}}
+    </pre> -->
+    
+    <div class="post">
+        
+        <div class="post-header">
+            <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ng-repeat="parent in vm.decisionParents track by parent.decisionId" ng-class="{'active':parent.isActive}">
+                        <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})">
+                            {{::parent.name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="post-sub-header">
+            <div class="author">
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+                <span ng-bind="::vm.decision.createUser.username"></span>
+            </div>
+            <div class="date">
+                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+            </div>
+        </div>
+        
+        <div class="post-body">
+            <p class="app-content-description" ng-if="::vm.decision.description">
+                {{::vm.decision.description}}
+            </p>
+        </div>
+    </div>
 
     <div class="app-content-nav">
         <div class="row" ng-if="::vm.decision.parentDecisionIds.length">

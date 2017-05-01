@@ -533,6 +533,7 @@
         }
 
         function setMatrixModeCounters(mode) {
+            _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
                 _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                 if (_.isArray(_fo.excludeChildDecisionIds)) {
