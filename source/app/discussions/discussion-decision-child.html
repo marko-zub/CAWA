@@ -26,49 +26,10 @@
         <div class="col-sm-12">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="app-list-panel" ng-if="vm.criteriaGroups">
-                        <h4>Criteria</h4>
-                        <div class="app-list-group" ng-repeat="group in ::vm.criteriaGroups track by $index">
-                            <h5>{{::group.name}}</h5>
-                            <ul class="discussions-list">
-                                <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-class="{'selected':vm.discussion.childCriterion.criterionId === criteria.criterionId}">
-                                    <div class="discussions-list-content">
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <a ui-sref="decisions.single.matrix.child.option({critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
-                                                <span ng-if="criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                            </div>
-                                            <div class="pull-right app-rating-inline">
-                                                <rating-star class="text-left" item="::criteria" ng-show="::criteria.weight"></rating-star>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <criteria-list list="::vm.criteriaGroups"></criteria-list>
                 </div>
                 <div class="col-sm-6">
-                    <div class="app-list-panel" ng-if="::vm.characteristicGroups">
-                        <h4>Characteristics</h4>
-                        <div class="app-list-group" ng-repeat="group in ::vm.characteristicGroups track by $index">
-                            <h5>{{::group.name}}</h5>
-                            <ul class="discussions-list">
-                                <li ng-repeat="characteristic in ::group.characteristics | orderBy:'characteristicId'" ng-class="{'selected':vm.discussion.childCharacteristic.characteristicId === characteristic.characteristicId}">
-                                    <div class="discussions-list-content">
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <a ui-sref="decisions.single.matrix.child.option({critOrCharId:characteristic.characteristicId, critOrCharSlug:characteristic.nameSlug})">{{::characteristic.name}}</a> <span ng-if="characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                                <p>
-                                                    {{::characteristic.value}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <characteristics-list list="::vm.characteristicGroups"></characteristics-list>
                 </div>
             </div>
         </div>

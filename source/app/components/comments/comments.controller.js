@@ -15,9 +15,9 @@
             controllerAs: 'vm'
         });
 
-    CommentsController.$inject = ['$element', 'DiscussionsDataService'];
+    CommentsController.$inject = ['DiscussionsDataService'];
 
-    function CommentsController($element, DiscussionsDataService) {
+    function CommentsController(DiscussionsDataService) {
         var
             vm = this;
 

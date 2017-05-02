@@ -39,8 +39,6 @@
             console.log('Decision Single Controller');
             initPagination();
             getDecisionNomimations($stateParams.id);
-            getCriteriaGroupsById($stateParams.id);
-
             getDecisionParents($stateParams.id);
         }
 
@@ -62,19 +60,33 @@
                 // console.log(result);
                 vm.decisionParents = result;
 
-                if(vm.decision.totalChildDecisions) {
+                if (vm.decision.totalChildDecisions) {
                     var decisionCopy = angular.copy(vm.decision);
                     decisionCopy.isActive = true;
+                    decisionCopy.name = 'Top ' + decisionCopy.name;
                     vm.decisionParents.unshift(decisionCopy);
                 }
+                getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
             });
+        }
+
+        // TODO: clean up
+        function getDecisionParentsCriteriaCharacteristicts(list) {
+                getCriteriaGroupsById(list[0].decisionId);
+                getCharacteristictsGroupsById(list[0].decisionId);            
+            // if(list.lenght > 15) return;
+            // _.forEach(list, function(parent) {
+            //     // console.log('get', parent.decisionId);
+            //     getCriteriaGroupsById(parent.decisionId);
+            //     getCharacteristictsGroupsById(parent.decisionId);
+            // });
         }
 
         // TODO: move to utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 el.description = $sce.trustAsHtml(el.description);
-                if(el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
+                if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 return el;
             });
         }
@@ -119,13 +131,24 @@
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
                 vm.criteriaGroups = descriptionTrustHtml(result);
-                _.map(result, function(resultEl) {
+                _.forEach(result, function(resultEl) {
                     descriptionTrustHtml(resultEl.criteria);
                 });
             });
         }
 
-
+        function getCharacteristictsGroupsById(decisionId) {
+            // characteristics
+            return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
+                vm.characteristicGroups = _.map(result, function(resultEl) {
+                    resultEl.description = $sce.trustAsHtml(resultEl.description);
+                    _.forEach(resultEl.characteristics, function(characteristic) {
+                        characteristic.description = $sce.trustAsHtml(characteristic.description);
+                    });
+                    return resultEl;
+                });
+            });
+        }
 
     }
 })();

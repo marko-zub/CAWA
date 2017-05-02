@@ -12,9 +12,9 @@
         });
 
 
-    renderTemplate.$inject = ['$element', '$attrs'];
+    renderTemplate.$inject = [];
 
-    function renderTemplate($element, $attrs) {
+    function renderTemplate() {
         return [
             '<div class="comment-form clearfix">',
                 '<text-angular id="dicussion-comment" ng-model="vm.commentContent" ta-maxlength="500" ta-default-wrap="span" name="comment" placeholder = "Comment..." ></text-angular>',

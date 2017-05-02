@@ -313,6 +313,8 @@
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
             renderMatrix(calcHeight);
+
+            initIncExcCounters();
         }
 
         function prepareMatrixData(data) {
@@ -374,10 +376,9 @@
         }
 
         function updatePosition(martrixScroll) {
-            var _this = martrixScroll;
+            var _this = this;
             scrollHandler(_this.y, _this.x);
             angular.element('.matrix-g .app-control').toggleClass('selected', false);
-            angular.element('.app-pop-over-content').toggleClass('hide', true);
         }
         // Table scroll
         var tableBody,
@@ -505,11 +506,20 @@
             foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
 
+        // TODO: clean up optimize
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
-
         vm.matrixMode = 'inclusion';
+
+        function initIncExcCounters() {
+            if(vm.matrixMode === 'inclusion') {
+                vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
+            } else if (vm.matrixMode=== 'exclusion') {
+                vm.exclusionItemsLength = vm.decisions.totalDecisionMatrixs;
+            }            
+        }
+
         function initMatrixMode() {
             vm.exclusionItemsLength = 0;
             if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
@@ -572,7 +582,7 @@
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
         }
 
-        // Toggle:
+        // Toggle group
         vm.toggleGroupName = toggleGroupName;
 
         function toggleGroupName(id, type) {

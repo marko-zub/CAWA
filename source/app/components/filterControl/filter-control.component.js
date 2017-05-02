@@ -222,6 +222,8 @@
                 locale: {
                     format: 'DD/MM/YYYY'
                 },
+                showDropdowns: true, // some bug
+                linkedCalendars: false,
                 eventHandlers: {
                     'apply.daterangepicker': function() {
                         changeDate(vm.dateRange, item);
