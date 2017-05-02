@@ -6,9 +6,13 @@
         .module('app.decision')
         .controller('DecisionSingleController', DecisionSingleController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q'];
+    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
+    ];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q) {
+    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService,
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+
         var
             vm = this,
             isInitedSorters = false,
@@ -197,7 +201,15 @@
                             characteristicId: el.characteristicId
                         });
 
-                        if (elEqual) return _.merge(el, elEqual);
+                        // console.log(el);
+
+                        if (elEqual) {
+                            el = _.merge(el, elEqual);
+                            el.html = ContentFormaterService.getTemplate(el);
+                            return el;
+                        }
+                        
+
                     });
                     return resultEl;
                 });

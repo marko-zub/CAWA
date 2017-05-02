@@ -8,7 +8,7 @@
                     <div class="clearfix">
                         <div class="pull-left">
                             <a ui-sref="decisions.single.matrix.child.option({critOrCharId:characteristic.characteristicId, critOrCharSlug:characteristic.nameSlug})">{{::characteristic.name}}</a> <span ng-if="characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                            <p ng-bind="::characteristic.value"></p>
+                            <div ng-bind-html="::characteristic.html"></div>
                         </div>
                     </div>
                 </div>

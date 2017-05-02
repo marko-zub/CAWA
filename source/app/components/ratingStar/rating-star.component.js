@@ -44,8 +44,8 @@
             } else {
                 votes = [
                     '<div class="app-rating-votes">',
-                    '<span class="app-rating-votes-weight">' + vm.item.weight + '</span>',
-                    '<span class="js-total-votes"><span class="app-icon glyphicon glyphicon-thumbs-up">' + vm.item.totalVotes + '</span>',
+                        '<span class="app-rating-votes-weight">' + vm.item.weight + '</span>',
+                        '<span><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + vm.item.totalVotes + '</span>',
                     '</div>'
                 ].join('\n');
             }
@@ -57,10 +57,10 @@
 
             var html = [
                 '<div class="app-rating-star-wrapper">',
-                '<div class="app-rating-star">',
-                '<span class="bar" style="width:' + vm.rating + '"></span>',
-                '</div>',
-                votes,
+                    '<div class="app-rating-star">',
+                        '<span class="bar" style="width:' + vm.rating + '"></span>',
+                    '</div>',
+                    votes,
                 '</div>',
             ].join('\n');
 
