@@ -59,7 +59,8 @@
                 return resp;
             },
             responseError: function(rejection) {
-                // console.log(rejection);
+                console.log(rejection);
+                $state.go('404');
                 return rejection;
             }
         };

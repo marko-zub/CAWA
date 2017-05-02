@@ -85,6 +85,8 @@
     function DecisionStateResolver(decisionBasicInfo, $stateParams, $state, $rootScope) {
 
         var result = decisionBasicInfo;
+        if(!result) return;
+        
         // SLUG for Decision page firt time call
         var decisionSlug = result.nameSlug ? result.nameSlug : '';
 

@@ -8,7 +8,8 @@
         .component('criteriaList', {
             templateUrl: 'app/components/criteriaList/criteria-list.html',
             bindings: {
-                list: '<'
+                list: '<',
+                links: '<'
             },
             controller: 'CriteriaListController',
             controllerAs: 'vm',
@@ -20,5 +21,6 @@
     function CriteriaListController() {
         var
             vm = this;
+            if(!vm.links) vm.links = true;
     }
 })();

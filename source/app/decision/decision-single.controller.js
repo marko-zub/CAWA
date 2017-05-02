@@ -39,6 +39,7 @@
 
         init();
         vm.activeTab = 0;
+        vm.isDecisionParents = false;
 
         // TODO: clean up separete for 2 template parent and child
         function init() {
@@ -46,7 +47,6 @@
             initPagination();
             getDecisionNomimations($stateParams.id);
             getDecisionParents($stateParams.id);
-            vm.isDecisionParents = false;
         }
 
         function getDecisionNomimations(id) {

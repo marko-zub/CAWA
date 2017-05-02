@@ -7,7 +7,11 @@
                 <div class="discussions-list-content">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <a ui-sref="decisions.single.matrix.child.option({critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
+                            <div ng-switch="vm.links == true">
+                                <a ng-switch-when="true" ui-sref="decisions.single.matrix.child.option({critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
+                                <span ng-switch-when="false" ng-bind="::criteria.name"></span>
+                            </div>
+                            
                             <span ng-if="criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                         </div>
                         <div class="pull-right app-rating-inline">

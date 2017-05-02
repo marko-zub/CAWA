@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
+                    <a ng-if="vm.decision.totalChildDecisions > 0" ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
                     <a href class="btn btn-primary btn-sm">Ask for Decision</a>
                 </div>
             </div>
@@ -15,14 +15,17 @@
     <!--     <pre>
         {{vm.decision | json}}
     </pre> -->
+    <!-- TODO: break out to 2 views and $compile template -->
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}">
-                    <a ng-click="vm.activeTab = $index">
-                        <!-- <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})"> -->
-                        {{::parent.name}}
-                    </a>
+                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}" ng-switch="vm.decision.totalChildDecisions > 0">
+   
+                        <a ng-switch-when="true" ng-click="vm.activeTab = $index">
+                            {{::parent.name}}
+                        </a>                        
+                        <a ng-switch-when="false" ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link">{{::parent.name}}</a>
+     
                 </li>
             </ul>
         </div>
@@ -50,7 +53,7 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-6">
-                            <criteria-list list="::item.criteriaGroups"></criteria-list>
+                            <criteria-list list="::item.criteriaGroups" links="!(vm.decision.totalChildDecisions > 0)"></criteria-list>
                         </div>
                         <div class="col-sm-6">
                             <characteristics-list list="::item.characteristicGroups"></characteristics-list>
