@@ -376,7 +376,7 @@
         }
 
         function updatePosition(martrixScroll) {
-            var _this = this;
+            var _this = martrixScroll || this;
             scrollHandler(_this.y, _this.x);
             angular.element('.matrix-g .app-control').toggleClass('selected', false);
         }

@@ -12,23 +12,21 @@
     </div>
 </div>
 <div class="app-container-sm">
-
-<!--     <pre>
+    <!--     <pre>
         {{vm.decision | json}}
     </pre> -->
-    
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-repeat="parent in vm.decisionParents track by parent.decisionId" ng-class="{'active':parent.isActive}">
-                    <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})">
+                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}">
+                    <a ng-click="vm.activeTab = $index">
+                        <!-- <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})"> -->
                         {{::parent.name}}
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-
     <div class="post">
         <div class="post-sub-header">
             <div class="author">
@@ -40,15 +38,27 @@
                 <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
             </div>
         </div>
-        
         <div class="post-body">
             <p class="app-content-description" ng-if="::vm.decision.description">
                 {{::vm.decision.description}}
             </p>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row tabs-header-hide" ng-if="vm.isDecisionParents">
+        <uib-tabset active="vm.activeTab">
+            <uib-tab index="$index" ng-repeat="item in vm.parentGroups track by $index" disable="item.isDisabled">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <criteria-list list="::item.criteriaGroups"></criteria-list>
+                        </div>
+                        <div class="col-sm-6">
+                            <characteristics-list list="::item.characteristicGroups"></characteristics-list>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
         <div class="col-sm-12">
             <div class="row">
                 <div class="col-sm-6">
@@ -60,9 +70,8 @@
             </div>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <ul class="discussions-list">
                 <li ng-repeat="decision in vm.decisions track by $index">
                     <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
@@ -94,5 +103,10 @@
                 </div>
             </div>
         </div>
+        <!-- Criteria -->
+        <div class="col-sm-4" ng-if="vm.decision.totalChildDecisions > 0">
+            <criteria-list list="::vm.criteriaGroups"></criteria-list>
+        </div>
+        <!-- End Criteria -->
     </div>
 </div>

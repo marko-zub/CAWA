@@ -6,13 +6,17 @@
         .module('app.decision')
         .controller('DecisionSingleController', DecisionSingleController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce'];
+    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q'];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce) {
+    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q) {
         var
             vm = this,
             isInitedSorters = false,
-            defaultDecisionCount = 10;
+            defaultDecisionCount = 10,
+            criteriaIds = [],
+            characteristicsIds = [],
+            criteriaArray = [],
+            characteristicsArray = [];
 
         vm.decisionId = $stateParams.id;
         vm.decisionsList = [];
@@ -34,12 +38,15 @@
         }];
 
         init();
+        vm.activeTab = 0;
 
+        // TODO: clean up separete for 2 template parent and child
         function init() {
             console.log('Decision Single Controller');
             initPagination();
             getDecisionNomimations($stateParams.id);
             getDecisionParents($stateParams.id);
+            vm.isDecisionParents = false;
         }
 
         function getDecisionNomimations(id) {
@@ -66,20 +73,44 @@
                     decisionCopy.name = 'Top ' + decisionCopy.name;
                     vm.decisionParents.unshift(decisionCopy);
                 }
-                getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
+
+                if (vm.decisionParents[0].decisionId !== vm.decision.decisionId) {
+                    vm.decisionParents[0].isActive = true;
+                    getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
+                    vm.isDecisionParents = true;
+                } else {
+                    getCriteriaGroupsByIdParent(vm.decision.decisionId);
+                }
             });
         }
 
         // TODO: clean up
         function getDecisionParentsCriteriaCharacteristicts(list) {
-                getCriteriaGroupsById(list[0].decisionId);
-                getCharacteristictsGroupsById(list[0].decisionId);            
-            // if(list.lenght > 15) return;
-            // _.forEach(list, function(parent) {
-            //     // console.log('get', parent.decisionId);
-            //     getCriteriaGroupsById(parent.decisionId);
-            //     getCharacteristictsGroupsById(parent.decisionId);
-            // });
+            if (list.lenght > 15) return;
+            _.forEach(list, function(parent) {
+
+                vm.parentGroups = [];
+
+                var sendData = {
+                    includeChildDecisionIds: []
+                };
+                sendData.includeChildDecisionIds.push(vm.decision.decisionId);
+                DecisionDataService.getDecisionMatrix(parent.decisionId, sendData).then(function(result) {
+                    var criteriaGroups;
+                    $q.all([
+                        getCriteriaGroupsById(parent.decisionId, result.decisionMatrixs[0].criteria),
+                        getCharacteristictsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
+                    ]).then(function(values) {
+                        var parentGroups = {
+                            criteriaGroups: values[0],
+                            characteristicGroups: values[1]
+                        };
+                        vm.parentGroups.push(parentGroups);
+                    });
+
+                });
+
+            });
         }
 
         // TODO: move to utils
@@ -127,7 +158,53 @@
 
 
         // TODO: move to service
-        function getCriteriaGroupsById(decisionId) {
+        function getCriteriaGroupsById(decisionId, criteriaArray) {
+            // if(!criteriaArray) return false
+            // Criteria
+            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+                // vm.criteriaGroups = result;
+                criteriaIds = [];
+                return _.filter(result, function(resultEl) {
+                    _.filter(resultEl.criteria, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+                        var elEqual = _.find(criteriaArray, {
+                            criterionId: el.criterionId
+                        });
+
+                        if (elEqual) return _.merge(el, elEqual);
+                    });
+
+                    return resultEl;
+                });
+            });
+        }
+
+
+        function getCharacteristictsGroupsById(decisionId, characteristicsArray) {
+            // if(!characteristicsArray) return;
+            // Characteristicts
+            return DecisionDataService.getCharacteristictsGroupsById(decisionId, {
+                options: false
+            }).then(function(result) {
+                // vm.characteristicGroups = result;
+                characteristicsIds = [];
+
+                return _.map(result, function(resultEl) {
+                    _.map(resultEl.characteristics, function(el) {
+                        el.description = $sce.trustAsHtml(el.description);
+
+                        var elEqual = _.find(characteristicsArray, {
+                            characteristicId: el.characteristicId
+                        });
+
+                        if (elEqual) return _.merge(el, elEqual);
+                    });
+                    return resultEl;
+                });
+            });
+        }
+
+        function getCriteriaGroupsByIdParent(decisionId) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
                 vm.criteriaGroups = descriptionTrustHtml(result);
@@ -137,18 +214,6 @@
             });
         }
 
-        function getCharacteristictsGroupsById(decisionId) {
-            // characteristics
-            return DecisionDataService.getCharacteristictsGroupsById(decisionId).then(function(result) {
-                vm.characteristicGroups = _.map(result, function(resultEl) {
-                    resultEl.description = $sce.trustAsHtml(resultEl.description);
-                    _.forEach(resultEl.characteristics, function(characteristic) {
-                        characteristic.description = $sce.trustAsHtml(characteristic.description);
-                    });
-                    return resultEl;
-                });
-            });
-        }
 
     }
 })();
