@@ -29,12 +29,12 @@
                         <a ui-sref="decisions.single({id:decision.decisionId, slug:decision.nameSlug, size: null, page: null})">
                             <div class="clearfix">
                                 <div class="img-container" ng-if="decision.imageUrl">
-                                    <img ng-src="{{decision.imageUrl}}" class="img-responsive">
+                                    <img ng-src="{{::decision.imageUrl}}" class="img-responsive">
                                 </div>
                                 <div class="pull-left" ng-bind="decision.name"></div>
                             </div>
                         </a>
-                        <div class="discussions-list-description" ng-bind-html="decision.description"></div>
+                        <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
                     </li>
                 </ul>
                 <!-- TODO: use as component -->

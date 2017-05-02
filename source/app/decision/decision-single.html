@@ -20,12 +20,8 @@
         <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}" ng-switch="vm.decision.totalChildDecisions > 0">
-   
-                        <a ng-switch-when="true" ng-click="vm.activeTab = $index">
-                            {{::parent.name}}
-                        </a>                        
-                        <a ng-switch-when="false" ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link">{{::parent.name}}</a>
-     
+                    <a ng-switch-when="true" ng-click="vm.activeTab = $index">{{::parent.name}}</a>
+                    <a ng-switch-when="false" ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link">{{::parent.name}}</a>
                 </li>
             </ul>
         </div>
@@ -42,9 +38,7 @@
             </div>
         </div>
         <div class="post-body">
-            <p class="app-content-description" ng-if="::vm.decision.description">
-                {{::vm.decision.description}}
-            </p>
+            <p class="app-content-description" ng-if="::vm.decision.description" ng-bind="::vm.decision.description"></p>
         </div>
     </div>
     <div class="row tabs-header-hide" ng-if="vm.isDecisionParents">
@@ -83,17 +77,17 @@
                                 <img ng-src="{{decision.imageUrl}}" class="img-responsive">
                             </div>
                             <div class="pull-left">
-                                {{decision.name}}
-                                <div>
-                                    <small>
-                                        Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>%
-                                         | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{decision.totalVotes}}
-                                    </small>
-                                </div>
+                                {{::decision.name}}
                             </div>
                         </div>
                     </a>
-                    <div class="discussions-list-description" ng-bind-html="decision.description"></div>
+                    <div>
+                        <div class="criteria-comliance">
+                            Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>%
+                             | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                        </small>
+                    </div>
+                    <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
                 </li>
             </ul>
             <!-- TODO: use as component -->
