@@ -4,7 +4,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a ng-if="vm.decision.totalChildDecisions > 0" ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
                     <a href class="btn btn-primary btn-sm">Ask for Decision</a>
                 </div>
             </div>
@@ -19,22 +18,36 @@
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}" ng-switch="vm.decision.totalChildDecisions > 0">
-                    <a ng-switch-when="true" ng-click="vm.activeTab = $index">{{::parent.name}}</a>
-                    <a ng-switch-when="false" ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link">{{::parent.name}}</a>
+                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}">
+                    <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" ng-click="vm.activeTab = $index">{{::parent.name}}</a>
+                    <!-- <a ng-click="vm.activeTab = $index">{{::parent.name}}</a> -->
                 </li>
             </ul>
         </div>
     </div>
     <div class="post">
         <div class="post-sub-header">
-            <div class="author">
-                <i class="fa fa-user-o" aria-hidden="true"></i>
-                <span ng-bind="::vm.decision.createUser.username"></span>
-            </div>
-            <div class="date">
-                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="author">
+                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                        <span ng-bind="::vm.decision.createUser.username"></span>
+                    </div>
+                    <div class="date">
+                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-switch="::vm.decision.totalChildDecisions > 0">
+                        <div ng-switch-when="true">
+                             <a ng-if="vm.decision.totalChildDecisions > 0" ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
+                        </div>
+                        <div ng-switch-when="false">
+                            <a  ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link" ng-repeat="parent in vm.decisionParents track by $index">{{::parent.name}}</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="post-body">

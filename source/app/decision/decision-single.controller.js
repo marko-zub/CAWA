@@ -90,31 +90,32 @@
 
         // TODO: clean up
         function getDecisionParentsCriteriaCharacteristicts(list) {
-            if (list.lenght > 15) return;
-            _.forEach(list, function(parent) {
+            // if (list.lenght > 15) return;
+            // _.forEach(list, function(parent) {
+            var parent = list[0];
 
-                vm.parentGroups = [];
+            vm.parentGroups = [];
 
-                var sendData = {
-                    includeChildDecisionIds: []
-                };
-                sendData.includeChildDecisionIds.push(vm.decision.decisionId);
-                DecisionDataService.getDecisionMatrix(parent.decisionId, sendData).then(function(result) {
-                    var criteriaGroups;
-                    $q.all([
-                        getCriteriaGroupsById(parent.decisionId, result.decisionMatrixs[0].criteria),
-                        getCharacteristictsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
-                    ]).then(function(values) {
-                        var parentGroups = {
-                            criteriaGroups: values[0],
-                            characteristicGroups: values[1]
-                        };
-                        vm.parentGroups.push(parentGroups);
-                    });
-
+            var sendData = {
+                includeChildDecisionIds: []
+            };
+            sendData.includeChildDecisionIds.push(vm.decision.decisionId);
+            DecisionDataService.getDecisionMatrix(parent.decisionId, sendData).then(function(result) {
+                var criteriaGroups;
+                $q.all([
+                    getCriteriaGroupsById(parent.decisionId, result.decisionMatrixs[0].criteria),
+                    getCharacteristictsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
+                ]).then(function(values) {
+                    var parentGroups = {
+                        criteriaGroups: values[0],
+                        characteristicGroups: values[1]
+                    };
+                    vm.parentGroups.push(parentGroups);
                 });
 
             });
+
+            // });
         }
 
         // TODO: move to utils
@@ -208,7 +209,7 @@
                             el.html = ContentFormaterService.getTemplate(el);
                             return el;
                         }
-                        
+
 
                     });
                     return resultEl;
