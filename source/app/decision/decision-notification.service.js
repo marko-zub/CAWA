@@ -21,6 +21,7 @@
             subscribeCharacteristicsGroups: subscribeCharacteristicsGroups,
             subscribePageChanged: subscribePageChanged,
             subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
+            subscribeFilterTags: subscribeFilterTags,
             notifyGetDetailedCharacteristics: notifyGetDetailedCharacteristics,
             notifySelectCriterion: notifySelectCriterion,
             notifySelectDecision: notifySelectDecision,
@@ -28,7 +29,8 @@
             notifyCharacteristicsGroups: notifyCharacteristicsGroups,
             notifyPageChanged: notifyPageChanged,
             notifyInitSorter: notifyInitSorter,
-            notifyChildDecisionExclusion: notifyChildDecisionExclusion
+            notifyChildDecisionExclusion: notifyChildDecisionExclusion,
+            notifyFilterTags: notifyFilterTags
         };
 
         return service;
@@ -81,6 +83,9 @@
         function subscribeChildDecisionExclusion(callback) {
             subscribe('decisionExclusionChanged', callback);
         }
+        function subscribeFilterTags(callback) {
+            subscribe('queryFilterChanged', callback);
+        }
 
         // Emitters
         function notifyGetDetailedCharacteristics(data) {
@@ -113,6 +118,9 @@
 
         function notifyChildDecisionExclusion(data) {
             emit('decisionExclusionChanged', data);
+        }
+        function notifyFilterTags(data) {
+            emit('queryFilterChanged', data);
         }
 
     }

@@ -28,7 +28,7 @@
         // console.log(vm.placeholder);
 
         vm.searchOptions = {
-            debounce: 300
+            debounce: 50
         };
 
         function search() {
@@ -75,4 +75,3 @@
 
     }
 })();
-

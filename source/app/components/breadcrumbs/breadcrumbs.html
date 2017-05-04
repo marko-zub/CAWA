@@ -2,9 +2,9 @@
     <div class="app-container">
         <ul>
             <li ng-repeat="item in vm.items track by $index">
-                <a ui-sref="{{item.link}}" ng-if="item.link">{{::item.title}}</a>
-                <span ng-if="!item.link">{{::item.title}}</span>
-                <span class="breadcrumb-divider" ng-if="!$last"><i class="glyphicon glyphicon-menu-right"></i></span>
+                <a ui-sref="{{item.link}}" ng-if="item.link" ng-bind="::item.title"></a>
+                <span ng-if="!item.link" ng-bind="::item.title"></span>
+                <span class="breadcrumb-divider"><i class="glyphicon glyphicon-menu-right"></i></span>
             </li>
         </ul>
     </div>

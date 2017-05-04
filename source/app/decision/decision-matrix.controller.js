@@ -113,6 +113,8 @@
             getDecisionMatrix(vm.decisionId).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
+
+            DecisionNotificationService.notifyFilterTags(DecisionSharedService.filterObject);
         });
 
         // Discussions Subscrive
@@ -517,7 +519,7 @@
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
             } else if (vm.matrixMode=== 'exclusion') {
                 vm.exclusionItemsLength = vm.decisions.totalDecisionMatrixs;
-            }            
+            }
         }
 
         function initMatrixMode() {
@@ -538,7 +540,7 @@
             if (mode === 'inclusion') {
                 _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                 if (_.isEmpty(_fo.excludeChildDecisionIds)) {
-                    _fo.excludeChildDecisionIds = null;                  
+                    _fo.excludeChildDecisionIds = null;
                 }
                 _fo.includeChildDecisionIds = null;
             } else if (mode === 'exclusion') {
@@ -576,7 +578,7 @@
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
                 vm.inclusionItemsLength++;
             }
-            
+
             var send_fo = _fo;
             send_fo.persistent = true;
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
