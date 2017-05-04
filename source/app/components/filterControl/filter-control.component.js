@@ -120,6 +120,7 @@
             var query = {
                 "type": "CompositeQuery",
                 "characteristicId": vm.item.characteristicId,
+                "characteristicName": vm.item.name,
                 "operator": "AND",
                 "queries": queries
             };
@@ -176,6 +177,7 @@
             var sendObj = {
                 "type": "EqualQuery",
                 "characteristicId": vm.item.characteristicId,
+                "characteristicName": vm.item.name,
                 "value": model
             };
             createFilterQuery(sendObj);
@@ -205,6 +207,7 @@
             if (model === 'null') model = null;
             var sendObj = {
                 "type": "EqualQuery",
+                "characteristicName": vm.item.name,
                 "characteristicId": vm.item.characteristicId,
                 "value": model,
             };
@@ -264,6 +267,7 @@
             var query = {
                 "type": "CompositeQuery",
                 "characteristicId": item.characteristicId,
+                "characteristicName": item.name,
                 "operator": "AND",
                 "queries": queries
             };
@@ -309,6 +313,7 @@
                 }
                 var sendObj = {
                     'type': 'AllInQuery',
+                    "characteristicName": item.name,
                     'characteristicId': item.characteristicId,
                     'value': checkedValues
                 };
@@ -325,6 +330,7 @@
             var query = {
                 'type': data.type || 'AllInQuery',
                 'characteristicId': data.characteristicId || null,
+                'characteristicName': data.characteristicName || null,
                 'value': sendVal
             };
 
