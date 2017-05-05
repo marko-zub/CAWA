@@ -113,7 +113,7 @@
                     $state.go(currentState, toParams, {
                         notify: false,
                         reload: false,
-                        location: 'replace'
+                        location: false
                     });
                 }
 
@@ -145,7 +145,7 @@
                     }, {
                         notify: false,
                         reload: false,
-                        location: 'replace'
+                        location: false
                     });
                 }
 

@@ -75,7 +75,7 @@
                 }, {
                     notify: false,
                     reload: false,
-                    location: 'replace'
+                    location: false
                 });
             }
 

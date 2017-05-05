@@ -74,7 +74,7 @@
             }, {
                 notify: false,
                 reload: false,
-                location: 'replace'
+                location: false
             });
         }
 
@@ -108,7 +108,7 @@
                 } else {
                     $state.go($state.current.name, {
                         sort: null,
-                        location: 'replace'
+                        location: false
                     });
                 }
             }

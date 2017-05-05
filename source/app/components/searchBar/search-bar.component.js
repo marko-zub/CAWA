@@ -32,24 +32,30 @@
         };
 
         function search() {
-            if(!vm.searchQuery) return;
-            $state.go('search', {query: vm.searchQuery.toString()});
+            changeState(vm.searchQuer);
         }
 
         function shouldSelectSuggestedDecisions($event, model) {
             // console.log($event);
             // return true;
             var code = $event.keyCode;
-            if(code === 13) {
+            if (code === 13) {
                 var query = cleanQuery(vm.searchQuery);
-                $state.go('search', {query: query});
+                changeState(query);
                 $event.preventDefault();
             }
         }
 
         function selectSuggestedDecisions($item, $model) {
-            // console.log($item, $model)
-            $state.go('search', {query: $item.name});
+            changeState($item.name.toString());
+        }
+
+        function changeState(queryVal) {
+            if (!queryVal) return;
+            var sendQuery = cleanQuery(queryVal);
+            $state.go('search', {
+                query: sendQuery
+            });
         }
 
         function searchSuggestedDecisions(query) {
@@ -68,9 +74,10 @@
         }
 
         function cleanQuery(val) {
-            if(!val) return;
-            val = val.toString();
-            return window.encodeURIComponent(val);
+            if (!val) return;
+            val = escape(val.toString());
+            // TODO: clean query
+            return val;
         }
 
     }
