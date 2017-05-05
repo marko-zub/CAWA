@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    SearchBarController.$inject = ['$element', 'DecisionDataService', '$state'];
+    SearchBarController.$inject = ['$element', 'DecisionDataService', '$state', '$rootScope', '$stateParams'];
 
-    function SearchBarController($element, DecisionDataService, $state) {
+    function SearchBarController($element, DecisionDataService, $state, $rootScope, $stateParams) {
         var
             vm = this,
             value;
@@ -25,22 +25,27 @@
         vm.searchSuggestedDecisions = searchSuggestedDecisions;
         vm.selectSuggestedDecisions = selectSuggestedDecisions;
         vm.shouldSelectSuggestedDecisions = shouldSelectSuggestedDecisions;
-        // console.log(vm.placeholder);
+        vm.searchQuery = $stateParams.query ? decodeURI($stateParams.query) : null;
 
         vm.searchOptions = {
             debounce: 50
         };
+
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams) {
+                vm.searchQuery = toParams.query ? decodeURI(toParams.query) : null;
+            });
 
         function search() {
             changeState(vm.searchQuer);
         }
 
         function shouldSelectSuggestedDecisions($event, model) {
-            // console.log($event);
-            // return true;
-            var code = $event.keyCode;
-            if (code === 13) {
-                var query = cleanQuery(vm.searchQuery);
+            var query;
+            if ($event.keyCode === 13) {
+                if (!vm.searchQuery) return;
+                var sendQuery = _.isObject(vm.searchQuery) ? vm.searchQuery.name : vm.searchQuery;
+                query = cleanQuery(sendQuery);
                 changeState(query);
                 $event.preventDefault();
             }
@@ -68,15 +73,14 @@
             };
             return DecisionDataService.searchSuggestedDecisions(searchData).then(function(resp) {
                 var decisions = resp.decisions;
-                // console.log(resp);
                 return decisions;
             });
         }
 
         function cleanQuery(val) {
             if (!val) return;
-            val = escape(val.toString());
-            // TODO: clean query
+            // val = encodeURI(val.toString());
+            // // TODO: clean query
             return val;
         }
 

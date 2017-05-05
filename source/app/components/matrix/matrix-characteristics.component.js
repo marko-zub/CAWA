@@ -22,7 +22,7 @@
             '<div class="matrix-g matrix-g-characteristic" ng-repeat="group in vm.list track by group.characteristicGroupId">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
-                '<div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.characteristicId" ng-class="{\'hide\': group.isClosed}">',
+                '<div class="matrix-item matrix-item-content js-matrix-item-content matrix-row" ng-repeat="item in group.characteristics track by item.characteristicId" ng-class="{\'hide\': group.isClosed}">',
                     '<div class="matrix-row">',
                         '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',

@@ -10,5 +10,6 @@
     typeahead-focus-first="false"
     ng-keyup="vm.shouldSelectSuggestedDecisions($event, vm.searchQuery)"
     typeahead-on-select="vm.selectSuggestedDecisions($item)"
+    ng-class="{'open':vm.searchQuery}"
     typeahead-append-to-body="true">
 <span class="fa fa-search glyphicon glyphicon-search search-input-icon" ng-click="vm.search()" tabindex="0"></span>

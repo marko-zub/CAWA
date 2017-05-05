@@ -81,20 +81,20 @@
     float: left;
     position: relative;
     margin: 5px 0;
-    input {
+    .form-control {
         background-color: darken(@header-background, 5%);
         border-color: darken(@header-background, 5%);
         width: 150px;
         padding-left: 30px;
-        .transition(all 0.2s ease-in-out);
+        .transition(background-color 0.2s ease-in-out);
         color: #fff;
+        &.open,
         &:focus {
             width: 250px;
             background-color: #fff;
             color: @title-color;
             & + .search-input-icon {
                 color: @gray-mid;
-                // display: none;
             }
         }
     }
@@ -102,8 +102,21 @@
         left: 3px;
         top: 2px;
         color: #fff;
+        width: 25px;
         cursor: pointer;
     }
+}
+
+.search-input-icon {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 15px;
+    top: 5px;
+    line-height: 30px;
+    padding: 0px;
+    padding-left: 7px;
+    color: @icon-color;
 }
 
 // Login

@@ -11,10 +11,25 @@
 			controllerAs: 'vm'
 		});
 
-	HeaderController.$inject = [];
+	HeaderController.$inject = ['$state', '$stateParams', '$rootScope'];
 
-	function HeaderController() {
+	function HeaderController($state, $stateParams, $rootScope) {
 		var vm = this;
+
+        // Page title
+        var pageTitle = 'DecisionWanted';
+        $rootScope.pageTitle = pageTitle;
+        $rootScope.breadcrumbs = false;
+
+        $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
+            if (angular.isDefined($stateParams.data)) {
+                if ($stateParams.data.pageTitle) {
+                    $rootScope.pageTitle = $stateParams.data.pageTitle + ' | ' + pageTitle;
+                }
+
+                $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
+            }
+        });		
 	}
 
 })();

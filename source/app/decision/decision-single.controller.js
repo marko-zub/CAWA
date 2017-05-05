@@ -157,7 +157,7 @@
             // }, {
             //     notify: true,
             //     reload: true,
-            //     location: 'replace'
+            //     location: false
             // });
         }
 
