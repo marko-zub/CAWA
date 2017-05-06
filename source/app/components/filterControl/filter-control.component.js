@@ -295,26 +295,21 @@
                 return html.join('\n');
             }).join('\n');
 
-            var queryTypes = [{
-                key: 'OR',
-                value: 'OR'
-            }, {
-                key: 'AND',
-                value: 'AND'
-            }];
-            var queryTypeHtml = _.map(queryTypes, function(option) {
-                return [
-                    '<div class="filter-item-group">',
-                    '<input type="radio" id="option-' + option.key + '" name="option-operator-"' + item.characteristicId + '" value="' + option.key + '">',
-                    '<label for="option-' + option.key + '">' + option.value + '</label>',
-                    '</div>'
-                ].join('\n');
-            });
+            var queryTypeHtml = [
+                '<div class="switcher">',
+                    '<input type="checkbox" name="switcher" class="switcher-checkbox" id="toggle-' + item.characteristicId + '" checked>',
+                    '<label class="switcher-label" for="toggle-' + item.characteristicId + '">',
+                        '<span class="switcher-inner"></span>',
+                        '<span class="switcher-switch"></span>',
+                    '</label>',
+                '</div>',
+            ].join('\n');
+
 
             var html = [
                 '<div class="query-type-wrapper">',
-                queryTypeHtml.join('\n'),
-                '</div>',            
+                queryTypeHtml,
+                '</div>',
                 '<div class="filter-item checkbox-list">',
                 content,
                 '</div>'
@@ -329,6 +324,7 @@
                 'type': 'AllInQuery',
                 "characteristicName": item.name,
                 'characteristicId': item.characteristicId,
+                "operator": 'AND'
             };
             var checkedValues = [];
             $($element).on('change', '.filter-item-checkbox input', function() {
@@ -348,9 +344,13 @@
             });
 
             $($element).on('change', '.query-type-wrapper input', function() {
-                if(_.isEmpty(vm.sendObj)) return;
-                var operator = $(this).val();
-                vm.sendObj.operator = operator.toUpperCase();
+                if (_.isEmpty(vm.sendObj)) return;
+                if ($(this).is(':checked')) {
+                    vm.sendObj.operator = 'AND';
+                } else {
+                    vm.sendObj.operator = 'OR';
+                }
+
                 // console.log(vm.sendObj);
                 createFilterQuery(vm.sendObj);
             });
@@ -361,16 +361,45 @@
         // TODO: move to Data Filter servise
         function createFilterQuery(data) {
             // Make constructor for Filter Query
-            var sendVal = (data.value === false || data.value) ? data.value : null;
+            var sendData = angular.copy(data);
+            var sendVal = (sendData.value === false || sendData.value) ? sendData.value : null;
             var query = {
-                'type': data.type || 'AllInQuery',
-                'characteristicId': data.characteristicId || null,
-                'characteristicName': data.characteristicName || null,
+                'type': sendData.type || 'AllInQuery',
+                'characteristicId': sendData.characteristicId || null,
+                'characteristicName': sendData.characteristicName || null,
                 'value': sendVal,
             };
-            if(data.operator) query.operator = data.operator;
+            if (sendData.operator && _.isArray(sendVal)) {
+                query.operator = sendData.operator;
+                if (sendData.operator === 'OR') {
+                    // query
+                    query = createCompositeQuery(data);
+                }
+            }
+            // console.log(sendData.characteristicId, query);
+            filterQueriesCharacteristicChange(sendData.characteristicId, query);
+        }
 
-            filterQueriesCharacteristicChange(data.characteristicId, query);
+        function createCompositeQuery(data) {
+            if (!data || !_.isArray(data.value)) return;
+            var queries = [];
+            _.forEach(data.value, function(val) {
+                var queryVal = {
+                    "type": "EqualQuery",
+                    "characteristicId": vm.item.characteristicId,
+                    "value": val
+                };
+                queries.push(queryVal);
+            });
+
+            var query = {
+                "type": "CompositeQuery",
+                "characteristicId": vm.item.characteristicId,
+                "characteristicName": vm.item.name,
+                "operator": "OR",
+                "queries": queries
+            };
+            return query;
         }
 
         function onDestroy() {

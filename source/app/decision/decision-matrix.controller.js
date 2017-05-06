@@ -288,10 +288,12 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                $scope.$applyAsync(function() {
+
+                // $applyAsync some times to long wait for next $digest
+                // $scope.$applyAsync(function() {
                 vm.decisionsSpinner = false;
-                // $scope.$digest();
-                });
+                $scope.$digest();
+                // });
             }, 0);
         }
 

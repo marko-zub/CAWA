@@ -1095,13 +1095,79 @@ filter-control {
 .query-type-wrapper {
     display: block;
     margin-bottom: 2px;
-    text-align: right;
     padding: 0 20px;
     height: 12px;
-    margin-top: -5px;
+    margin-top: -20px;
+    .switcher {
+        float: right;   
+    }
 }
 
 // Hide by option
 .rz-bubble {
     display: none !important;
+}
+
+
+// Controls
+// Switcher
+.switcher {
+    position: relative;
+     width: 44px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.switcher-checkbox {
+    display: none;
+}
+.switcher-label {
+    display: block; 
+    overflow: hidden; 
+    cursor: pointer;
+    border-radius: 10px;
+}
+.switcher-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.switcher-inner:before, 
+.switcher-inner:after {
+    display: block; 
+    float: left; 
+    width: 50%; 
+    height: 18px; 
+    padding: 0; 
+    line-height: 18px;
+    font-size: 11px; 
+    color: white;
+    box-sizing: border-box;
+}
+.switcher-inner:before {
+    content: "AND";
+    padding-left: 5px;
+    background-color: @basic-active; 
+    color: #FFFFFF;
+}
+.switcher-inner:after {
+    content: "OR";
+    padding-right: 5px;
+    background-color: #EEEEEE; 
+    color: #999999;
+    text-align: right;
+}
+.switcher-switch {
+    display: block; width: 11px; 
+    margin: 3px 4px;
+    background: #FFFFFF;
+    position: absolute; top: 0; 
+    bottom: 0;
+    right: 25px;
+    height: 11px;
+    transition: all 0.3s ease-in 0s; 
+    border-radius: 6px;
+}
+.switcher-checkbox:checked + .switcher-label .switcher-inner {
+    margin-left: 0;
+}
+.switcher-checkbox:checked + .switcher-label .switcher-switch {
+    right: 0px; 
 }
