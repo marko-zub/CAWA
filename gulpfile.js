@@ -28,7 +28,7 @@ var config = {
     allLessFiles: 'source/styles/**/*.less',
     allCssFiles: 'source/styles/*.css',
     allHtmlFiles: 'source/app/**/*.html',
-    bootstrapFonts: 'bower_components/bootstrap/fonts',
+    fonts: 'source/fonts',
     fontAwesome: 'bower_components/font-awesome/fonts',
     allJsOrdered: ['source/app/app.js', 'source/app/**/*.module.js', 'source/app/**/*.js'],
     index: 'source/app/index.tpl.html',
@@ -87,7 +87,7 @@ gulp.task('inject', ['jshint', 'less'], function() {
 gulp.task('fonts', function() {
     log('Copying fonts');
     return gulp.src([
-        config.bootstrapFonts + '/*',
+        config.fonts + '/*',
         config.fontAwesome + '/*'])
         .pipe(gulp.dest(config.release + '/fonts'));
 });

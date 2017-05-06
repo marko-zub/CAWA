@@ -260,8 +260,8 @@
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
-            angular.element('.js-item-aside').css('height', 'auto');
-            angular.element('.js-matrix-item-content').css('height', 'auto');
+            $('.js-item-aside').css('height', 'auto');
+            $('.js-matrix-item-content').css('height', 'auto');
 
             var asideArray = [],
                 contentArray = [];
@@ -288,10 +288,10 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                // $scope.$applyAsync(function() {
+                $scope.$applyAsync(function() {
                 vm.decisionsSpinner = false;
-                $scope.$digest();
-                // });
+                // $scope.$digest();
+                });
             }, 0);
         }
 
@@ -357,7 +357,7 @@
                 mode: "sortByCriteria"
             };
             $scope.$emit('selectSorter', sortObj);
-            var parentCriteria = angular.element($event.target).parents('.criteria-col');
+            var parentCriteria = $($event.target).parents('.criteria-col');
             if (parentCriteria.hasClass('selected')) {
                 $event.stopPropagation();
             }
@@ -380,7 +380,7 @@
         function updatePosition(martrixScroll) {
             var _this = martrixScroll || this;
             scrollHandler(_this.y, _this.x);
-            angular.element('.matrix-g .app-control').toggleClass('selected', false);
+            $('.matrix-g .app-control').toggleClass('selected', false);
         }
         // Table scroll
         var tableBody,
@@ -413,6 +413,7 @@
                 disablePointer: true,
                 disableTouch: false,
                 // bounce: false,
+                momentum: false,
                 disableMouse: false
             });
         }
@@ -434,7 +435,7 @@
 
         function setMatrixTableHeight(total) {
             var tableH = total * 112 + 'px';
-            angular.element('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
+            $('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
         }
         // TODO: make as a separeted component
         // Criteria header
@@ -472,7 +473,7 @@
         vm.selectCriterion = selectCriterion;
 
         function selectCriterion(event, criterion, coefCall) {
-            if (angular.element(event.target).hasClass('title-descr')) return;
+            if ($(event.target).hasClass('title-descr')) return;
             vm.decisionsSpinner = true;
             if (coefCall && !criterion.isSelected) {
                 return;

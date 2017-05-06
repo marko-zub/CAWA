@@ -23,6 +23,7 @@ app.get('/build/*', (req, res) => {
 app.use('/bower_components', express.static(path.join(__dirname, bower)));
 app.use('/images', express.static(path.join(__dirname, target, 'images')));
 app.use('/styles', express.static(path.join(__dirname, target, 'styles')));
+app.use('/fonts', express.static(path.join(__dirname, target, 'fonts')));
 app.use('/app', express.static(path.join(__dirname, target, 'app')));
 app.use('/app.config', express.static(path.join(__dirname, target, 'app.config')));
 

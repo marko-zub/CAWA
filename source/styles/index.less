@@ -1,6 +1,5 @@
 // TODO: include less bootstrap and use only necessary components
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
+@import "bootstrap/bootstrap";
 
 @import "mixins";
 @import "variables";
@@ -12,7 +11,9 @@
 @import "discussions";
 
 body {
-  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  margin: 0;
 }
 html {
   height: 100%;
@@ -21,10 +22,10 @@ html {
 .content {
   background-color: @app-bg;
   overflow: hidden;
-  margin-top: @header-height;
-  margin-bottom: -(@footer-height + @header-height);
+  padding-top: @header-height;
   padding-bottom: @footer-height + @header-height;
-  min-height: 100%;
+  margin-bottom: -(@footer-height + @header-height);
+  min-height: 100vh;
 }
 
 .app-row-content-label {

@@ -13,12 +13,11 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "3.3.7",
     "lodash": "^4.17.2",
     "angular": "^1.6.4",
-    "angular-ui-router": "^0.3.2",
-    "angular-resource": "1.6.3",
-    "angular-animate": "1.6.3",
+    "angular-ui-router": "^0.4.2",
+    "angular-resource": "^1.6.3",
+    "angular-animate": "^1.6.3",
     "angular-bootstrap": "^2.3.0",
     "ngstorage": "^0.3.11",
     "angular-jwt": "^0.1.8",
@@ -35,11 +34,6 @@
       "main": [
         "./angular.js",
         "./angular-csp.css"
-      ]
-    },
-    "bootstrap": {
-      "main": [
-        "dist/css/bootstrap.css"
       ]
     },
     "jquery": {
