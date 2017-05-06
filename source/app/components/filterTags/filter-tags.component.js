@@ -77,7 +77,7 @@
         var data = [];
         switch (item.type) {
           case "CompositeQuery":
-            data[0] = item.queries[0].value + ' - ' + item.queries[1].value;
+            if(!item.queries) data[0] = item.queries[0].value + ' - ' + item.queries[1].value;
             break;
           default:
             data = _.isArray(item.value) ? item.value : [item.value];

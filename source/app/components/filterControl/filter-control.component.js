@@ -324,7 +324,7 @@
                 'type': 'AllInQuery',
                 "characteristicName": item.name,
                 'characteristicId': item.characteristicId,
-                "operator": 'AND'
+                "operator": 'OR'
             };
             var checkedValues = [];
             $($element).on('change', '.filter-item-checkbox input', function() {
@@ -346,9 +346,9 @@
             $($element).on('change', '.query-type-wrapper input', function() {
                 if (_.isEmpty(vm.sendObj)) return;
                 if ($(this).is(':checked')) {
-                    vm.sendObj.operator = 'AND';
-                } else {
                     vm.sendObj.operator = 'OR';
+                } else {
+                    vm.sendObj.operator = 'AND';
                 }
 
                 // console.log(vm.sendObj);
@@ -360,6 +360,7 @@
 
         // TODO: move to Data Filter servise
         function createFilterQuery(data) {
+            if(!data) return;
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
             var sendVal = (sendData.value === false || sendData.value) ? sendData.value : null;
@@ -385,7 +386,7 @@
             var queries = [];
             _.forEach(data.value, function(val) {
                 var queryVal = {
-                    "type": "EqualQuery",
+                    "type": "InQuery",
                     "characteristicId": vm.item.characteristicId,
                     "value": val
                 };
