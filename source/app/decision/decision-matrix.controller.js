@@ -102,7 +102,7 @@
             if (find >= 0) {
                 // TODO: find better solution
                 if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
-                    !data.filterQueries.queries) {
+                    _.isEmpty(data.filterQueries.queries)) {
                     sendFo.filterQueries.splice(find, 1);
                 } else {
                     sendFo.filterQueries[find] = data.filterQueries;
@@ -110,10 +110,9 @@
             } else {
                 sendFo.filterQueries.push(data.filterQueries);
             }
-            if (_.isEmpty(sendFo.filterQueries) ||
-                (_.isArray(sendFo.queries) && sendFo.queries.length === 0)) {
+            if (_.isEmpty(sendFo.filterQueries)) {
                 sendFo.filterQueries = null;
-                DecisionSharedService.filterObject.filterQueries = null;
+                DecisionSharedService.filterObjec = null;
             }
             getDecisionMatrix(vm.decisionId).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
