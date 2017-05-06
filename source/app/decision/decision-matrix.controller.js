@@ -90,31 +90,35 @@
         });
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
             // if (!data.filterQueries) return;
-            DecisionSharedService.filterObject.persistent = true;
+            var sendFo = DecisionSharedService.filterObject;
+            sendFo.persistent = true;
             //TODO: Clean up code
-            if (!DecisionSharedService.filterObject.filterQueries)
-                DecisionSharedService.filterObject.filterQueries = [];
+            if (!sendFo.filterQueries)
+                sendFo.filterQueries = [];
 
-            var find = _.findIndex(DecisionSharedService.filterObject.filterQueries, function(filterQuery) {
+            var find = _.findIndex(sendFo.filterQueries, function(filterQuery) {
                 return filterQuery.characteristicId == data.filterQueries.characteristicId;
             });
             if (find >= 0) {
                 // TODO: find better solution
                 if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
                     !data.filterQueries.queries) {
-                    DecisionSharedService.filterObject.filterQueries.splice(find, 1);
+                    sendFo.filterQueries.splice(find, 1);
                 } else {
-                    DecisionSharedService.filterObject.filterQueries[find] = data.filterQueries;
+                    sendFo.filterQueries[find] = data.filterQueries;
                 }
             } else {
-                DecisionSharedService.filterObject.filterQueries.push(data.filterQueries);
+                sendFo.filterQueries.push(data.filterQueries);
             }
-            if (_.isEmpty(DecisionSharedService.filterObject.filterQueries)) DecisionSharedService.filterObject.filterQueries = null;
+            if (_.isEmpty(sendFo.filterQueries) ||
+                (_.isArray(sendFo.queries) && sendFo.queries.length === 0)) {
+                sendFo.filterQueries = null;
+                DecisionSharedService.filterObject.filterQueries = null;
+            }
             getDecisionMatrix(vm.decisionId).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
-
-            DecisionNotificationService.notifyFilterTags(DecisionSharedService.filterObject);
+            DecisionNotificationService.notifyFilterTags(sendFo);
         });
 
         // Discussions Subscrive
@@ -520,9 +524,9 @@
         vm.matrixMode = 'inclusion';
 
         function initIncExcCounters() {
-            if(vm.matrixMode === 'inclusion') {
+            if (vm.matrixMode === 'inclusion') {
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
-            } else if (vm.matrixMode=== 'exclusion') {
+            } else if (vm.matrixMode === 'exclusion') {
                 vm.exclusionItemsLength = vm.decisions.totalDecisionMatrixs;
             }
         }
@@ -556,7 +560,7 @@
                     _fo.includeChildDecisionIds = [];
                 }
             }
-             vm.inclusionItemsLength = inclusionItemsLength;
+            vm.inclusionItemsLength = inclusionItemsLength;
         }
 
         function changeMatrixMode(mode) {

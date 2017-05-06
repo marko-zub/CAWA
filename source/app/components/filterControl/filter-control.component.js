@@ -360,7 +360,7 @@
 
         // TODO: move to Data Filter servise
         function createFilterQuery(data) {
-            if(!data) return;
+            if(!data || !_.isArray(data.value)) return;
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
             var sendVal = (sendData.value === false || sendData.value) ? sendData.value : null;
@@ -370,12 +370,9 @@
                 'characteristicName': sendData.characteristicName || null,
                 'value': sendVal,
             };
-            if (sendData.operator && _.isArray(sendVal)) {
+            if (sendData.operator && _.isArray(sendVal.value)) {
                 query.operator = sendData.operator;
-                if (sendData.operator === 'OR') {
-                    // query
-                    query = createCompositeQuery(data);
-                }
+                if (sendData.operator === 'OR') query = createCompositeQuery(data);
             }
             // console.log(sendData.characteristicId, query);
             filterQueriesCharacteristicChange(sendData.characteristicId, query);
@@ -405,7 +402,8 @@
 
         function onDestroy() {
             //onDestroy all js event
-            $element.find('.filter-item-checkbox input').off('change');
+            $($element).find('.filter-item-checkbox input').off('change');
+            $($element).find('.query-type-wrapper input').off('change');
         }
 
         function renderHtml(html) {
