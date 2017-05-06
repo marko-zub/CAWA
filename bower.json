@@ -42,6 +42,11 @@
         "dist/css/bootstrap.css"
       ]
     },
+    "jquery": {
+      "main": [
+        "./dist/jquery.slim.js"
+      ]
+    },    
     "iscroll": {
       "main": [
         "./build/iscroll-probe.js"

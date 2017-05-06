@@ -409,8 +409,10 @@
                 fadeScrollbars: false,
                 probeType: 3,
                 useTransition: true,
+                bindToWrapper: true,
                 disablePointer: true,
                 disableTouch: false,
+                // bounce: false,
                 disableMouse: false
             });
         }

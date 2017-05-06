@@ -11,11 +11,20 @@
 @import "helpers";
 @import "discussions";
 
+body {
+  height: 100%;
+}
+html {
+  height: 100%;
+}
+
 .content {
   background-color: @app-bg;
-	min-height: calc(~"100vh - 100px"); //@footer-height + @header-height
   overflow: hidden;
   margin-top: @header-height;
+  margin-bottom: -(@footer-height + @header-height);
+  padding-bottom: @footer-height + @header-height;
+  min-height: 100%;
 }
 
 .app-row-content-label {

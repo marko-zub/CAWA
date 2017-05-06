@@ -25,7 +25,11 @@
         vm.searchSuggestedDecisions = searchSuggestedDecisions;
         vm.selectSuggestedDecisions = selectSuggestedDecisions;
         vm.shouldSelectSuggestedDecisions = shouldSelectSuggestedDecisions;
-        vm.searchQuery = $stateParams.query ? decodeURI($stateParams.query) : null;
+        
+        init();
+        function init() {
+            vm.searchQuery = $stateParams.query ? decodeURI($stateParams.query) : null;
+        }
 
         vm.searchOptions = {
             debounce: 50

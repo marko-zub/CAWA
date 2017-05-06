@@ -22,7 +22,7 @@
             '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
-                '<div class="matrix-row-float" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
+                '<div class="matrix-row" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
                     '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                         '<div class="matrix-col-content">',
                             '<div ng-switch="decisionCol.criteria.totalVotes > 0">',
