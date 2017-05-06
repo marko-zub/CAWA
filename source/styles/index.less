@@ -10,11 +10,7 @@
 @import "helpers";
 @import "discussions";
 
-body {
-  min-height: 100%;
-  overflow: hidden;
-  margin: 0;
-}
+body,
 html {
   height: 100%;
 }
@@ -23,8 +19,8 @@ html {
   background-color: @app-bg;
   overflow: hidden;
   padding-top: @header-height;
-  padding-bottom: @footer-height + @header-height;
-  margin-bottom: -(@footer-height + @header-height);
+  padding-bottom: @footer-height;
+  margin-bottom: -@footer-height;
   min-height: 100vh;
 }
 
