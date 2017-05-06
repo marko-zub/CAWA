@@ -27,7 +27,8 @@
     "angular-pageslide-directive": "^2.1.4",
     "angularjs-slider": "^6.1.1",
     "angular-daterangepicker": "^0.2.2",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "jquery": "^3.2.1"
   },
   "overrides": {
     "angular": {
@@ -40,7 +41,7 @@
       "main": [
         "./dist/jquery.slim.js"
       ]
-    },    
+    },
     "iscroll": {
       "main": [
         "./build/iscroll-probe.js"
