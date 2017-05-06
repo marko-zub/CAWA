@@ -918,20 +918,32 @@ a {
     }
 }
 
-.filter-item-wrapper {
-    overflow: auto;
-    position: absolute;
-    top: 30px;
-    bottom: 5px;
-    width: auto;
-    left: 0px;
-    right: 10px;
+.filter-item-group {
+    display: inline-block;
+    label {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 1.2;
+        vertical-align: top;
+        margin-top: 0px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+        margin: 0;
+        vertical-align: top;
+    }
 }
 
+.filter-item-label {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.2;
+    vertical-align: top;
+    margin-top: 0px;    
+}
 .filter-item {
     overflow: auto;
     position: absolute;
-    top: 30px;
+    top: 40px;
     bottom: 5px;
     //min-height: 100px;
     width: auto;
@@ -1079,3 +1091,17 @@ filter-control {
 //         float: left;
 //     }
 // }
+
+.query-type-wrapper {
+    display: block;
+    margin-bottom: 2px;
+    text-align: right;
+    padding: 0 20px;
+    height: 12px;
+    margin-top: -5px;
+}
+
+// Hide by option
+.rz-bubble {
+    display: none !important;
+}

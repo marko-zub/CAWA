@@ -51,7 +51,7 @@
                     $state.go('decisions.single.matrix.analysis', decisionAnalysisStateParams, {
                         notify: false,
                         reload: false,
-                        location: false
+                        location: true
                     });
                     // }
 

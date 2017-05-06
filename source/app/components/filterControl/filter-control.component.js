@@ -276,7 +276,11 @@
         }
         // END Control DATERANGEPICKER
 
+        // TODO: move to separate component clean up
+        // Choose Juqey or Angular
         // Control Checkboxes
+        vm.sendObj = {};
+
         function renderCheckboxes(item) {
             // String Array type
             var options = _.sortBy(item.options, 'name');
@@ -284,14 +288,33 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '"> ',
+                    '<input type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '">',
                     '<label for="option-' + option.characteristicOptionId + '">' + option.name + '</label>',
                     '</div>'
                 ];
                 return html.join('\n');
             }).join('\n');
 
+            var queryTypes = [{
+                key: 'OR',
+                value: 'OR'
+            }, {
+                key: 'AND',
+                value: 'AND'
+            }];
+            var queryTypeHtml = _.map(queryTypes, function(option) {
+                return [
+                    '<div class="filter-item-group">',
+                    '<input type="radio" id="option-' + option.key + '" name="option-operator-"' + item.characteristicId + '" value="' + option.key + '">',
+                    '<label for="option-' + option.key + '">' + option.value + '</label>',
+                    '</div>'
+                ].join('\n');
+            });
+
             var html = [
+                '<div class="query-type-wrapper">',
+                queryTypeHtml.join('\n'),
+                '</div>',            
                 '<div class="filter-item checkbox-list">',
                 content,
                 '</div>'
@@ -299,9 +322,16 @@
 
             renderHtml(html);
 
+            // TODO: jQuery vs Angular
             // Change value
+
+            var sendObj = {
+                'type': 'AllInQuery',
+                "characteristicName": item.name,
+                'characteristicId': item.characteristicId,
+            };
             var checkedValues = [];
-            $element.find('.filter-item-checkbox input').on('change', function() {
+            $($element).on('change', '.filter-item-checkbox input', function() {
                 var checkbox,
                     value;
                 checkbox = $(this);
@@ -311,13 +341,18 @@
                 } else {
                     Utils.removeItemFromArray(value, checkedValues);
                 }
-                var sendObj = {
-                    'type': 'AllInQuery',
-                    "characteristicName": item.name,
-                    'characteristicId': item.characteristicId,
-                    'value': checkedValues
-                };
+
+                sendObj.value = checkedValues;
+                vm.sendObj = sendObj;
                 createFilterQuery(sendObj);
+            });
+
+            $($element).on('change', '.query-type-wrapper input', function() {
+                if(_.isEmpty(vm.sendObj)) return;
+                var operator = $(this).val();
+                vm.sendObj.operator = operator.toUpperCase();
+                // console.log(vm.sendObj);
+                createFilterQuery(vm.sendObj);
             });
         }
         // END Control Checkboxes
@@ -331,8 +366,9 @@
                 'type': data.type || 'AllInQuery',
                 'characteristicId': data.characteristicId || null,
                 'characteristicName': data.characteristicName || null,
-                'value': sendVal
+                'value': sendVal,
             };
+            if(data.operator) query.operator = data.operator;
 
             filterQueriesCharacteristicChange(data.characteristicId, query);
         }
