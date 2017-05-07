@@ -27,6 +27,13 @@
             });
         }
 
+        // Dates
+        function dateToDB(date) {
+            var momentDate = Date(date);
+            return moment(momentDate).valueOf();
+        }
+
+
         // function isDate(date) {
         //     var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
         //     return isValueDate;
@@ -35,7 +42,8 @@
 		return {
 			addItemToArray: addItemToArray,
 			removeItemFromArray: removeItemFromArray,
-			removeEmptyFromArray: removeEmptyFromArray
+			removeEmptyFromArray: removeEmptyFromArray,
+			dateToDB: dateToDB
 		};
 	}
 })();

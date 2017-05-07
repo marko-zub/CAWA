@@ -41,7 +41,7 @@
 
       DecisionNotificationService.subscribeFilterTags(function(event, data) {
         _fo = angular.copy(data);
-        createTagsList(_fo.filterQueries);
+        if(_fo) createTagsList(_fo.filterQueries);
       });
 
       function removeTag(item, value) {

@@ -37,7 +37,8 @@
                     ceil: Number(item.maxValue),
                     id: 'slider-' + item.characteristicId,
                     onEnd: vm.callRangeSlider,
-                    hidePointerLabels: true
+                    hidePointerLabels: true,
+                    hideLimitLabels: true
                 }
             };
 

@@ -112,7 +112,6 @@
             }
             if (_.isEmpty(sendFo.filterQueries)) {
                 sendFo.filterQueries = null;
-                DecisionSharedService.filterObjec = null;
             }
             getDecisionMatrix(vm.decisionId).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
