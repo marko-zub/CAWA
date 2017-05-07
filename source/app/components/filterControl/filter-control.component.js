@@ -1,44 +1,31 @@
 (function() {
     'use strict';
-    angular.module('app.components').controller('FilterControlController', FilterControlController).component('filterControl', {
-        // templateUrl: 'app/components/filterControl/filter-control.html',
-        bindings: {
-            item: '<',
-        },
-        controller: 'FilterControlController',
-        controllerAs: 'vm'
-    });
+    angular.module('app.components')
+        .controller('FilterControlController', FilterControlController)
+        .component('filterControl', {
+            bindings: {
+                item: '<',
+            },
+            controller: 'FilterControlController',
+            controllerAs: 'vm'
+        });
 
-    FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils'];
 
-    function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils) {
+
+    FilterControlController.$inject = ['$element', '$compile', '$scope', 'DecisionNotificationService', 'Utils', 'FilterControlsDataService'];
+
+    function FilterControlController($element, $compile, $scope, DecisionNotificationService, Utils, FilterControlsDataService) {
         var vm = this,
             controlOptions;
         // vm.$onChanges = onChanges;
         vm.$onInit = onInit;
         vm.$onDestroy = onDestroy;
 
-        vm.callRangeSlider = callRangeSlider;
-        vm.changeRadio = changeRadio;
-        vm.changeSelect = changeSelect;
-
         vm.controlOptions = {
             debounce: 50
         };
 
-        var selectAllObj = {
-            characteristicId: null,
-            characteristicOptionId: '*',
-            createDate: null,
-            description: null,
-            name: 'All',
-            value: 'null'
-        };
-        // TODO: global clean up and optimize
-
         function onInit() {
-            // console.log(vm.item.valueType, vm.item.visualMode);
-            // vm.item = _.pick(vm.item, 'valueType', 'visualMode', 'filterable', 'options', 'characteristicId', 'min', 'max');
             chooseValueType(vm.item);
         }
 
@@ -51,13 +38,13 @@
 
             switch (true) {
                 case ((item.valueType === 'STRING') && (item.visualMode === 'SELECT')):
-                    renderSelect(item);
+                    renderHtml('<filter-select item="::vm.item"></filter-select>');
                     break;
                 case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER')):
                     createDateRangePicker(item);
                     break;
                 case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):
-                    renderRangeSlider(item);
+                    renderHtml('<filter-range-slider item="::vm.item"></filter-range-slider>');
                     break;
                 case ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')):
                     renderCheckboxes(item);
@@ -66,154 +53,15 @@
                     renderCheckboxes(item);
                     break;
                 case ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT')):
-                    renderSelect(item);
+                    renderHtml('<filter-select item="::vm.item"></filter-select>');
                     break;
                 case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
-                    renderRadiogroup(item);
+                    renderHtml('<filter-radio-group item="::vm.item"></filter-radio-group>');
                     break;
                 default:
                     //Empty
             }
         }
-
-        function chooseVisualMode() {}
-
-
-        // TODO: move to separete template
-        function renderRangeSlider(item) {
-            vm.slider = {
-                min: Number(item.minValue),
-                max: Number(item.maxValue),
-                options: {
-                    floor: Number(item.minValue),
-                    ceil: Number(item.maxValue),
-                    id: 'slider-' + item.characteristicId,
-                    onEnd: vm.callRangeSlider
-                }
-            };
-
-            var html = [
-                '<div class="filter-item-wrapper">',
-                '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
-                '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
-                '</div>'
-            ].join('\n');
-            renderHtml(html);
-        }
-
-
-        function callRangeSlider(sliderId, min, max, type) {
-            // console.log('call range ', sliderId, vm.slider.value, vm.item.characteristicId, vm.slider);
-            // TOOD: make some builder for queries
-            var queries = [{
-                "type": "GreaterOrEqualQuery",
-                "characteristicId": vm.item.characteristicId,
-                "value": min
-            }, {
-                "type": "LessOrEqualQuery",
-                "characteristicId": vm.item.characteristicId,
-                "value": max
-            }];
-            if (min == vm.item.minValue && max == vm.item.maxValue) {
-                queries = null;
-            }
-            var query = {
-                "type": "CompositeQuery",
-                "characteristicId": vm.item.characteristicId,
-                "characteristicName": vm.item.name,
-                "operator": "AND",
-                "queries": queries
-            };
-
-            //
-            filterQueriesCharacteristicChange(vm.item.characteristicId, query);
-        }
-
-        function filterQueriesCharacteristicChange(characteristicId, query) {
-            if (!characteristicId || !query) return;
-            var filterQueries,
-                findIndex,
-                sendData;
-
-            sendData = {
-                'filterQueries': query
-            };
-            DecisionNotificationService.notifySelectCharacteristic(sendData);
-        }
-
-
-        // Contorl RADIOGROUP
-        function renderRadiogroup(item) {
-
-            var options = [{
-                value: null,
-                label: 'All'
-            }, {
-                value: true,
-                label: 'Yes'
-            }, {
-                value: false,
-                label: 'No'
-            }];
-
-            vm.radio = options[0].value;
-            var content = _.map(options, function(option) {
-                return [
-                    '<label class="filter-list-item">',
-                    '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
-                    '</label>'
-                ].join('\n');
-            }).join('\n');
-
-            var html = [
-                '<div class="filter-item-wrapper filter-list">',
-                content,
-                '</div>'
-            ].join('\n');
-            renderHtml(html);
-        }
-
-        function changeRadio(model) {
-            var sendObj = {
-                "type": "EqualQuery",
-                "characteristicId": vm.item.characteristicId,
-                "characteristicName": vm.item.name,
-                "value": model
-            };
-            createFilterQuery(sendObj);
-        }
-
-        // Contorl SELECT
-        function renderSelect(item) {
-            vm.select = 'null';
-            var options = _.sortBy(item.options, 'name');
-            options.unshift(selectAllObj);
-            var content = _.map(options, function(option) {
-                option = '<option value="' + option.value + '">' + option.name + '</option>';
-                return option;
-            }).join('\n');
-
-            var html = [
-                '<div class="filter-item-wrapper">',
-                '<select class="form-control input-sm" ng-model="vm.select" ng-model-options="vm.controlOptions" ng-change="vm.changeSelect(vm.select)">',
-                content,
-                '</select>',
-                '</div>'
-            ].join('\n');
-            renderHtml(html);
-        }
-
-        function changeSelect(model) {
-            if (model === 'null') model = null;
-            var sendObj = {
-                "type": "EqualQuery",
-                "characteristicName": vm.item.name,
-                "characteristicId": vm.item.characteristicId,
-                "value": model,
-            };
-            createFilterQuery(sendObj);
-        }
-
 
         // Control DATERANGEPICKER
         function createDateRangePicker(item) {
@@ -272,7 +120,7 @@
                 "queries": queries
             };
             // console.log(queries);
-            filterQueriesCharacteristicChange(item.characteristicId, query);
+            FilterControlsDataService.characteristicChange(item.characteristicId, query);
         }
         // END Control DATERANGEPICKER
 
@@ -340,7 +188,7 @@
 
                 sendObj.value = checkedValues;
                 vm.sendObj = sendObj;
-                createFilterQuery(sendObj);
+                FilterControlsDataService.createFilterQuery(sendObj);
             });
 
             $($element).on('change', '.query-type-wrapper input', function() {
@@ -352,62 +200,10 @@
                 }
 
                 // console.log(vm.sendObj);
-                createFilterQuery(vm.sendObj);
+                FilterControlsDataService.createFilterQuery(vm.sendObj);
             });
         }
         // END Control Checkboxes
-
-
-        // TODO: move to Data Filter servise
-        function createFilterQuery(data) {
-            if (!data) return;
-            // Make constructor for Filter Query
-            var sendData = angular.copy(data);
-            var sendVal = (_.isBoolean(sendData.value) || !_.isEmpty(sendData.value)) ? sendData.value : null;
-            var query = {
-                'type': sendData.type || 'AllInQuery',
-                'characteristicId': sendData.characteristicId || null,
-                'characteristicName': sendData.characteristicName || null,
-                'value': sendVal,
-            };
-            if (sendData.operator && _.isArray(sendVal)) {
-                query.operator = sendData.operator;
-                if (sendData.operator === 'OR') {
-                    // query
-                    query = createCompositeQuery(data);
-                }
-            }
-            // console.log(sendData.characteristicId, query);
-            filterQueriesCharacteristicChange(sendData.characteristicId, query);
-        }
-
-        function createCompositeQuery(data) {
-            if (!data || !_.isArray(data.value)) return;
-
-            var queries;
-            if (!_.isEmpty(data.value)) {
-                queries = [];
-                _.forEach(data.value, function(val) {
-                    var queryVal = {
-                        "type": "InQuery",
-                        "characteristicId": vm.item.characteristicId,
-                        "value": val
-                    };
-                    queries.push(queryVal);
-                });
-
-            }
-
-
-            var query = {
-                "type": "CompositeQuery",
-                "characteristicId": vm.item.characteristicId,
-                "characteristicName": vm.item.name,
-                "operator": "OR",
-                "queries": queries
-            };
-            return query;
-        }
 
         function onDestroy() {
             //onDestroy all js event
