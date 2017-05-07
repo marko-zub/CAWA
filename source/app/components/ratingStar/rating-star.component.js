@@ -6,9 +6,10 @@
         .module('app.components')
         .controller('RatingStarController', RatingStarController)
         .component('ratingStar', {
-            template: renderTemplate,
+            // template: renderTemplate,
             bindings: {
-                item: '<',
+                weight: '@',
+                totalVotes: '@'
             },
             controller: 'RatingStarController',
             controllerAs: 'vm'
@@ -29,30 +30,29 @@
             value;
 
         vm.$onInit = onInit;
-        vm.$doCheck = doCheck;
+        // vm.$doCheck = doCheck;
 
         function onInit() {
             var votes = '';
-            if(!vm.item) return;
-            if (vm.item.weight) value = vm.item.weight.toString();
-            vm.item.weight = vm.item.weight ? Number((vm.item.weight).toFixed(1)) : null;
+            if (vm.weight) value = vm.weight.toString();
+            vm.weight = vm.weight ? Number(vm.weight).toFixed(1) : null;
             vm.rating = value;
 
-            if (!vm.item.totalVotes) {
-                vm.item.totalVotes = 0;
+            if (!vm.totalVotes) {
+                vm.totalVotes = 0;
                 votes = '<a class="js-rating-rate" href>Rate it first</a>';
             } else {
                 votes = [
                     '<div class="app-rating-votes">',
-                        '<span class="app-rating-votes-weight">' + vm.item.weight + '</span>',
-                        '<span><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + vm.item.totalVotes + '</span>',
+                        '<span class="app-rating-votes-weight">' + vm.weight + '</span>',
+                        '<span><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + vm.totalVotes + '</span>',
                     '</div>'
                 ].join('\n');
             }
             // calc default rating widthout %
             if (value && value.indexOf('%') === -1) {
-                vm.rating = parseFloat(vm.item.weight) / AppRatingStarConstant.MAX_RATING * 100 + '%' || 0;
-                vm.item.weight = vm.item.weight || 0;
+                vm.rating = parseFloat(vm.weight) / AppRatingStarConstant.MAX_RATING * 100 + '%' || 0;
+                vm.weight = vm.weight || 0;
             }
 
             var html = [
@@ -64,16 +64,16 @@
                 '</div>',
             ].join('\n');
 
-            prevItem = vm.item;
+            prevItem = vm;
             vm.html = html;
-            // $element.html(html);
-            // $compile($element.contents())($scope);
+            $element.html(html);
+            $compile($element.contents())($scope);
         }
 
         function doCheck() {
-            if (!angular.equals(vm.item, prevItem)) {
+            if (!angular.equals(vm, prevItem)) {
                 handleChange();
-                prevItem = angular.copy(vm.item);
+                prevItem = angular.copy(vm);
             }
         }
 

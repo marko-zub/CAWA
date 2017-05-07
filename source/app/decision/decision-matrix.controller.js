@@ -63,7 +63,7 @@
         });
         DecisionNotificationService.subscribePageChanged(function() {
             getDecisionMatrix(vm.decisionId).then(function(result) {
-                initMatrix(result.decisionMatrixs);
+                initMatrix(result.decisionMatrixs, true);
             });
         });
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
@@ -159,6 +159,7 @@
             });
         }
 
+        var characteristicsIds = [];
         function prepareCharacteristictsGroups(result) {
             var total = 0;
             vm.characteristicGroups = _.map(result, function(resultEl) {
@@ -174,11 +175,15 @@
                     } else {
                         characteristicsItem.isSortable = true;
                     }
+                    
+                    characteristicsIds.push(characteristicsItem.characteristicId);
                     return characteristicsItem;
                 });
                 return resultEl;
             });
+            // console.log(characteristicsIds);
         }
+
 
         // TODO: try to optimize it
         function createMatrixContentCriteria(decisions) {
@@ -302,6 +307,7 @@
         function getDecisionMatrix(id) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
+            sendData.includeCharacteristicIds = characteristicsIds;
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);

@@ -8,7 +8,8 @@
         .component('contentFormater', {
             template: renderTemplate,
             bindings: {
-                item: '<',
+                valueType: '<',
+                value: '<'
             },
             controller: 'ContentFormaterController',
             controllerAs: 'vm'
@@ -31,8 +32,8 @@
 
         function onInit() {
             // console.log('init');
-            vm.item = _.pick(vm.item, 'value', 'valueType');
-            var renderContent = vm.item && vm.item.value ? ContentFormaterService.getTemplate(vm.item) : '';
+            // vm = _.pick(vm.item, 'value', 'valueType');
+            var renderContent = vm && vm.value ? ContentFormaterService.getTemplate(vm.item) : '';
             if (renderContent) {
                 vm.html = renderContent;
             }
