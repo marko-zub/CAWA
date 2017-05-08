@@ -31,7 +31,7 @@
             var query = {
                 "type": "CompositeQuery",
                 "characteristicId": data.characteristicId,
-                "characteristicName": data.name,
+                "characteristicName": data.characteristicName,
                 "operator": "OR",
                 "queries": queries
             };

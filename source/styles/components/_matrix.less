@@ -466,9 +466,9 @@ a {
 .matrix-header {
     position: absolute;
     z-index: 2;
-    height: @matrix-header;
+    // height: @matrix-header;
     top: 0;
-    overflow: hidden;
+    // overflow: hidden;
     z-index: 3;
     background-color: #fff;
     border-bottom: 1px solid @gray-light;
@@ -476,6 +476,10 @@ a {
     font-weight: 500;
     color: @title-color;
     border-bottom: 0;
+
+    .matrix-g-name {
+        height: 180px;
+    }
 
     .matrix-row {
         // height: 36px;
@@ -518,14 +522,15 @@ a {
     .scroll-group {
         position: relative;
         z-index: 1;
-        overflow: hidden;
-        height: @matrix-header; //TODO: fix height
+        // overflow: hidden;
+        // height: @matrix-header; //TODO: fix height
     }
 }
 
 .matrix-body-wrapper {
     position: absolute;
-    top: @matrix-header;
+    // top: @matrix-header;
+    top: 145px;
     bottom: -1px;
     width: 100%;
     z-index: 1;
@@ -861,6 +866,7 @@ a {
 .group-wrapper {
     position: relative;
     padding-left: 12px;
+    z-index: 111;
     .title {
         position: absolute;
         font-size: 10px;
@@ -1002,10 +1008,10 @@ a {
 
 filter-control {
     display: block;
-    min-height: 80px;
-    .checkbox-list {
-        min-height: 80px;
-    }
+    min-height: 94px;
+    // .checkbox-list {
+    //     min-height: 94px;
+    // }
 }
 
 
@@ -1095,7 +1101,7 @@ filter-control {
 .query-type-wrapper {
     display: block;
     margin-bottom: 2px;
-    padding: 0 20px;
+    padding: 0 2px;
     height: 12px;
     margin-top: -20px;
     .switcher {

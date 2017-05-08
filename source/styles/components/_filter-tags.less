@@ -1,19 +1,25 @@
+filter-tags {
+    // TODO: rempve it
+    display: block;
+    height: 30px;
+}
 .filter-tags {
     position: fixed;
+    top: 225px;
     z-index: 100;
-    bottom: 0;
     left: 0;
-    padding: 5px 20px;
+    padding: 0 16px;
     background-color: #fff;
     // height: 30px;
-    margin: 0 3px;
-    font-size: 13px;
+    margin: 0;
+    font-size: 11px;
     width: 100%;
-    z-index: ;
+    // min-width: 100vw;
+    border-bottom: 1px solid @gray-light-extra;
     .tag-group {
         display: inline-block;
         margin: 3px 5px;
-        padding: 4px 2px;
+        padding: 1px;
         border: 1px solid @gray-light-extra;     
     }
     .tag {
@@ -34,4 +40,8 @@
     &:hover {
         color: @light-black;
     }
+}
+
+.filter-item-wrapper {
+    padding: 0 16px 0 0;
 }
