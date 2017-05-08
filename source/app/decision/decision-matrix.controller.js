@@ -261,12 +261,16 @@
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
+
+        var matrixAsideRowH = [];
+        var matrixRowsH = [];
         function calcMatrixRowHeight() {
             $('.js-item-aside').css('height', 'auto');
             $('.js-matrix-item-content').css('height', 'auto');
 
             var asideArray = [],
                 contentArray = [];
+            if(!matrixRows.length) return;
             for (var i = matrixRows.length - 1; i >= 0; i--) {
                 var el,
                     elAside,
@@ -275,13 +279,18 @@
                 el = matrixRows[i];
                 elAside = matrixAsideRow[i];
 
+                matrixAsideRowH.push(elAside.clientHeight);
+                matrixRowsH.push(el.clientHeight);
+
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
                 var newHpx = newH + 'px';
-                el.style.height = newHpx;
-                elAside.style.height = newHpx;
+                if(el.clientHeight != newHpx) el.style.height = newHpx;
+                if(elAside.clientHeight != newHpx) elAside.style.height = newHpx;
 
             }
+            // console.log(_.uniq(matrixAsideRowH), _.min(matrixAsideRowH));
+            // console.log(_.uniq(matrixRowsH), _.min(matrixRowsH));
         }
 
         // TODO: drop settimeout and apply
