@@ -63,7 +63,7 @@
         });
         DecisionNotificationService.subscribePageChanged(function() {
             getDecisionMatrix(vm.decisionId).then(function(result) {
-                initMatrix(result.decisionMatrixs);
+                initMatrix(result.decisionMatrixs, true);
             });
         });
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
