@@ -301,10 +301,10 @@
                 reinitMatrixScroller();
 
                 // $applyAsync some times to long wait for next $digest
-                // $scope.$applyAsync(function() {
+                $scope.$applyAsync(function() {
                 vm.decisionsSpinner = false;
-                $scope.$digest();
-                // });
+                // $scope.$digest();
+                });
             }, 0);
         }
 
