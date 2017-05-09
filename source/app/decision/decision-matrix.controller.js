@@ -221,7 +221,7 @@
                     return findEl[keyId] === id;
                 });
                 obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
-                obj.uuid = parseInt(id.toString() + obj.decision.decisionId.toString());
+                obj.uuid = id.toString() + '-' + obj.decision.decisionId.toString();
                 return obj;
             });
         }

@@ -472,14 +472,11 @@ a {
     z-index: 3;
     background-color: #fff;
     border-bottom: 1px solid @gray-light;
-    box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     font-weight: 500;
     color: @title-color;
     border-bottom: 0;
 
-    .matrix-g-name {
-        height: 180px;
-    }
 
     .matrix-row {
         // height: 36px;
@@ -510,18 +507,23 @@ a {
         position: absolute;
         left: 0;
         top: 0;
-        z-index: 2;
+        z-index: 3;
         width: @matrix-aside-width - 1px;
-        overflow: hidden;
-        height: @matrix-header; //TODO: fix height
-        box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
+        // overflow-y: hidden;
+        // height: @matrix-header; //TODO: fix height
+        height: 123px;
+        background-color: #fff;
+        border-bottom: 1px solid @gray-light;
         .matrix-title-wrapper {
-            max-width: @matrix-aside-width - 1px;
+            // max-width: @matrix-aside-width - 1px;
+            width: 100%;
+            box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
         }
     }
     .scroll-group {
-        position: relative;
+        position: absolute;
         z-index: 1;
+        margin-left: 200px;
         // overflow: hidden;
         // height: @matrix-header; //TODO: fix height
     }
@@ -530,7 +532,7 @@ a {
 .matrix-body-wrapper {
     position: absolute;
     // top: @matrix-header;
-    top: 145px;
+    top: 154px;
     bottom: -1px;
     width: 100%;
     z-index: 1;
@@ -653,7 +655,7 @@ a {
     line-height: 32px;
     overflow: hidden;
     height: 36px;
-    max-width: 120px;
+    // max-width: 120px;
 }
 
 .matrix-g-criteria {
@@ -865,7 +867,7 @@ a {
 
 .group-wrapper {
     position: relative;
-    padding-left: 12px;
+    padding-left: 16px;
     z-index: 111;
     .title {
         position: absolute;

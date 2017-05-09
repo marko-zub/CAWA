@@ -12,22 +12,21 @@
             },
             controller: 'MatrixCriteriaController',
             controllerAs: 'vm',
-
         });
 
     renderTemplate.$inject = [];
 
     function renderTemplate() {
         return [
-            '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.list track by group.criterionGroupId">',
+            '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.criterionGroupId">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
                 '<div class="matrix-row" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
-                    '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid"   >',
+                    '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                         '<div class="matrix-col-content">',
-                            '<div ng-switch="decisionCol.criteria.totalVotes > 0">',
+                            '<div ng-switch="::(decisionCol.criteria.totalVotes > 0)">',
                                 '<div ng-switch-when="true">',
-                                    '<rating-star class="text-left" item="decisionCol.criteria"></rating-star>',
+                                    '<rating-star class="text-left" item="::decisionCol.criteria"></rating-star>',
                                 '</div>',
                                 '<div ng-switch-when="false">',
                                     '<div class="app-rating-votes">',
@@ -54,6 +53,24 @@
 
         // Discussions
         vm.getComments = getComments;
+        vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
+
+        function onInit() {
+            vm.listDisplay = angular.copy(vm.list);
+            console.log(vm.listDisplay);
+        }
+
+        function onChanges (changes) {
+            // TODO: check for performance
+            // Also compare current and prev changes
+            if (changes.list.currentValue &&
+                !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
+                vm.listDisplay = changes.list.currentValue;
+                console.log(vm.listDisplay);
+            }
+                
+        }
 
         function getComments($event) {
             vm.isGetCommentsOpen = true;

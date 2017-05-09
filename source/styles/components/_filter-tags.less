@@ -5,10 +5,10 @@ filter-tags {
 }
 .filter-tags {
     position: fixed;
-    top: 225px;
+    top: 231px;
     z-index: 100;
     left: 0;
-    padding: 0 16px;
+    padding: 0 12px;
     background-color: #fff;
     // height: 30px;
     margin: 0;
@@ -16,11 +16,20 @@ filter-tags {
     width: 100%;
     // min-width: 100vw;
     border-bottom: 1px solid @gray-light-extra;
+    // box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    .tag-wrapper {
+        display: inline-block;
+    }
     .tag-group {
         display: inline-block;
         margin: 3px 5px;
         padding: 1px;
-        border: 1px solid @gray-light-extra;     
+        // border: 1px solid @gray-light-extra;
+    }
+    .tag-divider {
+        display: inline-block;
+        margin: 0 1px;
+        text-transform: lowercase;
     }
     .tag {
         display: inline-block;
