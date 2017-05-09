@@ -6,9 +6,9 @@
         .module('app.decision')
         .service('ContentFormaterService', ContentFormaterService);
 
-    ContentFormaterService.$inject = ['$filter'];
+    ContentFormaterService.$inject = ['Utils'];
 
-    function ContentFormaterService($filter) {
+    function ContentFormaterService(Utils) {
 
         function contentFormaterArray(str) {
             if (_.isObject(str) || !str) return;
@@ -39,7 +39,7 @@
                     result = stringFullDescr(itemCopy.value);
                     break;
                 case "DATETIME":
-                    result = $filter('date')(new Date(itemCopy.value), "dd/MM/yyyy");
+                    result = Utils.dateToUI(itemCopy.value);
                     break;
                 case "STRINGARRAY":
                     result = contentFormaterArray(itemCopy.value);

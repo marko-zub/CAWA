@@ -42,6 +42,7 @@
             if (!data) return;
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
+            if(sendData.value === 'all') sendData.value = null;
             var sendVal = (_.isBoolean(sendData.value) || !_.isEmpty(sendData.value)) ? sendData.value : null;
             var query = {
                 'type': sendData.type || 'AllInQuery',

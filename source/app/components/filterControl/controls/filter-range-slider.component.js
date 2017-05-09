@@ -3,32 +3,60 @@
     angular.module('app.components')
         .controller('FilterRangeSliderController', FilterRangeSliderController)
         .component('filterRangeSlider', {
+            template: renderTemplate,
             bindings: {
                 item: '<',
+                selected: '<'
             },
             controller: 'FilterRangeSliderController',
             controllerAs: 'vm'
         });
 
-    FilterRangeSliderController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope'];
+    renderTemplate.$inject = [];
 
-    function FilterRangeSliderController(FilterControlsDataService, $element, $compile, $scope) {
+    function renderTemplate() {
+        return [
+            '<div class="filter-item-wrapper">',
+            '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
+            '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
+            '</div>'
+        ].join('\n');
+    }
+
+    FilterRangeSliderController.$inject = ['FilterControlsDataService'];
+
+    function FilterRangeSliderController(FilterControlsDataService) {
         var
             vm = this;
 
-        vm.callRangeSlider = callRangeSlider;
+        vm.changeRangeSlider = changeRangeSlider;
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
         function onInit() {
-            // debugger
-            var html = renderRangeSlider(vm.item);
-            $element.html(html);
-            $compile($element.contents())($scope);
+            initRangeSlider(vm.item);
+        }
+
+        function onChanges(changes) {
+            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+                if (_.isNull(changes.selected.currentValue)) {
+                    initRangeSliderValues(vm.item.minValue, vm.item.maxValue);
+                } else if (_.isArray(changes.selected.currentValue)) {
+                    var rangeVals = changes.selected.currentValue.splice(',');
+                    initRangeSliderValues(rangeVals[0], rangeVals[1]);
+                }
+            }
+        }
+
+        function initRangeSliderValues(min, max) {
+            if (!min || !max) return;
+            vm.slider.min = Number(min);
+            vm.slider.max = Number(max);
         }
 
         // TODO: move to separete template
-        function renderRangeSlider(item) {
+        function initRangeSlider(item) {
             vm.slider = {
                 min: Number(item.minValue),
                 max: Number(item.maxValue),
@@ -36,24 +64,15 @@
                     floor: Number(item.minValue),
                     ceil: Number(item.maxValue),
                     id: 'slider-' + item.characteristicId,
-                    onEnd: vm.callRangeSlider,
+                    onEnd: vm.changeRangeSlider,
                     hidePointerLabels: true,
                     hideLimitLabels: true
                 }
             };
-
-            var html = [
-                '<div class="filter-item-wrapper">',
-                '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
-                '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
-                '</div>'
-            ].join('\n');
-            return html;
         }
 
 
-        function callRangeSlider(sliderId, min, max, type) {
-            // console.log('call range ', sliderId, vm.slider.value, vm.item.characteristicId, vm.slider);
+        function changeRangeSlider(sliderId, min, max, type) {
             // TOOD: make some builder for queries
             var queries = [{
                 "type": "GreaterOrEqualQuery",

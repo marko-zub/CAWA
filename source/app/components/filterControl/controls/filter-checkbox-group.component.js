@@ -5,6 +5,7 @@
         .component('filterCheckboxGroup', {
             bindings: {
                 item: '<',
+                selected: '<'
             },
             controller: 'FilterCheckboxGroupController',
             controllerAs: 'vm'
@@ -19,6 +20,7 @@
             checkedValues = [];
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
 
         function onInit() {
@@ -31,6 +33,30 @@
             var html = renderCheckboxes(vm.item);
             $element.html(html);
             $compile($element.contents())($scope);
+        }
+
+        function onChanges(changes) {
+            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+                selectCheckboxes(changes.selected.currentValue);
+            }
+        }
+
+        // TODO:
+        // Realy need Juqery? or slow ng-repeat
+        function selectCheckboxes(list) {
+            checkedValues = !_.isEmpty(list) ? list : [];
+            if (_.isNull(list)) {
+                $($element).find('.filter-item-checkbox input').prop('checked', false);
+                return;
+            }
+            $($element).find('.filter-item-checkbox input').each(function() {
+                var val = $(this).val();
+                if (_.includes(list, val)) {
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            });
         }
 
         function renderCheckboxes(item) {
@@ -92,7 +118,7 @@
             } else {
                 sendObj.operator = 'AND';
             }
-            
+
             if (!_.isEmpty(sendObj.value)) {
                 var sendObjCopy = angular.copy(sendObj);
                 FilterControlsDataService.createFilterQuery(sendObjCopy);

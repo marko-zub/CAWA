@@ -108,7 +108,7 @@
             getDecisions: getDecisions,
             getDecisionMatrix: getDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
-            getCharacteristictsGroupsById: getCharacteristictsGroupsById,
+            getCharacteristicsGroupsById: getCharacteristicsGroupsById,
             getDecisionInfo: getDecisionInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
@@ -148,7 +148,7 @@
             }).$promise;
         }
 
-        function getCharacteristictsGroupsById(id, data) {
+        function getCharacteristicsGroupsById(id, data) {
             return characteristictsGroups.query({
                 id: id
             }, data).$promise;
