@@ -16,13 +16,13 @@
     function renderTemplate() {
         return [
             '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-            '<span>{{tag.characteristicName}}:</span>',
-            '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
-            '<div class="tag">',
-            '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-            '</div>',
-            '<span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
-            '</div>',
+                '<span>{{::tag.characteristicName}}:</span>',
+                '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
+                    '<div class="tag">',
+                        '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                    '</div>',
+                    '<span ng-if="::(tag.data.length > 1 && !$last)" ng-bind="tag.operator" class="tag-divider"></span>',
+                '</div>',
             '</div>'
         ].join('\n');
     }

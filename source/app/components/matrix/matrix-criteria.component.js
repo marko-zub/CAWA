@@ -69,7 +69,6 @@
                 vm.listDisplay = changes.list.currentValue;
                 // console.log(vm.listDisplay);
             }
-                
         }
 
         function getComments($event) {
