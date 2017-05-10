@@ -21,7 +21,7 @@
                     '<div class="tag">',
                         '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
                     '</div>',
-                    '<span ng-if="::(tag.data.length > 1 && !$last)" ng-bind="tag.operator" class="tag-divider"></span>',
+                    '<span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
                 '</div>',
             '</div>'
         ].join('\n');
