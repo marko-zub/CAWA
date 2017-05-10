@@ -29,7 +29,7 @@
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
             }
-        });		
+        });
 	}
 
 })();

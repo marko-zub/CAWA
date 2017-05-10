@@ -28,14 +28,19 @@
     function CommentPostFormController() {
         var
             vm = this;
-
-        vm.commentContent = undefined;
         vm.saveComment = saveComment;
+
+        vm.$onInit = onInit;
+
+        function onInit() {
+            vm.commentContent = undefined;
+        }
+
         function saveComment() {
             var sendData = {
                 text: vm.commentContent
             };
-            if(sendData.text.length) console.log('save', sendData);
+            if (sendData.text.length) console.log('save', sendData);
         }
     }
 })();

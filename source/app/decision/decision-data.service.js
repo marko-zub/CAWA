@@ -36,7 +36,7 @@
                     method: 'GET',
                     isArray: true
                 }
-            }),            
+            }),
 
             decisionsMatrix = $resource(decisionUrl + '/decisions/matrix', {
                 id: '@id'
@@ -129,7 +129,7 @@
         function getDecisionParents(id) {
             return decisionParents.getDecisionParentById({
                 id: id
-            }).$promise;            
+            }).$promise;
         }
 
         function getDecisions(data) {

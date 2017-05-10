@@ -16,8 +16,12 @@
     function PaginatorController(DecisionSharedService, DecisionNotificationService, PaginatorConstant) {
         var vm = this;
 
-        vm.pagination = DecisionSharedService.filterObject.pagination;
-        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
+        vm.$onInit = onInit;
+
+        function onInit() {
+            vm.pagination = DecisionSharedService.filterObject.pagination;
+            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
+        }
 
         vm.changePage = changePage;
         vm.changePageSize = changePageSize;

@@ -19,9 +19,9 @@
 
         vm.$onInit = onInit;
 
-
         function onInit() {
-            chooseValueType(vm.item);
+            var cleanItem = _.omit(vm.item, 'characteristicGroupId', 'createDate', 'description', 'nameSlug');
+            chooseValueType(cleanItem);
         }
 
         // TODO: make nested switch ?!
