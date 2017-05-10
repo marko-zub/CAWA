@@ -1,30 +1,25 @@
 filter-tags {
-    // TODO: rempve it
-    display: block;
-    height: 30px;
+    position: relative;
+    z-index: 3;
 }
 .filter-tags {
-    position: fixed;
-    top: 231px;
-    z-index: 100;
-    left: 0;
-    padding: 0 12px;
+    padding: 2px 12px;
     background-color: #fff;
-    // height: 30px;
     margin: 0;
     font-size: 11px;
     width: 100%;
-    // min-width: 100vw;
-    border-bottom: 1px solid @gray-light-extra;
+    border-bottom: 1px solid @gray-light;
+    // white-space: nowrap;
+    position: relative;
+    z-index: 3;
     // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     .tag-wrapper {
         display: inline-block;
     }
     .tag-group {
         display: inline-block;
-        margin: 3px 5px;
+        margin: 2px 5px 2px;
         padding: 1px;
-        // border: 1px solid @gray-light-extra;
     }
     .tag-divider {
         display: inline-block;

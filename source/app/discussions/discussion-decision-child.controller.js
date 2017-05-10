@@ -40,9 +40,9 @@
             });
         }
 
-        function getCharacteristictsGroupsById(decisionId, characteristicsArray) {
+        function getCharacteristicsGroupsById(decisionId, characteristicsArray) {
             // Characteristicts
-            return DecisionDataService.getCharacteristictsGroupsById(decisionId, {options: false}).then(function(result) {
+            return DecisionDataService.getCharacteristicsGroupsById(decisionId, {options: false}).then(function(result) {
                 // vm.characteristicGroups = result;
                 characteristicsIds = [];
 
@@ -74,7 +74,7 @@
             sendData.includeChildDecisionIds.push($stateParams.discussionId);
             DecisionDataService.getDecisionMatrix(vm.decision.decisionId, sendData).then(function(result) {
                 getCriteriaGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].criteria);
-                getCharacteristictsGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].characteristics);
+                getCharacteristicsGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].characteristics);
             });
 
 

@@ -20,7 +20,8 @@
         left: 0;
         width: 100%;
         top: 0;
-        height: 100%;
+        height: auto;
+        bottom: 46px;
         padding: 0;
     }
     .app-rating-star-wrapper {
@@ -464,17 +465,18 @@ a {
 
 @matrix-header: 120px;
 .matrix-header {
-    position: absolute;
+    position: relative;
     z-index: 2;
-    // height: @matrix-header;
+    height: @matrix-header;
     top: 0;
-    // overflow: hidden;
+    overflow: hidden;
     z-index: 3;
     background-color: #fff;
     border-bottom: 1px solid @gray-light;
     // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     font-weight: 500;
     color: @title-color;
+    width: 100%;
     border-bottom: 0;
 
 
@@ -510,8 +512,7 @@ a {
         z-index: 3;
         width: @matrix-aside-width - 1px;
         // overflow-y: hidden;
-        // height: @matrix-header; //TODO: fix height
-        height: 123px;
+        height: @matrix-header; //TODO: fix height
         background-color: #fff;
         border-bottom: 1px solid @gray-light;
         .matrix-title-wrapper {
@@ -532,11 +533,11 @@ a {
 
 .matrix-body-wrapper {
     position: absolute;
-    // top: @matrix-header;
-    top: 154px;
-    bottom: -1px;
+    top: @matrix-header;
+    // top: 160px;
     width: 100%;
     z-index: 1;
+    bottom: 0;
 }
 
 .matrix-body {
@@ -846,9 +847,6 @@ a {
     .main-panel {
         margin-bottom: -46px; //Pagination height
         padding-bottom: 46px;
-        .matrix-body-wrapper {
-            bottom: 46px;
-        }
     }
     .nav-tabs-wrapper {
         border-bottom: 1px solid #ddd;
@@ -1073,6 +1071,9 @@ filter-control {
             margin: 0px 4px;
             font-size: 19px;
             color: @gray-mid;
+            i {
+                line-height: 19px;
+            }
             &:hover {
                 color: @basic-active;
             }

@@ -104,7 +104,7 @@
                 var criteriaGroups;
                 $q.all([
                     getCriteriaGroupsById(parent.decisionId, result.decisionMatrixs[0].criteria),
-                    getCharacteristictsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
+                    getCharacteristicsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
                 ]).then(function(values) {
                     var parentGroups = {
                         criteriaGroups: values[0],
@@ -185,10 +185,10 @@
         }
 
 
-        function getCharacteristictsGroupsById(decisionId, characteristicsArray) {
+        function getCharacteristicsGroupsById(decisionId, characteristicsArray) {
             // if(!characteristicsArray) return;
             // Characteristicts
-            return DecisionDataService.getCharacteristictsGroupsById(decisionId, {
+            return DecisionDataService.getCharacteristicsGroupsById(decisionId, {
                 options: false
             }).then(function(result) {
                 // vm.characteristicGroups = result;

@@ -53,7 +53,7 @@
             vm.title = pageTitle;
 
             // getCriteriaGroupsById(vm.discussion.decision.decisionId);
-            // getCharacteristictsGroupsById(vm.discussion.decision.decisionId);
+            // getCharacteristicsGroupsById(vm.discussion.decision.decisionId);
 
             // TODO: avoid $stateParams
             if (vm.discussion.childCriterion) searchCommentableVotesWeight($stateParams.discussionId, $stateParams.critOrCharId);
