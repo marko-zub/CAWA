@@ -46,10 +46,10 @@
         function selectCheckboxes(list) {
             checkedValues = !_.isEmpty(list) ? list : [];
             if (_.isNull(list)) {
-                $($element).find('.filter-item-checkbox input').prop('checked', false);
+                $($element).find('.filter-item-checkbox input.js-checkbox:checked').prop('checked', false);
                 return;
             }
-            $($element).find('.filter-item-checkbox input').each(function() {
+            $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
                 var val = $(this).val();
                 if (_.includes(list, val)) {
                     $(this).prop('checked', true);
@@ -66,7 +66,7 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '">',
+                    '<input class="js-checkbox" type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '">',
                     '<label for="option-' + option.characteristicOptionId + '">' + option.name + '</label>',
                     '</div>'
                 ];
@@ -75,7 +75,7 @@
 
             var queryTypeHtml = [
                 '<div class="switcher">',
-                '<input type="checkbox" name="switcher" class="switcher-checkbox" id="toggle-' + item.characteristicId + '" checked>',
+                '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.characteristicId + '" checked>',
                 '<label class="switcher-label" for="toggle-' + item.characteristicId + '">',
                 '<span class="switcher-inner"></span>',
                 '<span class="switcher-switch"></span>',
@@ -96,7 +96,7 @@
             return html;
         }
 
-        $($element).on('change', '.filter-item-checkbox input', function() {
+        $($element).on('change', '.filter-item-checkbox input.js-checkbox', function() {
             var checkbox,
                 value;
             checkbox = $(this);
@@ -112,7 +112,7 @@
             FilterControlsDataService.createFilterQuery(sendObjCopy);
         });
 
-        $($element).on('change', '.query-type-wrapper input', function() {
+        $($element).on('change', '.query-type-wrapper input.js-switcher-checkbox', function() {
             if ($(this).is(':checked')) {
                 sendObj.operator = 'OR';
             } else {

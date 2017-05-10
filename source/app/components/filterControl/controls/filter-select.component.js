@@ -35,7 +35,7 @@
             vm.selected = !_.isEmpty(vm.selected) ? vm.selected : selectAllObj.value;
             var html = renderSelect(vm.item);
             $element.html(html);
-            $compile($element.contents())($scope);            
+            $compile($element.contents())($scope);
         }
 
         function onChanges(changes) {

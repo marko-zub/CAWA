@@ -34,7 +34,7 @@
 
         function onChanges(changes) {
             if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
-                vm.radio = changes.selected.currentValue; 
+                vm.radio = changes.selected.currentValue;
             }
         }
 
