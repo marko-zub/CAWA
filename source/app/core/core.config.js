@@ -10,7 +10,7 @@
 
     function configuration($animateProvider, $provide, $httpProvider, $compileProvider, Config) {
         // Enable ngAnimation for specific class
-        $animateProvider.classNameFilter(/angular-animate/);
+        $animateProvider.classNameFilter( /\banimated\b/ );
 
         $provide.decorator('taOptions', taOptions);
 

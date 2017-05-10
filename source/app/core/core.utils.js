@@ -31,6 +31,11 @@
         function dateToDB(date) {
             var momentDate = Date(date);
             return moment(momentDate).valueOf();
+        }        
+
+        function dateToUI(date) {
+        	if(!date) return;
+            return moment(date).format('DD/MM/YYYY');
         }
 
 
@@ -43,7 +48,8 @@
 			addItemToArray: addItemToArray,
 			removeItemFromArray: removeItemFromArray,
 			removeEmptyFromArray: removeEmptyFromArray,
-			dateToDB: dateToDB
+			dateToDB: dateToDB,
+			dateToUI: dateToUI
 		};
 	}
 })();

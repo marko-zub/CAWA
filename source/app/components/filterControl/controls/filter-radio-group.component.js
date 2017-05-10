@@ -5,6 +5,7 @@
         .component('filterRadioGroup', {
             bindings: {
                 item: '<',
+                selected: '<'
             },
             controller: 'FilterRadioGroupController',
             controllerAs: 'vm'
@@ -23,12 +24,18 @@
         };
 
         vm.$onInit = onInit;
-
+        vm.$onChanges = onChanges;
 
         function onInit() {
             var html = renderRadiogroup(vm.item);
             $element.html(html);
             $compile($element.contents())($scope);
+        }
+
+        function onChanges(changes) {
+            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+                vm.radio = changes.selected.currentValue; 
+            }
         }
 
         // Contorl RADIOGROUP

@@ -1,20 +1,35 @@
+filter-tags {
+    // TODO: rempve it
+    display: block;
+    height: 30px;
+}
 .filter-tags {
     position: fixed;
+    top: 231px;
     z-index: 100;
-    bottom: 0;
     left: 0;
-    padding: 5px 20px;
+    padding: 0 12px;
     background-color: #fff;
     // height: 30px;
-    margin: 0 3px;
-    font-size: 13px;
+    margin: 0;
+    font-size: 11px;
     width: 100%;
-    z-index: ;
+    // min-width: 100vw;
+    border-bottom: 1px solid @gray-light-extra;
+    // box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    .tag-wrapper {
+        display: inline-block;
+    }
     .tag-group {
         display: inline-block;
         margin: 3px 5px;
-        padding: 4px 2px;
-        border: 1px solid @gray-light-extra;     
+        padding: 1px;
+        // border: 1px solid @gray-light-extra;
+    }
+    .tag-divider {
+        display: inline-block;
+        margin: 0 1px;
+        text-transform: lowercase;
     }
     .tag {
         display: inline-block;
@@ -34,4 +49,8 @@
     &:hover {
         color: @light-black;
     }
+}
+
+.filter-item-wrapper {
+    padding: 0 16px 0 0;
 }

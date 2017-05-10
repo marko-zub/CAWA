@@ -6,7 +6,7 @@
         .module('app.components')
         .controller('CriteriaCoefficientIndicatorController', CriteriaCoefficientIndicatorController)
         .component('criteriaCoefficientIndicator', {
-            template: renderTemplate,
+            // template: renderTemplate,
             bindings: {
                 coefficient: '<'
             },
@@ -15,15 +15,15 @@
         });
 
 
-    renderTemplate.$inject = [];
+    // renderTemplate.$inject = [];
 
-    function renderTemplate() {
-        return '<div ng-bind-html="vm.html" class="criteria-coefficient-indicator"></div>';
-    }
+    // function renderTemplate() {
+    //     return '<div ng-bind-html="::vm.html" class="criteria-coefficient-indicator"></div>';
+    // }
 
-    CriteriaCoefficientIndicatorController.$inject = ['DecisionCriteriaCoefficientsConstant'];
+    CriteriaCoefficientIndicatorController.$inject = ['DecisionCriteriaCoefficientsConstant', '$element', '$compile', '$scope'];
 
-    function CriteriaCoefficientIndicatorController(DecisionCriteriaCoefficientsConstant) {
+    function CriteriaCoefficientIndicatorController(DecisionCriteriaCoefficientsConstant, $element, $compile, $scope) {
         var vm = this;
 
         vm.$onChanges = onChanges;
@@ -59,13 +59,18 @@
 
         function renderComponent(coefficientList) {
             // TODO: optimize loop
-            var html = _(coefficientList).chain().map(function(coefficient) {
+            var content = _(coefficientList).chain().map(function(coefficient) {
                 return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
             }).sortBy('value').reverse().value().join('\n');
 
-            vm.html = html;
+            var html = [
+            '<div class="criteria-coefficient-indicator">',
+                content,
+            '</div>'
+            ].join('\n');
+
+            $element.html(html);
+            $compile($element.contents())($scope);            
         }
-
-
     }
 })();

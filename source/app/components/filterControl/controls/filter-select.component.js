@@ -5,6 +5,7 @@
         .component('filterSelect', {
             bindings: {
                 item: '<',
+                selected: '<'
             },
             controller: 'FilterSelectController',
             controllerAs: 'vm'
@@ -21,35 +22,40 @@
                 createDate: null,
                 description: null,
                 name: 'All',
-                value: 'null'
+                value: 'all'
             };
 
         vm.changeSelect = changeSelect;
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
         function onInit() {
             // debugger
+            vm.selected = !_.isEmpty(vm.selected) ? vm.selected : selectAllObj.value;
             var html = renderSelect(vm.item);
             $element.html(html);
             $compile($element.contents())($scope);            
         }
 
+        function onChanges(changes) {
+            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+                vm.selected = !_.isEmpty(changes.selected.currentValue) ? changes.selected.currentValue : selectAllObj.value;
+            }
+        }
+
         // Contorl SELECT
         function renderSelect(item) {
             if(!item) return;
-            vm.select = 'null';
             var options = _.sortBy(item.options, 'name');
             options.unshift(selectAllObj);
-            var content = [];
-            _.forEach(options, function(option) {
-                var optionHtml = '<option value="' + option.value + '">' + option.name + '</option>';
-                content.push(optionHtml);
+            var content = _.map(options, function(option) {
+                return '<option value="' + _.escape(option.value) + '">' + option.name + '</option>';
             });
 
             var html = [
                 '<div class="filter-item-wrapper">',
-                '<select class="form-control input-sm" ng-model="vm.select" ng-model-options="vm.controlOptions" ng-change="vm.changeSelect(vm.select)">',
+                '<select class="form-control input-sm" ng-model="vm.selected" ng-model-options="vm.controlOptions" ng-change="vm.changeSelect(vm.selected)">',
                 content.join('\n'),
                 '</select>',
                 '</div>'
@@ -63,7 +69,7 @@
                 "type": "EqualQuery",
                 "characteristicName": vm.item.name,
                 "characteristicId": vm.item.characteristicId,
-                "value": model,
+                "value": _.unescape(model),
             };
             FilterControlsDataService.createFilterQuery(sendObj);
         }
