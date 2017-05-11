@@ -58,7 +58,6 @@
 
         function onInit() {
             vm.listDisplay = angular.copy(vm.list);
-            // console.log(vm.listDisplay);
         }
 
         function onChanges (changes) {
@@ -67,7 +66,6 @@
             if (changes.list.currentValue &&
                 !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
                 vm.listDisplay = changes.list.currentValue;
-                // console.log(vm.listDisplay);
             }
         }
 

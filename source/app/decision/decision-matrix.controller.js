@@ -312,9 +312,9 @@
 
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
-                var newHpx = newH + 'px';
-                if (el.clientHeight != newHpx) el.style.height = newHpx;
-                if (elAside.clientHeight != newHpx) elAside.style.height = newHpx;
+                var newHpx = newH;
+                if (el.clientHeight != newHpx) el.style.height = newH + 'px';
+                if (elAside.clientHeight != newHpx) elAside.style.height = newH + 'px';
 
             }
             // console.log(_.uniq(matrixAsideRowH), _.min(matrixAsideRowH));
@@ -367,7 +367,7 @@
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
                 }
-                return decisionMatrixEl;
+                return _.pick(decisionMatrixEl, 'decision');
             });
         }
         // TODO: make as in sorter directive

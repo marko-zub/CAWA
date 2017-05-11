@@ -69,7 +69,8 @@
         }
 
         function onChanges(changes) {
-            if (!angular.equals(changes.list.currentValue, changes.list.previousValue)) {
+            if (changes.item.currentValue &&
+                !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
                 handleChange();
             }
         }

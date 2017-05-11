@@ -62,7 +62,6 @@
         }
 
         function onChanges(changes) {
-
             if(changes.list.currentValue) {
                 decisionsIds = pickDecisionsIds(changes.list.currentValue);
             }
