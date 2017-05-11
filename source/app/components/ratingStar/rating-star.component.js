@@ -25,11 +25,10 @@
     function RatingStarController($element, AppRatingStarConstant, $scope, $compile) {
         var
             vm = this,
-            prevItem,
             value;
 
         vm.$onInit = onInit;
-        vm.$doCheck = doCheck;
+        vm.$onChanges = onChanges;
 
         function onInit() {
             var votes = '';
@@ -64,16 +63,14 @@
                 '</div>',
             ].join('\n');
 
-            prevItem = vm.item;
             vm.html = html;
             // $element.html(html);
             // $compile($element.contents())($scope);
         }
 
-        function doCheck() {
-            if (!angular.equals(vm.item, prevItem)) {
+        function onChanges(changes) {
+            if (!angular.equals(changes.list.currentValue, changes.list.previousValue)) {
                 handleChange();
-                prevItem = angular.copy(vm.item);
             }
         }
 
