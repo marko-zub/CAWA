@@ -307,8 +307,8 @@
                 el = matrixRows[i];
                 elAside = matrixAsideRow[i];
 
-                matrixAsideRowH.push(elAside.clientHeight);
-                matrixRowsH.push(el.clientHeight);
+                // matrixAsideRowH.push(elAside.clientHeight);
+                // matrixRowsH.push(el.clientHeight);
 
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
@@ -343,6 +343,7 @@
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
+                prevTotal = vm.decisionMatrixList.length;
                 setMatrixTableWidth(vm.decisionMatrixList.length);
                 return result;
             });
@@ -468,11 +469,13 @@
             }
         }
 
+        var prevTotal;
         function setMatrixTableWidth(total) {
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            table.style.width = tableWidth;
+            if(vm.decisionMatrixList.length !== prevTotal) table.style.width = tableWidth;
+
         }
 
         function setMatrixTableHeight(total) {

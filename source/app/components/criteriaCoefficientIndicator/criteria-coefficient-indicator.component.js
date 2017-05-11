@@ -50,11 +50,11 @@
             setCoefficientIndicator(vm.coefficient);
         }
 
-        function onChanges(changesObj) {
+        function onChanges(changes) {
             // console.log(changesObj.coefficient);
-            // if (!angular.equals(vm.coefficient, changesObj.coefficient.currentValue)) {
+            if (!angular.equals(changes.coefficient.currentValue, changes.coefficient.previousValue)) {
                 setCoefficientIndicator(vm.coefficient);
-            // }
+            }
         }
 
         function renderComponent(coefficientList) {

@@ -35,7 +35,7 @@
                                 '</div>',
                             '</div>',
                             '<div class="app-item-additional-wrapper">',
-                                '<a class="app-item-comments link-secondary" ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })">',
+                                '<a class="app-item-comments link-secondary">',
                                     '<span class="glyphicon glyphicon-comment"></span>0',
                                 '</a>',
                             '</div>',
@@ -50,6 +50,11 @@
 
     function MatrixCriteriaController(DiscussionsNotificationService) {
         var vm = this;
+
+
+        // ui-sref make deep watch 
+        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })"
+        // Create url in ctrl
 
         // Discussions
         vm.getComments = getComments;
