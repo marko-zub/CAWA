@@ -22,7 +22,6 @@
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
 
-
         function onInit() {
             sendObj = {
                 'type': 'AllInQuery',

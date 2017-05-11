@@ -14,15 +14,16 @@
             _fo = DecisionSharedService.filterObject;
 
 
-        vm.decisionId = $stateParams.id;
-        vm.decision = decisionBasicInfo || {};
-        $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
-
         // TODO: simplify conttoller and move to different componnts
-        init();
+        vm.$onInit = onInit;
 
-        function init() {
-            // console.log('Decision Matrix Controller');
+        function onInit() {
+            console.log('Decision Matrix Controller');
+
+            vm.decisionId = $stateParams.id;
+            vm.decision = decisionBasicInfo || {};
+            $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
+
             vm.decisionsSpinner = true;
 
             // First call
