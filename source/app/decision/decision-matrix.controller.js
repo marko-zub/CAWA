@@ -313,8 +313,9 @@
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 // Set new height
                 var newHpx = newH;
-                if (el.clientHeight != newHpx) el.style.height = newH + 'px';
-                if (elAside.clientHeight != newHpx) elAside.style.height = newH + 'px';
+                el.style.height = newH + 'px';
+                elAside.style.height = newH + 'px';
+
 
             }
             // console.log(_.uniq(matrixAsideRowH), _.min(matrixAsideRowH));
