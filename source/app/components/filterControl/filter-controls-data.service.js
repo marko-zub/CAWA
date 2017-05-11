@@ -42,19 +42,27 @@
             if (!data) return;
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
-            if(sendData.value === 'all') sendData.value = null;
+            if (sendData.value === 'all') sendData.value = null;
             var sendVal = (_.isBoolean(sendData.value) || !_.isEmpty(sendData.value)) ? sendData.value : null;
             var query = {
                 'type': sendData.type || 'AllInQuery',
                 'characteristicId': sendData.characteristicId || null,
                 'characteristicName': sendData.characteristicName || null,
                 'value': sendVal,
+                'operator': sendData.operator
             };
             if (sendData.operator && _.isArray(sendVal)) {
                 query.operator = sendData.operator;
                 if (sendData.operator === 'OR') {
                     // query
-                    query = createCompositeQuery(data);
+                    // query = createCompositeQuery(data);
+                    query = {
+                        'type': 'AnyInQuery',
+                        'characteristicId': sendData.characteristicId || null,
+                        'characteristicName': sendData.characteristicName || null,
+                        'value': sendVal,
+                        'operator': sendData.operator
+                    };
                 }
             }
             // console.log(sendData.characteristicId, query);
