@@ -149,7 +149,7 @@
                                     <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by characteristic.characteristicId" ng-class="{'hide': group.isClosed}">
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
-                                            <filter-control selected="characteristic.seletedValues" item="::characteristic"></filter-control>
+                                            <filter-control  selected="characteristic.seletedValues" item="::characteristic"></filter-control>
                                             <div class="app-sorter" ng-if="::characteristic.isSortable">
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'ASC'}"></span>
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.characteristicId, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.characteristicId && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>
@@ -179,7 +179,7 @@
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <!-- <matrix-characteristics ng-show="!vm.characteristicGroupsContentLoader" list="vm.characteristicGroupsContent"></matrix-characteristics> -->
+                                <matrix-characteristics ng-show="!vm.characteristicGroupsContentLoader" list="vm.characteristicGroupsContent"></matrix-characteristics>
                             </div>
 
                         </div>
