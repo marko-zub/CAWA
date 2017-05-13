@@ -37,7 +37,7 @@
 
                 var decisionMatrixs = values[0].decisionMatrixs;
                 // 2. render list of criterias
-                createMatrixContentCriteria(decisionMatrixs);
+                // createMatrixContentCriteria(decisionMatrixs);
                 renderMatrix(true);
 
                 // Init only first time
@@ -59,7 +59,9 @@
 
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
+            // TODO: simplify 
             vm.decisionMatrixList = prepareMatrixData(data);
+            vm.decisions.decisionMatrixs = data;
             initMatrix(data);
         });
         DecisionNotificationService.subscribePageChanged(function() {
@@ -112,7 +114,10 @@
                 sendFo.filterQueries.push(data.filterQueries);
             }
 
-            if (_.isEmpty(sendFo.filterQueries)) sendFo.filterQueries = null;
+            if (_.isEmpty(sendFo.filterQueries) || 
+                (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
+                sendFo.filterQueries = null;
+            }
 
             getDecisionMatrix(vm.decisionId).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
@@ -208,21 +213,22 @@
         }
 
         // TODO: try to optimize it
-        function createMatrixContentCriteria(decisions) {
-            // Criteria
-            var decisionsCopy = angular.copy(decisions);
-            var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
+        // function createMatrixContentCriteria(decisions) {
+        //     // Criteria
+        //     var decisionsCopy = angular.copy(decisions);
+        //     var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
 
-            vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
-                criteriaItem.criteria = _.map(criteriaItem.criteria, function(criteria) {
-                    criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
-                    return _.omit(criteria, 'description');
-                });
-                return _.pick(criteriaItem, 'criterionGroupId', 'criteria', 'isClosed');
-            });
-            // console.log(vm.criteriaGroupsContent);
-            // console.log(_.compact(vm.criteriaGroupsContent));
-        }
+        //     vm.criteriaGroupsContent = decisionsCopy;
+        //     // vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
+        //     //     criteriaItem.criteria = _.map(criteriaItem.criteria, function(criteria) {
+        //     //         criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
+        //     //         return _.omit(criteria, 'description');
+        //     //     });
+        //     //     return _.pick(criteriaItem, 'criterionGroupId', 'criteria', 'isClosed');
+        //     // });
+        //     // console.log(vm.criteriaGroupsContent);
+        //     // console.log(_.compact(vm.criteriaGroupsContent));
+        // }
 
         // TODO: clean obj
         function createMatrixContentCharacteristics(decisions) {
@@ -328,13 +334,8 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-
-                // $applyAsync some times to long wait for next $digest
-                $scope.$applyAsync(function() {
-                    vm.decisionsSpinner = false;
-                    // $scope.$digest();
-                });
             }, 0);
+            vm.decisionsSpinner = false;
         }
 
         function getDecisionMatrix(id) {
@@ -352,7 +353,7 @@
         function initMatrix(data, calcHeight) {
             // var performance = window.performance;
             // var t0 = performance.now();
-            createMatrixContentCriteria(data);
+            // createMatrixContentCriteria(data);
             createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
@@ -470,11 +471,12 @@
         }
 
         var prevTotal;
+
         function setMatrixTableWidth(total) {
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            if(vm.decisionMatrixList.length !== prevTotal) table.style.width = tableWidth;
+            if (vm.decisionMatrixList.length !== prevTotal) table.style.width = tableWidth;
 
         }
 

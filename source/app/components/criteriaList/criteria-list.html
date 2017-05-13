@@ -15,7 +15,7 @@
                             <span ng-if="::criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                         </div>
                         <div class="pull-right app-rating-inline">
-                            <rating-star class="text-left" item="::criteria" ng-show="::criteria.weight"></rating-star>
+                            <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
                         </div>
                     </div>
                 </div>

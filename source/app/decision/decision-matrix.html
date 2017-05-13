@@ -173,7 +173,7 @@
                         <!-- Table Content -->
                         <div id="matrix-content" class="matrix-content">
 
-                            <matrix-criteria list="vm.criteriaGroupsContent"></matrix-criteria>
+                            <matrix-criteria decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                             <div class="characteristic-groups-content">
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>

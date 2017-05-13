@@ -73,28 +73,12 @@
 
 
         function changeRangeSlider(sliderId, min, max, type) {
-            // TOOD: make some builder for queries
-            var queries = [{
-                "type": "GreaterOrEqualQuery",
-                "characteristicId": vm.item.characteristicId,
-                "value": min
-            }, {
-                "type": "LessOrEqualQuery",
-                "characteristicId": vm.item.characteristicId,
-                "value": max
-            }];
-            if (min == vm.item.minValue && max == vm.item.maxValue) {
-                queries = null;
-            }
             var query = {
-                "type": "CompositeQuery",
+                "type": "RangeQuery",
                 "characteristicId": vm.item.characteristicId,
                 "characteristicName": vm.item.name,
-                "operator": "AND",
-                "queries": queries
+                "value":  [min, max]
             };
-
-            //
             FilterControlsDataService.characteristicChange(vm.item.characteristicId, query);
         }
 

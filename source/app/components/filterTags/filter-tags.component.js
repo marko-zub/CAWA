@@ -56,6 +56,13 @@
         // Optimize
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
+
+            if(item.type === "RangeQuery") {
+                itemCopy.value = null;
+                updateFilterObject(itemCopy);
+                return;
+            }
+
             if (item.value && _.isArray(item.value)) { //Checkboxes
                 Utils.removeItemFromArray(value, itemCopy.value);
             } else if (_.isArray(itemCopy.queries)) {
@@ -69,7 +76,6 @@
                     itemCopy.value = null;
                 }
             } else {
-                itemCopy.value = null;
                 itemCopy.value = null;
             }
             itemCopy = _.omit(itemCopy, 'data');
@@ -93,13 +99,16 @@
                 if (item.value === true) item.value = 'Yes';
                 if (item.value === false) item.value = 'No';
 
-                vm.tags.push(caseQueryType(item));
+                if(!_.isEmpty(item.value)) vm.tags.push(caseQueryType(item));
             });
         }
         // TODO: clean up
         function caseQueryType(item) {
             var data = [];
             switch (item.type) {
+                case "RangeQuery":
+                    data[0] = item.value[0] + ' - ' + item.value[1];
+                    break;
                 case "CompositeQuery":
                     if (!_.isEmpty(item.queries)) {
                         if (item.queries[0].type == 'GreaterOrEqualQuery') {

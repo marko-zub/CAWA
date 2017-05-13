@@ -250,10 +250,11 @@
     }
 }
 
+// Remove it
 // Width for cols
 .matrix-content-name {
-    width: 200px;
-    min-width: 200px;
+    width: 199px;
+    min-width: 199px;
 }
 
 
@@ -478,9 +479,6 @@ a {
     font-weight: 500;
     color: @title-color;
     width: 100%;
-    border-bottom: 0;
-
-
     .matrix-row {
         // height: 36px;
         vertical-align: top;
@@ -788,8 +786,8 @@ a {
         height: 48px;
     }
     .matrix-col {
-        width: 201px;
-        min-width: 201px;
+        width: 200px;
+        min-width: 200px;
         display: table-cell;
         border-right: 1px solid @gray-light;
         border-bottom: 1px solid @gray-light;
@@ -1176,4 +1174,38 @@ filter-control {
 }
 .switcher-checkbox:checked + .switcher-label .switcher-switch {
     right: 0px;
+}
+
+
+// Move table to absolute
+.m-group-content {
+    position: relative;
+}
+
+.m-group-row {
+    height: 50px;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid @gray-light;
+}
+.m-group-col {
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    font-size: 13px;
+    padding: 2px 4px 24px;
+    cursor: pointer;
+    border-right: 1px solid @gray-light;
+}
+.m-group {
+    position: relative;
+    // padding: 24px 0 0;
+}
+.m-group-title {
+    height: 24px !important;
+    min-height: 24px;
+    line-height: 24px;
+    background-color: lighten(@gray-light, 5%);
+    border-bottom: 1px solid @gray-light;
 }
