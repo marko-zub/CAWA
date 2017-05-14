@@ -56,7 +56,7 @@
             var content = _.map(options, function(option) {
                 return [
                     '<label class="filter-list-item">',
-                    '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.characteristicId + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
+                    '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.id + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
                     '</label>'
                 ].join('\n');
             }).join('\n');
@@ -72,7 +72,7 @@
         function changeRadio(model) {
             var sendObj = {
                 "type": "EqualQuery",
-                "characteristicId": vm.item.characteristicId,
+                "characteristicId": vm.item.id,
                 "characteristicName": vm.item.name,
                 "value": model
             };

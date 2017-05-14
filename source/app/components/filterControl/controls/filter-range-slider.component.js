@@ -63,7 +63,7 @@
                 options: {
                     floor: Number(item.minValue),
                     ceil: Number(item.maxValue),
-                    id: 'slider-' + item.characteristicId,
+                    id: 'slider-' + item.id,
                     onEnd: vm.changeRangeSlider,
                     hidePointerLabels: true,
                     hideLimitLabels: true
@@ -73,13 +73,14 @@
 
 
         function changeRangeSlider(sliderId, min, max, type) {
+            var value = (_.isNumber(max) && _.isNumber(min)) ? [min, max] : null;
             var query = {
                 "type": "RangeQuery",
-                "characteristicId": vm.item.characteristicId,
+                "characteristicId": vm.item.id,
                 "characteristicName": vm.item.name,
-                "value":  [min, max]
+                "value": value
             };
-            FilterControlsDataService.characteristicChange(vm.item.characteristicId, query);
+            FilterControlsDataService.characteristicChange(vm.item.id, query);
         }
 
     }

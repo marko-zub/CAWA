@@ -22,7 +22,7 @@
             criteriaArray = [],
             characteristicsArray = [];
 
-        vm.decisionId = $stateParams.id;
+        vm.id = $stateParams.id;
         vm.decisionsList = [];
         vm.updateDecisionList = [];
         vm.decision = decisionBasicInfo || {};
@@ -41,12 +41,12 @@
             link: null
         }];
 
-        init();
+        vm.$onInit = onInit;
         vm.activeTab = 0;
-        vm.isDecisionParents = false;
+        vm.isDecisionsParent = false;
 
         // TODO: clean up separete for 2 template parent and child
-        function init() {
+        function onInit() {
             console.log('Decision Single Controller');
             initPagination();
             getDecisionNomimations($stateParams.id);
@@ -71,46 +71,46 @@
                 // console.log(result);
                 vm.decisionParents = result;
 
-                if (vm.decision.totalChildDecisions) {
-                    var decisionCopy = angular.copy(vm.decision);
-                    decisionCopy.isActive = true;
-                    decisionCopy.name = 'Top ' + decisionCopy.name;
-                    vm.decisionParents.unshift(decisionCopy);
-                }
 
-                if (vm.decisionParents[0].decisionId !== vm.decision.decisionId) {
-                    vm.decisionParents[0].isActive = true;
-                    getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
-                    vm.isDecisionParents = true;
+                // if (vm.decision.totalChildDecisions) {
+                //     var decisionCopy = angular.copy(vm.decision);
+                //     decisionCopy.isActive = true;
+                //     decisionCopy.name = 'Top ' + decisionCopy.name; //General Info
+                //     vm.decisionParents.unshift(decisionCopy);
+                // }
+
+                if(vm.decision.totalChildDecisions > 0) {
+                    getCriteriaGroupsByParentId(vm.decision.id);
+                    vm.isDecisionsParent = true;
                 } else {
-                    getCriteriaGroupsByIdParent(vm.decision.decisionId);
+                    vm.isDecisionsParent = false;
+                    // getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
+                    getDecisionParentsCriteriaCharacteristicts(vm.decisionParents[0]);
                 }
+                return result;
             });
         }
 
         // TODO: clean up
-        function getDecisionParentsCriteriaCharacteristicts(list) {
+        // Remove loop
+        function getDecisionParentsCriteriaCharacteristicts(parent) {
             // if (list.lenght > 15) return;
             // _.forEach(list, function(parent) {
-            var parent = list[0];
-
-            vm.parentGroups = [];
 
             var sendData = {
-                includeChildDecisionIds: []
+                includeChildids: []
             };
-            sendData.includeChildDecisionIds.push(vm.decision.decisionId);
-            DecisionDataService.getDecisionMatrix(parent.decisionId, sendData).then(function(result) {
+            sendData.includeChildids.push(vm.decision.id);
+            // console.log(parent);
+            // console.log(parent);
+            DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                 var criteriaGroups;
                 $q.all([
-                    getCriteriaGroupsById(parent.decisionId, result.decisionMatrixs[0].criteria),
-                    getCharacteristicsGroupsById(parent.decisionId, result.decisionMatrixs[0].characteristics)
+                    getCriteriaGroupsById(parent.id, result.decisionMatrixs[0].criteria),
+                    getCharacteristicsGroupsById(parent.id, result.decisionMatrixs[0].characteristics)
                 ]).then(function(values) {
-                    var parentGroups = {
-                        criteriaGroups: values[0],
-                        characteristicGroups: values[1]
-                    };
-                    vm.parentGroups.push(parentGroups);
+                    vm.criteriaGroups = values[0];
+                    vm.characteristicGroups = values[1];
                 });
 
             });
@@ -150,7 +150,7 @@
 
         function updateStateParams() {
             // $state.go($state.current.name, {
-            //     id: vm.decision.decisionId,
+            //     id: vm.decision.id,
             //     slug: vm.decision.nameSlug,
             //     page: vm.pagination.pageNumber.toString(),
             //     size: vm.pagination.pageSize.toString()
@@ -163,10 +163,10 @@
 
 
         // TODO: move to service
-        function getCriteriaGroupsById(decisionId, criteriaArray) {
+        function getCriteriaGroupsById(id, criteriaArray) {
             // if(!criteriaArray) return false
             // Criteria
-            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 // vm.criteriaGroups = result;
                 criteriaIds = [];
                 return _.filter(result, function(resultEl) {
@@ -185,28 +185,29 @@
         }
 
 
-        function getCharacteristicsGroupsById(decisionId, characteristicsArray) {
+        function getCharacteristicsGroupsById(id, characteristicsArray) {
             // if(!characteristicsArray) return;
             // Characteristicts
-            return DecisionDataService.getCharacteristicsGroupsById(decisionId, {
+            return DecisionDataService.getCharacteristicsGroupsById(id, {
                 options: false
             }).then(function(result) {
                 // vm.characteristicGroups = result;
                 characteristicsIds = [];
 
-                return _.map(result, function(resultEl) {
+                var list = _.map(result, function(resultEl) {
+                    resultEl.isCollapsed = true;
                     _.map(resultEl.characteristics, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
 
                         var elEqual = _.find(characteristicsArray, {
-                            characteristicId: el.characteristicId
+                            id: el.id
                         });
 
                         // console.log(el);
 
                         if (elEqual) {
                             el = _.merge(el, elEqual);
-                            el.html = ContentFormaterService.getTemplate(el);
+                            el.html = ContentFormaterService.getTemplate(el.value, el.valueType);
                             return el;
                         }
 
@@ -214,16 +215,19 @@
                     });
                     return resultEl;
                 });
+                list[0].isCollapsed = false;
+                return list;
             });
         }
 
-        function getCriteriaGroupsByIdParent(decisionId) {
+        function getCriteriaGroupsByParentId(id) {
             // Criteria
-            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 vm.criteriaGroups = descriptionTrustHtml(result);
                 _.forEach(result, function(resultEl) {
                     descriptionTrustHtml(resultEl.criteria);
                 });
+                return result;
             });
         }
 

@@ -52,8 +52,8 @@
             console.log(vm.discussion);
             vm.title = pageTitle;
 
-            // getCriteriaGroupsById(vm.discussion.decision.decisionId);
-            // getCharacteristicsGroupsById(vm.discussion.decision.decisionId);
+            // getCriteriaGroupsById(vm.discussion.decision.id);
+            // getCharacteristicsGroupsById(vm.discussion.decision.id);
 
             // TODO: avoid $stateParams
             if (vm.discussion.childCriterion) searchCommentableVotesWeight($stateParams.discussionId, $stateParams.critOrCharId);

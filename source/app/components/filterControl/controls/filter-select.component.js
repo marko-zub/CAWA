@@ -17,7 +17,7 @@
         var
             vm = this,
             selectAllObj = {
-                characteristicId: null,
+                id: null,
                 characteristicOptionId: '*',
                 createDate: null,
                 description: null,
@@ -68,7 +68,7 @@
             var sendObj = {
                 "type": "EqualQuery",
                 "characteristicName": vm.item.name,
-                "characteristicId": vm.item.characteristicId,
+                "characteristicId": vm.item.id,
                 "value": _.unescape(model),
             };
             FilterControlsDataService.createFilterQuery(sendObj);

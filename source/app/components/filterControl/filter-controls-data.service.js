@@ -19,7 +19,7 @@
                 _.forEach(data.value, function(val) {
                     var queryVal = {
                         "type": "InQuery",
-                        "characteristicId": data.characteristicId,
+                        "id": data.id,
                         "value": val
                     };
                     queries.push(queryVal);

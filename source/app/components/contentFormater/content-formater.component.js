@@ -7,7 +7,8 @@
         .controller('ContentFormaterController', ContentFormaterController)
         .component('contentFormater', {
             bindings: {
-                item: '<',
+                value: '<',
+                type: '<',
             },
             controller: 'ContentFormaterController',
             controllerAs: 'vm'
@@ -17,8 +18,7 @@
 
     function ContentFormaterController(ContentFormaterService, $element, $compile, $scope) {
         var
-            vm = this,
-            renderContent;
+            vm = this;
 
         vm.$onInit = onInit;
 
@@ -26,18 +26,17 @@
         // vm.$onChanges = onChanges;
 
         function onInit() {
-            // console.log('init');
-            vm.item = _.pick(vm.item, 'value', 'valueType');
-            var renderContent = vm.item && vm.item.value ? ContentFormaterService.getTemplate(vm.item) : '';
-            if (renderContent) renderHtml(renderContent);
+            // console.log(vm.value, vm.type);
+            var renderContent = ContentFormaterService.getTemplate(vm.value, vm.type);
+            renderHtml(renderContent);
         }
 
         // function onChanges(changes) {
         //     console.log(changes);
-        //     if (changes.item.currentValue &&
-        //         !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
-        //         vm.item = _.pick(changes.item.currentValue, 'value', 'valueType');
-        //         var renderContent = vm.item && vm.item.value ? ContentFormaterService.getTemplate(vm.item) : '';
+        //     if (changes.value.currentValue &&
+        //         !angular.equals(changes.value.currentValue, changes.value.previousValue)) {
+        //         vm.value = _.pick(changes.value.currentValue, 'value', 'valueType');
+        //         var renderContent = vm.value && vm.value.value ? ContentFormaterService.getTemplate(vm.value) : '';
         //         if (renderContent) renderHtml(renderContent);
         //     }
         // }

@@ -26,7 +26,7 @@
             sendObj = {
                 'type': 'AllInQuery',
                 "characteristicName": vm.item.name,
-                'characteristicId': vm.item.characteristicId,
+                'characteristicId': vm.item.id,
                 "operator": 'OR'
             };
             var html = renderCheckboxes(vm.item);
@@ -65,8 +65,8 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input class="js-checkbox" type="checkbox" id="option-' + option.characteristicOptionId + '" name="option-' + option.characteristicOptionId + '" value="' + option.value + '">',
-                    '<label for="option-' + option.characteristicOptionId + '">' + option.name + '</label>',
+                    '<input class="js-checkbox" type="checkbox" id="option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
+                    '<label for="option-' + option.id + '">' + option.name + '</label>',
                     '</div>'
                 ];
                 return html.join('\n');
@@ -74,8 +74,8 @@
 
             var queryTypeHtml = [
                 '<div class="switcher">',
-                '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.characteristicId + '" checked>',
-                '<label class="switcher-label" for="toggle-' + item.characteristicId + '">',
+                '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
+                '<label class="switcher-label" for="toggle-' + item.id + '">',
                 '<span class="switcher-inner"></span>',
                 '<span class="switcher-switch"></span>',
                 '</label>',

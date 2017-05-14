@@ -39,8 +39,8 @@
                 decisionsIds: []
             },
             persistent: true,
-            includeChildDecisionIds: null,
-            excludeChildDecisionIds: null,
+            includeChildids: null,
+            excludeChildids: null,
             filterQueries: null
         };
 
@@ -62,7 +62,7 @@
                 //criteria weight (1st level)
                 sortWeightCriteriaDirection: _fo.sorters.sortByCriteria.order,
                 //characteristic (2nd level)
-                sortCharacteristicId: _fo.sorters.sortByCharacteristic.id,
+                sortid: _fo.sorters.sortByCharacteristic.id,
                 sortCharacteristicDirection: _fo.sorters.sortByCharacteristic.order,
                 //property (3rd level)
                 sortDecisionPropertyName: _fo.sorters.sortByDecisionProperty.id,
@@ -70,8 +70,8 @@
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
-                includeChildDecisionIds: _fo.includeChildDecisionIds,
-                excludeChildDecisionIds: _fo.excludeChildDecisionIds,
+                includeChildids: _fo.includeChildids,
+                excludeChildids: _fo.excludeChildids,
                 filterQueries: _fo.filterQueries
             };
         };
@@ -80,11 +80,11 @@
             if (!obj) return;
 
             // Fix for inclusion tab first time call
-            if((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
-                obj.includeChildDecisionIds = null;
-            } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
-                obj.excludeChildDecisionIds = obj.includeChildDecisionIds;
-                obj.includeChildDecisionIds = null;
+            if((obj.excludeChildids && obj.excludeChildids.length) > 0 && !obj.includeChildids) {
+                obj.includeChildids = null;
+            } else if (obj.includeChildids && obj.includeChildids.length) {
+                obj.excludeChildids = obj.includeChildids;
+                obj.includeChildids = null;
             }
 
             // Set new values
@@ -104,7 +104,7 @@
                         order: obj.sortWeightCriteriaDirection || 'DESC'
                     },
                     sortByCharacteristic: {
-                        id: obj.sortCharacteristicId || null,
+                        id: obj.sortid || null,
                         order: obj.sortCharacteristicDirection || null
                     },
                     sortByDecisionProperty: {
@@ -115,8 +115,8 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildDecisionIds: obj.includeChildDecisionIds || null,
-                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
+                includeChildids: obj.includeChildids || null,
+                excludeChildids: obj.excludeChildids || null,
                 persistent: obj.persistent || false,
                 filterQueries: obj.filterQueries || null
             };

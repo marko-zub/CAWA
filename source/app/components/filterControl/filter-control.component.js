@@ -22,7 +22,7 @@
         vm.$onChanges = onChanges;
 
         function onInit() {
-            var cleanItem = _.omit(vm.item, 'characteristicGroupId', 'createDate', 'description', 'nameSlug');
+            var cleanItem = _.omit(vm.item, 'createDate', 'description', 'nameSlug');
             chooseValueType(cleanItem);
         }
 
@@ -43,34 +43,31 @@
             item.visualMode = item.visualMode.toUpperCase();
 
             switch (true) {
-                case ((item.valueType === 'STRING') && (item.visualMode === 'SELECT')):
-                    renderHtml('<filter-select selected="vm.selected" item="::vm.item"></filter-select>');
+                case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
+                    ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
+                    renderControl('select');
                     break;
                 case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER')):
-                    renderHtml('<filter-date-range selected="vm.selected" item="::vm.item"></filter-date-range>');
+                    renderControl('date-range');
                     break;
                 case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):
-                    renderHtml('<filter-range-slider selected="vm.selected" item="::vm.item"></filter-range-slider>');
+                    renderControl('range-slider');
                     break;
-                case ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')):
-                    renderHtml('<filter-checkbox-group selected="vm.selected" item="::vm.item"></filter-checkbox-group>');
-                    break;
-                case ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL')):
-                    renderHtml('<filter-checkbox-group selected="vm.selected" item="::vm.item"></filter-checkbox-group>');
-                    break;
-                case ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT')):
-                    renderHtml('<filter-select selected="vm.selected" item="::vm.item"></filter-select>');
+                case (((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
+                    ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL'))):
+                    renderControl('checkbox-group');
                     break;
                 case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
-                    renderHtml('<filter-radio-group selected="vm.selected" item="::vm.item"></filter-radio-group>');
+                    renderControl('radio-group');
                     break;
                 default:
                     //Empty
             }
         }
 
-        function renderHtml(html) {
-            $element.html(html);
+        function renderControl(type) {
+            var element = '<filter-' + type + ' selected="vm.selected" item="::vm.item"></filter-' + type + '>';
+            $element.html(element);
             $compile($element.contents())($scope);
         }
     }

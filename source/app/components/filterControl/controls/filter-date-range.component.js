@@ -49,7 +49,7 @@
 
 
         function changeDate(model, item) {
-            if (!item.characteristicId) return;
+            if (!item.id) return;
             if (model === 'null') model = null;
 
             var queries;
@@ -60,24 +60,24 @@
                 var endDate = parseInt(model.endDate.valueOf());
                 queries = [{
                     "type": "GreaterOrEqualQuery",
-                    "characteristicId": item.characteristicId,
+                    "id": item.id,
                     "value": startDate
                 }, {
                     "type": "LessOrEqualQuery",
-                    "characteristicId": item.characteristicId,
+                    "id": item.id,
                     "value": endDate
                 }];
             }
 
             var query = {
                 "type": "CompositeQuery",
-                "characteristicId": item.characteristicId,
+                "characteristicId": item.id,
                 "characteristicName": item.name,
                 "operator": "AND",
                 "queries": queries
             };
 
-            FilterControlsDataService.characteristicChange(item.characteristicId, query);
+            FilterControlsDataService.characteristicChange(item.id, query);
         }
         // END Control DATERANGEPICKER
 

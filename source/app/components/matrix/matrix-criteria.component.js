@@ -54,7 +54,7 @@
 
 
         // ui-sref make deep watch 
-        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.decisionId, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })"
+        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })"
         // Create url in ctrl
 
         // Discussions
@@ -116,8 +116,8 @@
             $('.m-group-col').html(emptyCol);
             _.forEach(decisions, function(decision) {
                 _.forEach(decision.criteria, function(criteria) {
-                    var id = '#m-group-col-' + decision.decision.decisionId + '-' + criteria.criterionId;
-                    var rating = rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '"></rating-star>';
+                    var id = '#m-group-col-' + decision.decision.id + '-' + criteria.criterionId;
+                    var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '"></rating-star>';
                     $(id).find('.rating').html(rating);
                     // console.log(id, rating);
                 });
@@ -130,7 +130,7 @@
             var html = [];
             _.forEach(decisions, function(decision, decisionIndex) {
                 var col = [
-                    '<div class="m-group-col" id="m-group-col-' + decision.decision.decisionId + '-' + id +'" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
+                    '<div class="m-group-col" id="m-group-col-' + decision.decision.id + '-' + id +'" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
                     '</div>'
                 ].join('\n');
                 html.push(col);

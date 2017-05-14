@@ -28,30 +28,29 @@
             return html;
         }
 
-        function getTemplate(item) {
-            if (!item || !item.valueType) return;
-            var itemCopy = angular.copy(item);
-            // CASE
-            // console.log(item.valueType);
+        function getTemplate(value, type) {
+            if (!value || !type) return;
+            // console.log(value, type);
+            // CASE Visual Mode
             var result = '';
-            switch (itemCopy.valueType.toUpperCase()) {
+            switch (type.toUpperCase()) {
                 case "STRING":
-                    result = stringFullDescr(itemCopy.value);
+                    result = stringFullDescr(value);
                     break;
                 case "DATETIME":
-                    result = Utils.dateToUI(itemCopy.value);
+                    result = Utils.dateToUI(value);
                     break;
                 case "STRINGARRAY":
-                    result = contentFormaterArray(itemCopy.value);
+                    result = contentFormaterArray(value);
                     break;
                 case "INTEGERARRAY":
-                    result = contentFormaterArray(itemCopy.value);
+                    result = contentFormaterArray(value);
                     break;
                 case "BOOLEAN":
-                    result = contentFormaterBool(itemCopy.value);
+                    result = contentFormaterBool(value);
                     break;
                 default:
-                    result = itemCopy.value || '';
+                    result = value || '';
             }
 
             return result;

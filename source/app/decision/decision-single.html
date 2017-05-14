@@ -13,15 +13,14 @@
     </div>
 </div>
 <div class="app-container-sm">
-    <!--     <pre>
-        {{vm.decision | json}}
-    </pre> -->
-    <!-- TODO: break out to 2 views and $compile template -->
     <div class="post-header">
-        <div class="nav-tabs-wrapper clearfix" ng-if="vm.decisionParents.length">
+        <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index}">
-                    <a ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" ng-click="vm.activeTab = $index">{{::parent.name}}</a>
+                <li ng-class="{'active':vm.activeTab == 0}">
+                    <a href ng-click="vm.activeTab = 0">General Info</a>
+                </li>
+                <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                    <a ui-sref="decisions.single({id:parent.id, slug:parent.nameSlug})" ng-click="vm.activeTab = $index"> Top {{::parent.name}}</a>
                     <!-- <a ng-click="vm.activeTab = $index">{{::parent.name}}</a> -->
                 </li>
             </ul>
@@ -31,92 +30,86 @@
         <div class="post-sub-header">
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="author">
-                        <i class="fa fa-user-o" aria-hidden="true"></i>
-                        <span ng-bind="::vm.decision.createUser.username"></span>
-                    </div>
-                    <div class="date">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+                    <div class="info">
+                        <div class="author">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <span ng-bind="::vm.decision.createUser.username"></span>
+                        </div>
+                        <div class="date">
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                            <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div ng-switch="::vm.decision.totalChildDecisions > 0">
-                        <div ng-switch-when="true">
-                             <a ng-if="vm.decision.totalChildDecisions > 0" ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})" class="btn btn-sm">Comparison Matrix Hall of Fame</a>
-                        </div>
-                        <div ng-switch-when="false">
-                            <a  ui-sref="decisions.single({id:parent.decisionId, slug:parent.nameSlug})" class="link" ng-repeat="parent in vm.decisionParents track by $index">{{::parent.name}}</a>
-                        </div>
+                    <div ng-if="vm.isDecisionsParent">
+                        <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})"><i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix Hall of Fame</a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="post-body">
+            <!--         <div class="post-body">
             <p class="app-content-description" ng-if="::vm.decision.description" ng-bind="::vm.decision.description"></p>
+        </div> -->
         </div>
-    </div>
-    <div class="row tabs-header-hide" ng-if="vm.isDecisionParents">
-        <uib-tabset active="vm.activeTab">
-            <uib-tab index="$index" ng-repeat="item in vm.parentGroups track by $index" disable="item.isDisabled">
-                <div class="col-sm-12">
+        <div class="row tabs-header-hide">
+            <uib-tabset active="vm.activeTab" disable="false">
+                <uib-tab index="0">
+                    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <criteria-list list="::item.criteriaGroups" links="!(vm.decision.totalChildDecisions > 0)"></criteria-list>
+                        <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
+                            <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
                         </div>
-                        <div class="col-sm-6">
-                            <characteristics-list list="::item.characteristicGroups"></characteristics-list>
-                        </div>
+                        <div class="col-sm-8">{{::vm.decision.description}}</div>                       
                     </div>
-                </div>
-            </uib-tab>
-        </uib-tabset>
-        <div class="col-sm-12">
+                </uib-tab>
+            </uib-tabset>
+        </div>
+
+        <div class="col-sm-12" ng-if="!vm.isDecisionsParent">
             <div class="row">
                 <div class="col-sm-6">
-                    <criteria-list list="::vm.criteriaGroups"></criteria-list>
+                    <criteria-list list="vm.criteriaGroups" links="!(vm.decision.totalChildDecisions > 0)"></criteria-list>
                 </div>
                 <div class="col-sm-6">
-                    <characteristics-list list="::vm.characteristicGroups"></characteristics-list>
+                    <characteristics-list list="vm.characteristicGroups"></characteristics-list>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <ul class="discussions-list">
-                <li ng-repeat="decision in vm.decisions track by $index">
-                    <a ui-sref="decisions.single.matrix.child({discussionId:decision.decisionId, discussionSlug:decision.nameSlug, size: null, page: null})">
-                        <div class="clearfix">
-                            <div class="img-container" ng-if="decision.imageUrl">
-                                <img ng-src="{{decision.imageUrl}}" class="img-responsive">
+
+        <div class="row" ng-if="vm.isDecisionsParent">
+            <div class="col-sm-8">
+                <ul class="discussions-list">
+                    <li ng-repeat="decision in vm.decisions track by $index">
+                        <a ui-sref="decisions.single.matrix.child({discussionId:decision.id, discussionSlug:decision.nameSlug, size: null, page: null})">
+                            <div class="clearfix">
+                                <div class="img-container" ng-if="decision.imageUrl">
+                                    <img ng-src="{{decision.imageUrl}}" class="img-responsive">
+                                </div>
+                                <div class="pull-left">
+                                    {{::decision.name}}
+                                </div>
                             </div>
-                            <div class="pull-left">
-                                {{::decision.name}}
+                        </a>
+                        <div>
+                            <div class="criteria-comliance">
+                                Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                                </small>
                             </div>
-                        </div>
-                    </a>
-                    <div>
-                        <div class="criteria-comliance">
-                            Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>%
-                             | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                        </small>
+                            <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
+                    </li>
+                </ul>
+                <!-- TODO: use as component -->
+                <div class="row app-pagination clearfix" ng-if="vm.isDecisionsParent">
+                    <div class="col-md-10 col-sm-10 paginator">
+                        <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5"></div>
                     </div>
-                    <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
-                </li>
-            </ul>
-            <!-- TODO: use as component -->
-            <div class="row app-pagination clearfix" ng-if="vm.decision.totalChildDecisions > 0">
-                <div class="col-md-10 col-sm-10 paginator">
-                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5"></div>
-                </div>
-                <div class="col-md-2 col-sm-2 counter">
-                    <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+                    <div class="col-md-2 col-sm-2 counter">
+                        <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+                    </div>
                 </div>
             </div>
-        </div>
         <!-- Criteria -->
-        <div class="col-sm-4" ng-if="vm.decision.totalChildDecisions > 0">
+        <div class="col-sm-4">
             <criteria-list list="::vm.criteriaGroups"></criteria-list>
         </div>
         <!-- End Criteria -->

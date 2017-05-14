@@ -20,7 +20,7 @@
         function onInit() {
             console.log('Decision Matrix Controller');
 
-            vm.decisionId = $stateParams.id;
+            vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
@@ -30,8 +30,8 @@
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
             $q.all([
-                getDecisionMatrix(vm.decisionId),
-                getCriteriaGroupsById(vm.decisionId)
+                getDecisionMatrix(vm.id),
+                getCriteriaGroupsById(vm.id)
             ]).then(function(values) {
                 // Render html matrix
 
@@ -44,7 +44,7 @@
                 initSorters(); //Hall of fame
                 initMatrixMode();
 
-                getCharacteristicsGroupsById(vm.decisionId).then(function(resp) {
+                getCharacteristicsGroupsById(vm.id).then(function(resp) {
                     // 3. Render characteristics
                     prepareCharacteristicsGroups(resp);
                     createMatrixContentCharacteristics(decisionMatrixs);
@@ -65,18 +65,18 @@
             initMatrix(data);
         });
         DecisionNotificationService.subscribePageChanged(function() {
-            getDecisionMatrix(vm.decisionId).then(function(result) {
+            getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-            getDecisionMatrix(vm.decisionId).then(function(result) {
+            getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
             });
         });
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
-            DecisionDataService.getDecisionCharacteristics(vm.decisionId, data.decisionId).then(function(result) {
+            DecisionDataService.getDecisionCharacteristics(vm.id, data.id).then(function(result) {
                 data.characteristics = prepareDataToDisplay(result);
             }).finally(function() {
                 data.detailsSpinner = false;
@@ -87,7 +87,7 @@
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
             vm.fo = DecisionSharedService.filterObject.sorters;
-            getDecisionMatrix(vm.decisionId).then(function(result) {
+            getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
             });
         });
@@ -119,7 +119,7 @@
                 sendFo.filterQueries = null;
             }
 
-            getDecisionMatrix(vm.decisionId).then(function(result) {
+            getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
             // console.log(data);
@@ -148,7 +148,7 @@
 
             _.forEach(vm.characteristicGroups, function(group) {
                 var find = _.findIndex(group.characteristics, function(characteristicFind) {
-                    return characteristicFind.characteristicId == characteristic.characteristicId;
+                    return characteristicFind.id == characteristic.id;
                 });
                 if (find >= 0) {
                     group.characteristics[find].seletedValues = value;
@@ -159,8 +159,8 @@
         }
 
 
-        function getCriteriaGroupsById(decisionId) {
-            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+        function getCriteriaGroupsById(id) {
+            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 criteriaIds = [];
                 // Fill all criterias
                 if ($state.params.analysisId === 'hall-of-fame') {
@@ -184,8 +184,8 @@
             });
         }
 
-        function getCharacteristicsGroupsById(decisionId) {
-            return DecisionDataService.getCharacteristicsGroupsById(decisionId).then(function(result) {
+        function getCharacteristicsGroupsById(id) {
+            return DecisionDataService.getCharacteristicsGroupsById(id).then(function(result) {
                 // characteristics
                 return result;
             });
@@ -237,10 +237,10 @@
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
             vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
                 resultEl.characteristics = _.map(resultEl.characteristics, function(characteristicsItem) {
-                    characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.characteristicId, 'characteristicId', 'characteristics');
+                    characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.id, 'id', 'characteristics');
                     return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
-                return _.pick(resultEl, 'characteristicGroupId', 'characteristics', 'isClosed');
+                return _.pick(resultEl, 'id', 'characteristics', 'isClosed');
             });
             // console.log(vm.characteristicGroupsContent);
         }
@@ -249,12 +249,12 @@
             var arrayCopy = _.clone(array);
             return _.map(arrayCopy, function(item) {
                 var obj = _.pick(item, 'decision');
-                obj.decision = _.pick(item.decision, 'decisionId', 'nameSlug');
+                obj.decision = _.pick(item.decision, 'id', 'nameSlug');
                 obj[property] = _.find(item[property], function(findEl) {
                     return findEl[keyId] === id;
                 });
                 obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
-                obj.uuid = id.toString() + '-' + obj.decision.decisionId.toString();
+                obj.uuid = id.toString() + '-' + obj.decision.id.toString();
                 return obj;
             });
         }
@@ -531,7 +531,7 @@
             formDataForSearchRequest(criterion, coefCall);
             var sendData = DecisionSharedService.getFilterObject();
             sendData.persistent = true;
-            DecisionDataService.getDecisionMatrix(vm.decisionId, sendData).then(function(result) {
+            DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
                 DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
             });
         }
@@ -574,10 +574,10 @@
 
         function initMatrixMode() {
             vm.exclusionItemsLength = 0;
-            if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
-                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-            } else if (_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length > 0) {
-                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+            if (_fo.includeChildids && _fo.includeChildids.length > 0) {
+                vm.exclusionItemsLength = _fo.includeChildids.length;
+            } else if (_fo.excludeChildids && _fo.excludeChildids.length > 0) {
+                vm.exclusionItemsLength = _fo.excludeChildids.length;
             }
 
             vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
@@ -588,17 +588,17 @@
             var inclusionItemsLength = vm.inclusionItemsLength >= 0 ? vm.inclusionItemsLength : vm.decisions.totalDecisionMatrixs;
             _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
-                _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
-                if (_.isEmpty(_fo.excludeChildDecisionIds)) {
-                    _fo.excludeChildDecisionIds = null;
+                _fo.excludeChildids = _fo.includeChildids;
+                if (_.isEmpty(_fo.excludeChildids)) {
+                    _fo.excludeChildids = null;
                 }
-                _fo.includeChildDecisionIds = null;
+                _fo.includeChildids = null;
             } else if (mode === 'exclusion') {
-                _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
-                vm.exclusionItemsLength = _.isArray(_fo.includeChildDecisionIds) ? _fo.includeChildDecisionIds.length : 0;
-                _fo.excludeChildDecisionIds = null;
+                _fo.includeChildids = _fo.excludeChildids;
+                vm.exclusionItemsLength = _.isArray(_fo.includeChildids) ? _fo.includeChildids.length : 0;
+                _fo.excludeChildids = null;
                 if (vm.exclusionItemsLength === 0) {
-                    _fo.includeChildDecisionIds = [];
+                    _fo.includeChildids = [];
                 }
             }
             vm.inclusionItemsLength = inclusionItemsLength;
@@ -619,13 +619,13 @@
         function updateExclusionList(id) {
             if (!id) return;
             if (vm.matrixMode === 'inclusion') {
-                _fo.excludeChildDecisionIds = _fo.excludeChildDecisionIds ? _fo.excludeChildDecisionIds : [];
-                Utils.addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
-                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+                _fo.excludeChildids = _fo.excludeChildids ? _fo.excludeChildids : [];
+                Utils.addItemToArray(parseInt(id), _fo.excludeChildids);
+                vm.exclusionItemsLength = _fo.excludeChildids.length;
                 vm.inclusionItemsLength--;
             } else if (vm.matrixMode === 'exclusion') {
-                Utils.removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
-                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
+                Utils.removeItemFromArray(parseInt(id), _fo.includeChildids);
+                vm.exclusionItemsLength = _fo.includeChildids.length;
                 vm.inclusionItemsLength++;
             }
 

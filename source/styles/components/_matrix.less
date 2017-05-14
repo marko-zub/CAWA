@@ -1209,3 +1209,42 @@ filter-control {
     background-color: lighten(@gray-light, 5%);
     border-bottom: 1px solid @gray-light;
 }
+
+
+// Panel
+.closed {
+    .controls {
+        .fa {
+            .transform(rotate(180deg));
+        }        
+    }
+}
+.app-panel-title {
+    position: relative;
+    cursor: pointer;
+    background-color: @gray-light-extra-1;
+    .controls {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 0px 8px;
+        font-size: 19px;
+        color: @gray-mid;
+        i {
+            line-height: 26px;
+        }
+        &:hover {
+            color: @basic-active;
+        }
+    }    
+}
+
+.tab-content {
+    padding: 0 15px;
+    margin: 0 0 20px;
+}
+
+.icon-info {
+    display: inline-block;
+    margin: 0 4px;
+}

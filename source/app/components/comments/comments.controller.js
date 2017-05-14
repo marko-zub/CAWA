@@ -8,7 +8,7 @@
         .component('comments', {
             templateUrl: 'app/components/comments/comments.html',
             bindings: {
-                decisionId: '<',
+                id: '<',
                 optionId: '<'
             },
             controller: 'CommentsController',

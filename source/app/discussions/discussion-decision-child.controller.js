@@ -20,9 +20,9 @@
             criteriaArray = [],
             characteristicsArray = [];
 
-        function getCriteriaGroupsById(decisionId, criteriaArray) {
+        function getCriteriaGroupsById(id, criteriaArray) {
             // Criteria
-            return DecisionDataService.getCriteriaGroupsById(decisionId).then(function(result) {
+            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 // vm.criteriaGroups = result;
                 criteriaIds = [];
                 vm.criteriaGroups = _.filter(result, function(resultEl) {
@@ -40,9 +40,9 @@
             });
         }
 
-        function getCharacteristicsGroupsById(decisionId, characteristicsArray) {
+        function getCharacteristicsGroupsById(id, characteristicsArray) {
             // Characteristicts
-            return DecisionDataService.getCharacteristicsGroupsById(decisionId, {options: false}).then(function(result) {
+            return DecisionDataService.getCharacteristicsGroupsById(id, {options: false}).then(function(result) {
                 // vm.characteristicGroups = result;
                 characteristicsIds = [];
 
@@ -51,7 +51,7 @@
                         el.description = $sce.trustAsHtml(el.description);
 
                         var elEqual = _.find(characteristicsArray, {
-                            characteristicId: el.characteristicId
+                            id: el.id
                         });
 
                         if (elEqual) return _.merge(el, elEqual);
@@ -68,13 +68,13 @@
             // Get criteria and characteristic
 
             var sendData = {
-                includeChildDecisionIds: []
+                includeChildids: []
             };
 
-            sendData.includeChildDecisionIds.push($stateParams.discussionId);
-            DecisionDataService.getDecisionMatrix(vm.decision.decisionId, sendData).then(function(result) {
-                getCriteriaGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].criteria);
-                getCharacteristicsGroupsById(vm.decision.decisionId, result.decisionMatrixs["0"].characteristics);
+            sendData.includeChildids.push($stateParams.discussionId);
+            DecisionDataService.getDecisionMatrix(vm.decision.id, sendData).then(function(result) {
+                getCriteriaGroupsById(vm.decision.id, result.decisionMatrixs["0"].criteria);
+                getCharacteristicsGroupsById(vm.decision.id, result.decisionMatrixs["0"].characteristics);
             });
 
 
