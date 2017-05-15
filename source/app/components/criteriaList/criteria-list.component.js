@@ -21,6 +21,11 @@
     function CriteriaListController() {
         var
             vm = this;
-            if(!vm.links) vm.links = true;
+
+        vm.$onInit = onInit;
+
+        function onInit() {
+            if (!!vm.links) vm.links = true;
+        }
     }
 })();

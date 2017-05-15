@@ -1,5 +1,6 @@
-<div class="breadcrumbs-wrapper" ng-if="::breadcrumbs.length">
-    <breadcrumbs items="breadcrumbs"></breadcrumbs>
+<div class="breadcrumbs-wrapper" ng-if="::vm.breadcrumbs.length">
+    <breadcrumbs items="vm.breadcrumbs"></breadcrumbs>
+    }
 </div>
 <div class="app-top-panel">
     <div class="app-container-sm">
@@ -42,10 +43,10 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <criteria-list list="vm.criteriaGroups" links="!vm.isDecisionsParent"></criteria-list>
+                <criteria-list list="vm.criteriaGroups" links="false"></criteria-list>
             </div>
             <div class="col-sm-6">
-                <characteristics-list list="vm.characteristicGroups"></characteristics-list>
+                <characteristics-list list="vm.characteristicGroups" links="false"></characteristics-list>
             </div>
         </div>
 

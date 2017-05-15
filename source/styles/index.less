@@ -50,7 +50,7 @@ html {
 .app-top-panel {
   min-height: 40px;
   background-color: #fff;
-  border-bottom: 1px solid @gray-light;
+  // border-bottom: 1px solid @gray-light;
   overflow: hidden;
   position: relative;
 }
@@ -105,6 +105,7 @@ html {
 
 .post {
   padding: 0 8px;
+  margin: 0 0 32px;
 }
 
 body {
@@ -192,4 +193,8 @@ body {
 .nav-tabs > li.active > a:hover, 
 .nav-tabs > li.active > a:focus {
 
+}
+
+.nav-tabs > li > a {
+  border-radius: @border-radius @border-radius 0 0;
 }

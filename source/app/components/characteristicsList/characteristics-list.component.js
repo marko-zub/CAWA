@@ -8,7 +8,9 @@
         .component('characteristicsList', {
             templateUrl: 'app/components/characteristicsList/characteristics-list.html',
             bindings: {
-                list: '<'
+                list: '<',
+                links: '<',
+                comments: '<'
             },
             controller: 'CharacteristicsListController',
             controllerAs: 'vm',
@@ -20,7 +22,11 @@
     function CharacteristicsListController() {
         var
             vm = this;
-
-            // Format content
+            
+        vm.$onInit = onInit;
+        function onInit() {
+            if(!!vm.links) vm.links = true;
+            if(!!vm.comments) vm.comments = false;
+        }
     }
 })();

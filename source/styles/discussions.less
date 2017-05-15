@@ -217,6 +217,10 @@
     padding: 0 0 8px;
     margin: 0 0 12px 0;
     .discussions-list-content {
+        .link-secondary {
+            display: inline-block;
+            margin: 0 3px;
+        }
         padding: 3px 8px;
         p {
             margin: 0;
@@ -230,6 +234,9 @@
             &:hover {
                 background-color: @basic-active-light;
             }
+        }
+        &:last-child {
+            border-bottom: 0;
         }
     }
 

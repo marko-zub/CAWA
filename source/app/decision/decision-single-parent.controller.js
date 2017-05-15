@@ -14,7 +14,8 @@
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
 
         var
-            vm = this;
+            vm = this,
+            stateId;
 
         vm.$onInit = onInit;
 
@@ -24,29 +25,35 @@
 
             vm.id = $stateParams.id;
 
-            vm.parent = {};
-            vm.parent.id = $stateParams.parentId;
             vm.decision = decisionBasicInfo || {};
 
 
             vm.isDecisionsParent = false;
-            if(vm.decision.totalChildDecisions > 0) {
+            if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
             }
 
-            // TODO: Update title
-            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
-
-            $rootScope.breadcrumbs = [{
-                title: 'Decisions',
-                link: 'decisions'
-            }, {
-                title: vm.decision.name,
-                link: null
-            }];
+            stateId = parseInt($stateParams.parentId);
 
             // getDecisionNomimations($stateParams.id);
-            getDecisionParents($stateParams.id);
+            getDecisionParents($stateParams.id).then(function(result) {
+                vm.parent = _.find(result, function(parent) {
+                    return parent.id === stateId;
+                });
+
+                vm.breadcrumbs = [{
+                    title: 'Decisions',
+                    link: 'decisions'
+                }, {
+                    title: vm.parent.name,
+                    link: 'decisions.single({id:' + vm.parent.id + ', slug:"' + vm.parent.nameSlug + '"})'
+                }, {
+                    title: vm.decision.name,
+                    link: null
+                }];
+
+                $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';
+            });
         }
 
         function getDecisionNomimations(id) {
@@ -59,11 +66,11 @@
         }
 
         function getDecisionParents(id) {
-            DecisionDataService.getDecisionParents(id).then(function(result) {
+            return DecisionDataService.getDecisionParents(id).then(function(result) {
                 // console.log(result);
                 vm.decisionParents = result;
 
-                getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
+                getDecisionParentsCriteriaCharacteristicts(stateId);
 
                 return result;
             });

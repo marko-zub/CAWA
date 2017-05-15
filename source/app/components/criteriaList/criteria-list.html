@@ -13,7 +13,7 @@
                     <div class="discussions-list-content">
                         <div class="clearfix">
                             <div class="pull-left">
-                                <div ng-switch="vm.links == true" class="pull-left">
+                                <div ng-switch="::(vm.links == true)" class="pull-left">
                                     <a ng-switch-when="true" ui-sref="decisions.single.matrix.child.option({critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
                                     <span ng-switch-when="false" ng-bind="::criteria.name"></span>
                                 </div>
