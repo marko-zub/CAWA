@@ -175,7 +175,6 @@
                     return criteriaItem;
                 });
 
-                console.log(criteriaIds);
                 if ($state.params.analysisId === 'hall-of-fame') {
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                     _fo.persistent = false;

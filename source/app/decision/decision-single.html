@@ -20,7 +20,7 @@
                     <a href>General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a ui-sref="decisions.single.parent({parentId:parent.id, parentSlug:parent.nameSlug})"> Top {{::parent.name}}</a>
+                    <a ui-sref="decisions.single.parent({parentId:parent.id, parentSlug:parent.nameSlug})"> {{::parent.name}}</a>
                 </li>
             </ul>
         </div>

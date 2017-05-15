@@ -29,6 +29,11 @@
             vm.decision = decisionBasicInfo || {};
 
 
+            vm.isDecisionsParent = false;
+            if(vm.decision.totalChildDecisions > 0) {
+                vm.isDecisionsParent = true;
+            }
+
             // TODO: Update title
             $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
 
@@ -42,7 +47,6 @@
 
             // getDecisionNomimations($stateParams.id);
             getDecisionParents($stateParams.id);
-            console.log($stateParams);
         }
 
         function getDecisionNomimations(id) {
@@ -59,10 +63,8 @@
                 // console.log(result);
                 vm.decisionParents = result;
 
-                // if (vm.decision.totalChildDecisions < 0) {
-                vm.isDecisionsParent = false;
                 getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
-                // }
+
                 return result;
             });
         }

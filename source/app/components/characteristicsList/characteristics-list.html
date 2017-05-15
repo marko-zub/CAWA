@@ -12,9 +12,15 @@
                 <li ng-repeat="characteristic in ::group.characteristics | orderBy:'id'">
                     <div class="discussions-list-content">
                         <div class="clearfix">
-                            <div class="pull-left">
-                                <a ui-sref="decisions.single.matrix.child.option({critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a> <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                                <div ng-bind-html="::characteristic.html"></div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a ui-sref="decisions.single.matrix.child.option({critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a> <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div ng-bind-html="::characteristic.html"></div>
+                                </div>
+                                
+                                
                             </div>
                         </div>
                     </div>
