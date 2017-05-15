@@ -59,7 +59,7 @@
 
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
-            // TODO: simplify 
+            // TODO: simplify
             vm.decisionMatrixList = prepareMatrixData(data);
             vm.decisions.decisionMatrixs = data;
             initMatrix(data);
@@ -114,7 +114,7 @@
                 sendFo.filterQueries.push(data.filterQueries);
             }
 
-            if (_.isEmpty(sendFo.filterQueries) || 
+            if (_.isEmpty(sendFo.filterQueries) ||
                 (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
                 sendFo.filterQueries = null;
             }
@@ -173,7 +173,7 @@
                         if (criteria.description && !_.isObject(criteria.description)) {
                             criteria.description = $sce.trustAsHtml(criteria.description);
                         }
-                        criteriaIds.push(criteria.criterionId);
+                        criteriaIds.push(criteria.id);
                         return criteria;
                     });
                     return criteriaItem;
@@ -221,7 +221,7 @@
         //     vm.criteriaGroupsContent = decisionsCopy;
         //     // vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
         //     //     criteriaItem.criteria = _.map(criteriaItem.criteria, function(criteria) {
-        //     //         criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.criterionId, 'criterionId', 'criteria');
+        //     //         criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.id, 'id', 'criteria');
         //     //         return _.omit(criteria, 'description');
         //     //     });
         //     //     return _.pick(criteriaItem, 'criterionGroupId', 'criteria', 'isClosed');
@@ -267,11 +267,11 @@
             // Set Criteria for Hall of fame
             _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
-                    if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.criterionId)) {
+                    if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.id)) {
                         el.isSelected = true;
                         // Set criterion coefficient el.coefficient.
                         _.map(_fo.selectedCriteria.sortCriteriaCoefficients, function(value, key) {
-                            if (el.isSelected && parseInt(key) === el.criterionId) {
+                            if (el.isSelected && parseInt(key) === el.id) {
                                 var coefficientNew = findCoefNameByValue(value);
                                 el.coefficient = coefficientNew;
                             }
@@ -509,7 +509,7 @@
                     criterionGroupId: result.criterionGroupId
                 });
                 var criteriaIndex = _.findIndex(vm.criteriaGroups[groupIndex].criteria, {
-                    criterionId: result.criterionId
+                    id: result.id
                 });
                 vm.criteriaGroups[groupIndex].criteria[criteriaIndex] = result;
                 selectCriterion(event, result, criteria.isSelected);
@@ -538,22 +538,22 @@
 
 
         function formDataForSearchRequest(criterion, coefCall) {
-            if (!criterion.criterionId) return;
-            var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.criterionId);
+            if (!criterion.id) return;
+            var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.id);
             //select criterion
             if (position === -1) {
-                foSelectedCriteria.sortCriteriaIds.push(criterion.criterionId);
+                foSelectedCriteria.sortCriteriaIds.push(criterion.id);
                 //don't add default coefficient
                 if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
-                    foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
+                    foSelectedCriteria.sortCriteriaCoefficients[criterion.id] = criterion.coefficient.value;
                 }
                 //add only coefficient (but not default)
             } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
-                foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId] = criterion.coefficient.value;
+                foSelectedCriteria.sortCriteriaCoefficients[criterion.id] = criterion.coefficient.value;
                 //unselect criterion
             } else {
                 foSelectedCriteria.sortCriteriaIds.splice(position, 1);
-                delete foSelectedCriteria.sortCriteriaCoefficients[criterion.criterionId];
+                delete foSelectedCriteria.sortCriteriaCoefficients[criterion.id];
             }
             foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }
@@ -574,8 +574,8 @@
 
         function initMatrixMode() {
             vm.exclusionItemsLength = 0;
-            if (_fo.includeChildids && _fo.includeChildids.length > 0) {
-                vm.exclusionItemsLength = _fo.includeChildids.length;
+            if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
+                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
             } else if (_fo.excludeChildids && _fo.excludeChildids.length > 0) {
                 vm.exclusionItemsLength = _fo.excludeChildids.length;
             }
@@ -588,17 +588,17 @@
             var inclusionItemsLength = vm.inclusionItemsLength >= 0 ? vm.inclusionItemsLength : vm.decisions.totalDecisionMatrixs;
             _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
-                _fo.excludeChildids = _fo.includeChildids;
+                _fo.excludeChildids = _fo.includeChildDecisionIds;
                 if (_.isEmpty(_fo.excludeChildids)) {
                     _fo.excludeChildids = null;
                 }
-                _fo.includeChildids = null;
+                _fo.includeChildDecisionIds = null;
             } else if (mode === 'exclusion') {
-                _fo.includeChildids = _fo.excludeChildids;
-                vm.exclusionItemsLength = _.isArray(_fo.includeChildids) ? _fo.includeChildids.length : 0;
+                _fo.includeChildDecisionIds = _fo.excludeChildids;
+                vm.exclusionItemsLength = _.isArray(_fo.includeChildDecisionIds) ? _fo.includeChildDecisionIds.length : 0;
                 _fo.excludeChildids = null;
                 if (vm.exclusionItemsLength === 0) {
-                    _fo.includeChildids = [];
+                    _fo.includeChildDecisionIds = [];
                 }
             }
             vm.inclusionItemsLength = inclusionItemsLength;
@@ -624,8 +624,8 @@
                 vm.exclusionItemsLength = _fo.excludeChildids.length;
                 vm.inclusionItemsLength--;
             } else if (vm.matrixMode === 'exclusion') {
-                Utils.removeItemFromArray(parseInt(id), _fo.includeChildids);
-                vm.exclusionItemsLength = _fo.includeChildids.length;
+                Utils.removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
+                vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
                 vm.inclusionItemsLength++;
             }
 

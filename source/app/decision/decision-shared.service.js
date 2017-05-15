@@ -39,7 +39,7 @@
                 decisionsIds: []
             },
             persistent: true,
-            includeChildids: null,
+            includeChildDecisionIds: null,
             excludeChildids: null,
             filterQueries: null
         };
@@ -70,7 +70,7 @@
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
-                includeChildids: _fo.includeChildids,
+                includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildids: _fo.excludeChildids,
                 filterQueries: _fo.filterQueries
             };
@@ -80,11 +80,11 @@
             if (!obj) return;
 
             // Fix for inclusion tab first time call
-            if((obj.excludeChildids && obj.excludeChildids.length) > 0 && !obj.includeChildids) {
-                obj.includeChildids = null;
-            } else if (obj.includeChildids && obj.includeChildids.length) {
-                obj.excludeChildids = obj.includeChildids;
-                obj.includeChildids = null;
+            if((obj.excludeChildids && obj.excludeChildids.length) > 0 && !obj.includeChildDecisionIds) {
+                obj.includeChildDecisionIds = null;
+            } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
+                obj.excludeChildids = obj.includeChildDecisionIds;
+                obj.includeChildDecisionIds = null;
             }
 
             // Set new values
@@ -115,7 +115,7 @@
                 selectedDecision: {
                     decisionsIds: []
                 },
-                includeChildids: obj.includeChildids || null,
+                includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildids: obj.excludeChildids || null,
                 persistent: obj.persistent || false,
                 filterQueries: obj.filterQueries || null
