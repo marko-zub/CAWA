@@ -22,7 +22,7 @@
         //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.criterionGroupId">',
         //         '<div class="matrix-item matrix-g-item matrix-item-content">',
         //         '</div>',
-        //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.criterionId" ng-class="{\'hide\': group.isClosed}">',
+        //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.id" ng-class="{\'hide\': group.isClosed}">',
         //             '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
         //                 '<div class="matrix-col-content">',
         //                     '<div ng-switch="::(decisionCol.criteria.totalVotes > 0)">',
@@ -53,8 +53,8 @@
         var vm = this;
 
 
-        // ui-sref make deep watch 
-        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.criterionId, critOrCharSlug: item.nameSlug })"
+        // ui-sref make deep watch
+        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.id, critOrCharSlug: item.nameSlug })"
         // Create url in ctrl
 
         // Discussions
@@ -75,7 +75,7 @@
                 // vm.decisions = changes.decisions.currentValue;
 
                 // Render Matrix fist time and whne decisions size changes
-                // if (changes.criteria && 
+                // if (changes.criteria &&
                 //     changes.criteria.currentValue) {
                 //         generateBaseGrid(changes.criteria.currentValue);
                 // }
@@ -89,7 +89,7 @@
                 }
             }
             // debugger
-            
+
         }
 
 
@@ -116,7 +116,7 @@
             $('.m-group-col').html(emptyCol);
             _.forEach(decisions, function(decision) {
                 _.forEach(decision.criteria, function(criteria) {
-                    var id = '#m-group-col-' + decision.decision.id + '-' + criteria.criterionId;
+                    var id = '#m-group-col-' + decision.decision.id + '-' + criteria.id;
                     var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '"></rating-star>';
                     $(id).find('.rating').html(rating);
                     // console.log(id, rating);
@@ -143,14 +143,14 @@
             var html = [];
             // console.log(list);
             _.forEach(list, function(container) {
-               
+
                // Rows
                var rows = [];
                 _.forEach(container.criteria, function(row, rowIndex) {
                     // console.log(row);
-                    var decisionsRow = generateDecisionsRow(vm.decisions, row.criterionId);
+                    var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row" id="m-group-row-' + container.criterionGroupId + '-' + row.criterionId + '" style="top: ' + rowIndex *50+ 'px">',
+                        '<div class="m-group-row" id="m-group-row-' + container.criterionGroupId + '-' + row.id + '" style="top: ' + rowIndex *50+ 'px">',
                             decisionsRow,
                         '</div>'
                     ].join('\n');
@@ -162,7 +162,7 @@
                     '<div class="m-group" id="g-criteria-content-' + container.criterionGroupId + '" style="height: ' + container.criteria.length * 50 +'px">',
                         rows.join('\n'),
                     '</div>'
-                ].join('\n');                
+                ].join('\n');
 
                 // Group block
                 // console.log(container);
@@ -184,7 +184,7 @@
 
         function render(html) {
             $element.html(html);
-            $compile($element.contents())($scope);            
+            $compile($element.contents())($scope);
         }
 
         function getComments($event) {

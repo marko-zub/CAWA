@@ -50,8 +50,7 @@
                         <div id="matrix-scroll-group" class="scroll-group">
                             <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.id">
                                 <div class="matrix-col-content matrix-content-name decision-matrix-col">
-                                    <!-- ui-sref="decisions.single.matrix.child(::{discussionId:item.decision.id, discussionSlug:item.decision.nameSlug})" -->
-                                    <a href >
+                                    <a ui-sref="decisions.single.parent({id:item.decision.id, slug: item.decision.nameSlug, parentId:parent.id, parentSlug:parent.nameSlug})">
                                         <!-- deep watch {discussionId:item.decision.id, discussionSlug:item.decision.nameSlug} -->
                                         <div class="clearfix">
                                             <div class="matrix-img-container img-sm" >

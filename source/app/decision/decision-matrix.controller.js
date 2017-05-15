@@ -163,10 +163,6 @@
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 criteriaIds = [];
                 // Fill all criterias
-                if ($state.params.analysisId === 'hall-of-fame') {
-                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
-                    _fo.persistent = false;
-                }
 
                 vm.criteriaGroups = _.map(result, function(criteriaItem) {
                     _.map(criteriaItem.criteria, function(criteria) {
@@ -178,6 +174,12 @@
                     });
                     return criteriaItem;
                 });
+
+                console.log(criteriaIds);
+                if ($state.params.analysisId === 'hall-of-fame') {
+                    _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
+                    _fo.persistent = false;
+                }
 
                 // TOOD: check if work correct
                 return result;

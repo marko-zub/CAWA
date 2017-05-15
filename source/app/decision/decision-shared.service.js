@@ -40,7 +40,7 @@
             },
             persistent: true,
             includeChildDecisionIds: null,
-            excludeChildids: null,
+            excludeChildDecisionIds: null,
             filterQueries: null
         };
 
@@ -62,7 +62,7 @@
                 //criteria weight (1st level)
                 sortWeightCriteriaDirection: _fo.sorters.sortByCriteria.order,
                 //characteristic (2nd level)
-                sortid: _fo.sorters.sortByCharacteristic.id,
+                sortCharacteristicId: _fo.sorters.sortByCharacteristic.id,
                 sortCharacteristicDirection: _fo.sorters.sortByCharacteristic.order,
                 //property (3rd level)
                 sortDecisionPropertyName: _fo.sorters.sortByDecisionProperty.id,
@@ -71,7 +71,7 @@
                 decisionsIds: _fo.selectedDecision.decisionsIds,
                 persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
-                excludeChildids: _fo.excludeChildids,
+                excludeChildDecisionIds: _fo.excludeChildDecisionIds,
                 filterQueries: _fo.filterQueries
             };
         };
@@ -80,10 +80,10 @@
             if (!obj) return;
 
             // Fix for inclusion tab first time call
-            if((obj.excludeChildids && obj.excludeChildids.length) > 0 && !obj.includeChildDecisionIds) {
+            if((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
                 obj.includeChildDecisionIds = null;
             } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
-                obj.excludeChildids = obj.includeChildDecisionIds;
+                obj.excludeChildDecisionIds = obj.includeChildDecisionIds;
                 obj.includeChildDecisionIds = null;
             }
 
@@ -104,7 +104,7 @@
                         order: obj.sortWeightCriteriaDirection || 'DESC'
                     },
                     sortByCharacteristic: {
-                        id: obj.sortid || null,
+                        id: obj.sortCharacteristicId || null,
                         order: obj.sortCharacteristicDirection || null
                     },
                     sortByDecisionProperty: {
@@ -116,7 +116,7 @@
                     decisionsIds: []
                 },
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
-                excludeChildids: obj.excludeChildids || null,
+                excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
                 persistent: obj.persistent || false,
                 filterQueries: obj.filterQueries || null
             };
