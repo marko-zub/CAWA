@@ -16,12 +16,11 @@
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
-                <li ng-class="{'active':vm.activeTab == 0}">
-                    <a href ng-click="vm.activeTab = 0">General Info</a>
+                <li class="active">
+                    <a href>General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a ui-sref="decisions.single({id:parent.id, slug:parent.nameSlug})" ng-click="vm.activeTab = $index"> Top {{::parent.name}}</a>
-                    <!-- <a ng-click="vm.activeTab = $index">{{::parent.name}}</a> -->
+                    <a ui-sref="decisions.single.parent({parentId:parent.id, parentSlug:parent.nameSlug})"> Top {{::parent.name}}</a>
                 </li>
             </ul>
         </div>
@@ -43,39 +42,32 @@
                 </div>
                 <div class="col-sm-4">
                     <div ng-if="vm.isDecisionsParent">
-                        <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})"><i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix Hall of Fame</a>
+                        <a ui-sref="decisions.single.matrix.analysis({analysisId:'hall-of-fame'})">
+                            <i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix Hall of Fame
+                        </a>
                     </div>
                 </div>
             </div>
-            <!--         <div class="post-body">
-            <p class="app-content-description" ng-if="::vm.decision.description" ng-bind="::vm.decision.description"></p>
-        </div> -->
         </div>
-        <div class="row tabs-header-hide">
-            <uib-tabset active="vm.activeTab" disable="false">
-                <uib-tab index="0">
-                    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
-                    <div class="row">
-                        <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
-                            <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
-                        </div>
-                        <div class="col-sm-8">{{::vm.decision.description}}</div>                       
-                    </div>
-                </uib-tab>
-            </uib-tabset>
+        <div class="post-content">
+            <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+            <div class="row">
+                <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
+                    <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                </div>
+                <div class="col-sm-8">{{::vm.decision.description}}</div>
+            </div>
         </div>
-
-        <div class="col-sm-12" ng-if="!vm.isDecisionsParent">
+<!--         <div class="col-sm-12" ng-if="!vm.isDecisionsParent">
             <div class="row">
                 <div class="col-sm-6">
-                    <criteria-list list="vm.criteriaGroups" links="!(vm.decision.totalChildDecisions > 0)"></criteria-list>
+                    <criteria-list list="vm.criteriaGroups" links="!vm.isDecisionsParent"></criteria-list>
                 </div>
                 <div class="col-sm-6">
                     <characteristics-list list="vm.characteristicGroups"></characteristics-list>
                 </div>
             </div>
-        </div>
-
+        </div> -->
         <div class="row" ng-if="vm.isDecisionsParent">
             <div class="col-sm-8">
                 <ul class="discussions-list">
@@ -96,6 +88,7 @@
                                 </small>
                             </div>
                             <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
+                        </div>
                     </li>
                 </ul>
                 <!-- TODO: use as component -->
@@ -108,10 +101,11 @@
                     </div>
                 </div>
             </div>
-        <!-- Criteria -->
-        <div class="col-sm-4">
-            <criteria-list list="::vm.criteriaGroups"></criteria-list>
+            <!-- Criteria -->
+            <div class="col-sm-4">
+                <criteria-list list="::vm.criteriaGroups"></criteria-list>
+            </div>
+            <!-- End Criteria -->
         </div>
-        <!-- End Criteria -->
     </div>
 </div>

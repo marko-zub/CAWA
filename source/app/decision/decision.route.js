@@ -39,26 +39,29 @@
                     }
                 }
             })
+            .state('decisions.single.parent', {
+                url: '/:parentId/{parentSlug}',
+                abstract: false,
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-single-parent.html',
+                        controller: 'DecisionSingleParentController',
+                        controllerAs: 'vm',
+                    }
+                },
+                params: {
+                    parentSlug: {
+                        value: null,
+                        squash: false
+                    }
+                }
+            })
             .state('decisions.single.matrix', {
                 url: '/matrix',
                 views: {
                     "@": {
                         templateUrl: 'app/decision/decision-matrix.html',
                         controller: 'DecisionMatrixController',
-                        controllerAs: 'vm',
-                    }
-                },
-                resolve: {
-                    decisionStateInfo: DecisionStateResolver,
-                    decisionAnalysisInfo: DecisionAanalysisResolver
-                },
-            })
-            .state('decisions.single.matrixOld', {
-                url: '/matrix-old',
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision-matrix-old.html',
-                        controller: 'DecisionMatrixControllerOld',
                         controllerAs: 'vm',
                     }
                 },
@@ -86,7 +89,7 @@
 
         var result = decisionBasicInfo;
         if(!result) return;
-        
+
         // SLUG for Decision page firt time call
         var decisionSlug = result.nameSlug ? result.nameSlug : '';
 
@@ -115,6 +118,14 @@
                         reload: false,
                         location: false
                     });
+
+                    $rootScope.breadcrumbs = [{
+                        title: 'Decisions',
+                        link: 'decisions'
+                    }, {
+                        title: result.name,
+                        link: null
+                    }];
                 }
 
                 // TODO: fix it
@@ -188,7 +199,7 @@
         analysisId = urlParams[urlParams.length - 1];
         analysisSlug = urlParams[urlParams.length - 2];
 
-        // console.log(analysisSlug, analysisId); 
+        // console.log(analysisSlug, analysisId);
         if (analysisSlug === 'analysis' && analysisId && analysisId !== 'hall-of-fame') {
             return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
                 if (resp.error) {

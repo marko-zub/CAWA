@@ -68,10 +68,10 @@
             // Get criteria and characteristic
 
             var sendData = {
-                includeChildids: []
+                includeChildDecisionIds: []
             };
 
-            sendData.includeChildids.push($stateParams.discussionId);
+            sendData.includeChildDecisionIds.push($stateParams.discussionId);
             DecisionDataService.getDecisionMatrix(vm.decision.id, sendData).then(function(result) {
                 getCriteriaGroupsById(vm.decision.id, result.decisionMatrixs["0"].criteria);
                 getCharacteristicsGroupsById(vm.decision.id, result.decisionMatrixs["0"].characteristics);

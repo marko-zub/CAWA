@@ -4,55 +4,53 @@
 
     angular
         .module('app.decision')
-        .controller('DecisionSingleController', DecisionSingleController);
+        .controller('DecisionSingleParentController', DecisionSingleParentController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
+    DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
     ];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService,
+    function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
 
         var
             vm = this;
 
-        vm.id = $stateParams.id;
-        vm.decision = decisionBasicInfo || {};
-
-        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
-        vm.changePageSize = changePageSize;
-        vm.changePage = changePage;
-
-        $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
-
-        $rootScope.breadcrumbs = [{
-            title: 'Decisions',
-            link: 'decisions'
-        }, {
-            title: vm.decision.name,
-            link: null
-        }];
-
         vm.$onInit = onInit;
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            console.log('Decision Single Controller');
-            initPagination();
-            getDecisionNomimations($stateParams.id);
+            console.log('Decision Single Parent Controller');
+
+            vm.id = $stateParams.id;
+
+            vm.parent = {};
+            vm.parent.id = $stateParams.parentId;
+            vm.decision = decisionBasicInfo || {};
+
+
+            // TODO: Update title
+            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
+
+            $rootScope.breadcrumbs = [{
+                title: 'Decisions',
+                link: 'decisions'
+            }, {
+                title: vm.decision.name,
+                link: null
+            }];
+
+            // getDecisionNomimations($stateParams.id);
             getDecisionParents($stateParams.id);
+            console.log($stateParams);
         }
 
         function getDecisionNomimations(id) {
             if (!id) return;
 
-            var pagination = _.clone(vm.pagination);
-            pagination.pageNumber = pagination.pageNumber - 1;
-
             DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
                 vm.decisions = descriptionTrustHtml(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
-                // console.log(result);
             });
         }
 
@@ -61,14 +59,9 @@
                 // console.log(result);
                 vm.decisionParents = result;
 
-                if(vm.decision.totalChildDecisions > 0) {
-                    getCriteriaGroupsByParentId(vm.decision.id);
-                    vm.isDecisionsParent = true;
-                }
-                //} else {
-                //     // getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
-                //     vm.isDecisionsParent = false;
-                //     getDecisionParentsCriteriaCharacteristicts(vm.decisionParents[0]);
+                // if (vm.decision.totalChildDecisions < 0) {
+                vm.isDecisionsParent = false;
+                getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
                 // }
                 return result;
             });
@@ -76,16 +69,16 @@
 
         // TODO: clean up
         // Remove loop
-        function getDecisionParentsCriteriaCharacteristicts(parent) {
+        function getDecisionParentsCriteriaCharacteristicts(parentId) {
             var sendData = {
                 includeChildDecisionIds: []
             };
             sendData.includeChildDecisionIds.push(vm.decision.id);
-            DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
+            DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(result) {
                 var criteriaGroups;
                 $q.all([
-                    getCriteriaGroupsById(parent.id, result.decisionMatrixs[0].criteria),
-                    getCharacteristicsGroupsById(parent.id, result.decisionMatrixs[0].characteristics)
+                    getCriteriaGroupsById(parentId, result.decisionMatrixs[0].criteria),
+                    getCharacteristicsGroupsById(parentId, result.decisionMatrixs[0].characteristics)
                 ]).then(function(values) {
                     vm.criteriaGroups = values[0];
                     vm.characteristicGroups = values[1];
@@ -104,41 +97,6 @@
                 return el;
             });
         }
-
-        // Pagination
-        function changePageSize() {
-            vm.pagination.pageNumber = 1;
-            getDecisionNomimations($stateParams.id);
-            updateStateParams();
-        }
-
-        function changePage() {
-            getDecisionNomimations($stateParams.id);
-            updateStateParams();
-        }
-
-        function initPagination() {
-            vm.pagination = {
-                pageNumber: parseInt($stateParams.page) || 1,
-                pageSize: parseInt($stateParams.size) || 10,
-                totalDecisions: vm.decision.totalChildDecisions || 10
-            };
-            // updateStateParams();
-        }
-
-        function updateStateParams() {
-            // $state.go($state.current.name, {
-            //     id: vm.decision.id,
-            //     slug: vm.decision.nameSlug,
-            //     page: vm.pagination.pageNumber.toString(),
-            //     size: vm.pagination.pageSize.toString()
-            // }, {
-            //     notify: true,
-            //     reload: true,
-            //     location: false
-            // });
-        }
-
 
         // TODO: move to service
         function getCriteriaGroupsById(id, criteriaArray) {
@@ -192,17 +150,6 @@
                 });
                 list[0].isCollapsed = false;
                 return list;
-            });
-        }
-
-        function getCriteriaGroupsByParentId(id) {
-            // Criteria
-            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
-                vm.criteriaGroups = descriptionTrustHtml(result);
-                _.forEach(result, function(resultEl) {
-                    descriptionTrustHtml(resultEl.criteria);
-                });
-                return result;
             });
         }
 
