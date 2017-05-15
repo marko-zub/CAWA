@@ -72,7 +72,7 @@
             <div class="col-sm-8">
                 <ul class="discussions-list">
                     <li ng-repeat="decision in vm.decisions track by $index">
-                        <a ui-sref="decisions.single.matrix.child({discussionId:decision.id, discussionSlug:decision.nameSlug, size: null, page: null})">
+                        <a ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
                             <div class="clearfix">
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{decision.imageUrl}}" class="img-responsive">
@@ -81,6 +81,9 @@
                                     {{::decision.name}}
                                 </div>
                             </div>
+                        </a>
+                        <a ui-sref="decisions.single.matrix.child({discussionId:decision.id, discussionSlug:decision.nameSlug, size: null, page: null})">
+                            <span class="glyphicon glyphicon-comment"></span>
                         </a>
                         <div>
                             <div class="criteria-comliance">

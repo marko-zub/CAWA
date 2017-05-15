@@ -29,7 +29,7 @@
             value;
 
         vm.$onInit = onInit;
-        // vm.$onChanges = onChanges;
+        vm.$onChanges = onChanges;
 
         function onInit() {
             var votes = '';

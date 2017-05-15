@@ -108,7 +108,7 @@
                     _.filter(resultEl.criteria, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
                         var elEqual = _.find(criteriaArray, {
-                            criterionId: el.criterionId
+                            id: el.id
                         });
 
                         if (elEqual) return _.merge(el, elEqual);
