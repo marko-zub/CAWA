@@ -2,12 +2,12 @@
     'use strict';
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
-        'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', '$q', 'DecisionCriteriaCoefficientsConstant',
+        'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
         '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
-        DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, $q, DecisionCriteriaCoefficientsConstant,
+        DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
         $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
@@ -29,31 +29,27 @@
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
-            $q.all([
-                getDecisionMatrix(vm.id),
-                getCriteriaGroupsById(vm.id)
-            ]).then(function(values) {
-                // Render html matrix
-
-                var decisionMatrixs = values[0].decisionMatrixs;
-                // 2. render list of criterias
-                // createMatrixContentCriteria(decisionMatrixs);
-                renderMatrix(true);
-
-                // Init only first time
-                initSorters(); //Hall of fame
-                initMatrixMode();
-
-                getCharacteristicsGroupsById(vm.id).then(function(resp) {
-                    // 3. Render characteristics
-                    prepareCharacteristicsGroups(resp);
-                    createMatrixContentCharacteristics(decisionMatrixs);
+            getCriteriaGroupsById(vm.id).then(function(criteriaResp) {
+                getDecisionMatrix(vm.id).then(function(matrixResp) {
+                    // Render html matrix
+                    var decisionMatrixs = matrixResp.decisionMatrixs;
+                    // 2. render list of criterias
+                    // createMatrixContentCriteria(decisionMatrixs);
                     renderMatrix(true);
-                    vm.characteristicGroupsContentLoader = false;
-                });
 
-            }, function(error) {
-                console.log(error);
+                    // Init only first time
+                    initSorters(); //Hall of fame
+                    initMatrixMode();
+
+                    getCharacteristicsGroupsById(vm.id).then(function(resp) {
+                        // 3. Render characteristics
+                        prepareCharacteristicsGroups(resp);
+                        createMatrixContentCharacteristics(decisionMatrixs);
+                        renderMatrix(true);
+                        vm.characteristicGroupsContentLoader = false;
+                    });
+
+                });
             });
         }
 
@@ -178,6 +174,7 @@
                 if ($state.params.analysisId === 'hall-of-fame') {
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                     _fo.persistent = false;
+                    console.log(criteriaIds);
                 }
 
                 // TOOD: check if work correct
@@ -477,7 +474,8 @@
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            if (vm.decisionMatrixList.length !== prevTotal) table.style.width = tableWidth;
+            // if (vm.decisionMatrixList.length !== prevTotal) 
+            table.style.width = tableWidth;
 
         }
 

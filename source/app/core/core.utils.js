@@ -31,7 +31,7 @@
         function dateToDB(date) {
             var momentDate = Date(date);
             return moment(momentDate).valueOf();
-        }        
+        }
 
         function dateToUI(date) {
         	if(!date) return;

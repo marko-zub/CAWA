@@ -45,11 +45,11 @@
                     title: 'Decisions',
                     link: 'decisions'
                 }, {
-                    title: vm.parent.name,
-                    link: null
-                }, {
                     title: vm.decision.name,
                     link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
+                }, {
+                    title: vm.parent.name,
+                    link: 'decisions.single.parent({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '", parentId:' + vm.parent.id + ', parentSlug:"' + vm.parent.nameSlug + '"})'
                 }];
 
                 $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';

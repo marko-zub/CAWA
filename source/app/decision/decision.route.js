@@ -39,46 +39,48 @@
                     }
                 }
             })
-            .state('decisions.single.parent', {
-                url: '/:parentId/{parentSlug}',
-                abstract: false,
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision-single-parent.html',
-                        controller: 'DecisionSingleParentController',
-                        controllerAs: 'vm',
-                    }
-                },
-                params: {
-                    parentSlug: {
-                        value: null,
-                        squash: false
-                    }
+
+        // TODO: matrix and single.parent state have some bugs
+        .state('decisions.single.matrix', {
+            url: '/matrix',
+            views: {
+                "@": {
+                    templateUrl: 'app/decision/decision-matrix.html',
+                    controller: 'DecisionMatrixController',
+                    controllerAs: 'vm',
                 }
-            })
-            .state('decisions.single.matrix', {
-                url: '/matrix',
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision-matrix.html',
-                        controller: 'DecisionMatrixController',
-                        controllerAs: 'vm',
-                    }
-                },
-                resolve: {
-                    decisionStateInfo: DecisionStateResolver,
-                    decisionAnalysisInfo: DecisionAanalysisResolver
-                },
-            })
-            .state('decisions.single.matrix.analysis', {
-                url: '/analysis/:analysisId',
-                templateUrl: 'app/decision/decision.html',
-                controller: 'DecisionController',
-                controllerAs: 'vm',
-                resolve: {
-                    decisionStateInfo: DecisionStateResolver
-                },
-            });
+            },
+            resolve: {
+                decisionStateInfo: DecisionStateResolver,
+                decisionAnalysisInfo: DecisionAanalysisResolver
+            },
+        })
+        .state('decisions.single.matrix.analysis', {
+            url: '/analysis/:analysisId',
+            templateUrl: 'app/decision/decision.html',
+            controller: 'DecisionController',
+            controllerAs: 'vm',
+            resolve: {
+                decisionStateInfo: DecisionStateResolver
+            },
+        })
+        .state('decisions.single.parent', {
+            url: '/:parentId/{parentSlug}',
+            abstract: false,
+            views: {
+                "@": {
+                    templateUrl: 'app/decision/decision-single-parent.html',
+                    controller: 'DecisionSingleParentController',
+                    controllerAs: 'vm',
+                }
+            },
+            params: {
+                parentSlug: {
+                    value: null,
+                    squash: false
+                }
+            }
+        });
     }
 
 
@@ -88,7 +90,7 @@
     function DecisionStateResolver(decisionBasicInfo, $stateParams, $state, $rootScope) {
 
         var result = decisionBasicInfo;
-        if(!result) return;
+        if (!result) return;
 
         // SLUG for Decision page firt time call
         var decisionSlug = result.nameSlug ? result.nameSlug : '';
@@ -99,7 +101,7 @@
             $stateParams.slug = result.nameSlug;
         }
 
-
+        // TODO: optimize logic or remove from resolver
         var stateListener = $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
                 var

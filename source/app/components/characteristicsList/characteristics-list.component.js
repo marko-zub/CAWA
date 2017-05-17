@@ -22,7 +22,7 @@
     function CharacteristicsListController() {
         var
             vm = this;
-            
+
         vm.$onInit = onInit;
         function onInit() {
             if(!!vm.links) vm.links = true;
