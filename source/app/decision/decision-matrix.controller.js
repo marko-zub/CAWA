@@ -144,7 +144,7 @@
 
             _.forEach(vm.characteristicGroups, function(group) {
                 var find = _.findIndex(group.characteristics, function(characteristicFind) {
-                    return characteristicFind.id == characteristic.id;
+                    return characteristicFind.id == characteristic.characteristicId;
                 });
                 if (find >= 0) {
                     group.characteristics[find].seletedValues = value;

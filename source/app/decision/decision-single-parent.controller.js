@@ -49,7 +49,7 @@
                     link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
                 }, {
                     title: vm.parent.name,
-                    link: 'decisions.single.parent({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '", parentId:' + vm.parent.id + ', parentSlug:"' + vm.parent.nameSlug + '"})'
+                    link: null
                 }];
 
                 $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';
@@ -137,7 +137,7 @@
             }).then(function(result) {
                 // vm.characteristicGroups = result;
                 var list = _.map(result, function(resultEl) {
-                    resultEl.isCollapsed = true;
+
                     _.map(resultEl.characteristics, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
 
@@ -157,7 +157,7 @@
                     });
                     return resultEl;
                 });
-                list[0].isCollapsed = false;
+
                 return list;
             });
         }

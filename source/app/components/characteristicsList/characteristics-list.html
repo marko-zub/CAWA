@@ -9,7 +9,7 @@
         </h5>
         <div uib-collapse="group.isCollapsed">
             <ul class="discussions-list">
-                <li ng-repeat="characteristic in ::group.characteristics | orderBy:'id'">
+                <li ng-repeat="characteristic in ::group.characteristics track by characteristic.id">
                     <div class="discussions-list-content">
                         <div class="clearfix">
                             <div class="row">
