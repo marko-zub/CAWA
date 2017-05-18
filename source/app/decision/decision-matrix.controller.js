@@ -35,7 +35,7 @@
                     var decisionMatrixs = matrixResp.decisionMatrixs;
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
-                    renderMatrix(true);
+                    renderMatrix(false);
 
                     // Init only first time
                     initSorters(); //Hall of fame
@@ -46,7 +46,6 @@
                         prepareCharacteristicsGroups(resp);
                         createMatrixContentCharacteristics(decisionMatrixs);
                         renderMatrix(true);
-                        vm.characteristicGroupsContentLoader = false;
                     });
 
                 });
@@ -172,7 +171,6 @@
                 if ($state.params.analysisId === 'hall-of-fame') {
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                     _fo.persistent = false;
-                    console.log(criteriaIds);
                 }
 
                 // TOOD: check if work correct
@@ -330,6 +328,10 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
+
+                $scope.$applyAsync(function() {
+                    vm.characteristicGroupsContentLoader = false;
+                })
             }, 0);
             vm.decisionsSpinner = false;
         }

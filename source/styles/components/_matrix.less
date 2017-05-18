@@ -104,6 +104,11 @@
     .main-panel {
         width: 100%;
         overflow: hidden;
+        position: relative;
+        z-index: 2;
+        height: calc(~"100vh - 170px");       
+        margin-bottom: -46px; //Pagination height
+        padding-bottom: 46px;
     }
     &.decision {
         .scroll-wrapper-header {
@@ -135,6 +140,8 @@
 .matrix-content {
     position: relative;
     width: 2000px;
+    top: 0;
+    // padding: 0 10px 0 0;    
     .matrix-col {
         cursor: pointer;
         &:hover {
@@ -457,8 +464,6 @@ a {
     bottom: 0;
 }
 
-.matrix-content {
-}
 
 .matrix-panel {
     height: 100%;
@@ -474,6 +479,7 @@ a {
     overflow: hidden;
     z-index: 3;
     background-color: #fff;
+    padding: 0 10px 0 0;
     border-bottom: 1px solid @gray-light;
     // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     font-weight: 500;
@@ -553,10 +559,6 @@ a {
         z-index: 2;
         width: @matrix-aside-width;
         margin-left: 0;
-    }
-    .matrix-content {
-        top: 0;
-        padding: 0 10px 0 0;
     }
 }
 
@@ -793,11 +795,12 @@ a {
         border-bottom: 1px solid @gray-light;
         vertical-align: top;
         background-color: #fff;
+        position: relative;
     }
-    .matrix-col-name {
-        vertical-align: top;
-        height: @matrix-header;
-    }
+    // .matrix-col-name {
+    //     vertical-align: top;
+    //     height: @matrix-header;
+    // }
     .matrix-item {
         min-height: 50px;
         min-width: 100%;
@@ -814,14 +817,11 @@ a {
         max-width: 200px;
         min-height: 49px;
     }
-    .matrix-g {
-        position: relative;
-    }
+    // .matrix-g {
+    //     position: relative;
+    // }
     .matrix-aside {
         width: 200px;
-    }
-    .matrix-body {
-        left: 200px;
     }
     .info {
         position: absolute;
@@ -843,10 +843,6 @@ a {
             display: inline-block;
             line-height: 16px;
         }
-    }
-    .main-panel {
-        margin-bottom: -46px; //Pagination height
-        padding-bottom: 46px;
     }
     .nav-tabs-wrapper {
         border-bottom: 1px solid #ddd;
@@ -1085,6 +1081,7 @@ filter-control {
     position: relative;
     min-height: 100px;
     overflow: hidden;
+    border-right: 1px solid @gray-light;
     .app-loader-small {
         left: -200px;
         width: 100vw;
