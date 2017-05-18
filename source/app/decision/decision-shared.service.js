@@ -46,6 +46,8 @@
 
         //allias
 
+        // TODO: add function to clear object 
+        // Remove send 'data' etc...
         service.getFilterObject = function() {
             var _fo = service.filterObject;
             // console.log(_fo);

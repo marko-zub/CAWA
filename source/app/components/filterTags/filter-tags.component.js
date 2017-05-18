@@ -16,14 +16,14 @@
     function renderTemplate() {
         return [
             '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length">',
-                '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-                    '<span>{{::tag.characteristicName}}:</span>',
-                    '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
-                    '<div class="tag">',
-                        '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                    '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
-                    '</div>',
-                '</div>',
+            '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
+            '<span>{{::tag.characteristicName}}:</span>',
+            '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
+            '<div class="tag">',
+            '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
+            '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
+            '</div>',
+            '</div>',
             '</div>'
         ].join('\n');
     }
@@ -38,26 +38,32 @@
         vm.$onInit = onInit;
 
         function onInit() {
-
+             subscribe();
         }
 
-        DecisionNotificationService.subscribeFilterTags(function(event, data) {
-            _fo = angular.copy(data);
-            if (_fo) createTagsList(_fo.filterQueries);
+        function subscribe() {
+            DecisionNotificationService.subscribeFilterTags(function(event, data) {
+                _fo = data;
+                if (_fo) createTagsList(_fo.filterQueries);
 
-            // TODO: avoid jquery
-            setTimeout(function() {
+                // TODO: avoid jquery
                 var matrixMargin = $('#filter-tags').outerHeight();
+                if (vm.tags.length === 1) {
+                    matrixMargin = 30;
+                } else if(_.isEmpty(vm.tags)) {
+                    matrixMargin = 0;
+                }
+
                 $('.matrix-body-wrapper').css('margin-top', matrixMargin);
-            }, 0);
-        });
+            });            
+        }
 
         // TODO: remove logic
         // Optimize
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
 
-            if(item.type === "RangeQuery") {
+            if (item.type === "RangeQuery") {
                 itemCopy.value = null;
                 updateFilterObject(itemCopy);
                 return;
@@ -99,8 +105,9 @@
                 if (item.value === true) item.value = 'Yes';
                 if (item.value === false) item.value = 'No';
 
-                if(!_.isEmpty(item.value)) vm.tags.push(caseQueryType(item));
+                if (!_.isEmpty(item.value)) vm.tags.push(caseQueryType(item));
             });
+            // console.log(vm.tags);
         }
         // TODO: clean up
         function caseQueryType(item) {
@@ -114,10 +121,10 @@
                         if (item.queries[0].type == 'GreaterOrEqualQuery') {
 
                             // TODO: format date
-                            if (_.isDate(item.queries[0].value) && _.isDate(item.queries[1].value)) {
-                                item.queries[0].value = Utils.dateToUI(item.queries[0].value);
-                                item.queries[1].value = Utils.dateToUI(item.queries[1].value);
-                            }
+                            // if (_.isDate(item.queries[0].value) && _.isDate(item.queries[1].value)) {
+                            //     item.queries[0].value = Utils.dateToUI(item.queries[0].value);
+                            //     item.queries[1].value = Utils.dateToUI(item.queries[1].value);
+                            // }
                             // debugger
                             data[0] = item.queries[0].value + ' - ' + item.queries[1].value;
                         } else if (item.operator == 'OR') {

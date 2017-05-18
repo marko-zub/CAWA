@@ -67,7 +67,7 @@
         });
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
             getDecisionMatrix(vm.id).then(function(result) {
-                initMatrix(result.decisionMatrixs);
+                initMatrix(result.decisionMatrixs, true);
             });
         });
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
@@ -126,18 +126,16 @@
         // Discussions Subscrive
         vm.isCommentsOpen = false;
         DiscussionsNotificationService.subscribeOpenDiscussion(function(event, data) {
-            console.log(data);
             vm.isCommentsOpen = true;
         });
 
 
         function setCharacteristicChanges(characteristic) {
             if (!characteristic) return;
-            var value = characteristic.value;
-            if (characteristic.value) {
-                value = characteristic.value;
-            } else if (characteristic.queries) {
-                value = _.map(characteristic.queries, function(query) {
+            var characteristicCopy = angular.copy(characteristic);
+            var value = characteristicCopy.value;
+            if (characteristicCopy.queries && !characteristicCopy.value) {
+                value = _.map(characteristicCopy.queries, function(query) {
                     return query.value;
                 });
             }
@@ -575,8 +573,8 @@
             vm.exclusionItemsLength = 0;
             if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-            } else if (_fo.excludeChildids && _fo.excludeChildids.length > 0) {
-                vm.exclusionItemsLength = _fo.excludeChildids.length;
+            } else if (_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length > 0) {
+                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
             }
 
             vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
@@ -587,15 +585,15 @@
             var inclusionItemsLength = vm.inclusionItemsLength >= 0 ? vm.inclusionItemsLength : vm.decisions.totalDecisionMatrixs;
             _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
-                _fo.excludeChildids = _fo.includeChildDecisionIds;
-                if (_.isEmpty(_fo.excludeChildids)) {
-                    _fo.excludeChildids = null;
+                _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
+                if (_.isEmpty(_fo.excludeChildDecisionIds)) {
+                    _fo.excludeChildDecisionIds = null;
                 }
                 _fo.includeChildDecisionIds = null;
             } else if (mode === 'exclusion') {
-                _fo.includeChildDecisionIds = _fo.excludeChildids;
+                _fo.includeChildDecisionIds = _fo.excludeChildDecisionIds;
                 vm.exclusionItemsLength = _.isArray(_fo.includeChildDecisionIds) ? _fo.includeChildDecisionIds.length : 0;
-                _fo.excludeChildids = null;
+                _fo.excludeChildDecisionIds = null;
                 if (vm.exclusionItemsLength === 0) {
                     _fo.includeChildDecisionIds = [];
                 }
@@ -618,9 +616,9 @@
         function updateExclusionList(id) {
             if (!id) return;
             if (vm.matrixMode === 'inclusion') {
-                _fo.excludeChildids = _fo.excludeChildids ? _fo.excludeChildids : [];
-                Utils.addItemToArray(parseInt(id), _fo.excludeChildids);
-                vm.exclusionItemsLength = _fo.excludeChildids.length;
+                _fo.excludeChildDecisionIds = _fo.excludeChildDecisionIds ? _fo.excludeChildDecisionIds : [];
+                Utils.addItemToArray(parseInt(id), _fo.excludeChildDecisionIds);
+                vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
                 vm.inclusionItemsLength--;
             } else if (vm.matrixMode === 'exclusion') {
                 Utils.removeItemFromArray(parseInt(id), _fo.includeChildDecisionIds);
