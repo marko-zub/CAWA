@@ -21,7 +21,6 @@
 
         vm.discussion = decisionDiscussionInfo || {};
 
-        var pageTitle = vm.discussion.childDecision && vm.discussion.childDecision.name;
         var critOrCharTitle = '';
         if (vm.discussion.childCharacteristic) {
             pageTitle += ' ' + vm.discussion.childCharacteristic.name;
@@ -31,26 +30,17 @@
             critOrCharTitle = vm.discussion.childCriterion.name;
         }
 
-        $rootScope.pageTitle = 'Discussion ' + pageTitle + ' | DecisionWanted';
+
+
+        vm.goToDiscussion = goToDiscussion;
 
         init();
-
-        function searchCommentableVotesWeight(discussionId, critOrCharId) {
-            if (!discussionId || !critOrCharId) return;
-            DiscussionsDataService.searchCommentableVotesWeight(discussionId, critOrCharId)
-                .then(function(resp) {
-                    // console.log(resp);
-                    vm.discussion.votes = resp;
-                }).catch(function(err) {
-                    console.log(err);
-                });
-        }
 
         function init() {
             console.log('Discussion Child Option Controller');
 
             console.log(vm.discussion);
-            vm.title = pageTitle;
+            setPageTitle();
 
             // getCriteriaGroupsById(vm.discussion.decision.id);
             // getCharacteristicsGroupsById(vm.discussion.decision.id);
@@ -98,7 +88,22 @@
             }];
         }
 
-        vm.goToDiscussion = goToDiscussion;
+        function searchCommentableVotesWeight(discussionId, critOrCharId) {
+            if (!discussionId || !critOrCharId) return;
+            DiscussionsDataService.searchCommentableVotesWeight(discussionId, critOrCharId)
+                .then(function(resp) {
+                    // console.log(resp);
+                    vm.discussion.votes = resp;
+                }).catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        function setPageTitle() {
+            var pageTitle = vm.discussion.childDecision && vm.discussion.childDecision.name;
+            vm.title = pageTitle;
+            $rootScope.pageTitle = 'Discussion ' + pageTitle + ' | DecisionWanted';
+        }
 
         function goToDiscussion(discussionId, critOrCharId) {
             params.discussionId = discussionId;

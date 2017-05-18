@@ -11,5 +11,7 @@
     ng-keyup="vm.shouldSelectSuggestedDecisions($event, vm.searchQuery)"
     typeahead-on-select="vm.selectSuggestedDecisions($item)"
     ng-class="{'open':vm.searchQuery}"
+    id="header-search"
     typeahead-append-to-body="true">
-<span class="fa fa-search glyphicon glyphicon-search search-input-icon" ng-click="vm.search()" tabindex="0"></span>
+<i class="fa fa-search glyphicon glyphicon-search search-input-icon" ng-click="vm.search()" tabindex="0"></i>
+<i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearValue()" ng-show="vm.searchQuery.length > 0"></i>

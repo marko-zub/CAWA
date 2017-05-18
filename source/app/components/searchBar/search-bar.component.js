@@ -25,15 +25,16 @@
         vm.searchSuggestedDecisions = searchSuggestedDecisions;
         vm.selectSuggestedDecisions = selectSuggestedDecisions;
         vm.shouldSelectSuggestedDecisions = shouldSelectSuggestedDecisions;
-        
-        init();
-        function init() {
-            vm.searchQuery = $stateParams.query ? decodeURI($stateParams.query) : null;
-        }
+        vm.clearValue = clearValue;
 
-        vm.searchOptions = {
-            debounce: 50
-        };
+        vm.$onInit = onInit;
+
+        function onInit() {
+            vm.searchQuery = $stateParams.query ? decodeURI($stateParams.query) : null;
+            vm.searchOptions = {
+                debounce: 50
+            };
+        }
 
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams) {
@@ -42,6 +43,11 @@
 
         function search() {
             changeState(vm.searchQuer);
+        }
+
+        function clearValue() {
+            vm.searchQuery = null;
+            $('#header-search').focus();
         }
 
         function shouldSelectSuggestedDecisions($event, model) {
