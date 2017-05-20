@@ -24,6 +24,10 @@
                 name: 'All',
                 value: 'all'
             };
+            
+        vm.controlOptions = {
+            debounce: 50
+        };
 
         vm.changeSelect = changeSelect;
 

@@ -38,6 +38,15 @@
                                 <div class="matrix-title app-sorter-wrapper matrix-content-name">
                                     Name
                                 </div>
+
+                                <!-- Filter  -->
+                                <div class="filter-name">
+                                    <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                    <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                                    <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                                </div>
+                                <!-- Filter Name -->
+
                                 <div class="app-sorter">
                                     <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'ASC'}"></span>
                                     <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-click="vm.orderByDecisionProperty('name', 'DESC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'DESC'}"></span>
@@ -178,7 +187,7 @@
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <matrix-characteristics ng-hide="vm.characteristicGroupsContentLoader" list="vm.characteristicGroupsContent"></matrix-characteristics>
+                                <matrix-characteristics ng-hide="vm.characteristicGroupsContentLoader" characteristics="vm.characteristicGroupsContent"></matrix-characteristics>
                             </div>
 
                         </div>

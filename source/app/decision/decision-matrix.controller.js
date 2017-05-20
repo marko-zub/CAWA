@@ -20,6 +20,8 @@
         function onInit() {
             console.log('Decision Matrix Controller');
 
+            vm.filterName = null;
+
             vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
@@ -51,6 +53,43 @@
                 });
             });
         }
+
+        // Filter name
+        vm.clearFilterName = clearFilterName;
+        vm.filterNameSubmit = filterNameSubmit;
+        vm.filterNameSubmitClick = filterNameSubmitClick;
+        vm.controlOptions = {
+            debounce: 50
+        };
+        function clearFilterName() {
+            vm.filterName = null;
+            if(_fo.decisionNameFilterPattern.length) {
+                filterNameSend(null);
+            }
+        }
+
+        function filterNameSubmit(event, value) {
+            if(!value) return;
+            if (event.keyCode === 13) {
+                filterNameSend(value);
+                event.preventDefault();
+            }
+        }
+
+        function filterNameSend(value) {
+            if(!_.isNull(value) && !value) return;
+
+            // TODO: send as parametr in getDecisionMatrix(id, filterObj) ?!
+            _fo.decisionNameFilterPattern = _.escape(value);
+            getDecisionMatrix(vm.id).then(function(result) {
+                initMatrix(result.decisionMatrixs, true);
+            });            
+        }
+
+        function filterNameSubmitClick(value) {
+            filterNameSend(value);
+        }
+        // End Filter name
 
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
@@ -248,7 +287,7 @@
                     return findEl[keyId] === id;
                 });
                 obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
-                obj.uuid = id.toString() + '-' + obj.decision.id.toString();
+                // obj.uuid = id.toString() + '-' + obj.decision.id.toString();
                 return obj;
             });
         }
@@ -331,7 +370,7 @@
 
                 $scope.$applyAsync(function() {
                     vm.characteristicGroupsContentLoader = false;
-                })
+                });
             }, 0);
             vm.decisionsSpinner = false;
         }
@@ -420,7 +459,7 @@
         }
 
         function updatePosition(martrixScroll) {
-            var _this = martrixScroll || this;
+            var _this = martrixScroll || this; // jshint ignore:line
             scrollHandler(_this.y, _this.x);
             $('.matrix-g .app-control').toggleClass('selected', false);
         }

@@ -19,7 +19,7 @@
 
     // function renderTemplate() {
         // return [
-        //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.criterionGroupId">',
+        //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.id">',
         //         '<div class="matrix-item matrix-g-item matrix-item-content">',
         //         '</div>',
         //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.id" ng-class="{\'hide\': group.isClosed}">',
@@ -70,29 +70,25 @@
             // TODO: check for performance
             // Also compare current and prev changes
 
-
             if (changes.decisions && changes.decisions.currentValue) {
-                // vm.decisions = changes.decisions.currentValue;
-
-                // Render Matrix fist time and whne decisions size changes
-                // if (changes.criteria &&
-                //     changes.criteria.currentValue) {
-                //         generateBaseGrid(changes.criteria.currentValue);
-                // }
-
+                // if first changes and not changed size of decision 
+                // Generate base html
+                if(!changes.decisions.previousValue || 
+                    changes.decisions.currentValue.length !== changes.decisions.previousValue.length) {
+                    generateBaseGrid(vm.criteria);
+                }
+                // Use index to add decision
+                // to avoid rerendering all grid all time
                 // Fill criteria values
                 if(vm.criteria &&
                     !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
-                // if(!angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
-                    generateBaseGrid(vm.criteria);
                     generateCriteriaMatrix(changes.decisions.currentValue);
                 }
             }
-            // debugger
-
         }
 
 
+        // TODO: any way faster render?
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
                 '<span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
@@ -111,12 +107,12 @@
         ].join('\n');
 
         function generateCriteriaMatrix(decisions) {
-            // console.log(decisions);
+            // TODO: do we need clear all cells html?
             // Empty criterion?!
-            $('.m-group-col').html(emptyCol);
-            _.forEach(decisions, function(decision) {
+            $($element).find('.m-group-col').html(emptyCol);
+            _.forEach(decisions, function(decision, decisionIndex) {
                 _.forEach(decision.criteria, function(criteria) {
-                    var id = '#m-group-col-' + decision.decision.id + '-' + criteria.id;
+                    var id = '#m-criteria-' + decisionIndex + '-' + criteria.id;
                     var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '"></rating-star>';
                     $(id).find('.rating').html(rating);
                     // console.log(id, rating);
@@ -130,7 +126,7 @@
             var html = [];
             _.forEach(decisions, function(decision, decisionIndex) {
                 var col = [
-                    '<div class="m-group-col" id="m-group-col-' + decision.decision.id + '-' + id +'" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
+                    '<div class="m-group-col" id="m-criteria-' + decisionIndex + '-' + id +'" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
                     '</div>'
                 ].join('\n');
                 html.push(col);
@@ -150,7 +146,7 @@
                     // console.log(row);
                     var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row" id="m-group-row-' + container.criterionGroupId + '-' + row.id + '" style="top: ' + rowIndex *50+ 'px">',
+                        '<div class="m-group-row" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex *50+ 'px">',
                             decisionsRow,
                         '</div>'
                     ].join('\n');
@@ -159,7 +155,7 @@
 
                 // Content block
                 var content = [
-                    '<div class="m-group" id="g-criteria-content-' + container.criterionGroupId + '" style="height: ' + container.criteria.length * 50 +'px">',
+                    '<div class="m-group" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 +'px">',
                         rows.join('\n'),
                     '</div>'
                 ].join('\n');
@@ -167,7 +163,7 @@
                 // Group block
                 // console.log(container);
                 var containerHtml = [
-                    '<div class="m-group" id="g-criteria-' + container.criterionGroupId + '">',
+                    '<div class="m-group" id="g-criteria-' + container.id + '">',
                         '<div class="m-group-title">',
                             // container.name,
                         '</div>',

@@ -41,7 +41,8 @@
             persistent: true,
             includeChildDecisionIds: null,
             excludeChildDecisionIds: null,
-            filterQueries: null
+            filterQueries: null,
+            decisionNameFilterPattern: null
         };
 
         //allias
@@ -74,7 +75,8 @@
                 persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds,
-                filterQueries: _fo.filterQueries
+                filterQueries: _fo.filterQueries,
+                decisionNameFilterPattern: _fo.decisionNameFilterPattern
             };
         };
 
@@ -120,7 +122,8 @@
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
                 persistent: obj.persistent || false,
-                filterQueries: obj.filterQueries || null
+                filterQueries: obj.filterQueries || null,
+                decisionNameFilterPattern: obj.decisionNameFilterPattern || null
             };
 
             service.filterObject = sortObjAnalysis;
