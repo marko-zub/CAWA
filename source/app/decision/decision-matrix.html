@@ -145,7 +145,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by characteristic.id" ng-class="{'hide': group.isClosed}">
+                                    <div class="matrix-item js-item-aside visual-type-{{::characteristic.valueType.toLowerCase()}}" ng-repeat="characteristic in group.characteristics track by characteristic.id" ng-class="{'hide': group.isClosed}">
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                             <filter-control  selected="characteristic.seletedValues" item="::characteristic"></filter-control>
@@ -178,7 +178,7 @@
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <matrix-characteristics ng-hide="vm.characteristicGroupsContentLoader" list="vm.characteristicGroupsContent"></matrix-characteristics>
+                                <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups" ></matrix-characteristics>
                             </div>
 
                         </div>

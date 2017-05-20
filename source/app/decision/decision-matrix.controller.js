@@ -20,6 +20,8 @@
         function onInit() {
             console.log('Decision Matrix Controller');
 
+            initMatrixScroller();
+
             vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
@@ -44,7 +46,7 @@
                     getCharacteristicsGroupsById(vm.id).then(function(resp) {
                         // 3. Render characteristics
                         prepareCharacteristicsGroups(resp);
-                        createMatrixContentCharacteristics(decisionMatrixs);
+                        // createMatrixContentCharacteristics(decisionMatrixs);
                         renderMatrix(true);
                     });
 
@@ -115,7 +117,7 @@
             }
 
             getDecisionMatrix(vm.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, false);
+                initMatrix(result.decisionMatrixs, true);
             });
             // console.log(data);
             setCharacteristicChanges(data.filterQueries);
@@ -285,12 +287,12 @@
         // TODO: optimize avoid Reflow!
         var matrixAsideRow,
             matrixRows;
-        matrixAsideRow = document.getElementsByClassName('js-item-aside');
-        matrixRows = document.getElementsByClassName('js-matrix-item-content');
-
 
         var matrixAsideRowH = [];
         var matrixRowsH = [];
+
+        matrixAsideRow = document.getElementsByClassName('js-item-aside');
+        matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
         function calcMatrixRowHeight() {
             $('.js-item-aside').css('height', 'auto');
@@ -352,7 +354,7 @@
             // var performance = window.performance;
             // var t0 = performance.now();
             // createMatrixContentCriteria(data);
-            createMatrixContentCharacteristics(data);
+            // createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
@@ -436,7 +438,7 @@
             tableHeader.style.left = scrollLeft + 'px';
         }
         // Custom scroll
-        initMatrixScroller();
+        
         var martrixScroll;
 
         function initMatrixScroller() {
