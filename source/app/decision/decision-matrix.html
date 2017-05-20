@@ -144,7 +144,7 @@
                                 <div class="title">
                                     Characteristics
                                 </div>
-                                <div class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
+                                <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
                                     <div class="matrix-item  matrix-g-item">
                                         <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'characteristics')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>

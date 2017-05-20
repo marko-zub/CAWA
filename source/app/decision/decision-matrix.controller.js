@@ -87,6 +87,7 @@
         }
 
         function filterNameSubmitClick(value) {
+            if(!value) return;
             filterNameSend(value);
         }
         // End Filter name
@@ -226,7 +227,7 @@
 
         function prepareCharacteristicsGroups(result) {
             var total = 0;
-            vm.characteristicGroups = _.map(result, function(resultEl) {
+            vm.characteristicGroups = _.chain(result).map(function(resultEl) {
                 total += resultEl.characteristics.length;
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
@@ -242,7 +243,7 @@
                     return characteristicsItem;
                 });
                 return resultEl;
-            });
+            }).value();
         }
 
         // TODO: try to optimize it
@@ -268,13 +269,13 @@
             var decisionsCopy = angular.copy(decisions);
             // characteristics
             var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
-            vm.characteristicGroupsContent = _.map(characteristicGroupsCopy, function(resultEl) {
+            vm.characteristicGroupsContent = _.chain(characteristicGroupsCopy).map(function(resultEl) {
                 resultEl.characteristics = _.map(resultEl.characteristics, function(characteristicsItem) {
                     characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.id, 'id', 'characteristics');
                     return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
                 });
                 return _.pick(resultEl, 'id', 'characteristics', 'isClosed');
-            });
+            }).value();
             // console.log(vm.characteristicGroupsContent);
         }
 
@@ -327,39 +328,62 @@
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
-
         var matrixAsideRowH = [];
         var matrixRowsH = [];
 
         function calcMatrixRowHeight() {
+            var matrixSizes = [];
             $('.js-item-aside').css('height', 'auto');
             $('.js-matrix-item-content').css('height', 'auto');
 
             var asideArray = [],
                 contentArray = [];
             if (!matrixRows.length) return;
-            for (var i = matrixRows.length - 1; i >= 0; i--) {
+            for (var i = 0; i < matrixRows.length; i++) {
                 var el,
                     elAside,
                     newH;
 
                 el = matrixRows[i];
-                elAside = matrixAsideRow[i];
+                elAside = matrixAsideRow[i]; //TODO: Pofiler 600ms in slow PC
 
                 // matrixAsideRowH.push(elAside.clientHeight);
                 // matrixRowsH.push(el.clientHeight);
 
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
+                matrixSizes.push(newH);
                 // Set new height
-                var newHpx = newH;
-                el.style.height = newH + 'px';
-                elAside.style.height = newH + 'px';
-
-
+                // el.style.height = newH + 'px';
+                // elAside.style.height = newH + 'px';
             }
-            // console.log(_.uniq(matrixAsideRowH), _.min(matrixAsideRowH));
-            // console.log(_.uniq(matrixRowsH), _.min(matrixRowsH));
+
+            applySizes(matrixSizes);
         }
+
+        function applySizes(matrixSizes) {
+            var titleH = 24;
+            // console.log(matrixSizes);
+
+            var matrixSizesCopy = angular.copy(matrixSizes);
+            var characteristicsCopy = angular.copy(vm.characteristicGroups);
+           
+            _.forEach(characteristicsCopy, function(group) {
+                var array = matrixSizesCopy.splice(0, group.characteristics.length);
+                var size = _.sum(array) + titleH;
+                $('.matrix-g-characteristics[data-characteristic-group=' + group.id + ']').css({
+                    'height': size
+                });
+                // console.log(size);
+            });
+
+            for (var i = 0; i < matrixSizes.length; i++) {
+                matrixRows[i].style.height = matrixSizes[i] + 'px';
+                matrixAsideRow[i].style.height = matrixSizes[i] + 'px';                
+            }
+            // 
+        }
+
+
 
         // TODO: drop settimeout and apply
         // Need only for first time load
@@ -401,7 +425,8 @@
         }
 
         function prepareMatrixData(data) {
-            return _.map(data, function(decisionMatrixEl) {
+            var dataCopy = angular.copy(data);
+            return _.map(dataCopy, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
                 if (decisionMatrixEl.decision.description && !_.isObject(decisionMatrixEl.decision.description)) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {

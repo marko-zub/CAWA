@@ -58,23 +58,15 @@
             } else {
                 var startDate = parseInt(model.startDate.valueOf());
                 var endDate = parseInt(model.endDate.valueOf());
-                queries = [{
-                    "type": "GreaterOrEqualQuery",
-                    "id": item.id,
-                    "value": startDate
-                }, {
-                    "type": "LessOrEqualQuery",
-                    "id": item.id,
-                    "value": endDate
-                }];
+                queries = [startDate, endDate];
             }
 
             var query = {
-                "type": "CompositeQuery",
+                "type": "RangeQuery",
                 "characteristicId": item.id,
                 "characteristicName": item.name,
                 "operator": "AND",
-                "queries": queries
+                "value": queries
             };
 
             FilterControlsDataService.characteristicChange(item.id, query);
