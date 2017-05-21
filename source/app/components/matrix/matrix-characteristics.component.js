@@ -19,10 +19,10 @@
 
     function renderTemplate() {
         return [
-            '<div class="matrix-g matrix-g-characteristics" data-characteristic-group="{{::group.id}}" ng-repeat="group in vm.characteristicsDisplay track by group.id" ng-class="{\'hide\': group.isClosed}">',
+            '<div class="matrix-g matrix-g-characteristics" data-characteristic-group="{{::group.id}}" ng-repeat="group in vm.characteristicsDisplay track by group.id">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
-                '<div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.id">',
+                '<div class="matrix-item matrix-item-content js-matrix-item-content js-toggle-hide" ng-repeat="item in group.characteristics track by item.id">',
                     '<div class="matrix-row">',
                         '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',

@@ -54,6 +54,7 @@
             });
         }
 
+        // TODO: move to separate component
         // Filter name
         vm.clearFilterName = clearFilterName;
         vm.filterNameSubmit = filterNameSubmit;
@@ -61,15 +62,16 @@
         vm.controlOptions = {
             debounce: 50
         };
+
         function clearFilterName() {
             vm.filterName = null;
-            if(_fo.decisionNameFilterPattern.length) {
-                filterNameSend(null);
-            }
+            // if (_fo.decisionNameFilterPattern.length) {
+            filterNameSend(null);
+            // }
         }
 
         function filterNameSubmit(event, value) {
-            if(!value) return;
+            if (!value) return;
             if (event.keyCode === 13) {
                 filterNameSend(value);
                 event.preventDefault();
@@ -77,17 +79,23 @@
         }
 
         function filterNameSend(value) {
-            if(!_.isNull(value) && !value) return;
+            if (!_.isNull(value) && !value) return;
 
             // TODO: send as parametr in getDecisionMatrix(id, filterObj) ?!
             _fo.decisionNameFilterPattern = _.escape(value);
-            getDecisionMatrix(vm.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
-            });            
+
+            DecisionNotificationService.notifyFilterByName(_fo.decisionNameFilterPattern || value);
+
+            // TODO: avoid string 'Name'
+            DecisionNotificationService.notifyFilterTags({
+                id: -1,
+                name: 'Name',
+                value: _fo.decisionNameFilterPattern
+            });
         }
 
         function filterNameSubmitClick(value) {
-            if(!value) return;
+            if (!value) return;
             filterNameSend(value);
         }
         // End Filter name
@@ -99,16 +107,19 @@
             vm.decisions.decisionMatrixs = data;
             initMatrix(data);
         });
+
         DecisionNotificationService.subscribePageChanged(function() {
             getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
+
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
             getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
+
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
             DecisionDataService.getDecisionCharacteristics(vm.id, data.id).then(function(result) {
@@ -117,6 +128,7 @@
                 data.detailsSpinner = false;
             });
         });
+
         DecisionNotificationService.subscribeSelectSorter(function(event, data) {
             // TODO: clean up DecisionSharedService in controller maake one object
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
@@ -126,6 +138,7 @@
                 initMatrix(result.decisionMatrixs);
             });
         });
+
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
             // if (!data.filterQueries) return;
             var sendFo = DecisionSharedService.filterObject;
@@ -161,6 +174,14 @@
             setCharacteristicChanges(data.filterQueries);
             DecisionNotificationService.notifyFilterTags(sendFo);
         });
+
+        DecisionNotificationService.subscribeFilterByName(function(event, data) {
+            getDecisionMatrix(vm.id).then(function(result) {
+                initMatrix(result.decisionMatrixs, true);
+                vm.filterName = data;
+            });
+        });
+
 
         // Discussions Subscrive
         vm.isCommentsOpen = false;
@@ -296,22 +317,28 @@
 
         //Init sorters, when directives loaded
         function initSorters() {
+            // Set filter by name
+            // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
+
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
             // Set Criteria for Hall of fame
-            _.map(vm.criteriaGroups, function(criteriaGroupsArray) {
+            var copyCriteria = angular.copy(vm.criteriaGroups);
+            vm.criteriaGroups = _.filter(copyCriteria, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.id)) {
                         el.isSelected = true;
                         // Set criterion coefficient el.coefficient.
-                        _.map(_fo.selectedCriteria.sortCriteriaCoefficients, function(value, key) {
+                        _.filter(_fo.selectedCriteria.sortCriteriaCoefficients, function(value, key) {
                             if (el.isSelected && parseInt(key) === el.id) {
                                 var coefficientNew = findCoefNameByValue(value);
                                 el.coefficient = coefficientNew;
                             }
                         });
                     }
+                    return el;
                 });
+                return criteriaGroupsArray;
             });
         }
 
@@ -366,7 +393,7 @@
 
             var matrixSizesCopy = angular.copy(matrixSizes);
             var characteristicsCopy = angular.copy(vm.characteristicGroups);
-           
+
             _.forEach(characteristicsCopy, function(group) {
                 var array = matrixSizesCopy.splice(0, group.characteristics.length);
                 var size = _.sum(array) + titleH;
@@ -378,7 +405,7 @@
 
             for (var i = 0; i < matrixSizes.length; i++) {
                 matrixRows[i].style.height = matrixSizes[i] + 'px';
-                matrixAsideRow[i].style.height = matrixSizes[i] + 'px';                
+                matrixAsideRow[i].style.height = matrixSizes[i] + 'px';
             }
             // 
         }
@@ -399,9 +426,10 @@
             vm.decisionsSpinner = false;
         }
 
-        function getDecisionMatrix(id) {
+        function getDecisionMatrix(id, persistent) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
+            if(persistent === true) sendData.persistent = true;
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
@@ -592,13 +620,8 @@
                 criterion.isSelected = !criterion.isSelected;
             }
             formDataForSearchRequest(criterion, coefCall);
-            var sendData = DecisionSharedService.getFilterObject();
-            sendData.persistent = true;
-            DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
-                DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
-            });
+            getDecisionMatrirx(vm.id, true);
         }
-
 
         function formDataForSearchRequest(criterion, coefCall) {
             if (!criterion.id) return;
@@ -697,22 +720,15 @@
             DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
         }
 
+
         // Toggle group
         vm.toggleGroupName = toggleGroupName;
 
-        function toggleGroupName(id, type) {
-            // console.log(id, type, vm.criteriaGroups[id]);
-            // TODO: optimize
-            var flag;
-            if (type === 'criterion') {
-                flag = vm.criteriaGroups[id].isClosed ? vm.criteriaGroups[id].isClosed : false;
-                vm.criteriaGroups[id].isClosed = !flag;
-                vm.criteriaGroupsContent[id].isClosed = !flag;
-            } else if ('characteristics') {
-                flag = vm.characteristicGroups[id].isClosed ? vm.characteristicGroups[id].isClosed : false;
-                vm.characteristicGroups[id].isClosed = !flag;
-                vm.characteristicGroupsContent[id].isClosed = !flag;
-            }
+        function toggleGroupName($event, id, type) {
+            $($event.target).toggleClass('closed');
+            // TYPES: 'characteristic', 'criteria'
+            if(!type) type = 'criteria';
+            $('[data-'+type+'-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
 
             // Incorect height calc
             setTimeout(function() {

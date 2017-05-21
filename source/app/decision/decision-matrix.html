@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <filter-tags characteristics="vm.characteristicGroups"></filter-tags>
+                <filter-tags criteria="vm.criteriaGroups" characteristics="vm.characteristicGroups"></filter-tags>
 
                 <div class="matrix-body-wrapper">
                     <!-- End Header -->
@@ -146,7 +146,7 @@
                                 </div>
                                 <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
                                     <div class="matrix-item  matrix-g-item">
-                                        <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'characteristics')">
+                                        <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  group.id, 'characteristic')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>
                                             <div class="controls">
                                                 <i class="fa fa-angle-up" aria-hidden="true"></i>
@@ -154,7 +154,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="matrix-item js-item-aside" ng-repeat="characteristic in group.characteristics track by characteristic.id" ng-class="{'hide': group.isClosed}">
+                                    <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                             <filter-control  selected="characteristic.seletedValues" item="::characteristic"></filter-control>

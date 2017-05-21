@@ -7,7 +7,8 @@
         .controller('FilterTagsController', FilterTagsController)
         .component('filterTags', {
             bindings: {
-                characteristics: '<'
+                characteristics: '<',
+                criteria: '<'
             },
             template: renderTemplate,
             controller: 'FilterTagsController',
@@ -18,16 +19,30 @@
 
     function renderTemplate() {
         return [
-            '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length">',
-                '<div class="filter-tags-label">Filtered by: </div>',
-                '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-                    '<span>{{::tag.name}}:</span>',
-                    '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
-                        '<div class="tag">',
-                        '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                    '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
+            '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
+                '<div class="filter-tags-group" ng-show="vm.tags.length > 0">',
+                    '<div class="filter-tags-label">Filtered by: </div>',
+                    '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
+                        '<span>{{::tag.name}}:</span>',
+                        '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
+                            '<div class="tag">',
+                            '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                        '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
+                        '</div>',
                     '</div>',
                 '</div>',
+
+                '<div class="filter-tags-group" ng-show="vm.criteriaTags.length > 0">',
+                    '<div class="filter-tags-label">Sorted by: </div>',
+                    '<div class="tag-group">',
+                        '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
+                            '<div class="tag">',
+                                '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove  hide"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                            '</div><span ng-if="!$last" class="tag-divider">and</span>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+
             '</div>'
         ].join('\n');
     }
@@ -40,32 +55,103 @@
         vm.removeTag = removeTag;
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
+        var filterNameTag;
         function onInit() {
-             subscribe();
+            vm.tags = [];
+            subscribe();
         }
+
+        function onChanges(changes) {
+            // console.log(changes.criteria);
+            if(changes.criteria && changes.criteria.currentValue) {
+                generateCriteriaTags(changes.criteria.currentValue);
+            }
+        }
+
+        // Criteria
+        var criteriaSelectedList = [];
+        vm.removeCriteriaTag = removeCriteriaTag;
+
+        function removeCriteriaTag(criteria) {
+
+            DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
+                DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
+            });
+        }
+
+        function generateCriteriaTags(criteria) {
+            criteriaSelectedList = [];
+            _.forEach(criteria, function(group) {
+                _.forEach(group.criteria, function(criteriaItem) {
+                    if(criteriaItem.isSelected === true) {
+                        criteriaSelectedList.push(criteriaItem);
+                    }
+                });
+            });
+
+            if(!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
+                vm.criteriaTags = criteriaSelectedList;
+                updateFilterStyles();
+            }
+        }
+        // End Criteria
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
+                // TODO: use seletedValue
+                // console.log(vm.characteristics);
+                if (data.id === -1) {
+                    var filterByNameTag = {
+                        'id': -1,
+                        'characteristicId': -1,
+                        'name': 'Name',
+                        'value': [data.value],
+                    };
+                    if(_.isNull(data.value)) {
+                        filterNameTag = null;
+                        removeTag(filterByNameTag); 
+                        return;
+                    }
+                    filterNameTag = filterByNameTag;
+                    // vm.tags.push(filterByNameTag);
+                    createTagsList(filterByNameTag);
+                    return;
+                }  
+
                 _fo = angular.copy(data);
                 if (_fo) createTagsList(_fo.filterQueries);
+            });
+        }
 
-                // TODO: avoid jquery
-                var matrixMargin = $('#filter-tags').outerHeight();
-                if (vm.tags.length === 1) {
-                    matrixMargin = 30;
-                } else if(_.isEmpty(vm.tags)) {
-                    matrixMargin = 0;
-                }
+        var filter = $('#filter-tags');
+        function updateFilterStyles() {
+            // TODO: avoid jquery
+            var matrixMargin = filter.outerHeight();
+            if (vm.tags.length === 1 || vm.criteriaTags.length > 0) {
+                matrixMargin = 30;
+            } else if(_.isEmpty(vm.tags) && _.isEmpty(vm.criteriaTags)) {
+                matrixMargin = 0;
+            }
 
-                $('.matrix-body-wrapper').css('margin-top', matrixMargin);
-            });            
+            $('.matrix-body-wrapper').css('margin-top', matrixMargin);            
         }
 
         // TODO: remove logic
         // Optimize
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
+
+            if(itemCopy.characteristicId === -1) {
+                DecisionNotificationService.notifyFilterByName(null);
+                var index = _.findIndex(vm.tags, function(tag) {
+                    return tag.id === -1;
+                });
+                if(index >=0) vm.tags.splice(index, 1);
+                filterNameTag = undefined;
+            }
+
 
             if (item.type === "RangeQuery") {
                 itemCopy.value = null;
@@ -88,12 +174,22 @@
             } else {
                 itemCopy.value = null;
             }
+
             itemCopy = _.omit(itemCopy, 'data');
             if (_.isEmpty(itemCopy)) itemCopy = null;
-            updateFilterObject(itemCopy);
+
+            // TODO: clean up
+            var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
+            updateFilterObject(sendItemCopy);
+            updateFilterStyles();
         }
 
         function updateFilterObject(query) {
+            // TODO: avoid string
+            if(query.id === -1) {
+                DecisionNotificationService.subscribeFilterByName(null);
+                return;
+            }
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
             });
@@ -113,26 +209,32 @@
         }
 
         function createTagsList(filterQueries) {
-            vm.tags = [];
             if (_.isEmpty(filterQueries)) return;
+            // TODO: Always regenerate new array 
+            // Update it
+            var tags = [];
+            if(_.isArray(filterQueries)) {
+                _.forEach(filterQueries, function(item) {
+                    var find = findCharacteristic(item.characteristicId);
+                    item = _.merge(item, find);
+                    if (!_.isEmpty(item)) tags.push(caseQueryType(item));
+                });
+            }
 
-            _.forEach(filterQueries, function(item) {
-                var find = findCharacteristic(item.characteristicId);
-                item = _.merge(item, find);
-                if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
-            });
-            // console.log(vm.tags);
+            if(filterNameTag) tags.push(caseQueryType(filterNameTag));
+            vm.tags = tags;
         }
-        // TODO: clean up
+
+
         function caseQueryType(item) {
             var data = [];
             // TODO: use Switch Case ?!
-            if(item.valueType.toLowerCase() === 'datetime') {
+            if(item.valueType && item.valueType.toLowerCase() === 'datetime') {
                 data[0] = Utils.dateToUI(item.value[0]) + ' - ' + Utils.dateToUI(item.value[1]);
-            } else if(item.valueType.toLowerCase() === 'boolean') { 
+            } else if(item.valueType && item.valueType.toLowerCase() === 'boolean') { 
                 if (item.value === true) data[0] = 'Yes';
                 if (item.value === false) data[0] = 'No';
-            } else if(item.type.toLowerCase() === 'rangequery') {
+            } else if(item.type && item.type.toLowerCase() === 'rangequery') {
                 data[0] = item.value[0] + ' - ' + item.value[1];
             } else {
                 data = _.isArray(item.value) ? item.value : [item.value];

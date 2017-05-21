@@ -22,6 +22,7 @@
             subscribePageChanged: subscribePageChanged,
             subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
             subscribeFilterTags: subscribeFilterTags,
+            subscribeFilterByName: subscribeFilterByName,
             notifyGetDetailedCharacteristics: notifyGetDetailedCharacteristics,
             notifySelectCriterion: notifySelectCriterion,
             notifySelectDecision: notifySelectDecision,
@@ -30,7 +31,8 @@
             notifyPageChanged: notifyPageChanged,
             notifyInitSorter: notifyInitSorter,
             notifyChildDecisionExclusion: notifyChildDecisionExclusion,
-            notifyFilterTags: notifyFilterTags
+            notifyFilterTags: notifyFilterTags,
+            notifyFilterByName: notifyFilterByName
         };
 
         return service;
@@ -83,8 +85,13 @@
         function subscribeChildDecisionExclusion(callback) {
             subscribe('decisionExclusionChanged', callback);
         }
+
         function subscribeFilterTags(callback) {
             subscribe('queryFilterChanged', callback);
+        }
+
+        function subscribeFilterByName(callback) {
+            subscribe('queryFilterByNameChanged', callback);
         }
 
         // Emitters
@@ -119,8 +126,13 @@
         function notifyChildDecisionExclusion(data) {
             emit('decisionExclusionChanged', data);
         }
+
         function notifyFilterTags(data) {
             emit('queryFilterChanged', data);
+        }
+
+        function notifyFilterByName(data) {
+            emit('queryFilterByNameChanged', data);
         }
 
     }
