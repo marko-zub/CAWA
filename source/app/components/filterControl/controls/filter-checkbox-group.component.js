@@ -25,7 +25,6 @@
         function onInit() {
             sendObj = {
                 'type': 'AllInQuery',
-                "characteristicName": vm.item.name,
                 'characteristicId': vm.item.id,
                 "operator": 'OR'
             };

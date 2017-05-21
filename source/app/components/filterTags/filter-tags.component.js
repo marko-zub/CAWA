@@ -6,6 +6,9 @@
         .module('app.components')
         .controller('FilterTagsController', FilterTagsController)
         .component('filterTags', {
+            bindings: {
+                characteristics: '<'
+            },
             template: renderTemplate,
             controller: 'FilterTagsController',
             controllerAs: 'vm'
@@ -16,8 +19,9 @@
     function renderTemplate() {
         return [
             '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length">',
+                '<div class="filter-tags-label">Filtered by: </div>',
                 '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-                    '<span>{{::tag.characteristicName}}:</span>',
+                    '<span>{{::tag.name}}:</span>',
                     '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
                         '<div class="tag">',
                         '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
@@ -43,7 +47,7 @@
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
-                _fo = data;
+                _fo = angular.copy(data);
                 if (_fo) createTagsList(_fo.filterQueries);
 
                 // TODO: avoid jquery
@@ -90,55 +94,50 @@
         }
 
         function updateFilterObject(query) {
-            var sendData = {
+            DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
-            };
-            DecisionNotificationService.notifySelectCharacteristic(sendData);
+            });
+        }
+
+        // TODO: clean up find
+        function findCharacteristic(id) {
+            var findCharacteristic;
+            _.forEach(vm.characteristics, function(group) {
+                var find = _.findLast(group.characteristics, function(characteristic) {
+                    // console.log(characteristic.id, id, characteristic.id === id)
+                    return characteristic.id === id;
+                });
+                if(find) findCharacteristic = find;
+            });
+            if(findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
         }
 
         function createTagsList(filterQueries) {
             vm.tags = [];
             if (_.isEmpty(filterQueries)) return;
-            _.forEach(filterQueries, function(item) {
-                // TODO: optimize
-                // Currently all data shared in view
-                if (item.value === true) item.data = ['Yes'];
-                if (item.value === false) item.data = ['No'];
 
-                if (!_.isEmpty(item.value)) vm.tags.push(caseQueryType(item));
+            _.forEach(filterQueries, function(item) {
+                var find = findCharacteristic(item.characteristicId);
+                item = _.merge(item, find);
+                if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
             });
             // console.log(vm.tags);
         }
         // TODO: clean up
         function caseQueryType(item) {
             var data = [];
-            switch (item.type) {
-                case "RangeQuery":
-                    data[0] = item.value[0] + ' - ' + item.value[1];
-                    break;
-                case "CompositeQuery":
-                    if (!_.isEmpty(item.queries)) {
-                        if (item.queries[0].type == 'GreaterOrEqualQuery') {
-
-                            // TODO: format date
-                            // if (_.isDate(item.queries[0].value) && _.isDate(item.queries[1].value)) {
-                            //     item.queries[0].value = Utils.dateToUI(item.queries[0].value);
-                            //     item.queries[1].value = Utils.dateToUI(item.queries[1].value);
-                            // }
-                            // debugger
-                            data[0] = item.queries[0].value + ' - ' + item.queries[1].value;
-                        } else if (item.operator == 'OR') {
-                            data = _.map(item.queries, function(query) {
-                                return query.value;
-                            });
-                        }
-                    }
-                    break;
-                default:
-                    data = _.isArray(item.value) ? item.value : [item.value];
+            // TODO: use Switch Case ?!
+            if(item.valueType.toLowerCase() === 'datetime') {
+                data[0] = Utils.dateToUI(item.value[0]) + ' - ' + Utils.dateToUI(item.value[1]);
+            } else if(item.valueType.toLowerCase() === 'boolean') { 
+                if (item.value === true) data[0] = 'Yes';
+                if (item.value === false) data[0] = 'No';
+            } else if(item.type.toLowerCase() === 'rangequery') {
+                data[0] = item.value[0] + ' - ' + item.value[1];
+            } else {
+                data = _.isArray(item.value) ? item.value : [item.value];
             }
             item.data = data;
-            // debugger
             return item;
         }
     }

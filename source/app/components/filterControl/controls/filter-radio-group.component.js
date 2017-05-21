@@ -73,7 +73,6 @@
             var sendObj = {
                 "type": "EqualQuery",
                 "characteristicId": vm.item.id,
-                "characteristicName": vm.item.name,
                 "value": model
             };
             FilterControlsDataService.createFilterQuery(sendObj);

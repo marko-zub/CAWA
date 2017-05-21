@@ -64,7 +64,6 @@
             var query = {
                 "type": "RangeQuery",
                 "characteristicId": item.id,
-                "characteristicName": item.name,
                 "operator": "AND",
                 "value": queries
             };

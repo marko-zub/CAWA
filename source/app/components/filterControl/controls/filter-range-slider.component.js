@@ -77,7 +77,6 @@
             var query = {
                 "type": "RangeQuery",
                 "characteristicId": vm.item.id,
-                "characteristicName": vm.item.name,
                 "value": value
             };
             FilterControlsDataService.characteristicChange(vm.item.id, query);
