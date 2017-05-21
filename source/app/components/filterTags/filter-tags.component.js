@@ -102,8 +102,8 @@
             _.forEach(filterQueries, function(item) {
                 // TODO: optimize
                 // Currently all data shared in view
-                if (item.value === true) item.value = 'Yes';
-                if (item.value === false) item.value = 'No';
+                if (item.value === true) item.data = ['Yes'];
+                if (item.value === false) item.data = ['No'];
 
                 if (!_.isEmpty(item.value)) vm.tags.push(caseQueryType(item));
             });

@@ -24,7 +24,7 @@
                 '</div>',
                 '<div class="matrix-item matrix-item-content js-matrix-item-content" ng-repeat="item in group.characteristics track by item.id">',
                     '<div class="matrix-row">',
-                        '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by $index" ng-click="vm.getComments($event)">',
+                        '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
                                 '<content-formater ng-if="::decisionCol.characteristics" value="::decisionCol.characteristics.value" type="::item.valueType"></content-formater>',
                                 '<div class="app-item-additional-wrapper">',
