@@ -620,7 +620,9 @@
                 criterion.isSelected = !criterion.isSelected;
             }
             formDataForSearchRequest(criterion, coefCall);
-            getDecisionMatrirx(vm.id, true);
+            getDecisionMatrix(vm.id, true).then(function(result) {
+                DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
+            });
         }
 
         function formDataForSearchRequest(criterion, coefCall) {
