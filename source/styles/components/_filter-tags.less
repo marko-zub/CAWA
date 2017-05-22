@@ -9,19 +9,29 @@ filter-tags {
     font-size: 11px;
     width: 100%;
     border-bottom: 1px solid @gray-light;
-    // white-space: nowrap;
     position: relative;
     z-index: 3;
     // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     .tag-wrapper {
         display: inline-block;
     }
+    .tag-group-wrapper {
+        overflow: hidden;
+    }
     .tag-group {
         display: inline-block;
         margin: 0 5px;
         padding: 1px;
     }
+    .filter-tags-group {
+        overflow: hidden;
+        border-bottom: 1px solid @gray-light;
+        &:last-child {
+            border-bottom: 0;
+        }
+    }    
     .tag-divider {
+        color: @gray-mid;
         display: inline-block;
         margin: 0 1px;
         text-transform: lowercase;
@@ -51,10 +61,11 @@ filter-tags {
 }
 
 .filter-tags-label {
-    display: inline-block;
     font-weight: 600;
-    margin: 0 16px 0 0;
+    margin: 5px 16px 0 0;
+    float: left;
 }
+
 
 .filter-tags-group {
     margin: 0;

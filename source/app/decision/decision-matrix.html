@@ -107,16 +107,16 @@
                                 <div class="title">
                                     Criteria
                                 </div>
-                                <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criterionGroupId">
+                                <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
                                     <div class="matrix-item matrix-g-item">
-                                        <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index,  'criterion')">
+                                        <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index, 'criteria')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>
                                             <div class="controls">
                                                 <i class="fa fa-angle-up" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriterion($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
+                                    <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
 
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name"></div>
@@ -206,7 +206,7 @@
 <!-- Comments -->
 <pageslide class="sidebar" ps-size="500px" ps-open="vm.isCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
     <div class="sidebar-content">
-        <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriterion.criterionId"></comments>
+        <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
     </div>
 </pageslide>
 <!-- End Comments -->

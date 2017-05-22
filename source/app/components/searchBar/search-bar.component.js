@@ -45,9 +45,9 @@
             changeState(vm.searchQuer);
         }
 
-        function clearValue() {
+        function clearValue($event) {
             vm.searchQuery = null;
-            $('#header-search').focus();
+            $($event.target).siblings('.form-control').focus();
         }
 
         function shouldSelectSuggestedDecisions($event, model) {

@@ -71,7 +71,7 @@
         }
 
         function filterNameSubmit(event, value) {
-            if (!value) return;
+            // if (!value) return;
             if (event.keyCode === 13) {
                 filterNameSend(value);
                 event.preventDefault();
@@ -79,7 +79,7 @@
         }
 
         function filterNameSend(value) {
-            if (!_.isNull(value) && !value) return;
+            // if (!_.isNull(value) && !value) return;
 
             // TODO: send as parametr in getDecisionMatrix(id, filterObj) ?!
             _fo.decisionNameFilterPattern = _.escape(value);
@@ -88,17 +88,20 @@
         }
 
         function filterNameSubmitClick(value) {
-            if (!value) return;
+            // if (!value) return;
+            // TODO: firs ng-touched
             filterNameSend(value);
         }
         // End Filter name
 
         //Subscribe to notification events
-        DecisionNotificationService.subscribeSelectCriterion(function(event, data) {
+        DecisionNotificationService.subscribeSelectCriteria(function(event, data) {
             // TODO: simplify
-            vm.decisionMatrixList = prepareMatrixData(data);
-            vm.decisions.decisionMatrixs = data;
-            initMatrix(data);
+            formDataForSearchRequest(data, data.coefCall);
+            initSorters();
+            getDecisionMatrix(vm.id).then(function(result) {
+                initMatrix(result.decisionMatrixs, true);
+            });
         });
 
         DecisionNotificationService.subscribePageChanged(function() {
@@ -275,7 +278,7 @@
         //     //         criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.id, 'id', 'criteria');
         //     //         return _.omit(criteria, 'description');
         //     //     });
-        //     //     return _.pick(criteriaItem, 'criterionGroupId', 'criteria', 'isClosed');
+        //     //     return _.pick(criteriaItem, 'criteriaGroupId', 'criteria', 'isClosed');
         //     // });
         //     // console.log(vm.criteriaGroupsContent);
         //     // console.log(_.compact(vm.criteriaGroupsContent));
@@ -315,7 +318,7 @@
         function initSorters() {
             // Set filter by name
             // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
-
+            _fo = DecisionSharedService.filterObject;
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = _fo.sorters;
             // Set Criteria for Hall of fame
@@ -324,13 +327,15 @@
                 _.map(criteriaGroupsArray.criteria, function(el) {
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.id)) {
                         el.isSelected = true;
-                        // Set criterion coefficient el.coefficient.
+                        // Set criteria coefficient el.coefficient.
                         _.filter(_fo.selectedCriteria.sortCriteriaCoefficients, function(value, key) {
                             if (el.isSelected && parseInt(key) === el.id) {
                                 var coefficientNew = findCoefNameByValue(value);
                                 el.coefficient = coefficientNew;
                             }
                         });
+                    } else {
+                        el.isSelected = false;
                     }
                     return el;
                 });
@@ -593,51 +598,51 @@
             });
             modalInstance.result.then(function(result) {
                 var groupIndex = _.findIndex(vm.criteriaGroups, {
-                    criterionGroupId: result.criterionGroupId
+                    criteriaGroupId: result.criteriaGroupId
                 });
                 var criteriaIndex = _.findIndex(vm.criteriaGroups[groupIndex].criteria, {
                     id: result.id
                 });
                 vm.criteriaGroups[groupIndex].criteria[criteriaIndex] = result;
-                selectCriterion(event, result, criteria.isSelected);
+                selectCriteria(event, result, criteria.isSelected);
                 vm.decisionsSpinner = false;
             });
         }
         var foSelectedCriteria = _fo.selectedCriteria;
-        vm.selectCriterion = selectCriterion;
+        vm.selectCriteria = selectCriteria;
 
-        function selectCriterion(event, criterion, coefCall) {
+        function selectCriteria(event, criteria, coefCall) {
             if ($(event.target).hasClass('title-descr')) return;
             vm.decisionsSpinner = true;
-            if (coefCall && !criterion.isSelected) {
+            if (coefCall && !criteria.isSelected) {
                 return;
             }
             if (!coefCall) {
-                criterion.isSelected = !criterion.isSelected;
+                criteria.isSelected = !criteria.isSelected;
             }
-            formDataForSearchRequest(criterion, coefCall);
-            getDecisionMatrix(vm.id, true).then(function(result) {
-                DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
-            });
+
+            criteria.coefCall = coefCall;
+
+            DecisionNotificationService.notifySelectCriteria(criteria);
         }
 
-        function formDataForSearchRequest(criterion, coefCall) {
-            if (!criterion.id) return;
-            var position = foSelectedCriteria.sortCriteriaIds.indexOf(criterion.id);
-            //select criterion
+        function formDataForSearchRequest(criteria, coefCall) {
+            if (!criteria.id) return;
+            var position = foSelectedCriteria.sortCriteriaIds.indexOf(criteria.id);
+            //select criteria
             if (position === -1) {
-                foSelectedCriteria.sortCriteriaIds.push(criterion.id);
+                foSelectedCriteria.sortCriteriaIds.push(criteria.id);
                 //don't add default coefficient
-                if (criterion.coefficient && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
-                    foSelectedCriteria.sortCriteriaCoefficients[criterion.id] = criterion.coefficient.value;
+                if (criteria.coefficient && criteria.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
+                    foSelectedCriteria.sortCriteriaCoefficients[criteria.id] = criteria.coefficient.value;
                 }
                 //add only coefficient (but not default)
-            } else if (coefCall && criterion.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
-                foSelectedCriteria.sortCriteriaCoefficients[criterion.id] = criterion.coefficient.value;
-                //unselect criterion
+            } else if (coefCall && criteria.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
+                foSelectedCriteria.sortCriteriaCoefficients[criteria.id] = criteria.coefficient.value;
+                //unselect criteria
             } else {
                 foSelectedCriteria.sortCriteriaIds.splice(position, 1);
-                delete foSelectedCriteria.sortCriteriaCoefficients[criterion.id];
+                delete foSelectedCriteria.sortCriteriaCoefficients[criteria.id];
             }
             foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
         }

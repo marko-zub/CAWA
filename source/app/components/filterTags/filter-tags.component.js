@@ -9,7 +9,7 @@
             bindings: {
                 characteristics: '<',
                 criteria: '<',
-                filterName: '<',
+                // filterName: '<',
             },
             template: renderTemplate,
             controller: 'FilterTagsController',
@@ -20,27 +20,31 @@
 
     function renderTemplate() {
         return [
-            '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
+            '<div id="filter-tags" class="filter-tags" ng-if="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
 
                 '<div class="filter-tags-group sorted-panel" ng-show="vm.criteriaTags.length > 0">',
                     '<div class="filter-tags-label">Sorted by: </div>',
-                    '<div class="tag-group">',
-                        '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
-                            '<div class="tag">',
-                                '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove  hide"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                            '</div><span ng-if="!$last" class="tag-divider">and</span>',
+                    '<div class="tag-group-wrapper">',
+                        '<div class="tag-group">',
+                            '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
+                                '<div class="tag">',
+                                    '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                                '</div><span ng-if="!$last" class="tag-divider">and</span>',
+                            '</div>',
                         '</div>',
                     '</div>',
                 '</div>',
 
-                '<div class="filter-tags-group" ng-show="vm.tags.length > 0">',
+                '<div class="filter-tags-group" ng-if="vm.tags.length > 0">',
                     '<div class="filter-tags-label">Filtered by: </div>',
-                    '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-                        '<span>{{::tag.name}}:</span>',
-                        '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
-                            '<div class="tag">',
-                            '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                        '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
+                    '<div class="tag-group-wrapper">',
+                        '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
+                            '<span>{{::tag.name}}:</span>',
+                            '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
+                                '<div class="tag">',
+                                '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                            '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
+                            '</div>',
                         '</div>',
                     '</div>',
                 '</div>',
@@ -72,10 +76,10 @@
 
         function onChanges(changes) {
             // Characteristics
-            if(changes.characteristics && changes.characteristics.currentValue) {
-                vm.characteristics = angular.copy(changes.characteristics.currentValue);
-                generateCharacteristicsTags(vm.characteristics);
-            }
+            // if(changes.characteristics && changes.characteristics.currentValue) {
+            //     vm.characteristics = angular.copy(changes.characteristics.currentValue);
+            //     generateCharacteristicsTags(vm.characteristics);
+            // }
 
             // Criteria
             if(changes.criteria && changes.criteria.currentValue) {
@@ -84,16 +88,16 @@
             }
 
             // Filter Name
-            if(changes.filterName && changes.filterName.currentValue) {
-                // vm.tags.push()
+            // if(changes.filterName && changes.filterName.currentValue) {
+            //     // vm.tags.push()
 
-                if(_.isNull(changes.filterName.currentValue)) {
-                    removeTag(filterByNameTag);
-                } else {
-                    filterByNameTag.value = changes.filterName.currentValue;
-                    vm.tags.push(filterByNameTag);
-                }
-            }
+            //     if(_.isNull(changes.filterName.currentValue)) {
+            //         removeTag(filterByNameTag);
+            //     } else {
+            //         filterByNameTag.value = changes.filterName.currentValue;
+            //         vm.tags.push(filterByNameTag);
+            //     }
+            // }
         }
 
         // Criteria
@@ -101,10 +105,8 @@
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
-            console.log(criteria);
-            // DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
-            //     DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
-            // });
+            criteria.isSelected = false;
+            DecisionNotificationService.notifySelectCriteria(criteria);
         }
 
         function generateCriteriaTags(criteria) {
@@ -227,23 +229,35 @@
             if(findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
         }
 
+        // TODO: Remove it
+        // Always regenerate new array
         function createTagsList(filterQueries) {
-            if (_.isEmpty(filterQueries)) return;
-            // TODO: Always regenerate new array
-            // Update it
-            if(_.isArray(filterQueries)) {
-                _.forEach(filterQueries, function(item) {
-                    var itemInTags = _.find(vm.tags, function(tag){
-                        return tag.characteristicId === item.characteristicId;
-                    });
-                    if(itemInTags < 0) {
-                        var find = findCharacteristic(item.characteristicId);
-                        item = _.merge(item, find);
-                        if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
-                    }
-                });
-            }
+            vm.tags = [];
+            _.forEach(filterQueries, function(item) {
+                var find = findCharacteristic(item.characteristicId);
+                item = _.merge(item, find);
+                if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
+            });
         }
+
+
+        // function createTagsList(filterQueries) {
+        //     if (_.isEmpty(filterQueries)) return;
+        //     // TODO: Always regenerate new array
+        //     // Update it
+        //     if(_.isArray(filterQueries)) {
+        //         _.forEach(filterQueries, function(item) {
+        //             var itemInTags = _.find(vm.tags, function(tag){
+        //                 return tag.characteristicId === item.characteristicId;
+        //             });
+        //             if(itemInTags < 0) {
+        //                 var find = findCharacteristic(item.characteristicId);
+        //                 item = _.merge(item, find);
+        //                 if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
+        //             }
+        //         });
+        //     }
+        // }
 
 
         function caseQueryType(item) {

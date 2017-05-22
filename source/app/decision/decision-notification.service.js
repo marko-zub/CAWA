@@ -14,7 +14,7 @@
 
         var service = {
             subscribeSelectSorter: subscribeSelectSorter,
-            subscribeSelectCriterion: subscribeSelectCriterion,
+            subscribeSelectCriteria: subscribeSelectCriteria,
             subscribeSelectDecision: subscribeSelectDecision,
             subscribeSelectCharacteristic: subscribeSelectCharacteristic,
             subscribeGetDetailedCharacteristics: subscribeGetDetailedCharacteristics,
@@ -24,7 +24,7 @@
             subscribeFilterTags: subscribeFilterTags,
             subscribeFilterByName: subscribeFilterByName,
             notifyGetDetailedCharacteristics: notifyGetDetailedCharacteristics,
-            notifySelectCriterion: notifySelectCriterion,
+            notifySelectCriteria: notifySelectCriteria,
             notifySelectDecision: notifySelectDecision,
             notifySelectCharacteristic: notifySelectCharacteristic,
             notifyCharacteristicsGroups: notifyCharacteristicsGroups,
@@ -58,8 +58,8 @@
             subscribe('selectSorter', callback);
         }
 
-        function subscribeSelectCriterion(callback) {
-            subscribe('selectCriterion', callback);
+        function subscribeSelectCriteria(callback) {
+            subscribe('selectCriteria', callback);
         }
 
         function subscribeSelectDecision(callback) {
@@ -99,8 +99,8 @@
             emit('getDetailedCharacteristics', data);
         }
 
-        function notifySelectCriterion(data) {
-            emit('selectCriterion', data);
+        function notifySelectCriteria(data) {
+            emit('selectCriteria', data);
         }
 
         function notifySelectDecision(data) {
