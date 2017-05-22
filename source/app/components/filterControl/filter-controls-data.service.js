@@ -13,7 +13,7 @@
 
         function createFilterQuery(data) {
             if (!data) return;
-            
+
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
             if (sendData.value === 'all') sendData.value = null;

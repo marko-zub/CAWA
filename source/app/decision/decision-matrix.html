@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <filter-tags criteria="vm.criteriaGroups" characteristics="vm.characteristicGroups"></filter-tags>
+                <filter-tags criteria="vm.criteriaGroups" characteristics="vm.characteristicGroups" filter-name="vm.filterName"></filter-tags>
 
                 <div class="matrix-body-wrapper">
                     <!-- End Header -->
@@ -157,7 +157,7 @@
                                     <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
-                                            <filter-control  selected="characteristic.seletedValues" item="::characteristic"></filter-control>
+                                            <filter-control  selected="characteristic.seletedValue" item="::characteristic"></filter-control>
                                             <div class="app-sorter" ng-if="::characteristic.isSortable">
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.id, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.id && vm.fo.sortByCharacteristic.order == 'ASC'}"></span>
                                                 <span ng-click="vm.orderByCharacteristicProperty(characteristic.id, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.id && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>

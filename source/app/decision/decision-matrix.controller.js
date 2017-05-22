@@ -85,13 +85,6 @@
             _fo.decisionNameFilterPattern = _.escape(value);
 
             DecisionNotificationService.notifyFilterByName(_fo.decisionNameFilterPattern || value);
-
-            // TODO: avoid string 'Name'
-            DecisionNotificationService.notifyFilterTags({
-                id: -1,
-                name: 'Name',
-                value: _fo.decisionNameFilterPattern
-            });
         }
 
         function filterNameSubmitClick(value) {
@@ -200,14 +193,17 @@
                 });
             }
 
-            _.forEach(vm.characteristicGroups, function(group) {
+            var characteristicGroups = _.forEach(vm.characteristicGroups, function(group) {
                 var find = _.findIndex(group.characteristics, function(characteristicFind) {
                     return characteristicFind.id == characteristic.characteristicId;
                 });
                 if (find >= 0) {
-                    group.characteristics[find].seletedValues = value;
+                    group.characteristics[find].seletedValue = value;
                 }
+                return group;
             });
+
+            vm.characteristicGroups = angular.copy(characteristicGroups);
             // debugger
             // console.log(vm.characteristicGroups);
         }

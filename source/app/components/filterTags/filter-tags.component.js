@@ -8,7 +8,8 @@
         .component('filterTags', {
             bindings: {
                 characteristics: '<',
-                criteria: '<'
+                criteria: '<',
+                filterName: '<',
             },
             template: renderTemplate,
             controller: 'FilterTagsController',
@@ -20,6 +21,18 @@
     function renderTemplate() {
         return [
             '<div id="filter-tags" class="filter-tags" ng-show="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
+
+                '<div class="filter-tags-group sorted-panel" ng-show="vm.criteriaTags.length > 0">',
+                    '<div class="filter-tags-label">Sorted by: </div>',
+                    '<div class="tag-group">',
+                        '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
+                            '<div class="tag">',
+                                '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove  hide"><i class="fa fa-times" aria-hidden="true"></i></span>',
+                            '</div><span ng-if="!$last" class="tag-divider">and</span>',
+                        '</div>',
+                    '</div>',
+                '</div>',
+
                 '<div class="filter-tags-group" ng-show="vm.tags.length > 0">',
                     '<div class="filter-tags-label">Filtered by: </div>',
                     '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
@@ -28,17 +41,6 @@
                             '<div class="tag">',
                             '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
                         '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-
-                '<div class="filter-tags-group" ng-show="vm.criteriaTags.length > 0">',
-                    '<div class="filter-tags-label">Sorted by: </div>',
-                    '<div class="tag-group">',
-                        '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
-                            '<div class="tag">',
-                                '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove  hide"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                            '</div><span ng-if="!$last" class="tag-divider">and</span>',
                         '</div>',
                     '</div>',
                 '</div>',
@@ -57,16 +59,40 @@
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
 
-        var filterNameTag;
+        var filterByNameTag = {
+            'id': -1,
+            'characteristicId': -1,
+            'name': 'Name'
+        };
+
         function onInit() {
             vm.tags = [];
             subscribe();
         }
 
         function onChanges(changes) {
-            // console.log(changes.criteria);
+            // Characteristics
+            if(changes.characteristics && changes.characteristics.currentValue) {
+                vm.characteristics = angular.copy(changes.characteristics.currentValue);
+                generateCharacteristicsTags(vm.characteristics);
+            }
+
+            // Criteria
             if(changes.criteria && changes.criteria.currentValue) {
-                generateCriteriaTags(changes.criteria.currentValue);
+                vm.criteria = angular.copy(changes.criteria.currentValue);
+                generateCriteriaTags(vm.criteria);
+            }
+
+            // Filter Name
+            if(changes.filterName && changes.filterName.currentValue) {
+                // vm.tags.push()
+
+                if(_.isNull(changes.filterName.currentValue)) {
+                    removeTag(filterByNameTag);
+                } else {
+                    filterByNameTag.value = changes.filterName.currentValue;
+                    vm.tags.push(filterByNameTag);
+                }
             }
         }
 
@@ -75,10 +101,10 @@
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
-
-            DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
-                DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
-            });
+            console.log(criteria);
+            // DecisionDataService.getDecisionMatrix(vm.id, sendData).then(function(result) {
+            //     DecisionNotificationService.notifySelectCriterion(result.decisionMatrixs);
+            // });
         }
 
         function generateCriteriaTags(criteria) {
@@ -98,28 +124,21 @@
         }
         // End Criteria
 
+        function generateCharacteristicsTags(characteristics) {
+            console.log(characteristics);
+            _.forEach(characteristics, function(group) {
+                _.forEach(group.characteristics, function(characteristic) {
+                    console.log(characteristic.seletedValues);
+                    // if(characteristics.seletedValues) console.log(characteristics.seletedValues);
+                });
+            });
+        }
+
+
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
                 // TODO: use seletedValue
                 // console.log(vm.characteristics);
-                if (data.id === -1) {
-                    var filterByNameTag = {
-                        'id': -1,
-                        'characteristicId': -1,
-                        'name': 'Name',
-                        'value': [data.value],
-                    };
-                    if(_.isNull(data.value)) {
-                        filterNameTag = null;
-                        removeTag(filterByNameTag); 
-                        return;
-                    }
-                    filterNameTag = filterByNameTag;
-                    // vm.tags.push(filterByNameTag);
-                    createTagsList(filterByNameTag);
-                    return;
-                }  
-
                 _fo = angular.copy(data);
                 if (_fo) createTagsList(_fo.filterQueries);
             });
@@ -135,7 +154,7 @@
                 matrixMargin = 0;
             }
 
-            $('.matrix-body-wrapper').css('margin-top', matrixMargin);            
+            $('.matrix-body-wrapper').css('margin-top', matrixMargin);
         }
 
         // TODO: remove logic
@@ -210,19 +229,20 @@
 
         function createTagsList(filterQueries) {
             if (_.isEmpty(filterQueries)) return;
-            // TODO: Always regenerate new array 
+            // TODO: Always regenerate new array
             // Update it
-            var tags = [];
             if(_.isArray(filterQueries)) {
                 _.forEach(filterQueries, function(item) {
-                    var find = findCharacteristic(item.characteristicId);
-                    item = _.merge(item, find);
-                    if (!_.isEmpty(item)) tags.push(caseQueryType(item));
+                    var itemInTags = _.find(vm.tags, function(tag){
+                        return tag.characteristicId === item.characteristicId;
+                    });
+                    if(itemInTags < 0) {
+                        var find = findCharacteristic(item.characteristicId);
+                        item = _.merge(item, find);
+                        if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
+                    }
                 });
             }
-
-            if(filterNameTag) tags.push(caseQueryType(filterNameTag));
-            vm.tags = tags;
         }
 
 
@@ -231,7 +251,7 @@
             // TODO: use Switch Case ?!
             if(item.valueType && item.valueType.toLowerCase() === 'datetime') {
                 data[0] = Utils.dateToUI(item.value[0]) + ' - ' + Utils.dateToUI(item.value[1]);
-            } else if(item.valueType && item.valueType.toLowerCase() === 'boolean') { 
+            } else if(item.valueType && item.valueType.toLowerCase() === 'boolean') {
                 if (item.value === true) data[0] = 'Yes';
                 if (item.value === false) data[0] = 'No';
             } else if(item.type && item.type.toLowerCase() === 'rangequery') {
