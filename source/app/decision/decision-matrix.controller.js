@@ -408,7 +408,6 @@
                 matrixRows[i].style.height = matrixSizes[i] + 'px';
                 matrixAsideRow[i].style.height = matrixSizes[i] + 'px';
             }
-            // 
         }
 
 
@@ -567,7 +566,7 @@
             // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            // if (vm.decisionMatrixList.length !== prevTotal) 
+            // if (vm.decisionMatrixList.length !== prevTotal)
             table.style.width = tableWidth;
 
         }

@@ -10,6 +10,7 @@
                 characteristics: '<',
                 criteria: '<',
                 // filterName: '<',
+                onChangeCriteriaOrder: '&'
             },
             template: renderTemplate,
             controller: 'FilterTagsController',
@@ -23,7 +24,10 @@
             '<div id="filter-tags" class="filter-tags" ng-if="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
 
                 '<div class="filter-tags-group sorted-panel" ng-show="vm.criteriaTags.length > 0">',
-                    '<div class="filter-tags-label">Sorted by: </div>',
+                    '<div class="filter-tags-label">Sorted by: weighted average vote',
+                        '<span class="link" ng-click="vm.changeCriteriaProperty(\'ASC\', $event)">ASC</span>',
+                        '<span class="link" ng-click="vm.changeCriteriaProperty(\'DESC\', $event)">DESC</span>',
+                    '</div>',
                     '<div class="tag-group-wrapper">',
                         '<div class="tag-group">',
                             '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
@@ -53,15 +57,16 @@
         ].join('\n');
     }
 
-    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils'];
+    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils','$scope'];
 
-    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils) {
+    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope) {
         var vm = this,
             _fo;
         vm.removeTag = removeTag;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+        vm.changeCriteriaProperty = changeCriteriaProperty;
 
         var filterByNameTag = {
             'id': -1,
@@ -149,14 +154,17 @@
         var filter = $('#filter-tags');
         function updateFilterStyles() {
             // TODO: avoid jquery
-            var matrixMargin = filter.outerHeight();
-            if (vm.tags.length === 1 || vm.criteriaTags.length > 0) {
-                matrixMargin = 30;
-            } else if(_.isEmpty(vm.tags) && _.isEmpty(vm.criteriaTags)) {
-                matrixMargin = 0;
-            }
 
-            $('.matrix-body-wrapper').css('margin-top', matrixMargin);
+            // if (vm.tags.length === 1 || vm.criteriaTags.length === 1)) {
+            //     matrixMargin = 30;
+            // } else if(_.isEmpty(vm.tags) && _.isEmpty(vm.criteriaTags)) {
+            //     matrixMargin = 0;
+            // }
+
+            setTimeout(function() {
+                var matrixMargin = filter.outerHeight();
+                $('.matrix-body-wrapper').css('margin-top', matrixMargin);
+            }, 0);
         }
 
         // TODO: remove logic
@@ -276,6 +284,12 @@
             item.data = data;
             return item;
         }
+
+        function changeCriteriaProperty(order, $event) {
+            console.log({order: order, $event: $event});
+            vm.onChangeCriteriaOrder({order: order, $event: $event});
+        }
+
     }
 
 })();
