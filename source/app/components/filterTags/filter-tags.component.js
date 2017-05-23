@@ -10,52 +10,14 @@
                 characteristics: '<',
                 criteria: '<',
                 // filterName: '<',
+                filterObject: '<',
                 onChangeCriteriaOrder: '&'
             },
-            template: renderTemplate,
+            templateUrl: 'app/components/filterTags/filter-tags.html',
             controller: 'FilterTagsController',
             controllerAs: 'vm'
         });
 
-    renderTemplate.$inject = [];
-
-    function renderTemplate() {
-        return [
-            '<div id="filter-tags" class="filter-tags" ng-if="vm.tags.length > 0 || vm.criteriaTags.length > 0">',
-
-                '<div class="filter-tags-group sorted-panel" ng-show="vm.criteriaTags.length > 0">',
-                    '<div class="filter-tags-label">Sorted by: weighted average vote',
-                        '<span class="link" ng-click="vm.changeCriteriaProperty(\'ASC\', $event)">ASC</span>',
-                        '<span class="link" ng-click="vm.changeCriteriaProperty(\'DESC\', $event)">DESC</span>',
-                    '</div>',
-                    '<div class="tag-group-wrapper">',
-                        '<div class="tag-group">',
-                            '<div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.id">',
-                                '<div class="tag">',
-                                    '{{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                                '</div><span ng-if="!$last" class="tag-divider">and</span>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-
-                '<div class="filter-tags-group" ng-if="vm.tags.length > 0">',
-                    '<div class="filter-tags-label">Filtered by: </div>',
-                    '<div class="tag-group-wrapper">',
-                        '<div class="tag-group" ng-repeat="tag in vm.tags track by tag.characteristicId">',
-                            '<span>{{::tag.name}}:</span>',
-                            '<div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">',
-                                '<div class="tag">',
-                                '{{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>',
-                            '</div><span ng-if="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-
-            '</div>'
-        ].join('\n');
-    }
 
     FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils','$scope'];
 
@@ -75,11 +37,13 @@
         };
 
         function onInit() {
+            console.log(vm.criteriaOrder);
             vm.tags = [];
             subscribe();
         }
 
         function onChanges(changes) {
+            // console.log(vm.filterObject);
             // Characteristics
             // if(changes.characteristics && changes.characteristics.currentValue) {
             //     vm.characteristics = angular.copy(changes.characteristics.currentValue);
@@ -151,7 +115,6 @@
             });
         }
 
-        var filter = $('#filter-tags');
         function updateFilterStyles() {
             // TODO: avoid jquery
 
@@ -162,6 +125,7 @@
             // }
 
             setTimeout(function() {
+                var filter = $('#filter-tags');
                 var matrixMargin = filter.outerHeight();
                 $('.matrix-body-wrapper').css('margin-top', matrixMargin);
             }, 0);

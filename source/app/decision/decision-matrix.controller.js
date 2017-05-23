@@ -129,7 +129,7 @@
             // TODO: clean up DecisionSharedService in controller maake one object
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
-            vm.fo = DecisionSharedService.filterObject.sorters;
+            vm.fo = angular.copy(DecisionSharedService.filterObject.sorters);
             getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
             });
@@ -401,7 +401,6 @@
                 $('.matrix-g-characteristics[data-characteristic-group=' + group.id + ']').css({
                     'height': size
                 });
-                // console.log(size);
             });
 
             for (var i = 0; i < matrixSizes.length; i++) {
@@ -409,8 +408,6 @@
                 matrixAsideRow[i].style.height = matrixSizes[i] + 'px';
             }
         }
-
-
 
         // TODO: drop settimeout and apply
         // Need only for first time load

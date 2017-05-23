@@ -94,7 +94,13 @@
                     </div>
                 </div>
 
-                <filter-tags criteria="vm.criteriaGroups" characteristics="vm.characteristicGroups" filter-name="vm.filterName" on-change-criteria-order="vm.orderByCriteriaProperty(order, $event)"></filter-tags>
+                <filter-tags
+                    criteria="vm.criteriaGroups"
+                    characteristics="vm.characteristicGroups"
+                    filter-name="vm.filterName"
+                    on-change-criteria-order="vm.orderByCriteriaProperty(order, $event)"
+                   filter-object="vm.fo"
+                    ></filter-tags>
 
                 <div class="matrix-body-wrapper">
                     <!-- End Header -->
