@@ -110,6 +110,13 @@
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
                 // TODO: use seletedValue
                 // console.log(vm.characteristics);
+
+                if (data.characteristicId === -1) {
+                    addToTagsList(data);
+                    return;
+                }
+
+                // Parese Filter Object
                 _fo = angular.copy(data);
                 if (_fo) createTagsList(_fo.filterQueries);
             });
@@ -131,21 +138,21 @@
             }, 0);
         }
 
-        // TODO: remove logic
+        // TODO: update remove logic
         // Optimize
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
 
+            // TODO: check for all items
             if (itemCopy.characteristicId === -1) {
+                var indexTag = tagIndexInList(itemCopy.characteristicId);
+                if (indexTag >= 0) vm.tags.splice(index, 1);
                 DecisionNotificationService.notifyFilterByName(null);
-                var index = _.findIndex(vm.tags, function(tag) {
-                    return tag.id === -1;
-                });
-                if (index >= 0) vm.tags.splice(index, 1);
-                filterNameTag = undefined;
+                return;
             }
 
-
+            // TODO: clean up 
+            // Check if we use property 'queries'
             if (item.type === "RangeQuery") {
                 itemCopy.value = null;
                 updateFilterObject(itemCopy);
@@ -154,11 +161,14 @@
 
             if (item.value && _.isArray(item.value)) { //Checkboxes
                 Utils.removeItemFromArray(value, itemCopy.value);
+               
             } else if (_.isArray(itemCopy.queries)) {
                 var find = _.findIndex(itemCopy.queries, function(query) {
                     return query.value === value;
                 });
-                if (find >= 0) itemCopy.queries.splice(find, 1);
+                if (find >= 0) {
+                    itemCopy.queries.splice(find, 1);
+                }
                 if (_.isEmpty(itemCopy.queries) ||
                     value.indexOf('-') >= 0) {
                     itemCopy.queries = null;
@@ -171,21 +181,27 @@
             itemCopy = _.omit(itemCopy, 'data');
             if (_.isEmpty(itemCopy)) itemCopy = null;
 
-            // TODO: clean up
+            var index = tagIndexInList(itemCopy.characteristicId); 
+            if(index >=0 && _.isEmpty(itemCopy.value)) {
+                vm.tags.splice(index, 1);
+            }
+            
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
             updateFilterObject(sendItemCopy);
-            updateFilterStyles();
+            // debugger
+        }
+
+        function tagIndexInList(id) {
+            return _.findIndex(vm.tags, function(tag) {
+                return tag.characteristicId === id;
+            });
         }
 
         function updateFilterObject(query) {
-            // TODO: avoid string
-            if (query.id === -1) {
-                DecisionNotificationService.subscribeFilterByName(null);
-                return;
-            }
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
             });
+            updateFilterStyles();
         }
 
         // TODO: clean up find
@@ -204,14 +220,23 @@
         // TODO: Remove it
         // Always regenerate new array
         function createTagsList(filterQueries) {
-            vm.tags = [];
             _.forEach(filterQueries, function(item) {
-                var find = findCharacteristic(item.characteristicId);
-                item = _.merge(item, find);
-                if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
+                addToTagsList(item);
             });
         }
 
+        function addToTagsList(item) {
+            if (!_.isEmpty(item)) {
+                var find = findCharacteristic(item.characteristicId);
+                item = _.merge(item, find);
+                var index = tagIndexInList(item.characteristicId);
+                if (index >= 0) {
+                    vm.tags[index] = caseQueryType(item);
+                } else {
+                    vm.tags.push(caseQueryType(item));
+                }
+            }            
+        }
 
         // function createTagsList(filterQueries) {
         //     if (_.isEmpty(filterQueries)) return;
@@ -255,7 +280,7 @@
             } else {
                 order = 'ASC';
             }
-           
+
             vm.onChangeCriteriaOrder({
                 order: order,
                 $event: $event

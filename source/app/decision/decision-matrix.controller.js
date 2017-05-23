@@ -80,11 +80,14 @@
 
         function filterNameSend(value) {
             // if (!_.isNull(value) && !value) return;
+            DecisionNotificationService.notifyFilterByName(value);
 
-            // TODO: send as parametr in getDecisionMatrix(id, filterObj) ?!
-            _fo.decisionNameFilterPattern = _.escape(value);
-
-            DecisionNotificationService.notifyFilterByName(_fo.decisionNameFilterPattern || value);
+            var tag = {
+                'name': 'Name',
+                'characteristicId': -1,
+                'value': _.escape(value)
+            };
+            DecisionNotificationService.notifyFilterTags(tag);
         }
 
         function filterNameSubmitClick(value) {
@@ -172,6 +175,7 @@
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
+            _fo.decisionNameFilterPattern = _.escape(data) || null;
             getDecisionMatrix(vm.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
                 vm.filterName = data;
@@ -207,7 +211,6 @@
             });
 
             vm.characteristicGroups = angular.copy(characteristicGroups);
-            // debugger
             // console.log(vm.characteristicGroups);
         }
 
