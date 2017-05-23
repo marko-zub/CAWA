@@ -79,13 +79,14 @@
         }
 
         function filterNameSend(value) {
-            // if (!_.isNull(value) && !value) return;
+           
             DecisionNotificationService.notifyFilterByName(value);
 
+            // Send to filter tags
             var tag = {
                 'name': 'Name',
                 'characteristicId': -1,
-                'value': _.escape(value)
+                'value': value || null
             };
             DecisionNotificationService.notifyFilterTags(tag);
         }
@@ -410,6 +411,9 @@
                 matrixRows[i].style.height = matrixSizes[i] + 'px';
                 matrixAsideRow[i].style.height = matrixSizes[i] + 'px';
             }
+
+            // var characteristicsHeight = _.sum(matrixSizes) + characteristicsCopy.length*24;
+            // $('.characteristic-groups-content').css('height', characteristicsHeight);
         }
 
         // TODO: drop settimeout and apply

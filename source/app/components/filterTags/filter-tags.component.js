@@ -9,7 +9,6 @@
             bindings: {
                 characteristics: '<',
                 criteria: '<',
-                // filterName: '<',
                 filterObject: '<',
                 onChangeCriteriaOrder: '&'
             },
@@ -46,7 +45,7 @@
             // console.log(vm.filterObject);
             // Characteristics
             // if(changes.characteristics && changes.characteristics.currentValue) {
-            //     vm.characteristics = angular.copy(changes.characteristics.currentValue);
+            //     vm.characteristics = changes.characteristics.currentValue;
             //     generateCharacteristicsTags(vm.characteristics);
             // }
 
@@ -55,18 +54,6 @@
                 vm.criteria = angular.copy(changes.criteria.currentValue);
                 generateCriteriaTags(vm.criteria);
             }
-
-            // Filter Name
-            // if(changes.filterName && changes.filterName.currentValue) {
-            //     // vm.tags.push()
-
-            //     if(_.isNull(changes.filterName.currentValue)) {
-            //         removeTag(filterByNameTag);
-            //     } else {
-            //         filterByNameTag.value = changes.filterName.currentValue;
-            //         vm.tags.push(filterByNameTag);
-            //     }
-            // }
         }
 
         // Criteria
@@ -99,7 +86,8 @@
             console.log(characteristics);
             _.forEach(characteristics, function(group) {
                 _.forEach(group.characteristics, function(characteristic) {
-                    console.log(characteristic.seletedValues);
+                    // console.log(characteristic);
+                    // debugger
                     // if(characteristics.seletedValues) console.log(characteristics.seletedValues);
                 });
             });
@@ -112,7 +100,12 @@
                 // console.log(vm.characteristics);
 
                 if (data.characteristicId === -1) {
-                    addToTagsList(data);
+                    if (_.isNull(data.value)) {
+                        removeTag(data);
+                    } else {
+                        addToTagsList(data);
+                    }
+
                     return;
                 }
 
@@ -123,14 +116,7 @@
         }
 
         function updateFilterStyles() {
-            // TODO: avoid jquery
-
-            // if (vm.tags.length === 1 || vm.criteriaTags.length === 1)) {
-            //     matrixMargin = 30;
-            // } else if(_.isEmpty(vm.tags) && _.isEmpty(vm.criteriaTags)) {
-            //     matrixMargin = 0;
-            // }
-
+            // TODO: avoid jquery and timeout
             setTimeout(function() {
                 var filter = $('#filter-tags');
                 var matrixMargin = filter.outerHeight();
@@ -142,50 +128,35 @@
         // Optimize
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
+            var index = tagIndexInList(itemCopy.characteristicId);
+            if (index < 0) return;
 
-            // TODO: check for all items
-            if (itemCopy.characteristicId === -1) {
-                var indexTag = tagIndexInList(itemCopy.characteristicId);
-                if (indexTag >= 0) vm.tags.splice(index, 1);
-                DecisionNotificationService.notifyFilterByName(null);
-                return;
-            }
 
-            // TODO: clean up 
-            // Check if we use property 'queries'
-            if (item.type === "RangeQuery") {
-                itemCopy.value = null;
-                updateFilterObject(itemCopy);
-                return;
-            }
+            if (index >= 0) {
 
-            if (item.value && _.isArray(item.value)) { //Checkboxes
-                Utils.removeItemFromArray(value, itemCopy.value);
-               
-            } else if (_.isArray(itemCopy.queries)) {
-                var find = _.findIndex(itemCopy.queries, function(query) {
-                    return query.value === value;
-                });
-                if (find >= 0) {
-                    itemCopy.queries.splice(find, 1);
-                }
-                if (_.isEmpty(itemCopy.queries) ||
-                    value.indexOf('-') >= 0) {
-                    itemCopy.queries = null;
+                if(_.isUndefined(itemCopy.data)) {
                     itemCopy.value = null;
                 }
-            } else {
-                itemCopy.value = null;
+                // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
+                // value can be length 2 [1, 100] 
+                // but data = ["1 - 100"] lenght 1
+                if (_.isArray(itemCopy.data) && itemCopy.data.length > 1) {
+                    Utils.removeItemFromArray(value, itemCopy.data);
+                    itemCopy.value = itemCopy.data;
+                } else { //Checkboxes
+                    vm.tags.splice(index, 1);
+                    itemCopy.value = null;
+                }
+
+                // Filter Name
+                if (itemCopy.characteristicId === -1) {
+                    vm.tags.splice(index, 1);
+                    itemCopy.value = null;
+                    DecisionNotificationService.notifyFilterByName(null);
+                    return;
+                }
             }
 
-            itemCopy = _.omit(itemCopy, 'data');
-            if (_.isEmpty(itemCopy)) itemCopy = null;
-
-            var index = tagIndexInList(itemCopy.characteristicId); 
-            if(index >=0 && _.isEmpty(itemCopy.value)) {
-                vm.tags.splice(index, 1);
-            }
-            
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
             updateFilterObject(sendItemCopy);
             // debugger
@@ -235,7 +206,7 @@
                 } else {
                     vm.tags.push(caseQueryType(item));
                 }
-            }            
+            }
         }
 
         // function createTagsList(filterQueries) {
@@ -275,14 +246,11 @@
         }
 
         function changeCriteriaProperty(order, $event) {
-            if (order === 'ASC') {
-                order = 'DESC';
-            } else {
-                order = 'ASC';
-            }
+            var defaultOrder = 'DESC';
+            if (order === defaultOrder) defaultOrder = 'ASC';
 
             vm.onChangeCriteriaOrder({
-                order: order,
+                order: defaultOrder,
                 $event: $event
             });
         }

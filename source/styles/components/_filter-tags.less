@@ -26,6 +26,8 @@ filter-tags {
     .filter-tags-group {
         overflow: hidden;
         border-bottom: 1px solid @gray-light;
+        padding: 2px 0;
+        background-color: #fff;
         &:last-child {
             border-bottom: 0;
         }
@@ -35,14 +37,18 @@ filter-tags {
         display: inline-block;
         margin: 0 1px;
         text-transform: lowercase;
+        font-size: 9px;
     }
     .tag {
         display: inline-block;
         border-radius: 2px;
-        background-color: @gray-light;
+        border: 1px solid @gray-light;
         color: @light-black;
         margin: 2px 2px;
         padding: 2px 4px;
+        &:hover {
+            background-color: @gray-light;
+        }
     }
 }
 
@@ -65,9 +71,4 @@ filter-tags {
     margin: 5px 0;
     float: left;
     // width: 200px
-}
-
-
-.filter-tags-group {
-    margin: 0;
 }
