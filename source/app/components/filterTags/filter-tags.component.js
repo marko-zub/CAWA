@@ -19,7 +19,7 @@
         });
 
 
-    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils','$scope'];
+    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', '$scope'];
 
     function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope) {
         var vm = this,
@@ -37,7 +37,7 @@
         };
 
         function onInit() {
-            console.log(vm.criteriaOrder);
+            // console.log(vm.criteriaOrder);
             vm.tags = [];
             subscribe();
         }
@@ -51,7 +51,7 @@
             // }
 
             // Criteria
-            if(changes.criteria && changes.criteria.currentValue) {
+            if (changes.criteria && changes.criteria.currentValue) {
                 vm.criteria = angular.copy(changes.criteria.currentValue);
                 generateCriteriaTags(vm.criteria);
             }
@@ -82,13 +82,13 @@
             criteriaSelectedList = [];
             _.forEach(criteria, function(group) {
                 _.forEach(group.criteria, function(criteriaItem) {
-                    if(criteriaItem.isSelected === true) {
+                    if (criteriaItem.isSelected === true) {
                         criteriaSelectedList.push(criteriaItem);
                     }
                 });
             });
 
-            if(!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
+            if (!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
                 vm.criteriaTags = criteriaSelectedList;
                 updateFilterStyles();
             }
@@ -136,12 +136,12 @@
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
 
-            if(itemCopy.characteristicId === -1) {
+            if (itemCopy.characteristicId === -1) {
                 DecisionNotificationService.notifyFilterByName(null);
                 var index = _.findIndex(vm.tags, function(tag) {
                     return tag.id === -1;
                 });
-                if(index >=0) vm.tags.splice(index, 1);
+                if (index >= 0) vm.tags.splice(index, 1);
                 filterNameTag = undefined;
             }
 
@@ -179,7 +179,7 @@
 
         function updateFilterObject(query) {
             // TODO: avoid string
-            if(query.id === -1) {
+            if (query.id === -1) {
                 DecisionNotificationService.subscribeFilterByName(null);
                 return;
             }
@@ -196,9 +196,9 @@
                     // console.log(characteristic.id, id, characteristic.id === id)
                     return characteristic.id === id;
                 });
-                if(find) findCharacteristic = find;
+                if (find) findCharacteristic = find;
             });
-            if(findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
+            if (findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
         }
 
         // TODO: Remove it
@@ -235,12 +235,12 @@
         function caseQueryType(item) {
             var data = [];
             // TODO: use Switch Case ?!
-            if(item.valueType && item.valueType.toLowerCase() === 'datetime') {
+            if (item.valueType && item.valueType.toLowerCase() === 'datetime') {
                 data[0] = Utils.dateToUI(item.value[0]) + ' - ' + Utils.dateToUI(item.value[1]);
-            } else if(item.valueType && item.valueType.toLowerCase() === 'boolean') {
+            } else if (item.valueType && item.valueType.toLowerCase() === 'boolean') {
                 if (item.value === true) data[0] = 'Yes';
                 if (item.value === false) data[0] = 'No';
-            } else if(item.type && item.type.toLowerCase() === 'rangequery') {
+            } else if (item.type && item.type.toLowerCase() === 'rangequery') {
                 data[0] = item.value[0] + ' - ' + item.value[1];
             } else {
                 data = _.isArray(item.value) ? item.value : [item.value];
@@ -250,8 +250,16 @@
         }
 
         function changeCriteriaProperty(order, $event) {
-            console.log({order: order, $event: $event});
-            vm.onChangeCriteriaOrder({order: order, $event: $event});
+            if (order === 'ASC') {
+                order = 'DESC';
+            } else {
+                order = 'ASC';
+            }
+           
+            vm.onChangeCriteriaOrder({
+                order: order,
+                $event: $event
+            });
         }
 
     }

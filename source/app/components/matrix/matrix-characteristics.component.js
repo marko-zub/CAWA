@@ -62,16 +62,21 @@
         // }
 
         function onChanges(changes) {
-            if(changes.characteristics.currentValue) {
-                decisionsIds = pickDecisionsIds(changes.characteristics.currentValue);
+            // if(changes.characteristics.currentValue) {
+            //     decisionsIds = pickDecisionsIds(changes.characteristics.currentValue);
+            // }
+
+
+            if(changes.characteristics.currentValue && !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
+                vm.characteristicsDisplay = changes.characteristics.currentValue;
             }
 
             // Update only when decisions ids changes
-            if (changes.characteristics.currentValue &&
-                !angular.equals(decisionsIds, decisionsIdsPrev)) {
-                vm.characteristicsDisplay = changes.characteristics.currentValue;
-                decisionsIdsPrev = angular.copy(decisionsIds);
-            }
+            // if (changes.characteristics.currentValue &&
+            //     !angular.equals(decisionsIds, decisionsIdsPrev)) {
+            //     vm.characteristicsDisplay = changes.characteristics.currentValue;
+            //     decisionsIdsPrev = angular.copy(decisionsIds);
+            // }
         }
 
         function pickDecisionsIds(characteristics) {
