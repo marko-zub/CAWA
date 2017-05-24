@@ -18,9 +18,9 @@
         });
 
 
-    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', '$scope'];
+    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', '$scope', '$element'];
 
-    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope) {
+    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope, $element) {
         var vm = this,
             _fo;
         vm.removeTag = removeTag;
@@ -77,13 +77,12 @@
 
             if (!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
                 vm.criteriaTags = criteriaSelectedList;
-                updateFilterStyles();
             }
         }
         // End Criteria
 
         function generateCharacteristicsTags(characteristics) {
-            console.log(characteristics);
+            // console.log(characteristics);
             _.forEach(characteristics, function(group) {
                 _.forEach(group.characteristics, function(characteristic) {
                     // console.log(characteristic);
@@ -105,7 +104,6 @@
                     } else {
                         addToTagsList(data);
                     }
-
                     return;
                 }
 
@@ -116,12 +114,11 @@
         }
 
         function updateFilterStyles() {
-            // TODO: avoid jquery and timeout
-            setTimeout(function() {
-                var filter = $('#filter-tags');
-                var matrixMargin = filter.outerHeight();
-                $('.matrix-body-wrapper').css('margin-top', matrixMargin);
-            }, 0);
+            var filter = $($element).find('#filter-tags');
+            console.log(filter, filter.outerHeight());
+            if (filter.length)
+                $('.matrix-body-wrapper').css('margin-top', filter.outerHeight());
+
         }
 
         // TODO: update remove logic
@@ -134,7 +131,7 @@
 
             if (index >= 0) {
 
-                if(_.isUndefined(itemCopy.data)) {
+                if (_.isUndefined(itemCopy.data)) {
                     itemCopy.value = null;
                 }
                 // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
@@ -172,7 +169,6 @@
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
             });
-            updateFilterStyles();
         }
 
         // TODO: clean up find
@@ -191,9 +187,15 @@
         // TODO: Remove it
         // Always regenerate new array
         function createTagsList(filterQueries) {
+            // Clear all tags
+            vm.tags = _.filter(vm.tags, function(tag) {
+                return tag.characteristicId === -1;
+            });
+
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
+
         }
 
         function addToTagsList(item) {

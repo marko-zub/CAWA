@@ -43,7 +43,7 @@
                 }
             };
 
-            var html = '<input date-range-picker options="vm.dateRangeOptions" class="form-control input-sm date-picker" type="text" ng-model="vm.dateRange" />';
+            var html = '<div class="filter-item-content"><input date-range-picker options="vm.dateRangeOptions" class="form-control input-sm date-picker" type="text" ng-model="vm.dateRange" /></div>';
             return html;
         }
 

@@ -102,7 +102,7 @@
                    filter-object="vm.fo"
                     ></filter-tags>
 
-                <div class="matrix-body-wrapper">
+                <div id="matrix-body-wrapper" class="matrix-body-wrapper">
                     <!-- End Header -->
                     <!-- Table Aside -->
                     <div id="matrix-aside" class="matrix-aside">
@@ -203,7 +203,7 @@
                 </div>
             </div>
         </div>
-        <div class="martix-footer">
+        <div class="martix-footer" ng-show="vm.decisionMatrixList">
             <app-paginator></app-paginator>
         </div>
     </div>

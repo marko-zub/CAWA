@@ -87,9 +87,13 @@
         .glyphicon {
             margin: 0 2px;
         }
-        &:hover {
-            color: @basic-active;
-        }
+
+        .control {
+            color: @icon-color;
+            &:hover {
+                color: @basic-active;
+            }            
+        }        
         &.empty {
             margin-top: 20px;
         }
@@ -473,7 +477,6 @@ a {
 @matrix-header: 120px;
 .matrix-header {
     position: relative;
-    z-index: 2;
     height: @matrix-header;
     top: 0;
     overflow: hidden;
@@ -537,13 +540,24 @@ a {
     }
 }
 
+// .matrix .app-panel {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1 1 auto;
+// }
+
 .matrix-body-wrapper {
     position: absolute;
     top: @matrix-header;
     // top: 160px;
+    // position: relative;
+    // overflow: hidden;
+    // height: 100%;
     width: 100%;
     z-index: 1;
     bottom: 0;
+    // bottom: 46px;
+    // margin-bottom: 46px;
 }
 
 .matrix-body {
@@ -944,15 +958,30 @@ a {
     vertical-align: top;
     margin-top: 0px;
 }
-.filter-item {
+
+.checkbox-list {
+    min-height: 94px;
+    max-height: 250px;
+}
+
+
+.filter-item-content {
+    padding: 10px 8px 5px 0;
     overflow: auto;
-    position: absolute;
-    top: 40px;
-    bottom: 5px;
-    //min-height: 100px;
-    width: auto;
-    left: 0;
-    right: 0;
+    width: 100%;
+}
+
+.filter-item {
+    margin: 10px 0 5px;
+    overflow: auto;
+    width: 100%;
+    // position: absolute;
+    // top: 40px;
+    // bottom: 5px;
+    // //min-height: 100px;
+    // width: auto;
+    // left: 0;
+    // right: 0;
     label {
         font-weight: 500;
         font-size: 11px;
@@ -1006,11 +1035,8 @@ a {
 
 
 // TODO: find better way
-filter-control {
-    display: block;
-    min-height: 94px;
-}
-// .checkbox-list {
+// filter-control {
+//     display: block;
 //     min-height: 94px;
 // }
 

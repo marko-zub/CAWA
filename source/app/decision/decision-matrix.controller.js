@@ -79,7 +79,7 @@
         }
 
         function filterNameSend(value) {
-           
+
             DecisionNotificationService.notifyFilterByName(value);
 
             // Send to filter tags
@@ -419,7 +419,9 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
+            updateMatrixHeight();
             setTimeout(function() {
+                updateMatrixHeight(); //First time
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
 
@@ -433,7 +435,7 @@
         function getDecisionMatrix(id, persistent) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getFilterObject();
-            if(persistent === true) sendData.persistent = true;
+            if (persistent === true) sendData.persistent = true;
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
@@ -556,7 +558,19 @@
             });
         }
 
+
+        // TODO: avoid it!!!
+        // var win_resize = _.throttle(updateMatrixHeight, 50);
+        // $(window).on('resize', win_resize);
+        function updateMatrixHeight() {
+            var matrixHeaderHeight = $('.matrix-header').height();
+            var height = $('#filter-tags').height();
+            // - $('.martix-footer').height();
+            $('#matrix-body-wrapper').css('margin-top', height);
+        }
+
         function reinitMatrixScroller() {
+            // TODO: avoid jquery height
             if (martrixScroll) {
                 martrixScroll.refresh();
                 martrixScroll.on('scroll', updatePosition);
@@ -733,8 +747,8 @@
         function toggleGroupName($event, id, type) {
             $($event.target).toggleClass('closed');
             // TYPES: 'characteristic', 'criteria'
-            if(!type) type = 'criteria';
-            $('[data-'+type+'-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
+            if (!type) type = 'criteria';
+            $('[data-' + type + '-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
 
             // Incorect height calc
             setTimeout(function() {
