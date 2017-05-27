@@ -29,7 +29,7 @@
                                 '<content-formater ng-if="::decisionCol.characteristics.value" value="::decisionCol.characteristics.value" type="::item.valueType"></content-formater>',
                                 '<div class="app-item-additional-wrapper">',
                                     '<div class="app-item-comments">',
-                                        '<i class="control glyphicon glyphicon-comment"></i>0',
+                                        '<a href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
                                         '<a href="#" class="control"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
                                         // '<a href="#" ng-if="::decisionCol.characteristics.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
                                     '</div>',

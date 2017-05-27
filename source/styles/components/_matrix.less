@@ -91,22 +91,24 @@
         display: inline-block;
         margin: 0;
         color: @icon-color;
-        font-size: 13px;
         padding: 0;
+        font-size: 0;
         .glyphicon {
             margin: 0 2px;
         }
-
         .control {
+            font-size: 13px;
             display: inline-block;
-            padding: 0 4px;
+            padding: 0 4px 0 0;
+            margin: 0 4px 0 0;
             color: @icon-color;
+            border-right: 1px solid @gray-light;
             &:hover {
                 color: @basic-active;
             }
-            & + {
-                border-left: 1px solid @gray-light;
-            }      
+            &:last-child {
+                border-right-color: transparent;
+            }    
         }        
         &.empty {
             margin-top: 20px;
@@ -255,7 +257,7 @@
 
 .app-item-additional-wrapper {
     display: inline-block;
-    width: 100%;
+    // width: 100%;
     position: absolute;
     bottom: 5px;
     left: 3px;
