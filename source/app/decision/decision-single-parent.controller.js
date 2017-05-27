@@ -39,14 +39,17 @@
                     return parent.uid === stateId;
                 });
 
+
                 if(!vm.parent) return;
+
+                vm.parent.description = $sce.trustAsHtml(vm.parent.description);
                 getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
                 $rootScope.breadcrumbs = [{
                     title: 'Decisions',
                     link: 'decisions'
                 }, {
                     title: vm.decision.name,
-                    link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
+                    link: 'decisions.single({id:' + vm.decision.uid + ', slug:"' + vm.decision.nameSlug + '"})'
                 }, {
                     title: vm.parent.name,
                     link: null

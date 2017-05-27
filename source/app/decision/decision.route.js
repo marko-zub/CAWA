@@ -149,18 +149,18 @@
 
                 // TODO: find better way
                 // Remove size & page params
-                if ($state.current.name !== 'decisions' ||
-                    $state.current.name !== 'decisions.single') {
-                    $state.go($state.current.name, {
-                        page: null,
-                        size: null,
-                        sort: null
-                    }, {
-                        notify: false,
-                        reload: false,
-                        location: false
-                    });
-                }
+                // if ($state.current.name !== 'decisions' ||
+                //     $state.current.name !== 'decisions.single') {
+                //     $state.go($state.current.name, {
+                //         page: null,
+                //         size: null,
+                //         sort: null
+                //     }, {
+                //         notify: false,
+                //         reload: false,
+                //         location: false
+                //     });
+                // }
 
                 //unsubscribe event listener
                 // stateListener();

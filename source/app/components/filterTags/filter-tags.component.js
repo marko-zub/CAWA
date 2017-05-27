@@ -114,10 +114,10 @@
         }
 
         function updateFilterStyles() {
-            var filter = $($element).find('#filter-tags');
-            console.log(filter, filter.outerHeight());
-            if (filter.length)
-                $('.matrix-body-wrapper').css('margin-top', filter.outerHeight());
+            // var filter = $($element).find('#filter-tags');
+            // console.log(filter, filter.outerHeight());
+            // if (filter.length)
+            //     $('.matrix-body-wrapper').css('margin-top', filter.outerHeight());
 
         }
 

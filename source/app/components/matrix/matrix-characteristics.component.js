@@ -30,7 +30,7 @@
                                 '<div class="app-item-additional-wrapper">',
                                     '<div class="app-item-comments">',
                                         '<i class="control glyphicon glyphicon-comment"></i>0',
-                                        '<a href="#" ng-if="::decisionCol.characteristics.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
+                                        '<a href="#"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
                                     '</div>',
                                 '</div>',
                                 '</a>',

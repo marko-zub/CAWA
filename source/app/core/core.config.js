@@ -15,7 +15,7 @@
         $provide.decorator('taOptions', taOptions);
 
         // Call $digest after all request finshed
-        $httpProvider.useApplyAsync(true);
+        // $httpProvider.useApplyAsync(true);
 
         // TODO: disable only on prod Disable
         $compileProvider.debugInfoEnabled(Config.mode === 'dev');

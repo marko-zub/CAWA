@@ -21,7 +21,7 @@ html {
   padding-top: 0;
   padding-bottom: @footer-height;
   margin-bottom: -@footer-height;
-  min-height: 100vh;
+  min-height: calc(~"100vh - 96px"); //96 = header + footer
 }
 
 .app-row-content-label {
