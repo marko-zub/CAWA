@@ -171,7 +171,8 @@
     DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state'];
 
     function DecisionResolver(DecisionDataService, $stateParams, $state) {
-        return DecisionDataService.getDecisionInfo($stateParams.id).then(function(result) {
+        var uid = $stateParams.id;
+        return DecisionDataService.getDecisionInfo(uid).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);
                 $state.go('404');

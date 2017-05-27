@@ -22,7 +22,7 @@
             <div class="col-sm-8">
                 <ul class="discussions-list">
                     <li ng-repeat="decision in vm.decisions track by $index">
-                        <a ui-sref="decisions.single({id:decision.id, slug:decision.nameSlug, size: null, page: null})">
+                        <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null})">
                             <div class="clearfix">
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{decision.imageUrl}}" class="img-responsive">

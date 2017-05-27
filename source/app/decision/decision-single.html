@@ -20,7 +20,7 @@
                     <a href>General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a ui-sref="decisions.single.parent({parentId:parent.id, parentSlug:parent.nameSlug})"> {{::parent.name}}</a>
+                    <a ui-sref="decisions.single.parent({parentId:parent.uid, parentSlug:parent.nameSlug})"> {{::parent.name}}</a>
                 </li>
             </ul>
         </div>
@@ -72,8 +72,8 @@
     <div class="row" ng-if="vm.isDecisionsParent">
         <div class="col-sm-8">
             <ul class="discussions-list">
-                <li ng-repeat="decision in vm.decisions track by decision.id">
-                    <a ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                <li ng-repeat="decision in vm.decisions track by decision.uid">
+                    <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})">
                         <div class="clearfix">
                             <div class="img-container" ng-if="decision.imageUrl">
                                 <img ng-src="{{decision.imageUrl}}" class="img-responsive">

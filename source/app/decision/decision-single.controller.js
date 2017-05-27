@@ -15,8 +15,7 @@
 
         var
             vm = this;
-
-        vm.id = $stateParams.id;
+            
         vm.decision = decisionBasicInfo || {};
 
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
@@ -39,8 +38,8 @@
         function onInit() {
             console.log('Decision Single Controller');
             initPagination();
-            getDecisionNomimations($stateParams.id);
-            getDecisionParents($stateParams.id);
+            getDecisionNomimations(vm.decision.id);
+            getDecisionParents(vm.decision.id);
         }
 
         function getDecisionNomimations(id) {

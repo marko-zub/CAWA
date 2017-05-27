@@ -22,7 +22,7 @@
 
             vm.filterName = null;
 
-            vm.id = $stateParams.id;
+            // vm.uid = $stateParams.uid;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
@@ -31,8 +31,8 @@
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
-            getCriteriaGroupsById(vm.id).then(function(criteriaResp) {
-                getDecisionMatrix(vm.id).then(function(matrixResp) {
+            getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
+                getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
                     // Render html matrix
                     var decisionMatrixs = matrixResp.decisionMatrixs;
                     // 2. render list of criterias
@@ -43,7 +43,7 @@
                     initSorters(); //Hall of fame
                     initMatrixMode();
 
-                    getCharacteristicsGroupsById(vm.id).then(function(resp) {
+                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                         // 3. Render characteristics
                         prepareCharacteristicsGroups(resp);
                         createMatrixContentCharacteristics(decisionMatrixs);
@@ -103,26 +103,26 @@
             // TODO: simplify
             formDataForSearchRequest(data, data.coefCall);
             initSorters();
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
 
         DecisionNotificationService.subscribePageChanged(function() {
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
 
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
         });
 
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
-            DecisionDataService.getDecisionCharacteristics(vm.id, data.id).then(function(result) {
+            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function(result) {
                 data.characteristics = prepareDataToDisplay(result);
             }).finally(function() {
                 data.detailsSpinner = false;
@@ -134,7 +134,7 @@
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
             vm.fo = angular.copy(DecisionSharedService.filterObject.sorters);
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
             });
         });
@@ -167,7 +167,7 @@
                 sendFo.filterQueries = null;
             }
 
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
             // console.log(data);
@@ -177,7 +177,7 @@
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
             _fo.decisionNameFilterPattern = _.escape(data) || null;
-            getDecisionMatrix(vm.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
                 vm.filterName = data;
             });

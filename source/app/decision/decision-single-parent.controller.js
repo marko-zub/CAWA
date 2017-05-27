@@ -23,8 +23,6 @@
         function onInit() {
             console.log('Decision Single Parent Controller');
 
-            vm.id = $stateParams.id;
-
             vm.decision = decisionBasicInfo || {};
 
 
@@ -35,12 +33,14 @@
 
             stateId = parseInt($stateParams.parentId);
 
-            // getDecisionNomimations($stateParams.id);
-            getDecisionParents($stateParams.id).then(function(result) {
+            // getDecisionNomimations(vm.decision.id);
+            getDecisionParents(vm.decision.id).then(function(result) {
                 vm.parent = _.find(result, function(parent) {
-                    return parent.id === stateId;
+                    return parent.uid === stateId;
                 });
 
+                if(!vm.parent) return;
+                getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
                 vm.breadcrumbs = [{
                     title: 'Decisions',
                     link: 'decisions'
@@ -69,9 +69,6 @@
             return DecisionDataService.getDecisionParents(id).then(function(result) {
                 // console.log(result);
                 vm.decisionParents = result;
-
-                getDecisionParentsCriteriaCharacteristicts(stateId);
-
                 return result;
             });
         }
