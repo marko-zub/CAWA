@@ -425,7 +425,7 @@
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
 
-                $scope.$apply(function() {
+                $scope.$applyAsync(function() {
                     vm.characteristicGroupsContentLoader = false;
                 });
             }, 0);

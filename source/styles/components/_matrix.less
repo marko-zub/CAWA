@@ -42,6 +42,15 @@
             margin: 0 2px;
         }
     }
+
+    .app-rating-votes-likes {
+        position: absolute;
+        left: 32px;
+        bottom: 5px;
+        padding: 0 2px;
+        border-left: 1px solid @gray-light;
+        display: inline-block;
+    }
 }
 
 .matrix-g-criteria {
@@ -89,10 +98,15 @@
         }
 
         .control {
+            display: inline-block;
+            padding: 0 4px;
             color: @icon-color;
             &:hover {
                 color: @basic-active;
-            }            
+            }
+            & + {
+                border-left: 1px solid @gray-light;
+            }      
         }        
         &.empty {
             margin-top: 20px;

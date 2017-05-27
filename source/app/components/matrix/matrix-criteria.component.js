@@ -91,7 +91,7 @@
         // TODO: any way faster render?
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
-                '<span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
+                '<span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
             '</div>',
         ].join('\n');
 

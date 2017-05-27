@@ -45,7 +45,7 @@
                 votes = [
                     '<div class="app-rating-votes">',
                         '<span class="app-rating-votes-weight">' + vm.weight + '</span>',
-                        '<span><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + vm.totalVotes + '</span>',
+                        '<span class="app-rating-votes-likes"><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + vm.totalVotes + '</span>',
                     '</div>'
                 ].join('\n');
             }
