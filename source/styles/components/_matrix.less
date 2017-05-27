@@ -304,6 +304,10 @@ a {
 .matrix-g-title {
     font-size: 11px;
     overflow: hidden;
+    .controls,
+    .group-title-line {
+        pointer-events: none;
+    }
     // border-bottom: 1px solid @gray-light;
     .group-title-line {
         display: inline-block;
@@ -564,13 +568,14 @@ a {
 
 .matrix-body-wrapper {
     position: absolute;
-    top: @matrix-header;
+    // top: @matrix-header;
     // position: relative;
-    overflow: hidden;
+    // overflow: hidden;
     // height: 100%;
     width: 100%;
     z-index: 1;
     bottom: 0;
+    top: 0;
     // bottom: 46px;
     // margin-bottom: 46px;
 }

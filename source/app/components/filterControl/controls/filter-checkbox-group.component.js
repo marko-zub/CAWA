@@ -107,7 +107,7 @@
 
             sendObj.value = checkedValues;
             var sendObjCopy = angular.copy(sendObj);
-            FilterControlsDataService.createFilterQuery(sendObjCopy);
+            sendRequestDebounce(sendObjCopy);
         });
 
         $($element).on('change', '.query-type-wrapper input.js-switcher-checkbox', function() {
@@ -119,10 +119,17 @@
 
             if (!_.isEmpty(sendObj.value)) {
                 var sendObjCopy = angular.copy(sendObj);
-                FilterControlsDataService.createFilterQuery(sendObjCopy);
+                sendRequestDebounce(sendObjCopy);
             }
         });
         // END Control Checkboxes
+
+        var sendRequestDebounce = _.debounce(sendRequest, 100);
+        // var sendRequestDebounce = _.debounce(sendRequest, 300, {leading: true});
+
+        function sendRequest(sendObjCopy) {
+            FilterControlsDataService.createFilterQuery(sendObjCopy);
+        }
 
     }
 })();

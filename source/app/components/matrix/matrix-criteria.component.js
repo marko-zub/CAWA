@@ -155,7 +155,7 @@
 
                 // Content block
                 var content = [
-                    '<div class="m-group" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 +'px">',
+                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 +'px">',
                         rows.join('\n'),
                     '</div>'
                 ].join('\n');
@@ -163,7 +163,7 @@
                 // Group block
                 // console.log(container);
                 var containerHtml = [
-                    '<div class="m-group" id="g-criteria-' + container.id + '">',
+                    '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
                         '<div class="m-group-title">',
                             // container.name,
                         '</div>',
@@ -185,7 +185,7 @@
 
         function getComments($event) {
             vm.isGetCommentsOpen = true;
-            console.log($event);
+            // console.log($event);
             DiscussionsNotificationService.notifyOpenDiscussion('data');
             $event.preventDefault();
         }

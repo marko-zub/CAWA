@@ -46,7 +46,6 @@
                     getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                         // 3. Render characteristics
                         prepareCharacteristicsGroups(resp);
-                        createMatrixContentCharacteristics(decisionMatrixs);
                         renderMatrix(true);
                     });
 
@@ -102,8 +101,9 @@
         DecisionNotificationService.subscribeSelectCriteria(function(event, data) {
             // TODO: simplify
             formDataForSearchRequest(data, data.coefCall);
-            initSorters();
+            
             getDecisionMatrix(vm.decision.id).then(function(result) {
+                initSorters();
                 initMatrix(result.decisionMatrixs, true);
             });
         });
@@ -172,7 +172,6 @@
             });
             // console.log(data);
             setCharacteristicChanges(data.filterQueries);
-            DecisionNotificationService.notifyFilterTags(sendFo);
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
@@ -269,54 +268,6 @@
                 return resultEl;
             }).value();
         }
-
-        // TODO: try to optimize it
-        // function createMatrixContentCriteria(decisions) {
-        //     // Criteria
-        //     var decisionsCopy = angular.copy(decisions);
-        //     var criteriaGroupsCopy = angular.copy(vm.criteriaGroups);
-
-        //     vm.criteriaGroupsContent = decisionsCopy;
-        //     // vm.criteriaGroupsContent = _.map(criteriaGroupsCopy, function(criteriaItem) {
-        //     //     criteriaItem.criteria = _.map(criteriaItem.criteria, function(criteria) {
-        //     //         criteria.decisionsRow = createDecisionsRow(decisionsCopy, criteria.id, 'id', 'criteria');
-        //     //         return _.omit(criteria, 'description');
-        //     //     });
-        //     //     return _.pick(criteriaItem, 'criteriaGroupId', 'criteria', 'isClosed');
-        //     // });
-        //     // console.log(vm.criteriaGroupsContent);
-        //     // console.log(_.compact(vm.criteriaGroupsContent));
-        // }
-
-        // TODO: clean obj
-        function createMatrixContentCharacteristics(decisions) {
-            var decisionsCopy = angular.copy(decisions);
-            // characteristics
-            var characteristicGroupsCopy = angular.copy(vm.characteristicGroups);
-            vm.characteristicGroupsContent = _.chain(characteristicGroupsCopy).map(function(resultEl) {
-                resultEl.characteristics = _.map(resultEl.characteristics, function(characteristicsItem) {
-                    characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.id, 'id', 'characteristics');
-                    return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
-                });
-                return _.pick(resultEl, 'id', 'characteristics', 'isClosed');
-            }).value();
-            // console.log(vm.characteristicGroupsContent);
-        }
-
-        function createDecisionsRow(array, id, keyId, property) {
-            var arrayCopy = _.clone(array);
-            return _.map(arrayCopy, function(item) {
-                var obj = _.pick(item, 'decision');
-                obj.decision = _.pick(item.decision, 'id', 'nameSlug');
-                obj[property] = _.find(item[property], function(findEl) {
-                    return findEl[keyId] === id;
-                });
-                obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
-                obj.uuid = id.toString() + '-' + obj.decision.id.toString();
-                return obj;
-            });
-        }
-        // END TODO: try to optimize it
 
         //Init sorters, when directives loaded
         function initSorters() {
@@ -421,7 +372,7 @@
         function renderMatrix(calcHeight) {
             updateMatrixHeight();
             setTimeout(function() {
-                updateMatrixHeight(); //First time
+                // updateMatrixHeight(); //First time
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
 
@@ -441,6 +392,10 @@
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
                 prevTotal = vm.decisionMatrixList.length;
                 setMatrixTableWidth(vm.decisionMatrixList.length);
+
+                // Update data if decision matrix response success
+                DecisionNotificationService.notifyFilterTags(sendData);
+
                 return result;
             });
         }
@@ -448,8 +403,6 @@
         function initMatrix(data, calcHeight) {
             // var performance = window.performance;
             // var t0 = performance.now();
-            // createMatrixContentCriteria(data);
-            createMatrixContentCharacteristics(data);
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
@@ -563,10 +516,12 @@
         // var win_resize = _.throttle(updateMatrixHeight, 50);
         // $(window).on('resize', win_resize);
         function updateMatrixHeight() {
+            $('#filter-tags').removeClass('hide'); //Dirty hack remove it!
             var matrixHeaderHeight = $('.matrix-header').height();
-            var height = $('#filter-tags').height();
+            var height = $('#filter-tags').height() + matrixHeaderHeight;
             // - $('.martix-footer').height();
-            $('#matrix-body-wrapper').css('margin-top', height);
+
+            $('#matrix-body-wrapper').css('top', height);
         }
 
         function reinitMatrixScroller() {
@@ -748,12 +703,14 @@
             $($event.target).toggleClass('closed');
             // TYPES: 'characteristic', 'criteria'
             if (!type) type = 'criteria';
+            // TODO: avoid class js-toggle-hide
+            // Optimize function to toggle
             $('[data-' + type + '-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
 
             // Incorect height calc
-            setTimeout(function() {
-                reinitMatrixScroller();
-            }, 0);
+            calcMatrixRowHeight();
+            reinitMatrixScroller();
+            $event.preventDefault();
         }
     }
 })();

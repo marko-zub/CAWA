@@ -21,7 +21,6 @@
             </div>
         </div>
 
-        <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
             <div id="panel" class="app-panel matrix-panel">
                 <!-- Header -->
@@ -108,16 +107,16 @@
                                 <div class="title">
                                     Criteria
                                 </div>
-                                <div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
+                                <div data-criteria-group="{{::group.id}}" class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
                                     <div class="matrix-item matrix-g-item">
-                                        <div class="matrix-g-title" ng-class="{'closed': group.isClosed}" ng-click="vm.toggleGroupName($index, 'criteria')">
+                                        <div class="matrix-g-title" ng-click="vm.toggleGroupName($event, group.id, 'criteria')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>
                                             <div class="controls">
                                                 <i class="fa fa-angle-up" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="matrix-item matrix-control" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
+                                    <div class="matrix-item matrix-control js-toggle-hide" ng-repeat="criteria in group.criteria track by $index" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
 
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name"></div>
@@ -146,7 +145,7 @@
                                     Characteristics
                                 </div>
                                 <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
-                                    <div class="matrix-item  matrix-g-item">
+                                    <div class="matrix-item matrix-g-item">
                                         <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  group.id, 'characteristic')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>
                                             <div class="controls">
@@ -179,16 +178,17 @@
                     <!-- End Table Aside -->
                     <!-- Table Body -->
                     <div id="matrix-body" class="matrix-body">
+                        <div ng-if="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                         <!-- Table Content -->
                         <div id="matrix-content" class="matrix-content">
-
+                            
                             <matrix-criteria decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                             <div class="characteristic-groups-content">
-                                <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                                <div ng-if="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <matrix-characteristics characteristics="vm.characteristicGroupsContent"></matrix-characteristics>
+                                <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups"></matrix-characteristics>
                             </div>
 
                         </div>
@@ -207,7 +207,7 @@
 <!-- Comments -->
 <pageslide class="sidebar" ps-size="500px" ps-open="vm.isCommentsOpen" ps-body-class="true" ps-click-outside="true" ps-speed="0.35" ps-body-class="true">
     <div class="sidebar-content">
-        <comments decision-id="vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
+        <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
     </div>
 </pageslide>
 <!-- End Comments -->

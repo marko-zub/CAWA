@@ -51,6 +51,7 @@
 
             // Criteria
             if (changes.criteria && changes.criteria.currentValue) {
+                // console.log(changes.criteria.currentValue);
                 vm.criteria = angular.copy(changes.criteria.currentValue);
                 generateCriteriaTags(vm.criteria);
             }
@@ -78,6 +79,7 @@
             if (!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
                 vm.criteriaTags = criteriaSelectedList;
             }
+            updateMatrixHeight();
         }
         // End Criteria
 
@@ -104,22 +106,25 @@
                     } else {
                         addToTagsList(data);
                     }
+                    updateMatrixHeight();
                     return;
                 }
 
                 // Parese Filter Object
                 _fo = angular.copy(data);
                 if (_fo) createTagsList(_fo.filterQueries);
+                updateMatrixHeight();
             });
         }
 
-        function updateFilterStyles() {
-            // var filter = $($element).find('#filter-tags');
-            // console.log(filter, filter.outerHeight());
-            // if (filter.length)
-            //     $('.matrix-body-wrapper').css('margin-top', filter.outerHeight());
+        function updateMatrixHeight() {
+            var matrixHeaderHeight = $('.matrix-header').height();
+            var height = $('#filter-tags').height() + matrixHeaderHeight;
+            // - $('.martix-footer').height();
 
+            $('#matrix-body-wrapper').css('top', height);
         }
+
 
         // TODO: update remove logic
         // Optimize
@@ -141,13 +146,13 @@
                     Utils.removeItemFromArray(value, itemCopy.data);
                     itemCopy.value = itemCopy.data;
                 } else { //Checkboxes
-                    vm.tags.splice(index, 1);
+                    // vm.tags.splice(index, 1);
                     itemCopy.value = null;
                 }
 
                 // Filter Name
                 if (itemCopy.characteristicId === -1) {
-                    vm.tags.splice(index, 1);
+                    // vm.tags.splice(index, 1);
                     itemCopy.value = null;
                     DecisionNotificationService.notifyFilterByName(null);
                     return;
@@ -195,7 +200,7 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
-
+            updateMatrixHeight();
         }
 
         function addToTagsList(item) {

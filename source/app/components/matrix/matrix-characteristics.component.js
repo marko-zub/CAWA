@@ -8,7 +8,8 @@
         .component('matrixCharacteristics', {
             template: renderTemplate,
             bindings: {
-                characteristics: '<'
+                characteristics: '<',
+                decisions: '<'
             },
             controller: 'MatrixCharacteristicsController',
             controllerAs: 'vm'
@@ -47,7 +48,7 @@
     MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService'];
 
     function MatrixCharacteristicsController(DiscussionsNotificationService) {
-        var vm = this, decisionsIds, decisionsIdsPrev;
+        var vm = this, decisionsIds, decisionsIdsPrev, characteristicsIsInited = false;
 
         // Discussions
         vm.getComments = getComments;
@@ -64,37 +65,79 @@
         // }
 
         function onChanges(changes) {
-            // if(changes.characteristics.currentValue) {
-            //     decisionsIds = pickDecisionsIds(changes.characteristics.currentValue);
-            // }
-
-
-            if(changes.characteristics.currentValue && !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
-                vm.characteristicsDisplay = changes.characteristics.currentValue;
+            // First time init
+            // 1. call Decision then 2. call Characteristics
+            if(vm.decisions && changes.characteristics && changes.characteristics.currentValue && !characteristicsIsInited) {
+                // console.log('characteristics changes');
+                vm.characteristicsDisplay = createMatrixContentCharacteristics(vm.decisions);
+                decisionsIdsPrev = pickDecisionsIds(vm.decisions);
+                characteristicsIsInited = true;
             }
 
-            // Update only when decisions ids changes
-            // if (changes.characteristics.currentValue &&
-            //     !angular.equals(decisionsIds, decisionsIdsPrev)) {
-            //     vm.characteristicsDisplay = changes.characteristics.currentValue;
-            //     decisionsIdsPrev = angular.copy(decisionsIds);
-            // }
+            if(characteristicsIsInited && changes.decisions && 
+                changes.decisions.currentValue && 
+                !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) { 
+
+                    // Update only characterisctics for new decision
+                    decisionsIds = pickDecisionsIds(changes.decisions.currentValue);
+                    // console.log(decisionsIds, decisionsIdsPrev, angular.equals(decisionsIds, decisionsIdsPrev));
+                    if(!angular.equals(decisionsIds, decisionsIdsPrev)) {
+                        decisionsIdsPrev = angular.copy(decisionsIds);
+                        // console.log('Update decisions');
+                        vm.decisions = angular.copy(changes.decisions.currentValue);
+                        vm.characteristicsDisplay = createMatrixContentCharacteristics(changes.decisions.currentValue);
+                    }
+            }
         }
 
-        function pickDecisionsIds(characteristics) {
-            var copy = angular.copy(characteristics[0].characteristics[0].decisionsRow);
-            return _.map(copy, function(item) {
-                return item.decision.id;
+        function pickDecisionsIds(decisions) {
+            return _.map(decisions, function(item) {
+                return item.decision.uid;
             });
         }
 
         function getComments($event) {
             // console.log($event.target);
-            // if(!$($event.target).hasClass('link-secondary')) {
+            if($($event.target).hasClass('link-secondary')) {
+            // if($($event.target).hasClass('link-secondary') || $($event.target).hasClass('control')) {
+                $event.stopPropagation();
+                // return;
+            }
             vm.isGetCommentsOpen = true;
             DiscussionsNotificationService.notifyOpenDiscussion('data');
             $event.preventDefault();
         }
+
+
+        // TODO: clean obj
+        function createMatrixContentCharacteristics(decisions) {
+            var decisionsCopy = angular.copy(decisions);
+            // characteristics
+            var characteristicGroupsCopy = angular.copy(vm.characteristics);
+            return _.chain(characteristicGroupsCopy).map(function(resultEl) {
+                resultEl.characteristics = _.map(resultEl.characteristics, function(characteristicsItem) {
+                    characteristicsItem.decisionsRow = createDecisionsRow(decisions, characteristicsItem.id, 'id', 'characteristics');
+                    return _.omit(characteristicsItem, 'description', 'createDate', 'name', 'sortable', 'options');
+                });
+                return _.pick(resultEl, 'id', 'characteristics', 'isClosed');
+            }).value();
+            // console.log(vm.characteristicsContent);
+        }
+
+        function createDecisionsRow(array, id, keyId, property) {
+            var arrayCopy = _.clone(array);
+            return _.map(arrayCopy, function(item) {
+                var obj = _.pick(item, 'decision');
+                obj.decision = _.pick(item.decision, 'id', 'nameSlug');
+                obj[property] = _.find(item[property], function(findEl) {
+                    return findEl[keyId] === id;
+                });
+                obj[property] = _.omit(obj[property], 'description', 'options', 'filterable', 'sortable');
+                obj.uuid = id.toString() + '-' + obj.decision.id.toString();
+                return obj;
+            });
+        }
+        // END TODO: try to optimize it        
     }
 
 })();
