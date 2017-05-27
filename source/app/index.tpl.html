@@ -15,6 +15,11 @@
 
 <body>
     <app-header></app-header>
+    
+    <div class="breadcrumbs-wrapper" ng-if="breadcrumbs.length">
+        <breadcrumbs items="breadcrumbs"></breadcrumbs>
+    </div>
+
     <div class="container-fluid content" ui-view></div>
     <app-footer></app-footer>
 </body>

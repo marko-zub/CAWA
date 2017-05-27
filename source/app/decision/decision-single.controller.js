@@ -15,22 +15,12 @@
 
         var
             vm = this;
-            
+
         vm.decision = decisionBasicInfo || {};
 
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         vm.changePageSize = changePageSize;
         vm.changePage = changePage;
-
-        $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
-
-        $rootScope.breadcrumbs = [{
-            title: 'Decisions',
-            link: 'decisions'
-        }, {
-            title: vm.decision.name,
-            link: null
-        }];
 
         vm.$onInit = onInit;
 
@@ -60,7 +50,7 @@
                 // console.log(result);
                 vm.decisionParents = result;
 
-                if(vm.decision.totalChildDecisions > 0) {
+                if (vm.decision.totalChildDecisions > 0) {
                     getCriteriaGroupsByParentId(vm.decision.id);
                     vm.isDecisionsParent = true;
                 }

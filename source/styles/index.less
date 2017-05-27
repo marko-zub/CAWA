@@ -18,7 +18,7 @@ html {
 .content {
   background-color: @app-bg;
   overflow: hidden;
-  padding-top: @header-height;
+  padding-top: 0;
   padding-bottom: @footer-height;
   margin-bottom: -@footer-height;
   min-height: 100vh;
@@ -109,6 +109,7 @@ html {
 }
 
 body {
+    padding-top: @header-height;
     background-color: @gray-light-extra;
     & > .dropdown-menu {
         max-height: 700px;

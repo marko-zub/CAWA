@@ -1,6 +1,3 @@
-<div class="breadcrumbs-wrapper" ng-if="::breadcrumbs.length">
-    <breadcrumbs items="breadcrumbs"></breadcrumbs>
-</div>
 <div class="app-top-panel">
     <div class="app-container-sm">
         <div class="row">
@@ -17,7 +14,7 @@
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li class="active">
-                    <a href>General Info</a>
+                    <a ui-sref="decisions.single({id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                     <a ui-sref="decisions.single.parent({parentId:parent.uid, parentSlug:parent.nameSlug})"> {{::parent.name}}</a>

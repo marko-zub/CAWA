@@ -18,7 +18,12 @@
     BreadcrumbsController.$inject = [];
 
     function BreadcrumbsController() {
-        var vm = this;
+        var vm = this;        
+        // vm.$onChanges = onChanges;
+
+        // function onChanges(changes) {
+        //     console.log(changes);
+        // }
     }
 
 })();

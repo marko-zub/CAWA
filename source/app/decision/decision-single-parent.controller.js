@@ -41,7 +41,7 @@
 
                 if(!vm.parent) return;
                 getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
-                vm.breadcrumbs = [{
+                $rootScope.breadcrumbs = [{
                     title: 'Decisions',
                     link: 'decisions'
                 }, {
