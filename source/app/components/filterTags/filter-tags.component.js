@@ -52,22 +52,27 @@
             // Criteria
             if (changes.criteria && changes.criteria.currentValue) {
                 // console.log(changes.criteria.currentValue);
-                vm.criteria = angular.copy(changes.criteria.currentValue);
-                generateCriteriaTags(vm.criteria);
+
+                // if(!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
+                    vm.criteria = angular.copy(changes.criteria.currentValue);
+                    generateCriteriaTags(vm.criteria);
+
+                    updateMatrixHeight();
+                // }
             }
         }
 
         // Criteria
-        var criteriaSelectedList = [];
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
-            criteria.isSelected = false;
-            DecisionNotificationService.notifySelectCriteria(criteria);
+            var criteriaCopy = criteria;
+            criteriaCopy.isSelected = false;
+            DecisionNotificationService.notifySelectCriteria(criteriaCopy);
         }
 
         function generateCriteriaTags(criteria) {
-            criteriaSelectedList = [];
+            var criteriaSelectedList = [];
             _.forEach(criteria, function(group) {
                 _.forEach(group.criteria, function(criteriaItem) {
                     if (criteriaItem.isSelected === true) {
@@ -79,7 +84,9 @@
             if (!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
                 vm.criteriaTags = criteriaSelectedList;
             }
-            updateMatrixHeight();
+            setTimeout(function() {
+                updateMatrixHeight();
+            }, 0);
         }
         // End Criteria
 
@@ -122,7 +129,12 @@
             var height = $('#filter-tags').height() + matrixHeaderHeight;
             // - $('.martix-footer').height();
 
-            $('#matrix-body-wrapper').css('top', height);
+            if (height >= 0) {
+                // console.log(height);
+                $('#matrix-body-wrapper').css({
+                    'top': height
+                });
+            }
         }
 
 
@@ -138,6 +150,12 @@
 
                 if (_.isUndefined(itemCopy.data)) {
                     itemCopy.value = null;
+                }
+
+                if (item.characteristicId === -1) {
+                    vm.tags.splice(index, 1);
+                    updateMatrixHeight();
+                    return;
                 }
                 // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
                 // value can be length 2 [1, 100] 
@@ -200,7 +218,6 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
-            updateMatrixHeight();
         }
 
         function addToTagsList(item) {

@@ -92,16 +92,15 @@
 
         function filterNameSubmitClick(value) {
             // if (!value) return;
-            // TODO: firs ng-touched
+            // TODO: first request if ng-touched
             filterNameSend(value);
         }
         // End Filter name
 
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriteria(function(event, data) {
-            // TODO: simplify
             formDataForSearchRequest(data, data.coefCall);
-            
+            // DecisionSharedService.filterObject.persistent = true;
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initSorters();
                 initMatrix(result.decisionMatrixs, true);
@@ -370,9 +369,7 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            updateMatrixHeight();
             setTimeout(function() {
-                // updateMatrixHeight(); //First time
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
 
@@ -511,18 +508,6 @@
             });
         }
 
-
-        // TODO: avoid it!!!
-        // var win_resize = _.throttle(updateMatrixHeight, 50);
-        // $(window).on('resize', win_resize);
-        function updateMatrixHeight() {
-            $('#filter-tags').removeClass('hide'); //Dirty hack remove it!
-            var matrixHeaderHeight = $('.matrix-header').height();
-            var height = $('#filter-tags').height() + matrixHeaderHeight;
-            // - $('.martix-footer').height();
-
-            $('#matrix-body-wrapper').css('top', height);
-        }
 
         function reinitMatrixScroller() {
             // TODO: avoid jquery height
