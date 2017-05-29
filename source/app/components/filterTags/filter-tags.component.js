@@ -10,7 +10,8 @@
                 characteristics: '<',
                 criteria: '<',
                 filterObject: '<',
-                onChangeCriteriaOrder: '&'
+                onChangeCriteriaOrder: '&',
+                onChangeCharacteristicsOrder: '&',
             },
             templateUrl: 'app/components/filterTags/filter-tags.html',
             controller: 'FilterTagsController',
@@ -28,6 +29,7 @@
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
         vm.changeCriteriaProperty = changeCriteriaProperty;
+        vm.characteristicsOrderChange = characteristicsOrderChange;
 
         var filterByNameTag = {
             'id': -1,
@@ -37,35 +39,60 @@
 
         function onInit() {
             // console.log(vm.criteriaOrder);
-            vm.tags = [];
+            vm.tagsFilter = [];
+            vm.tagsSort = [];
             subscribe();
         }
 
         function onChanges(changes) {
             // console.log(vm.filterObject);
             // Characteristics
-            // if(changes.characteristics && changes.characteristics.currentValue) {
-            //     vm.characteristics = changes.characteristics.currentValue;
-            //     generateCharacteristicsTags(vm.characteristics);
-            // }
+            if (changes.characteristics &&
+                !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
+                vm.characteristics = changes.characteristics.currentValue;
+
+                if(vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
+                    vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
+            }
+
+            if (changes.filterObject &&
+                !angular.equals(changes.filterObject.currentValue, changes.filterObject.previousValue)) {
+                if (changes.filterObject.currentValue) {
+                    vm.sortByCharacteristic = setCharacteristicsSortTag(changes.filterObject.currentValue.sortByCharacteristic);
+                }
+
+            }
 
             // Criteria
             if (changes.criteria && changes.criteria.currentValue) {
                 // console.log(changes.criteria.currentValue);
 
-                // if(!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
+                if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
                     vm.criteria = angular.copy(changes.criteria.currentValue);
                     generateCriteriaTags(vm.criteria);
-
                     updateMatrixHeight();
-                // }
+                }
             }
+        }
+
+        function setCharacteristicsSortTag(characteristic) {
+            if(!characteristic) return;
+            var characteristicsOrderTag = angular.copy(characteristic);
+            var findCharacteristics = findGroupItem(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
+            characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
+            // debugger
+            return characteristicsOrderTag;            
         }
 
         // Criteria
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
+            if (criteria.uid < 0) {
+                console.log(criteria);
+                return;
+            }
+
             var criteriaCopy = criteria;
             criteriaCopy.isSelected = false;
             DecisionNotificationService.notifySelectCriteria(criteriaCopy);
@@ -75,15 +102,22 @@
             var criteriaSelectedList = [];
             _.forEach(criteria, function(group) {
                 _.forEach(group.criteria, function(criteriaItem) {
-                    if (criteriaItem.isSelected === true) {
-                        criteriaSelectedList.push(criteriaItem);
+
+                    var find = _.findIndex(vm.tagsSort, function(tag) {
+                        return tag.uid === criteriaItem.uid;
+                    });
+                    if (criteriaItem.isSelected === true && find < 0) {
+                        // criteriaSelectedList.push(criteriaItem);
+                        vm.tagsSort.push(criteriaItem);
+                    } else if (!criteriaItem.isSelected && find >= 0) {
+                        vm.tagsSort.splice(find, 1);
                     }
                 });
             });
 
-            if (!angular.equals(vm.criteriaTags, criteriaSelectedList)) {
-                vm.criteriaTags = criteriaSelectedList;
-            }
+            // if (!angular.equals(vm.tagsSort, criteriaSelectedList)) {
+            //     vm.tagsSort = criteriaSelectedList;
+            // }
             setTimeout(function() {
                 updateMatrixHeight();
             }, 0);
@@ -153,7 +187,7 @@
                 }
 
                 if (item.characteristicId === -1) {
-                    vm.tags.splice(index, 1);
+                    vm.tagsFilter.splice(index, 1);
                     updateMatrixHeight();
                     return;
                 }
@@ -164,13 +198,13 @@
                     Utils.removeItemFromArray(value, itemCopy.data);
                     itemCopy.value = itemCopy.data;
                 } else { //Checkboxes
-                    // vm.tags.splice(index, 1);
+                    // vm.tagsFilter.splice(index, 1);
                     itemCopy.value = null;
                 }
 
                 // Filter Name
                 if (itemCopy.characteristicId === -1) {
-                    // vm.tags.splice(index, 1);
+                    // vm.tagsFilter.splice(index, 1);
                     itemCopy.value = null;
                     DecisionNotificationService.notifyFilterByName(null);
                     return;
@@ -183,7 +217,7 @@
         }
 
         function tagIndexInList(id) {
-            return _.findIndex(vm.tags, function(tag) {
+            return _.findIndex(vm.tagsFilter, function(tag) {
                 return tag.characteristicId === id;
             });
         }
@@ -192,6 +226,9 @@
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
             });
+            setTimeout(function() {
+                updateMatrixHeight();
+            }, 0);            
         }
 
         // TODO: clean up find
@@ -211,7 +248,7 @@
         // Always regenerate new array
         function createTagsList(filterQueries) {
             // Clear all tags
-            vm.tags = _.filter(vm.tags, function(tag) {
+            vm.tagsFilter = _.filter(vm.tagsFilter, function(tag) {
                 return tag.characteristicId === -1;
             });
 
@@ -226,9 +263,9 @@
                 item = _.merge(item, find);
                 var index = tagIndexInList(item.characteristicId);
                 if (index >= 0) {
-                    vm.tags[index] = caseQueryType(item);
+                    vm.tagsFilter[index] = caseQueryType(item);
                 } else {
-                    vm.tags.push(caseQueryType(item));
+                    vm.tagsFilter.push(caseQueryType(item));
                 }
             }
         }
@@ -239,13 +276,13 @@
         //     // Update it
         //     if(_.isArray(filterQueries)) {
         //         _.forEach(filterQueries, function(item) {
-        //             var itemInTags = _.find(vm.tags, function(tag){
+        //             var itemInTags = _.find(vm.tagsFilter, function(tag){
         //                 return tag.characteristicId === item.characteristicId;
         //             });
         //             if(itemInTags < 0) {
         //                 var find = findCharacteristic(item.characteristicId);
         //                 item = _.merge(item, find);
-        //                 if (!_.isEmpty(item)) vm.tags.push(caseQueryType(item));
+        //                 if (!_.isEmpty(item)) vm.tagsFilter.push(caseQueryType(item));
         //             }
         //         });
         //     }
@@ -277,6 +314,39 @@
                 order: defaultOrder,
                 $event: $event
             });
+        }
+
+        function characteristicsOrderChange(order, orderId) {
+            var defaultOrder = 'DESC';
+            if (order === defaultOrder) defaultOrder = 'ASC';
+            var sortObj = {
+                sort: {
+                    id: orderId,
+                    order: defaultOrder
+                },
+                mode: "sortByCharacteristic"
+            };
+
+            if (_.isNull(order)) {
+                sortObj.sort.id = null;
+                sortObj.sort.order = null;
+            }
+            // console.log(sortObj);
+            DecisionNotificationService.notifySelectSorter(sortObj);
+        }
+
+        // TODO: move to UTILS
+        function findGroupItem(id, list, property) {
+            var findItem;
+            _.forEach(list, function(group) {
+                var find = _.find(group[property], function(groupItem) {
+                    // console.log(groupItem.id, id, groupItem.id === id)
+                    return groupItem.id === id;
+                });
+                if (find) findItem = find;
+            });
+            return findItem;
+
         }
 
     }

@@ -132,9 +132,9 @@
             // TODO: clean up DecisionSharedService in controller maake one object
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
-            vm.fo = angular.copy(DecisionSharedService.filterObject.sorters);
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
+                // vm.fo = angular.copy(DecisionSharedService.filterObject.sorters);
             });
         });
 
@@ -274,7 +274,7 @@
             // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
             _fo = DecisionSharedService.filterObject;
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
-            vm.fo = _fo.sorters;
+            vm.fo = angular.copy(_fo.sorters);
             // Set Criteria for Hall of fame
             var copyCriteria = angular.copy(vm.criteriaGroups);
             vm.criteriaGroups = _.filter(copyCriteria, function(criteriaGroupsArray) {
@@ -424,6 +424,9 @@
         vm.orderByCharacteristicProperty = orderByCharacteristicProperty;
         vm.orderByCriteriaProperty = orderByCriteriaProperty;
 
+        // TODO: make as component
+        // Simplify sortObj
+        // DNRY
         function orderByDecisionProperty(field, order) {
             if (!field) return;
             order = order || 'DESC';
@@ -434,7 +437,7 @@
                 },
                 mode: "sortByDecisionProperty"
             };
-            $scope.$emit('selectSorter', sortObj);
+            DecisionNotificationService.notifySelectSorter(sortObj);
         }
 
         function orderByCriteriaProperty(order, $event) {
@@ -446,7 +449,7 @@
                 },
                 mode: "sortByCriteria"
             };
-            $scope.$emit('selectSorter', sortObj);
+            DecisionNotificationService.notifySelectSorter(sortObj);
             var parentCriteria = $($event.target).parents('.criteria-col');
             if (parentCriteria.hasClass('selected')) {
                 $event.stopPropagation();
@@ -464,7 +467,7 @@
                 },
                 mode: "sortByCharacteristic"
             };
-            $scope.$emit('selectSorter', sortObj);
+            DecisionNotificationService.notifySelectSorter(sortObj);
         }
 
         function updatePosition(martrixScroll) {

@@ -1,25 +1,34 @@
 <div id="filter-tags" class="filter-tags">
-    <div  ng-if="vm.tags.length > 0 || vm.criteriaTags.length > 0">
-        <div class="filter-tags-group sorted-panel clearfix" ng-show="vm.criteriaTags.length > 0">
+    <div  ng-if="vm.tagsFilter.length > 0 || vm.tagsSort.length > 0">
+        <div class="filter-tags-group sorted-panel clearfix" ng-show="vm.tagsSort.length > 0">
             <div class="filter-tags-label">Sorted by: weighted average vote
                 <span class="app-link" ng-click="vm.changeCriteriaProperty(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span>
                  for
             </div>
             <div class="tag-group-wrapper">
                 <div class="tag-group">
-                    <div class="tag-wrapper" ng-repeat="tag in vm.criteriaTags track by tag.uid">
+                    <div class="tag-wrapper" ng-repeat="tag in vm.tagsSort track by tag.uid">
                         <div class="tag">
                             {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div><span ng-if="!$last" class="tag-divider">and</span>
                     </div>
+
+                    <div class="tag-wrapper" ng-if="vm.sortByCharacteristic.name">
+                        <div class="tag">
+                            Sorted by: characteristic {{vm.sortByCharacteristic.name}} 
+                            <span class="app-link text-bold" ng-click="vm.characteristicsOrderChange(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{vm.sortByCharacteristic.order}}</span>
+                            <span ng-click="vm.characteristicsOrderChange(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <div class="filter-tags-group" ng-if="vm.tags.length > 0">
+        <div class="filter-tags-group" ng-if="vm.tagsFilter.length > 0">
             <div class="filter-tags-label">Filtered by: </div>
             <div class="tag-group-wrapper">
-                <div class="tag-group" ng-repeat="tag in vm.tags track by tag.uid">
+                <div class="tag-group" ng-repeat="tag in vm.tagsFilter track by tag.uid">
                     <span>{{::tag.name}}:</span>
                     <div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">
                         <div class="tag">

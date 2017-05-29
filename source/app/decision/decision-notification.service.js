@@ -13,6 +13,7 @@
         var listeners = {};
 
         var service = {
+            // Subscribe
             subscribeSelectSorter: subscribeSelectSorter,
             subscribeSelectCriteria: subscribeSelectCriteria,
             subscribeSelectDecision: subscribeSelectDecision,
@@ -23,6 +24,9 @@
             subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
             subscribeFilterTags: subscribeFilterTags,
             subscribeFilterByName: subscribeFilterByName,
+
+            // Notify
+            notifySelectSorter: notifySelectSorter,
             notifyGetDetailedCharacteristics: notifyGetDetailedCharacteristics,
             notifySelectCriteria: notifySelectCriteria,
             notifySelectDecision: notifySelectDecision,
@@ -95,6 +99,10 @@
         }
 
         // Emitters
+        function notifySelectSorter(data) {
+            emit('selectSorter', data);
+        }
+        
         function notifyGetDetailedCharacteristics(data) {
             emit('getDetailedCharacteristics', data);
         }
