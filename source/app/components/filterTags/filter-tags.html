@@ -28,7 +28,7 @@
         <div class="filter-tags-group" ng-if="vm.tagsFilter.length > 0">
             <div class="filter-tags-label">Filtered by: </div>
             <div class="tag-group-wrapper">
-                <div class="tag-group" ng-repeat="tag in vm.tagsFilter track by tag.uid">
+                <div class="tag-group" ng-repeat="tag in vm.tagsFilter track by tag.characteristicId">
                     <span>{{::tag.name}}:</span>
                     <div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">
                         <div class="tag">
