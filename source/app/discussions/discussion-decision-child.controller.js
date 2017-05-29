@@ -71,8 +71,9 @@
                 includeChildDecisionIds: []
             };
 
-            sendData.includeChildDecisionIds.push($stateParams.discussionId);
+            sendData.includeChildDecisionIds.push(vm.decision.id);
             DecisionDataService.getDecisionMatrix(vm.decision.id, sendData).then(function(result) {
+                if(!result.decisionMatrixs["0"]) return;
                 getCriteriaGroupsById(vm.decision.id, result.decisionMatrixs["0"].criteria);
                 getCharacteristicsGroupsById(vm.decision.id, result.decisionMatrixs["0"].characteristics);
             });

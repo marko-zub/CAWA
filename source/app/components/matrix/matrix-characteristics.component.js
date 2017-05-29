@@ -30,8 +30,8 @@
                                 '<content-formater ng-if="::decisionCol.characteristics.value" value="::decisionCol.characteristics.value" type="::item.valueType"></content-formater>',
                                 '<div class="app-item-additional-wrapper">',
                                     '<div class="app-item-comments">',
-                                        '<a href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
-                                        '<a href="#" class="control"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
+                                        '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
+                                        '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
                                         // '<a href="#" ng-if="::decisionCol.characteristics.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
                                     '</div>',
                                 '</div>',
@@ -97,15 +97,17 @@
         }
 
         function getComments($event) {
-            // console.log($event.target);
-            if($($event.target).hasClass('link-secondary')) {
-            // if($($event.target).hasClass('link-secondary') || $($event.target).hasClass('control')) {
+            if($($event.target).hasClass('control') || 
+                $($event.target).parents().hasClass('control') ||
+                $($event.target).hasClass('link-secondary')) {
                 $event.stopPropagation();
-                // return;
+                $event.preventDefault();
+                console.log('c');
+            } else {
+                vm.isGetCommentsOpen = true;
+                DiscussionsNotificationService.notifyOpenDiscussion('data');
+                $event.preventDefault();
             }
-            vm.isGetCommentsOpen = true;
-            DiscussionsNotificationService.notifyOpenDiscussion('data');
-            $event.preventDefault();
         }
 
 
@@ -121,7 +123,6 @@
                 });
                 return _.pick(resultEl, 'id', 'characteristics', 'isClosed');
             }).value();
-            // console.log(vm.characteristicsContent);
         }
 
         function createDecisionsRow(array, id, keyId, property) {

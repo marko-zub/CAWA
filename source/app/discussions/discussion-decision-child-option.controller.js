@@ -11,15 +11,17 @@
     function DiscussionDecisionChildOptionController(decisionDiscussionInfo, DiscussionsDataService, $rootScope, $stateParams, DecisionDataService, $state) {
         var vm = this;
 
+
+        vm.discussion = decisionDiscussionInfo || {};
+
+
         var params = {
-            'id': parseInt($stateParams.id),
+            'id': vm.discussion.id,
             'slug': $stateParams.slug,
             'criteria': $stateParams.criteria,
         };
 
         vm.params = params;
-
-        vm.discussion = decisionDiscussionInfo || {};
 
         var critOrCharTitle = '';
         if (vm.discussion.childCharacteristic) {

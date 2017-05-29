@@ -204,7 +204,6 @@
 
                 // Filter Name
                 if (itemCopy.characteristicId === -1) {
-                    // vm.tagsFilter.splice(index, 1);
                     itemCopy.value = null;
                     DecisionNotificationService.notifyFilterByName(null);
                     return;
@@ -213,7 +212,6 @@
 
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
             updateFilterObject(sendItemCopy);
-            // debugger
         }
 
         function tagIndexInList(id) {
@@ -225,10 +223,7 @@
         function updateFilterObject(query) {
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
-            });
-            setTimeout(function() {
-                updateMatrixHeight();
-            }, 0);            
+            });           
         }
 
         // TODO: clean up find
@@ -255,6 +250,11 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
+
+            updateMatrixHeight();
+            setTimeout(function() {
+                updateMatrixHeight();
+            }, 0);             
         }
 
         function addToTagsList(item) {
