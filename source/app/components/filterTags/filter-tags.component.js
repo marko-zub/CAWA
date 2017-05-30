@@ -67,11 +67,12 @@
             if (changes.criteria && changes.criteria.currentValue) {
                 // console.log(changes.criteria.currentValue);
 
-                if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
+                console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
+                // if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
                     vm.criteria = angular.copy(changes.criteria.currentValue);
                     generateCriteriaTags(vm.criteria);
                     updateMatrixHeight();
-                }
+                // }
             }
         }
 
@@ -81,7 +82,7 @@
             var findCharacteristics = findGroupItem(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
             // debugger
-            return characteristicsOrderTag;            
+            return characteristicsOrderTag;
         }
 
         // Criteria
@@ -114,6 +115,7 @@
                     }
                 });
             });
+            // console.log(vm.tagsSort);
 
             // if (!angular.equals(vm.tagsSort, criteriaSelectedList)) {
             //     vm.tagsSort = criteriaSelectedList;
@@ -192,7 +194,7 @@
                     return;
                 }
                 // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
-                // value can be length 2 [1, 100] 
+                // value can be length 2 [1, 100]
                 // but data = ["1 - 100"] lenght 1
                 if (_.isArray(itemCopy.data) && itemCopy.data.length > 1) {
                     Utils.removeItemFromArray(value, itemCopy.data);
@@ -223,7 +225,7 @@
         function updateFilterObject(query) {
             DecisionNotificationService.notifySelectCharacteristic({
                 'filterQueries': query
-            });           
+            });
         }
 
         // TODO: clean up find
@@ -254,7 +256,7 @@
             updateMatrixHeight();
             setTimeout(function() {
                 updateMatrixHeight();
-            }, 0);             
+            }, 0);
         }
 
         function addToTagsList(item) {

@@ -23,6 +23,7 @@
 
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
             <div id="panel" class="app-panel matrix-panel">
+                <div ng-if="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 <!-- Header -->
                 <div class="matrix-header">
                     <div class="matrix-row">
@@ -178,10 +179,9 @@
                     <!-- End Table Aside -->
                     <!-- Table Body -->
                     <div id="matrix-body" class="matrix-body">
-                        <div ng-if="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                         <!-- Table Content -->
                         <div id="matrix-content" class="matrix-content">
-                            
+
                             <matrix-criteria decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                             <div class="characteristic-groups-content">

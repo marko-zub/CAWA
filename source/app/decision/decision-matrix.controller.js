@@ -276,8 +276,7 @@
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
             // Set Criteria for Hall of fame
-            var copyCriteria = angular.copy(vm.criteriaGroups);
-            vm.criteriaGroups = _.filter(copyCriteria, function(criteriaGroupsArray) {
+            var copyCriteria = _.filter(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
                     if (_.includes(_fo.selectedCriteria.sortCriteriaIds, el.id)) {
                         el.isSelected = true;
@@ -295,6 +294,8 @@
                 });
                 return criteriaGroupsArray;
             });
+
+            vm.criteriaGroups = angular.copy(copyCriteria);
         }
 
         function findCoefNameByValue(valueSearch) {
