@@ -67,7 +67,7 @@
             if (changes.criteria && changes.criteria.currentValue) {
                 // console.log(changes.criteria.currentValue);
 
-                console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
+                // console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
                 // if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
                     vm.criteria = angular.copy(changes.criteria.currentValue);
                     generateCriteriaTags(vm.criteria);

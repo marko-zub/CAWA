@@ -86,8 +86,10 @@
                 '<div class="query-type-wrapper">',
                 queryTypeHtml,
                 '</div>',
-                '<div class="filter-item checkbox-list">',
-                content,
+                '<div class="filter-item checkbox-list" dw-scroll-bar>',
+                    '<div>',
+                        content,
+                    '</div>',
                 '</div>'
             ].join('\n');
 

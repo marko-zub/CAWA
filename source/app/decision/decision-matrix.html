@@ -50,6 +50,8 @@
                         </div>
 
                         <!-- End Make Sticky -->
+
+                        <!-- TODO: move to component matrix header -->
                         <!-- Decisions Header -->
                         <div id="matrix-scroll-group" class="scroll-group">
                             <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.uid">
@@ -124,10 +126,9 @@
                                             <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                                 <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                             </div>
-                                            <div class="app-sorter">
-                                                <!-- TODO: make as to toogle to avoid 2 ng-click event -->
-                                                <span ng-click="vm.orderByCriteriaProperty('ASC', $event)" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCriteria.order == 'ASC'}"></span>
-                                                <span ng-click="vm.orderByCriteriaProperty('DESC', $event)" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCriteria.order == 'DESC'}"></span>
+                                            <div class="app-sorter active" ng-click="vm.orderByCriteriaProperty(vm.fo.sortByCriteria.order, $event)" ng-class="vm.fo.sortByCriteria.order.toLowerCase()">
+                                                <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                                                <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                             </div>
 
 
@@ -156,12 +157,16 @@
                                     </div>
 
                                     <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
+
+                                        <!-- TODO: move to component -->
+                                        <!-- TODO: remove title wrapper -->
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                             <filter-control  selected="characteristic.seletedValue" item="::characteristic"></filter-control>
-                                            <div class="app-sorter" ng-if="::characteristic.isSortable">
-                                                <span ng-click="vm.orderByCharacteristicProperty(characteristic.id, 'ASC')" class="app-sorter-top glyphicon glyphicon-triangle-top" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.id && vm.fo.sortByCharacteristic.order == 'ASC'}"></span>
-                                                <span ng-click="vm.orderByCharacteristicProperty(characteristic.id, 'DESC')" class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-class="{'selected': vm.fo.sortByCharacteristic.id == characteristic.id && vm.fo.sortByCharacteristic.order == 'DESC'}"></span>
+
+                                            <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
+                                                <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                                                <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                             </div>
 
                                             <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>

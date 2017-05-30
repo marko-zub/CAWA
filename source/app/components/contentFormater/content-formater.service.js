@@ -21,9 +21,11 @@
 
 
             var html = [
+                '<div class="app-iscroll-wrapper" dw-scroll-bar>',
                 '<ul class="app-list-sm">',
                 content,
-                '</ul>'
+                '</ul>',
+                '</div>'
             ].join('\n');
             return html;
         }

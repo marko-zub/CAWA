@@ -443,15 +443,14 @@
 
         function orderByCriteriaProperty(order, $event) {
             var sortObj;
-            order = order || 'DESC';
             sortObj = {
                 sort: {
-                    order: order
+                    order: (order === 'ASC' || !order) ? 'DESC' : 'ASC'
                 },
                 mode: "sortByCriteria"
             };
             DecisionNotificationService.notifySelectSorter(sortObj);
-            var parentCriteria = $($event.target).parents('.criteria-col');
+            var parentCriteria = $($event.target).parents('.matrix-item');
             if (parentCriteria.hasClass('selected')) {
                 $event.stopPropagation();
             }
@@ -460,7 +459,7 @@
         function orderByCharacteristicProperty(field, order) {
             if (!field) return;
             var sortObj;
-            order = order || 'DESC';
+            order = (order === 'ASC' || !order) ? 'DESC' : 'ASC';
             sortObj = {
                 sort: {
                     id: field,

@@ -28,12 +28,10 @@
                         '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
                                 '<content-formater ng-if="::decisionCol.characteristics.value" value="::decisionCol.characteristics.value" type="::item.valueType"></content-formater>',
-                                '<div class="app-item-additional-wrapper">',
-                                    '<div class="app-item-comments">',
-                                        '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
-                                        '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
-                                        // '<a href="#" ng-if="::decisionCol.characteristics.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
-                                    '</div>',
+                                '<div class="app-item-additional-wrapper app-item-comments">',
+                                    '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
+                                    '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
+                                    // '<a href="#" ng-if="::decisionCol.characteristics.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
                                 '</div>',
                                 '</a>',
                             '</div>',
@@ -97,6 +95,7 @@
         }
 
         function getComments($event) {
+
             // if($($event.target).hasClass('control') ||
             //     $($event.target).parents().hasClass('control') ||
             //     $($event.target).hasClass('link-secondary')) {
@@ -104,10 +103,14 @@
             //     $event.preventDefault();
             //     console.log('c');
             // } else {
+
+            if(!$($event.target).hasClass('iScrollLoneScrollbar') || 
+                $($event.target).hasClass('link-secondary') ||
+                !$($event.target).parents().hasClass('iScrollLoneScrollbar')) {
                 vm.isGetCommentsOpen = true;
                 DiscussionsNotificationService.notifyOpenDiscussion('data');
                 $event.preventDefault();
-            // }
+            }
         }
 
 

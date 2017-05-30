@@ -371,6 +371,16 @@ a {
     .glyphicon {
         margin: 0;
     }
+    &.active.asc {
+        .app-sorter-top {
+            color: @basic-active;
+        }
+    }
+    &.active.desc {
+        .app-sorter-bottom {
+            color: @basic-active;
+        }
+    }
     .app-sorter-bottom {
         position: absolute;
         bottom: 0;
@@ -845,13 +855,15 @@ a {
         width: 200px;
         max-width: 200px;
         min-height: 49px;
-        .app-list-sm {
-            max-height: 280px;
-            min-height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+        min-height: 100%;
     }
+    .app-iscroll-wrapper {
+        max-height: @scroll-height;
+        min-height: 100%;
+        overflow: hidden;
+        // overflow-y: auto;
+        // overflow-x: hidden;
+    }    
     .matrix-aside {
         width: 200px;
     }
@@ -974,10 +986,11 @@ a {
     vertical-align: top;
     margin-top: 0px;
 }
-
-.checkbox-list {
+@scroll-height: 200px;
+.filter-item.checkbox-list {
     min-height: 94px;
-    max-height: 280px;
+    max-height: @scroll-height;
+    overflow: hidden;
 }
 
 
@@ -1133,6 +1146,7 @@ a {
     margin-top: -20px;
     .switcher {
         float: right;
+        margin: 0 8px;
     }
 }
 
