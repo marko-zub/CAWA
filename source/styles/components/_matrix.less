@@ -108,8 +108,8 @@
             }
             &:last-child {
                 border-right-color: transparent;
-            }    
-        }        
+            }
+        }
         &.empty {
             margin-top: 20px;
         }
@@ -161,7 +161,7 @@
     position: relative;
     width: 2000px;
     top: 0;
-    // padding: 0 10px 0 0;    
+    // padding: 0 10px 0 0;
     .matrix-col {
         cursor: pointer;
         &:hover {
@@ -568,7 +568,7 @@ a {
 
 .matrix-body-wrapper {
     position: absolute;
-    top: @matrix-header;
+    top: @matrix-header - 1px;
     // position: relative;
     // overflow: hidden;
     // height: 100%;
@@ -809,13 +809,6 @@ a {
     .app-sorter {
         height: 40px;
     }
-    .matrix-col {
-        &.matrix-g-item {
-            height: 24px;
-            line-height: 24px;
-            background-color: @gray-light;
-        }
-    }
     .matrix-block {
         border-bottom: 1px solid @gray-light;
         height: 48px;
@@ -830,11 +823,13 @@ a {
         vertical-align: top;
         background-color: #fff;
         position: relative;
+        height: 100%;
+        &.matrix-g-item {
+            height: 24px;
+            line-height: 24px;
+            background-color: @gray-light;
+        }
     }
-    // .matrix-col-name {
-    //     vertical-align: top;
-    //     height: @matrix-header;
-    // }
     .matrix-item {
         min-height: 50px;
         min-width: 100%;
@@ -850,10 +845,13 @@ a {
         width: 200px;
         max-width: 200px;
         min-height: 49px;
+        .app-list-sm {
+            max-height: 280px;
+            min-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
     }
-    // .matrix-g {
-    //     position: relative;
-    // }
     .matrix-aside {
         width: 200px;
     }
@@ -901,7 +899,6 @@ a {
     .title {
         position: absolute;
         font-size: 10px;
-        // color: #ddd;
         opacity: 0.5;
         position: absolute;
         top: 24px;
@@ -980,7 +977,7 @@ a {
 
 .checkbox-list {
     min-height: 94px;
-    max-height: 250px;
+    max-height: 280px;
 }
 
 
@@ -994,13 +991,6 @@ a {
     margin: 10px 0 5px;
     overflow: auto;
     width: 100%;
-    // position: absolute;
-    // top: 40px;
-    // bottom: 5px;
-    // //min-height: 100px;
-    // width: auto;
-    // left: 0;
-    // right: 0;
     label {
         font-weight: 500;
         font-size: 11px;
@@ -1020,12 +1010,10 @@ a {
         margin-bottom: 4px;
         input[type="radio"], input[type="checkbox"] {
             float: left;
-            // width: 15%;
             margin-right: 5px;
         }
         label {
             float: left;
-            // cursor: pointer;
             width: 85%;
             padding-right: 5px;
         }
@@ -1061,10 +1049,6 @@ a {
 
 .rzslider {
     margin: 0;
-    // position: absolute;
-    // top: 60px;
-    // right: 10px;
-    // left: 10px;
     .rz-pointer {
         top: -4px;
         z-index: 3;
@@ -1133,11 +1117,6 @@ a {
     min-height: 100px;
     overflow: hidden;
     border-right: 1px solid @gray-light;
-    // .matrix-g-characteristics {
-    //     position: absolute;
-    //     left: 0;
-    //     width: 100%;
-    // }
     .app-loader-small {
         left: -200px;
         width: 100vw;
@@ -1145,15 +1124,6 @@ a {
         top: 0;
     }
 }
-
-// .matrix-row-float {
-//     .clearfix;
-//     .matrix-col-float {
-//         width: 200px;
-//         border-right: 1px solid @gray-light;
-//         float: left;
-//     }
-// }
 
 .query-type-wrapper {
     display: block;
@@ -1346,5 +1316,5 @@ a {
       &:hover {
             color: @gray-mid;
         }
-    }     
+    }
 }

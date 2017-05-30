@@ -501,7 +501,7 @@
                 shrinkScrollbars: 'scale',
                 fadeScrollbars: false,
                 probeType: 3,
-                useTransition: true,
+                useTransition: false,
                 bindToWrapper: true,
                 disablePointer: true,
                 disableTouch: false,

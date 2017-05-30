@@ -74,9 +74,9 @@
                 characteristicsIsInited = true;
             }
 
-            if(characteristicsIsInited && changes.decisions && 
-                changes.decisions.currentValue && 
-                !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) { 
+            if(characteristicsIsInited && changes.decisions &&
+                changes.decisions.currentValue &&
+                !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
 
                     // Update only characterisctics for new decision
                     decisionsIds = pickDecisionsIds(changes.decisions.currentValue);
@@ -97,17 +97,17 @@
         }
 
         function getComments($event) {
-            if($($event.target).hasClass('control') || 
-                $($event.target).parents().hasClass('control') ||
-                $($event.target).hasClass('link-secondary')) {
-                $event.stopPropagation();
-                $event.preventDefault();
-                console.log('c');
-            } else {
+            // if($($event.target).hasClass('control') ||
+            //     $($event.target).parents().hasClass('control') ||
+            //     $($event.target).hasClass('link-secondary')) {
+            //     $event.stopPropagation();
+            //     $event.preventDefault();
+            //     console.log('c');
+            // } else {
                 vm.isGetCommentsOpen = true;
                 DiscussionsNotificationService.notifyOpenDiscussion('data');
                 $event.preventDefault();
-            }
+            // }
         }
 
 
@@ -138,7 +138,7 @@
                 return obj;
             });
         }
-        // END TODO: try to optimize it        
+        // END TODO: try to optimize it
     }
 
 })();
