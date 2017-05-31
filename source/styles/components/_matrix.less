@@ -863,7 +863,7 @@ a {
         overflow: hidden;
         // overflow-y: auto;
         // overflow-x: hidden;
-    }    
+    }
     .matrix-aside {
         width: 200px;
     }
@@ -1136,6 +1136,11 @@ a {
         position: absolute;
         top: 0;
     }
+    .matrix-content {
+        .matrix-item {
+            min-height: 60px;
+        }
+}
 }
 
 .query-type-wrapper {
@@ -1339,5 +1344,10 @@ a {
 }
 
 .iScrollVerticalScrollbar.iScrollLoneScrollbar {
-    
+
+}
+
+.el-loaded {
+    position: absolute !important;
+    visibility: hidden;
 }

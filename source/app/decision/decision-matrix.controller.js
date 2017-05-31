@@ -31,8 +31,12 @@
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
 
+
+
             getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
+
                 getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
+                    initMatrixScroller();
                     // Render html matrix
                     var decisionMatrixs = matrixResp.decisionMatrixs;
                     // 2. render list of criterias
@@ -42,20 +46,23 @@
                     // Init only first time
                     initSorters(); //Hall of fame
                     initMatrixMode();
+                });
 
-                    vm.characteristicGroupsContentLoader = true;
+                vm.characteristicGroupsContentLoader = true;
 
-                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                        // 3. Render characteristics
-                        prepareCharacteristicsGroups(resp);
-                    });
+                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                    // 3. Render characteristics
+                    prepareCharacteristicsGroups(resp);
                 });
             });
         }
 
+        var isloadCharacteristics = false;
         function loadCharacteristics() {
-            renderMatrix(true);
+            isloadCharacteristics = true;
+
             $scope.$applyAsync(function() {
+                renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
             });
         }
@@ -226,8 +233,12 @@
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 criteriaIds = [];
                 // Fill all criterias
+                //
+
+                var criteriaSize = [];
 
                 vm.criteriaGroups = _.map(result, function(criteriaItem) {
+                    criteriaSize.push(criteriaItem.criteria.length);
                     _.map(criteriaItem.criteria, function(criteria) {
                         if (criteria.description && !_.isObject(criteria.description)) {
                             criteria.description = $sce.trustAsHtml(criteria.description);
@@ -237,6 +248,11 @@
                     });
                     return criteriaItem;
                 });
+
+
+                var criteriahHeight = criteriaSize.length*24 + _.sum(criteriaSize)*49; // titles + col
+                // console.log(criteriahHeight);
+                setMatrixTableHeight(criteriahHeight);
 
                 if ($state.params.analysisId === 'hall-of-fame') {
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
@@ -481,7 +497,7 @@
             $('.matrix-g .app-control').toggleClass('selected', false);
 
             // Load characteristics first time
-            if (vm.characteristicGroupsContentLoader === true) {
+            if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
                 // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
                 if (-1 * _this.y > 350) { //100 height of characteristic static block
                     console.log('loadCharacteristics');
@@ -502,7 +518,6 @@
             tableHeader.style.left = scrollLeft + 'px';
         }
         // Custom scroll
-        initMatrixScroller();
         var martrixScroll;
 
         function initMatrixScroller() {
@@ -547,9 +562,8 @@
 
         }
 
-        function setMatrixTableHeight(total) {
-            var tableH = total * 112 + 'px';
-            $('#matrix-content').find('.characteristic-groups-content').css('min-height', tableH);
+        function setMatrixTableHeight(height) {
+            $('#matrix-content').css('min-height', height);
         }
         // TODO: make as a separeted component
         // Criteria header

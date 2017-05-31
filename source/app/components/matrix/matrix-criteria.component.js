@@ -71,9 +71,9 @@
             // Also compare current and prev changes
 
             if (changes.decisions && changes.decisions.currentValue) {
-                // if first changes and not changed size of decision 
+                // if first changes and not changed size of decision
                 // Generate base html
-                if(!changes.decisions.previousValue || 
+                if(!changes.decisions.previousValue ||
                     changes.decisions.currentValue.length !== changes.decisions.previousValue.length) {
                     generateBaseGrid(vm.criteria);
                 }

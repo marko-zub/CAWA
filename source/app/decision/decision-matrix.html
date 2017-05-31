@@ -142,38 +142,40 @@
                             <!-- End Criteria Aside -->
 
                             <!-- Characteristic Aside -->
-                            <div id="characteristic-content-aside" class="criteria-list group-wrapper">
-                                <div class="title">
-                                    Characteristics
-                                </div>
-                                <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
-                                    <div class="matrix-item matrix-g-item">
-                                        <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  group.id, 'characteristic')">
-                                            <span class="group-title-line" ng-bind="::group.name"></span>
-                                            <div class="controls">
-                                                <i class="fa fa-angle-up" aria-hidden="true"></i>
+                            <div ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
+                                <div id="characteristic-content-aside" class="criteria-list group-wrapper">
+                                    <div class="title">
+                                        Characteristics
+                                    </div>
+                                    <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
+                                        <div class="matrix-item matrix-g-item">
+                                            <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  group.id, 'characteristic')">
+                                                <span class="group-title-line" ng-bind="::group.name"></span>
+                                                <div class="controls">
+                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
+                                        <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
 
-                                        <!-- TODO: move to component -->
-                                        <!-- TODO: remove title wrapper -->
-                                        <div class="matrix-title-wrapper">
-                                            <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
-                                            <filter-control  selected="characteristic.seletedValue" item="::characteristic"></filter-control>
+                                            <!-- TODO: move to component -->
+                                            <!-- TODO: remove title wrapper -->
+                                            <div class="matrix-title-wrapper">
+                                                <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
+                                                <filter-control  selected="characteristic.seletedValue" item="::characteristic"></filter-control>
 
-                                            <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
-                                                <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                                                <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                                <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
+                                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                                </div>
+
+                                                <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+
                                             </div>
-
-                                            <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
-
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                             <!-- End Characteristic Aside -->
@@ -193,7 +195,9 @@
                                 <div ng-if="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups"></matrix-characteristics>
+                                <div ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
+                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups"></matrix-characteristics>
+                                </div>
                             </div>
 
                         </div>
