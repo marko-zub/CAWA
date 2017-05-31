@@ -58,6 +58,7 @@
         }
 
         var isloadCharacteristics = false;
+
         function loadCharacteristics() {
             isloadCharacteristics = true;
 
@@ -250,7 +251,8 @@
                 });
 
 
-                var criteriahHeight = criteriaSize.length*24 + _.sum(criteriaSize)*49; // titles + col
+                // / titles + criteria col height + characteristic wrapper
+                var criteriahHeight = criteriaSize.length * 24 + _.sum(criteriaSize) * 49 + 100;
                 // console.log(criteriahHeight);
                 setMatrixTableHeight(criteriahHeight);
 
@@ -499,9 +501,8 @@
             // Load characteristics first time
             if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
                 // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
-                if (-1 * _this.y > 350) { //100 height of characteristic static block
-                    console.log('loadCharacteristics');
-
+                if (-1 * _this.y > 90) {
+                    // console.log('loadCharacteristics');
                     loadCharacteristics();
                 }
             }
