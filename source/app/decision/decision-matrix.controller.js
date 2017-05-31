@@ -275,7 +275,7 @@
 
         function prepareCharacteristicsGroups(result) {
             var total = 0;
-            vm.characteristicGroups = _.chain(result).map(function(resultEl) {
+            var characteristicGroups = _.chain(result).map(function(resultEl) {
                 total += resultEl.characteristics.length;
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
@@ -292,6 +292,8 @@
                 });
                 return resultEl;
             }).value();
+
+            vm.characteristicGroups = angular.copy(characteristicGroups);
         }
 
         //Init sorters, when directives loaded

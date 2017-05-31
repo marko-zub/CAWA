@@ -41,11 +41,6 @@
 					disableMouse: false
 				});
 			}
-
-			
-			if ($el[0].offsetHeight > $el[0].clientHeight) {
-				console.log($el);
-			}
 		}
 	}
 
