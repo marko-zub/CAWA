@@ -1,8 +1,6 @@
 <div id="filter-tags" class="filter-tags">
         <div class="filter-tags-group sorted-panel clearfix" ng-if="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name">
-            <div class="filter-tags-label">Sorted by: 
-            <div ng-show="vm.tagsSort.length > 0" class="display-inline">weighted average vote 
-                <span class="app-link" ng-click="vm.changeCriteriaProperty(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span>
+            <div class="filter-tags-label">Sorted by: <div ng-show="vm.tagsSort.length > 0" class="display-inline">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span>
                  for
             </div>
             </div>
@@ -17,8 +15,8 @@
                     <div class="tag-wrapper" ng-if="vm.sortByCharacteristic.name">
                         <div class="tag">
                             {{vm.sortByCharacteristic.name}}
-                            <span class="app-link text-bold" ng-click="vm.characteristicsOrderChange(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{vm.sortByCharacteristic.order}}</span>
-                            <span ng-click="vm.characteristicsOrderChange(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span class="app-link text-bold" ng-click="vm.changeCharacteristicsOrder(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{vm.sortByCharacteristic.order}}</span>
+                            <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div>
                     </div>
 

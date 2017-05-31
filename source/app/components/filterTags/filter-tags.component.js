@@ -28,8 +28,8 @@
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
-        vm.changeCriteriaProperty = changeCriteriaProperty;
-        vm.characteristicsOrderChange = characteristicsOrderChange;
+        vm.changeCriteriaOrder = changeCriteriaOrder;
+        vm.changeCharacteristicsOrder = changeCharacteristicsOrder;
 
         var filterByNameTag = {
             'id': -1,
@@ -308,17 +308,14 @@
             return item;
         }
 
-        function changeCriteriaProperty(order, $event) {
-            var defaultOrder = 'DESC';
-            if (order === defaultOrder) defaultOrder = 'ASC';
-
+        function changeCriteriaOrder(order, $event) {
             vm.onChangeCriteriaOrder({
-                order: defaultOrder,
-                $event: $event
+                'order': order,
+                '$event': $event
             });
         }
 
-        function characteristicsOrderChange(order, orderId) {
+        function changeCharacteristicsOrder(order, orderId) {
             var defaultOrder = 'DESC';
             if (order === defaultOrder) defaultOrder = 'ASC';
             var sortObj = {

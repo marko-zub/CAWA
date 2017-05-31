@@ -104,8 +104,8 @@
             //     console.log('c');
             // } else {
 
-            if(!$($event.target).hasClass('iScrollLoneScrollbar') || 
-                $($event.target).hasClass('link-secondary') ||
+            if(!$($event.target).hasClass('iScrollLoneScrollbar') &&
+                !$($event.target).hasClass('link-secondary') &&
                 !$($event.target).parents().hasClass('iScrollLoneScrollbar')) {
                 vm.isGetCommentsOpen = true;
                 DiscussionsNotificationService.notifyOpenDiscussion('data');

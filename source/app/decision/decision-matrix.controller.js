@@ -30,7 +30,7 @@
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
-            vm.characteristicGroupsContentLoader = true;
+
             getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
                 getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
                     // Render html matrix
@@ -43,10 +43,13 @@
                     initSorters(); //Hall of fame
                     initMatrixMode();
 
+                    vm.characteristicGroupsContentLoader = true;
                     getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                         // 3. Render characteristics
                         prepareCharacteristicsGroups(resp);
                         renderMatrix(true);
+
+                        vm.characteristicGroupsContentLoader = false;
                     });
 
                 });
@@ -373,10 +376,6 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-
-                $scope.$applyAsync(function() {
-                    vm.characteristicGroupsContentLoader = false;
-                });
             }, 0);
             vm.decisionsSpinner = false;
         }
@@ -430,11 +429,10 @@
         // DNRY
         function orderByDecisionProperty(field, order) {
             if (!field) return;
-            order = order || 'DESC';
             var sortObj = {
                 sort: {
                     id: field,
-                    order: order
+                    order: (order === 'ASC' || !order) ? 'DESC' : 'ASC'
                 },
                 mode: "sortByDecisionProperty"
             };

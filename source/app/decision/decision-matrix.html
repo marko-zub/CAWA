@@ -42,9 +42,9 @@
                                 </div>
                                 <!-- Filter Name -->
 
-                                <div class="app-sorter">
-                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top" ng-click="vm.orderByDecisionProperty('name', 'ASC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'ASC'}"></span>
-                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom" ng-click="vm.orderByDecisionProperty('name', 'DESC')" ng-class="{'selected': vm.fo.sortByDecisionProperty.id == 'name' && vm.fo.sortByDecisionProperty.order == 'DESC'}"></span>
+                                <div class="app-sorter active" ng-class="vm.fo.sortByDecisionProperty.order.toLowerCase()"  ng-click="vm.orderByDecisionProperty('name', vm.fo.sortByDecisionProperty.order)">
+                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                 </div>
                             </div>
                         </div>
