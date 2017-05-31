@@ -44,17 +44,20 @@
                     initMatrixMode();
 
                     vm.characteristicGroupsContentLoader = true;
-                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                        // 3. Render characteristics
-                        prepareCharacteristicsGroups(resp);
-                        renderMatrix(true);
-
-                        vm.characteristicGroupsContentLoader = false;
-                    });
-
                 });
             });
         }
+
+        function loadCharacteristics() {
+            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                // 3. Render characteristics
+                prepareCharacteristicsGroups(resp);
+                renderMatrix(true);
+
+                vm.characteristicGroupsContentLoader = false;
+            });
+        }
+
 
         // TODO: move to separate component
         // Filter name
@@ -468,10 +471,22 @@
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
 
+        var characteristicsBlock = $('#matrix-content');
+
         function updatePosition(martrixScroll) {
             var _this = martrixScroll || this; // jshint ignore:line
             scrollHandler(_this.y, _this.x);
             $('.matrix-g .app-control').toggleClass('selected', false);
+
+            // Load characteristics first time
+            if (vm.characteristicGroupsContentLoader === true) {
+                // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
+                if (-1 * _this.y > 350) { //100 height of characteristic static block
+                    // console.log('loadCharacteristics');
+
+                    loadCharacteristics();
+                }
+            }
         }
         // Table scroll
         var tableBody,
@@ -515,7 +530,7 @@
             if (martrixScroll) {
                 martrixScroll.refresh();
                 martrixScroll.on('scroll', updatePosition);
-                updatePosition(martrixScroll);
+                // updatePosition(martrixScroll);
             }
         }
 
