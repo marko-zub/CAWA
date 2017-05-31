@@ -44,16 +44,18 @@
                     initMatrixMode();
 
                     vm.characteristicGroupsContentLoader = true;
+
+                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                        // 3. Render characteristics
+                        prepareCharacteristicsGroups(resp);
+                    });
                 });
             });
         }
 
         function loadCharacteristics() {
-            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                // 3. Render characteristics
-                prepareCharacteristicsGroups(resp);
-                renderMatrix(true);
-
+            renderMatrix(true);
+            $scope.$applyAsync(function() {
                 vm.characteristicGroupsContentLoader = false;
             });
         }
@@ -482,7 +484,7 @@
             if (vm.characteristicGroupsContentLoader === true) {
                 // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
                 if (-1 * _this.y > 350) { //100 height of characteristic static block
-                    // console.log('loadCharacteristics');
+                    console.log('loadCharacteristics');
 
                     loadCharacteristics();
                 }
