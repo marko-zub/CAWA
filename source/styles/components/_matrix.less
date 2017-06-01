@@ -513,7 +513,7 @@ a {
     z-index: 3;
     background-color: #fff;
     padding: 0 10px 0 0;
-    border-bottom: 1px solid @gray-light;
+    // border-bottom: 1px solid @gray-light;
     // box-shadow: 0 0 11px rgba(0,0,0,0.2);
     font-weight: 500;
     color: @title-color;
@@ -552,7 +552,7 @@ a {
         // overflow-y: hidden;
         height: @matrix-header; //TODO: fix height
         background-color: #fff;
-        border-bottom: 1px solid @gray-light;
+        // border-bottom: 1px solid @gray-light;
         .matrix-title-wrapper {
             // max-width: @matrix-aside-width - 1px;
             padding: 0 10px;
@@ -565,6 +565,7 @@ a {
         z-index: 1;
         left: 0;
         margin-left: 200px;
+        height: @matrix-header;
         // overflow: hidden;
         // height: @matrix-header; //TODO: fix height
     }
@@ -578,7 +579,7 @@ a {
 
 .matrix-body-wrapper {
     position: absolute;
-    top: @matrix-header - 1px;
+    top: @matrix-header;
     // position: relative;
     // overflow: hidden;
     // height: 100%;
@@ -845,7 +846,7 @@ a {
         min-width: 100%;
         &.matrix-g-item {
             height: 24px !important;
-            min-height: 24px;
+            min-height: 24px !important; //Remove
             line-height: 24px;
             background-color: lighten(@gray-light, 5%);
             border-bottom: 1px solid @gray-light;
@@ -1125,24 +1126,23 @@ a {
     }
 }
 
-.characteristic-groups-content {
-    position: relative;
-    min-height: 100px;
-    overflow: hidden;
-    border-right: 1px solid @gray-light;
-    .app-loader-small {
-        left: -200px;
-        width: 100vw;
-        position: absolute;
-        top: 0;
-    }
-    .matrix-content {
+.matrix.matrix-new {
+    .characteristic-groups-content {
+        position: relative;
+        min-height: 100px;
+        overflow: hidden;
+        border-right: 1px solid @gray-light;
+        .app-loader-small {
+            left: -200px;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+        }
         .matrix-item {
             min-height: 60px;
         }
+    }
 }
-}
-
 .query-type-wrapper {
     display: block;
     margin-bottom: 2px;
@@ -1247,7 +1247,7 @@ a {
 }
 .m-group-title {
     height: 24px !important;
-    min-height: 24px;
+    min-height: 24px !important; // Remove it
     line-height: 24px;
     background-color: lighten(@gray-light, 5%);
     border-bottom: 1px solid @gray-light;
@@ -1350,4 +1350,15 @@ a {
 .el-loaded {
     position: absolute !important;
     visibility: hidden;
+}
+
+.matrix.matrix-new .scroll-group {
+    .clearfix;
+    display: table;
+    .matrix-col {
+        // display: block;
+        // float: left;
+
+        border-bottom: 0;
+    }        
 }

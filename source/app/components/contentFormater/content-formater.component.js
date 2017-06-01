@@ -28,7 +28,7 @@
         function onInit() {
             // console.log(vm.value, vm.type);
             var renderContent = ContentFormaterService.getTemplate(vm.value, vm.type);
-            renderHtml(renderContent);
+            if(!_.isBoolean(renderContent) && !_.isEmpty(renderContent)) renderHtml(renderContent);
         }
 
         // function onChanges(changes) {

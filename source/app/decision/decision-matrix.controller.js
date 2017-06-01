@@ -22,6 +22,8 @@
 
             vm.filterName = null;
 
+            vm.characteristicLimit = 4;
+
             // vm.uid = $stateParams.uid;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
@@ -63,6 +65,8 @@
             isloadCharacteristics = true;
 
             $scope.$applyAsync(function() {
+                vm.characteristicLimit = vm.characteristicGroups.length;
+                // console.log(vm.characteristicLimit);
                 renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
             });
@@ -501,7 +505,7 @@
             // Load characteristics first time
             if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
                 // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
-                if (-1 * _this.y > 90) {
+                if (-1 * _this.y > 40) {
                     // console.log('loadCharacteristics');
                     loadCharacteristics();
                 }
