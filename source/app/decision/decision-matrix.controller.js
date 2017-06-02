@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
+        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService', '$q'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
+        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService, $q) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -32,8 +32,6 @@
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
-
-
 
             getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 

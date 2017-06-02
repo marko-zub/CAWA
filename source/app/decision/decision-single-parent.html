@@ -17,7 +17,7 @@
                     <a ui-sref="decisions.single({id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
-                    <a ui-sref="decisions.single.parent({parentId:parent.uid, parentSlug:parent.nameSlug})">{{::parent.name}}</a>
+                    <a ui-sref="decisions.single.parent({parentId:parent.uid, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
                 </li>
             </ul>
         </div>
@@ -30,11 +30,15 @@
                                 <a ui-sref="decisions.single({id: vm.parent.uid, slug: vm.parent.nameSlug})">
                                     {{ vm.parent.name }}
                                 </a>
-                            </div>                            
-                        </div>                    
+                            </div>
+                        </div>
                         {{ ::vm.parent.description }}
                     </div>
                 </div>
+            </div>
+
+            <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
+                Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
             </div>
         </div>
     </div>

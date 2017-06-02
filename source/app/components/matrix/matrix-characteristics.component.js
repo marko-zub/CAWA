@@ -19,6 +19,7 @@
 
     renderTemplate.$inject = [];
 
+    // TODO: move to template?!
     function renderTemplate() {
         return [
             '<div class="matrix-g matrix-g-characteristics" data-characteristic-group="{{::group.id}}" ng-repeat="group in ::vm.characteristics track by group.id">',
@@ -28,7 +29,6 @@
                     '<div class="matrix-row">',
                         '<div class="matrix-col matrix-criteria-group" data-connect="{{::item.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
-                                // '{{::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic | json}}',
                                 '<content-formater ng-if="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value" value="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value" type="::item.valueType"></content-formater>',
                                 '<div class="app-item-additional-wrapper app-item-comments">',
                                     '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
@@ -45,9 +45,9 @@
     }
 
 
-    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService'];
+    MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService', 'ContentFormaterService'];
 
-    function MatrixCharacteristicsController(DiscussionsNotificationService) {
+    function MatrixCharacteristicsController(DiscussionsNotificationService, ContentFormaterService) {
         var vm = this, decisionsIds, decisionsIdsPrev, characteristicsIsInited = false;
 
         // Discussions
@@ -79,7 +79,7 @@
             //     characteristicsIsInited = true;
             // }
 
-            if( changes.decisions && changes.decisions.currentValue &&
+            if(changes.decisions && changes.decisions.currentValue &&
                 !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
                     setDecisions(changes.decisions.currentValue);
             }
@@ -98,28 +98,22 @@
             //             vm.characteristicsDisplay = createMatrixContentCharacteristics(changes.decisions.currentValue);
             //         }
             // }
-        }  
+        }
 
         function setDecisions(decisions) {
             // console.log(decisions);
-
+            // console.log(vm.characteristics);
             var displayDecisions = {};
-            // setTimeout(function() {
             _.forEach(decisions, function(decision){
-                
+
                 _.forEach(decision.characteristics, function(characteristic) {
-                    // $('characteristic')
-                    // console.log(characteristic.id + '-' + decision.decision.id, characteristic.value);
                     var colId = characteristic.id + '-' + decision.decision.id;
                     displayDecisions[colId] = {};
                     displayDecisions[colId].characteristic = characteristic;
-                    // $('.matrix-col[data-connect="' + colId + '"]').find('.matrix-col-content').html(characteristic.value);
-                    //  $('.matrix-col[data-connect="' + colId + '"]').addClass('xxxxxxx');
+                    // displayDecisions[colId].characteristic.html = ContentFormaterService.getTemplate(characteristic.value, characteristic)
                 });
             });
             vm.decisionsDisplay = displayDecisions;
-            // console.log(displayDecisions);
-            // }, 0); 
         }
 
         function pickDecisionsIds(decisions) {
