@@ -33,17 +33,16 @@
 
             vm.characteristicGroupsContentLoader = true;
 
+            initMatrixScroller();
             getCriteriaGroupsById(vm.decision.id)
                 .then(function() {
 
                     getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
-                        initMatrixScroller();
-
                         // Init only first time
                         initSorters(); //Hall of fame
                         initMatrixMode();
                         // renderMatrix(false);
-                        vm.decisionsSpinner = false;
+                        renderMatrix(false);
                     });
 
                     getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
