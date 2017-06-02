@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService', '$q'
+        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService, $q) {
+        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -30,73 +30,48 @@
 
             vm.decisionsSpinner = true;
 
-
-            vm.characteristicGroupsContentLoader = true;
-
-            initMatrixScroller();
-            getCriteriaGroupsById(vm.decision.id)
-                .then(function() {
-
-                    getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
-                        // Init only first time
-                        initSorters(); //Hall of fame
-                        initMatrixMode();
-                        // renderMatrix(false);
-                        renderMatrix(false);
-                    });
-
-                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                        // 3. Render characteristics
-                        prepareCharacteristicsGroups(resp);
-                        vm.characteristicGroupsContentLoader = false;
-                        renderMatrix(true);
-
-
-                        $scope.$applyAsync(function() {
-                            vm.characteristicGroupsContentLoader = false;
-                        });
-                    });
-                });
-
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
-            // vm.characteristicGroupsContentLoader = true;
-            // getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
+            vm.characteristicGroupsContentLoader = true;
+            getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 
-            //     getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
-            //         initMatrixScroller();
-            //         // Render html matrix
-            //         var decisionMatrixs = matrixResp.decisionMatrixs;
-            //         // 2. render list of criterias
-            //         // createMatrixContentCriteria(decisionMatrixs);
-            //         renderMatrix(false);
+                getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
+                    initMatrixScroller();
+                    // Render html matrix
+                    var decisionMatrixs = matrixResp.decisionMatrixs;
+                    // 2. render list of criterias
+                    // createMatrixContentCriteria(decisionMatrixs);
+                    renderMatrix(false);
 
-            //         // Init only first time
-            //         initSorters(); //Hall of fame
-            //         initMatrixMode();
+                    // Init only first time
+                    initSorters(); //Hall of fame
+                    initMatrixMode();
+                });
 
-            //         getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-            //             // 3. Render characteristics
-            //             prepareCharacteristicsGroups(resp);
-            //             vm.characteristicGroupsContentLoader = false;
-            //             renderMatrix(true);
-            //         });                    
-            //     });
-            // });
+                
+                loadCharacteristics();
+
+
+            });
         }
 
         var isloadCharacteristics = false;
 
         function loadCharacteristics() {
 
-
+                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                    // 3. Render characteristics
+                    prepareCharacteristicsGroups(resp);
+                    vm.characteristicGroupsContentLoader = false;
+                    renderMatrix(true);
+                });
 
             // isloadCharacteristics = true;
 
             // $scope.$applyAsync(function() {
             //     // vm.characteristicLimit = vm.characteristicGroups.length;
             //     // console.log(vm.characteristicLimit);
-
+                
             //     vm.characteristicGroupsContentLoader = false;
             // });
         }
@@ -308,7 +283,7 @@
 
         function prepareCharacteristicsGroups(result) {
             var total = 0;
-            var characteristicGroups = _.chain(result).map(function(resultEl) {
+            vm.characteristicGroups = _.chain(result).map(function(resultEl) {
                 total += resultEl.characteristics.length;
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
@@ -325,8 +300,6 @@
                 });
                 return resultEl;
             }).value();
-
-             vm.characteristicGroups = angular.copy(characteristicGroups);
         }
 
         //Init sorters, when directives loaded
@@ -576,7 +549,6 @@
                 momentum: false,
                 disableMouse: false
             });
-            martrixScroll.on('scroll', updatePosition);
         }
 
 
@@ -584,6 +556,7 @@
             // TODO: avoid jquery height
             if (martrixScroll) {
                 martrixScroll.refresh();
+                martrixScroll.on('scroll', updatePosition);
                 // updatePosition(martrixScroll);
             }
         }

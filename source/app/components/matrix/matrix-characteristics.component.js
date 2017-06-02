@@ -25,7 +25,7 @@
             '<div class="matrix-g matrix-g-characteristics" data-characteristic-group="{{::group.id}}" ng-repeat="group in ::vm.characteristics track by group.id">',
                 '<div class="matrix-item matrix-g-item matrix-item-content">',
                 '</div>',
-                '<div class="matrix-item matrix-row matrix-item-content js-matrix-item-content js-toggle-hide" ng-repeat="item in ::group.characteristics track by item.uid">',
+                '<div class="matrix-item matrix-item-content js-matrix-item-content js-toggle-hide" ng-repeat="item in ::group.characteristics track by item.uid">',
                     '<div class="matrix-row">',
                         '<div class="matrix-col matrix-criteria-group" data-connect="{{::item.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
