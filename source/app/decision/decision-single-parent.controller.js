@@ -7,11 +7,11 @@
         .controller('DecisionSingleParentController', DecisionSingleParentController);
 
     DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService', 'Utils'
     ];
 
     function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService, Utils) {
 
         var
             vm = this,
@@ -90,7 +90,7 @@
                 getCriteriaGroupsById(parentId),
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
-                vm.criteriaGroups = values[0];
+
                 vm.characteristicGroups = values[1];
 
                 // Criterias IDs
@@ -106,7 +106,7 @@
                 sendData.sortCriteriaIds = criteriaIds;
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    mergeCriteriaDecisions(resp, vm.criteriaGroups);
+                    vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
                     mergeCharacteristicsDecisions(resp, vm.criteriaGroups);
 
                     var decisionMatrixs = resp.decisionMatrixs;
@@ -132,11 +132,13 @@
             });
         }
 
-        function mergeCriteriaDecisions(decisions, criteriaArray) {
-            return _.filter(decisions, function(resultEl) {
+        function mergeCriteriaDecisions(decisions, criteriaGroupsArray) {
+            var currentDecisionCriteria = decisions.decisionMatrixs[0].criteria;
+            return _.filter(criteriaGroupsArray, function(resultEl) {
                 _.filter(resultEl.criteria, function(el) {
                     el.description = $sce.trustAsHtml(el.description);
-                    var elEqual = _.find(criteriaArray, {
+
+                    var elEqual = _.find(currentDecisionCriteria, {
                         id: el.id
                     });
 

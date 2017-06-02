@@ -39,6 +39,19 @@
         }
 
 
+        // TODO: move to UTILS
+        function findGroupItemById(id, list, property) {
+            var findItem;
+            _.forEach(list, function(group) {
+                var find = _.find(group[property], function(groupItem) {
+                    // console.log(groupItem.id, id, groupItem.id === id)
+                    return groupItem.id === id;
+                });
+                if (find) findItem = find;
+            });
+            return findItem;
+
+        }
         // function isDate(date) {
         //     var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
         //     return isValueDate;
@@ -49,7 +62,8 @@
 			removeItemFromArray: removeItemFromArray,
 			removeEmptyFromArray: removeEmptyFromArray,
 			dateToDB: dateToDB,
-			dateToUI: dateToUI
+			dateToUI: dateToUI,
+			findGroupItemById: findGroupItemById
 		};
 	}
 })();

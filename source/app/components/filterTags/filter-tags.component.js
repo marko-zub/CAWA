@@ -79,7 +79,7 @@
         function setCharacteristicsSortTag(characteristic) {
             if(!characteristic) return;
             var characteristicsOrderTag = angular.copy(characteristic);
-            var findCharacteristics = findGroupItem(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
+            var findCharacteristics = Utils.findGroupItemById(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
             // debugger
             return characteristicsOrderTag;
@@ -334,19 +334,7 @@
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
 
-        // TODO: move to UTILS
-        function findGroupItem(id, list, property) {
-            var findItem;
-            _.forEach(list, function(group) {
-                var find = _.find(group[property], function(groupItem) {
-                    // console.log(groupItem.id, id, groupItem.id === id)
-                    return groupItem.id === id;
-                });
-                if (find) findItem = find;
-            });
-            return findItem;
 
-        }
 
     }
 
