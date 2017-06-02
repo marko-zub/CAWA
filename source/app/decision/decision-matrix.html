@@ -142,8 +142,8 @@
                             <!-- End Criteria Aside -->
 
                             <!-- Characteristic Aside -->
-                            <div ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
-                                <div id="characteristic-content-aside" class="criteria-list group-wrapper">
+                            <div  ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
+                                <div id="characteristic-content-aside" class="criteria-list group-wrapper characteristic-content-aside">
                                     <div class="title">
                                         Characteristics
                                     </div>
@@ -157,11 +157,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="matrix-item js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
-
+                                        <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
                                             <!-- TODO: move to component -->
-                                            <!-- TODO: remove title wrapper -->
-                                            <div class="matrix-title-wrapper">
+              
                                                 <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                 <filter-control selected="characteristic.seletedValue" item="::characteristic"></filter-control>
 
@@ -172,7 +170,6 @@
 
                                                 <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
-                                            </div>
                                         </div>
 
                                     </div>

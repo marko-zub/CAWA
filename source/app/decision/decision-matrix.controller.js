@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
+        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService', '$q'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
+        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService, $q) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -30,48 +30,69 @@
 
             vm.decisionsSpinner = true;
 
-            // First call
-            // 1. Render criteria and decisions for fast delivery info for user
+
             vm.characteristicGroupsContentLoader = true;
-            getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 
-                getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
-                    initMatrixScroller();
-                    // Render html matrix
-                    var decisionMatrixs = matrixResp.decisionMatrixs;
-                    // 2. render list of criterias
-                    // createMatrixContentCriteria(decisionMatrixs);
-                    renderMatrix(false);
+            getCriteriaGroupsById(vm.decision.id)
+                .then(function() {
 
-                    // Init only first time
-                    initSorters(); //Hall of fame
-                    initMatrixMode();
+                    getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
+                        initMatrixScroller();
+
+                        // Init only first time
+                        initSorters(); //Hall of fame
+                        initMatrixMode();
+                        // renderMatrix(false);
+                        vm.decisionsSpinner = false;
+                    });
+
+                    getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                        // 3. Render characteristics
+                        prepareCharacteristicsGroups(resp);
+                        vm.characteristicGroupsContentLoader = false;
+                        renderMatrix(true);
+                    });
                 });
 
-                
-                loadCharacteristics();
+            // First call
+            // 1. Render criteria and decisions for fast delivery info for user
+            // vm.characteristicGroupsContentLoader = true;
+            // getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 
+            //     getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
+            //         initMatrixScroller();
+            //         // Render html matrix
+            //         var decisionMatrixs = matrixResp.decisionMatrixs;
+            //         // 2. render list of criterias
+            //         // createMatrixContentCriteria(decisionMatrixs);
+            //         renderMatrix(false);
 
-            });
+            //         // Init only first time
+            //         initSorters(); //Hall of fame
+            //         initMatrixMode();
+
+            //         getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+            //             // 3. Render characteristics
+            //             prepareCharacteristicsGroups(resp);
+            //             vm.characteristicGroupsContentLoader = false;
+            //             renderMatrix(true);
+            //         });                    
+            //     });
+            // });
         }
 
         var isloadCharacteristics = false;
 
         function loadCharacteristics() {
 
-                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                    // 3. Render characteristics
-                    prepareCharacteristicsGroups(resp);
-                    vm.characteristicGroupsContentLoader = false;
-                    renderMatrix(true);
-                });
+
 
             // isloadCharacteristics = true;
 
             // $scope.$applyAsync(function() {
             //     // vm.characteristicLimit = vm.characteristicGroups.length;
             //     // console.log(vm.characteristicLimit);
-                
+
             //     vm.characteristicGroupsContentLoader = false;
             // });
         }
@@ -283,7 +304,7 @@
 
         function prepareCharacteristicsGroups(result) {
             var total = 0;
-            vm.characteristicGroups = _.chain(result).map(function(resultEl) {
+            var characteristicGroups = _.chain(result).map(function(resultEl) {
                 total += resultEl.characteristics.length;
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
@@ -300,6 +321,8 @@
                 });
                 return resultEl;
             }).value();
+
+             vm.characteristicGroups = angular.copy(characteristicGroups);
         }
 
         //Init sorters, when directives loaded
@@ -549,6 +572,7 @@
                 momentum: false,
                 disableMouse: false
             });
+            martrixScroll.on('scroll', updatePosition);
         }
 
 
@@ -556,7 +580,6 @@
             // TODO: avoid jquery height
             if (martrixScroll) {
                 martrixScroll.refresh();
-                martrixScroll.on('scroll', updatePosition);
                 // updatePosition(martrixScroll);
             }
         }

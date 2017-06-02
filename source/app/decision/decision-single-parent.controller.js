@@ -96,9 +96,10 @@
                 // Criterias IDs
                 _.forEach(values[0], function(criteriaItem) {
                     _.forEach(criteriaItem.criteria, function(criteria) {
-                        if (criteria.description && !_.isObject(criteria.description)) {
-                            criteria.description = $sce.trustAsHtml(criteria.description);
-                        }
+                        // console.log(criteria);
+                        // if (criteria.description && !_.isObject(criteria.description)) {
+                        //     criteria.description = $sce.trustAsHtml(criteria.description);
+                        // }
                         criteriaIds.push(criteria.id);
                     });
                 });
