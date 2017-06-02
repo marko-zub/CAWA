@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService', '$q'
+        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService, $q) {
+        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -32,7 +32,7 @@
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
-
+            vm.characteristicGroupsContentLoader = true;
             getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 
                 getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
@@ -48,26 +48,32 @@
                     initMatrixMode();
                 });
 
-                vm.characteristicGroupsContentLoader = true;
+                
+                loadCharacteristics();
 
-                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                    // 3. Render characteristics
-                    prepareCharacteristicsGroups(resp);
-                });
+
             });
         }
 
         var isloadCharacteristics = false;
 
         function loadCharacteristics() {
-            isloadCharacteristics = true;
 
-            $scope.$applyAsync(function() {
-                vm.characteristicLimit = vm.characteristicGroups.length;
-                // console.log(vm.characteristicLimit);
-                renderMatrix(true);
-                vm.characteristicGroupsContentLoader = false;
-            });
+                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                    // 3. Render characteristics
+                    prepareCharacteristicsGroups(resp);
+                    vm.characteristicGroupsContentLoader = false;
+                    renderMatrix(true);
+                });
+
+            // isloadCharacteristics = true;
+
+            // $scope.$applyAsync(function() {
+            //     // vm.characteristicLimit = vm.characteristicGroups.length;
+            //     // console.log(vm.characteristicLimit);
+                
+            //     vm.characteristicGroupsContentLoader = false;
+            // });
         }
 
 
@@ -501,13 +507,14 @@
             $('.matrix-g .app-control').toggleClass('selected', false);
 
             // Load characteristics first time
-            if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
-                // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
-                if (-1 * _this.y > 40) {
-                    // console.log('loadCharacteristics');
-                    loadCharacteristics();
-                }
-            }
+            // if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
+            //     // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
+            //     if (-1 * _this.y > 40) {
+            //         // console.log('loadCharacteristics');
+            //         loadCharacteristics();
+            //         isloadCharacteristics = true;
+            //     }
+            // }
         }
         // Table scroll
         var tableBody,

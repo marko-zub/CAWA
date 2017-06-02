@@ -61,6 +61,11 @@
             responseError: function(rejection) {
                 console.log(rejection);
                 // $state.go('404');
+
+                // var notification = $injector.get('MsgService');
+                // var msg = rejection.status + ': ' + rejection.statusText;
+                // notification.error(msg);  
+
                 return rejection;
             }
         };

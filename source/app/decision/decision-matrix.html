@@ -76,7 +76,7 @@
                                             </small>
                                         </div>
                                         <div class="info">
-                                            <span ng-if="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <span ng-show="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
                                     <div class="app-panel-controls">
@@ -192,7 +192,7 @@
                             <matrix-criteria decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                             <div class="characteristic-groups-content">
-                                <div ng-if="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                                <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
