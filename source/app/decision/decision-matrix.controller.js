@@ -51,6 +51,11 @@
                         prepareCharacteristicsGroups(resp);
                         vm.characteristicGroupsContentLoader = false;
                         renderMatrix(true);
+
+
+                        $scope.$applyAsync(function() {
+                            vm.characteristicGroupsContentLoader = false;
+                        });
                     });
                 });
 

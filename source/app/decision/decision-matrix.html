@@ -142,7 +142,7 @@
                             <!-- End Criteria Aside -->
 
                             <!-- Characteristic Aside -->
-                            <div  ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
+                            <div  ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
                                 <div id="characteristic-content-aside" class="criteria-list group-wrapper characteristic-content-aside">
                                     <div class="title">
                                         Characteristics
@@ -192,7 +192,7 @@
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
-                                <div ng-class="{'el-loaded': vm.characteristicGroupsContentLoader}">
+                                <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
                                     <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups" characteristic-limit="vm.characteristicLimit"></matrix-characteristics>
                                 </div>
                             </div>

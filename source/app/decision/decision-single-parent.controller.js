@@ -108,7 +108,7 @@
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
-                    mergeCharacteristicsDecisions(resp, vm.criteriaGroups);
+                    mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
@@ -160,15 +160,14 @@
         }
 
         function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
-            var list = _.map(decisions, function(resultEl) {
+            var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
+            var list = _.map(characteristicsArray, function(resultEl) {
                 _.map(resultEl.characteristics, function(el) {
                     el.description = $sce.trustAsHtml(el.description);
 
-                    var elEqual = _.find(characteristicsArray, {
+                    var elEqual = _.find(currentDecisionCharacteristics, {
                         id: el.id
                     });
-
-                    // console.log(el);
 
                     if (elEqual) {
                         el = _.merge(el, elEqual);
