@@ -140,42 +140,50 @@
                                 </div>
                             </div>
                             <!-- End Criteria Aside -->
+                        
+                            <div class="criteria-list group-wrapper characteristic-content-aside">
+                                <!-- {{characteristic | json}} -->
+                               <div class="title">
+                                    Characteristics
+                                </div>
+                                
+                                <div ng-repeat="characteristic in vm.characteristicGroupsArray" lazy-repeater="10">
+                                    <div ng-switch="::characteristic.characteristicGroupId >= 0">
 
-                            <!-- Characteristic Aside -->
-                            <div  ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
-                                <div id="characteristic-content-aside" class="criteria-list group-wrapper characteristic-content-aside">
-                                    <div class="title">
-                                        Characteristics
-                                    </div>
-                                    <div data-characteristic-group="{{::group.id}}" class="matrix-g matrix-g-characteristics" ng-repeat="group in vm.characteristicGroups track by group.id">
-                                        <div class="matrix-item matrix-g-item">
-                                            <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  group.id, 'characteristic')">
-                                                <span class="group-title-line" ng-bind="::group.name"></span>
-                                                <div class="controls">
-                                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                        <!-- Title-->
+                                        
+                                        <div ng-switch-when="false">
+                                            <div class="matrix-item matrix-g-item">
+                                                <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  characteristic.id, 'characteristic')">
+                                                    <span class="group-title-line" ng-bind="::characteristic.name"></span>
+                                                    <div class="controls">
+                                                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide" ng-repeat="characteristic in group.characteristics track by characteristic.id">
-                                            <!-- TODO: move to component -->
-              
-                                                <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
-                                                <filter-control selected="characteristic.seletedValue" item="::characteristic"></filter-control>
+                                        <div ng-switch-when="true">
+                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
+                                                <!-- TODO: move to component -->
+                  
+                                                    <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
+                                                    <filter-control selected="characteristic.seletedValue" item="::characteristic"></filter-control>
 
-                                                <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
-                                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
-                                                </div>
+                                                    <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
+                                                        <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                                                        <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                                    </div>
 
-                                                <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
+                                            </div>   
                                         </div>
-
                                     </div>
                                 </div>
+                                                             
                             </div>
-                            <!-- End Characteristic Aside -->
+
 
                         </div>
 

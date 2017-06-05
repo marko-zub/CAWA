@@ -282,9 +282,14 @@
         }
 
         function prepareCharacteristicsGroups(result) {
+            var characteristicsArray = [];
+
             var total = 0;
             vm.characteristicGroups = _.chain(result).map(function(resultEl) {
                 total += resultEl.characteristics.length;
+
+                var group = _.omit(resultEl, 'characteristics');
+                characteristicsArray.push(group);
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                         characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
@@ -296,10 +301,15 @@
                     } else {
                         characteristicsItem.isSortable = true;
                     }
+                    characteristicsArray.push(characteristicsItem);
                     return characteristicsItem;
                 });
                 return resultEl;
             }).value();
+
+
+            vm.characteristicGroupsArray = characteristicsArray;
+            console.log( vm.characteristicGroupsArray);
         }
 
         //Init sorters, when directives loaded
