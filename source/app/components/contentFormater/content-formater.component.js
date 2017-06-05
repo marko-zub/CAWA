@@ -7,7 +7,7 @@
         .controller('ContentFormaterController', ContentFormaterController)
         .component('contentFormater', {
             bindings: {
-                value: '<',
+                item: '<',
                 type: '<',
             },
             controller: 'ContentFormaterController',
@@ -22,28 +22,15 @@
 
         vm.$onInit = onInit;
 
-        // Create additional watcher
-        // vm.$onChanges = onChanges;
-
         function onInit() {
             // console.log(vm.value, vm.type);
-            var renderContent = ContentFormaterService.getTemplate(vm.value, vm.type);
-            if(!_.isBoolean(renderContent) && !_.isEmpty(renderContent)) renderHtml(renderContent);
+            var renderContent = ContentFormaterService.getTemplate(vm.item.value, vm.type, vm.item.description);
+            renderHtml(renderContent);
         }
 
-        // function onChanges(changes) {
-        //     console.log(changes);
-        //     if (changes.value.currentValue &&
-        //         !angular.equals(changes.value.currentValue, changes.value.previousValue)) {
-        //         vm.value = _.pick(changes.value.currentValue, 'value', 'valueType');
-        //         var renderContent = vm.value && vm.value.value ? ContentFormaterService.getTemplate(vm.value) : '';
-        //         if (renderContent) renderHtml(renderContent);
-        //     }
-        // }
-
-        function renderHtml(html) {
-            $element.html(html);
-            $compile($element.contents())($scope);
+        function renderHtml(data) {
+            $element.html(data.html);
+            if (data.compile) $compile($element.contents())($scope);
         }
 
     }
