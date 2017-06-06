@@ -83,7 +83,7 @@
 
         function replaceURLWithHTMLLinks(text) {
             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-            return text.replace(exp, "<a href='$1' class=\"link-secondary\" target=\"_blank\">$1</a>");
+            return text.replace(exp, "<a href='$1' class=\"link\" target=\"_blank\">$1</a>");
         }
 
         function contentFormaterBool(val) {

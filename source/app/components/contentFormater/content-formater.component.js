@@ -29,6 +29,7 @@
         }
 
         function renderHtml(data) {
+            if(_.isEmpty(data)) return;
             $element.html(data.html);
             if (data.compile) $compile($element.contents())($scope);
         }

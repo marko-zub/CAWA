@@ -16,7 +16,7 @@
 
     function renderTemplate() {
         return [
-            '<div class="filter-item-wrapper">',
+            '<div class="filter-item-wrapper" ng-if="vm.showRange">',
             '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
             '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
             '</div>'
@@ -33,6 +33,7 @@
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+        vm.showRange = false;
 
         function onInit() {
             initRangeSlider(vm.item);
@@ -50,16 +51,23 @@
         }
 
         function initRangeSliderValues(min, max) {
-            if (!min || !max) return;
             vm.slider.min = Number(min);
             vm.slider.max = Number(max);
+
+            if (_.isNaN(vm.slider.min) || _.isNaN(vm.slider.max)) return;
         }
 
         // TODO: move to separete template
         function initRangeSlider(item) {
+            var minVal = Number(item.minValue);
+            var maxVal = Number(item.maxValue);
+
+            if(!_.isNaN(minVal) && !_.isNaN(maxVal)) {
+                vm.showRange = true;
+            }
             vm.slider = {
-                min: Number(item.minValue),
-                max: Number(item.maxValue),
+                min: minVal,
+                max: maxVal,
                 options: {
                     floor: Number(item.minValue),
                     ceil: Number(item.maxValue),
