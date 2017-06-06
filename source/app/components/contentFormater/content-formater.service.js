@@ -30,9 +30,8 @@
             return html;
         }
 
-        function getTemplate(value, type, description) {
+        function getTemplate(value, type, description, visualMode) {
             if (!value || !type) return;
-            // console.log(value, type);
             // CASE Visual Mode
             var compile = false;
             var result = '';
@@ -53,11 +52,18 @@
                 case "BOOLEAN":
                     result = contentFormaterBool(value);
                     break;
+                case "LINK":
+                    result = contentFormaterLink(value);
+                    break;
                 default:
                     result = value || '';
             }
 
-            if (description) result += '<div class="description">' + description + '</div>';
+            if (description)
+                result += '<div class="description">' + description + '</div>';
+
+            if (visualMode && visualMode.toUpperCase() === 'LINK')
+                result = contentFormaterLink(result);
 
             return {
                 html: result,
@@ -76,12 +82,12 @@
             }
 
             return {
-                result: replaceURLWithHTMLLinks(valCopy),
+                result: valCopy,
                 compile: compile
             };
         }
 
-        function replaceURLWithHTMLLinks(text) {
+        function contentFormaterLink(text) {
             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
             return text.replace(exp, "<a href='$1' class=\"link\" target=\"_blank\">$1</a>");
         }

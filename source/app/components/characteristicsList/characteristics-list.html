@@ -21,7 +21,7 @@
                                     <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <content-formater ng-if="::characteristic.value" item="::characteristic" type="::characteristic.valueType"></content-formater>
+                                    <content-formater ng-if="::characteristic.value" item="::characteristic" characteristic="::characteristic"></content-formater>
                                 </div>
                             </div>
                         </div>

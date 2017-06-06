@@ -8,7 +8,7 @@
         .component('contentFormater', {
             bindings: {
                 item: '<',
-                type: '<',
+                characteristic: '<',
             },
             controller: 'ContentFormaterController',
             controllerAs: 'vm'
@@ -24,7 +24,7 @@
 
         function onInit() {
             // console.log(vm.value, vm.type);
-            var renderContent = ContentFormaterService.getTemplate(vm.item.value, vm.type, vm.item.description);
+            var renderContent = ContentFormaterService.getTemplate(vm.item.value, vm.characteristic.valueType, vm.item.description, vm.characteristic.visualMode);
             renderHtml(renderContent);
         }
 

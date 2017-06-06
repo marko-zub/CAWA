@@ -30,7 +30,7 @@
                         '<div class="matrix-col matrix-criteria-group" data-connect="{{::item.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">',
                             '<div class="matrix-col-content">',
                                 // '<div ng-bind-html="::vm.renderContent(vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value, item.valueType,)"></div> ',
-                                '<content-formater ng-if="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value" item="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic" type="::item.valueType"></content-formater>',
+                                '<content-formater ng-if="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value" item="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic" characteristic="::item"></content-formater>',
                                 '<div class="app-item-additional-wrapper app-item-comments">',
                                     '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
                                     '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
@@ -135,6 +135,7 @@
             // } else {
 
             if(!$($event.target).hasClass('iScrollLoneScrollbar') &&
+                !$($event.target).hasClass('link') &&
                 !$($event.target).hasClass('link-secondary') &&
                 !$($event.target).parents().hasClass('iScrollLoneScrollbar')) {
                 vm.isGetCommentsOpen = true;
