@@ -1,18 +1,26 @@
 <header class="app-header">
     <div class="row">
-        <div class="col-sm-7 header-menu-btn clearfix">
+        <div class="col-xs-6 col-sm-7 header-menu-btn clearfix">
             <div class="navbar-brand">
                 <a ui-sref="home">Decision<span class="app-light">Wanted</span></a>
             </div>
-            <div class="app-panel-search">
+            <div class="app-panel-search  hidden-xs">
                 <search-bar></search-bar>
             </div>
         </div>
-        <div class="col-sm-2 text-center">
+        <div class="col-sm-2 text-center  hidden-xs">
             <!-- <span class="header-text">Millions of lemmings can't be wrong!</span> -->
         </div>
-        <div class="col-sm-3 header-login">
+        <div class="col-xs-6 col-sm-3 header-login">
             <app-login></app-login>
         </div>
     </div>
 </header>
+
+<div class="clearfix visible-xs">
+    <div class="container-fluid">
+        <div class="app-panel-search ">
+            <search-bar></search-bar>
+        </div>
+    </div>
+</div>
