@@ -188,9 +188,10 @@
                     itemCopy.value = null;
                 }
 
-                if (item.characteristicId === -1) {
+                if (itemCopy.characteristicId === -1) {
+                    itemCopy.value = null;
+                    DecisionNotificationService.notifyFilterByName(null);
                     vm.tagsFilter.splice(index, 1);
-                    updateMatrixHeight();
                     return;
                 }
                 // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
@@ -205,11 +206,7 @@
                 }
 
                 // Filter Name
-                if (itemCopy.characteristicId === -1) {
-                    itemCopy.value = null;
-                    DecisionNotificationService.notifyFilterByName(null);
-                    return;
-                }
+
             }
 
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');

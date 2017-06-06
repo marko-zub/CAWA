@@ -41,8 +41,8 @@
             })
 
         // TODO: matrix and single.parent state have some bugs
-        .state('decisions.single.matrix', {
-            url: '/matrix',
+        .state('decisions.single.comparison', {
+            url: '/comparison/{analysisId}',
             views: {
                 "@": {
                     templateUrl: 'app/decision/decision-matrix.html',
@@ -55,15 +55,15 @@
                 decisionAnalysisInfo: DecisionAanalysisResolver
             },
         })
-        .state('decisions.single.matrix.analysis', {
-            url: '/analysis/:analysisId',
-            templateUrl: 'app/decision/decision.html',
-            controller: 'DecisionController',
-            controllerAs: 'vm',
-            resolve: {
-                decisionStateInfo: DecisionStateResolver
-            },
-        })
+        // .state('decisions.single.comparison.analysis', {
+        //     url: '/analysis/:analysisId',
+        //     templateUrl: 'app/decision/decision.html',
+        //     controller: 'DecisionController',
+        //     controllerAs: 'vm',
+        //     resolve: {
+        //         decisionStateInfo: DecisionStateResolver
+        //     },
+        // })
         .state('decisions.single.parent', {
             url: '/:parentId/{parentSlug}',
             abstract: false,
@@ -96,7 +96,7 @@
         var decisionSlug = result.nameSlug ? result.nameSlug : '';
 
         if ($stateParams.slug === null ||
-            $stateParams.slug === 'matrix' ||
+            $stateParams.slug === 'comparison' ||
             $stateParams.slug === 'list') {
             $stateParams.slug = result.nameSlug;
         }
@@ -132,8 +132,8 @@
 
                 // TODO: fix it
                 // BreadCrumbs
-                if ($state.current.name === 'decisions.single.matrix' ||
-                    $state.current.name === 'decisions.single.matrix.analysis') {
+                if ($state.current.name === 'decisions.single.comparison' ||
+                    $state.current.name === 'decisions.single.comparison.analysis') {
                     $rootScope.breadcrumbs = [{
                         title: 'Decisions',
                         link: 'decisions'
@@ -206,7 +206,7 @@
         analysisSlug = urlParams[urlParams.length - 2];
 
         // console.log(analysisSlug, analysisId);
-        if (analysisSlug === 'analysis' && analysisId && analysisId !== 'hall-of-fame') {
+        if (analysisSlug === 'comparison' && analysisId && analysisId !== 'hall-of-fame') {
             return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
                 if (resp.error) {
                     console.log(resp.error);

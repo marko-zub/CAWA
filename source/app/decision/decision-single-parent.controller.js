@@ -91,7 +91,15 @@
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
 
-                vm.characteristicGroups = values[1];
+                vm.characteristicGroups = _.map(values[1], function(resultEl) {
+                    resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
+                    _.map(resultEl.characteristics, function(el) {
+                        return el;
+                    });
+                    return resultEl;
+                });
+
+
 
                 // Criterias IDs
                 _.forEach(values[0], function(criteriaItem) {

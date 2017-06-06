@@ -54,7 +54,7 @@
 
 
         // ui-sref make deep watch
-        // ui-sref="decisions.single.matrix.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.id, critOrCharSlug: item.nameSlug })"
+        // ui-sref="decisions.single.comparison.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.id, critOrCharSlug: item.nameSlug })"
         // Create url in ctrl
 
         // Discussions

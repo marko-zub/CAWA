@@ -10,7 +10,7 @@
 
     function configuration($stateProvider) {
         $stateProvider
-            .state('decisions.single.matrix.child', {
+            .state('decisions.single.comparison.child', {
                 url: '/:discussionId/{discussionSlug}',
                 views: {
                     "@": {
@@ -26,7 +26,7 @@
                     }
                 }
             })
-            .state('decisions.single.matrix.child.option', {
+            .state('decisions.single.comparison.child.option', {
                 url: '/:critOrCharId/{critOrCharSlug}',
                 views: {
                     "@": {
