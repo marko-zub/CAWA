@@ -20,6 +20,8 @@
         function onInit() {
             console.log('Decision Matrix Controller');
 
+            DecisionSharedService.setCleanFilterObject();
+
             vm.filterName = null;
 
             vm.characteristicLimit = 4;
@@ -323,7 +325,7 @@
         function initSorters() {
             // Set filter by name
             // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
-            _fo = DecisionSharedService.filterObject;
+            _fo = DecisionSharedService.setCleanFilterObject();
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
             // Set Criteria for Hall of fame

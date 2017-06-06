@@ -25,15 +25,17 @@
             <div class="col-sm-8">
                 <ul class="discussions-list">
                     <li ng-repeat="decision in vm.decisionsList track by decision.uid">
-                        <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null})">
-                            <div class="clearfix">
+                        <div class="post">
+                            <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
                                 <div class="img-container" ng-if="decision.imageUrl">
-                                    <img ng-src="{{::decision.imageUrl}}" class="img-responsive">
+                                    <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                 </div>
-                                <div class="pull-left" ng-bind="::decision.name"></div>
+                            </a>
+                            <div class="post-content">
+                                <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
+                                <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
                             </div>
-                        </a>
-                        <div class="discussions-list-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
+                        </div>
                     </li>
                 </ul>
                 <!-- TODO: use as component -->

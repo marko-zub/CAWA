@@ -64,9 +64,10 @@
                 console.log(rejection);
                 // $state.go('404');
 
-                // var notification = $injector.get('MsgService');
-                // var msg = rejection.status + ': ' + rejection.statusText;
-                // notification.error(msg);  
+                var notification = $injector.get('MsgService');
+                var msg = ''//rejection.status + ': ' + rejection.statusText;
+                if(rejection.status === -1)
+                    notification.error('No API connection ' + rejection.statusText);  
 
                 return rejection;
             }

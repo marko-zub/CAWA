@@ -49,7 +49,14 @@
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
                 if (!el.imageUrl) el.imageUrl = '/images/noimage.png';
+
+                // Move to constat
+                if(el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0,80) + '...';
+                }
+                                
                 el.description = $sce.trustAsHtml(el.description);
+
                 return el;
             });
         }

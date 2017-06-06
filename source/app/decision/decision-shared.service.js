@@ -11,7 +11,7 @@
     function DecisionSharedService($rootScope) {
         var service = this;
 
-        service.filterObject = {
+        var emptyFilterObject = {
             selectedCriteria: {
                 sortCriteriaIds: [],
                 sortCriteriaCoefficients: {}
@@ -38,12 +38,14 @@
             selectedDecision: {
                 decisionsIds: []
             },
-            persistent: true,
+            persistent: false, //as we disable analysis true
             includeChildDecisionIds: null,
             excludeChildDecisionIds: null,
             filterQueries: null,
             decisionNameFilterPattern: null
         };
+
+        service.filterObject = emptyFilterObject;
 
         //allias
 
@@ -72,7 +74,7 @@
                 sortDecisionPropertyDirection: _fo.sorters.sortByDecisionProperty.order,
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
-                persistent: _fo.persistent,
+                persistent: false, //_fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds,
                 filterQueries: _fo.filterQueries,
@@ -84,7 +86,7 @@
             if (!obj) return;
 
             // Fix for inclusion tab first time call
-            if((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
+            if ((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
                 obj.includeChildDecisionIds = null;
             } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
                 obj.excludeChildDecisionIds = obj.includeChildDecisionIds;
@@ -100,7 +102,7 @@
                 pagination: {
                     pageNumber: obj.pageNumber ? obj.pageNumber + 1 : 1,
                     pageSize: obj.pageSize || 10,
-                    totalDecisions: obj.totalDecisions || (obj.pageNumber + 1)*obj.pageSize //Need to be sended in analysis or in endpoint api/v1.0/decisions/16003
+                    totalDecisions: obj.totalDecisions || (obj.pageNumber + 1) * obj.pageSize //Need to be sended in analysis or in endpoint api/v1.0/decisions/16003
                 },
                 selectedCharacteristics: {},
                 sorters: {
@@ -121,12 +123,17 @@
                 },
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
-                persistent: obj.persistent || false,
+                persistent: false, //obj.persistent || false,
                 filterQueries: obj.filterQueries || null,
                 decisionNameFilterPattern: obj.decisionNameFilterPattern || null
             };
 
             service.filterObject = sortObjAnalysis;
+        };
+
+        service.setCleanFilterObject = function() {
+            service.filterObject = emptyFilterObject;
+            return emptyFilterObject;
         };
 
 

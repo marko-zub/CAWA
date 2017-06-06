@@ -50,6 +50,12 @@
                     controllerAs: 'vm',
                 }
             },
+            params: {
+                analysisId: {
+                    value: null,
+                    squash: true
+                }
+            },
             resolve: {
                 decisionStateInfo: DecisionStateResolver,
                 decisionAnalysisInfo: DecisionAanalysisResolver
