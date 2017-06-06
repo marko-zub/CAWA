@@ -22,7 +22,8 @@
         vm.$onChanges = onChanges;
 
         function onInit() {
-            var cleanItem = _.omit(vm.item, 'createDate', 'description', 'nameSlug');
+            var itemCopy = angular.copy(vm.item);
+            var cleanItem = _.omit(itemCopy, 'createDate', 'description', 'nameSlug');
             chooseValueType(cleanItem);
         }
 
@@ -50,6 +51,9 @@
                 case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER')):
                     renderControl('date-range');
                     break;
+                case ((item.valueType === 'DOUBLE') && (item.visualMode === 'DOUBLERANGESLIDER')):
+                    renderControl('range-slider');
+                    break;
                 case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):
                     renderControl('range-slider');
                     break;
@@ -66,7 +70,7 @@
         }
 
         function renderControl(type) {
-            var element = '<filter-' + type + ' selected="vm.selected" item="::vm.item"></filter-' + type + '>';
+            var element = '<filter-' + type + ' selected="::vm.selected" item="::vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
         }

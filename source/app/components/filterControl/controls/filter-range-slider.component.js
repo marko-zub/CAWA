@@ -53,12 +53,16 @@
         function initRangeSliderValues(min, max) {
             vm.slider.min = Number(min);
             vm.slider.max = Number(max);
-
             if (_.isNaN(vm.slider.min) || _.isNaN(vm.slider.max)) return;
         }
 
         // TODO: move to separete template
         function initRangeSlider(item) {
+            var step = 1;
+            if(item.visualMode.toUpperCase() === 'DOUBLERANGESLIDER') {
+                step = 0.1;
+            }
+
             var minVal = Number(item.minValue);
             var maxVal = Number(item.maxValue);
 
@@ -69,8 +73,10 @@
                 min: minVal,
                 max: maxVal,
                 options: {
+                    step: step,
                     floor: Number(item.minValue),
                     ceil: Number(item.maxValue),
+                    precision: 1,
                     id: 'slider-' + item.id,
                     onEnd: vm.changeRangeSlider,
                     hidePointerLabels: true,
