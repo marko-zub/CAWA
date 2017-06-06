@@ -170,8 +170,7 @@
                     });
 
                     if (elEqual) {
-                        el = _.merge(el, elEqual);
-                        el.html = ContentFormaterService.getTemplate(el.value, el.valueType);
+                        el.decision = elEqual;
                         return el;
                     }
 
