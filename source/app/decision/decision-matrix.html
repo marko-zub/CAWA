@@ -140,18 +140,18 @@
                                 </div>
                             </div>
                             <!-- End Criteria Aside -->
-                        
+
                             <div class="criteria-list group-wrapper characteristic-content-aside">
                                 <!-- {{characteristic | json}} -->
                                <div class="title">
                                     Characteristics
                                 </div>
-                                
-                                <div ng-repeat="characteristic in vm.characteristicGroupsArray" lazy-repeater="10">
+
+                                <div ng-repeat="characteristic in vm.characteristicGroupsArray">
                                     <div ng-switch="::characteristic.characteristicGroupId >= 0">
 
                                         <!-- Title-->
-                                        
+
                                         <div ng-switch-when="false">
                                             <div class="matrix-item matrix-g-item">
                                                 <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  characteristic.id, 'characteristic')">
@@ -166,7 +166,7 @@
                                         <div ng-switch-when="true">
                                             <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
                                                 <!-- TODO: move to component -->
-                  
+
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                     <filter-control selected="characteristic.seletedValue" item="::characteristic"></filter-control>
 
@@ -177,11 +177,11 @@
 
                                                     <a href ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon-que title-descrstion-sign" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
-                                            </div>   
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                                             
+
                             </div>
 
 
@@ -201,7 +201,7 @@
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
-                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroups" characteristic-limit="vm.characteristicLimit"></matrix-characteristics>
+                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroupsArray" characteristic-limit="vm.characteristicLimit"></matrix-characteristics>
                                 </div>
                             </div>
 
