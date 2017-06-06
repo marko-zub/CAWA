@@ -41,14 +41,14 @@
                     var decisionMatrixs = matrixResp.decisionMatrixs;
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
-                    renderMatrix(false);
+                    renderMatrix();
 
                     // Init only first time
                     initSorters(); //Hall of fame
                     initMatrixMode();
                 });
 
-                
+
                 loadCharacteristics();
 
 
@@ -59,19 +59,19 @@
 
         function loadCharacteristics() {
 
-                getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
-                    // 3. Render characteristics
-                    prepareCharacteristicsGroups(resp);
-                    vm.characteristicGroupsContentLoader = false;
-                    renderMatrix(true);
-                });
+            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+                // 3. Render characteristics
+                prepareCharacteristicsGroups(resp);
+                vm.characteristicGroupsContentLoader = false;
+                renderMatrix(true);
+            });
 
             // isloadCharacteristics = true;
 
             // $scope.$applyAsync(function() {
             //     // vm.characteristicLimit = vm.characteristicGroups.length;
             //     // console.log(vm.characteristicLimit);
-                
+
             //     vm.characteristicGroupsContentLoader = false;
             // });
         }
@@ -223,18 +223,21 @@
                 });
             }
 
-            var characteristicGroups = _.forEach(vm.characteristicGroups, function(group) {
-                var find = _.findIndex(group.characteristics, function(characteristicFind) {
+            // TODO: Use utils finction
+            var characteristicGroups = angular.copy(vm.characteristicGroupsArray);
+            var find = _.findIndex(characteristicGroups, function(characteristicFind) {
+                // console.log(characteristicFind);
+                if (characteristicFind.characteristicGroupId && characteristicFind.characteristicGroupId >= 0) {
                     return characteristicFind.id == characteristic.characteristicId;
-                });
-                if (find >= 0) {
-                    group.characteristics[find].seletedValue = value;
-                }
-                return group;
-            });
 
-            vm.characteristicGroups = angular.copy(characteristicGroups);
-            // console.log(vm.characteristicGroups);
+                }
+            });
+            if (find >= 0) {
+                characteristicGroups[find].seletedValue = value;
+                // console.log(characteristicGroups[find]);
+            }
+
+            vm.characteristicGroupsArray = angular.copy(characteristicGroups);
         }
 
 
@@ -289,7 +292,10 @@
                 total += resultEl.characteristics.length;
 
                 var group = _.omit(resultEl, 'characteristics');
+                group.uuid = 'char-g-' + group.uid;
                 characteristicsArray.push(group);
+                resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
+
                 _.map(resultEl.characteristics, function(characteristicsItem) {
                     if (characteristicsItem.description && !_.isObject(characteristicsItem.description)) {
                         characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
@@ -301,6 +307,7 @@
                     } else {
                         characteristicsItem.isSortable = true;
                     }
+                    characteristicsItem.uuid = 'char-' + group.uid + '-' + characteristicsItem.uid;
                     characteristicsArray.push(characteristicsItem);
                     return characteristicsItem;
                 });
@@ -309,7 +316,7 @@
 
 
             vm.characteristicGroupsArray = characteristicsArray;
-            console.log( vm.characteristicGroupsArray);
+            // console.log(vm.characteristicGroupsArray, _.uniq(vm.characteristicGroupsArray));
         }
 
         //Init sorters, when directives loaded
@@ -380,11 +387,11 @@
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 matrixSizes.push(newH);
                 // Set new height
-                // el.style.height = newH + 'px';
-                // elAside.style.height = newH + 'px';
+                el.style.height = newH + 'px';
+                elAside.style.height = newH + 'px';
             }
 
-            applySizes(matrixSizes);
+            // applySizes(matrixSizes);
         }
 
         function applySizes(matrixSizes) {

@@ -90,7 +90,7 @@
 
         function removeCriteriaTag(criteria) {
             if (criteria.uid < 0) {
-                console.log(criteria);
+                // console.log(criteria);
                 return;
             }
 

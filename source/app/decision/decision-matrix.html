@@ -147,7 +147,7 @@
                                     Characteristics
                                 </div>
 
-                                <div ng-repeat="characteristic in vm.characteristicGroupsArray">
+                                <div ng-repeat="characteristic in vm.characteristicGroupsArray track by characteristic.uuid">
                                     <div ng-switch="::characteristic.characteristicGroupId >= 0">
 
                                         <!-- Title-->

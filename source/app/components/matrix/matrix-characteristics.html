@@ -1,11 +1,11 @@
-<div class="matrix-g matrix-g-characteristics js-matrix-item-content" data-characteristic-group="{{::characteristic.id}}" ng-repeat="characteristic in ::vm.characteristics">
+<div class="matrix-g matrix-g-characteristics" ng-repeat="characteristic in ::vm.characteristics track by characteristic.uuid">
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content">
             </div>
         </div>
         <div ng-switch-when="true">
-            <div class="matrix-row">
+            <div class="matrix-row js-matrix-item-content js-toggle-hide">
                 <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">
                     <div class="matrix-col-content">
                         <content-formater ng-if="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value"

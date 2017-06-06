@@ -70,7 +70,7 @@
         }
 
         function renderControl(type) {
-            var element = '<filter-' + type + ' selected="::vm.selected" item="::vm.item"></filter-' + type + '>';
+            var element = '<filter-' + type + ' selected="vm.selected" item="::vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
         }
