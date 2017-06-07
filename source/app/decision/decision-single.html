@@ -50,7 +50,7 @@
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="row">
                 <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
-                    <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                    <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
                 </div>
                 <div class="col-sm-8">{{::vm.decision.description}}</div>
             </div>
@@ -70,22 +70,22 @@
         <div class="col-sm-8">
             <ul class="discussions-list">
                 <li ng-repeat="decision in vm.decisions track by decision.uid">
-                    <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})">
-                        <div class="clearfix">
+                    <div class="post">
+                        <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})" class="left-side">
                             <div class="img-container" ng-if="decision.imageUrl">
-                                <img ng-src="{{decision.imageUrl}}" class="img-responsive">
+                                <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                             </div>
-                            <div class="pull-left">
-                                {{::decision.name}}
+                        </a>
+                        <div class="post-content">
+                            <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})" ng-bind="::decision.name"></a>
+
+                            <div class="criteria-comliance">
+                                Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                                </small>
                             </div>
+
+                            <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
                         </div>
-                    </a>
-                    <div>
-                        <div class="criteria-comliance">
-                            Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                            </small>
-                        </div>
-                        <div class="discussions-list-description" ng-if="decision.description" ng-bind-html="decision.description"></div>
                     </div>
                 </li>
             </ul>
@@ -99,7 +99,7 @@
         <div class="col-sm-8">
             <div class="row app-pagination clearfix" ng-if="vm.isDecisionsParent">
                 <div class="col-md-10 col-sm-10 paginator">
-                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5"></div>
+                    <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
                 </div>
                 <div class="col-md-2 col-sm-2 counter">
                     <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>

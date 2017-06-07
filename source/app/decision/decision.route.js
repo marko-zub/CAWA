@@ -57,8 +57,8 @@
                 }
             },
             resolve: {
-                decisionStateInfo: DecisionStateResolver,
-                decisionAnalysisInfo: DecisionAanalysisResolver
+                decisionStateInfo: DecisionStateResolver
+                // decisionAnalysisInfo: DecisionAanalysisResolver
             },
         })
         // .state('decisions.single.comparison.analysis', {
@@ -220,7 +220,7 @@
                 }
 
                 // Set analysis obj
-                DecisionSharedService.setFilterObject(resp);
+                // DecisionSharedService.setFilterObject(resp);
 
                 return resp;
             }, function(req) {

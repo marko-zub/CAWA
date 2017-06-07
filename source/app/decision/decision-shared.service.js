@@ -45,13 +45,15 @@
             decisionNameFilterPattern: null
         };
 
-        service.filterObject = emptyFilterObject;
+        service.filterObject = angular.copy(emptyFilterObject);
 
         //allias
-
+        service.getFilterObject = function() {
+            return service.filterObject;
+        };
         // TODO: add function to clear object 
         // Remove send 'data' etc...
-        service.getFilterObject = function() {
+        service.getRequestFilterObject = function() {
             var _fo = service.filterObject;
             // console.log(_fo);
             // console.log(_fo.pagination.pageNumber);
@@ -82,6 +84,13 @@
             };
         };
 
+        service.changeFilterObject = function(obj) {
+            if(_.isEmpty(obj)) return;
+            // TODO: add check obj properties or clear function
+            service.filterObject = obj;
+        };
+
+        // Set data from request
         service.setFilterObject = function(obj) {
             if (!obj) return;
 
@@ -132,8 +141,8 @@
         };
 
         service.setCleanFilterObject = function() {
-            service.filterObject = emptyFilterObject;
-            return emptyFilterObject;
+            service.filterObject = angular.copy(emptyFilterObject);
+            return service.filterObject;
         };
 
 

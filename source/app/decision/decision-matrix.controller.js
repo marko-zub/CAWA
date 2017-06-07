@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', 'decisionAnalysisInfo', '$sce', 'Utils', 'DiscussionsNotificationService'
+        '$uibModal', '$sce', 'Utils', 'DiscussionsNotificationService'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, decisionAnalysisInfo, $sce, Utils, DiscussionsNotificationService) {
+        $uibModal, $sce, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject;
@@ -20,8 +20,6 @@
         function onInit() {
             console.log('Decision Matrix Controller');
 
-            DecisionSharedService.setCleanFilterObject();
-
             vm.filterName = null;
 
             vm.characteristicLimit = 4;
@@ -31,6 +29,9 @@
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
             vm.decisionsSpinner = true;
+
+            // Reser filters
+            _fo = DecisionSharedService.setCleanFilterObject();
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
@@ -64,8 +65,8 @@
             getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                 // 3. Render characteristics
                 prepareCharacteristicsGroups(resp);
-                vm.characteristicGroupsContentLoader = false;
                 renderMatrix(true);
+                vm.characteristicGroupsContentLoader = false;
             });
 
             // isloadCharacteristics = true;
@@ -272,6 +273,7 @@
                 if ($state.params.analysisId === 'hall-of-fame') {
                     _fo.selectedCriteria.sortCriteriaIds = criteriaIds;
                     _fo.persistent = false;
+                    DecisionSharedService.changeFilterObject(_fo);
                 }
 
                 // TOOD: check if work correct
@@ -325,7 +327,8 @@
         function initSorters() {
             // Set filter by name
             // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
-            _fo = DecisionSharedService.setCleanFilterObject();
+            _fo = DecisionSharedService.getFilterObject();
+            // console.log(_fo);
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
             // Set Criteria for Hall of fame
@@ -423,16 +426,16 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            setTimeout(function() {
+            $scope.$applyAsync(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-            }, 0);
-            vm.decisionsSpinner = false;
+                vm.decisionsSpinner = false;
+            });
         }
 
         function getDecisionMatrix(id, persistent) {
             vm.decisionsSpinner = true;
-            var sendData = DecisionSharedService.getFilterObject();
+            var sendData = DecisionSharedService.getRequestFilterObject();
             if (persistent === true) sendData.persistent = true;
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;

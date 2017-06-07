@@ -97,12 +97,12 @@
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
-            getDecisionNomimations($stateParams.id);
+            getDecisionNomimations(vm.decision.id);
             updateStateParams();
         }
 
         function changePage() {
-            getDecisionNomimations($stateParams.id);
+            getDecisionNomimations(vm.decision.id);
             updateStateParams();
         }
 

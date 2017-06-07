@@ -60,7 +60,7 @@
                                         <!-- deep watch {discussionId:item.decision.id, discussionSlug:item.decision.nameSlug} -->
                                         <div class="clearfix">
                                             <div class="matrix-img-container img-sm" >
-                                                <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive">
+                                                <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive" src-error>
                                             </div>
                                             <div class="app-title-inline">
                                                 <span ng-bind="::item.decision.name"></span>
@@ -213,7 +213,7 @@
             </div>
         </div>
         <div class="martix-footer">
-            <app-paginator></app-paginator>
+            <app-paginator ng-if="vm.decisionMatrixList"></app-paginator>
         </div>
     </div>
 </div>

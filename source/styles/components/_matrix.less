@@ -1386,6 +1386,7 @@ a {
     .left-side {
         float: left;
         width: 25%;
+        max-width: 140px;
         // margin-right: 10px;
     }
     .post-content {
@@ -1397,6 +1398,9 @@ a {
     }
 }
 
-.discussions-list > li {
-    margin-bottom: 8px;
+.discussions-list {
+    position: relative;
+    & > li {
+        margin-bottom: 8px;
+    }    
 }
