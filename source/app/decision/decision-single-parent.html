@@ -10,6 +10,7 @@
     </div>
 </div>
 <div class="app-container-sm">
+    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
@@ -32,7 +33,7 @@
                                 </a>
                             </div>
                         </div>
-                        {{ ::vm.parent.description }}
+                        <div ng-bind-html="::vm.parent.description"></div>
                     </div>
                 </div>
             </div>

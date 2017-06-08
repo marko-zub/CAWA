@@ -128,6 +128,11 @@
         // TODO: move to utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
+
+                if(el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0,80) + '...';
+                }
+
                 el.description = $sce.trustAsHtml(el.description);
                 if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 return el;
