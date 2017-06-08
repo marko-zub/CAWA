@@ -29,7 +29,8 @@
 
         function onChanges(changes) {
             // TODO: optimize it
-            if (changes.selected.currentValue &&
+            // Check only item need to remove vm.selected
+            if (changes.selected && changes.selected.currentValue &&
                 !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 vm.selected = changes.selected.currentValue;
             }
@@ -70,7 +71,7 @@
         }
 
         function renderControl(type) {
-            var element = '<filter-' + type + ' selected="vm.selected" item="::vm.item"></filter-' + type + '>';
+            var element = '<filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
         }

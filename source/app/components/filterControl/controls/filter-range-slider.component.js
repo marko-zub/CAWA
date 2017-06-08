@@ -40,7 +40,7 @@
         }
 
         function onChanges(changes) {
-            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+            if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 if (_.isNull(changes.selected.currentValue)) {
                     initRangeSliderValues(vm.item.minValue, vm.item.maxValue);
                 } else if (_.isArray(changes.selected.currentValue)) {
@@ -89,9 +89,9 @@
         function changeRangeSlider(sliderId, min, max, type) {
             var value = (_.isNumber(max) && _.isNumber(min)) ? [min, max] : null;
             var query = {
-                "type": "RangeQuery",
-                "characteristicId": vm.item.id,
-                "value": value
+                'type': 'RangeQuery',
+                'characteristicId': vm.item.id,
+                'value': value
             };
             FilterControlsDataService.characteristicChange(vm.item.id, query);
         }

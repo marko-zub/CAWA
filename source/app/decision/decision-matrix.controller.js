@@ -11,7 +11,8 @@
         $uibModal, $sce, Utils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
-            _fo = DecisionSharedService.filterObject;
+            _fo = DecisionSharedService.filterObject,
+            characteristicGroupsArrayOriginal;
 
 
         // TODO: simplify conttoller and move to different componnts
@@ -240,6 +241,26 @@
                 // console.log(characteristicGroups[find]);
             }
 
+            // Condition select controls
+            var selectCharacteristiId = characteristicCopy.characteristicId;
+            // console.log(characteristicGroups);
+            // console.log(characteristicCopy);
+            _.map(characteristicGroups, function(characteristic) {
+                if (characteristic.parentCharacteristicId &&
+                    characteristic.parentCharacteristicId === selectCharacteristiId) {
+                    characteristic.disabled = _.isNull(characteristicCopy.value) ? true : false;
+                }
+                // if( && characteristic.seletedValue) {
+                //     console.log(characteristic);
+                // }
+            });
+
+            // // Condition options
+            // var options = _.filter(options, function(option) {
+            //     return 
+            // });
+
+            // characteristicGroupsArrayOriginal
             vm.characteristicGroupsArray = angular.copy(characteristicGroups);
         }
 
@@ -312,6 +333,14 @@
                         characteristicsItem.isSortable = true;
                     }
                     characteristicsItem.uuid = 'char-' + group.uid + '-' + characteristicsItem.uid;
+
+                    // Condition characterisctis
+                    // TODO: if parent selecte then enable characteristic
+                    if (characteristicsItem.parentCharacteristicId) {
+                        characteristicsItem.disabled = true;
+                        // console.log(characteristicsItem);
+                    }
+
                     characteristicsArray.push(characteristicsItem);
                     return characteristicsItem;
                 });
@@ -320,6 +349,7 @@
 
 
             vm.characteristicGroupsArray = characteristicsArray;
+            characteristicGroupsArrayOriginal = angular.copy(characteristicsArray);
             // console.log(vm.characteristicGroupsArray, _.uniq(vm.characteristicGroupsArray));
         }
 

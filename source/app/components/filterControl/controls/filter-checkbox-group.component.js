@@ -26,7 +26,7 @@
             sendObj = {
                 'type': 'AllInQuery',
                 'characteristicId': vm.item.id,
-                "operator": 'OR'
+                'operator': 'OR'
             };
             var html = renderCheckboxes(vm.item);
             $element.html(html);
@@ -34,7 +34,7 @@
         }
 
         function onChanges(changes) {
-            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+            if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 selectCheckboxes(changes.selected.currentValue);
             }
         }
