@@ -65,8 +65,8 @@
 
         function cleanQuery(val) {
             if (!val) return;
-            val = val.toString();
-            return window.encodeURIComponent(val);
+            // val = val.toString();
+            return val;
         }
 
 

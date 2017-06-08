@@ -24,7 +24,7 @@
                 name: 'All',
                 value: 'all'
             };
-            
+
         vm.controlOptions = {
             debounce: 50
         };
@@ -38,6 +38,7 @@
             // debugger
             vm.selected = !_.isEmpty(vm.selected) ? vm.selected : selectAllObj.value;
             var html = renderSelect(vm.item);
+            // console.log(vm.item);
             $element.html(html);
             $compile($element.contents())($scope);
         }

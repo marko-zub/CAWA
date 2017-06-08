@@ -42,25 +42,19 @@
                 </div>
                 <div class="col-sm-4">
                     <div ng-if="vm.isDecisionsParent" class="pull-right">
-                        <a ui-sref="decisions.single.comparison({analysisId:null})" >
+                        <a ui-sref="decisions.single.comparison({analysisId:null})">
                             <i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="post-content">
-            <div ng-if="vm.isDecisionsParent" class="mg-sm-b">
-                <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
-                <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
-                    Details <i class="fa fa-chevron-right icon-sm" aria-hidden="true"></i>
-                </a>
-            </div>
+        <div class="">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
                     <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
                 </div>
-                <div class="col-sm-8" ng-bind-html="::vm.decision.description"></div>
+                <div class="col-sm-8 " ng-bind-html="::vm.decision.description"></div>
             </div>
         </div>
 <!--         <div class="col-sm-12" ng-if="!vm.isDecisionsParent">
@@ -74,7 +68,14 @@
             </div>
         </div> -->
     </div>
-    <div class="row" ng-if="vm.isDecisionsParent">
+    <div class="row decision-childs" ng-if="vm.isDecisionsParent">
+
+        <div class="col-xs-12 mg-sm-b">
+            <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
+            <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
+                Details <i class="fa fa-chevron-right icon-sm" aria-hidden="true"></i>
+            </a>
+        </div>
         <div class="col-sm-8">
             <ul class="discussions-list">
                 <li ng-repeat="decision in vm.decisions track by decision.uid">
