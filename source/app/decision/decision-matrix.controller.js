@@ -629,7 +629,6 @@
                 vm.decisionsSpinner = false;
             });
         }
-        var foSelectedCriteria = _fo.selectedCriteria;
         vm.selectCriteria = selectCriteria;
 
         function selectCriteria(event, criteria, coefCall) {
@@ -649,6 +648,8 @@
 
         function formDataForSearchRequest(criteria, coefCall) {
             if (!criteria.id) return;
+
+            var foSelectedCriteria = DecisionSharedService.getFilterObject().selectedCriteria;
             var position = foSelectedCriteria.sortCriteriaIds.indexOf(criteria.id);
             //select criteria
             if (position === -1) {
@@ -666,6 +667,9 @@
                 delete foSelectedCriteria.sortCriteriaCoefficients[criteria.id];
             }
             foSelectedCriteria.sortCriteriaIds = Utils.removeEmptyFromArray(foSelectedCriteria.sortCriteriaIds);
+
+            _fo.selectedCriteria = foSelectedCriteria;
+            DecisionSharedService.changeFilterObject(_fo);
         }
 
         // TODO: clean up optimize
