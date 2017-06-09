@@ -11,7 +11,7 @@
     function FilterControlsDataService(DecisionNotificationService, $filter) {
 
 
-        function createFilterQuery(data) {
+        function createFilterQuery(data, optionId) {
             if (!data) return;
 
             // Make constructor for Filter Query
@@ -35,15 +35,22 @@
                     };
                 }
             }
-            characteristicChange(sendData.characteristicId, query);
+            characteristicChange(sendData.characteristicId, query, optionId);
         }
 
 
-        function characteristicChange(characteristicId, query) {
+        function characteristicChange(characteristicId, query, optionId) {
             if (!characteristicId || !query) return;
-            DecisionNotificationService.notifySelectCharacteristic({
-                'filterQueries': query
-            });
+
+            var sendData = {
+                query: {
+                    'filterQueries': query
+                }
+            };
+            if (optionId >= 0) {
+                sendData.optionId = optionId;
+            }
+            DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 
         return {

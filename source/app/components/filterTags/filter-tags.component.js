@@ -51,7 +51,7 @@
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
                 vm.characteristics = changes.characteristics.currentValue;
 
-                if(vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
+                if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
             }
 
@@ -69,15 +69,15 @@
 
                 // console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
                 // if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
-                    vm.criteria = angular.copy(changes.criteria.currentValue);
-                    generateCriteriaTags(vm.criteria);
-                    updateMatrixHeight();
+                vm.criteria = angular.copy(changes.criteria.currentValue);
+                generateCriteriaTags(vm.criteria);
+                updateMatrixHeight();
                 // }
             }
         }
 
         function setCharacteristicsSortTag(characteristic) {
-            if(!characteristic) return;
+            if (!characteristic) return;
             var characteristicsOrderTag = angular.copy(characteristic);
             var findCharacteristics = Utils.findGroupItemById(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
@@ -220,9 +220,13 @@
         }
 
         function updateFilterObject(query) {
-            DecisionNotificationService.notifySelectCharacteristic({
-                'filterQueries': query
-            });
+
+            var sendData = {
+                query: {
+                    'filterQueries': query
+                }
+            };
+            DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 
         // TODO: clean up find

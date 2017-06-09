@@ -167,6 +167,7 @@
         });
 
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
+            var query = data.query;
             // if (!data.filterQueries) return;
             var sendFo = DecisionSharedService.filterObject;
             sendFo.persistent = true;
@@ -175,18 +176,18 @@
                 sendFo.filterQueries = [];
 
             var find = _.findIndex(sendFo.filterQueries, function(filterQuery) {
-                return filterQuery.characteristicId == data.filterQueries.characteristicId;
+                return filterQuery.characteristicId == query.filterQueries.characteristicId;
             });
             if (find >= 0) {
                 // TODO: find better solution
-                if (!_.isBoolean(data.filterQueries.value) && _.isEmpty(data.filterQueries.value) &&
-                    _.isEmpty(data.filterQueries.queries)) {
+                if (!_.isBoolean(query.filterQueries.value) && _.isEmpty(query.filterQueries.value) &&
+                    _.isEmpty(query.filterQueries.queries)) {
                     sendFo.filterQueries.splice(find, 1);
                 } else {
-                    sendFo.filterQueries[find] = data.filterQueries;
+                    sendFo.filterQueries[find] = query.filterQueries;
                 }
             } else {
-                sendFo.filterQueries.push(data.filterQueries);
+                sendFo.filterQueries.push(query.filterQueries);
             }
 
             if (_.isEmpty(sendFo.filterQueries) ||
@@ -197,8 +198,8 @@
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
-            // console.log(data);
-            setCharacteristicChanges(data.filterQueries);
+            // console.log(query);
+            setCharacteristicChanges(query.filterQueries, data.optionId);
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
@@ -217,8 +218,14 @@
         });
 
 
-        function setCharacteristicChanges(characteristic) {
+        var selectedCharacteristicsIds = [];
+        var selectedOptionsIds = [];
+
+        function setCharacteristicChanges(characteristic, optionId) {
             if (!characteristic) return;
+
+            if (optionId >= 0 && !_.includes(selectedOptionsIds, optionId)) selectedOptionsIds.push(optionId);
+
             var characteristicCopy = angular.copy(characteristic);
             var value = characteristicCopy.value;
             if (characteristicCopy.queries && !characteristicCopy.value) {
@@ -241,29 +248,65 @@
                 // console.log(characteristicGroups[find]);
             }
 
+            // console.log(optionId);
+            // debugger
             // Condition select controls
+
+            // console.log(optionId);
             var selectCharacteristiId = characteristicCopy.characteristicId;
             // console.log(characteristicGroups);
             // console.log(characteristicCopy);
-            _.map(characteristicGroups, function(characteristic) {
+
+            // TODO: use servise Filer Object
+
+            _.forEach(characteristicGroups, function(characteristic) {
+                if (characteristic.seletedValue && !_.includes(selectedCharacteristicsIds, characteristic.id)) {
+                    selectedCharacteristicsIds.push(characteristic.id);
+                };
+            });
+            // console.log(selectedCharacteristicsIds);
+
+            var characteristicGroupsFull = angular.copy(characteristicGroupsArrayOriginal);
+            characteristicGroups = _.filter(characteristicGroupsFull, function(characteristic) {
                 if (characteristic.parentCharacteristicId &&
-                    characteristic.parentCharacteristicId === selectCharacteristiId) {
-                    characteristic.disabled = _.isNull(characteristicCopy.value) ? true : false;
+                    _.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
+                    characteristic.disabled = false;
+                    characteristic.options = pickChildOptions(characteristic.options, selectedOptionsIds);
                 }
+                return characteristic;
                 // if( && characteristic.seletedValue) {
                 //     console.log(characteristic);
                 // }
             });
 
+
             // // Condition options
             // var options = _.filter(options, function(option) {
-            //     return 
+            //     return
             // });
 
             // characteristicGroupsArrayOriginal
             vm.characteristicGroupsArray = angular.copy(characteristicGroups);
         }
 
+        function pickChildOptions(options, optionsIds) {
+            if (!options) return;
+
+
+            var optionsFiltered = [];
+            // console.log(options, options.length);
+            // console.log(optionsFiltered, optionsFiltered.length);
+            _.forEach(optionsIds, function(optionId) {
+                _.forEach(options, function(option) {
+                    if (option.parentOptionIds && _.includes(option.parentOptionIds, optionId)) {
+                        optionsFiltered.push(option);
+                    }
+                });
+            });
+
+            return optionsFiltered;
+
+        }
 
         function getCriteriaGroupsById(id) {
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
