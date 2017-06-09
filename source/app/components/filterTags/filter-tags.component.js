@@ -132,7 +132,7 @@
                 _.forEach(group.characteristics, function(characteristic) {
                     // console.log(characteristic);
                     // debugger
-                    // if(characteristics.seletedValues) console.log(characteristics.seletedValues);
+                    // if(characteristics.selectedValues) console.log(characteristics.selectedValues);
                 });
             });
         }
@@ -140,7 +140,7 @@
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
-                // TODO: use seletedValue
+                // TODO: use selectedValue
                 // console.log(vm.characteristics);
 
                 if (data.characteristicId === -1) {

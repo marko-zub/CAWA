@@ -168,7 +168,7 @@
                                                 <!-- TODO: move to component -->
 
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
-                                                    <filter-control selected="characteristic.seletedValue" item="characteristic"></filter-control>
+                                                    <filter-control selected="characteristic.selectedValue" item="characteristic"></filter-control>
 
                                                     <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
                                                         <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>

@@ -224,7 +224,7 @@
         function setCharacteristicChanges(characteristic, optionId) {
             if (!characteristic) return;
 
-            if (optionId >= 0 && !_.includes(selectedOptionsIds, optionId)) selectedOptionsIds.push(optionId);
+            // if (optionId >= 0 && !_.includes(selectedOptionsIds, optionId)) selectedOptionsIds.push(optionId);
 
             var characteristicCopy = angular.copy(characteristic);
             var value = characteristicCopy.value;
@@ -244,48 +244,35 @@
                 }
             });
             if (find >= 0) {
-                characteristicGroups[find].seletedValue = value;
+                characteristicGroups[find].selectedValue = value;
+                if (optionId >= 0) characteristicGroups[find].optionId = optionId;
                 // console.log(characteristicGroups[find]);
             }
 
-            // console.log(optionId);
-            // debugger
-            // Condition select controls
-
-            // console.log(optionId);
-            var selectCharacteristiId = characteristicCopy.characteristicId;
-            // console.log(characteristicGroups);
-            // console.log(characteristicCopy);
-
+            // Pick all optionIDs
             // TODO: use servise Filer Object
-
-            _.forEach(characteristicGroups, function(characteristic) {
-                if (characteristic.seletedValue && !_.includes(selectedCharacteristicsIds, characteristic.id)) {
-                    selectedCharacteristicsIds.push(characteristic.id);
-                };
+            selectedCharacteristicsIds = [];
+            selectedOptionsIds = [];
+            _.forEach(characteristicGroups, function(characteristicItem) {
+                if (characteristicItem.selectedValue) {
+                    selectedCharacteristicsIds.push(characteristicItem.id);
+                    if (characteristicItem.optionId && characteristicItem.optionId >= 0) {
+                        selectedOptionsIds.push(characteristicItem.optionId);
+                    }
+                }
             });
-            // console.log(selectedCharacteristicsIds);
 
+            // Condition select controls
             var characteristicGroupsFull = angular.copy(characteristicGroupsArrayOriginal);
-            characteristicGroups = _.filter(characteristicGroupsFull, function(characteristic) {
+            characteristicGroups = _.filter(characteristicGroups, function(characteristic, index) {
                 if (characteristic.parentCharacteristicId &&
                     _.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
                     characteristic.disabled = false;
-                    characteristic.options = pickChildOptions(characteristic.options, selectedOptionsIds);
+                    characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds);
                 }
                 return characteristic;
-                // if( && characteristic.seletedValue) {
-                //     console.log(characteristic);
-                // }
             });
 
-
-            // // Condition options
-            // var options = _.filter(options, function(option) {
-            //     return
-            // });
-
-            // characteristicGroupsArrayOriginal
             vm.characteristicGroupsArray = angular.copy(characteristicGroups);
         }
 
