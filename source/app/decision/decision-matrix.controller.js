@@ -235,6 +235,10 @@
             }
 
             // TODO: Use utils finction
+
+            selectedCharacteristicsIds = [];
+            selectedOptionsIds = [];
+
             var characteristicGroups = angular.copy(vm.characteristicGroupsArray);
             var find = _.findIndex(characteristicGroups, function(characteristicFind) {
                 // console.log(characteristicFind);
