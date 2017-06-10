@@ -307,7 +307,7 @@
 
                 var criteriaSize = [];
 
-                vm.criteriaGroups = _.map(result, function(criteriaItem) {
+                vm.criteriaGroups = _.filter(result, function(criteriaItem) {
                     criteriaSize.push(criteriaItem.criteria.length);
                     _.map(criteriaItem.criteria, function(criteria) {
                         if (criteria.description && !_.isObject(criteria.description)) {
@@ -316,7 +316,7 @@
                         criteriaIds.push(criteria.id);
                         return criteria;
                     });
-                    return criteriaItem;
+                    if(criteriaItem.criteria.length > 0) return criteriaItem;
                 });
 
 
@@ -382,7 +382,20 @@
             }).value();
 
 
-            vm.characteristicGroupsArray = characteristicsArray;
+
+            // for (var i = 0; i < characteristicsArraySize.length; i++) {
+            //     vm.characteristicGroupsArray = chunkCollection(characteristicsArray, 20);
+            // }
+
+            vm.characteristicGroupsArray = [];
+
+            var chunked = _.chunk(characteristicsArray, 5);
+            for (var i = 0; i < chunked.length; i++) {
+                vm.characteristicGroupsArray = _.concat(vm.characteristicGroupsArray, chunked[i]);
+            }
+
+
+            // vm.characteristicGroupsArray = characteristicsArray;
             characteristicGroupsArrayOriginal = angular.copy(characteristicsArray);
             // console.log(vm.characteristicGroupsArray, _.uniq(vm.characteristicGroupsArray));
         }

@@ -44,6 +44,8 @@
             item.valueType = item.valueType.toUpperCase();
             item.visualMode = item.visualMode.toUpperCase();
 
+            // console.log(item);
+            // console.log(item.value, item.value && !_.isArray(item.value));
             switch (true) {
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
@@ -58,8 +60,12 @@
                 case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):
                     renderControl('range-slider');
                     break;
-                case (((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
+                case (
+                    // (item.value && !_.isArray(item.value)) ||
+                    (item.visualMode === 'CHECKBOX') ||
+                    ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL'))):
+                    if(item.value && !_.isArray(item.value) && !item.options) item.options = [item.value];
                     renderControl('checkbox-group');
                     break;
                 case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
