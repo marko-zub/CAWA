@@ -15,36 +15,37 @@
             controllerAs: 'vm',
         });
 
+    // TODO: make same object as in matrix-characteristics.component.js
     // renderTemplate.$inject = [];
 
     // function renderTemplate() {
-        // return [
-        //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.id">',
-        //         '<div class="matrix-item matrix-g-item matrix-item-content">',
-        //         '</div>',
-        //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.id" ng-class="{\'hide\': group.isClosed}">',
-        //             '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
-        //                 '<div class="matrix-col-content">',
-        //                     '<div ng-switch="::(decisionCol.criteria.totalVotes > 0)">',
-        //                         '<div ng-switch-when="true">',
-        //                             '<rating-star class="text-left" item="::decisionCol.criteria"></rating-star>',
-        //                         '</div>',
-        //                         '<div ng-switch-when="false">',
-        //                             '<div class="app-rating-votes">',
-        //                                 '<span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
-        //                             '</div>',
-        //                         '</div>',
-        //                     '</div>',
-        //                     '<div class="app-item-additional-wrapper">',
-        //                         '<a class="app-item-comments control">',
-        //                             '<span class="glyphicon glyphicon-comment"></span>0',
-        //                         '</a>',
-        //                     '</div>',
-        //                 '</div>',
-        //             '</div>',
-        //         '</div>',
-        //     '</div>',
-        // ].join('\n');
+    // return [
+    //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.id">',
+    //         '<div class="matrix-item matrix-g-item matrix-item-content">',
+    //         '</div>',
+    //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.id" ng-class="{\'hide\': group.isClosed}">',
+    //             '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
+    //                 '<div class="matrix-col-content">',
+    //                     '<div ng-switch="::(decisionCol.criteria.totalVotes > 0)">',
+    //                         '<div ng-switch-when="true">',
+    //                             '<rating-star class="text-left" item="::decisionCol.criteria"></rating-star>',
+    //                         '</div>',
+    //                         '<div ng-switch-when="false">',
+    //                             '<div class="app-rating-votes">',
+    //                                 '<span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
+    //                             '</div>',
+    //                         '</div>',
+    //                     '</div>',
+    //                     '<div class="app-item-additional-wrapper">',
+    //                         '<a class="app-item-comments control">',
+    //                             '<span class="glyphicon glyphicon-comment"></span>0',
+    //                         '</a>',
+    //                     '</div>',
+    //                 '</div>',
+    //             '</div>',
+    //         '</div>',
+    //     '</div>',
+    // ].join('\n');
     // }
 
     MatrixCriteriaController.$inject = ['DiscussionsNotificationService', '$element', '$scope', '$compile'];
@@ -73,14 +74,14 @@
             if (changes.decisions && changes.decisions.currentValue) {
                 // if first changes and not changed size of decision
                 // Generate base html
-                if(!changes.decisions.previousValue ||
+                if (!changes.decisions.previousValue ||
                     changes.decisions.currentValue.length !== changes.decisions.previousValue.length) {
                     generateBaseGrid(vm.criteria);
                 }
                 // Use index to add decision
                 // to avoid rerendering all grid all time
                 // Fill criteria values
-                if(vm.criteria &&
+                if (vm.criteria &&
                     !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
                     generateCriteriaMatrix(changes.decisions.currentValue);
                 }
@@ -91,18 +92,18 @@
         // TODO: any way faster render?
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
-                '<span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
+            '<span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
             '</div>',
         ].join('\n');
 
         var emptyCol = [
             '<div class="rating">',
-                ratingEmptyHtml,
+            ratingEmptyHtml,
             '</div>',
             '<div class="app-item-additional-wrapper app-item-comments">',
-                '<a class="control" href="#">',
-                    '<span class="glyphicon glyphicon-comment"></span>0',
-                '</a>',
+            '<a class="control" href="#">',
+            '<span class="glyphicon glyphicon-comment"></span>0',
+            '</a>',
             '</div>'
         ].join('\n');
 
@@ -126,7 +127,7 @@
             var html = [];
             _.forEach(decisions, function(decision, decisionIndex) {
                 var col = [
-                    '<div class="m-group-col" id="m-criteria-' + decisionIndex + '-' + id +'" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
+                    '<div class="m-group-col" id="m-criteria-' + decisionIndex + '-' + id + '" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
                     '</div>'
                 ].join('\n');
                 html.push(col);
@@ -140,14 +141,14 @@
             // console.log(list);
             _.forEach(list, function(container) {
 
-               // Rows
-               var rows = [];
+                // Rows
+                var rows = [];
                 _.forEach(container.criteria, function(row, rowIndex) {
                     // console.log(row);
                     var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex *50+ 'px">',
-                            decisionsRow,
+                        '<div class="m-group-row" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex * 50 + 'px">',
+                        decisionsRow,
                         '</div>'
                     ].join('\n');
                     rows.push(rowBlock);
@@ -155,8 +156,8 @@
 
                 // Content block
                 var content = [
-                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 +'px">',
-                        rows.join('\n'),
+                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 + 'px">',
+                    rows.join('\n'),
                     '</div>'
                 ].join('\n');
 
@@ -164,10 +165,10 @@
                 // console.log(container);
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
-                        '<div class="m-group-title">',
-                            // container.name,
-                        '</div>',
-                        content,
+                    '<div class="m-group-title">',
+                    // container.name,
+                    '</div>',
+                    content,
                     '</div>'
                 ].join('\n');
 

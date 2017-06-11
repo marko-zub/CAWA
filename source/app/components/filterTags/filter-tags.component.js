@@ -49,7 +49,8 @@
             // Characteristics
             if (changes.characteristics &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
-                vm.characteristics = changes.characteristics.currentValue;
+                vm.characteristics = angular.copy(changes.characteristics.currentValue);
+                // generateCharacteristicsTags(vm.characteristics);
 
                 if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
@@ -65,14 +66,9 @@
 
             // Criteria
             if (changes.criteria && changes.criteria.currentValue) {
-                // console.log(changes.criteria.currentValue);
-
-                // console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
-                // if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
                 vm.criteria = angular.copy(changes.criteria.currentValue);
                 generateCriteriaTags(vm.criteria);
                 updateMatrixHeight();
-                // }
             }
         }
 
@@ -108,18 +104,12 @@
                         return tag.uid === criteriaItem.uid;
                     });
                     if (criteriaItem.isSelected === true && find < 0) {
-                        // criteriaSelectedList.push(criteriaItem);
                         vm.tagsSort.push(criteriaItem);
                     } else if (!criteriaItem.isSelected && find >= 0) {
                         vm.tagsSort.splice(find, 1);
                     }
                 });
             });
-            // console.log(vm.tagsSort);
-
-            // if (!angular.equals(vm.tagsSort, criteriaSelectedList)) {
-            //     vm.tagsSort = criteriaSelectedList;
-            // }
             setTimeout(function() {
                 updateMatrixHeight();
             }, 0);
@@ -128,13 +118,18 @@
 
         function generateCharacteristicsTags(characteristics) {
             // console.log(characteristics);
-            _.forEach(characteristics, function(group) {
-                _.forEach(group.characteristics, function(characteristic) {
-                    // console.log(characteristic);
-                    // debugger
-                    // if(characteristics.selectedValues) console.log(characteristics.selectedValues);
+            // _.forEach(characteristics, function(group) {
+            _.forEach(characteristics, function(characteristic) {
+                var find = _.findIndex(vm.tagsFilter, function(tag) {
+                    return tag.uid === characteristic.uid;
                 });
+                if (characteristic.selectedValue && find < 0) {
+                    vm.tagsFilter.push(characteristic);
+                } else if (!characteristic.isSelected && find >= 0) {
+                    vm.tagsFilter.splice(find, 1);
+                }
             });
+            // });
         }
 
 
@@ -155,8 +150,10 @@
 
                 // Parese Filter Object
                 _fo = angular.copy(data);
-                if (_fo) createTagsList(_fo.filterQueries);
-                updateMatrixHeight();
+                if (_fo) {
+                    createTagsList(_fo.filterQueries);
+                    updateMatrixHeight();
+                }
             });
         }
 
@@ -231,15 +228,11 @@
 
         // TODO: clean up find
         function findCharacteristic(id) {
-            var findCharacteristic;
-            _.forEach(vm.characteristics, function(group) {
-                var find = _.findLast(group.characteristics, function(characteristic) {
-                    // console.log(characteristic.id, id, characteristic.id === id)
-                    return characteristic.id === id;
-                });
-                if (find) findCharacteristic = find;
+            var find = _.findLast(vm.characteristics, function(characteristic) {
+                return characteristic.id === id;
             });
-            if (findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
+
+            if (find) return _.pick(find, 'name', 'valueType');
         }
 
         // TODO: Remove it
@@ -253,11 +246,6 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
-
-            updateMatrixHeight();
-            setTimeout(function() {
-                updateMatrixHeight();
-            }, 0);
         }
 
         function addToTagsList(item) {
@@ -272,24 +260,6 @@
                 }
             }
         }
-
-        // function createTagsList(filterQueries) {
-        //     if (_.isEmpty(filterQueries)) return;
-        //     // TODO: Always regenerate new array
-        //     // Update it
-        //     if(_.isArray(filterQueries)) {
-        //         _.forEach(filterQueries, function(item) {
-        //             var itemInTags = _.find(vm.tagsFilter, function(tag){
-        //                 return tag.characteristicId === item.characteristicId;
-        //             });
-        //             if(itemInTags < 0) {
-        //                 var find = findCharacteristic(item.characteristicId);
-        //                 item = _.merge(item, find);
-        //                 if (!_.isEmpty(item)) vm.tagsFilter.push(caseQueryType(item));
-        //             }
-        //         });
-        //     }
-        // }
 
 
         function caseQueryType(item) {

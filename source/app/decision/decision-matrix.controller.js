@@ -306,8 +306,7 @@
                 //
 
                 var criteriaSize = [];
-
-                vm.criteriaGroups = _.filter(result, function(criteriaItem) {
+                var criteriaGroups = _.filter(result, function(criteriaItem) {
                     criteriaSize.push(criteriaItem.criteria.length);
                     _.map(criteriaItem.criteria, function(criteria) {
                         if (criteria.description && !_.isObject(criteria.description)) {
@@ -316,9 +315,11 @@
                         criteriaIds.push(criteria.id);
                         return criteria;
                     });
-                    if(criteriaItem.criteria.length > 0) return criteriaItem;
+                    if (criteriaItem.criteria.length > 0) return criteriaItem;
                 });
 
+                vm.criteriaGroups = angular.copy(criteriaGroups);
+                if(_.isEmpty(vm.criteriaGroups)) return;
 
                 // / titles + criteria col height + characteristic wrapper
                 var criteriahHeight = criteriaSize.length * 24 + _.sum(criteriaSize) * 49 + 100;
@@ -347,7 +348,7 @@
             var characteristicsArray = [];
 
             var total = 0;
-            vm.characteristicGroups = _.chain(result).map(function(resultEl) {
+            _.forEach(result, function(resultEl) {
                 total += resultEl.characteristics.length;
 
                 var group = _.omit(resultEl, 'characteristics');
@@ -375,27 +376,29 @@
                         // console.log(characteristicsItem);
                     }
 
+                    characteristicsItem.parentId = group.id;
+
                     characteristicsArray.push(characteristicsItem);
                     return characteristicsItem;
                 });
                 return resultEl;
-            }).value();
+            });
 
 
 
+            // TODO: finalize Superfast ng-repeat
             // for (var i = 0; i < characteristicsArraySize.length; i++) {
             //     vm.characteristicGroupsArray = chunkCollection(characteristicsArray, 20);
             // }
+            // vm.characteristicGroupsArray = [];
 
-            vm.characteristicGroupsArray = [];
-
-            var chunked = _.chunk(characteristicsArray, 5);
-            for (var i = 0; i < chunked.length; i++) {
-                vm.characteristicGroupsArray = _.concat(vm.characteristicGroupsArray, chunked[i]);
-            }
+            // var chunked = _.chunk(characteristicsArray, 5);
+            // for (var i = 0; i < chunked.length; i++) {
+            //     vm.characteristicGroupsArray = _.concat(vm.characteristicGroupsArray, chunked[i]);
+            // }
 
 
-            // vm.characteristicGroupsArray = characteristicsArray;
+            vm.characteristicGroupsArray = characteristicsArray;
             characteristicGroupsArrayOriginal = angular.copy(characteristicsArray);
             // console.log(vm.characteristicGroupsArray, _.uniq(vm.characteristicGroupsArray));
         }
@@ -836,6 +839,7 @@
             // TODO: avoid class js-toggle-hide
             // Optimize function to toggle
             $('[data-' + type + '-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
+            console.log('[data-' + type + '-group="' + id + '"]');
 
             // Incorect height calc
             calcMatrixRowHeight();

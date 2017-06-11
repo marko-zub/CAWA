@@ -93,7 +93,7 @@
 
                 <filter-tags
                     criteria="vm.criteriaGroups"
-                    characteristics="vm.characteristicGroups"
+                    characteristics="vm.characteristicGroupsArray"
                     filter-name="vm.filterName"
                     on-change-criteria-order="vm.orderByCriteriaProperty(order, $event)"
                     filter-object="vm.fo"
@@ -106,7 +106,7 @@
                         <div id="matrix-aside-content" class="matrix-aside-content">
 
                             <!-- Criteria Aside -->
-                            <div class="criteria-list group-wrapper">
+                            <div class="criteria-list group-wrapper" ng-if="vm.criteriaGroups.length">
                                 <div class="title">
                                     Criteria
                                 </div>
@@ -141,7 +141,7 @@
                             </div>
                             <!-- End Criteria Aside -->
 
-                            <div class="criteria-list group-wrapper characteristic-content-aside">
+                            <div class="criteria-list group-wrapper characteristic-content-aside" >
                                 <!-- {{characteristic | json}} -->
                                <div class="title">
                                     Characteristics
@@ -163,8 +163,8 @@
                                             </div>
                                         </div>
 
-                                        <div ng-switch-when="true">
-                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
+                                        <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
+                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide" >
                                                 <!-- TODO: move to component -->
 
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
@@ -194,14 +194,14 @@
                         <!-- Table Content -->
                         <div id="matrix-content" class="matrix-content">
 
-                            <matrix-criteria decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
+                            <matrix-criteria ng-if="vm.criteriaGroups.length" decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                             <div class="characteristic-groups-content">
                                 <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
-                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroupsArray" characteristic-limit="vm.characteristicLimit"></matrix-characteristics>
+                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroupsArray"></matrix-characteristics>
                                 </div>
                             </div>
 
