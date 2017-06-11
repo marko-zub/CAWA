@@ -78,7 +78,7 @@
 
         function renderControl(type) {
             if (!type) return;
-            var element = '<filter-' + type + ' selected="vm.selected" item="::vm.item"></filter-' + type + '>';
+            var element = '<filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
         }
