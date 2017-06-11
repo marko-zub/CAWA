@@ -63,7 +63,7 @@
 
         function loadCharacteristics() {
 
-            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+            getCharacteristicsGroupsById(vm.decision.uid).then(function(resp) {
                 // 3. Render characteristics
                 prepareCharacteristicsGroups(resp);
                 renderMatrix(true);
@@ -336,8 +336,8 @@
             });
         }
 
-        function getCharacteristicsGroupsById(id) {
-            return DecisionDataService.getCharacteristicsGroupsById(id).then(function(result) {
+        function getCharacteristicsGroupsById(uid) {
+            return DecisionDataService.getCharacteristicsGroupsById(uid).then(function(result) {
                 // characteristics
                 return result;
             });
