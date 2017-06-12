@@ -1,0 +1,84 @@
+
+.social-share-btns-container {
+  display: block;
+  margin: 0 auto;
+}
+
+
+.social-share-btns {
+  display: inline-block;
+  overflow: hidden;
+  .share-btn {
+    float: left;
+    margin: 0 5px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+    vertical-align: middle;
+    .transition(background 0.2s ease-in-out);
+
+    i {
+      margin-right: 5px;
+      display: inline-block;
+      font-size: 18px;
+      vertical-align: middle;
+    }
+  }
+}
+
+// Colors
+.share-btn {
+  background-color: #95a5a6;
+  &:hover {
+    background-color: darken(#95a5a6, 10%);
+  }
+}
+.share-btn-twitter {
+  background-color: #00aced;
+  &:hover {
+    background-color: darken(#00aced, 10%);
+  }
+}
+.share-btn-facebook {
+  background-color: #3b5998;
+  &:hover {
+    background-color: darken(#3b5998, 10%);
+  }
+}
+.share-btn-linkedin {
+  background-color: #007bb6;
+  &:hover {
+    background-color: darken(#007bb6, 10%);
+  }
+}
+.share-btn-reddit {
+  background-color: #ED001C;
+  &:hover {
+    background-color: darken(#ED001C, 10%);
+  }
+}
+
+.share-btn-mail {
+	background-color: #f1c40f;
+	&:hover {
+		background-color: darken(#f1c40f, 5%);
+	}
+}
+
+.credits {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 2px 15px;
+
+  width: 100%;
+  font-size: 11px;
+  z-index: 1111;
+  a {
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+  }
+}

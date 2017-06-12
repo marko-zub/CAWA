@@ -659,7 +659,7 @@
             if (martrixScroll) {
                 martrixScroll.refresh();
                 martrixScroll.on('scroll', updatePosition);
-                // updatePosition(martrixScroll);
+                updatePosition(martrixScroll);
             }
         }
 

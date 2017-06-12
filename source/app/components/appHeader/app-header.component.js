@@ -11,13 +11,16 @@
 			controllerAs: 'vm'
 		});
 
-	HeaderController.$inject = ['$state', '$stateParams', '$rootScope'];
+	HeaderController.$inject = ['$state', '$stateParams', '$rootScope', '$location'];
 
-	function HeaderController($state, $stateParams, $rootScope) {
+	function HeaderController($state, $stateParams, $rootScope, $location) {
 		var vm = this;
 
+		// TODO:
+		// Move to app.run.js
         // Page title
         var pageTitle = 'DecisionWanted';
+        $rootScope.url = '';
         $rootScope.pageTitle = pageTitle;
         $rootScope.breadcrumbs = true;
         var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
@@ -28,7 +31,11 @@
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
             }
+
+            $rootScope.pageUrl = $location.absUrl();
+            // console.log($rootScope.pageUrl);
         });
+
 	}
 
 })();

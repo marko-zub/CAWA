@@ -91,12 +91,12 @@
                 getCharacteristicsGroupsById(parentUid),
             ]).then(function(values) {
 
-                vm.characteristicGroups = _.map(values[1], function(resultEl) {
+                vm.characteristicGroups = _.filter(values[1], function(resultEl) {
                     resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
                     _.map(resultEl.characteristics, function(el) {
                         return el;
                     });
-                    return resultEl;
+                    if(resultEl.characteristics.length > 0) return resultEl;
                 });
 
 
@@ -159,7 +159,7 @@
                     if (elEqual) return _.merge(el, elEqual);
                 });
 
-                return resultEl;
+                if(resultEl.criteria.length > 0) return resultEl;
             });
         }
 
