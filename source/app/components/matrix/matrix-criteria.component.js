@@ -165,8 +165,8 @@
                 // console.log(container);
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
-                    '<div class="m-group-title">',
-                    // container.name,
+                    '<div class="m-group-title text-center">',
+                        'Can\'t find the necessary criterion? <a href="#">Add it</a>',
                     '</div>',
                     content,
                     '</div>'
