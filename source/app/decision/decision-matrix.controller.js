@@ -125,6 +125,10 @@
         }
         // End Filter name
 
+        DecisionNotificationService.subscribeUpdateMatrixSize(function(event, data) {
+            initMatrix(true);
+        });
+
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriteria(function(event, data) {
             formDataForSearchRequest(data, data.coefCall);
@@ -319,7 +323,7 @@
                 });
 
                 vm.criteriaGroups = angular.copy(criteriaGroups);
-                if(_.isEmpty(vm.criteriaGroups)) return;
+                if (_.isEmpty(vm.criteriaGroups)) return;
 
                 // / titles + criteria col height + characteristic wrapper
                 var criteriahHeight = criteriaSize.length * 24 + _.sum(criteriaSize) * 49 + 100;
@@ -842,10 +846,8 @@
             console.log('[data-' + type + '-group="' + id + '"]');
 
             // Incorect height calc
-            calcMatrixRowHeight();
-            settimeout(function() {
-                reinitMatrixScroller();
-            }, 0);
+            initMatrix(true);
+
             $event.preventDefault();
         }
     }

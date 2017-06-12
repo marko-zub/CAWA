@@ -11,9 +11,9 @@
             controllerAs: 'vm'
         });
 
-    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Utils', 'DecisionDataService', '$state'];
+    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Utils', 'DecisionDataService', '$state', 'DecisionNotificationService'];
 
-    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils, DecisionDataService, $state) {
+    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils, DecisionDataService, $state, DecisionNotificationService) {
         var
             vm = this,
             sendObj,
@@ -30,7 +30,7 @@
             };
 
             // Lazy options
-            if (vm.item.lazyOptions) {
+            if (vm.item.lazyOptions === true) {
                 // console.log(vm.item);
                 vm.filterSpinner = true;
                 // console.log($state)
@@ -59,6 +59,7 @@
                     vm.item.options = resp;
                     vm.filterSpinner = false;
                     renderItem(vm.item);
+                    DecisionNotificationService.notifyUpdateMatrixSize();
                     return resp;
                 });
         }

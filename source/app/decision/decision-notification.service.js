@@ -24,6 +24,7 @@
             subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
             subscribeFilterTags: subscribeFilterTags,
             subscribeFilterByName: subscribeFilterByName,
+            subscribeUpdateMatrixSize: subscribeUpdateMatrixSize,
 
             // Notify
             notifySelectSorter: notifySelectSorter,
@@ -36,7 +37,8 @@
             notifyInitSorter: notifyInitSorter,
             notifyChildDecisionExclusion: notifyChildDecisionExclusion,
             notifyFilterTags: notifyFilterTags,
-            notifyFilterByName: notifyFilterByName
+            notifyFilterByName: notifyFilterByName,
+            notifyUpdateMatrixSize: notifyUpdateMatrixSize
         };
 
         return service;
@@ -98,11 +100,15 @@
             subscribe('queryFilterByNameChanged', callback);
         }
 
+        function subscribeUpdateMatrixSize(callback) {
+            subscribe('updateMatrixSize', callback);
+        }
+
         // Emitters
         function notifySelectSorter(data) {
             emit('selectSorter', data);
         }
-        
+
         function notifyGetDetailedCharacteristics(data) {
             emit('getDetailedCharacteristics', data);
         }
@@ -141,6 +147,10 @@
 
         function notifyFilterByName(data) {
             emit('queryFilterByNameChanged', data);
+        }
+
+        function notifyUpdateMatrixSize(data) {
+            emit('updateMatrixSize', data);
         }
 
     }

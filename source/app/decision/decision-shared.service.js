@@ -51,7 +51,7 @@
         service.getFilterObject = function() {
             return service.filterObject;
         };
-        // TODO: add function to clear object 
+        // TODO: add function to clear object
         // Remove send 'data' etc...
         service.getRequestFilterObject = function() {
             var _fo = service.filterObject;
