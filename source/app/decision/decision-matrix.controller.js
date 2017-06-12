@@ -703,7 +703,7 @@
             });
             modalInstance.result.then(function(result) {
                 var groupIndex = _.findIndex(vm.criteriaGroups, {
-                    criteriaGroupId: result.criteriaGroupId
+                    id: result.criterionGroupId
                 });
                 var criteriaIndex = _.findIndex(vm.criteriaGroups[groupIndex].criteria, {
                     id: result.id

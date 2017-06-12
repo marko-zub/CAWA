@@ -89,8 +89,8 @@
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
 
-                if(el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0,80) + '...';
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
                 }
 
                 el.description = $sce.trustAsHtml(el.description);
@@ -140,7 +140,7 @@
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 // vm.criteriaGroups = result;
-                return _.filter(result, function(resultEl) {
+                _.filter(result, function(resultEl) {
                     _.filter(resultEl.criteria, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
                         var elEqual = _.find(criteriaArray, {
@@ -150,7 +150,7 @@
                         if (elEqual) return _.merge(el, elEqual);
                     });
 
-                    return resultEl;
+                    if (resultEl.criteria.length > 0) return resultEl;
                 });
             });
         }
@@ -192,11 +192,13 @@
         function getCriteriaGroupsByParentId(id) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
+                result = _.filter(result, function(group) {
+                    if (group.criteria.length > 0) return group;
+                });
                 vm.criteriaGroups = descriptionTrustHtml(result);
                 _.forEach(result, function(resultEl) {
                     descriptionTrustHtml(resultEl.criteria);
                 });
-                return result;
             });
         }
 

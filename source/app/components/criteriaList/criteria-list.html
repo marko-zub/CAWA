@@ -1,4 +1,4 @@
-<div class="app-list-panel" ng-if="::vm.list.lenght">
+<div class="app-list-panel" ng-if="::vm.list.length">
     <h4>Criteria</h4>
     <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
         <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
