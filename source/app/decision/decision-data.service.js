@@ -88,18 +88,28 @@
             }),
 
             decisionInfo = $resource(decisionUrl),
+
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
                 id: '@id',
                 childId: '@childId'
             }, {}),
+
             criteriasGroups = $resource(decisionUrl + '/criteriongroups'),
+
             characteristictsGroups = $resource(decisionUrl + '/characteristicgroups', {
                 options: '@options'
             }),
+
             criteriaByDecision = $resource(decisionUrl + '/:decisionId/decisions/:criterionId/criteria', {
                 criterionId: '@criterionId',
                 decisionId: '@decisionId'
+            }, {}),
+
+            characteristicOptions = $resource(decisionUrl + '/characteristics/:optionId/characteristicoptions', {
+                id: '@id',
+                optionId: '@optionId'
             }, {});
+
 
 
         var service = {
@@ -109,6 +119,7 @@
             getDecisionMatrix: getDecisionMatrix,
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristicsGroupsById: getCharacteristicsGroupsById,
+            getCharacteristicOptionsById: getCharacteristicOptionsById,
             getDecisionInfo: getDecisionInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
@@ -165,6 +176,13 @@
             return decisionCharacteristics.query({
                 id: id,
                 childId: childId
+            }).$promise;
+        }
+
+        function getCharacteristicOptionsById(id, optionId) {
+            return characteristicOptions.query({
+                id: id,
+                optionId: optionId
             }).$promise;
         }
 

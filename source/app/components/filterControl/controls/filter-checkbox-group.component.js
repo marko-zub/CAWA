@@ -11,9 +11,9 @@
             controllerAs: 'vm'
         });
 
-    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Utils'];
+    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Utils', 'DecisionDataService', '$state'];
 
-    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils) {
+    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils, DecisionDataService, $state) {
         var
             vm = this,
             sendObj,
@@ -28,15 +28,39 @@
                 'characteristicId': vm.item.id,
                 'operator': 'OR'
             };
-            var html = renderCheckboxes(vm.item);
-            $element.html(html);
-            $compile($element.contents())($scope);
+
+            // Lazy options
+            if (vm.item.lazyOptions) {
+                // console.log(vm.item);
+                vm.filterSpinner = true;
+                // console.log($state)
+                getLazyOptions($state.params.id, vm.item.uid);
+                return;
+            }
+
+            renderItem(vm.item);
         }
 
         function onChanges(changes) {
             if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 selectCheckboxes(changes.selected.currentValue);
             }
+        }
+
+        function renderItem(item) {
+            var html = renderCheckboxes(item);
+            $element.html(html);
+            $compile($element.contents())($scope);
+        }
+
+        function getLazyOptions(id, optionId) {
+            return DecisionDataService.getCharacteristicOptionsById(id, optionId)
+                .then(function(resp) {
+                    vm.item.options = resp;
+                    vm.filterSpinner = false;
+                    renderItem(vm.item);
+                    return resp;
+                });
         }
 
         // TODO:
@@ -64,8 +88,8 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input class="js-checkbox" type="checkbox" id="option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
-                    '<label for="option-' + option.id + '">' + option.value + '</label>',
+                    '<input class="js-checkbox" type="checkbox" id="option-' + option.uid + '" name="option-' + option.uid + '" value="' + option.value + '">',
+                    '<label for="option-' + option.uid + '">' + option.value + '</label>',
                     '</div>'
                 ];
                 return html.join('\n');
@@ -87,10 +111,11 @@
                 queryTypeHtml,
                 '</div>',
                 '<div class="filter-item checkbox-list" dw-scroll-bar>',
-                    '<div>',
-                        content,
-                    '</div>',
-                '</div>'
+                '<div>',
+                content,
+                '</div>',
+                '</div>',
+                '<div ng-show="vm.filterSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>'
             ].join('\n');
 
             return html;

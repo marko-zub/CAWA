@@ -843,7 +843,9 @@
 
             // Incorect height calc
             calcMatrixRowHeight();
-            reinitMatrixScroller();
+            settimeout(function() {
+                reinitMatrixScroller();
+            }, 0);
             $event.preventDefault();
         }
     }
