@@ -168,7 +168,8 @@
         function getDecisionInfo(uid) {
             return decisionInfo.get({
                 id: uid,
-                uid: true
+                uid: true,
+                views: true
             }).$promise;
         }
 

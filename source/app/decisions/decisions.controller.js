@@ -21,10 +21,30 @@
             pageSize: parseInt($stateParams.size) || 10
         };
 
+        var navigationObj = [{
+            key: 'createDate',
+            value: 'createDate',
+            label: 'Newest'
+        }, {
+            key: 'updateDate',
+            value: 'updateDate',
+            label: 'Active'
+        }, {
+            key: 'totalVotes',
+            value: 'totalVotes',
+            label: 'Votes'
+        }, {
+            key: 'totalViews',
+            value: 'totalViews',
+            label: 'Views'
+        }];
+
         init();
 
         function init() {
             console.log('Decisions controller');
+
+            vm.navigation = navigationObj;
 
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
             var data = checkStateParams($stateParams);
@@ -51,8 +71,8 @@
                 if (!el.imageUrl) el.imageUrl = '/images/noimage.png';
 
                 // Move to constat
-                if(el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0,80) + '...';
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
                 }
 
                 el.description = $sce.trustAsHtml(el.description);
@@ -91,16 +111,7 @@
                 allowedSortParams;
 
             data = vm.pagination;
-            allowedSortParams = [{
-                key: 'createDate',
-                value: 'createDate'
-            }, {
-                key: 'updateDate',
-                value: 'updateDate'
-            }, {
-                key: 'totalVotes',
-                value: 'totalVotes'
-            }];
+            allowedSortParams = navigationObj;
 
             data.sortDirection = stateParams.sortDirection || 'DESC';
             if (stateParams.sort) {

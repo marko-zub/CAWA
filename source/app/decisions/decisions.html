@@ -9,9 +9,7 @@
             <div class="col-sm-6">
                 <div class="pull-right">
                     <div class="btn-group btn-group-sm btns-view">
-                        <a ui-sref="decisions({sort: 'createDate'})" ui-sref-active="btn-primary" class="btn btn-default">Newest</a>
-                        <a ui-sref="decisions({sort: 'updateDate'})" ui-sref-active="btn-primary" class="btn btn-default">Active</a>
-                        <a ui-sref="decisions({sort: 'totalVotes'})" ui-sref-active="btn-primary" class="btn btn-default">Votes</a>
+                        <a ui-sref="decisions({sort:item.key})" ui-sref-active="btn-primary" class="btn btn-default" ng-repeat="item in vm.navigation track by $index">{{item.label}}</a>
                     </div>
                 </div>
             </div>
