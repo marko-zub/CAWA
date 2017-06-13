@@ -14,7 +14,7 @@
                         <div class="clearfix">
                             <div class="pull-left">
                                 <div ng-switch="::(vm.links == true)" class="pull-left">
-                                    <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option({critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
+                                    <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
                                     <span ng-switch-when="false" ng-bind="::criteria.name"></span>
                                 </div>
 

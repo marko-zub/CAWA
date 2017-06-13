@@ -41,6 +41,7 @@ html {
 
 .app-container-sm {
   width: 100%;
+  position: relative;
   margin: 0 auto;
   @media (min-width: @screen-sm-min) {
     margin: 0 30px;
@@ -209,6 +210,33 @@ body {
 .nav-tabs > li.active > a:hover, 
 .nav-tabs > li.active > a:focus {
 
+}
+
+.nav-tabs {
+  & > li {
+    & > a {
+      &:hover,
+      &:focus {
+        border: 1px solid #ddd;
+        border-top-color: @basic-active;
+        border-bottom-color: transparent;
+      }
+    }
+    &.active {
+      & > a {
+        border: 1px solid #ddd;
+        border-top-color: @basic-active;
+        border-bottom-color: transparent;
+        // padding: 3px 8px 4px 8px
+        &:hover,
+        &:focus {
+          border: 1px solid #ddd;
+          border-top-color: @basic-active;
+          border-bottom-color: transparent;
+        }        
+      }
+    }
+  }
 }
 
 .nav-tabs > li > a {

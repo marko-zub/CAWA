@@ -20,13 +20,13 @@
                 <ul class="discussions-list">
                     <li ng-repeat="decision in vm.decisionsList track by decision.uid">
                         <div class="post">
-                            <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
+                            <a ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                 </div>
                             </a>
                             <div class="post-content">
-                                <a ui-sref="decisions.single({id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
+                                <a ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
                                 <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
                             </div>
                         </div>

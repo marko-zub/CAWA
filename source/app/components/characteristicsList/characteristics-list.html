@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-sm-6 clearfix">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
-                                        <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option({critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a>
+                                        <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a>
                                         <span ng-switch-when="false" ng-bind="::characteristic.name"></span>
                                     </div>
                                     <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>

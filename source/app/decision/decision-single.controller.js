@@ -24,12 +24,36 @@
 
         vm.$onInit = onInit;
 
+        // TODO: move to constant
+        var navigationObj = [{
+            key: 'createDate',
+            value: 'createDate',
+            label: 'Newest'
+        }, {
+            key: 'updateDate',
+            value: 'updateDate',
+            label: 'Active'
+        }, {
+            key: 'totalVotes',
+            value: 'totalVotes',
+            label: 'Votes'
+        }, {
+            key: 'totalViews',
+            value: 'totalViews',
+            label: 'Views'
+        }];
+
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
             console.log('Decision Single Controller');
             initPagination();
             getDecisionNomimations(vm.decision.id);
             getDecisionParents(vm.decision.id);
+
+            vm.navigation = navigationObj;
+            // if (!$stateParams.sort) {
+                // vm.activeTab = 1;
+            // }            
         }
 
         function getDecisionNomimations(id) {

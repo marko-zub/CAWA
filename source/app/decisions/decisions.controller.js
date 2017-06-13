@@ -49,7 +49,14 @@
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
             var data = checkStateParams($stateParams);
             getDecisions(data);
+
+            if (!$stateParams.sort) {
+                vm.activeTab = 1;
+            }
         }
+
+        var decisionsHeight = 97;
+        vm.decisionsHeight = vm.pagination.pageSize * decisionsHeight + 'px';
 
         function getDecisions(data) {
             vm.decisionsSpinner = true;
@@ -59,6 +66,9 @@
             DecisionDataService.getDecisions(pagination).then(function(result) {
                 vm.decisionsList = descriptionTrustHtml(result.decisions);
                 initPagination(result.totalDecisions);
+
+                // TODO: avoid height
+                vm.decisionsHeight = result.decisions.length * decisionsHeight + 'px';
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);

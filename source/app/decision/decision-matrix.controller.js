@@ -843,7 +843,6 @@
             // TODO: avoid class js-toggle-hide
             // Optimize function to toggle
             $('[data-' + type + '-group="' + id + '"]').find('.js-toggle-hide').toggleClass('hide');
-            console.log('[data-' + type + '-group="' + id + '"]');
 
             // Incorect height calc
             initMatrix(true);
