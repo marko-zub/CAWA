@@ -48,15 +48,6 @@
             </div>
         </div>
 
-        <div class="nav-tabs-wrapper clearfix" ng-if="vm.isDecisionsParent">
-            <ul class="nav nav-tabs nav-tabs-sm">
-                <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a href="#">{{::item.label}}</a>
-                    <!-- <a ui-sref="decisions({sort:item.key})">{{item.label}}</a> -->
-                </li>
-            </ul>
-        </div>        
-
         <div class="row">
             <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
                 <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
@@ -67,10 +58,18 @@
     <div class="row decision-childs" ng-if="vm.isDecisionsParent">
 
         <div class="col-xs-12 mg-sm-b">
-            <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
+            <!-- <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
             <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
                 Details <i class="fa fa-chevron-right icon-sm" aria-hidden="true"></i>
-            </a>
+            </a> -->
+            <div class="nav-tabs-wrapper clearfix" ng-if="vm.isDecisionsParent">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                        <a href="#">{{::item.label}}</a>
+                        <!-- <a ui-sref="decisions({sort:item.key})">{{item.label}}</a> -->
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="col-sm-8">
             <ul class="discussions-list">

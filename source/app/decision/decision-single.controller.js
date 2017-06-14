@@ -26,6 +26,10 @@
 
         // TODO: move to constant
         var navigationObj = [{
+            key: 'userFeatured',
+            value: 'userFeatured',
+            label: 'User Featured'
+        }, {
             key: 'createDate',
             value: 'createDate',
             label: 'Newest'
@@ -52,8 +56,8 @@
 
             vm.navigation = navigationObj;
             // if (!$stateParams.sort) {
-                // vm.activeTab = 1;
-            // }            
+            // vm.activeTab = 1;
+            // }
         }
 
         function getDecisionNomimations(id) {
