@@ -92,13 +92,10 @@
 
         function clearFilterName() {
             vm.filterName = null;
-            // if (_fo.decisionNameFilterPattern.length) {
             filterNameSend(null);
-            // }
         }
 
         function filterNameSubmit(event, value) {
-            // if (!value) return;
             if (event.keyCode === 13) {
                 filterNameSend(value);
                 event.preventDefault();
@@ -166,7 +163,6 @@
             DecisionSharedService.filterObject.persistent = true;
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs);
-                // vm.fo = angular.copy(DecisionSharedService.filterObject.sorters);
             });
         });
 
@@ -202,7 +198,6 @@
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
-            // console.log(query);
             setCharacteristicChanges(query.filterQueries, data.optionId);
         });
 
@@ -239,7 +234,6 @@
             }
 
             // TODO: Use utils finction
-
             selectedCharacteristicsIds = [];
             selectedOptionsIds = [];
 
@@ -287,10 +281,7 @@
         function pickChildOptions(options, optionsIds) {
             if (!options) return;
 
-
             var optionsFiltered = [];
-            // console.log(options, options.length);
-            // console.log(optionsFiltered, optionsFiltered.length);
             _.forEach(optionsIds, function(optionId) {
                 _.forEach(options, function(option) {
                     if (option.parentOptionIds && _.includes(option.parentOptionIds, optionId)) {
@@ -307,8 +298,6 @@
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 criteriaIds = [];
                 // Fill all criterias
-                //
-
                 var criteriaSize = [];
                 var criteriaGroups = _.filter(result, function(criteriaItem) {
                     criteriaSize.push(criteriaItem.criteria.length);
@@ -343,7 +332,6 @@
 
         function getCharacteristicsGroupsById(uid) {
             return DecisionDataService.getCharacteristicsGroupsById(uid).then(function(result) {
-                // characteristics
                 return result;
             });
         }
@@ -377,7 +365,6 @@
                     // TODO: if parent selecte then enable characteristic
                     if (characteristicsItem.parentCharacteristicId) {
                         characteristicsItem.disabled = true;
-                        // console.log(characteristicsItem);
                     }
 
                     characteristicsItem.parentId = group.id;
@@ -391,6 +378,7 @@
 
 
             // TODO: finalize Superfast ng-repeat
+            // Make some batch load for ng-repeat
             // for (var i = 0; i < characteristicsArraySize.length; i++) {
             //     vm.characteristicGroupsArray = chunkCollection(characteristicsArray, 20);
             // }
@@ -410,9 +398,7 @@
         //Init sorters, when directives loaded
         function initSorters() {
             // Set filter by name
-            // if(_.isNull(_fo.sortDecisionPropertyName)) vm.filterName = null;
             _fo = DecisionSharedService.getFilterObject();
-            // console.log(_fo);
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
             // Set Criteria for Hall of fame
@@ -446,6 +432,7 @@
         }
 
         // TODO: optimize avoid Reflow!
+        // Very slow loop
         var matrixAsideRow,
             matrixRows;
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
@@ -470,9 +457,6 @@
                 el = matrixRows[i];
                 elAside = matrixAsideRow[i]; //TODO: Pofiler 600ms in slow PC
 
-                // matrixAsideRowH.push(elAside.clientHeight);
-                // matrixRowsH.push(el.clientHeight);
-
                 newH = (elAside.clientHeight >= el.clientHeight) ? elAside.clientHeight : el.clientHeight;
                 matrixSizes.push(newH);
                 // Set new height
@@ -485,8 +469,6 @@
 
         function applySizes(matrixSizes) {
             var titleH = 24;
-            // console.log(matrixSizes);
-
             var matrixSizesCopy = angular.copy(matrixSizes);
             var characteristicsCopy = angular.copy(vm.characteristicGroups);
 
@@ -611,17 +593,8 @@
             var _this = martrixScroll || this; // jshint ignore:line
             scrollHandler(_this.y, _this.x);
             $('.matrix-g .app-control').toggleClass('selected', false);
-
-            // Load characteristics first time
-            // if (vm.characteristicGroupsContentLoader === true && !isloadCharacteristics) {
-            //     // console.log(characteristicsBlock.height() / 3,  -1 * _this.y);
-            //     if (-1 * _this.y > 40) {
-            //         // console.log('loadCharacteristics');
-            //         loadCharacteristics();
-            //         isloadCharacteristics = true;
-            //     }
-            // }
         }
+
         // Table scroll
         var tableBody,
             tableHeader,
@@ -670,10 +643,8 @@
         var prevTotal;
 
         function setMatrixTableWidth(total) {
-            // vm.tableWidth = total * 200 + 'px';
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            // if (vm.decisionMatrixList.length !== prevTotal)
             table.style.width = tableWidth;
 
         }
@@ -726,7 +697,6 @@
             }
 
             criteria.coefCall = coefCall;
-
             DecisionNotificationService.notifySelectCriteria(criteria);
         }
 

@@ -24,6 +24,7 @@
 
         vm.$onInit = onInit;
 
+        var criteriaGroupsIds = [];
         // TODO: move to constant
         var navigationObj = [{
             key: 'userFeatured',
@@ -50,14 +51,38 @@
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
             console.log('Decision Single Controller');
-            initPagination();
-            getDecisionNomimations(vm.decision.id);
-            getDecisionParents(vm.decision.id);
-
             vm.navigation = navigationObj;
-            // if (!$stateParams.sort) {
-            // vm.activeTab = 1;
-            // }
+            initPagination();
+            getDecisionParents(vm.decision.id);
+        }
+
+        // TODO: Simplify logic
+        function initSortMode(mode) {
+            if (!mode) {
+                vm.activeTabSort = 1;
+            }
+            var find = _.find(navigationObj, function(navItem) {
+                return navItem.key === mode;
+            });
+            if (find && find.value !== 'userFeatured') {
+                vm.sortMode = find.value;
+                getDecisionMatrix(vm.decision.id);
+                // Hide criterias
+                vm.criteriaGroups = [];
+            } else {
+                vm.sortMode = 'userFeatured';
+                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
+                    var sendData = {
+                        sortCriteriaIds: criteriaGroupsIds,
+                        sortWeightCriteriaDirection: 'DESC',
+                        sortTotalVotesCriteriaDirection: 'DESC'
+                    };
+
+                    getDecisionMatrix(vm.decision.id, sendData);
+                });
+                vm.isDecisionsParent = true;
+            }
+
         }
 
         function getDecisionNomimations(id) {
@@ -81,6 +106,8 @@
                 if (vm.decision.totalChildDecisions > 0) {
                     getCriteriaGroupsByParentId(vm.decision.id);
                     vm.isDecisionsParent = true;
+
+                    initSortMode($stateParams.sort);
                 }
                 //} else {
                 //     // getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
@@ -88,6 +115,24 @@
                 //     getDecisionParentsCriteriaCharacteristicts(vm.decisionParents[0]);
                 // }
                 return result;
+            });
+        }
+
+        function getDecisionMatrix(id, data) {
+            var sendData = data;
+            if (!sendData) {
+                sendData = {
+                    sortDecisionPropertyName: vm.sortMode,
+                    sortDecisionPropertyDirection: 'DESC'
+                };
+            }
+            DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
+                vm.decisions = [];
+                var decisions = [];
+                _.forEach(result.decisionMatrixs, function(decision) {
+                    decisions.push(decision.decision);
+                });
+                vm.decisions = descriptionTrustHtml(decisions);
             });
         }
 
@@ -226,7 +271,13 @@
                 vm.criteriaGroups = descriptionTrustHtml(result);
                 _.forEach(result, function(resultEl) {
                     descriptionTrustHtml(resultEl.criteria);
+
+                    _.forEach(resultEl.criteria, function(criteria) {
+                        criteriaGroupsIds.push(criteria.id);
+                    });
                 });
+
+                return result;
             });
         }
 

@@ -15,10 +15,10 @@
         <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li class="active">
-                    <a ui-sref="decisions.single(::{id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
+                    <a ui-sref="decisions.single(::{id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null, sort: null})">General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a ui-sref="decisions.single.parent(::{parentId:parent.uid, parentSlug:parent.nameSlug})"> {{::parent.name}}</a>
+                    <a ui-sref="decisions.single.parent(::{parentId:parent.uid, parentSlug:parent.nameSlug, sort: null})"> {{::parent.name}}</a>
                 </li>
             </ul>
         </div>
@@ -47,7 +47,6 @@
                 </div>
             </div>
         </div>
-
         <div class="clearfix text-justify">
             <div class="post-image" ng-if="::vm.decision.imageUrl">
                 <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
@@ -56,7 +55,6 @@
         </div>
     </div>
     <div class="row decision-childs" ng-if="vm.isDecisionsParent">
-
         <div class="col-xs-12 mg-sm-b">
             <!-- <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
             <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
@@ -64,9 +62,8 @@
             </a> -->
             <div class="nav-tabs-wrapper clearfix" ng-if="vm.isDecisionsParent">
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                        <a href="#">{{::item.label}}</a>
-                        <!-- <a ui-sref="decisions({sort:item.key})">{{item.label}}</a> -->
+                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
+                        <a ui-sref="decisions.single(::{sort:item.key})">{{item.label}}</a>
                     </li>
                 </ul>
             </div>
@@ -75,19 +72,17 @@
             <ul class="discussions-list">
                 <li ng-repeat="decision in vm.decisions track by decision.uid">
                     <div class="post">
-                        <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})" class="left-side">
+                        <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug, sort: null})" class="left-side">
                             <div class="img-container">
                                 <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                             </div>
                         </a>
                         <div class="post-content">
-                            <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug})" ng-bind="::decision.name"></a>
-
-                            <div class="criteria-comliance">
-                                Criteria compliance: <strong ng-bind="decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                            <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug, sort: null})" ng-bind="::decision.name"></a>
+                            <div class="criteria-comliance" ng-show="decision.criteriaCompliancePercentage">
+                                Criteria compliance: <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                                 </small>
                             </div>
-
                             <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
                         </div>
                     </div>
@@ -99,7 +94,6 @@
             <criteria-list list="::vm.criteriaGroups"></criteria-list>
         </div>
         <!-- End Criteria -->
-
         <div class="col-sm-8">
             <div class="row app-pagination clearfix" ng-if="vm.isDecisionsParent">
                 <div class="col-md-10 col-sm-10 paginator">
@@ -111,5 +105,4 @@
             </div>
         </div>
     </div>
-
 </div>

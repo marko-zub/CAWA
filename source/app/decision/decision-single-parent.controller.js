@@ -25,7 +25,6 @@
 
             vm.decision = decisionBasicInfo || {};
 
-
             vm.isDecisionsParent = false;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
@@ -38,7 +37,6 @@
                 vm.parent = _.find(result, function(parent) {
                     return parent.uid === stateId;
                 });
-
 
                 if (!vm.parent) return;
 
@@ -96,18 +94,12 @@
                     _.map(resultEl.characteristics, function(el) {
                         return el;
                     });
-                    if(resultEl.characteristics.length > 0) return resultEl;
+                    if (resultEl.characteristics.length > 0) return resultEl;
                 });
-
-
 
                 // Criterias IDs
                 _.forEach(values[0], function(criteriaItem) {
                     _.forEach(criteriaItem.criteria, function(criteria) {
-                        // console.log(criteria);
-                        // if (criteria.description && !_.isObject(criteria.description)) {
-                        //     criteria.description = $sce.trustAsHtml(criteria.description);
-                        // }
                         criteriaIds.push(criteria.id);
                     });
                 });
@@ -120,7 +112,6 @@
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
-                    // console.log(resp.decisionMatrixs);
                 });
             });
         }
@@ -129,8 +120,8 @@
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
 
-                if(el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0,80) + '...';
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
                 }
 
                 el.description = $sce.trustAsHtml(el.description);
@@ -159,7 +150,7 @@
                     if (elEqual) return _.merge(el, elEqual);
                 });
 
-                if(resultEl.criteria.length > 0) return resultEl;
+                if (resultEl.criteria.length > 0) return resultEl;
             });
         }
 
@@ -174,7 +165,7 @@
 
         function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
             var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            var list = _.map(characteristicsArray, function(resultEl) {
+            var list = _.filter(characteristicsArray, function(resultEl) {
                 _.map(resultEl.characteristics, function(el) {
                     el.description = $sce.trustAsHtml(el.description);
 
@@ -189,7 +180,7 @@
 
 
                 });
-                return resultEl;
+                if (resultEl.characteristics.length > 0) return resultEl;
             });
         }
 
