@@ -34,7 +34,8 @@
             }, {
                 getDecisionParentById: {
                     method: 'GET',
-                    isArray: true
+                    isArray: true,
+                    cache: true
                 }
             }),
 
@@ -87,7 +88,11 @@
                 }
             }),
 
-            decisionInfo = $resource(decisionUrl),
+            decisionInfo = $resource(decisionUrl, {
+                id: '@id'
+            }, {
+                cache: true
+            }),
 
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
                 id: '@id',

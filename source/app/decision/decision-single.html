@@ -17,7 +17,7 @@
                 <li class="active">
                     <a ui-sref="decisions.single(::{id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null, sort: null})">General Info</a>
                 </li>
-                <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                     <a ui-sref="decisions.single.parent(::{parentId:parent.uid, parentSlug:parent.nameSlug, sort: null})"> {{::parent.name}}</a>
                 </li>
             </ul>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div ng-if="vm.isDecisionsParent" class="pull-right">
+                    <div ng-show="vm.isDecisionsParent" class="pull-right">
                         <a ui-sref="decisions.single.comparison({analysisId:null})">
                             <i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix
                         </a>
@@ -48,19 +48,19 @@
             </div>
         </div>
         <div class="clearfix text-justify">
-            <div class="post-image" ng-if="::vm.decision.imageUrl">
+            <div class="post-image" ng-show="::vm.decision.imageUrl">
                 <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
             </div>
             <div ng-bind-html="::vm.decision.description"></div>
         </div>
     </div>
-    <div class="row decision-childs" ng-if="vm.isDecisionsParent">
+    <div class="row decision-childs" ng-show="vm.isDecisionsParent">
         <div class="col-xs-12 mg-sm-b">
             <!-- <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
             <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
                 Details <i class="fa fa-chevron-right icon-sm" aria-hidden="true"></i>
             </a> -->
-            <div class="nav-tabs-wrapper clearfix" ng-if="vm.isDecisionsParent">
+            <div class="nav-tabs-wrapper clearfix" ng-show="vm.isDecisionsParent">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
                         <a ui-sref="decisions.single(::{sort:item.key})">{{item.label}}</a>
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <ul class="discussions-list">
+            <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
                 <li ng-repeat="decision in vm.decisions track by decision.uid">
                     <div class="post">
                         <a ui-sref="decisions.single.parent({id:decision.uid, slug: decision.nameSlug, parentId:vm.decision.uid, parentSlug:vm.decision.nameSlug, sort: null})" class="left-side">
@@ -83,11 +83,13 @@
                                 Criteria compliance: <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                                 </small>
                             </div>
-                            <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
+                            <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
                         </div>
                     </div>
                 </li>
             </ul>
+
+            <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         </div>
         <!-- Criteria -->
         <div class="col-sm-4">
@@ -95,7 +97,7 @@
         </div>
         <!-- End Criteria -->
         <div class="col-sm-8">
-            <div class="row app-pagination clearfix" ng-if="vm.isDecisionsParent">
+            <div class="row app-pagination clearfix" ng-show="vm.isDecisionsParent">
                 <div class="col-md-10 col-sm-10 paginator">
                     <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
                 </div>

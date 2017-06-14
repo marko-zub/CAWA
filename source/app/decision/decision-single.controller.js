@@ -80,9 +80,7 @@
 
                     getDecisionMatrix(vm.decision.id, sendData);
                 });
-                vm.isDecisionsParent = true;
             }
-
         }
 
         function getDecisionNomimations(id) {
@@ -104,16 +102,11 @@
                 vm.decisionParents = result;
 
                 if (vm.decision.totalChildDecisions > 0) {
-                    getCriteriaGroupsByParentId(vm.decision.id);
                     vm.isDecisionsParent = true;
-
+                    vm.decisionsSpinnerChilds = true;
                     initSortMode($stateParams.sort);
                 }
-                //} else {
-                //     // getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
-                //     vm.isDecisionsParent = false;
-                //     getDecisionParentsCriteriaCharacteristicts(vm.decisionParents[0]);
-                // }
+
                 return result;
             });
         }
@@ -133,6 +126,7 @@
                     decisions.push(decision.decision);
                 });
                 vm.decisions = descriptionTrustHtml(decisions);
+                vm.decisionsSpinnerChilds = false;
             });
         }
 
@@ -190,6 +184,8 @@
                 pageSize: parseInt($stateParams.size) || 10,
                 totalDecisions: vm.decision.totalChildDecisions || 10
             };
+
+            vm.decisionsHeight = vm.pagination.pageSize * 97 + 'px';
             // updateStateParams();
         }
 
