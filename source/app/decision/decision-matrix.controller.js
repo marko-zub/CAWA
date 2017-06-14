@@ -548,7 +548,7 @@
         function prepareMatrixData(data) {
             var dataCopy = angular.copy(data);
             return _.map(dataCopy, function(decisionMatrixEl) {
-                if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.png';
+                if (!decisionMatrixEl.decision.imageUrl) decisionMatrixEl.decision.imageUrl = '/images/noimage.jpg';
                 if (decisionMatrixEl.decision.description && !_.isObject(decisionMatrixEl.decision.description)) decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);

@@ -78,7 +78,7 @@
         // Move to Utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.png';
+                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
 
                 // Move to constat
                 if (el.description && el.description.length > 80) {

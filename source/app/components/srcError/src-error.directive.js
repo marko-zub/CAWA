@@ -19,7 +19,7 @@
         function link(scope, element, attrs) {
             element[0].onerror = function () {
                 // element[0].className = element[0].className + " image-error";
-                element[0].src = '/images/noimage.png';
+                element[0].src = '/images/noimage.jpg';
             };
         }
     }

@@ -48,11 +48,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-4" ng-if="::vm.decision.imageUrl">
+        <div class="clearfix text-justify">
+            <div class="post-image" ng-if="::vm.decision.imageUrl">
                 <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
             </div>
-            <div class="col-sm-8 " ng-bind-html="::vm.decision.description"></div>
+            <div ng-bind-html="::vm.decision.description"></div>
         </div>
     </div>
     <div class="row decision-childs" ng-if="vm.isDecisionsParent">
