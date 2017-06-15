@@ -22,28 +22,25 @@
                 </li>
             </ul>
         </div>
-        <div class="post">
-            <div class="post-sub-header">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="clearfix">
-                            <div class="pull-right">
-                                <a ui-sref="decisions.single(::{id: vm.parent.uid, slug: vm.parent.nameSlug})">
-                                    {{ vm.parent.name }}
-                                </a>
-                            </div>
+    </div>
+    <div class="post post-single">
+        <div class="post-sub-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a ui-sref="decisions.single(::{id: vm.parent.uid, slug: vm.parent.nameSlug})">
+                                {{ vm.parent.name }}
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
-                Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
-            </div>
         </div>
-    </div>
-    <div class="post">
 
+        <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
+            Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+        </div>
         <div class="row">
             <div class="col-sm-6">
                 <criteria-list list="vm.criteriaGroups" links="false"></criteria-list>
