@@ -107,7 +107,7 @@
                 'type': 'EqualQuery',
                 'characteristicName': vm.item.name,
                 'characteristicId': vm.item.id,
-                'value': (model && !_.isNull(model.value)) ? _.unescape(model.value) : null
+                'value': (model.value && model.value !== 'All') ? _.unescape(model.value) : null
             };
             // console.log(model);
             // console.log(sendObj);

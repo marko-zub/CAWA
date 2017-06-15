@@ -183,6 +183,7 @@
                 if (!_.isBoolean(query.filterQueries.value) && _.isEmpty(query.filterQueries.value) &&
                     _.isEmpty(query.filterQueries.queries)) {
                     sendFo.filterQueries.splice(find, 1);
+
                 } else {
                     sendFo.filterQueries[find] = query.filterQueries;
                 }
@@ -194,9 +195,10 @@
                 (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
                 sendFo.filterQueries = null;
             }
+            sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
 
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, false);
+                initMatrix(result.decisionMatrixs, true);
             });
             setCharacteristicChanges(query.filterQueries, data.optionId);
         });
@@ -208,6 +210,25 @@
                 vm.filterName = data;
             });
         });
+
+        function filterObjectClearConditionCharacterisctics(filterQueries, query) {
+            // if (!query.value) return filterQueries;
+            var removeCharacteristics = [];
+            _.forEach(characteristicGroupsArrayOriginal, function(characteristic) {
+                if ((characteristic.parentCharacteristicId && characteristic.parentCharacteristicId >= 0) &&
+                    characteristic.parentCharacteristicId === query.characteristicId) {
+                    removeCharacteristics.push(characteristic.id);
+                }
+            });
+
+            if (!_.isEmpty(removeCharacteristics)) {
+                filterQueries = _.filter(filterQueries, function(filterQuery) {
+                    if (!_.includes(removeCharacteristics, filterQuery.characteristicId)) return filterQuery;
+                });
+            }
+
+            return filterQueries;
+        }
 
 
         // Discussions Subscrive
@@ -233,22 +254,17 @@
                 });
             }
 
-            // TODO: Use utils finction
-            selectedCharacteristicsIds = [];
-            selectedOptionsIds = [];
-
             var characteristicGroups = angular.copy(vm.characteristicGroupsArray);
             var find = _.findIndex(characteristicGroups, function(characteristicFind) {
                 // console.log(characteristicFind);
                 if (characteristicFind.characteristicGroupId && characteristicFind.characteristicGroupId >= 0) {
                     return characteristicFind.id == characteristic.characteristicId;
-
                 }
             });
+
             if (find >= 0) {
                 characteristicGroups[find].selectedValue = value;
                 if (optionId >= 0) characteristicGroups[find].optionId = optionId;
-                // console.log(characteristicGroups[find]);
             }
 
             // Pick all optionIDs
@@ -267,10 +283,14 @@
             // Condition select controls
             var characteristicGroupsFull = angular.copy(characteristicGroupsArrayOriginal);
             characteristicGroups = _.filter(characteristicGroups, function(characteristic, index) {
-                if (characteristic.parentCharacteristicId &&
-                    _.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
-                    characteristic.disabled = false;
-                    characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds);
+                if (characteristic.parentCharacteristicId) {
+                    if (_.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
+                        characteristic.disabled = false;
+                        characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds);
+                    } else {
+                        characteristic.selectedValue = null;
+                        characteristic.disabled = true;
+                    }
                 }
                 return characteristic;
             });
@@ -492,9 +512,11 @@
         // TODO: drop settimeout and apply
         // Need only for first time load
         function renderMatrix(calcHeight) {
-            $scope.$applyAsync(function() {
+            setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
+            }, 0);
+            $scope.$applyAsync(function() {
                 vm.decisionsSpinner = false;
             });
         }

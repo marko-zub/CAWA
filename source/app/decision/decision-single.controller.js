@@ -28,7 +28,7 @@
         // TODO: move to constant
         var navigationObj = [{
             key: 'userFeatured',
-            value: 'userFeatured',
+            value: null,
             label: 'User Featured'
         }, {
             key: 'createDate',
