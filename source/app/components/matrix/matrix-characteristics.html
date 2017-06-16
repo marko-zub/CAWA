@@ -9,7 +9,7 @@
         </div>
         <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
             <div class="matrix-row js-matrix-item-content js-toggle-hide">
-                <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">
+                <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.id" ng-click="vm.getComments($event)">
                     <div class="matrix-col-content">
                         <content-formater 
                                           item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"

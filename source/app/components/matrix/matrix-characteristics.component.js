@@ -91,7 +91,7 @@
 
         function pickDecisionsIds(decisions) {
             return _.map(decisions, function(item) {
-                return item.decision.uid;
+                return item.decision.id;
             });
         }
 

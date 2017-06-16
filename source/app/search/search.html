@@ -18,16 +18,16 @@
         <div class="row" ng-show="!vm.noResult">
             <div class="col-sm-8">
                 <ul class="discussions-list">
-                    <li ng-repeat="decision in vm.decisionsList track by decision.uid">
+                    <li ng-repeat="decision in vm.decisionsList track by decision.id">
                         <div class="post">
-                            <a class="img-link" ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
+                            <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
                                 <div class="img-container" ng-if="decision.imageUrl">
                                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                 </div>
                             </a>
 
                             <div class="post-content">
-                                <a class="post-title" ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
+                                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
                                 <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
                             </div>
                         </div>

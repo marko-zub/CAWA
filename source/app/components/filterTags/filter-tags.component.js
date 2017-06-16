@@ -85,7 +85,7 @@
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
-            if (criteria.uid < 0) {
+            if (criteria.id < 0) {
                 // console.log(criteria);
                 return;
             }
@@ -101,7 +101,7 @@
                 _.forEach(group.criteria, function(criteriaItem) {
 
                     var find = _.findIndex(vm.tagsSort, function(tag) {
-                        return tag.uid === criteriaItem.uid;
+                        return tag.id === criteriaItem.id;
                     });
                     if (criteriaItem.isSelected === true && find < 0) {
                         vm.tagsSort.push(criteriaItem);
@@ -121,7 +121,7 @@
             // _.forEach(characteristics, function(group) {
             _.forEach(characteristics, function(characteristic) {
                 var find = _.findIndex(vm.tagsFilter, function(tag) {
-                    return tag.uid === characteristic.uid;
+                    return tag.id === characteristic.id;
                 });
                 if (characteristic.selectedValue && find < 0) {
                     vm.tagsFilter.push(characteristic);

@@ -6,7 +6,7 @@
             </div>
             <div class="tag-group-wrapper">
                 <div class="tag-group">
-                    <div class="tag-wrapper" ng-repeat="tag in vm.tagsSort track by tag.uid" ng-show="vm.tagsSort.length > 0">
+                    <div class="tag-wrapper" ng-repeat="tag in vm.tagsSort track by tag.id" ng-show="vm.tagsSort.length > 0">
                         <div class="tag">
                             {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div><span ng-show="!$last" class="tag-divider">and</span>

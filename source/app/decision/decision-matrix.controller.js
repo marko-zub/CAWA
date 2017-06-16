@@ -25,7 +25,7 @@
 
             vm.characteristicLimit = 4;
 
-            // vm.uid = $stateParams.uid;
+            // vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
             $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
 
@@ -63,7 +63,7 @@
 
         function loadCharacteristics() {
 
-            getCharacteristicsGroupsById(vm.decision.uid).then(function(resp) {
+            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                 // 3. Render characteristics
                 prepareCharacteristicsGroups(resp);
                 renderMatrix(true);
@@ -364,7 +364,7 @@
                 total += resultEl.characteristics.length;
 
                 var group = _.omit(resultEl, 'characteristics');
-                group.uuid = 'char-g-' + group.uid;
+                group.uuid = 'char-g-' + group.id;
                 characteristicsArray.push(group);
                 resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
 
@@ -379,7 +379,7 @@
                     } else {
                         characteristicsItem.isSortable = true;
                     }
-                    characteristicsItem.uuid = 'char-' + group.uid + '-' + characteristicsItem.uid;
+                    characteristicsItem.uuid = 'char-' + group.id + '-' + characteristicsItem.id;
 
                     // Condition characterisctis
                     // TODO: if parent selecte then enable characteristic

@@ -15,10 +15,10 @@
         <div class="nav-tabs-wrapper clearfix">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li>
-                    <a ui-sref="decisions.single(::{id:vm.decision.uid, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
+                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
-                    <a ui-sref="decisions.single.parent(::{parentId:parent.uid, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
+                    <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
                 </li>
             </ul>
         </div>
@@ -29,7 +29,7 @@
                 <div class="col-sm-12">
                     <div class="clearfix">
                         <div class="pull-right">
-                            <a ui-sref="decisions.single(::{id: vm.parent.uid, slug: vm.parent.nameSlug})">
+                            <a ui-sref="decisions.single(::{id: vm.parent.id, slug: vm.parent.nameSlug})">
                                 {{ vm.parent.name }}
                             </a>
                         </div>

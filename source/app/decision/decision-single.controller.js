@@ -141,7 +141,7 @@
                 var criteriaGroups;
                 $q.all([
                     getCriteriaGroupsById(parent.id, result.decisionMatrixs[0].criteria),
-                    getCharacteristicsGroupsById(parent.uid, result.decisionMatrixs[0].characteristics)
+                    getCharacteristicsGroupsById(parent.id, result.decisionMatrixs[0].characteristics)
                 ]).then(function(values) {
                     vm.criteriaGroups = values[0];
                     vm.characteristicGroups = values[1];

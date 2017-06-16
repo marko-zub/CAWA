@@ -35,19 +35,19 @@
             // getDecisionNomimations(vm.decision.id);
             getDecisionParents(vm.decision.id).then(function(result) {
                 vm.parent = _.find(result, function(parent) {
-                    return parent.uid === stateId;
+                    return parent.id === stateId;
                 });
 
                 if (!vm.parent) return;
 
                 vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-                getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.uid);
+                getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
                 $rootScope.breadcrumbs = [{
                     title: 'Decisions',
                     link: 'decisions'
                 }, {
                     title: vm.decision.name,
-                    link: 'decisions.single({id:' + vm.decision.uid + ', slug:"' + vm.decision.nameSlug + '"})'
+                    link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
                 }, {
                     title: vm.parent.name,
                     link: null

@@ -15,15 +15,15 @@
                 <!-- TODO: create decisions-list component -->
                 <div class="container-desisions">
                     <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
-                        <li ng-repeat="decision in vm.decisionsList track by decision.uid">
+                        <li ng-repeat="decision in vm.decisionsList track by decision.id">
                             <div class="post">
-                                <a class="img-link" ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
+                                <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
                                     <div class="img-container" ng-if="decision.imageUrl">
                                         <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                     </div>
                                 </a>
                                 <div class="post-content">
-                                    <a class="post-title" ui-sref="decisions.single(::{id:decision.uid, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
+                                    <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
 
                                     <div class="info">
                                         <div class="author info-divider">
