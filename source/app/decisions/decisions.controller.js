@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant'];
+    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
 
-    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant) {
+    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
         var
             vm = this;
 
@@ -21,23 +21,7 @@
             pageSize: parseInt($stateParams.size) || 10
         };
 
-        var navigationObj = [{
-            key: 'createDate',
-            value: 'createDate',
-            label: 'Newest'
-        }, {
-            key: 'updateDate',
-            value: 'updateDate',
-            label: 'Active'
-        }, {
-            key: 'totalVotes',
-            value: 'totalVotes',
-            label: 'Votes'
-        }, {
-            key: 'totalViews',
-            value: 'totalViews',
-            label: 'Views'
-        }];
+        var navigationObj = DecisionsConstant.NAVIGATON_STATES;
 
         init();
 
@@ -135,7 +119,8 @@
                     data.sort = allowed.value;
                 } else {
                     $state.go($state.current.name, {
-                        sort: null,
+                        sort: null
+                    }, {
                         location: false
                     });
                 }

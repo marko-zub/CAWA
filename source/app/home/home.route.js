@@ -17,6 +17,12 @@
                 controllerAs: 'vm',
                 data: {
                     pageTitle: 'Home'
+                },
+                params: {
+                    sort: {
+                        value: null,
+                        squash: true
+                    }
                 }
             });
     }

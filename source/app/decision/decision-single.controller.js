@@ -6,11 +6,11 @@
         .module('app.decision')
         .controller('DecisionSingleController', DecisionSingleController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
+    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
     ];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService,
+    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
 
         var
@@ -25,28 +25,14 @@
         vm.$onInit = onInit;
 
         var criteriaGroupsIds = [];
-        // TODO: move to constant
-        var navigationObj = [{
+        var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
+        var newState = {
             key: 'userFeatured',
             value: null,
             label: 'User Featured'
-        }, {
-            key: 'createDate',
-            value: 'createDate',
-            label: 'Newest'
-        }, {
-            key: 'updateDate',
-            value: 'updateDate',
-            label: 'Active'
-        }, {
-            key: 'totalVotes',
-            value: 'totalVotes',
-            label: 'Votes'
-        }, {
-            key: 'totalViews',
-            value: 'totalViews',
-            label: 'Views'
-        }];
+        };
+
+        navigationObj.unshift(newState);
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
@@ -54,6 +40,8 @@
             vm.navigation = navigationObj;
             initPagination();
             getDecisionParents(vm.decision.id);
+
+            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
         }
 
         // TODO: Simplify logic

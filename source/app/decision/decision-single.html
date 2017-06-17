@@ -67,7 +67,7 @@
             <div class="nav-tabs-wrapper clearfix" ng-show="vm.isDecisionsParent">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                        <a ui-sref="decisions.single(::{sort:item.value})">{{item.label}}</a>
+                        <a ui-sref="decisions.single(::{sort:item.key})">{{item.label}}</a>
                     </li>
                 </ul>
             </div>

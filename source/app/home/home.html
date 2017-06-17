@@ -1,6 +1,6 @@
 <div class="home">
-    <div class="row ">
-        <div class="col-md-offset-3 col-md-6">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 hide">
             <div class="mg-sm-b">
                 <a ui-sref="decisions">Decisions</a>
             </div>
@@ -10,5 +10,58 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="app-container-sm">
+        <div class="post-header">  
+            <div class="nav-tabs-wrapper clearfix">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                        <a ui-sref="home({sort:item.key})">{{::item.label}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">    
+                <div class="container-desisions">
+                    <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
+                        <li ng-repeat="decision in vm.decisionsList track by decision.id">
+                            <div class="post">
+                                <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
+                                    <div class="img-container" ng-if="decision.imageUrl">
+                                        <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
+                                    </div>
+                                </a>
+                                <div class="post-content">
+                                    <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
+
+                                    <div class="info">
+                                        <div class="author info-divider">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                                            <span ng-bind="::decision.createUser.username"></span>
+                                        </div>
+                                        <div class="date info-divider">
+                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                            <span ng-bind="::decision.createDate | date:'MM/dd/yyyy'"></span>
+                                        </div>
+                                        <div class="info-divider">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <span ng-bind="::decision.totalViews"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                </div>
+            </div>
+        </div>
+
+        Looking for more? Browse the <a ui-sref="decisions" class="text-bold">complete list of decisions</a>
     </div>
 </div>

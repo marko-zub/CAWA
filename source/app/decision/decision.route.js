@@ -120,6 +120,7 @@
 
                 currentState = $state.current.name;
 
+                // TODO: move to app.run.js
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
@@ -173,16 +174,17 @@
                 // }
 
                 //unsubscribe event listener
-                // stateListener();
+                stateListener();
             });
     }
 
     // Decision Data
-    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', 'MsgService'];
+    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', 'MsgService', '$rootScope'];
 
-    function DecisionResolver(DecisionDataService, $stateParams, $state, msg) {
+    function DecisionResolver(DecisionDataService, $stateParams, $state, msg, $rootScope) {
         var id = $stateParams.id;
-        return DecisionDataService.getDecisionInfo(id).then(function(result) {
+        
+        return DecisionDataService.getDecisionInfo(id, $rootScope.decisonViewsCount).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;

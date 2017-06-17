@@ -170,10 +170,11 @@
             }, data).$promise;
         }
 
-        function getDecisionInfo(id) {
+        function getDecisionInfo(id, enableViews) {
+            enableViews = enableViews !== false ? true : false;
             return decisionInfo.get({
                 id: id,
-                views: true
+                views: enableViews
             }).$promise;
         }
 
