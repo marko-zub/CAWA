@@ -52,7 +52,7 @@
             var find = _.find(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
-            if (find && find.value !== 'userFeatured') {
+            if (find && find.key !== 'userFeatured') {
                 vm.sortMode = find.value;
                 getDecisionMatrix(vm.decision.id);
                 // Hide criterias
@@ -67,6 +67,14 @@
                     };
 
                     getDecisionMatrix(vm.decision.id, sendData);
+                });
+
+                $state.go($state.current.name, {
+                    sort: null
+                }, {
+                    location: true,
+                    reload: false,
+                    notify: false
                 });
             }
         }
