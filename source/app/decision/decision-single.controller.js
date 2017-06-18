@@ -53,12 +53,12 @@
                 return navItem.key === mode;
             });
             if (find && find.key !== 'userFeatured') {
-                vm.sortMode = find.value;
+                vm.tabMode = find.value;
                 getDecisionMatrix(vm.decision.id);
                 // Hide criterias
                 vm.criteriaGroups = [];
             } else {
-                vm.sortMode = 'userFeatured';
+                vm.tabMode = 'userFeatured';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
                     var sendData = {
                         sortCriteriaIds: criteriaGroupsIds,
@@ -70,9 +70,8 @@
                 });
 
                 $state.go($state.current.name, {
-                    sort: null
+                    tab: null
                 }, {
-                    location: true,
                     reload: false,
                     notify: false
                 });
@@ -100,7 +99,7 @@
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
                     vm.decisionsSpinnerChilds = true;
-                    initSortMode($stateParams.sort);
+                    initSortMode($stateParams.tab);
                 }
 
                 return result;
@@ -111,7 +110,7 @@
             var sendData = data;
             if (!sendData) {
                 sendData = {
-                    sortDecisionPropertyName: vm.sortMode,
+                    sortDecisionPropertyName: vm.tabMode,
                     sortDecisionPropertyDirection: 'DESC'
                 };
             }

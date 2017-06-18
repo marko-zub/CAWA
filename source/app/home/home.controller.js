@@ -35,7 +35,7 @@
             var data = checkStateParams($stateParams);
             getDecisions(data);
 
-            if (!$stateParams.sort) {
+            if (!$stateParams.tab) {
                 vm.activeTab = 1;
             }
         }
@@ -79,25 +79,27 @@
         function checkStateParams(stateParams) {
             if (!stateParams) return;
             var data,
-                allowedSortParams;
+                allowedTabParams;
 
             data = vm.pagination;
-            allowedSortParams = navigationObj;
+            allowedTabParams = navigationObj;
 
-            data.sortDirection = stateParams.sortDirection || 'DESC';
-            if (stateParams.sort) {
+            data.tabDirection = stateParams.tabDirection || 'DESC';
+            if (stateParams.tab) {
                 var checkObj, allowed;
 
                 checkObj = {
-                    key: stateParams.sort
+                    key: stateParams.tab
                 };
-                allowed = _.find(allowedSortParams, checkObj);
+                allowed = _.find(allowedTabParams, checkObj);
                 if (_.isObject(allowed)) {
-                    data.sort = allowed.value;
+                    data.tab = allowed.value;
                 } else {
                     $state.go($state.current.name, {
-                        sort: null,
-                        location: false
+                        tab: null
+                    }, {
+                        reload: false,
+                        notify: false
                     });
                 }
             }

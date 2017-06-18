@@ -34,7 +34,7 @@
             var data = checkStateParams($stateParams);
             getDecisions(data);
 
-            if (!$stateParams.sort) {
+            if (!$stateParams.tab) {
                 vm.activeTab = 1;
             }
         }
@@ -107,21 +107,22 @@
             data = vm.pagination;
             allowedSortParams = navigationObj;
 
-            data.sortDirection = stateParams.sortDirection || 'DESC';
-            if (stateParams.sort) {
+            data.tabDirection = stateParams.tabDirection || 'DESC';
+            if (stateParams.tab) {
                 var checkObj, allowed;
 
                 checkObj = {
-                    key: stateParams.sort
+                    key: stateParams.tab
                 };
                 allowed = _.find(allowedSortParams, checkObj);
                 if (_.isObject(allowed)) {
-                    data.sort = allowed.value;
+                    data.tab = allowed.value;
                 } else {
                     $state.go($state.current.name, {
-                        sort: null
+                        tab: null
                     }, {
-                        location: false
+                        reload: false,
+                        notify: false
                     });
                 }
             }

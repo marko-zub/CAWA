@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('home', {
-                url: '/',
+                url: '/?tab',
                 templateUrl: 'app/home/home.html',
                 controller: 'HomeController',
                 controllerAs: 'vm',
@@ -19,7 +19,7 @@
                     pageTitle: 'Home'
                 },
                 params: {
-                    sort: {
+                    tab: {
                         value: null,
                         squash: true
                     }

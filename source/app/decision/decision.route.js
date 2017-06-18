@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('decisions.single', {
-                url: '/:id/{slug}?page&size',
+                url: '/:id/{slug}?page&size&tab',
                 abstract: false,
                 views: {
                     "@": {
@@ -37,7 +37,7 @@
                         value: null,
                         squash: true
                     },
-                    sort: {
+                    tab: {
                         value: null,
                         squash: true
                     }
