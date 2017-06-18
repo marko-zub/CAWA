@@ -60,10 +60,6 @@
     </div>
     <div class="row decision-childs" ng-show="vm.isDecisionsParent">
         <div class="col-xs-12 mg-sm-b">
-            <!-- <h4 class="app-title-inline">Most popular {{::vm.decision.name}} by User Rating</h4>
-            <a ui-sref="decisions.single.comparison({analysisId:'hall-of-fame'})">
-                Details <i class="fa fa-chevron-right icon-sm" aria-hidden="true"></i>
-            </a> -->
             <div class="nav-tabs-wrapper clearfix" ng-show="vm.isDecisionsParent">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
@@ -76,13 +72,13 @@
             <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
                 <li ng-repeat="decision in vm.decisions track by decision.id">
                     <div class="post">
-                        <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, sort: null})" class="left-side">
+                        <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="left-side">
                             <div class="img-container">
                                 <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                             </div>
                         </a>
                         <div class="post-content">
-                            <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, sort: null})" ng-bind="::decision.name"></a>
+                            <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
                             <div class="criteria-comliance" ng-show="decision.criteriaCompliancePercentage">
                                 Criteria compliance: <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                                 </small>
