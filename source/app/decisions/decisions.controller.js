@@ -116,7 +116,7 @@
                 };
                 allowed = _.find(allowedSortParams, checkObj);
                 if (_.isObject(allowed)) {
-                    data.tab = allowed.value;
+                    data.sort = allowed.value;
                 } else {
                     $state.go($state.current.name, {
                         tab: null
