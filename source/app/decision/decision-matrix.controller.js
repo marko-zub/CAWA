@@ -269,6 +269,7 @@
 
             // Pick all optionIDs
             // TODO: use servise Filer Object
+            // Simplify logic
             selectedCharacteristicsIds = [];
             selectedOptionsIds = [];
             _.forEach(characteristicGroups, function(characteristicItem) {
@@ -286,7 +287,8 @@
                 if (characteristic.parentCharacteristicId) {
                     if (_.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
                         characteristic.disabled = false;
-                        characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds);
+                        characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds, characteristic.selectedValue);
+                        // console.log(characteristicGroupsFull[index].options, characteristic.options)
                     } else {
                         characteristic.selectedValue = null;
                         characteristic.disabled = true;
@@ -298,16 +300,19 @@
             vm.characteristicGroupsArray = angular.copy(characteristicGroups);
         }
 
-        function pickChildOptions(options, optionsIds) {
+        function pickChildOptions(options, optionsIds, selected) {
             if (!options) return;
-
             var optionsFiltered = [];
-            _.forEach(optionsIds, function(optionId) {
-                _.forEach(options, function(option) {
-                    if (option.parentOptionIds && _.includes(option.parentOptionIds, optionId)) {
+            _.forEach(options, function(option) {
+                if (option.parentOptionIds) {
+                    var parentOptionIdsInArray = _.intersection(optionsIds, option.parentOptionIds);
+                    if (selected && !_.isEmpty(parentOptionIdsInArray)) {
+                        optionsFiltered.push(option);
+                    } else if (!selected && !_.isEmpty(parentOptionIdsInArray) && parentOptionIdsInArray.length === optionsIds.length) {
                         optionsFiltered.push(option);
                     }
-                });
+
+                }
             });
 
             return optionsFiltered;
@@ -515,10 +520,10 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
+                $scope.$applyAsync(function() {
+                    vm.decisionsSpinner = false;
+                });
             }, 0);
-            $scope.$applyAsync(function() {
-                vm.decisionsSpinner = false;
-            });
         }
 
         function getDecisionMatrix(id, persistent) {

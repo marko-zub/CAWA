@@ -20,6 +20,9 @@
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
                 </li>
+                <li>
+                    <a href="#">Nominations</a>
+                </li>                
             </ul>
         </div>
     </div>

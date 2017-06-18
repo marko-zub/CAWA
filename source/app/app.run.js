@@ -17,6 +17,8 @@
             function(event, toState, toParams, fromState, fromParams) {
                 if(toState && fromState && toState.name === fromState.name) {
                     $rootScope.decisonViewsCount = false;
+                } else {
+                    $rootScope.decisonViewsCount = true;
                 }
         });
 

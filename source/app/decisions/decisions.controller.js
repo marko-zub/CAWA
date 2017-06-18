@@ -107,7 +107,7 @@
             data = vm.pagination;
             allowedSortParams = navigationObj;
 
-            data.tabDirection = stateParams.tabDirection || 'DESC';
+            data.sortDirection = stateParams.sortDirection || 'DESC';
             if (stateParams.tab) {
                 var checkObj, allowed;
 
