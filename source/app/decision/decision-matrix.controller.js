@@ -333,7 +333,8 @@
                         criteriaIds.push(criteria.id);
                         return criteria;
                     });
-                    if (criteriaItem.criteria.length > 0) return criteriaItem;
+                    return criteriaItem;
+                    // if (criteriaItem.criteria.length > 0) return criteriaItem;
                 });
 
                 vm.criteriaGroups = angular.copy(criteriaGroups);

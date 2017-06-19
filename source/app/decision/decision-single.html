@@ -12,7 +12,7 @@
 <div class="app-container-sm">
     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
     <div class="post-header">
-        <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.decisionParents.length">
+        <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li class="active">
                     <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
@@ -63,7 +63,10 @@
     </div>
     <div class="row decision-childs" ng-show="vm.isDecisionsParent">
         <div class="col-xs-12 mg-sm-b">
-            <div class="nav-tabs-wrapper clearfix" ng-show="vm.isDecisionsParent">
+            <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="vm.isDecisionsParent">
+                <h4 class="tabs-title">
+                    All Options
+                </h4>
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
                         <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
@@ -100,7 +103,7 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     <span ng-bind="decision.totalViews"></span>
                                 </div>
-                            </div>   
+                            </div>
 
                             <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
                         </div>

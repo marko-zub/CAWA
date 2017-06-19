@@ -27,9 +27,9 @@
         var criteriaGroupsIds = [];
         var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
         var newState = {
-            key: 'userFeatured',
+            key: 'topRated',
             value: null,
-            label: 'User Featured'
+            label: 'Top Rated'
         };
 
         navigationObj.unshift(newState);
@@ -52,13 +52,13 @@
             var find = _.find(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
-            if (find && find.key !== 'userFeatured') {
+            if (find && find.key !== 'topRated') {
                 vm.tabMode = find.value;
                 getDecisionMatrix(vm.decision.id);
                 // Hide criterias
                 vm.criteriaGroups = [];
             } else {
-                vm.tabMode = 'userFeatured';
+                vm.tabMode = 'topRated';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
                     var sendData = {
                         sortCriteriaIds: criteriaGroupsIds,
