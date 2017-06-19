@@ -60,13 +60,7 @@
             } else {
                 vm.tabMode = 'topRated';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                    var sendData = {
-                        sortCriteriaIds: criteriaGroupsIds,
-                        sortWeightCriteriaDirection: 'DESC',
-                        sortTotalVotesCriteriaDirection: 'DESC'
-                    };
-
-                    getDecisionMatrix(vm.decision.id, sendData);
+                    getDecisionMatrix(vm.decision.id);
                 });
 
                 $state.go($state.current.name, {
@@ -76,19 +70,6 @@
                     notify: false
                 });
             }
-        }
-
-        function getDecisionNomimations(id) {
-            if (!id) return;
-
-            var pagination = _.clone(vm.pagination);
-            pagination.pageNumber = pagination.pageNumber - 1;
-
-            DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = descriptionTrustHtml(result.decisions);
-                vm.pagination.totalDecisions = result.totalDecisions;
-                // console.log(result);
-            });
         }
 
         function getDecisionParents(id) {
@@ -106,14 +87,31 @@
             });
         }
 
-        function getDecisionMatrix(id, data) {
-            var sendData = data;
-            if (!sendData) {
-                sendData = {
-                    sortDecisionPropertyName: vm.tabMode,
-                    sortDecisionPropertyDirection: 'DESC'
-                };
+        function getDecisionMatrix(id, filter) {
+            var sendData = {};
+            var pagination = _.clone(vm.pagination);
+            pagination.pageNumber = pagination.pageNumber - 1;
+            if (pagination && pagination.pageNumber !== 0) {
+                sendData.pageNumber = pagination.pageNumber;
+                sendData.pageSize = pagination.pageSize;
             }
+
+            if (vm.tabMode === 'topRated') {
+                sendData.sortCriteriaIds = criteriaGroupsIds;
+                sendData.sortWeightCriteriaDirection = 'DESC';
+                sendData.sortTotalVotesCriteriaDirection = 'DESC';
+            } else {
+                sendData.sortDecisionPropertyName = vm.tabMode;
+                sendData.sortDecisionPropertyDirection = 'DESC';
+            }
+
+            if (_.isNull(filter) || filter) {
+                sendData.decisionNameFilterPattern = filter;
+            } else if(vm.filterName) {
+                sendData.decisionNameFilterPattern = vm.filterName;
+            }
+
+
             DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = [];
                 var decisions = [];
@@ -122,6 +120,8 @@
                 });
                 vm.decisions = descriptionTrustHtml(decisions);
                 vm.decisionsSpinnerChilds = false;
+
+                vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
         }
 
@@ -164,12 +164,12 @@
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
-            getDecisionNomimations(vm.decision.id);
+            getDecisionMatrix(vm.decision.id);
             updateStateParams();
         }
 
         function changePage() {
-            getDecisionNomimations(vm.decision.id);
+            getDecisionMatrix(vm.decision.id);
             updateStateParams();
         }
 
@@ -272,6 +272,37 @@
             });
         }
 
+        // TODO: make component
+        // Filter
+        vm.clearFilterName = clearFilterName;
+        vm.filterNameSubmit = filterNameSubmit;
+        vm.filterNameSubmitClick = filterNameSubmitClick;
+        vm.controlOptions = {
+            debounce: 50
+        };
+
+        function clearFilterName() {
+            vm.filterName = null;
+            filterNameSend(null);
+        }
+
+        function filterNameSubmit(event, value) {
+            if (event.keyCode === 13) {
+                filterNameSend(value);
+                event.preventDefault();
+            }
+        }
+
+        function filterNameSend(value) {
+            getDecisionMatrix(vm.decision.id, value);
+        }
+
+        function filterNameSubmitClick(value) {
+            // if (!value) return;
+            // TODO: first request if ng-touched
+            filterNameSend(value);
+        }
+        // End Filter name
 
     }
 })();

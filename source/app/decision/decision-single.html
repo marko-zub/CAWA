@@ -75,6 +75,16 @@
             </div>
         </div>
         <div class="col-sm-8">
+            
+            <!-- TODO: make as component -->
+            <!-- Filter  -->
+            <div class="filter-name">
+                <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+            </div>
+            <!-- Filter Name -->
+
             <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
                 <li ng-repeat="decision in vm.decisions track by decision.id">
                     <div class="post">
