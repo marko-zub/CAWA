@@ -90,8 +90,9 @@
         function getDecisionMatrix(id, filter) {
             var sendData = {};
             var pagination = _.clone(vm.pagination);
+
             pagination.pageNumber = pagination.pageNumber - 1;
-            if (pagination && pagination.pageNumber !== 0) {
+            if (pagination) {
                 sendData.pageNumber = pagination.pageNumber;
                 sendData.pageSize = pagination.pageSize;
             }
