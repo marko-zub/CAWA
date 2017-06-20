@@ -215,7 +215,7 @@
                         if (elEqual) return _.merge(el, elEqual);
                     });
 
-                    if (resultEl.criteria.length > 0) return resultEl;
+                    return resultEl;
                 });
             });
         }

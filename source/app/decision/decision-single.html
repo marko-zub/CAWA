@@ -61,7 +61,7 @@
             <div ng-bind-html="::vm.decision.description"></div>
         </div>
     </div>
-    <div class="row decision-childs" ng-show="vm.isDecisionsParent">
+    <div class="row decision-childs">
         <div class="col-xs-12 mg-sm-b">
             <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="vm.isDecisionsParent">
                 <h4 class="tabs-title">
@@ -74,7 +74,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8" ng-if="vm.isDecisionsParent">
             
             <!-- TODO: make as component -->
             <!-- Filter  -->
@@ -128,7 +128,7 @@
             <criteria-list list="::vm.criteriaGroups"></criteria-list>
         </div>
         <!-- End Criteria -->
-        <div class="col-sm-8">
+        <div class="col-sm-8" ng-if="vm.isDecisionsParent">
             <div class="row app-pagination clearfix" ng-show="vm.isDecisionsParent">
                 <div class="col-md-10 col-sm-10 paginator">
                     <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
