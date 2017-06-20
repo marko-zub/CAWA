@@ -520,10 +520,10 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
-                $scope.$applyAsync(function() {
-                    vm.decisionsSpinner = false;
-                });
             }, 0);
+            $scope.$applyAsync(function() {
+                vm.decisionsSpinner = false;
+            });            
         }
 
         function getDecisionMatrix(id, persistent) {

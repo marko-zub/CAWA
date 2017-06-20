@@ -36,6 +36,7 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
+            vm.activeTabSortChild = 0;
             console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
