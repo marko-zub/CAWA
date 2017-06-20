@@ -11,12 +11,18 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('home', {
-                url: '/',
+                url: '/?tab',
                 templateUrl: 'app/home/home.html',
                 controller: 'HomeController',
                 controllerAs: 'vm',
                 data: {
                     pageTitle: 'Home'
+                },
+                params: {
+                    tab: {
+                        value: null,
+                        squash: true
+                    }
                 }
             });
     }

@@ -11,7 +11,7 @@
     function DecisionSharedService($rootScope) {
         var service = this;
 
-        service.filterObject = {
+        var emptyFilterObject = {
             selectedCriteria: {
                 sortCriteriaIds: [],
                 sortCriteriaCoefficients: {}
@@ -38,18 +38,22 @@
             selectedDecision: {
                 decisionsIds: []
             },
-            persistent: true,
+            persistent: false, //as we disable analysis true
             includeChildDecisionIds: null,
             excludeChildDecisionIds: null,
             filterQueries: null,
             decisionNameFilterPattern: null
         };
 
-        //allias
+        service.filterObject = angular.copy(emptyFilterObject);
 
-        // TODO: add function to clear object 
-        // Remove send 'data' etc...
+        //allias
         service.getFilterObject = function() {
+            return service.filterObject;
+        };
+        // TODO: add function to clear object
+        // Remove send 'data' etc...
+        service.getRequestFilterObject = function() {
             var _fo = service.filterObject;
             // console.log(_fo);
             // console.log(_fo.pagination.pageNumber);
@@ -72,7 +76,7 @@
                 sortDecisionPropertyDirection: _fo.sorters.sortByDecisionProperty.order,
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
-                persistent: _fo.persistent,
+                persistent: false, //_fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds,
                 filterQueries: _fo.filterQueries,
@@ -80,11 +84,18 @@
             };
         };
 
+        service.changeFilterObject = function(obj) {
+            if(_.isEmpty(obj)) return;
+            // TODO: add check obj properties or clear function
+            service.filterObject = obj;
+        };
+
+        // Set data from request
         service.setFilterObject = function(obj) {
             if (!obj) return;
 
             // Fix for inclusion tab first time call
-            if((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
+            if ((obj.excludeChildDecisionIds && obj.excludeChildDecisionIds.length) > 0 && !obj.includeChildDecisionIds) {
                 obj.includeChildDecisionIds = null;
             } else if (obj.includeChildDecisionIds && obj.includeChildDecisionIds.length) {
                 obj.excludeChildDecisionIds = obj.includeChildDecisionIds;
@@ -100,7 +111,7 @@
                 pagination: {
                     pageNumber: obj.pageNumber ? obj.pageNumber + 1 : 1,
                     pageSize: obj.pageSize || 10,
-                    totalDecisions: obj.totalDecisions || (obj.pageNumber + 1)*obj.pageSize //Need to be sended in analysis or in endpoint api/v1.0/decisions/16003
+                    totalDecisions: obj.totalDecisions || (obj.pageNumber + 1) * obj.pageSize //Need to be sended in analysis or in endpoint api/v1.0/decisions/16003
                 },
                 selectedCharacteristics: {},
                 sorters: {
@@ -121,12 +132,17 @@
                 },
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
-                persistent: obj.persistent || false,
+                persistent: false, //obj.persistent || false,
                 filterQueries: obj.filterQueries || null,
                 decisionNameFilterPattern: obj.decisionNameFilterPattern || null
             };
 
             service.filterObject = sortObjAnalysis;
+        };
+
+        service.setCleanFilterObject = function() {
+            service.filterObject = angular.copy(emptyFilterObject);
+            return service.filterObject;
         };
 
 

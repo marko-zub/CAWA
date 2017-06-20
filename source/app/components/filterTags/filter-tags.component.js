@@ -49,9 +49,10 @@
             // Characteristics
             if (changes.characteristics &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
-                vm.characteristics = changes.characteristics.currentValue;
+                vm.characteristics = angular.copy(changes.characteristics.currentValue);
+                // generateCharacteristicsTags(vm.characteristics);
 
-                if(vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
+                if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
             }
 
@@ -65,19 +66,14 @@
 
             // Criteria
             if (changes.criteria && changes.criteria.currentValue) {
-                // console.log(changes.criteria.currentValue);
-
-                // console.log(changes.criteria.currentValue, changes.criteria.previousValue, !angular.equals(changes.criteria.currentValue, changes.criteria.previousValue));
-                // if (!angular.equals(changes.criteria.currentValue, changes.criteria.previousValue)) {
-                    vm.criteria = angular.copy(changes.criteria.currentValue);
-                    generateCriteriaTags(vm.criteria);
-                    updateMatrixHeight();
-                // }
+                vm.criteria = angular.copy(changes.criteria.currentValue);
+                generateCriteriaTags(vm.criteria);
+                updateMatrixHeight();
             }
         }
 
         function setCharacteristicsSortTag(characteristic) {
-            if(!characteristic) return;
+            if (!characteristic) return;
             var characteristicsOrderTag = angular.copy(characteristic);
             var findCharacteristics = Utils.findGroupItemById(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
@@ -89,8 +85,8 @@
         vm.removeCriteriaTag = removeCriteriaTag;
 
         function removeCriteriaTag(criteria) {
-            if (criteria.uid < 0) {
-                console.log(criteria);
+            if (criteria.id < 0) {
+                // console.log(criteria);
                 return;
             }
 
@@ -105,21 +101,15 @@
                 _.forEach(group.criteria, function(criteriaItem) {
 
                     var find = _.findIndex(vm.tagsSort, function(tag) {
-                        return tag.uid === criteriaItem.uid;
+                        return tag.id === criteriaItem.id;
                     });
                     if (criteriaItem.isSelected === true && find < 0) {
-                        // criteriaSelectedList.push(criteriaItem);
                         vm.tagsSort.push(criteriaItem);
                     } else if (!criteriaItem.isSelected && find >= 0) {
                         vm.tagsSort.splice(find, 1);
                     }
                 });
             });
-            // console.log(vm.tagsSort);
-
-            // if (!angular.equals(vm.tagsSort, criteriaSelectedList)) {
-            //     vm.tagsSort = criteriaSelectedList;
-            // }
             setTimeout(function() {
                 updateMatrixHeight();
             }, 0);
@@ -128,19 +118,24 @@
 
         function generateCharacteristicsTags(characteristics) {
             // console.log(characteristics);
-            _.forEach(characteristics, function(group) {
-                _.forEach(group.characteristics, function(characteristic) {
-                    // console.log(characteristic);
-                    // debugger
-                    // if(characteristics.seletedValues) console.log(characteristics.seletedValues);
+            // _.forEach(characteristics, function(group) {
+            _.forEach(characteristics, function(characteristic) {
+                var find = _.findIndex(vm.tagsFilter, function(tag) {
+                    return tag.id === characteristic.id;
                 });
+                if (characteristic.selectedValue && find < 0) {
+                    vm.tagsFilter.push(characteristic);
+                } else if (!characteristic.isSelected && find >= 0) {
+                    vm.tagsFilter.splice(find, 1);
+                }
             });
+            // });
         }
 
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
-                // TODO: use seletedValue
+                // TODO: use selectedValue
                 // console.log(vm.characteristics);
 
                 if (data.characteristicId === -1) {
@@ -155,8 +150,10 @@
 
                 // Parese Filter Object
                 _fo = angular.copy(data);
-                if (_fo) createTagsList(_fo.filterQueries);
-                updateMatrixHeight();
+                if (_fo) {
+                    createTagsList(_fo.filterQueries);
+                    updateMatrixHeight();
+                }
             });
         }
 
@@ -188,9 +185,10 @@
                     itemCopy.value = null;
                 }
 
-                if (item.characteristicId === -1) {
+                if (itemCopy.characteristicId === -1) {
+                    itemCopy.value = null;
+                    DecisionNotificationService.notifyFilterByName(null);
                     vm.tagsFilter.splice(index, 1);
-                    updateMatrixHeight();
                     return;
                 }
                 // All data in arrays [true], ['Value', 'Value2'], ['date1 - date2']
@@ -205,11 +203,7 @@
                 }
 
                 // Filter Name
-                if (itemCopy.characteristicId === -1) {
-                    itemCopy.value = null;
-                    DecisionNotificationService.notifyFilterByName(null);
-                    return;
-                }
+
             }
 
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
@@ -223,22 +217,22 @@
         }
 
         function updateFilterObject(query) {
-            DecisionNotificationService.notifySelectCharacteristic({
-                'filterQueries': query
-            });
+
+            var sendData = {
+                query: {
+                    'filterQueries': query
+                }
+            };
+            DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 
         // TODO: clean up find
         function findCharacteristic(id) {
-            var findCharacteristic;
-            _.forEach(vm.characteristics, function(group) {
-                var find = _.findLast(group.characteristics, function(characteristic) {
-                    // console.log(characteristic.id, id, characteristic.id === id)
-                    return characteristic.id === id;
-                });
-                if (find) findCharacteristic = find;
+            var find = _.findLast(vm.characteristics, function(characteristic) {
+                return characteristic.id === id;
             });
-            if (findCharacteristic) return _.pick(findCharacteristic, 'name', 'valueType');
+
+            if (find) return _.pick(find, 'name', 'valueType');
         }
 
         // TODO: Remove it
@@ -252,11 +246,6 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
-
-            updateMatrixHeight();
-            setTimeout(function() {
-                updateMatrixHeight();
-            }, 0);
         }
 
         function addToTagsList(item) {
@@ -271,24 +260,6 @@
                 }
             }
         }
-
-        // function createTagsList(filterQueries) {
-        //     if (_.isEmpty(filterQueries)) return;
-        //     // TODO: Always regenerate new array
-        //     // Update it
-        //     if(_.isArray(filterQueries)) {
-        //         _.forEach(filterQueries, function(item) {
-        //             var itemInTags = _.find(vm.tagsFilter, function(tag){
-        //                 return tag.characteristicId === item.characteristicId;
-        //             });
-        //             if(itemInTags < 0) {
-        //                 var find = findCharacteristic(item.characteristicId);
-        //                 item = _.merge(item, find);
-        //                 if (!_.isEmpty(item)) vm.tagsFilter.push(caseQueryType(item));
-        //             }
-        //         });
-        //     }
-        // }
 
 
         function caseQueryType(item) {

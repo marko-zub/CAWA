@@ -9,6 +9,9 @@
             templateUrl: 'app/components/appPaginator/app-paginator.html',
             controller: 'PaginatorController',
             controllerAs: 'vm'
+            // bindings: {
+            //     pagination: '<'
+            // }
         });
 
     PaginatorController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'PaginatorConstant'];
@@ -19,7 +22,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            vm.pagination = DecisionSharedService.filterObject.pagination;
+            vm.pagination = DecisionSharedService.getFilterObject().pagination;
             vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         }
 

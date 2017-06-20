@@ -36,13 +36,17 @@
                     size: {
                         value: null,
                         squash: true
+                    },
+                    tab: {
+                        value: null,
+                        squash: true
                     }
                 }
             })
 
         // TODO: matrix and single.parent state have some bugs
-        .state('decisions.single.matrix', {
-            url: '/matrix',
+        .state('decisions.single.comparison', {
+            url: '/comparison/{analysisId}',
             views: {
                 "@": {
                     templateUrl: 'app/decision/decision-matrix.html',
@@ -50,20 +54,26 @@
                     controllerAs: 'vm',
                 }
             },
-            resolve: {
-                decisionStateInfo: DecisionStateResolver,
-                decisionAnalysisInfo: DecisionAanalysisResolver
+            params: {
+                analysisId: {
+                    value: null,
+                    squash: true
+                }
             },
-        })
-        .state('decisions.single.matrix.analysis', {
-            url: '/analysis/:analysisId',
-            templateUrl: 'app/decision/decision.html',
-            controller: 'DecisionController',
-            controllerAs: 'vm',
             resolve: {
                 decisionStateInfo: DecisionStateResolver
+                // decisionAnalysisInfo: DecisionAanalysisResolver
             },
         })
+        // .state('decisions.single.comparison.analysis', {
+        //     url: '/analysis/:analysisId',
+        //     templateUrl: 'app/decision/decision.html',
+        //     controller: 'DecisionController',
+        //     controllerAs: 'vm',
+        //     resolve: {
+        //         decisionStateInfo: DecisionStateResolver
+        //     },
+        // })
         .state('decisions.single.parent', {
             url: '/:parentId/{parentSlug}',
             abstract: false,
@@ -96,7 +106,7 @@
         var decisionSlug = result.nameSlug ? result.nameSlug : '';
 
         if ($stateParams.slug === null ||
-            $stateParams.slug === 'matrix' ||
+            $stateParams.slug === 'comparison' ||
             $stateParams.slug === 'list') {
             $stateParams.slug = result.nameSlug;
         }
@@ -110,6 +120,7 @@
 
                 currentState = $state.current.name;
 
+                // TODO: move to app.run.js
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
@@ -132,8 +143,8 @@
 
                 // TODO: fix it
                 // BreadCrumbs
-                if ($state.current.name === 'decisions.single.matrix' ||
-                    $state.current.name === 'decisions.single.matrix.analysis') {
+                if ($state.current.name === 'decisions.single.comparison' ||
+                    $state.current.name === 'decisions.single.comparison.analysis') {
                     $rootScope.breadcrumbs = [{
                         title: 'Decisions',
                         link: 'decisions'
@@ -163,16 +174,17 @@
                 // }
 
                 //unsubscribe event listener
-                // stateListener();
+                stateListener();
             });
     }
 
     // Decision Data
-    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', 'MsgService'];
+    DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', 'MsgService', '$rootScope'];
 
-    function DecisionResolver(DecisionDataService, $stateParams, $state, msg) {
-        var uid = $stateParams.id;
-        return DecisionDataService.getDecisionInfo(uid).then(function(result) {
+    function DecisionResolver(DecisionDataService, $stateParams, $state, msg, $rootScope) {
+        var id = $stateParams.id;
+        
+        return DecisionDataService.getDecisionInfo(id, $rootScope.decisonViewsCount).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;
@@ -206,7 +218,7 @@
         analysisSlug = urlParams[urlParams.length - 2];
 
         // console.log(analysisSlug, analysisId);
-        if (analysisSlug === 'analysis' && analysisId && analysisId !== 'hall-of-fame') {
+        if (analysisSlug === 'comparison' && analysisId && analysisId !== 'hall-of-fame') {
             return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
                 if (resp.error) {
                     console.log(resp.error);
@@ -214,7 +226,7 @@
                 }
 
                 // Set analysis obj
-                DecisionSharedService.setFilterObject(resp);
+                // DecisionSharedService.setFilterObject(resp);
 
                 return resp;
             }, function(req) {

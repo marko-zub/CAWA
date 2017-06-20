@@ -25,7 +25,6 @@
 
             vm.decision = decisionBasicInfo || {};
 
-
             vm.isDecisionsParent = false;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
@@ -36,20 +35,19 @@
             // getDecisionNomimations(vm.decision.id);
             getDecisionParents(vm.decision.id).then(function(result) {
                 vm.parent = _.find(result, function(parent) {
-                    return parent.uid === stateId;
+                    return parent.id === stateId;
                 });
-
 
                 if (!vm.parent) return;
 
                 vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-                getDecisionParentsCriteriaCharacteristicts(vm.parent.id);
+                getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
                 $rootScope.breadcrumbs = [{
                     title: 'Decisions',
                     link: 'decisions'
                 }, {
                     title: vm.decision.name,
-                    link: 'decisions.single({id:' + vm.decision.uid + ', slug:"' + vm.decision.nameSlug + '"})'
+                    link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
                 }, {
                     title: vm.parent.name,
                     link: null
@@ -78,7 +76,7 @@
 
         // TODO: clean up
         // Remove loop
-        function getDecisionParentsCriteriaCharacteristicts(parentId) {
+        function getDecisionParentsCriteriaCharacteristicts(parentId, parentUid) {
             var sendData = {
                 includeChildDecisionIds: []
             };
@@ -88,18 +86,20 @@
             var criteriaGroups;
             $q.all([
                 getCriteriaGroupsById(parentId),
-                getCharacteristicsGroupsById(parentId),
+                getCharacteristicsGroupsById(parentUid),
             ]).then(function(values) {
 
-                vm.characteristicGroups = values[1];
+                vm.characteristicGroups = _.filter(values[1], function(resultEl) {
+                    resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
+                    _.map(resultEl.characteristics, function(el) {
+                        return el;
+                    });
+                    if (resultEl.characteristics.length > 0) return resultEl;
+                });
 
                 // Criterias IDs
                 _.forEach(values[0], function(criteriaItem) {
                     _.forEach(criteriaItem.criteria, function(criteria) {
-                        // console.log(criteria);
-                        // if (criteria.description && !_.isObject(criteria.description)) {
-                        //     criteria.description = $sce.trustAsHtml(criteria.description);
-                        // }
                         criteriaIds.push(criteria.id);
                     });
                 });
@@ -112,7 +112,6 @@
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
-                    // console.log(resp.decisionMatrixs);
                 });
             });
         }
@@ -120,6 +119,11 @@
         // TODO: move to utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
+
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
+                }
+
                 el.description = $sce.trustAsHtml(el.description);
                 if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 return el;
@@ -146,7 +150,7 @@
                     if (elEqual) return _.merge(el, elEqual);
                 });
 
-                return resultEl;
+                if (resultEl.criteria.length > 0) return resultEl;
             });
         }
 
@@ -161,7 +165,7 @@
 
         function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
             var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            var list = _.map(characteristicsArray, function(resultEl) {
+            var list = _.filter(characteristicsArray, function(resultEl) {
                 _.map(resultEl.characteristics, function(el) {
                     el.description = $sce.trustAsHtml(el.description);
 
@@ -176,7 +180,7 @@
 
 
                 });
-                return resultEl;
+                if (resultEl.characteristics.length > 0) return resultEl;
             });
         }
 

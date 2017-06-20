@@ -347,8 +347,8 @@ a {
     line-height: 1.2;
     font-weight: 600;
     font-size: 14px;
-    width: 170px; // TODO: avoid
-    max-width: 170px;
+    width: 135px; // TODO: avoid
+    max-width: 135px;
 }
 
 // Sorter
@@ -757,7 +757,7 @@ a {
     &.nav-tabs-sm {
         & > li {
             & > a {
-                padding: 4px 8px;
+                padding: 6px 10px;
             }
         }
     }
@@ -1001,6 +1001,7 @@ a {
     min-height: 94px;
     max-height: @scroll-height;
     overflow: hidden;
+    position: relative;
 }
 
 
@@ -1160,7 +1161,7 @@ a {
     margin-top: -20px;
     .switcher {
         float: right;
-        margin: -3px 8px;
+        margin: -3px 16px;
     }
 }
 
@@ -1306,20 +1307,36 @@ a {
 }
 
 
+.matrix {
+    .filter-name {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        padding: 0 10px;
+        margin: 0;
+        .filter-btn {
+            left: 15px;
+        }
+        .icon-remove {
+            right: 5px;
+        }
+    }
+}
+
 // Filter Name
 .filter-name {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    padding: 0 10px;
+    width: 80%;
+    position: relative;
+    margin: 8px 0 32px;
+    // padding: 0 10px;
     .form-control {
         width: 100%;
         padding-left: 20px;
     }
     .filter-btn {
         position: absolute;
-        left: 15px;
+        left: 5px;
         top: 0;
         width: 20px;
         height: 30px;
@@ -1333,7 +1350,7 @@ a {
     }
     .icon-remove {
       position: absolute;
-      right: 10px;
+      right: 5px;
       top: 0;
       width: 20px;
       height: 30px;
@@ -1348,7 +1365,7 @@ a {
 }
 
 
-.display-inline {
+.display-inline-block {
     display: inline-block;
 }
 
@@ -1369,7 +1386,7 @@ a {
         // float: left;
 
         border-bottom: 0;
-    }        
+    }
 }
 
 .characteristic-content-aside {
@@ -1377,5 +1394,56 @@ a {
         position: relative;
         line-height: 32px;
         overflow: hidden;
+    }
+}
+
+.discussions-list {
+    position: relative;
+    & > li {
+        margin-bottom: 8px;
+    }
+}
+
+.app-title-inline {
+    display: inline-block;
+    margin: 0 4px 0 0;
+}
+
+.mg-sm-b {
+    margin-bottom: 8px;
+}
+
+.icon-sm {
+    font-size: 70%;
+}
+
+.decision-childs {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.container-desisions {
+    min-height: 400px;
+    position: relative;
+}
+
+.nav-tabs-wrapper {
+    &.tabs-right {
+        .clearfix;
+        border-bottom: 1px solid #ddd;
+        .nav-tabs {
+            // width: 50%;
+            float: right;
+            border-bottom: 0;
+            li {
+                // float: right;
+            }
+        }
+        .tabs-title {
+            margin: 0;
+            padding: 7px 10px;
+            float: left;
+            // width: 50%;
+        }
     }
 }

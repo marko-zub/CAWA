@@ -89,7 +89,7 @@
                 if ($stateParams.discussionId &&
                     !$stateParams.discussionSlug &&
                     !$stateParams.critOrCharId) {
-                    $state.go('decisions.single.matrix.child', {
+                    $state.go('decisions.single.comparison.child', {
                         discussionId: $stateParams.discussionId,
                         discussionSlug: result.nameSlug
                     }, {
@@ -107,7 +107,7 @@
                     link: 'decisions.single'
                 }, {
                     title: 'Comparison Matrix',
-                    link: 'decisions.single.matrix'
+                    link: 'decisions.single.comparison'
                 }, {
                     title: result.name,
                     link: null

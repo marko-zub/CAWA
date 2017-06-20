@@ -62,10 +62,10 @@
             }
 
             var query = {
-                "type": "RangeQuery",
-                "characteristicId": item.id,
-                "operator": "AND",
-                "value": queries
+                'type': 'RangeQuery',
+                'characteristicId': item.id,
+                'operator': 'AND',
+                'value': queries
             };
 
             FilterControlsDataService.characteristicChange(item.id, query);

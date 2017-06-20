@@ -6,11 +6,11 @@
         .module('app.decision')
         .controller('DecisionSingleController', DecisionSingleController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
+    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
     ];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService,
+    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
 
         var
@@ -24,25 +24,52 @@
 
         vm.$onInit = onInit;
 
+        var criteriaGroupsIds = [];
+        var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
+        var newState = {
+            key: 'topRated',
+            value: null,
+            label: 'Top Rated'
+        };
+
+        navigationObj.unshift(newState);
+
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
             console.log('Decision Single Controller');
+            vm.navigation = navigationObj;
             initPagination();
-            getDecisionNomimations(vm.decision.id);
             getDecisionParents(vm.decision.id);
+
+            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
         }
 
-        function getDecisionNomimations(id) {
-            if (!id) return;
-
-            var pagination = _.clone(vm.pagination);
-            pagination.pageNumber = pagination.pageNumber - 1;
-
-            DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = descriptionTrustHtml(result.decisions);
-                vm.pagination.totalDecisions = result.totalDecisions;
-                // console.log(result);
+        // TODO: Simplify logic
+        function initSortMode(mode) {
+            if (!mode) {
+                vm.activeTabSort = 1;
+            }
+            var find = _.find(navigationObj, function(navItem) {
+                return navItem.key === mode;
             });
+            if (find && find.key !== 'topRated') {
+                vm.tabMode = find.value;
+                getDecisionMatrix(vm.decision.id);
+                // Hide criterias
+                vm.criteriaGroups = [];
+            } else {
+                vm.tabMode = 'topRated';
+                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
+                    getDecisionMatrix(vm.decision.id);
+                });
+
+                $state.go($state.current.name, {
+                    tab: null
+                }, {
+                    reload: false,
+                    notify: false
+                });
+            }
         }
 
         function getDecisionParents(id) {
@@ -51,15 +78,51 @@
                 vm.decisionParents = result;
 
                 if (vm.decision.totalChildDecisions > 0) {
-                    getCriteriaGroupsByParentId(vm.decision.id);
                     vm.isDecisionsParent = true;
+                    vm.decisionsSpinnerChilds = true;
+                    initSortMode($stateParams.tab);
                 }
-                //} else {
-                //     // getDecisionParentsCriteriaCharacteristicts(vm.decisionParents);
-                //     vm.isDecisionsParent = false;
-                //     getDecisionParentsCriteriaCharacteristicts(vm.decisionParents[0]);
-                // }
+
                 return result;
+            });
+        }
+
+        function getDecisionMatrix(id, filter) {
+            var sendData = {};
+            var pagination = _.clone(vm.pagination);
+
+            pagination.pageNumber = pagination.pageNumber - 1;
+            if (pagination) {
+                sendData.pageNumber = pagination.pageNumber;
+                sendData.pageSize = pagination.pageSize;
+            }
+
+            if (vm.tabMode === 'topRated') {
+                sendData.sortCriteriaIds = criteriaGroupsIds;
+                sendData.sortWeightCriteriaDirection = 'DESC';
+                sendData.sortTotalVotesCriteriaDirection = 'DESC';
+            } else {
+                sendData.sortDecisionPropertyName = vm.tabMode;
+                sendData.sortDecisionPropertyDirection = 'DESC';
+            }
+
+            if (_.isNull(filter) || filter) {
+                sendData.decisionNameFilterPattern = filter;
+            } else if(vm.filterName) {
+                sendData.decisionNameFilterPattern = vm.filterName;
+            }
+
+
+            DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
+                vm.decisions = [];
+                var decisions = [];
+                _.forEach(result.decisionMatrixs, function(decision) {
+                    decisions.push(decision.decision);
+                });
+                vm.decisions = descriptionTrustHtml(decisions);
+                vm.decisionsSpinnerChilds = false;
+
+                vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
         }
 
@@ -88,6 +151,11 @@
         // TODO: move to utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
+
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
+                }
+
                 el.description = $sce.trustAsHtml(el.description);
                 if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 return el;
@@ -97,12 +165,12 @@
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
-            getDecisionNomimations($stateParams.id);
+            getDecisionMatrix(vm.decision.id);
             updateStateParams();
         }
 
         function changePage() {
-            getDecisionNomimations($stateParams.id);
+            getDecisionMatrix(vm.decision.id);
             updateStateParams();
         }
 
@@ -112,6 +180,8 @@
                 pageSize: parseInt($stateParams.size) || 10,
                 totalDecisions: vm.decision.totalChildDecisions || 10
             };
+
+            vm.decisionsHeight = vm.pagination.pageSize * 97 + 'px';
             // updateStateParams();
         }
 
@@ -135,7 +205,7 @@
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
                 // vm.criteriaGroups = result;
-                return _.filter(result, function(resultEl) {
+                _.filter(result, function(resultEl) {
                     _.filter(resultEl.criteria, function(el) {
                         el.description = $sce.trustAsHtml(el.description);
                         var elEqual = _.find(criteriaArray, {
@@ -145,7 +215,7 @@
                         if (elEqual) return _.merge(el, elEqual);
                     });
 
-                    return resultEl;
+                    if (resultEl.criteria.length > 0) return resultEl;
                 });
             });
         }
@@ -187,14 +257,53 @@
         function getCriteriaGroupsByParentId(id) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
+                result = _.filter(result, function(group) {
+                    if (group.criteria.length > 0) return group;
+                });
                 vm.criteriaGroups = descriptionTrustHtml(result);
                 _.forEach(result, function(resultEl) {
                     descriptionTrustHtml(resultEl.criteria);
+
+                    _.forEach(resultEl.criteria, function(criteria) {
+                        criteriaGroupsIds.push(criteria.id);
+                    });
                 });
+
                 return result;
             });
         }
 
+        // TODO: make component
+        // Filter
+        vm.clearFilterName = clearFilterName;
+        vm.filterNameSubmit = filterNameSubmit;
+        vm.filterNameSubmitClick = filterNameSubmitClick;
+        vm.controlOptions = {
+            debounce: 50
+        };
+
+        function clearFilterName() {
+            vm.filterName = null;
+            filterNameSend(null);
+        }
+
+        function filterNameSubmit(event, value) {
+            if (event.keyCode === 13) {
+                filterNameSend(value);
+                event.preventDefault();
+            }
+        }
+
+        function filterNameSend(value) {
+            getDecisionMatrix(vm.decision.id, value);
+        }
+
+        function filterNameSubmitClick(value) {
+            // if (!value) return;
+            // TODO: first request if ng-touched
+            filterNameSend(value);
+        }
+        // End Filter name
 
     }
 })();

@@ -31,40 +31,44 @@
                 $stateParams = $injector.get('$stateParams');
 
                 // if (currentState === 'decisions.matrix' || currentState === 'decisions.matrix.analysis')
-                if (($state.is('decisions.single.matrix') || $state.is('decisions.single.matrix.analysis')) &&
-                    resp.data && (resp.data.decisionMatrixs || resp.data.decisions) &&
-                    resp.data.decisionAnalysisId) {
 
-                    // Save only second call to avoid big array
-                    // TODO: check if we still need this code
-                    // if (analysisCallsArr.length === 0 && $stateParams.analysisId) analysisCallsArr.push(decisionAnalysisId);
+                // Disable analysis
+                // if (($state.is('decisions.single.comparison') || $state.is('decisions.single.comparison.analysis')) &&
+                //     resp.data && (resp.data.decisionMatrixs || resp.data.decisions) &&
+                //     resp.data.decisionAnalysisId) {
 
-                    var decisionAnalysisId = resp.data.decisionAnalysisId;
-                    // if (analysisCallsArr.length !== 0) {
+                //     // Save only second call to avoid big array
+                //     // TODO: check if we still need this code
+                //     // if (analysisCallsArr.length === 0 && $stateParams.analysisId) analysisCallsArr.push(decisionAnalysisId);
 
-                    var decisionAnalysisStateParams = {
-                        'id': $stateParams.id,
-                        'slug': $stateParams.slug,
-                        'criteria': $stateParams.criteria,
-                        'analysisId': decisionAnalysisId
-                    };
-                    $state.go('decisions.single.matrix.analysis', decisionAnalysisStateParams, {
-                        notify: false,
-                        reload: false,
-                        location: true
-                    });
-                    // }
+                //     var decisionAnalysisId = resp.data.decisionAnalysisId;
+                //     // if (analysisCallsArr.length !== 0) {
 
-                }
+                //     var decisionAnalysisStateParams = {
+                //         'id': $stateParams.id,
+                //         'slug': $stateParams.slug,
+                //         'criteria': $stateParams.criteria,
+                //         'analysisId': decisionAnalysisId
+                //     };
+                //     $state.go('decisions.single.comparison.analysis', decisionAnalysisStateParams, {
+                //         notify: false,
+                //         reload: false,
+                //         location: true
+                //     });
+                //     // }
+
+                // }
                 return resp;
             },
             responseError: function(rejection) {
                 console.log(rejection);
                 // $state.go('404');
 
-                // var notification = $injector.get('MsgService');
+                var notification = $injector.get('MsgService');
                 // var msg = rejection.status + ': ' + rejection.statusText;
-                // notification.error(msg);  
+                if(rejection.status === -1){
+                    notification.error('No API connection ' + rejection.statusText);  
+                }
 
                 return rejection;
             }

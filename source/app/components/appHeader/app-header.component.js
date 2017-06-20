@@ -11,24 +11,11 @@
 			controllerAs: 'vm'
 		});
 
-	HeaderController.$inject = ['$state', '$stateParams', '$rootScope'];
+	HeaderController.$inject = ['$state', '$stateParams'];
 
-	function HeaderController($state, $stateParams, $rootScope) {
+	function HeaderController($state, $stateParams) {
 		var vm = this;
 
-        // Page title
-        var pageTitle = 'DecisionWanted';
-        $rootScope.pageTitle = pageTitle;
-        $rootScope.breadcrumbs = true;
-        var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
-            if (angular.isDefined($stateParams.data)) {
-                if ($stateParams.data.pageTitle) {
-                    $rootScope.pageTitle = $stateParams.data.pageTitle + ' | ' + pageTitle;
-                }
-
-                $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
-            }
-        });
 	}
 
 })();

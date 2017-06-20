@@ -32,6 +32,8 @@
 
         function getTemplate(value, type, description, visualMode) {
             if (!value || !type) return;
+
+            // TODO: fix return obj
             // CASE Visual Mode
             var compile = false;
             var result = '';
@@ -45,9 +47,11 @@
                     break;
                 case "STRINGARRAY":
                     result = contentFormaterArray(value);
+                    compile = true;
                     break;
                 case "INTEGERARRAY":
                     result = contentFormaterArray(value);
+                    compile = true;
                     break;
                 case "BOOLEAN":
                     result = contentFormaterBool(value);

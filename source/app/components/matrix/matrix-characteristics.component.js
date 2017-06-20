@@ -6,7 +6,7 @@
         .module('app.components')
         .controller('MatrixCharacteristicsController', MatrixCharacteristicsController)
         .component('matrixCharacteristics', {
-            template: renderTemplate,
+            templateUrl: 'app/components/matrix/matrix-characteristics.html',
             bindings: {
                 characteristics: '<',
                 decisions: '<',
@@ -15,35 +15,6 @@
             controller: 'MatrixCharacteristicsController',
             controllerAs: 'vm'
         });
-
-
-    renderTemplate.$inject = [];
-
-    // TODO: move to template?!
-    function renderTemplate() {
-        return [
-            '<div class="matrix-g matrix-g-characteristics" data-characteristic-group="{{::group.id}}" ng-repeat="group in ::vm.characteristics track by group.id">',
-                '<div class="matrix-item matrix-g-item matrix-item-content">',
-                '</div>',
-                '<div class="matrix-item matrix-item-content js-matrix-item-content js-toggle-hide" ng-repeat="item in ::group.characteristics track by item.uid">',
-                    '<div class="matrix-row">',
-                        '<div class="matrix-col matrix-criteria-group" data-connect="{{::item.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.uid" ng-click="vm.getComments($event)">',
-                            '<div class="matrix-col-content">',
-                                // '<div ng-bind-html="::vm.renderContent(vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value, item.valueType,)"></div> ',
-                                '<content-formater ng-if="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.value" item="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic" characteristic="::item"></content-formater>',
-                                '<div class="app-item-additional-wrapper app-item-comments">',
-                                    '<a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>',
-                                    '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>',
-                                    // '<a href="#" ng-if="::vm.decisionsDisplay[item.id + \'-\' + decisionCol.decision.id].characteristic.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="true"></i></a>',
-                                '</div>',
-                                '</a>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-            '</div>'
-        ].join('\n');
-    }
 
 
     MatrixCharacteristicsController.$inject = ['DiscussionsNotificationService', 'ContentFormaterService'];
@@ -120,7 +91,7 @@
 
         function pickDecisionsIds(decisions) {
             return _.map(decisions, function(item) {
-                return item.decision.uid;
+                return item.decision.id;
             });
         }
 

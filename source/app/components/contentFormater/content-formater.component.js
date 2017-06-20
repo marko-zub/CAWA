@@ -21,15 +21,26 @@
             vm = this;
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
 
         function onInit() {
             // console.log(vm.value, vm.type);
-            var renderContent = ContentFormaterService.getTemplate(vm.item.value, vm.characteristic.valueType, vm.item.description, vm.characteristic.visualMode);
-            renderHtml(renderContent);
+            if (vm.item) {
+                var renderContent = ContentFormaterService.getTemplate(vm.item.value, vm.characteristic.valueType, vm.item.description, vm.characteristic.visualMode);
+                renderHtml(renderContent);
+            }
+        }
+
+        function onChanges(changes) {
+            if (changes.item && !angular.equals(changes.item.currentValue, changes.previousValue)) {
+                var renderContent = ContentFormaterService.getTemplate(changes.item.currentValue.value, vm.characteristic.valueType, changes.item.currentValue.description, vm.characteristic.visualMode);
+                renderHtml(renderContent);
+                // console.log(changes.item.currentValue);
+            }
         }
 
         function renderHtml(data) {
-            if(_.isEmpty(data)) return;
+            if (_.isEmpty(data)) return;
             $element.html(data.html);
             if (data.compile) $compile($element.contents())($scope);
         }

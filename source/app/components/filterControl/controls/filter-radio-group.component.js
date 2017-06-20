@@ -33,7 +33,7 @@
         }
 
         function onChanges(changes) {
-            if (!angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
+            if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 vm.radio = changes.selected.currentValue;
             }
         }
@@ -71,9 +71,9 @@
 
         function changeRadio(model) {
             var sendObj = {
-                "type": "EqualQuery",
-                "characteristicId": vm.item.id,
-                "value": model
+                'type': 'EqualQuery',
+                'characteristicId': vm.item.id,
+                'value': model
             };
             FilterControlsDataService.createFilterQuery(sendObj);
         }

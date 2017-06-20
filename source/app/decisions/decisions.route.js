@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('decisions', {
-                url: '/decisions?page&size&sort',
+                url: '/decisions?page&size&tab',
                 views: {
                     "@": {
                         templateUrl: 'app/decisions/decisions.html',
@@ -26,7 +26,7 @@
                     }]
                 },
                 params: {
-                    sort: {
+                    tab: {
                         value: null,
                         squash: true
                     },

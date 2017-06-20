@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant'];
+    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
 
-    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant) {
+    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
         var
             vm = this;
 
@@ -21,15 +21,26 @@
             pageSize: parseInt($stateParams.size) || 10
         };
 
+        var navigationObj = DecisionsConstant.NAVIGATON_STATES;
+
         init();
 
         function init() {
             console.log('Decisions controller');
 
+            vm.navigation = navigationObj;
+
             $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
             var data = checkStateParams($stateParams);
             getDecisions(data);
+
+            if (!$stateParams.tab) {
+                vm.activeTab = 1;
+            }
         }
+
+        var decisionsHeight = 97;
+        vm.decisionsHeight = vm.pagination.pageSize * decisionsHeight + 'px';
 
         function getDecisions(data) {
             vm.decisionsSpinner = true;
@@ -39,6 +50,9 @@
             DecisionDataService.getDecisions(pagination).then(function(result) {
                 vm.decisionsList = descriptionTrustHtml(result.decisions);
                 initPagination(result.totalDecisions);
+
+                // TODO: avoid height
+                vm.decisionsHeight = result.decisions.length * decisionsHeight + 'px';
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
@@ -48,8 +62,15 @@
         // Move to Utils
         function descriptionTrustHtml(list) {
             return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.png';
+                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
+
+                // Move to constat
+                if (el.description && el.description.length > 80) {
+                    el.description = el.description.substring(0, 80) + '...';
+                }
+
                 el.description = $sce.trustAsHtml(el.description);
+
                 return el;
             });
         }
@@ -84,31 +105,24 @@
                 allowedSortParams;
 
             data = vm.pagination;
-            allowedSortParams = [{
-                key: 'createDate',
-                value: 'createDate'
-            }, {
-                key: 'updateDate',
-                value: 'updateDate'
-            }, {
-                key: 'totalVotes',
-                value: 'totalVotes'
-            }];
+            allowedSortParams = navigationObj;
 
             data.sortDirection = stateParams.sortDirection || 'DESC';
-            if (stateParams.sort) {
+            if (stateParams.tab) {
                 var checkObj, allowed;
 
                 checkObj = {
-                    key: stateParams.sort
+                    key: stateParams.tab
                 };
                 allowed = _.find(allowedSortParams, checkObj);
                 if (_.isObject(allowed)) {
                     data.sort = allowed.value;
                 } else {
                     $state.go($state.current.name, {
-                        sort: null,
-                        location: false
+                        tab: null
+                    }, {
+                        reload: false,
+                        notify: false
                     });
                 }
             }
