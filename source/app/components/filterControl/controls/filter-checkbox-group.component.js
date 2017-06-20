@@ -96,16 +96,20 @@
                 return html.join('\n');
             }).join('\n');
 
-            var queryTypeHtml = [
-                '<div class="switcher">',
-                '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
-                '<label class="switcher-label" for="toggle-' + item.id + '">',
-                '<span class="switcher-inner"></span>',
-                '<span class="switcher-switch"></span>',
-                '</label>',
-                '</div>',
-            ].join('\n');
+            var queryTypeHtml = '';
 
+            // Allow multiply values switcher OR/AND
+            if (item.valueType !== 'STRING') {
+                queryTypeHtml = [
+                    '<div class="switcher">',
+                    '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
+                    '<label class="switcher-label" for="toggle-' + item.id + '">',
+                    '<span class="switcher-inner"></span>',
+                    '<span class="switcher-switch"></span>',
+                    '</label>',
+                    '</div>',
+                ].join('\n');
+            }
 
             var html = [
                 '<div class="query-type-wrapper">',

@@ -4,8 +4,7 @@
         .controller('FilterControlController', FilterControlController)
         .component('filterControl', {
             bindings: {
-                item: '<',
-                selected: '<'
+                item: '<'
             },
             controller: 'FilterControlController',
             controllerAs: 'vm'
@@ -30,9 +29,9 @@
         function onChanges(changes) {
             // TODO: optimize it
             // Check only item need to remove vm.selected
-            if (changes.selected && changes.selected.currentValue &&
-                !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
-                vm.selected = changes.selected.currentValue;
+            if (changes.item && changes.item.currentValue &&
+                !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
+                vm.selected = changes.item.currentValue.selectedValue;
             }
         }
 

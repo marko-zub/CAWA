@@ -1,33 +1,46 @@
-<div class="app-list-panel" ng-if="vm.list.length">
-    <h4>Criteria</h4>
-    <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
-        <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
-            {{::group.name}}
-            <div class="controls">
-                <i class="fa fa-angle-up" aria-hidden="true"></i>
+<div class="app-list-panel">
+    <div class="app-header-block">
+        <div class="pull-left">
+           <h4>Criteria</h4>
+        </div>
+        <div class="pull-right">
+            <div class="text">
+                Can't find the necessary criterion? <a href="#">Add it</a>
             </div>
-        </h5>
-        <div uib-collapse="group.isCollapsed">
-            <ul class="discussions-list">
-                <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-class="{'selected':vm.discussion.childCriterion.criterionId === criteria.criterionId}">
-                    <div class="discussions-list-content">
-                        <div class="clearfix">
-                            <div class="pull-left">
-                                <div ng-switch="::(vm.links == true)" class="pull-left">
-                                    <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
-                                    <span ng-switch-when="false" ng-bind="::criteria.name"></span>
-                                </div>
-
-                                <span ng-if="::criteria.description" class="icon-info link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
-                            </div>
-                            <div class="pull-right app-rating-inline">
-                                <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
         </div>
     </div>
-</div>
+    <div ng-if="vm.list.length">
+        <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
+            <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
+                {{::group.name}}
+                <div class="controls">
+                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+            </h5>
+            <div uib-collapse="group.isCollapsed">
+                <ul class="discussions-list">
+                    <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-class="{'selected':vm.discussion.childCriterion.criterionId === criteria.criterionId}">
+                        <div class="discussions-list-content">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <div ng-switch="::(vm.links == true)" class="pull-left">
+                                        <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
+                                        <span ng-switch-when="false" ng-bind="::criteria.name"></span>
+                                    </div>
+
+                                    <span ng-if="::criteria.description" class="icon-info link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                </div>
+                                <div class="pull-right app-rating-inline">
+                                    <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p ng-if="!vm.list.length" class="app-action-content">
+        There are no criteria yet, but you can be first to create them here.
+    </p>
 </div>

@@ -88,19 +88,35 @@
 
                 <!-- Tabs content -->
                 <div class="row">
-                    <div class="col-sm-8">
-                        <div class="mg-b-lg">
+                    <div class="col-sm-7">
+                        <div class="mg-b-lg app-action-text">
                             Can't find the necessary option? <a href="#">Add it</a>
                         </div>
+<!--                         <p class="app-action-content">
+                            There are no criteria yet, but you can be first to create them here.
+                        </p> -->
                     </div>
-                    <div class="col-sm-4 px-l-0" ng-show="vm.activeTabSortChild == 0">
-                        Can't find the necessary criterion? <a href="#">Add it</a>
+                    <div class="col-sm-5 px-l-0" ng-show="vm.activeTabSortChild == 0">
+                        <criteria-list list="::vm.criteriaGroups"></criteria-list>
+                        <!-- <div class="app-header-block">
+                            <div class="pull-left">
+                               <h4>Criteria</h4>
+                            </div>
+                            <div class="pull-right">
+                                <div class="text">
+                                    Can't find the necessary criterion? <a href="#">Add it</a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="app-action-content">
+                            There are no criteria yet, but you can be first to create them here.
+                        </p> -->
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="col-sm-8" ng-if="vm.isDecisionsParent">
+        <div class="col-sm-7" ng-if="vm.isDecisionsParent">
             
             <!-- TODO: make as component -->
             <!-- Filter  -->
@@ -111,7 +127,7 @@
             </div>
             <!-- Filter Name -->
             
-            <div class="mg-b-lg">
+            <div class="mg-b-lg app-action-text">
                 Can't find the necessary option? <a href="#">Add it</a>
             </div>
 
@@ -154,8 +170,7 @@
             <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
         </div>
         <!-- Criteria -->
-        <div class="col-sm-4 px-l-0" ng-if="vm.tabMode === 'topRated'">
-            Can't find the necessary criterion? <a href="#">Add it</a>
+        <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
             <criteria-list list="::vm.criteriaGroups"></criteria-list>
         </div>
         <!-- End Criteria -->
