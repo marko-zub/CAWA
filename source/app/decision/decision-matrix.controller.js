@@ -523,13 +523,16 @@
             }, 0);
             $scope.$applyAsync(function() {
                 vm.decisionsSpinner = false;
-            });            
+            });
         }
 
         function getDecisionMatrix(id, persistent) {
             vm.decisionsSpinner = true;
             var sendData = DecisionSharedService.getRequestFilterObject();
             if (persistent === true) sendData.persistent = true;
+
+            sendData.includeCharacteristicIds = -1;
+
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
