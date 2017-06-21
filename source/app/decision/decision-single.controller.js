@@ -113,7 +113,7 @@
                 sendData.decisionNameFilterPattern = vm.filterName;
             }
 
-            sendData.includeCharacteristicIds = -1;
+            sendData.includeCharacteristicIds = [0];
             DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = [];
                 var decisions = [];
