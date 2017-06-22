@@ -9,7 +9,8 @@
             templateUrl: 'app/components/criteriaList/criteria-list.html',
             bindings: {
                 list: '<',
-                links: '<'
+                links: '<',
+                rating: '<'
             },
             controller: 'CriteriaListController',
             controllerAs: 'vm',
@@ -26,6 +27,7 @@
 
         function onInit() {
             if (!!vm.links) vm.links = true;
+            if (!vm.rating) vm.rating = false;
         }
     }
 })();

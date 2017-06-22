@@ -47,9 +47,7 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (!mode) {
-                vm.activeTabSort = 1;
-            }
+
             var find = _.find(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
@@ -63,11 +61,12 @@
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
                     getDecisionMatrix(vm.decision.id);
                 });
+                vm.activeTabSort = 1;
 
-                $state.go($state.current.name, {
-                    tab: null
-                }, {
+                $state.params.tab = null;
+                $state.transitionTo($state.current.name, $state.params, {
                     reload: false,
+                    inherit: true,
                     notify: false
                 });
             }

@@ -19,7 +19,7 @@
             </h5>
             <div uib-collapse="group.isCollapsed">
                 <ul class="discussions-list">
-                    <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'" ng-class="{'selected':vm.discussion.childCriterion.criterionId === criteria.criterionId}">
+                    <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'">
                         <div class="discussions-list-content">
                             <div class="clearfix">
                                 <div class="pull-left">
@@ -31,6 +31,9 @@
                                     <span ng-if="::criteria.description" class="icon-info link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 </div>
                                 <div class="pull-right app-rating-inline">
+                                    <div ng-if="!criteria.totalVotes && vm.rating">
+                                        <a href="#">Rate it</a>
+                                    </div>
                                     <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
                                 </div>
                             </div>

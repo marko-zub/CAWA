@@ -30,6 +30,13 @@ html {
   color: @row-label-color;
 }
 
+.text-header {
+  font-size: 12px;
+  margin-top: 10px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
 .app-row-content {
   margin-bottom: 10px;
 }
@@ -251,4 +258,24 @@ body {
 }
 .mg-b-xs {
   margin-bottom: 4px;
+}
+
+
+// Votes 
+.app-votes {
+  position: absolute;
+  left: -60px;
+  text-align: center;
+  .app-vote-control {
+    font-size: 27px;
+    color: @gray-mid;
+    &:hover {
+       color: @basic-active;
+    }
+  }
+  .total {
+    // margin: 3px 0;
+    font-size: 19px;
+    line-height: 1.2;
+  }
 }

@@ -126,11 +126,12 @@
                 // Just added new slug
                 if (toState.name === 'decisions.single') {
 
-                    $state.go(currentState, toParams, {
-                        notify: false,
+                    $state.params.slug = result.nameSlug;
+                    $state.transitionTo($state.current.name, toParams, {
                         reload: false,
-                        location: false
-                    });
+                        inherit: true,
+                        notify: false
+                    });                    
 
                     $rootScope.breadcrumbs = [{
                         title: 'Decisions',

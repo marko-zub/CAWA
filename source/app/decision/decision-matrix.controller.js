@@ -531,7 +531,7 @@
             var sendData = DecisionSharedService.getRequestFilterObject();
             if (persistent === true) sendData.persistent = true;
 
-            sendData.includeCharacteristicIds = [-1];
+            // sendData.includeCharacteristicIds = [-1];
 
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = result;
