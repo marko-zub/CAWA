@@ -31,6 +31,9 @@
                                         <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                     </div>
                                     <div class="col-sm-6">
+                                        <div ng-if="!characteristic.decision.value && vm.rating">
+                                            <a href="#">Provide value</a>
+                                        </div>
                                         <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
                                     </div>
                                 </div>

@@ -10,7 +10,8 @@
             bindings: {
                 list: '<',
                 links: '<',
-                comments: '<'
+                comments: '<',
+                rating: '<'
             },
             controller: 'CharacteristicsListController',
             controllerAs: 'vm',
@@ -27,6 +28,7 @@
         function onInit() {
             if(!!vm.links) vm.links = true;
             if(!!vm.comments) vm.comments = false;
+            if (!vm.rating) vm.rating = false;
         }
     }
 })();

@@ -31,7 +31,7 @@
         <a href="#" class="up">
             <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
         </a>
-        <div class="total" ng-bind="::vm.decision.totalVotes">
+        <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
         </div>
         <a href="#" class="down">
             <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
@@ -169,7 +169,7 @@
         </div>
         <!-- Criteria -->
         <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
-            <criteria-list list="::vm.criteriaGroups" rating="true"></criteria-list>
+            <criteria-list list="::vm.criteriaGroups"></criteria-list>
         </div>
         <!-- End Criteria -->
         <div class="col-sm-8" ng-if="vm.isDecisionsParent">
