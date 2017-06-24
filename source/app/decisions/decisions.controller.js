@@ -34,6 +34,8 @@
             var data = checkStateParams($stateParams);
             getDecisions(data);
 
+            getTotalDecisions();
+
             if (!$stateParams.tab) {
                 vm.activeTab = 1;
             }
@@ -131,6 +133,12 @@
 
         function initPagination(total) {
             vm.pagination.totalDecisions = total || 10;
+        }
+
+        function getTotalDecisions() {
+            DecisionDataService.getDecisionsCount().then(function(resp) {
+                vm.totalCount = resp.totalCount || 0;
+            });
         }
     }
 })();

@@ -1183,7 +1183,9 @@ a {
     border-radius: 10px;
 }
 .switcher-inner {
-    display: block; width: 200%; margin-left: -100%;
+    display: block;
+    width: 200%; 
+    margin-left: -100%;
     transition: margin 0.3s ease-in 0s;
 }
 .switcher-inner:before,
@@ -1195,20 +1197,18 @@ a {
     padding: 0;
     line-height: 18px;
     font-size: 11px;
-    color: white;
     box-sizing: border-box;
+    color: #999999;
 }
 .switcher-inner:before {
     content: "OR";
     padding-left: 5px;
     background-color: #EEEEEE;
-    color: #999999;
 }
 .switcher-inner:after {
     content: "AND";
     padding-right: 5px;
     background-color: #EEEEEE;
-    color: #999999;
     text-align: right;
 }
 .switcher-switch {
@@ -1227,6 +1227,19 @@ a {
 }
 .switcher-checkbox:checked + .switcher-label .switcher-switch {
     right: 0px;
+}
+
+.switcher-text-label {
+    padding-left: 5px;
+    background-color: #EEEEEE;
+    color: #999999;
+    height: 18px;
+    padding: 0;
+    line-height: 18px;
+    font-size: 11px;
+    text-align: center;
+    font-weight: 600;
+    pointer-events: none; 
 }
 
 
@@ -1254,6 +1267,7 @@ a {
 .m-group {
     position: relative;
     // padding: 24px 0 0;
+    // min-height: 50px;
 }
 .m-group-title {
     height: 24px !important;
@@ -1263,6 +1277,10 @@ a {
     border-bottom: 1px solid @gray-light;
 }
 
+
+// .criteria-list {
+//     min-height: 50px + 24px;
+// }
 
 // Panel
 .closed {

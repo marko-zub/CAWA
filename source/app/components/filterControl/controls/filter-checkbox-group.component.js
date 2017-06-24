@@ -96,7 +96,13 @@
                 return html.join('\n');
             }).join('\n');
 
-            var queryTypeHtml = '';
+            var queryTypeHtml = [
+                '<div class="switcher">',
+                    '<div class="switcher-label">',
+                        '<div class="switcher-text-label">OR</div>',
+                    '</div>',
+                '</div>',
+            ].join('\n');
 
             // Allow multiply values switcher OR/AND
             if (item.valueType !== 'STRING') {

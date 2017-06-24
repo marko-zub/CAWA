@@ -48,6 +48,13 @@
                 }
             }),
 
+            decisionsCount = $resource(Config.endpointUrl + 'decisions/count', {}, {
+                getCount: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),
+
             decisionsAnalysis = $resource(Config.endpointUrl + 'decisions/analysis/:id', {
                 id: '@id'
             }, {
@@ -131,7 +138,8 @@
             getDecisionAnalysis: getDecisionAnalysis,
             getDecisionNomination: getDecisionNomination,
             searchDecisions: searchDecisions,
-            searchSuggestedDecisions: searchSuggestedDecisions
+            searchSuggestedDecisions: searchSuggestedDecisions,
+            getDecisionsCount: getDecisionsCount
         };
 
         return service;
@@ -217,6 +225,10 @@
 
         function searchSuggestedDecisions(data) {
             return decisionsSuggestions.search({}, data).$promise;
+        }
+
+        function getDecisionsCount() {
+            return decisionsCount.getCount().$promise;
         }
     }
 })();
