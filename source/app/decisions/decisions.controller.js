@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
+    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService'];
 
-    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
+    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
         var
             vm = this;
 
@@ -22,6 +22,7 @@
         };
 
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
+        var decisionsData = DecisionsService.getData();
 
         init();
 
@@ -35,6 +36,8 @@
             getDecisions(data);
 
             getTotalDecisions();
+
+            vm.totalCount = decisionsData.totalDecisions;
 
             if (!$stateParams.tab) {
                 vm.activeTab = 1;
@@ -137,7 +140,11 @@
 
         function getTotalDecisions() {
             DecisionDataService.getDecisionsCount().then(function(resp) {
-                vm.totalCount = resp.totalCount || 0;
+                if(vm.totalCount !== resp.totalCount) {
+                    vm.totalCount = resp.totalCount;
+                    DecisionsService.setCount(vm.totalCount);
+                }
+                
             });
         }
     }

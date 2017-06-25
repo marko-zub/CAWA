@@ -40,21 +40,29 @@
 
                 if (!vm.parent) return;
 
-                vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-                getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
-                $rootScope.breadcrumbs = [{
-                    title: 'Decisions',
-                    link: 'decisions'
-                }, {
-                    title: vm.decision.name,
-                    link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
-                }, {
-                    title: vm.parent.name,
-                    link: null
-                }];
-
-                $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';
+                setPageData();
             });
+
+            if(vm.parent && vm.decision) {
+                setPageData();
+            }
+        }
+
+        function setPageData() {
+            vm.parent.description = $sce.trustAsHtml(vm.parent.description);
+            getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
+            $rootScope.breadcrumbs = [{
+                title: 'Decisions',
+                link: 'decisions'
+            }, {
+                title: vm.decision.name,
+                link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
+            }, {
+                title: vm.parent.name,
+                link: null
+            }];
+
+            $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';
         }
 
         function getDecisionNomimations(id) {
