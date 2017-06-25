@@ -51,8 +51,8 @@
             decisionsCount = $resource(Config.endpointUrl + 'decisions/count', {}, {
                 getCount: {
                     method: 'GET',
-                    isArray: false,
-                    cache: true
+                    isArray: false
+                    // cache: true
                 }
             }),
 

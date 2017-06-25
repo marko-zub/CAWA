@@ -43,6 +43,15 @@
             getDecisionParents(vm.decision.id);
 
             $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
+
+            $rootScope.breadcrumbs = [{
+                title: 'Decisions',
+                link: 'decisions'
+            }, {
+                title: vm.decision.name,
+                link: null
+            }];
+
         }
 
         // TODO: Simplify logic

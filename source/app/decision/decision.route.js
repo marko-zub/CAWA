@@ -46,51 +46,51 @@
 
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {
-            url: '/comparison/{analysisId}',
-            views: {
-                "@": {
-                    templateUrl: 'app/decision/decision-matrix.html',
-                    controller: 'DecisionMatrixController',
-                    controllerAs: 'vm',
+                url: '/comparison/{analysisId}',
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-matrix.html',
+                        controller: 'DecisionMatrixController',
+                        controllerAs: 'vm',
+                    }
+                },
+                params: {
+                    analysisId: {
+                        value: null,
+                        squash: true
+                    }
+                },
+                resolve: {
+                    decisionStateInfo: DecisionStateResolver
+                        // decisionAnalysisInfo: DecisionAanalysisResolver
+                },
+            })
+            // .state('decisions.single.comparison.analysis', {
+            //     url: '/analysis/:analysisId',
+            //     templateUrl: 'app/decision/decision.html',
+            //     controller: 'DecisionController',
+            //     controllerAs: 'vm',
+            //     resolve: {
+            //         decisionStateInfo: DecisionStateResolver
+            //     },
+            // })
+            .state('decisions.single.parent', {
+                url: '/:parentId/{parentSlug}',
+                abstract: false,
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-single-parent.html',
+                        controller: 'DecisionSingleParentController',
+                        controllerAs: 'vm',
+                    }
+                },
+                params: {
+                    parentSlug: {
+                        value: null,
+                        squash: false
+                    }
                 }
-            },
-            params: {
-                analysisId: {
-                    value: null,
-                    squash: true
-                }
-            },
-            resolve: {
-                decisionStateInfo: DecisionStateResolver
-                // decisionAnalysisInfo: DecisionAanalysisResolver
-            },
-        })
-        // .state('decisions.single.comparison.analysis', {
-        //     url: '/analysis/:analysisId',
-        //     templateUrl: 'app/decision/decision.html',
-        //     controller: 'DecisionController',
-        //     controllerAs: 'vm',
-        //     resolve: {
-        //         decisionStateInfo: DecisionStateResolver
-        //     },
-        // })
-        .state('decisions.single.parent', {
-            url: '/:parentId/{parentSlug}',
-            abstract: false,
-            views: {
-                "@": {
-                    templateUrl: 'app/decision/decision-single-parent.html',
-                    controller: 'DecisionSingleParentController',
-                    controllerAs: 'vm',
-                }
-            },
-            params: {
-                parentSlug: {
-                    value: null,
-                    squash: false
-                }
-            }
-        });
+            });
     }
 
 
@@ -131,15 +131,7 @@
                         reload: false,
                         inherit: true,
                         notify: false
-                    });                    
-
-                    $rootScope.breadcrumbs = [{
-                        title: 'Decisions',
-                        link: 'decisions'
-                    }, {
-                        title: result.name,
-                        link: null
-                    }];
+                    });
                 }
 
                 // TODO: fix it
@@ -184,7 +176,7 @@
 
     function DecisionResolver(DecisionDataService, $stateParams, $state, msg, $rootScope) {
         var id = $stateParams.id;
-        
+
         return DecisionDataService.getDecisionInfo(id, $rootScope.decisonViewsCount).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);
