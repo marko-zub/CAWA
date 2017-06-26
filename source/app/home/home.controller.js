@@ -53,6 +53,7 @@
                 initPagination(result.totalDecisions);
 
                 // TODO: avoid height
+                if(!result.decisions) return;
                 vm.decisionsHeight = result.decisions.length * decisionsHeight + 'px';
                 vm.decisionsSpinner = false;
             }, function(error) {
