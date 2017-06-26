@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="::vm.list"> 
+    <div ng-if="::vm.list">
         <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
             <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
                 {{::group.name}}
