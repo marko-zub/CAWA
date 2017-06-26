@@ -1,0 +1,88 @@
+<div class="app-top-panel">
+    <div class="app-container-sm">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-right">
+                    <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-container-sm">
+    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+    <div class="post-header">
+        <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
+
+			<!-- TODO: make as dynamic navigation -->
+            <ul class="nav nav-tabs nav-tabs-sm">
+                <li>
+                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
+                </li>
+                <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                    <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
+                </li>
+                <li class="active">
+                    <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="app-votes">
+        <a href="#" class="up">
+            <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
+        </a>
+        <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
+        </div>
+        <a href="#" class="down">
+            <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+        </a>
+
+        <div class="decision-rating">
+            <span class="glyphicon icon glyphicon-star"></span>
+            <div class="total">
+                0
+            </div>
+        </div>
+    </div>
+
+    <div class="post post-single">
+        <div class="post-sub-header">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="info">
+                        <div class="author info-divider">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <span ng-bind="::vm.decision.createUser.username"></span>
+                        </div>
+                        <div class="date info-divider">
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                            <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+                        </div>
+                        <div class="info-divider">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <span ng-bind="::vm.decision.totalViews"></span>
+                        </div>
+
+                        <div class="info-divider">
+                            <a href="#" class="link-secondary">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-show="vm.isDecisionsParent" class="pull-right">
+                        <a ui-sref="decisions.single.comparison({analysisId:null})">
+                            <i class="fa fa-list-ol" aria-hidden="true"></i> Comparison Matrix
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        There are no nominations provided yet, but you can be first to create them here.
+    </div>
+
+
+</div>

@@ -44,6 +44,22 @@
                 }
             })
 
+            .state('decisions.single.nominations', {
+                url: '/nominations',
+                abstract: false,
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-nominations.html',
+                        controller: 'DecisionNominationsController',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve: {
+                    decisionBasicInfo: DecisionResolver,
+                    decisionStateInfo: DecisionStateResolver
+                }
+            })
+
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {
                 url: '/comparison/{analysisId}',

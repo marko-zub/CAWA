@@ -21,7 +21,7 @@
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                 </li>
                 <li>
-                    <a href="#">Nominations</a>
+                    <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                 </li>
             </ul>
         </div>
@@ -80,8 +80,12 @@
             </div>
         </div>
         <div class="clearfix text-justify">
-            <div class="post-image" ng-show="::vm.decision.imageUrl">
-                <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
+            <div class="post-image">
+                <img ng-if="::vm.decision.imageUrl" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
+                <div ng-if="::!vm.decision.imageUrl">
+                    <img ng-src="/images/noimage.jpg" alt="" class="img-responsive mg-b-sm" >
+                    <a href="#" class="btn btn-sm btn-default">Change</a>
+                </div>
             </div>
             <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
         </div>
