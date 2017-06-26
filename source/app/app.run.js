@@ -17,7 +17,7 @@
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams) {
                 if(toState && fromState && toState.name === fromState.name ||
-                    (fromState.name === 'decisions.single' && toState.name.indexOf('decisions.single') >= 0)) {
+                    (fromState.name.indexOf('decisions.single') >= 0 && toState.name.indexOf('decisions.single') >= 0)) {
                     $rootScope.decisonViewsCount = false;
                 } else {
                     $rootScope.decisonViewsCount = true;
