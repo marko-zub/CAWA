@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService'];
+    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService'];
 
-    function DecisionsController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
+    function DecisionsController(DecisionDataService,  $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
         var
             vm = this;
 
@@ -44,41 +44,20 @@
             }
         }
 
-        var decisionsHeight = 97;
-        vm.decisionsHeight = vm.pagination.pageSize * decisionsHeight + 'px';
-
         function getDecisions(data) {
             vm.decisionsSpinner = true;
             var pagination = _.clone(vm.pagination);
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
-                vm.decisionsList = descriptionTrustHtml(result.decisions);
+                vm.decisionsList = result.decisions;
                 initPagination(result.totalDecisions);
-
-                // TODO: avoid height
-                vm.decisionsHeight = result.decisions.length * decisionsHeight + 'px';
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
             });
         }
 
-        // Move to Utils
-        function descriptionTrustHtml(list) {
-            return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
-
-                // Move to constat
-                if (el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0, 80) + '...';
-                }
-
-                el.description = $sce.trustAsHtml(el.description);
-
-                return el;
-            });
-        }
 
         // Pagination
         function changePageSize() {

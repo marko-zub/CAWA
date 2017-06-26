@@ -13,6 +13,7 @@
             .state('decisions.single', {
                 url: '/:id/{slug}?page&size',
                 abstract: false,
+                cache: false,
                 views: {
                     "@": {
                         templateUrl: 'app/decision/decision-single.html',
@@ -46,7 +47,7 @@
 
             .state('decisions.single.nominations', {
                 url: '/nominations',
-                abstract: false,
+                cache: false,
                 views: {
                     "@": {
                         templateUrl: 'app/decision/decision-nominations.html',
@@ -55,8 +56,8 @@
                     }
                 },
                 resolve: {
-                    decisionBasicInfo: DecisionResolver,
-                    decisionStateInfo: DecisionStateResolver
+                    // decisionBasicInfo: DecisionResolver,
+                    // decisionStateInfo: DecisionStateResolver
                 }
             })
 
@@ -77,7 +78,7 @@
                     }
                 },
                 resolve: {
-                    decisionStateInfo: DecisionStateResolver
+                    // decisionStateInfo: DecisionStateResolver
                         // decisionAnalysisInfo: DecisionAanalysisResolver
                 },
             })
@@ -93,6 +94,7 @@
             .state('decisions.single.parent', {
                 url: '/:parentId/{parentSlug}',
                 abstract: false,
+                cache: true,
                 views: {
                     "@": {
                         templateUrl: 'app/decision/decision-single-parent.html',
@@ -140,7 +142,8 @@
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
-                if (toState.name === 'decisions.single') {
+                if (toState.name === 'decisions.single' && 
+                    ($stateParams.slug !== result.nameSlug)) {
 
                     $state.params.slug = result.nameSlug;
                     $state.transitionTo($state.current.name, toParams, {

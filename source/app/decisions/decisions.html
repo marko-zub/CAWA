@@ -21,37 +21,8 @@
             <div class="col-sm-8">
                 <!-- TODO: create decisions-list component -->
                 <div class="container-desisions">
-                    <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
-                        <li ng-repeat="decision in vm.decisionsList track by decision.id">
-                            <div class="post">
-                                <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" class="left-side">
-                                    <div class="img-container" ng-if="decision.imageUrl">
-                                        <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
-                                    </div>
-                                </a>
-                                <div class="post-content">
-                                    <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
-
-                                    <div class="info">
-                                        <div class="author info-divider">
-                                            <i class="fa fa-user-o" aria-hidden="true"></i>
-                                            <span ng-bind="::decision.createUser.username"></span>
-                                        </div>
-                                        <div class="date info-divider">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            <span ng-bind="::decision.createDate | date:'MM/dd/yyyy'"></span>
-                                        </div>
-                                        <div class="info-divider">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            <span ng-bind="::decision.totalViews"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    
+                    <decisions-list list="vm.decisionsList"></decisions-list>
 
                     <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 </div>

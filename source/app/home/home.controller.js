@@ -6,10 +6,10 @@
         .module('app.home')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['DecisionDataService', '$sce', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
+    HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
 
 
-    function HomeController(DecisionDataService, $sce, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
+    function HomeController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
         // TODO: this controller copy of 
         // Decisions view
         // Move decisions for separete component
@@ -40,8 +40,6 @@
             }
         }
 
-        var decisionsHeight = 97;
-        vm.decisionsHeight = vm.pagination.pageSize * decisionsHeight + 'px';
 
         function getDecisions(data) {
             vm.decisionsSpinner = true;
@@ -49,31 +47,11 @@
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
-                vm.decisionsList = descriptionTrustHtml(result.decisions);
+                vm.decisionsList = result.decisions;
                 initPagination(result.totalDecisions);
-
-                // TODO: avoid height
-                if(!result.decisions) return;
-                vm.decisionsHeight = result.decisions.length * decisionsHeight + 'px';
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
-            });
-        }
-
-        // Move to Utils
-        function descriptionTrustHtml(list) {
-            return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
-
-                // Move to constat
-                if (el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0, 80) + '...';
-                }
-
-                el.description = $sce.trustAsHtml(el.description);
-
-                return el;
             });
         }
 

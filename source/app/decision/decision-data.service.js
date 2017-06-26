@@ -99,7 +99,7 @@
             decisionInfo = $resource(decisionUrl, {
                 id: '@id'
             }, {
-                cache: true
+                // cache: true
             }),
 
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
