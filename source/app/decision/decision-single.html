@@ -26,7 +26,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="app-votes">
         <a href="#" class="up">
             <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
@@ -83,7 +83,7 @@
             <div class="post-image" ng-show="::vm.decision.imageUrl">
                 <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
             </div>
-            <div ng-bind-html="::vm.decision.description"></div>
+            <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
         </div>
     </div>
     <div class="row decision-childs">
@@ -94,14 +94,14 @@
                 </h4>
                 <span class="text-header">
                     Can't find the necessary option? <a href="#">Add it</a>
-                </span>                
+                </span>
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
                         <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
                     </li>
                 </ul>
             </div>
-    
+
             <div ng-if="!vm.isDecisionsParent">
                 <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
                     <h4 class="tabs-title">
@@ -132,7 +132,7 @@
 
         </div>
         <div class="col-sm-7" ng-if="vm.isDecisionsParent">
-            
+
             <!-- TODO: make as component -->
             <!-- Filter  -->
             <div class="filter-name">
@@ -199,175 +199,6 @@
 
     <hr>
     <h3>Comments</h3>
-
-<!-- Make as component -->
-<!-- Comments list -->
-<div class="comments-list">
-    <div class="media">
-        <div id="#12" class="comment">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>
-        <div class="comment lvl-2">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit ametfacilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>
-        <div class="comment lvl-3">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate,
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>
-        <div class="comment lvl-3">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>
-        <div class="comment lvl-3">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>
-        <div class="comment lvl-3">
-            <div class="clearfix">
-                <div class="comment-aside">
-                    <div class="comment-votes">
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-up icon"></i>
-                        </a>
-                        <div> 12 </div>
-                        <a href="#" class="btn-sm btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-down icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="comment-body">
-                    <div class="comment-header">
-                        <span class="label label-info">#12314</span> Author: Xame
-                        <div class="comment-time text-muted time">1 minute ago</div>
-                    </div>
-                    <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptate, nihil culpa accusamus. Ab adipisci, sint magni asperiores deserunt et dicta, facilis, aut rem itaque laborum placeat atque? Dolorem, impedit!
-                    </div>
-                </div>
-            </div>
-            <div class="comment-footer">
-                <a herf>add a comment</a>
-            </div>
-        </div>                
-    </div>
-</div>
-<!-- End Comments list -->
+    <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
 
 </div>
