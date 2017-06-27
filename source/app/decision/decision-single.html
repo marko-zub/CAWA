@@ -9,6 +9,7 @@
         </div>
     </div>
 </div>
+
 <div class="app-container-sm">
     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
     <div class="post-header">
@@ -104,6 +105,10 @@
                         <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
                     </li>
                 </ul>
+
+                <div class="decision-sub-header">
+                    <h3 class="title" ng-bind="vm.totalCount"></h3>Options
+                </div>
             </div>
 
             <div ng-if="!vm.isDecisionsParent">

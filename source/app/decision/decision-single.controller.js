@@ -88,6 +88,8 @@
 
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
+
+                    vm.totalCount = vm.decision.totalChildDecisions;
                     vm.decisionsSpinnerChilds = true;
                     initSortMode($stateParams.tab);
                 }
