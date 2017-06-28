@@ -8,7 +8,8 @@
         .component('decisionsList', {
             templateUrl: 'app/decisions/decisions-list.html',
             bindings: {
-                list: '<'
+                list: '<',
+                criteriaCompliance: '<'
             },
             controller: 'DecisionsListController',
             controllerAs: 'vm',
@@ -50,6 +51,8 @@
                 if (el.description && el.description.length > 80) {
                     el.description = el.description.substring(0, 80) + '...';
                 }
+                
+                if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
                 
                 el.description = $sce.trustAsHtml(el.description);
 
