@@ -7,11 +7,11 @@
         .controller('DecisionSingleController', DecisionSingleController);
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService) {
 
         var
             vm = this;
@@ -167,20 +167,6 @@
             // });
         }
 
-        // TODO: move to utils
-        function descriptionTrustHtml(list) {
-            return _.map(list, function(el) {
-
-                if (el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0, 80) + '...';
-                }
-
-                el.description = $sce.trustAsHtml(el.description);
-                if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
-                return el;
-            });
-        }
-
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;
@@ -279,9 +265,9 @@
                 result = _.filter(result, function(group) {
                     if (group.criteria.length > 0) return group;
                 });
-                vm.criteriaGroups = descriptionTrustHtml(result);
+                vm.criteriaGroups = DecisionsUtils.descriptionTrustHtml(result);
                 _.forEach(result, function(resultEl) {
-                    descriptionTrustHtml(resultEl.criteria);
+                    DecisionsUtils.descriptionTrustHtml(resultEl.criteria);
 
                     _.forEach(resultEl.criteria, function(criteria) {
                         criteriaGroupsIds.push(criteria.id);

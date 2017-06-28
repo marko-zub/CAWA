@@ -6,9 +6,9 @@
         .module('app.discussions')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService', '$sce', 'PaginatorConstant'];
+    SearchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService', 'DecisionsUtils', 'PaginatorConstant'];
 
-    function SearchController($rootScope, $state, $stateParams, DecisionDataService, $sce, PaginatorConstant) {
+    function SearchController($rootScope, $state, $stateParams, DecisionDataService, DecisionsUtils, PaginatorConstant) {
         var vm = this;
         vm.noResult = false;
 
@@ -39,27 +39,12 @@
             }
 
             return DecisionDataService.searchDecisions(searchData).then(function(result) {
-                vm.decisionsList = descriptionTrustHtml(result.decisions);
+                vm.decisionsList = DecisionsUtils.descriptionTrustHtml(result.decisions);
                 vm.noResult = !vm.decisionsList.length;
                 changePaginationTotal(result.totalDecisions);
                 return result;
             }, function(err) {
                 console.log(err);
-            });
-        }
-
-        function descriptionTrustHtml(list) {
-            return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
-
-                // Move to constat
-                if (el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0, 80) + '...';
-                }
-
-                el.description = $sce.trustAsHtml(el.description);
-
-                return el;
             });
         }
 

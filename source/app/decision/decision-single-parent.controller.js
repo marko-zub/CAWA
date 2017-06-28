@@ -6,11 +6,11 @@
         .module('app.decision')
         .controller('DecisionSingleParentController', DecisionSingleParentController);
 
-    DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
+    DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsUtils',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService', 'Utils'
     ];
 
-    function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService,
+    function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsUtils,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService, Utils) {
 
         var
@@ -69,7 +69,7 @@
             if (!id) return;
 
             DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = descriptionTrustHtml(result.decisions);
+                vm.decisions = DecisionsUtils.descriptionTrustHtml(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
             });
         }
@@ -121,20 +121,6 @@
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
                 });
-            });
-        }
-
-        // TODO: move to utils
-        function descriptionTrustHtml(list) {
-            return _.map(list, function(el) {
-
-                if (el.description && el.description.length > 80) {
-                    el.description = el.description.substring(0, 80) + '...';
-                }
-
-                el.description = $sce.trustAsHtml(el.description);
-                if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
-                return el;
             });
         }
 
