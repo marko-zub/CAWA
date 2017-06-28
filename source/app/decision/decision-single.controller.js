@@ -92,6 +92,16 @@
                     initSortMode($stateParams.tab);
                 }
 
+                // Recommended Decisions
+                if (vm.decisionParents.length) {
+                    vm.recommendedDecisionsListLoader = true;
+                    vm.activeRecommendedTab = {
+                        id: vm.decisionParents[0].id,
+                        name: vm.decisionParents[0].name
+                    };
+                    getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
+                }
+
                 return result;
             });
         }
@@ -117,7 +127,7 @@
 
             if (_.isNull(filter) || filter) {
                 sendData.decisionNameFilterPattern = filter;
-            } else if(vm.filterName) {
+            } else if (vm.filterName) {
                 sendData.decisionNameFilterPattern = vm.filterName;
             }
 
@@ -313,6 +323,49 @@
             filterNameSend(value);
         }
         // End Filter name
+
+
+        // Recommended decisions
+        vm.getRecommendedDecisions = getRecommendedDecisions;
+
+        function getRecommendedDecisions(decisionId, parent) {
+            if(!parent) return;
+            var sendData = {};
+            sendData.excludeChildDecisionIds = [decisionId];
+
+            vm.activeRecommendedTab = {
+                id: parent.id,
+                name: parent.name
+            };
+            
+            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                sendData.sortCriteriaIds = pickCriteriaIds(result);
+                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
+                    vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
+                    vm.recommendedDecisionsListLoader = false;
+                });
+            });
+        }
+
+
+        // TODO: move to service
+        function pickCriteriaIds(result) {
+            var criteriaGroupsIdsArray = [];
+            _.forEach(result, function(resultEl) {
+                _.forEach(resultEl.criteria, function(criteria) {
+                    criteriaGroupsIdsArray.push(criteria.id);
+                });
+            });
+            return criteriaGroupsIdsArray;
+        }
+
+        function filterDecisionList(decisionMatrixs) {
+            var list = [];
+            _.forEach(decisionMatrixs, function(item) {
+                list.push(item.decision);
+            });
+            return list;
+        }
 
     }
 })();

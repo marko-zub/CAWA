@@ -14,7 +14,7 @@
 
 // Posts list
 .post {
-
+    padding: 4px 0;
     // Single post view
     &.post-single {
         margin: 0 0 32px;
@@ -236,6 +236,16 @@
 .comment-aside {
     float: left;
     padding: 8px;
+    position: relative;
+    .app-votes {
+        left: 0;
+        .total {
+            // font-size: 16px;
+        }
+        .app-vote-control {
+            font-size: 21px;
+        }
+    }
 }
 
 .comment-header {
@@ -303,13 +313,6 @@
     font-size: 13px;
     font-weight: 600;
     color: #aaa;    
-}
-
-.app-list-panel {
-    h4 {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
 }
 
 .criteria-comliance {
