@@ -10,48 +10,79 @@
     </div>
 </div>
 <div class="app-container-sm">
-    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
-    <div class="post-header">
-        <div class="nav-tabs-wrapper clearfix">
-            <ul class="nav nav-tabs nav-tabs-sm">
-                <li>
-                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
-                </li>
-                <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
-                    <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
-                </li>
-                <li>
-                    <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="post post-single">
-        <div class="post-sub-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="clearfix">
-                        <div class="pull-right">
-                            <a ui-sref="decisions.single(::{id: vm.parent.id, slug: vm.parent.nameSlug})">
-                                {{ vm.parent.name }}
-                            </a>
+    <div class="row">
+        <div class="col-sm-8">
+            <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+            <div class="post-header">
+                <div class="nav-tabs-wrapper clearfix">
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li>
+                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
+                        </li>
+                        <li ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
+                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
+                        </li>
+                        <li>
+                            <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="post post-single">
+                <div class="post-sub-header">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a ui-sref="decisions.single(::{id: vm.parent.id, slug: vm.parent.nameSlug})">
+                                        {{ vm.parent.name }}
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
+                    Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <criteria-list list="vm.criteriaGroups" links="false" rating="true"></criteria-list>
+                    </div>
+                    <div class="col-sm-6">
+                        <characteristics-list list="vm.characteristicGroups" links="false" rating="true"></characteristics-list>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
-            Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <criteria-list list="vm.criteriaGroups" links="false" rating="true"></criteria-list>
+        <!-- Recommended Start -->
+        <div class="col-sm-4 recommended-list" ng-if="vm.decisionParents.length">
+            <h4>
+                 Recommended
+            </h4>
+            
+            <div class="nav-tabs-wrapper tabs-left">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
+                    </li>
+                </ul>
+                <div class="pull-right text-header">
+                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})">
+                        See All
+                    </a>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <characteristics-list list="vm.characteristicGroups" links="false" rating="true"></characteristics-list>
-            </div>
+
+            <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+
         </div>
+        <!-- End Recommended Start -->
 
     </div>
 

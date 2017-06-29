@@ -1446,8 +1446,15 @@ a {
 }
 
 .nav-tabs-wrapper {
+    .clearfix;
+    &.tabs-left {
+         border-bottom: 1px solid #ddd;
+        .nav-tabs {
+            float: left;
+            border-bottom: 0;
+        }         
+    }
     &.tabs-right {
-        .clearfix;
         border-bottom: 1px solid #ddd;
         .nav-tabs {
             // width: 50%;

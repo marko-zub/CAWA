@@ -317,15 +317,18 @@
         vm.getRecommendedDecisions = getRecommendedDecisions;
 
         function getRecommendedDecisions(decisionId, parent) {
-            if(!parent) return;
-            var sendData = {};
+            if (!parent) return;
+            var sendData = {
+                includeCharacteristicIds: [-1]
+            };
             sendData.excludeChildDecisionIds = [decisionId];
 
             vm.activeRecommendedTab = {
                 id: parent.id,
-                name: parent.name
+                name: parent.name,
+                nameSlug: parent.nameSlug
             };
-            
+
             DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
                 sendData.sortCriteriaIds = pickCriteriaIds(result);
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {

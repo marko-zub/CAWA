@@ -16,18 +16,18 @@
         <div ng-class="vm.decisionParents.length ? 'col-sm-8' : 'col-sm-12'">
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="post-header">
-                <div class="nav-tabs-wrapper" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
+                <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li class="active">
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                         </li>
-                        <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                        <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                         </li>
                         <li>
                             <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                         </li>
-                    </ul>
+                    </ul>                    
                 </div>
             </div>
 
@@ -108,6 +108,9 @@
                                 <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
                             </li>
                         </ul>
+                        <div class="decision-sub-header">
+                            <h3 class="title" ng-bind="vm.totalCount"></h3>Options
+                        </div>                        
                     </div>
 
                     <div ng-if="!vm.isDecisionsParent">
@@ -209,21 +212,14 @@
         <!-- Recommended Start -->
         <div class="col-sm-4 recommended-list" ng-if="vm.decisionParents.length">
             <h4>
-                 Recommended
+                 Recommended {{vm.activeRecommendedTab.name}}
             </h4>
-            
-            <div class="nav-tabs-wrapper tabs-left">
-                <ul class="nav nav-tabs nav-tabs-sm">
-                    <li  ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
-                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
-                    </li>
-                </ul>
-                <div class="pull-right text-header">
-                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})">
-                        See All
-                    </a>
-                </div>
-            </div>
+
+            <ul class="nav nav-tabs nav-tabs-sm">
+                <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                    <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
+                </li>
+            </ul>
 
             <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
 

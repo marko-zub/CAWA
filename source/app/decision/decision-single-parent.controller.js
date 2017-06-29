@@ -40,6 +40,8 @@
 
                 if (!vm.parent) return;
 
+                getRecommendedDecisions(vm.decision.id, vm.parent);
+
                 setPageData();
             });
 
@@ -178,6 +180,51 @@
             });
         }
 
+
+        // Recommended decisions
+        vm.getRecommendedDecisions = getRecommendedDecisions;
+
+        function getRecommendedDecisions(decisionId, parent) {
+            if (!parent) return;
+            var sendData = {
+                includeCharacteristicIds: [-1]
+            };
+            sendData.excludeChildDecisionIds = [decisionId];
+
+            vm.activeRecommendedTab = {
+                id: parent.id,
+                name: parent.name,
+                nameSlug: parent.nameSlug
+            };
+
+            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                sendData.sortCriteriaIds = pickCriteriaIds(result);
+                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
+                    vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
+                    vm.recommendedDecisionsListLoader = false;
+                });
+            });
+        }
+
+
+        // TODO: move to service
+        function pickCriteriaIds(result) {
+            var criteriaGroupsIdsArray = [];
+            _.forEach(result, function(resultEl) {
+                _.forEach(resultEl.criteria, function(criteria) {
+                    criteriaGroupsIdsArray.push(criteria.id);
+                });
+            });
+            return criteriaGroupsIdsArray;
+        }
+
+        function filterDecisionList(decisionMatrixs) {
+            var list = [];
+            _.forEach(decisionMatrixs, function(item) {
+                list.push(item.decision);
+            });
+            return list;
+        }
 
     }
 })();
