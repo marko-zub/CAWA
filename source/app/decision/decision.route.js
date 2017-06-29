@@ -186,7 +186,7 @@
                 // }
 
                 //unsubscribe event listener
-                stateListener();
+                // stateListener();
             });
     }
 

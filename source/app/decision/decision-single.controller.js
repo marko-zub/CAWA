@@ -88,6 +88,8 @@
 
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
+
+                    vm.totalCount = vm.decision.totalChildDecisions;
                     vm.decisionsSpinnerChilds = true;
                     initSortMode($stateParams.tab);
                 }
@@ -138,7 +140,7 @@
                 _.forEach(result.decisionMatrixs, function(decision) {
                     decisions.push(decision.decision);
                 });
-                vm.decisions = descriptionTrustHtml(decisions);
+                vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
                 vm.decisionsSpinnerChilds = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
