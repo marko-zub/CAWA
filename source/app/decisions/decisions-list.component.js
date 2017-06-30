@@ -9,7 +9,8 @@
             templateUrl: 'app/decisions/decisions-list.html',
             bindings: {
                 list: '<',
-                criteriaCompliance: '<'
+                criteriaCompliance: '<',
+                criteriaComplianceTitle: '@'
             },
             controller: 'DecisionsListController',
             controllerAs: 'vm',

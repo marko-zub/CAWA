@@ -10,7 +10,8 @@
             bindings: {
                 list: '<',
                 links: '<',
-                rating: '<'
+                rating: '<',
+                title: '@'
             },
             controller: 'CriteriaListController',
             controllerAs: 'vm',

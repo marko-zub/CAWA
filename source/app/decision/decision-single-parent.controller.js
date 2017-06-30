@@ -40,8 +40,6 @@
 
                 if (!vm.parent) return;
 
-                getRecommendedDecisions(vm.decision.id, vm.parent);
-
                 setPageData();
             });
 
@@ -86,13 +84,13 @@
 
         // TODO: clean up
         // Remove loop
+        var criteriaIds = [];
         function getDecisionParentsCriteriaCharacteristicts(parentId, parentUid) {
             var sendData = {
                 includeChildDecisionIds: []
             };
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
-            var criteriaIds = [];
             var criteriaGroups;
             $q.all([
                 getCriteriaGroupsById(parentId),
@@ -115,6 +113,8 @@
                 });
 
                 sendData.sortCriteriaIds = criteriaIds;
+
+                getRecommendedDecisions(vm.decision.id, vm.parent);
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
@@ -197,13 +197,13 @@
                 nameSlug: parent.nameSlug
             };
 
-            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = pickCriteriaIds(result);
+            // DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                sendData.sortCriteriaIds = pickCriteriaIds(criteriaIds);
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
                 });
-            });
+            // });
         }
 
 

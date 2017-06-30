@@ -9,9 +9,9 @@
             <div class="post-content">
                 <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
                 <div class="criteria-comliance" ng-if="::vm.criteriaCompliance" ng-show="decision.criteriaCompliancePercentage">
-                    Criteria compliance: <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                    {{ vm.criteriaComplianceTitle || 'Criteria compliance:'}} <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                     </small>
-                </div>                
+                </div>
                 <div class="info">
                     <div class="author info-divider">
                         <i class="fa fa-user-o" aria-hidden="true"></i>

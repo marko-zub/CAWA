@@ -48,7 +48,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <criteria-list list="vm.criteriaGroups" links="false" rating="true"></criteria-list>
+                        <criteria-list list="vm.criteriaGroups" links="false" rating="true" title="Reviews"></criteria-list>
                     </div>
                     <div class="col-sm-6">
                         <characteristics-list list="vm.characteristicGroups" links="false" rating="true"></characteristics-list>
@@ -63,7 +63,7 @@
             <h4>
                  Recommended
             </h4>
-            
+
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+            <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true" criteria-compliance-title="Reviews compliance:"></decisions-list>
 
             <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
