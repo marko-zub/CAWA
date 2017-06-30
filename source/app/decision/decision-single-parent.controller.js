@@ -114,15 +114,7 @@
 
                 sendData.sortCriteriaIds = criteriaIds;
 
-                getRecommendedDecisions(vm.decision.id, vm.parent);
-
-                DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
-                    mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
-
-                    var decisionMatrixs = resp.decisionMatrixs;
-                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
-                });
+                getRecommendedDecisions(vm.decision.id, vm.parent, values[0]);
             });
         }
 
@@ -184,7 +176,7 @@
         // Recommended decisions
         vm.getRecommendedDecisions = getRecommendedDecisions;
 
-        function getRecommendedDecisions(decisionId, parent) {
+        function getRecommendedDecisions(decisionId, parent, criteriaGroupsArray) {
             if (!parent) return;
             var sendData = {
                 includeCharacteristicIds: [-1]
@@ -202,20 +194,14 @@
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
+
+                    vm.criteriaGroups = mergeCriteriaDecisions(result, criteriaGroupsArray);
+                    mergeCharacteristicsDecisions(result, vm.characteristicGroups);
+
+                    var decisionMatrixs = result.decisionMatrixs;
+                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
                 });
             // });
-        }
-
-
-        // TODO: move to service
-        function pickCriteriaIds(result) {
-            var criteriaGroupsIdsArray = [];
-            _.forEach(result, function(resultEl) {
-                _.forEach(resultEl.criteria, function(criteria) {
-                    criteriaGroupsIdsArray.push(criteria.id);
-                });
-            });
-            return criteriaGroupsIdsArray;
         }
 
         function filterDecisionList(decisionMatrixs) {
