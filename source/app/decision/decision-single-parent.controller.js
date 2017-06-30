@@ -198,7 +198,7 @@
             };
 
             // DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = pickCriteriaIds(criteriaIds);
+                sendData.sortCriteriaIds = criteriaIds;
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
