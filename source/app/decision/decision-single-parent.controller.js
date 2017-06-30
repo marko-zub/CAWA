@@ -40,6 +40,8 @@
 
                 if (!vm.parent) return;
 
+                getRecommendedDecisions(vm.decision.id, vm.parent);
+
                 setPageData();
             });
 
@@ -84,13 +86,13 @@
 
         // TODO: clean up
         // Remove loop
-        var criteriaIds = [];
         function getDecisionParentsCriteriaCharacteristicts(parentId, parentUid) {
             var sendData = {
                 includeChildDecisionIds: []
             };
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
+            var criteriaIds = [];
             var criteriaGroups;
             $q.all([
                 getCriteriaGroupsById(parentId),
@@ -114,7 +116,13 @@
 
                 sendData.sortCriteriaIds = criteriaIds;
 
-                getRecommendedDecisions(vm.decision.id, vm.parent, values[0]);
+                DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
+                    vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
+                    mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
+
+                    var decisionMatrixs = resp.decisionMatrixs;
+                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
+                });
             });
         }
 
@@ -176,7 +184,7 @@
         // Recommended decisions
         vm.getRecommendedDecisions = getRecommendedDecisions;
 
-        function getRecommendedDecisions(decisionId, parent, criteriaGroupsArray) {
+        function getRecommendedDecisions(decisionId, parent) {
             if (!parent) return;
             var sendData = {
                 includeCharacteristicIds: [-1]
@@ -189,19 +197,25 @@
                 nameSlug: parent.nameSlug
             };
 
-            // DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = criteriaIds;
+            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                sendData.sortCriteriaIds = pickCriteriaIds(result);
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
-
-                    vm.criteriaGroups = mergeCriteriaDecisions(result, criteriaGroupsArray);
-                    mergeCharacteristicsDecisions(result, vm.characteristicGroups);
-
-                    var decisionMatrixs = result.decisionMatrixs;
-                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
                 });
-            // });
+            });
+        }
+
+
+        // TODO: move to service
+        function pickCriteriaIds(result) {
+            var criteriaGroupsIdsArray = [];
+            _.forEach(result, function(resultEl) {
+                _.forEach(resultEl.criteria, function(criteria) {
+                    criteriaGroupsIdsArray.push(criteria.id);
+                });
+            });
+            return criteriaGroupsIdsArray;
         }
 
         function filterDecisionList(decisionMatrixs) {
