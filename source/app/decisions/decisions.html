@@ -1,13 +1,14 @@
 <div class="app-container-sm">
 
-    <div class="decision-sub-header">
+<!--     <div class="decision-sub-header">
         <h3 class="title" ng-bind="vm.totalCount"></h3>Decisions
-    </div>
+    </div> -->
 
     <div class="post-header">
         <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
             <h4 class="tabs-title">
                 All Decisions
+                <span class="title-counter">({{vm.totalCount}})</span>
             </h4>
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
