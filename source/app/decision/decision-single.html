@@ -108,6 +108,11 @@
                                 <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
                             </li>
                         </ul>
+
+                        <div class="total-count">
+                            <h3 class="title" ng-bind="vm.totalCount"></h3>Options
+                        </div>
+
                     </div>
 
                     <div ng-if="!vm.isDecisionsParent">
