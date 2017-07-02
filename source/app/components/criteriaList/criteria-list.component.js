@@ -12,7 +12,7 @@
                 links: '<',
                 rating: '<',
                 discussion: '<',
-                title: '@'
+                criteriaTitle: '@'
             },
             controller: 'CriteriaListController',
             controllerAs: 'vm',
