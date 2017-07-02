@@ -10,6 +10,22 @@
 
     function configuration($stateProvider) {
         $stateProvider
+            .state('discussions', {
+                url: '/discussions',
+                views: {
+                    "@": {
+                        templateUrl: 'app/discussions/discussions.html',
+                        controller: 'DiscussionsController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    breadcrumbs: [{
+                        title: 'Discussions',
+                        link: null
+                    }]
+                },
+            })        
             .state('decisions.single.comparison.child', {
                 url: '/:discussionId/{discussionSlug}',
                 views: {

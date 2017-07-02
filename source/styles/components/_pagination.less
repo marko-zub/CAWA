@@ -13,12 +13,30 @@
   display: inline-block;
   margin: 0 2px;
   & > a{
-  -webkit-border-radius: @border-radius;
-          border-radius: @border-radius;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   }
 }
 
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
   background-color: @basic-active;
-  background-color: @basic-active;
+}
+
+
+// .pagination-sm 
+.pagination-sm  {
+  & > li > a, 
+  & > li > span {
+    padding: 3px 9px;
+  }
+}
+.pagination-sm > li:first-child > a, .pagination-sm > li:first-child > span,
+.pagination-sm > li:last-child > a, .pagination-sm > li:last-child > span {
+  -webkit-border-radius: 0;
+          border-radius: 0;  
 }

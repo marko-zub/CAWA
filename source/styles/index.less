@@ -67,12 +67,12 @@ html {
   position: relative;
   margin: 0 auto;
   @media (min-width: @screen-sm-min) {
-    margin: 0 30px;
+    margin: 0;
     width: auto;
   }
   @media (min-width: @screen-lg-min) {
     width: auto;
-    margin: 0 90px;
+    margin: 0 45px;
   }  
   @media (min-width: @screen-lgx-min) {
     width: auto;
@@ -209,9 +209,22 @@ body {
     }
 }
 
+
+// recommended
 .recommended-list {
   min-height: 200px;
   position: relative;
+  .post {
+    .img-link {
+      width: 100px;
+      .img-container {
+        width: 90px;
+      }
+    }
+    .post-content {
+      width: calc(~"100% - 100px");
+    }    
+  }
 }
 
 .nav-tabs > li.active > a.link {
@@ -273,7 +286,7 @@ body {
 // Votes 
 .app-votes {
   position: absolute;
-  left: -60px;
+  left: -30px;
   text-align: center;
   .app-vote-control {
     font-size: 27px;
@@ -346,11 +359,26 @@ body {
 
 .criteria-comliance-inline {
   display: inline-block;
-  margin: 0 8px;
+  margin: 0 0 8px;
+}
+
+.criteria-comliance {
+    font-size: 85%;
+    padding: 0 0 8px;
 }
 
 .see-all {
   .info {
     display: inline-block;
   }
+}
+
+.app-container-sm {
+  .title {
+    font-size: 18px;
+  }
+}
+
+.criteria-comliance-single {
+  margin: 0 0 16px;
 }

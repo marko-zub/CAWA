@@ -24,9 +24,9 @@
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
         var decisionsData = DecisionsService.getData();
 
-        init();
+        vm.$onInit = onInit;
 
-        function init() {
+        function onInit() {
             console.log('Decisions controller');
 
             vm.navigation = navigationObj;

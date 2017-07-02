@@ -25,9 +25,9 @@
 
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
 
-        init();
+        vm.$onInit = onInit;
 
-        function init() {
+        function onInit() {
             console.log('Home controller');
 
             vm.navigation = navigationObj;

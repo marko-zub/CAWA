@@ -1,29 +1,21 @@
 (function() {
 
-  'use strict';
+    'use strict';
 
-  angular
-    .module('app.discussions')
-    .controller('DiscussionsController', DiscussionsController);
+    angular
+        .module('app.discussions')
+        .controller('DiscussionsController', DiscussionsController);
 
-  DiscussionsController.$inject = ['$rootScope', '$stateParams'];
+    DiscussionsController.$inject = ['$rootScope', '$stateParams'];
 
-  function DiscussionsController($rootScope, $stateParams) {
-    var vm = this;
+    function DiscussionsController($rootScope, $stateParams) {
+        var vm = this;
 
-    $rootScope.breadcrumbs = [{
-      title: 'Decisions',
-      link: 'decisions'
-    }, {
-      title: vm.discussion.decision.name,
-      link: 'decisions.matrix({id: ' + $stateParams.id + '})'
-    }, {
-      title: 'Discussions',
-      link: 'decisions.discussions'
-    }];
+        vm.$onInit = onInit;
 
+        function onInit() {
+            console.log('Discussions controller');
+        }
 
-    console.log('Discussions controller');
-
-  }
+    }
 })();
