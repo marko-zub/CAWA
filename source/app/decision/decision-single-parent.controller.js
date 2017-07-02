@@ -194,7 +194,7 @@
             vm.activeRecommendedTab = {
                 id: parent.id,
                 name: parent.name,
-                nameSlug: parent.nameSlug
+                nameSlug: parent.nameSlug,
             };
 
             // DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
@@ -202,6 +202,7 @@
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
+                    vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
                 });
             // });
         }

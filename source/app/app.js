@@ -7,7 +7,9 @@
         'app.components',
         'app.login',
         'app.decision',
-        'app.discussions'
+        'app.discussions',
+        'app.users',
+        'app.tags'
     ]);
 
     var initInjector = angular.injector(["ng"]),

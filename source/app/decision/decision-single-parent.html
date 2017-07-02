@@ -43,15 +43,18 @@
                     </div>
                 </div>
 
-                <div class="criteria-comliance" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
+                <div class="criteria-comliance inline" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
                     Criteria compliance: <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                    <div class="criteria-comliance-inline" ng-if="vm.decision.criteriaCompliancePercentage >= 0">
+                        <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <criteria-list list="vm.criteriaGroups" links="false" rating="true" title="Reviews"></criteria-list>
+                        <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" title="Reviews"></criteria-list>
                     </div>
                     <div class="col-sm-6">
-                        <characteristics-list list="vm.characteristicGroups" links="false" rating="true"></characteristics-list>
+                        <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true"></characteristics-list>
                     </div>
                 </div>
 
@@ -71,8 +74,8 @@
                     </li>
                 </ul>
                 <div class="pull-right text-header">
-                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})">
-                        See All
+                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
+                        See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>
             </div>

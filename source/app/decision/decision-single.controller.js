@@ -165,8 +165,6 @@
                 });
 
             });
-
-            // });
         }
 
         // Pagination
@@ -334,6 +332,7 @@
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
+                    vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
                 });
             });
         }

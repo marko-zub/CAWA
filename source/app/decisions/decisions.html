@@ -1,20 +1,22 @@
 <div class="app-container-sm">
-
-<!--     <div class="decision-sub-header">
+    <!--     <div class="decision-sub-header">
         <h3 class="title" ng-bind="vm.totalCount"></h3>Decisions
     </div> -->
-
-    <div class="post-header">
-        <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
-            <h4 class="tabs-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="post-header">
+                <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
+                    <h4 class="tabs-title">
                 All Decisions
                 <span class="title-counter">({{vm.totalCount}})</span>
             </h4>
-            <ul class="nav nav-tabs nav-tabs-sm">
-                <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                    <a ui-sref="decisions({tab:item.key})">{{::item.label}}</a>
-                </li>
-            </ul>
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                            <a ui-sref="decisions({tab:item.key})">{{::item.label}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div class="app-main-panel main-panel">
@@ -22,9 +24,7 @@
             <div class="col-sm-8">
                 <!-- TODO: create decisions-list component -->
                 <div class="container-desisions">
-
                     <decisions-list list="vm.decisionsList"></decisions-list>
-
                     <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 </div>
                 <!-- TODO: use as component -->

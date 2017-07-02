@@ -191,7 +191,7 @@
                 </div>
                 <!-- Criteria -->
                 <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
-                    <criteria-list list="::vm.criteriaGroups"></criteria-list>
+                    <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups"></criteria-list>
                 </div>
                 <!-- End Criteria -->
                 <div class="col-sm-8" ng-if="vm.isDecisionsParent">
@@ -220,8 +220,8 @@
                     </li>
                 </ul>
                 <div class="pull-right text-header">
-                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})">
-                        See All
+                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
+                        See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>
             </div>

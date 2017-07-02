@@ -51,14 +51,33 @@
 
 }
 
+.header-nav {
+    float: left;
+    margin: 0 30px 0 15px;
+    .clearfix;
+    a {
+        float: left;
+        display: block;
+        padding: 15px 10px 13px;
+        border-bottom: 2px solid transparent;
+        .transition(color 0.3s ease, border-color 0.3s ease;);
+
+        &.active {
+            border-bottom-color: @basic-active;
+        }
+        &:hover { 
+            background-color: darken(@header-background, 5%);
+        }
+    }
+}
+
 .app-header-sub-title {
     font-size: 17px;
     font-weight: 500;
 }
 
 .navbar-brand {
-    margin-right: 15px;
-    min-width: 200px;
+    // min-width: 200px;
     font-weight: 600;
     padding-left: 0;
     a {
