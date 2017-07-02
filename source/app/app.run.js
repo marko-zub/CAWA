@@ -40,19 +40,18 @@
             // console.log($rootScope.pageUrl);
         });
 
+        // Box shadow on scroll for header
+        function headerClass() {
+            var header = $(document).scrollTop();
+            if (header > 10) {
+                $('#app-header').addClass('scroll');
+            } else {
+                $('#app-header').removeClass('scroll');
+            }
+        }
 
-        // Box shadow on scroll
         if ($(window).width() > 1024) {
-
-            $(window).scroll(function() {
-                var header = $(document).scrollTop();
-                if (header > 10) {
-                    $('#app-header').addClass('scroll');
-                } else {
-                    $('#app-header').removeClass('scroll');
-                }
-            });
-
+            $(window).scroll(_.throttle(headerClass, 500));
         }
 
     }
