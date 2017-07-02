@@ -11,6 +11,7 @@
                 list: '<',
                 links: '<',
                 rating: '<',
+                discussion: '<',
                 title: '@'
             },
             controller: 'CriteriaListController',
@@ -29,6 +30,7 @@
         function onInit() {
             if (!!vm.links) vm.links = true;
             if (!vm.rating) vm.rating = false;
+            if(vm.discussion !== true) vm.discussion = false;
         }
     }
 })();

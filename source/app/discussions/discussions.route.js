@@ -25,58 +25,49 @@
                         link: null
                     }]
                 },
-            })        
-            .state('decisions.single.comparison.child', {
-                url: '/:discussionId/{discussionSlug}',
-                views: {
-                    "@": {
-                        templateUrl: 'app/discussions/discussion-decision-child.html',
-                        controller: 'DiscussionDecisionChildController',
-                        controllerAs: 'vm',
-                    }
-                },
-                params: {
-                    discussionSlug: {
-                        value: null,
-                        squash: true
-                    }
-                }
             })
-            .state('decisions.single.comparison.child.option', {
-                url: '/:critOrCharId/{critOrCharSlug}',
+            .state('decisions.single.parent.characteristics', {
+                url: '/characteristics/:characteristicId/:characteristicSlug',
                 views: {
                     "@": {
-                        templateUrl: 'app/discussions/discussion-decision-child-option.html',
-                        controller: 'DiscussionDecisionChildOptionController',
+                        templateUrl: 'app/discussions/decision-characteristics.html',
+                        controller: 'DeicisionCharacteristicsController',
                         controllerAs: 'vm',
                     }
-                },
-                resolve: {
-                    decisionDiscussionInfo: DecisionSingleDiscussionResolver
-                },
-                params: {
-                    critOrCharId: {
-                        value: null,
-                        squash: true
+                }
+                // resolve: {
+                //     decisionDiscussionInfo: DecisionSingleDiscussionResolver
+                // }
+            })            
+            .state('decisions.single.parent.reviews', {
+                url: '/reviews/:reviewId/:reviewSlug',
+                views: {
+                    "@": {
+                        templateUrl: 'app/discussions/decision-reviews.html',
+                        controller: 'DeicisionReviewsController',
+                        controllerAs: 'vm',
                     }
                 }
+                // resolve: {
+                //     decisionDiscussionInfo: DecisionSingleDiscussionResolver
+                // }
             });
     }
 
 
 
     // Decision Data
-    DecisionSingleDiscussionResolver.$inject = ['DiscussionsDataService', '$stateParams', '$state', '$rootScope', '$location'];
+    // DecisionSingleDiscussionResolver.$inject = ['DiscussionsDataService', '$stateParams', '$state', '$rootScope', '$location'];
 
-    function DecisionSingleDiscussionResolver(DiscussionsDataService, $stateParams, $state, $rootScope, $location) {
-        return DiscussionsDataService.searchCommentableDiscussion($stateParams.discussionId, $stateParams.critOrCharId)
-            .then(function(resp) {
-                return resp;
-            })
-            .catch(function(err) {
-                console.log(err);
-                return err;
-            });
-    }
+    // function DecisionSingleDiscussionResolver(DiscussionsDataService, $stateParams, $state, $rootScope, $location) {
+    //     return DiscussionsDataService.searchCommentableDiscussion($stateParams.discussionId, $stateParams.critOrCharId)
+    //         .then(function(resp) {
+    //             return resp;
+    //         })
+    //         .catch(function(err) {
+    //             console.log(err);
+    //             return err;
+    //         });
+    // }
 
 })();

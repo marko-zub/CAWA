@@ -11,7 +11,8 @@
                 list: '<',
                 links: '<',
                 comments: '<',
-                rating: '<'
+                rating: '<',
+                discussion: '<'
             },
             controller: 'CharacteristicsListController',
             controllerAs: 'vm',
@@ -29,6 +30,7 @@
             if(!!vm.links) vm.links = true;
             if(!!vm.comments) vm.comments = false;
             if (!vm.rating) vm.rating = false;
+            if(vm.discussion !== true) vm.discussion = false;
         }
     }
 })();

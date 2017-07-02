@@ -23,7 +23,7 @@
                         <div class="discussions-list-content">
                             <div class="clearfix">
                                 <div class="row">
-                                    <div class="col-sm-6 clearfix">
+                                    <div class="col-sm-5 clearfix">
                                         <div ng-switch="::(vm.links == true)" class="pull-left">
                                             <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a>
                                             <span ng-switch-when="false" ng-bind="::characteristic.name"></span>
@@ -35,6 +35,13 @@
                                             <a href="#">Provide value</a>
                                         </div>
                                         <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="pull-right discussions-link" ng-if="::vm.discussion">
+                                             <a ui-sref="decisions.single.parent.characteristics({characteristicId: characteristic.id,characteristicSlug: characteristic.nameSlug})">
+                                                <i class="fa fa-link" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
