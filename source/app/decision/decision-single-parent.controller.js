@@ -114,14 +114,14 @@
 
                 sendData.sortCriteriaIds = criteriaIds;
 
-                getRecommendedDecisions(vm.decision.id, vm.parent);
-
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
                     mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
+
+                    getRecommendedDecisions(vm.decision.id, vm.parent);
                 });
             });
         }

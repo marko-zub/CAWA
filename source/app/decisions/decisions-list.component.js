@@ -10,16 +10,17 @@
             bindings: {
                 list: '<',
                 criteriaCompliance: '<',
-                criteriaComplianceTitle: '@'
+                criteriaComplianceTitle: '@',
+                compare: '<'
             },
             controller: 'DecisionsListController',
             controllerAs: 'vm',
         });
 
 
-    DecisionsListController.$inject = ['DecisionsUtils'];
+    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService'];
 
-    function DecisionsListController(DecisionsUtils) {
+    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService) {
         var
             vm = this;
 
@@ -28,11 +29,13 @@
         var decisionsHeight = 97;
         // TODO: avoid height
 
+        // TODO: break out to recommend list component
 
         function onInit() {
             if (!vm.list) return;
             vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
             vm.decisionsList = descriptionTrustHtml(vm.list);
+            if(vm.compare !== true) vm.compare = false;
         }
 
         function onChanges(changes) {
@@ -42,5 +45,11 @@
                 vm.decisionsList = DecisionsUtils.descriptionTrustHtml(changes.list.currentValue);
             }
         }
+
+        vm.addToCompareList = addToCompareList;
+        function addToCompareList(id) {
+            DecisionCompareNotificationService.notifyUpdateDecisionCompare(id);
+        }
+
     }
 })();

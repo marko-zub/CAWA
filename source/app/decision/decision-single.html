@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+            <decisions-list compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
 
             <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
@@ -244,3 +244,6 @@
     </div>
 
 </div>
+
+
+<compare-panel></compare-panel>
