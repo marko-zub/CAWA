@@ -5,10 +5,11 @@
         .module('app')
         .run(runBlock);
 
-    runBlock.$inject = ['$rootScope', '$state', '$location'];
+    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config'];
 
-    function runBlock($rootScope, $state, $location) {
-        var pageTitle = 'DecisionWanted';
+    function runBlock($rootScope, $state, $location, Config) {
+        console.log(Config);
+        var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
 
         // TODO: simplify logic
