@@ -13,7 +13,7 @@
         vm.noResult = false;
 
         vm.query = $stateParams.query || '';
-        $rootScope.pageTitle = 'Search' + ' | DecisionWanted';
+        $rootScope.pageTitle = 'Search' + ' | DecisionWanted.com';
 
         init();
 

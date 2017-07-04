@@ -42,7 +42,7 @@
             initPagination();
             getDecisionParents(vm.decision.id);
 
-            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted';
+            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted.com';
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',

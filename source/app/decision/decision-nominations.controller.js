@@ -28,7 +28,7 @@
         }
 
         function setPageData() {
-            $rootScope.pageTitle = vm.decision.name + ' Nominations | DecisionWanted';
+            $rootScope.pageTitle = vm.decision.name + ' Nominations | DecisionWanted.com';
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',

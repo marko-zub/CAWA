@@ -31,7 +31,7 @@
 
             vm.navigation = navigationObj;
 
-            $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted';
+            $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted.com';
             var data = checkStateParams($stateParams);
             getDecisions(data);
 

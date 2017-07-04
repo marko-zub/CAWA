@@ -27,7 +27,7 @@
 
             // vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
-            $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted';
+            $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted.com';
 
             vm.decisionsSpinner = true;
 

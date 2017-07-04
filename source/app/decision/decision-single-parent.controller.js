@@ -62,7 +62,7 @@
                 link: null
             }];
 
-            $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted';
+            $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted.com';
         }
 
         function getDecisionNomimations(id) {
