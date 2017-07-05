@@ -23,7 +23,7 @@
 
         function onInit() {
             vm.pagination = DecisionSharedService.getFilterObject().pagination;
-            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
+            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE_MATRIX;
         }
 
         vm.changePage = changePage;

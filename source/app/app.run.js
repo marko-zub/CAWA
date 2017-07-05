@@ -8,7 +8,6 @@
     runBlock.$inject = ['$rootScope', '$state', '$location', 'Config'];
 
     function runBlock($rootScope, $state, $location, Config) {
-        console.log(Config);
         var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
 

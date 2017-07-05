@@ -7,11 +7,13 @@
         .controller('DecisionSingleController', DecisionSingleController);
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService'
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService', 
+        'Config'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService) {
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
+        Config) {
 
         var
             vm = this;
@@ -42,7 +44,7 @@
             initPagination();
             getDecisionParents(vm.decision.id);
 
-            $rootScope.pageTitle = vm.decision.name + ' | DecisionWanted.com';
+            $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',

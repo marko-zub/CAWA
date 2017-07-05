@@ -1,13 +1,29 @@
 <pageslide class="sidebar" ps-size="200px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false" >
 	<div class="container-fluid">
-		<div class="compare-panel-toggle" ng-click="vm.togglePanel()">Compare ({{vm.compareList.length || 0}})</div>
+		<div class="compare-panel-toggle" ng-click="vm.togglePanel()">Compare ({{vm.displayDecisions.length || 0}})</div>
     <div class="compare-panel">
     	<!-- <select name="" id=""></select> -->
-    		
-    	<div class="btn btn-default" ng-repeat="decision in vm.compareList">
-    		{{decision}}
-    		<i ng-click="vm.removeFromCompareList(decision)" class="fa fa-times" aria-hidden="true"></i>
+    		  
+    	<div class="deicision-card" ng-repeat="decision in vm.displayDecisions">
+            <div class="img-container" ng-if="decision.imageUrl">
+                <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
+            </div>
+            <div>
+                {{::decision.name}}
+            </div>
+
+    		<div class="app-controls">
+                <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>      
+            </div>
     	</div>
+        <div ng-show="!vm.displayDecisions.length">
+            <h3>Nothing to Compare</h3>
+            <span>Please add decisions</span>
+        </div>
+
+        <pre>
+            {{vm.compareList}}
+        </pre>
 
         <!-- <compare-list list=""></compare-list> -->
     </div>

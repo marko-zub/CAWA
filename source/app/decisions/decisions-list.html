@@ -29,7 +29,7 @@
                 <div class="post-description"  ng-bind-html="::decision.description"></div>
 
                 <div ng-if="::vm.compare">
-                    <a ng-click="vm.addToCompareList(decision.id)" class="btn btn-default btn-sm">
+                    <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm" ng-class="{'disabled': decision.isInCompareList}">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add To Compare
                     </a>
                 </div>

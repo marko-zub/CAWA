@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', '$sce', 'Utils', 'DiscussionsNotificationService'
+        '$uibModal', '$sce', 'Utils', 'DiscussionsNotificationService', 'Config'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, $sce, Utils, DiscussionsNotificationService) {
+        $uibModal, $sce, Utils, DiscussionsNotificationService, Config) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -27,7 +27,7 @@
 
             // vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
-            $rootScope.pageTitle = vm.decision.name + ' Matrix | DecisionWanted.com';
+            $rootScope.pageTitle = vm.decision.name + ' Matrix | ' + Config.pagePrefix;
 
             vm.decisionsSpinner = true;
 
