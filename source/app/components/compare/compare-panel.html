@@ -3,17 +3,17 @@
 		<div class="compare-panel-toggle" ng-click="vm.togglePanel()">Compare ({{vm.displayDecisions.length || 0}})</div>
     <div class="compare-panel">
     	<!-- <select name="" id=""></select> -->
-    		  
+
     	<div class="deicision-card" ng-repeat="decision in vm.displayDecisions">
             <div class="img-container" ng-if="decision.imageUrl">
                 <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
             </div>
             <div>
-                {{::decision.name}}
+                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
             </div>
 
     		<div class="app-controls">
-                <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>      
+                <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>
             </div>
     	</div>
         <div ng-show="!vm.displayDecisions.length">
@@ -21,11 +21,20 @@
             <span>Please add decisions</span>
         </div>
 
-        <pre>
+<!--         <pre>
             {{vm.compareList}}
-        </pre>
+        </pre> -->
 
         <!-- <compare-list list=""></compare-list> -->
+    </div>
+
+    <div class="clearfix compare-panel-footer" ng-show="vm.displayDecisions.length > 0">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">Clear All</button>
+            <a href="#" class="btn btn-primary btn-sm">
+                Compare
+            </a>
+        </div>
     </div>
 	</div>
 </pageslide>

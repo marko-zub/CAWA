@@ -206,13 +206,13 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Recommended Start -->
         <div class="col-sm-4 recommended-list" ng-if="vm.decisionParents.length">
             <h4>
                  Recommended
             </h4>
-            
+
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li  ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
@@ -244,6 +244,3 @@
     </div>
 
 </div>
-
-
-<compare-panel></compare-panel>

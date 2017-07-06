@@ -20,9 +20,9 @@
         var
             vm = this;
 
-
         vm.isPanelOpen = false;
         vm.togglePanel = togglePanel;
+        vm.clearCompare = clearCompare;
         vm.$onInit = onInit;
 
         vm.compareList = []; //Not need to be displayed
@@ -41,6 +41,12 @@
 
         function initCompareList() {
             vm.compareList = DecisionCompareService.getList();
+        }
+
+        function clearCompare() {
+            // vm.isPanelOpen = false;
+            vm.compareList = []; //Not need to be displayed
+            vm.displayDecisions = [];
         }
 
         // vm.compareList = [];
