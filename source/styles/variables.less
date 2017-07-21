@@ -22,8 +22,12 @@
 @basic-active-state: darken(@basic-active, 30%);
 @basic-active-light: lighten(@basic-active, 35%);
 @screen-lgx-min: 1600px - 1px;
+
+// Colors
 @color-orange: #f48024;
 @color-dark: #242729;
+@color-green: #02a90a;
+
 
 @notSet: #ff0000;
 
@@ -47,8 +51,7 @@
 @border-radius-modal: @border-radius;
 
 @icon-color: @gray-mid;
-@title-color: #333;
-@base-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+@title-color: @color-dark;
 
 
 // Z-index s
@@ -60,3 +63,31 @@
 
 // Sizes
 @breadcrumbs-height: 22px;
+
+
+
+// Fonts
+@font-face {
+    font-family: 'HelveticaNeueCyrRoman';
+    src: url('../fonts/HelveticaNeueCyrRoman/HelveticaNeueCyrRoman.eot');
+    src: url('../fonts/HelveticaNeueCyrRoman/HelveticaNeueCyrRoman.eot') format('embedded-opentype'),
+         url('../fonts/HelveticaNeueCyrRoman/HelveticaNeueCyrRoman.woff2') format('woff2'),
+         
+         url('../fonts/HelveticaNeueCyrRoman/HelveticaNeueCyrRoman.ttf') format('truetype'),
+         url('../fonts/HelveticaNeueCyrRoman/HelveticaNeueCyrRoman.svg#HelveticaNeueCyrRoman') format('svg');
+}
+
+@font-face {
+    font-family: 'HelveticaNeueCyrBold';
+    src: url('../fonts/HelveticaNeueCyrBold/HelveticaNeueCyrBold.eot');
+    src: url('../fonts/HelveticaNeueCyrBold/HelveticaNeueCyrBold.eot') format('embedded-opentype'),
+         url('../fonts/HelveticaNeueCyrBold/HelveticaNeueCyrBold.woff2') format('woff2'),
+         
+         url('../fonts/HelveticaNeueCyrBold/HelveticaNeueCyrBold.ttf') format('truetype'),
+         url('../fonts/HelveticaNeueCyrBold/HelveticaNeueCyrBold.svg#HelveticaNeueCyrBold') format('svg');
+}
+
+
+
+@font-medium: 'HelveticaNeueCyrRoman', Arial, sans-serif;
+@font-bold: 'HelveticaNeueCyrBold', Arial, sans-serif;

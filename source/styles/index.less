@@ -71,11 +71,11 @@ html {
     width: auto;
   }
   @media (min-width: @screen-lg-min) {
-    width: auto;
+    width: 1170px;
     margin: 0 45px;
   }
   @media (min-width: @screen-lgx-min) {
-    width: auto;
+    width: 1170px;
     margin: 0 215px;
   }
 }
@@ -155,7 +155,9 @@ html {
 body {
     color: @color-dark;
     padding-top: @header-height;
-    background-color: @gray-light-extra;
+    font-family: @font-medium;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
     & > .dropdown-menu {
         max-height: 700px;
         overflow-y: auto;
@@ -392,10 +394,28 @@ body {
 
 .app-container-sm {
   .title {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
 
 .criteria-comliance-single {
   margin: 0 0 16px;
+}
+
+
+
+// TODO: clean up
+.criteria-block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: @color-green;
+  color: #fff;
+  font-size: 9px;
+  padding: 5px;
+  .counters {
+    font-size: 15px;
+    display: block;
+    margin: 0 0 5px;
+  }
 }

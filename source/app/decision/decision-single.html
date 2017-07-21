@@ -159,12 +159,21 @@
                                         <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                     </div>
                                 </a>
+
+                                <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                                    <div class="counters">
+                                        <span ng-bind="::decision.criteriaCompliancePercentage"></span>% 
+                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                                    </div>
+                                    <div class="text-uppercase">
+                                        criteria score 
+                                    </div>
+                                </div>
+
                                 <div class="post-content">
                                     <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
-                                    <div class="criteria-comliance" ng-show="decision.criteriaCompliancePercentage">
-                                        Criteria compliance: <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                                        </small>
-                                    </div>
+
+                                    <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
 
                                     <div class="info">
                                         <div class="author info-divider">
@@ -179,9 +188,7 @@
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                             <span ng-bind="decision.totalViews"></span>
                                         </div>
-                                    </div>
-
-                                    <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </li>
@@ -196,7 +203,7 @@
                 <!-- End Criteria -->
                 <div class="col-sm-8" ng-if="vm.isDecisionsParent">
                     <div class="row app-pagination clearfix" ng-show="vm.isDecisionsParent">
-                        <div class="col-md-10 col-sm-10 paginator">
+                        <div class="col-md-10 col-sm-10 paginator text-center">
                             <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 counter">
