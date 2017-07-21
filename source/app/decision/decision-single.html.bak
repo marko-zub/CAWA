@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a href class="btn btn-primary btn-sm">Ask for Decision</a>
+                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
                 </div>
             </div>
         </div>

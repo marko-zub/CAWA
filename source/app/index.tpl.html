@@ -21,8 +21,10 @@
 <body>
     <app-header></app-header>
 
-    <div class="breadcrumbs-wrapper" ng-if="breadcrumbs.length">
-        <breadcrumbs items="breadcrumbs"></breadcrumbs>
+    <div class="app-container-sm">
+        <div class="breadcrumbs-wrapper" ng-if="breadcrumbs.length">
+            <breadcrumbs items="breadcrumbs"></breadcrumbs>
+        </div>
     </div>
 
     <div class="container-fluid content" ui-view></div>

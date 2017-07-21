@@ -140,7 +140,20 @@ html {
 }
 
 
+.btn {
+  &.btn-primary-2 {
+    background-color: @color-orange;
+    border-color: @color-orange;
+    color: #fff;
+    &:hover {
+      background-color: darken( @color-orange, 10%);
+    }
+  }
+}
+
+
 body {
+    color: @color-dark;
     padding-top: @header-height;
     background-color: @gray-light-extra;
     & > .dropdown-menu {
@@ -239,23 +252,27 @@ body {
 .nav-tabs {
   & > li {
     & > a {
+      border-top: 3px solid transparent;
+      color: @color-dark;
+      font-size: 20px;
       &:hover,
       &:focus {
         border: 1px solid #ddd;
-        border-top-color: @basic-active;
+        border-top: 3px solid transparent;
         border-bottom-color: transparent;
       }
     }
     &.active {
       & > a {
         border: 1px solid #ddd;
-        border-top-color: @basic-active;
+        border-top: 3px solid transparent;
+        border-top-color: @color-orange;;
         border-bottom-color: transparent;
         // padding: 3px 8px 4px 8px
         &:hover,
         &:focus {
           border: 1px solid #ddd;
-          border-top-color: @basic-active;
+          border-top: 3px solid @color-orange;
           border-bottom-color: transparent;
         }
       }
@@ -264,7 +281,7 @@ body {
 }
 
 .nav-tabs > li > a {
-  border-radius: @border-radius @border-radius 0 0;
+  border-radius: 0;
   margin-right: -1px;
 }
 

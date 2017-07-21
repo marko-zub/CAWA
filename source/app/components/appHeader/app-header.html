@@ -1,22 +1,24 @@
 <header id="app-header" class="app-header">
-    <div class="row">
-        <div class="col-xs-6 col-sm-8 header-menu-btn clearfix">
-            <div class="navbar-brand">
-                <a ui-sref="home" ui-sref-opts="{reload: true}">Decision<span class="app-light">Wanted</span></a>
-            </div>
-            
-            <nav class="header-nav">
-                <a ui-sref="decisions" ui-sref-active="active">Decisions</a>
-                <a ui-sref="users" ui-sref-active="active">Users</a>
-                <a ui-sref="tags" ui-sref-active="active">Tags</a>
-            </nav>
+    <div class="app-container-sm">
+        <div class="row">
+            <div class="col-xs-6 col-sm-8 header-menu-btn clearfix">
+                <div class="navbar-brand">
+                    <a ui-sref="home" ui-sref-opts="{reload: true}">Decision<span class="app-light">Wanted</span></a>
+                </div>
+                
+                <nav class="header-nav">
+                    <a ui-sref="decisions" ui-sref-active="active">Decisions</a>
+                    <a ui-sref="users" ui-sref-active="active">Users</a>
+                    <a ui-sref="tags" ui-sref-active="active">Tags</a>
+                </nav>
 
-            <div class="app-panel-search hidden-xs">
-                <search-bar></search-bar>
+                <div class="app-panel-search hidden-xs">
+                    <search-bar></search-bar>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 header-login">
-            <app-login></app-login>
+            <div class="col-xs-6 col-sm-4 header-login">
+                <app-login></app-login>
+            </div>
         </div>
     </div>
 </header>

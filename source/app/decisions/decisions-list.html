@@ -1,3 +1,4 @@
+<!-- TODO: move to components -->
 <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}">
     <li ng-repeat="decision in vm.decisionsList track by decision.id">
         <div class="post">
@@ -12,6 +13,9 @@
                     {{ vm.criteriaComplianceTitle || 'Criteria compliance:'}} <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                     </small>
                 </div>
+
+                <div class="post-description"  ng-bind-html="::decision.description"></div>
+
                 <div class="info">
                     <div class="author info-divider">
                         <i class="fa fa-user-o" aria-hidden="true"></i>
@@ -26,11 +30,10 @@
                         <span ng-bind="::decision.totalViews"></span>
                     </div>
                 </div>
-                <div class="post-description"  ng-bind-html="::decision.description"></div>
 
-                <div ng-if="::vm.compare">
-                    <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm" ng-class="{'disabled': decision.isInCompareList}">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Add To Compare
+                <div ng-if="::vm.compare" class="clearfix">
+                    <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right" ng-class="{'disabled': decision.isInCompareList}">
+                        Add To Compare
                     </a>
                 </div>
 
