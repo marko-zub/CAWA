@@ -758,6 +758,7 @@ a {
         & > li {
             & > a {
                 padding: 6px 10px;
+                font-size: 16px;
             }
         }
     }
@@ -851,6 +852,7 @@ a {
     .matrix-item {
         min-height: 50px;
         min-width: 100%;
+        padding: 0 10px;
         &.matrix-g-item {
             height: 24px !important;
             min-height: 24px !important; //Remove
@@ -916,21 +918,25 @@ a {
 
 .group-wrapper {
     position: relative;
-    padding-left: 16px;
+    margin-left: 16px;
     z-index: 111;
-    .title {
+    background-color:#fff;
+    .group-wrapper-title {
         position: absolute;
         font-size: 10px;
         opacity: 0.5;
         position: absolute;
         top: 24px;
-        letter-spacing: 0.3em;
+        // letter-spacing: 0.3em;
         text-transform: uppercase;
         right: 100%;
         -webkit-transform-origin: top right 0;
         transform-origin: top right 0;
         -webkit-transform: rotate( 270deg );
         transform: rotate( 270deg );
+        margin: 0 14px;
+        color: @color-dark;
+        font-size: 11px;
     }
 }
 
@@ -1111,6 +1117,7 @@ a {
 
 
 .matrix-aside-content {
+    background-color: @color-gray;
     .matrix-g-title {
         cursor: pointer;
         position: relative;
