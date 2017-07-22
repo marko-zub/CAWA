@@ -139,7 +139,7 @@
     .icon-remove {
         // display: none;
         position: absolute;
-        right: 0;
+        right: 36px;
         top: 0;
         width: 30px;
         height: 34px;
@@ -155,39 +155,42 @@
     }
     .form-control {
         background-color: #fff;
-        border-color: darken(@header-background, 5%);
-        width: 150px;
-        padding-left: 30px;
+        width: 100%;
+        padding: 8px 36px 8px 15px;
+        height: 38px;
+        font-size: 14px;
+        // width: 360px;
         .transition(background-color 0.2s ease-in-out, width 0.2s ease-in-out;);
-        color: #fff;
-        &:focus {
-            width: 250px;
-            background-color: #fff;
-            color: @title-color;
-            & ~ .search-input-icon {
-                color: @gray-mid;
-            }
-        }
+
+        // &:focus {
+        //     width: 250px;
+        //     background-color: #fff;
+        //     color: @title-color;
+        //     & ~ .search-input-icon {
+        //         color: @gray-mid;
+        //     }
+        // }
     }
     .search-input-icon {
-        left: 3px;
-        top: 2px;
-        color: #fff;
-        width: 25px;
+        position: absolute;
+        right: 0;
+        left: auto;
+        text-align: center;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        margin: 1px;
+        vertical-align: middle;
         cursor: pointer;
+        color: #fff;
+        background-color: @color-gray-light;
+        padding: 0;
+        &:hover {
+            color: @gray-mid;
+            background-color: @color-gray;
+        }
     }
-}
-
-.search-input-icon {
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    left: 15px;
-    top: 5px;
-    line-height: 30px;
-    padding: 0px;
-    padding-left: 7px;
-    color: @icon-color;
 }
 
 // Login
@@ -240,6 +243,8 @@
 }
 
 .app-search {
+    float: right;
+    width: 350px;
     &.open {
         .form-control {
             border: 1px solid darken(@header-background, 5%);

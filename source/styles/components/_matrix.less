@@ -15,6 +15,7 @@
 }
 
 .matrix {
+    margin: 25px 0 0;
     .app-panel {
         position: absolute;
         left: 0;
@@ -345,7 +346,6 @@ a {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.2;
-    font-weight: 600;
     font-size: 14px;
     width: 135px; // TODO: avoid
     max-width: 135px;
@@ -355,7 +355,7 @@ a {
 .app-sorter-wrapper {
     position: relative;
     padding-right: 10px;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .app-sorter {
@@ -757,7 +757,7 @@ a {
     &.nav-tabs-sm {
         & > li {
             & > a {
-                padding: 6px 10px;
+                padding: 6px 20px;
                 font-size: 16px;
             }
         }
@@ -849,6 +849,9 @@ a {
             background-color: @gray-light;
         }
     }
+    .matrix-col-link {
+        display: block;
+    }
     .matrix-item {
         min-height: 50px;
         min-width: 100%;
@@ -858,7 +861,7 @@ a {
             min-height: 24px !important; //Remove
             line-height: 24px;
             background-color: lighten(@gray-light, 5%);
-            border-bottom: 1px solid @gray-light;
+            border-bottom: 1px solid transparent;
         }
     }
     .matrix-col-content {
@@ -882,7 +885,7 @@ a {
         position: absolute;
         right: 0;
         bottom: 0;
-        margin: 35px 4px;
+        // margin: 35px 4px;
     }
     .matrix-header .matrix-col-content {
         padding: 5px;
@@ -892,8 +895,10 @@ a {
         line-height: 17px;
         vertical-align: middle;
         width: 100%;
-        padding: 0 4px;
+        padding: 0;
         height: 30px;
+        color: @color-dark;
+        font-family: @font-bold;
         span {
             display: inline-block;
             line-height: 16px;
@@ -944,21 +949,42 @@ a {
     min-height: 400px;
 }
 
-.decision-matrix-col {
-    text-align: center;
-}
-
 .matrix-img-container {
     display: block;
     height: 60px;
     margin: 0 0 5px;
-    text-align: center;
     .img-responsive {
         max-height: 100%;
         display: inline-block;
         margin: 0 auto 10px;
     }
 }
+
+.decision-img-block {
+    float: left;
+    width: 30%;
+}
+.decision-content-block {
+    float: left;
+    width: 70%;
+}
+
+.decision-criteria-compilance {
+    background-color: @color-green;
+    color: #fff;
+    font-size: 9px;
+    padding: 5px;
+    display: inline-block;
+    margin: 0 0 0 15px;
+    .counters {
+        display: block;
+        margin: 0 0 3px;
+        font-size: 13px;
+    }
+}
+
+
+
 
 .app-list-sm {
     list-style: none;
@@ -1280,8 +1306,7 @@ a {
     height: 24px !important;
     min-height: 24px !important; // Remove it
     line-height: 24px;
-    background-color: lighten(@gray-light, 5%);
-    border-bottom: 1px solid @gray-light;
+    background-color: @color-gray-light-2;
     white-space: nowrap;
 }
 
@@ -1341,9 +1366,6 @@ a {
         width: 100%;
         padding: 0 10px;
         margin: 0;
-        .filter-btn {
-            left: 15px;
-        }
         .icon-remove {
             right: 5px;
         }
@@ -1358,29 +1380,37 @@ a {
     // padding: 0 10px;
     .form-control {
         width: 100%;
-        padding-left: 20px;
+        padding: 8px 36px 8px 15px ;
+        height: 38px;
+        font-size: 14px;
+        .transition(background-color 0 ease 0;);
     }
     .filter-btn {
         position: absolute;
-        left: 5px;
+        right: 8px;
+        left: auto;
+        text-align: center;
         top: 0;
-        width: 20px;
-        height: 30px;
-        line-height: 30px;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        margin: 1px 2px;
         vertical-align: middle;
         cursor: pointer;
-        color: darken(@gray-light, 15%);
+        color: #fff;
+        background-color: @color-gray-light;
         &:hover {
             color: @gray-mid;
+            background-color: @color-gray;
         }
     }
     .icon-remove {
       position: absolute;
-      right: 5px;
+      right: 36px;
       top: 0;
       width: 20px;
-      height: 30px;
-      line-height: 30px;
+      height: 36px;
+      line-height: 36px;
       z-index: 11;
       color: darken(@gray-light, 15%);
       text-align: center;
