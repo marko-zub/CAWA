@@ -54,16 +54,31 @@
         }
     }
 
+    .navbar-nav.nav-side {
+        & > li {
+            & > a {
+                padding: 30px 25px;
+                background-color: @basic-active;
+                color: #fff;
+                &:hover {
+                    color: #FFF;
+                    background-color: @basic-active-hover;
+                }
+            }
+        }
+    }    
+
 }
 
 .header-nav {
     float: left;
-    margin: 0 30px 0 15px;
+    margin: 0 40px 0 15px;
     .clearfix;
     a {
+        font-size: 16px;
         float: left;
         display: block;
-        padding: 29px 10px 29px;
+        padding: 30px 15px 25px;
         border-bottom: 3px solid transparent;
         .transition(color 0.3s ease, border-color 0.3s ease;);
 
@@ -86,9 +101,10 @@
     padding: 0;
     height: @header-height;
     // font-size: 30px;
+    margin: 0 75px 0 0;
     a {
         display: block;
-        padding: 29px 15px 29px 0;
+        padding: 28px 15px 21px 0;
         color: @color-dark;
         .transition( color 0.3s ease);
         .app-light {
@@ -138,7 +154,7 @@
         }
     }
     .form-control {
-        background-color: darken(@header-background, 5%);
+        background-color: #fff;
         border-color: darken(@header-background, 5%);
         width: 150px;
         padding-left: 30px;

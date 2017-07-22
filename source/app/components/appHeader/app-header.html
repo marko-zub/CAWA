@@ -1,9 +1,12 @@
 <header id="app-header" class="app-header">
     <div class="app-container-sm">
         <div class="row">
-            <div class="col-xs-6 col-sm-8 header-menu-btn clearfix">
+            <div class="col-xs-6 col-sm-10 header-menu-btn clearfix">
                 <div class="navbar-brand">
-                    <a ui-sref="home" ui-sref-opts="{reload: true}">Decision<span class="app-light">Wanted</span></a>
+                    <a ui-sref="home" ui-sref-opts="{reload: true}">
+                    <!-- Decision<span class="app-light">Wanted</span> -->
+                    <img src="/images/logo.png" alt="" class="img-responsive">
+                    </a>
                 </div>
                 
                 <nav class="header-nav">
@@ -13,10 +16,10 @@
                 </nav>
 
                 <div class="app-panel-search hidden-xs">
-                    <search-bar></search-bar>
+                    <search-bar placeholder="Search..."></search-bar>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-4 header-login">
+            <div class="col-xs-6 col-sm-2 header-login">
                 <app-login></app-login>
             </div>
         </div>

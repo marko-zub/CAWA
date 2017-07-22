@@ -18,7 +18,7 @@
         return [
             '<div class="comment-form clearfix">',
                 '<text-angular id="dicussion-comment" ng-model="vm.commentContent" ta-maxlength="500" ta-default-wrap="span" name="comment" placeholder = "Comment..." ></text-angular>',
-                '<button class="btn btn-primary pull-right" ng-click="vm.saveComment()">Send</button>',
+                '<button class="btn btn-primary-2 pull-right" ng-click="vm.saveComment()">Send</button>',
             '</div>'
         ].join('\n');
     }

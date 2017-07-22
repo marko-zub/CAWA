@@ -1,4 +1,5 @@
 .home {
+	padding: 20px 0 32px;
 	.search-box {
 		// margin-top: 100px;
 		margin-bottom: 30px;
@@ -6,7 +7,41 @@
 	.search-results {
 		// text-align: center;
 	}
-	padding-bottom: 32px;
+    .search-bar {
+        padding-right: 40px;
+        width: 100%;
+        .search-input-icon {
+            left: auto;
+            right: 0;
+            top: 0;
+            width: 40px;
+            color: #fff;
+            cursor: pointer;
+            height: 100%;
+            background-color: @basic-active;
+            padding: 0;
+            text-align: center;
+            line-height: 40px;
+            &:hover {
+                background: @basic-active-hover;
+            }
+        }
+        .icon-remove {
+          // display: none;
+          position: absolute;
+          right: 40px;
+          top: 0;
+          width: 30px;
+          height: 42px;
+          line-height: 42px;
+          z-index: 11;
+          color: darken(@gray-light, 15%);
+          text-align: center;
+          &:hover {
+              color: @gray-mid;
+            }
+        }
+    }	
 }
 
 .search-results-list {

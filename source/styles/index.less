@@ -32,7 +32,7 @@ html {
 
 .text-header {
   font-size: 12px;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 15px;
   display: inline-block;
 }
@@ -135,12 +135,14 @@ html {
 
 .btn-toolbar {
   .btn {
-    padding: 3px 6px;
+    padding: 3px 8px;
   }
 }
 
 
 .btn {
+  padding: 6px 18px;
+  .transition(color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;);
   &.btn-primary-2 {
     background-color: @color-orange;
     border-color: @color-orange;
@@ -186,43 +188,6 @@ body {
    }
 }
 
-.home {
-    .search-bar {
-        padding-right: 40px;
-        width: 100%;
-        .search-input-icon {
-            left: auto;
-            right: 0;
-            top: 0;
-            width: 40px;
-            color: #fff;
-            cursor: pointer;
-            height: 100%;
-            background-color: @basic-active;
-            padding: 0;
-            text-align: center;
-            line-height: 40px;
-            &:hover {
-                background: @basic-active-hover;
-            }
-        }
-        .icon-remove {
-          // display: none;
-          position: absolute;
-          right: 40px;
-          top: 0;
-          width: 30px;
-          height: 42px;
-          line-height: 42px;
-          z-index: 11;
-          color: darken(@gray-light, 15%);
-          text-align: center;
-          &:hover {
-              color: @gray-mid;
-            }
-        }
-    }
-}
 
 
 // recommended
@@ -257,6 +222,7 @@ body {
       border-top: 3px solid transparent;
       color: @color-dark;
       font-size: 20px;
+      padding: 10px 20px;
       &:hover,
       &:focus {
         border: 1px solid #ddd;
@@ -418,4 +384,8 @@ body {
     display: block;
     margin: 0 0 5px;
   }
+}
+
+.home-title {
+  // margin: 0 0;
 }

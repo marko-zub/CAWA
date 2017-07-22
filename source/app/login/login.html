@@ -18,9 +18,11 @@
     </div>
 
     <!-- New user -->
-    <ul class="nav navbar-nav pull-right" ng-if="!vm.loginService.getLoginStatus()">
+    <ul class="nav navbar-nav pull-right nav-side" ng-if="!vm.loginService.getLoginStatus()">
         <li>
-            <a ng-click="vm.loginService.login()">Login</a>
+            <a ng-click="vm.loginService.login()" class="btn-login">
+                <i class="fa fa-sign-in" aria-hidden="true"></i>
+            </a>
         </li>
     </ul>
 </div>
