@@ -15,7 +15,7 @@
 }
 
 .matrix {
-    margin: 25px 0 0;
+    padding: 25px 0 0;
     .app-panel {
         position: absolute;
         left: 0;
@@ -884,7 +884,7 @@ a {
     .info {
         position: absolute;
         right: 0;
-        bottom: 0;
+        bottom: 20px;
         // margin: 35px 4px;
     }
     .matrix-header .matrix-col-content {
@@ -961,25 +961,46 @@ a {
 }
 
 .decision-img-block {
-    float: left;
-    width: 30%;
+    height: 80px;
+    display: table;
+    width: 100%;
+    .matrix-img-container {
+        height: 80px;
+        width: 100%;
+        display: table-cell;
+        vertical-align: middle;
+        margin: 0;
+        text-align: center;
+        .img-responsive {
+            max-height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+        }
+    }
 }
 .decision-content-block {
-    float: left;
-    width: 70%;
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    bottom: 0;
 }
 
 .decision-criteria-compilance {
-    background-color: @color-green;
+    // background-color: @color-green;
+    background-color: rgba(0, 0, 0, 0.55);
     color: #fff;
     font-size: 9px;
-    padding: 5px;
-    display: inline-block;
-    margin: 0 0 0 15px;
+    padding: 2px 5px;
+    // display: inline-block;
+    text-align: center;
     .counters {
-        display: block;
-        margin: 0 0 3px;
+        display: inline-block;
+        margin: 0 5px 0 0;
         font-size: 13px;
+    }
+    .text-uppercase {
+        display: inline-block;
     }
 }
 
