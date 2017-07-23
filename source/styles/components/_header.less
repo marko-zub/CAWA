@@ -38,7 +38,7 @@
     .navbar-nav {
         & > li {
             & > a {
-                padding: 30px 25px;
+                padding: 20px 25px;
                 &:hover {
                     color: #FFF;
                     background-color: @basic-active-hover;
@@ -57,7 +57,7 @@
     .navbar-nav.nav-side {
         & > li {
             & > a {
-                padding: 30px 25px;
+                padding: 20px 25px;
                 background-color: @basic-active;
                 color: #fff;
                 &:hover {
@@ -78,7 +78,7 @@
         font-size: 16px;
         float: left;
         display: block;
-        padding: 30px 15px 25px;
+        padding: 20px 15px 15px;
         border-bottom: 3px solid transparent;
         .transition(color 0.3s ease, border-color 0.3s ease;);
 
@@ -104,7 +104,7 @@
     margin: 0 75px 0 0;
     a {
         display: block;
-        padding: 28px 15px 21px 0;
+        padding: 17px 15px 12px 0;
         color: @color-dark;
         .transition( color 0.3s ease);
         .app-light {
@@ -123,16 +123,16 @@
 .app-panel-search {
     float: left;
     position: relative;
-    margin: 22px 0;
+    margin: 11px 0;
     .app-search {
         &.open {
             .form-control {
-                width: 250px;
-                background-color: #fff;
+                // width: 250px;
+                // background-color: #fff;
                 color: @title-color; 
             }       
             .search-input-icon {
-                color: @gray-mid;
+                // color: @gray-mid;
             } 
         }
     }
@@ -142,8 +142,8 @@
         right: 36px;
         top: 0;
         width: 30px;
-        height: 34px;
-        line-height: 34px;
+        height: 36px;
+        line-height: 36px;
         z-index: 1;
         // opacity: 0.4;
         color: darken(@gray-light, 15%);
@@ -186,6 +186,7 @@
         color: #fff;
         background-color: @color-gray-light;
         padding: 0;
+        .transition(background-color 0.2s ease-in-out, width 0.2s ease-in-out;);
         &:hover {
             color: @gray-mid;
             background-color: @color-gray;

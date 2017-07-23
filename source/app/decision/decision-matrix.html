@@ -36,10 +36,12 @@
                                 </div>
 
                                 <!-- Filter  -->
-                                <div class="filter-name">
-                                    <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                                    <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                                    <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                                <div class="filter-wrapper">
+                                    <div class="filter-name">
+                                        <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                        <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                                        <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                                    </div>
                                 </div>
                                 <!-- Filter Name -->
 
@@ -69,13 +71,14 @@
                                                 </div>
                                             </div>
                                             <div class="decision-content-block">
-                                                <div class="decision-criteria-compilance" ng-show="item.decision.criteriaCompliancePercentage >= 0">                <div class="counters">
+                                                <div class="decision-criteria-compilance" ng-show="item.decision.criteriaCompliancePercentage >= 0">                
+                                                <div class="text-uppercase">
+                                                    criteria score 
+                                                </div>                                                    
+                                                <div class="counters">                           
                                                     <span ng-bind="item.decision.criteriaCompliancePercentage"></span>% 
                                                     <span class="app-icon glyphicon glyphicon-thumbs-up"></span><span ng-bind="item.decision.totalVotes"></span>   
-                                                    </div>
-                                                    <div class="text-uppercase">
-                                                        criteria score 
-                                                    </div>        
+                                                    </div>   
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +99,7 @@
                         <!-- End Decisions Header -->
                     </div>
                 </div>
-
+                
                 <filter-tags
                     criteria="vm.criteriaGroups"
                     characteristics="vm.characteristicGroupsArray"

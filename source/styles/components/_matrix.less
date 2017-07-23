@@ -897,7 +897,6 @@ a {
         width: 100%;
         padding: 0;
         height: 30px;
-        color: @color-dark;
         font-family: @font-bold;
         span {
             display: inline-block;
@@ -961,11 +960,11 @@ a {
 }
 
 .decision-img-block {
-    height: 80px;
+    height: 70px;
     display: table;
     width: 100%;
     .matrix-img-container {
-        height: 80px;
+        height: 70px;
         width: 100%;
         display: table-cell;
         vertical-align: middle;
@@ -984,19 +983,21 @@ a {
     left: 1px;
     right: 1px;
     bottom: 0;
+    text-align: center;
 }
 
 .decision-criteria-compilance {
-    // background-color: @color-green;
-    background-color: rgba(0, 0, 0, 0.55);
+    background-color: @color-green;
+    // background-color: rgba(0, 0, 0, 0.55);
+    display: inline-block;
     color: #fff;
     font-size: 9px;
-    padding: 2px 5px;
+    padding: 1px 5px;
     // display: inline-block;
     text-align: center;
     .counters {
         display: inline-block;
-        margin: 0 5px 0 0;
+        margin: 0 0 0 5px;
         font-size: 13px;
     }
     .text-uppercase {
@@ -1380,22 +1381,23 @@ a {
 
 
 .matrix {
-    .filter-name {
+    .filter-wrapper {
+        padding: 0 10px;
         position: absolute;
-        top: 80px;
+        bottom: 0;
         left: 0;
         width: 100%;
-        padding: 0 10px;
-        margin: 0;
-        .icon-remove {
-            right: 5px;
-        }
+        margin: 0;        
     }
+    // .filter-name {
+    //     .icon-remove {
+    //         // right: 36px;
+    //     }
+    // }
 }
 
 // Filter Name
 .filter-name {
-    width: 80%;
     position: relative;
     margin: 8px 0 8px;
     // padding: 0 10px;
@@ -1408,18 +1410,19 @@ a {
     }
     .filter-btn {
         position: absolute;
-        right: 8px;
+        right: 0;
         left: auto;
         text-align: center;
         top: 0;
         width: 36px;
         height: 36px;
         line-height: 36px;
-        margin: 1px 2px;
+        margin: 1px;
         vertical-align: middle;
         cursor: pointer;
         color: #fff;
         background-color: @color-gray-light;
+         .transition(background-color 0 ease 0;);
         &:hover {
             color: @gray-mid;
             background-color: @color-gray;
@@ -1525,7 +1528,7 @@ a {
         }
         .tabs-title {
             margin: 0;
-            padding: 7px 0px;
+            padding: 5px 0px;
             float: left;
             font-size: 24px;
             // width: 50%;

@@ -1,12 +1,30 @@
 .app-pagination {
-    .paginator, .counter {
+    .paginator, 
+    .counter {
         padding: 0 16px;
     }
-    .pagination {
+    .paginator {
+      vertical-align: top;
+      .clearfix;
+      margin: 0 auto;
       display: inline-block;
+    }
+    .pagination {
       width: auto;
       color: @gray-mid;
+      float: left;
     }
+
+    .app-pagination-pages {
+      margin: 0 0 0 30px;
+      float: left;
+    }
+}
+
+.app-pagination-pages-label {
+  display: inline-block;
+  margin: 10px 5px;
+  font-size: 12px;
 }
 
 .pagination > li {
