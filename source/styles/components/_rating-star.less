@@ -18,10 +18,20 @@
     display: inline-block;
     margin: 0;
     line-height: 1;
+    height: 14px;
+    width: 90px;
+
+    // TODO: make as svg star
     &:before {
-        content: '\e007\e007\e007\e007\e007'; //TODO: maybe make as repeater in rating component
-        font-family: 'Glyphicons Halflings';
+        content: '';
+        background-image: url('../images/bg-star.png');
+        background-repeat: repeat;
+        // content: '\e007 \e007 \e007 \e007 \e007 '; //TODO: maybe make as repeater in rating component
+        // font-family: 'Glyphicons Halflings';
         color: @rating-color;
+        display: block;
+        height: 100%;
+        width: 100%;        
     }
     .bar {
         position: absolute;
@@ -32,8 +42,13 @@
         overflow: hidden;
         &:before {
             color: @rating-color-active;
-            content: '\e006\e006\e006\e006\e006';
-            font-family: 'Glyphicons Halflings';
+            content: '';
+            background-image: url('../images/bg-star-active.png');
+            // content: '\e006 \e006 \e006 \e006 \e006 ';
+            // font-family: 'Glyphicons Halflings';
+            display: block;
+            height: 100%;
+            width: 100%;            
         }
     }
 }
