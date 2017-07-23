@@ -1,14 +1,21 @@
 .btn {
-  -webkit-border-radius: @border-radius;
-          border-radius: @border-radius;
-    -webkit-box-shadow: none;
-          box-shadow: none;
+  border-radius: @border-radius;
+  box-shadow: none;
+  padding: 6px 18px;
+  .transition(color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;);
+  &.btn-primary-2 {
+    background-color: @color-orange;
+    border-color: @color-orange;
+    color: #fff;
+    &:hover {
+      background-color: @color-orange-darken;
+    }
+  }          
 }
 
 .btn-sm,
 .btn-group-sm > .btn {
-  -webkit-border-radius: @border-radius;
-          border-radius: @border-radius;
+  border-radius: @border-radius;
 }
 
 .btn-primary {
@@ -18,9 +25,24 @@
     background-color: @basic-active-hover;
     border-color: @basic-active-hover;
   }
-}
-
-.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  &:hover, 
+  &:focus, 
+  &.focus, 
+  &:active, 
+  &.active {
     background-color: @basic-active-hover;
     border-color: @basic-active-hover;
+  }
+}
+ 
+.open > .dropdown-toggle.btn-primary {
+    background-color: @basic-active-hover;
+    border-color: @basic-active-hover;
+}
+
+
+.btn-toolbar {
+  .btn {
+    padding: 3px 8px;
+  }
 }

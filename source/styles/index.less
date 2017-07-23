@@ -15,13 +15,47 @@ html {
   height: 100%;
 }
 
+body {
+    color: @color-dark;
+    padding-top: @header-height;
+    font-family: @font-medium;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    & > .dropdown-menu {
+        max-height: 700px;
+        overflow-y: auto;
+    }
+    &.ng-pageslide-body-open {
+      overflow: hidden;
+      &:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        background-color: rgb(0,0,0);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        opacity: 0.5;
+        transition: opacity 1s;
+        opacity: 0.2;
+        pointer-events: all;
+        z-index: 100;
+      }
+      .app-header {
+        z-index: 99;
+      }
+   }
+}
+
 .content {
   background-color: @app-bg;
   overflow: hidden;
   padding-top: 0;
   padding-bottom: @footer-height;
   margin-bottom: -@footer-height;
-  min-height: calc(~"100vh - 96px"); //96 = header + footer
+  min-height: calc(~"100vh - 82px");
 }
 
 .app-row-content-label {
@@ -30,21 +64,10 @@ html {
   color: @row-label-color;
 }
 
-.text-header {
-  font-size: 12px;
-  margin-top: 15px;
-  margin-left: 15px;
-  display: inline-block;
-}
-
 .app-row-content {
   margin-bottom: 10px;
 }
 
-.app-title {
-  font-size: 21px;
-  margin-bottom: 30px;
-}
 
 .app-header-block {
   .clearfix;
@@ -82,7 +105,6 @@ html {
 .app-top-panel {
   min-height: 40px;
   background-color: #fff;
-  // border-bottom: 1px solid @gray-light;
   overflow: hidden;
   position: relative;
 }
@@ -95,27 +117,8 @@ html {
   .transition(all 0 ease 0;);
 }
 
-.px-l-0 {
-  padding-left: 0 !important;
-}
 
-.comment-form  {
-  .focussed {
-  .ta-editor.ta-html,
-  .ta-scroll-window.form-control{
-      min-height: 150px;
-      height: 150px;
-      // overflow: auto;
-    }
-  }
-  .ta-editor.ta-html,
-  .ta-scroll-window.form-control{
-    min-height: 35px;
-    .transition(all 0.2s ease;);
-    height: 35px;
-    // overflow: hidden;
-  }
-}
+
 
 // Sidebar
 .sidebar {
@@ -131,65 +134,6 @@ html {
   overflow-y: auto;
 }
 
-
-
-.btn-toolbar {
-  .btn {
-    padding: 3px 8px;
-  }
-}
-
-
-.btn {
-  padding: 6px 18px;
-  .transition(color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;);
-  &.btn-primary-2 {
-    background-color: @color-orange;
-    border-color: @color-orange;
-    color: #fff;
-    &:hover {
-      background-color: @color-orange-darken;
-    }
-  }
-}
-
-
-body {
-    color: @color-dark;
-    padding-top: @header-height;
-    font-family: @font-medium;
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px;
-    & > .dropdown-menu {
-        max-height: 700px;
-        overflow-y: auto;
-    }
-    &.ng-pageslide-body-open {
-      overflow: hidden;
-      &:before {
-        content: '';
-        display: block;
-        position: fixed;
-        top: 0;
-        background-color: rgb(0,0,0);
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        opacity: 0.5;
-        transition: opacity 1s;
-        opacity: 0.2;
-        pointer-events: all;
-        z-index: 100;
-      }
-      .app-header {
-        z-index: 99;
-      }
-   }
-}
-
-
-
 // recommended
 .recommended-list {
   min-height: 200px;
@@ -204,86 +148,6 @@ body {
     .post-content {
       width: calc(~"100% - 100px");
     }
-  }
-}
-
-.nav-tabs > li.active > a.link {
-  cursor: pointer;
-  color: @basic-active;
-}
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-
-}
-
-.nav-tabs {
-  & > li {
-    & > a {
-      border-top: 3px solid transparent;
-      color: @color-dark;
-      font-size: 20px;
-      padding: 10px 20px;
-      &:hover,
-      &:focus {
-        border: 1px solid #ddd;
-        border-top: 3px solid transparent;
-        border-bottom-color: transparent;
-      }
-    }
-    &.active {
-      & > a {
-        border: 1px solid #ddd;
-        border-top: 3px solid transparent;
-        border-top-color: @color-orange;;
-        border-bottom-color: transparent;
-        // padding: 3px 8px 4px 8px
-        &:hover,
-        &:focus {
-          border: 1px solid #ddd;
-          border-top: 3px solid @color-orange;
-          border-bottom-color: transparent;
-        }
-      }
-    }
-  }
-}
-
-.nav-tabs > li > a {
-  border-radius: 0;
-  margin-right: -1px;
-}
-
-.readonly {
-  pointer-events: none;
-}
-
-.mg-b-lg {
-  margin-bottom: 32px;
-}
-.mg-b-sm {
-  margin-bottom: 8px;
-}
-.mg-b-xs {
-  margin-bottom: 4px;
-}
-
-
-// Votes
-.app-votes {
-  position: absolute;
-  left: -30px;
-  text-align: center;
-  .app-vote-control {
-    font-size: 27px;
-    color: @gray-mid;
-    &:hover {
-       color: @basic-active;
-    }
-  }
-  .total {
-    // margin: 3px 0;
-    font-size: 19px;
-    line-height: 1.2;
   }
 }
 
@@ -308,8 +172,6 @@ body {
       margin: 0 0 4px 0;
     }
 }
-
-
 
 .decision-sub-header {
   position: absolute;
@@ -352,11 +214,6 @@ body {
     padding: 0 0 8px;
 }
 
-.see-all {
-  .info {
-    display: inline-block;
-  }
-}
 
 .app-container-sm {
   .title {
@@ -367,7 +224,6 @@ body {
 .criteria-comliance-single {
   margin: 0 0 16px;
 }
-
 
 
 // TODO: clean up
@@ -384,8 +240,4 @@ body {
     display: block;
     margin: 0 0 5px;
   }
-}
-
-.home-title {
-  // margin: 0 0;
 }

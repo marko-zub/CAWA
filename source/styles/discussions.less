@@ -1,4 +1,4 @@
-// TODO: move to views folder
+// TODO: move to views folder & clean up
 .panel-white {
     border: 1px solid #dddddd;
 }
@@ -118,7 +118,6 @@
         float: left;
         width: 25%;
         max-width: 295px;
-        // margin-right: 10px;
     }
     .post-content {
         float: left;
@@ -392,4 +391,23 @@ li {
 
 .discussions-link {
     padding: 0 0 0 12px;
+}
+
+
+.comment-form  {
+  .focussed {
+  .ta-editor.ta-html,
+  .ta-scroll-window.form-control{
+      min-height: 150px;
+      height: 150px;
+      // overflow: auto;
+    }
+  }
+  .ta-editor.ta-html,
+  .ta-scroll-window.form-control{
+    min-height: 35px;
+    .transition(all 0.2s ease;);
+    height: 35px;
+    // overflow: hidden;
+  }
 }

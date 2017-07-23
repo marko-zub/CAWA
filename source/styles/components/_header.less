@@ -38,11 +38,11 @@
     .navbar-nav {
         & > li {
             & > a {
-                padding: 20px 25px;
-                &:hover {
-                    color: #FFF;
-                    background-color: @basic-active-hover;
-                }
+                padding: 20px 15px;
+                // &:hover {
+                //     color: #FFF;
+                //     background-color: @basic-active-hover;
+                // }
             }
         }
         .link {
@@ -52,21 +52,22 @@
                 background-color: @basic-active-hover;
             }
         }
-    }
 
-    .navbar-nav.nav-side {
-        & > li {
-            & > a {
-                padding: 20px 25px;
-                background-color: @basic-active;
-                color: #fff;
-                &:hover {
-                    color: #FFF;
-                    background-color: @basic-active-hover;
+        // Login nav
+        &.nav-side {
+            & > li {
+                & > a.item-btn {
+                    padding: 20px 25px;
+                    background-color: @basic-active;
+                    color: #fff;
+                    &:hover {
+                        color: #FFF;
+                        background-color: @basic-active-hover;
+                    }
                 }
             }
         }
-    }    
+    }
 
 }
 
@@ -78,7 +79,7 @@
         font-size: 16px;
         float: left;
         display: block;
-        padding: 20px 15px 15px;
+        padding: 18px 15px 17px;
         border-bottom: 3px solid transparent;
         .transition(color 0.3s ease, border-color 0.3s ease;);
 
@@ -101,10 +102,11 @@
     padding: 0;
     height: @header-height;
     // font-size: 30px;
-    margin: 0 75px 0 0;
+    margin: 0 50px 0 0;
+    width: 200px;
     a {
         display: block;
-        padding: 17px 15px 12px 0;
+        padding: 17px 0 17px 0;
         color: @color-dark;
         .transition( color 0.3s ease);
         .app-light {

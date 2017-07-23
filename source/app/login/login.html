@@ -20,7 +20,12 @@
     <!-- New user -->
     <ul class="nav navbar-nav pull-right nav-side" ng-if="!vm.loginService.getLoginStatus()">
         <li>
-            <a ng-click="vm.loginService.login()" class="btn-login">
+            <a href="#">
+                Sign up
+            </a>
+        </li>    
+        <li>
+            <a ng-click="vm.loginService.login()" class="item-btn">
                 <i class="fa fa-sign-in" aria-hidden="true"></i>
             </a>
         </li>
