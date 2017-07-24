@@ -95,12 +95,12 @@ body {
   }
   @media (min-width: @screen-lg-min) {
     width: 1170px;
-    margin: 0 45px;
+    margin: 0 auto;
   }
-  @media (min-width: @screen-lgx-min) {
-    width: 1170px;
-    margin: 0 215px;
-  }
+  // @media (min-width: @screen-lgx-min) {
+  //   width: 1170px;
+  //   margin: 0 215px;
+  // }
 }
 .app-top-panel {
   min-height: 40px;
@@ -140,13 +140,17 @@ body {
   position: relative;
   .post {
     .img-link {
-      width: 100px;
+      margin: 0 0 10px;
+      display: block;
       .img-container {
-        width: 90px;
+        // width: 90px;
       }
     }
     .post-content {
-      width: calc(~"100% - 100px");
+      // width: calc(~"100% - 100px");
+      float: none;
+      display: block;
+      width: 100%;
     }
   }
 }
