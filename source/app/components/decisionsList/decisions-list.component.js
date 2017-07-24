@@ -6,7 +6,7 @@
         .module('app.components')
         .controller('DecisionsListController', DecisionsListController)
         .component('decisionsList', {
-            templateUrl: 'app/decisions/decisions-list.html',
+            templateUrl: 'app/components/decisionsList/decisions-list.html',
             bindings: {
                 list: '<',
                 criteriaCompliance: '<',

@@ -41,6 +41,7 @@
 
         function initCompareList() {
             vm.compareList = DecisionCompareService.getList();
+            console.log(vm.compareList);
         }
 
         function clearCompare() {

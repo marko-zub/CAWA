@@ -1,29 +1,29 @@
 <header id="app-header" class="app-header">
-    <div class="app-container-sm">
-        <div class="row">
-            <div class="col-xs-6 col-sm-10 header-menu-btn clearfix">
-                <div class="navbar-brand">
-                    <a ui-sref="home" ui-sref-opts="{reload: true}">
-                    <!-- Decision<span class="app-light">Wanted</span> -->
-                    <img src="/images/logo.png" alt="" class="img-responsive">
-                    </a>
-                </div>
-                
-                <nav class="header-nav">
-                    <a ui-sref="decisions" ui-sref-active="active">Decisions</a>
-                    <a ui-sref="users" ui-sref-active="active">Users</a>
-                    <a ui-sref="tags" ui-sref-active="active">Tags</a>
-                </nav>
 
-                <div class="app-panel-search hidden-xs">
-                    <search-bar placeholder="Search..."></search-bar>
-                </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-10 header-menu-btn clearfix">
+            <div class="navbar-brand">
+                <a ui-sref="home" ui-sref-opts="{reload: true}">
+                <!-- Decision<span class="app-light">Wanted</span> -->
+                <img src="/images/logo.png" alt="" class="img-responsive">
+                </a>
             </div>
-            <div class="col-xs-6 col-sm-2 header-login">
-                <app-login></app-login>
+
+            <nav class="header-nav">
+                <a ui-sref="decisions" ui-sref-active="active">Decisions</a>
+                <a ui-sref="users" ui-sref-active="active">Users</a>
+                <a ui-sref="tags" ui-sref-active="active">Tags</a>
+            </nav>
+
+            <div class="app-panel-search hidden-xs">
+                <search-bar placeholder="Search..."></search-bar>
             </div>
         </div>
+        <div class="col-xs-6 col-sm-2 header-login">
+            <app-login></app-login>
+        </div>
     </div>
+
 </header>
 
 <div class="clearfix visible-xs">
