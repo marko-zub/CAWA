@@ -1012,6 +1012,7 @@ a {
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: left;
     li {
         padding: 2px 8px;
         position: relative;
@@ -1348,13 +1349,13 @@ a {
 .app-panel-title {
     position: relative;
     cursor: pointer;
-    background-color: @gray-light-extra;
+    // background-color: @gray-light-extra;
     .controls {
         position: absolute;
         right: 0;
         top: 0;
-        margin: 0px 8px;
-        font-size: 19px;
+        margin: 0px 18px;
+        font-size: 15px;
         color: @gray-mid;
         i {
             line-height: 26px;
@@ -1399,8 +1400,9 @@ a {
 // Filter Name
 .filter-name {
     position: relative;
-    margin: 8px 0 8px;
+    margin: 8px 0 15px;
     // padding: 0 10px;
+    width: 350px;
     .form-control {
         width: 100%;
         padding: 8px 36px 8px 15px ;
@@ -1479,9 +1481,6 @@ a {
 
 .discussions-list {
     position: relative;
-    & > li {
-        margin-bottom: 8px;
-    }
 }
 
 .app-title-inline {

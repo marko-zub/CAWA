@@ -1,7 +1,7 @@
 <div class="app-list-panel">
     <div class="app-header-block">
         <div class="pull-left">
-           <h4>Characteristics</h4>
+            <h4 class="app-list-title">Characteristics</h4>
         </div>
         <div class="pull-right">
             <div class="text">
@@ -20,32 +20,36 @@
             <div uib-collapse="group.isCollapsed">
                 <ul class="discussions-list">
                     <li ng-repeat="characteristic in ::group.characteristics track by characteristic.id">
-                        <div class="discussions-list-content">
-                            <div class="clearfix">
-                                <div class="row">
-                                    <div class="col-sm-5 clearfix">
+
+                            <div class="clearfix row-eq-height">
+                                <div class="col-sm-5 clearfix bg-gray-light-2">
+                                    <div class="discussions-list-content clearfix">
                                         <div ng-switch="::(vm.links == true)" class="pull-left">
                                             <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a>
                                             <span ng-switch-when="false" ng-bind="::characteristic.name"></span>
                                         </div>
-                                        <span ng-if="::characteristic.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                        <span ng-if="::characteristic.description" class="link-secondary icon-info" popover-title="{{::characteristic.name}}" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                     </div>
-                                    <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <div class="discussions-list-content">
                                         <div ng-if="!characteristic.decision.value && vm.rating">
                                             <a href="#">Provide value</a>
                                         </div>
                                         <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
                                     </div>
-                                    <div class="col-sm-1">
+                                </div>
+                                <div class="col-sm-1 text-right">
+                                    <div class="discussions-list-content">
                                         <div class="pull-right discussions-link" ng-if="::vm.discussion">
-                                             <a ui-sref="decisions.single.parent.characteristics({characteristicId: characteristic.id,characteristicSlug: characteristic.nameSlug})">
+                                            <a ui-sref="decisions.single.parent.characteristics({characteristicId: characteristic.id,characteristicSlug: characteristic.nameSlug})">
                                                 <i class="fa fa-link" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+         
                     </li>
                 </ul>
             </div>

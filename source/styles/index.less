@@ -69,14 +69,6 @@ body {
 }
 
 
-.app-header-block {
-  .clearfix;
-  .text {
-    font-size: 12px;
-    margin-top: 12px;
-  }
-}
-
 .app-action-text {
   font-size: 12px;
 }
@@ -159,11 +151,9 @@ body {
 .decision-rating {
     margin: 8px 0;
     font-size: 27px;
-
     text-align: center;
     .icon {
-      color: @icon-color;
-      cursor: pointer;
+      color: @rating-color;
       .transition(color 0.2s ease-in-out);
       &:hover {
         color: @rating-color-active;
@@ -244,4 +234,15 @@ body {
     display: block;
     margin: 0 0 5px;
   }
+}
+
+
+
+// BG colors
+.bg-gray-light-2 {
+  background-color: @color-gray-light-2;
+}
+
+.row-eq-height {
+  display: flex;
 }

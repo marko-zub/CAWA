@@ -85,12 +85,12 @@
                                     </a>
                                     <div class="clearfix">
                                         <div class="info">
-                                            <span ng-show="::item.decision.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <span ng-show="::item.decision.description" class="link-secondary icon-info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
                                     <div class="app-panel-controls">
                                         <span ng-click="vm.updateExclusionList(item.decision.id)" class="app-control">
-                                            <i class="fa" ng-class="{'fa-check-circle-o' : vm.matrixMode == 'inclusion', 'fa-times-circle-o': vm.matrixMode == 'exclusion'}"></i>
+                                            <i class="fa" ng-class="{'fa-check' : vm.matrixMode == 'inclusion', 'fa-times': vm.matrixMode == 'exclusion'}"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                             </div>
 
 
-                                            <a href ng-if="::criteria.description" class="link-secondary glyphicon glyphicon glyphicon-info-sign title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                            <a href ng-if="::criteria.description" class="link-secondary icon-info title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                         </div>
 

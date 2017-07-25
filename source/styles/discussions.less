@@ -286,6 +286,7 @@
 }
 
 .app-rating-inline {
+    display: inline-block;
     .app-rating-star,
     .app-rating-votes {
         display: inline-block;
@@ -308,13 +309,25 @@
 
 
 .app-list-group-title {
-    padding: 6px 8px 6px;
+    padding: 6px 15px 6px;
     margin: 0 0 2px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #aaa;    
+    font-size: 14px;
+    // font-weight: 600;
 }
 
+.app-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 0 15px;
+}
+
+.app-header-block {
+  .clearfix;
+  .text {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+}
 
 .decisions-list {
    .post {
@@ -324,6 +337,7 @@
     }
     .img-container {
         max-width: 265px;
+        min-height: 170px;
     }
     .btn-compare {
         position: absolute;
@@ -335,29 +349,27 @@
 
 .discussions-list {
     list-style: none;
-    padding: 0 0 8px;
+    padding: 0;
     margin: 0 0 12px 0;
+    border-bottom: 1px solid @color-gray-light-extra;
     .discussions-list-content {
         .link-secondary {
             display: inline-block;
             margin: 0 3px;
         }
-        padding: 3px 8px;
+        padding: 3px 0;
         p {
             margin: 0;
         }
     }
     & > li {
-        border-bottom: 1px solid @gray-light;
+        border-top: 1px solid @color-gray-light-extra;
         & > a {
             padding: 8px 8px;
             display: block;
             &:hover {
                 background-color: @basic-active-light;
             }
-        }
-        &:last-child {
-            border-bottom: 0;
         }
     }
 
@@ -413,7 +425,7 @@ li {
 }
 
 .discussions-link {
-    padding: 0 0 0 12px;
+    padding: 0 0 0 10px;
 }
 
 
