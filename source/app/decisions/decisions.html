@@ -6,15 +6,23 @@
         <div class="col-sm-12">
             <div class="post-header">
                 <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
-                    <h4 class="tabs-title">
-                All Decisions
-                <span class="title-counter">({{vm.totalCount || 0}})</span>
-            </h4>
+                    <h4 class="tabs-title"> All Decisions <span class="title-counter">({{vm.totalCount || 0}})</span> </h4>
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions({tab:item.key})">{{::item.label}}</a>
                         </li>
                     </ul>
+
+                    <!-- TODO: optimize code nav-layout -->
+                    <div class="nav-layout">
+                        <a href="#" ng-click="vm.toggleLayout('list', $event)" ng-class="{'active': vm.layoutClass === 'list'}">
+                            <i class="fa fa-list" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" ng-click="vm.toggleLayout('cards', $event)" ng-class="{'active': vm.layoutClass === 'cards'}">
+                            <i class="fa fa-th" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -24,7 +32,7 @@
             <div class="col-sm-12">
                 <!-- TODO: create decisions-list component -->
                 <div class="container-desisions">
-                    <decisions-list compare="true" list="vm.decisionsList"></decisions-list>
+                    <decisions-list compare="true" list="vm.decisionsList" class-name="vm.layoutClass"></decisions-list>
                     <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 </div>
                 <!-- TODO: use as component -->
@@ -32,7 +40,6 @@
                     <div class="col-md-12 text-center">
                         <div class="paginator">
                             <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
-                            
                             <div class="app-pagination-pages">
                                 <span class="app-pagination-pages-label">On page:</span>
                                 <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>

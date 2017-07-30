@@ -329,21 +329,73 @@
   }
 }
 
+
+// TODO: clean up cards, post
+.recommended-list {
+   .decisions-list {
+        &.cards {
+            .post {
+                width: 100%;
+                .post-description {
+                    height: auto;
+                }
+            }
+        } 
+    }
+}
+
 .decisions-list {
+    &.cards {
+        margin: 0 -15px;
+        .clearfix;
+        .post {
+            width: 33.33333333%;
+            float: left;
+            padding: 0 15px;
+            margin: 0 0 30px;
+            .post-description {
+                height: 40px;
+            }
+            .img-link {
+                float: none;
+                width: auto;
+                .img-container {
+                    max-width: none;
+                };
+            }
+            .post-content {
+                width: 100%;
+                float: none;
+                padding: 0 15px 20px 15px;
+            }
+            .btn-compare {
+                margin: 15px 0 0;
+                position: static;
+            }
+        }
+        .img-container {
+            margin: 0 0 20px 0;
+        }
+    }
+
+    .post-inner {
+        .clearfix;
+        .box-shadow(3px 2px 8px rgba(0, 0, 0, 0.11));
+    }
+
    .post {
-    .box-shadow(3px 2px 8px rgba(0, 0, 0, 0.11));
-    .post-content {
-        padding: 0 15px 20px 15px;
-    }
-    .img-container {
-        max-width: 265px;
-        min-height: 170px;
-    }
-    .btn-compare {
-        position: absolute;
-        right: 15px;
-        bottom: 20px;
-    }
+        .post-content {
+            padding: 0 15px 20px 15px;
+        }
+        .img-container {
+            max-width: 265px;
+            min-height: 140px;
+        }
+        .btn-compare {
+            position: absolute;
+            right: 15px;
+            bottom: 20px;
+        }
    }
 }
 

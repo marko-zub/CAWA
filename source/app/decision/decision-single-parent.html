@@ -11,7 +11,7 @@
 </div>
 <div class="app-container-sm">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="post-header">
                 <div class="nav-tabs-wrapper clearfix">
@@ -62,7 +62,7 @@
         </div>
 
         <!-- Recommended Start -->
-        <div class="col-sm-4 recommended-list" ng-if="vm.decisionParents.length">
+        <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
             <h4>
                  Recommended
             </h4>
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <decisions-list compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+            <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
 
             <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 

@@ -8,7 +8,7 @@
 
     DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService'];
 
-    function DecisionsController(DecisionDataService,  $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
+    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
         var
             vm = this;
 
@@ -119,12 +119,21 @@
 
         function getTotalDecisions() {
             DecisionDataService.getDecisionsCount().then(function(resp) {
-                if(vm.totalCount !== resp.totalCount) {
+                if (vm.totalCount !== resp.totalCount) {
                     vm.totalCount = resp.totalCount;
                     DecisionsService.setCount(vm.totalCount);
                 }
-                
+
             });
+        }
+
+        // TODO: clean up
+        vm.layoutClass = 'list';
+        vm.toggleLayout = toggleLayout;
+        var allowedLayoutClass = ['list', 'cards'];
+
+        function toggleLayout(type, $event) {
+            if (_.includes(allowedLayoutClass, type)) vm.layoutClass = type;
         }
     }
 })();

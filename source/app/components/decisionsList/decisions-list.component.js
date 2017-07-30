@@ -11,7 +11,8 @@
                 list: '<',
                 criteriaCompliance: '<',
                 criteriaComplianceTitle: '@',
-                compare: '<'
+                compare: '<',
+                className: '<'
             },
             controller: 'DecisionsListController',
             controllerAs: 'vm',
@@ -36,6 +37,8 @@
             vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
             vm.decisionsList = descriptionTrustHtml(vm.list);
             if (vm.compare !== true) vm.compare = false;
+
+            if(!vm.className) vm.className = 'list';
         }
 
         function pickCompareDeicisions() {

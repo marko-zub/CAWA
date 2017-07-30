@@ -93,5 +93,13 @@
             vm.showTrigger = true;
         }        
 
+        // TODO: clean up
+        vm.layoutClass = 'list';
+        vm.toggleLayout = toggleLayout;
+        var allowedLayoutClass = ['list', 'cards'];
+
+        function toggleLayout(type, $event) {
+            if (_.includes(allowedLayoutClass, type)) vm.layoutClass = type;
+        }
     }
 })();
