@@ -31,58 +31,55 @@
                 </div>
             </div>
 
-            <div class="app-votes">
-                <a href="#" class="up">
-                    <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                </a>
-                <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
-                </div>
-                <a href="#" class="down">
-                    <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
-                </a>
+            <div class="post-sub-header">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="info">
+                            <div class="author info-divider">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                <span ng-bind="::vm.decision.createUser.username"></span>
+                            </div>
+                            <div class="date info-divider">
+                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
+                            </div>
+                            <div class="info-divider">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                <span ng-bind="::vm.decision.totalViews"></span>
+                            </div>
 
-                <div class="decision-rating">
-                    <i class="icon fa fa-star" aria-hidden="true"></i>
-                    <div class="total">
-                        0
+                            <div class="info-divider">
+                                <a href="#" class="link-secondary">
+                                    <i class="fa fa-flag" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
                     </div>
                 </div>
             </div>
 
             <div class="post post-single">
-                <div class="post-sub-header">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="info">
-                                <div class="author info-divider">
-                                    <i class="fa fa-user-o" aria-hidden="true"></i>
-                                    <span ng-bind="::vm.decision.createUser.username"></span>
-                                </div>
-                                <div class="date info-divider">
-                                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                    <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
-                                </div>
-                                <div class="info-divider">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                    <span ng-bind="::vm.decision.totalViews"></span>
-                                </div>
 
-                                <div class="info-divider">
-                                    <a href="#" class="link-secondary">
-                                        <i class="fa fa-flag" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div ng-show="vm.isDecisionsParent" class="pull-right">
-                                <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison">
-                                    Comparison Matrix
-                                </a>
-                            </div>
+                <div class="app-votes">
+                    <a href="#" class="up">
+                        <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                    <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
+                    </div>
+                    <a href="#" class="down">
+                        <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                    </a>
+
+                    <div class="app-votes-decision-rating">
+                        <i class="icon fa fa-star" aria-hidden="true"></i>
+                        <div class="total">
+                            0
                         </div>
                     </div>
                 </div>
+
                 <div class="clearfix text-justify">
                     <div class="post-image">
                         <img ng-if="::vm.decision.imageUrl" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
@@ -140,18 +137,32 @@
                     </div>
 
                 </div>
-                <div class="col-sm-7" ng-if="vm.isDecisionsParent">
+                <div class="col-sm-12" ng-if="vm.isDecisionsParent">
+                
 
-                    <!-- TODO: make as component -->
-                    <!-- Filter  -->
-                    <div class="filter-name">
-                        <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                        <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                        <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
-                    </div>
-                    <!-- Filter Name -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <!-- TODO: make as component -->
+                            <!-- Filter  -->
+                            <div class="filter-name">
+                                <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                                <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                            </div>
+                            <!-- Filter Name -->
+                        </div>
+                            
 
-                    <ul class="discussions-list" ng-style="{'min-height': vm.decisionsHeight}"  ng-if="vm.isDecisionsParent">
+                        <div class="col-md-4">
+
+                            <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
+                                Comparison Matrix
+                            </a>
+  
+                        </div>
+                    </div>                   
+
+                    <div class="decisions-list list-with-sm-icons" ng-style="{'min-height': vm.decisionsHeight}"  ng-if="vm.isDecisionsParent">
    
                         <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                             <div class="post-inner">
@@ -161,49 +172,57 @@
                                     </div>
                                 </a>
 
-                                <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
-                                    <div class="counters">
-                                        <span ng-bind="::decision.criteriaCompliancePercentage"></span>% 
-                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                                    </div>
-                                    <div class="text-uppercase">
-                                        criteria score 
-                                    </div>
-                                </div>
-
                                 <div class="post-content">
-                                    <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
+                                    <div class="post-header-content">
+                                        <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
+
+                                        <div class="info">
+                                            <div class="author info-divider">
+                                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                <span ng-bind="decision.createUser.username"></span>
+                                            </div>
+                                            <div class="date info-divider">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                <span ng-bind="decision.createDate | date:'MM/dd/yyyy'"></span>
+                                            </div>
+                                            <div class="info-divider">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                <span ng-bind="decision.totalViews"></span>
+                                            </div>
+                                            <div class="info-divider">
+                                                <a href="#" class="link-secondary">
+                                                    <i class="fa fa-flag" aria-hidden="true"></i>
+                                                </a>
+                                            </div>                                            
+                                        </div> 
+                                    </div>   
 
                                     <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
 
-                                    <div class="info">
-                                        <div class="author info-divider">
-                                            <i class="fa fa-user-o" aria-hidden="true"></i>
-                                            <span ng-bind="decision.createUser.username"></span>
+                                    <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                                        <div class="counters">
+                                            <span ng-bind="::decision.criteriaCompliancePercentage"></span>% 
+                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                                         </div>
-                                        <div class="date info-divider">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            <span ng-bind="decision.createDate | date:'MM/dd/yyyy'"></span>
+                                        <div class="text-uppercase">
+                                            criteria score 
                                         </div>
-                                        <div class="info-divider">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            <span ng-bind="decision.totalViews"></span>
-                                        </div>
-                                    </div>                                    
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
-                    </ul>
+                    </div>
 
                     <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 </div>
                 <!-- Criteria -->
-                <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
+ <!--                <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
                     <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups"></criteria-list>
-                </div>
+                </div> -->
                 <!-- End Criteria -->
-                <div class="col-sm-8" ng-if="vm.isDecisionsParent">
+                <div class="col-sm-12" ng-if="vm.isDecisionsParent">
                     <div class="row app-pagination clearfix">
                         <div class="col-md-12 text-center">
                             <div class="paginator">
@@ -246,12 +265,12 @@
         <!-- End Recommended Start -->
     </div>
 
-    <hr>
-
     <div class="row">
         <div class="col-sm-8">
-            <h3>Comments</h3>
-            <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
+            <div class="comments">
+                <h3 class="comments-tile">Comments</h3>
+                <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
+            </div>
         </div>
     </div>
 

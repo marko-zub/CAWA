@@ -20,6 +20,8 @@
     // Single post view
     &.post-single {
         margin: 0 0 32px;
+        padding: 0 0 0 50px;
+        position: relative;
         .post-description {
             margin: 0 0 8px;
         }    
@@ -198,6 +200,7 @@
     display: inline-block;
     margin: 15px 0 12px;
     padding: 0;
+    font-weight: 600;
 }
 
 
@@ -333,6 +336,9 @@
 // TODO: clean up cards, post
 .recommended-list {
    .decisions-list {
+        .post-inner {
+            position: relative;
+        }
         &.cards {
             .post {
                 width: 100%;
@@ -340,13 +346,61 @@
                     height: auto;
                 }
             }
-        } 
+        }
+        &.cards .img-container {
+            margin-bottom: 5px;
+        }
     }
 }
 
 .decisions-list {
+    &.list-with-sm-icons {
+        .post-header-content {
+            padding-left: 100px;
+        }
+        .post {
+            .post-content {
+                width: calc(~"100% - 125px");
+                padding: 0 0 5px;
+            }
+            .post-description {
+                margin: 5px 0 0;
+            }
+            .post-title {
+                margin: 0 0 7px;
+                font-size: 14px;
+            }
+            .img-container {
+                max-width: 125px;
+                // padding: 5px;
+                padding: 0;
+                min-height: auto;
+            }
+            .img-link {
+                width: 125px;
+            }            
+        }
+        .post-content {
+            position: relative;
+        }
+    }
+
     &.cards {
         margin: 0 -15px;
+       display: -webkit-flex;
+       display: flex;
+       -webkit-flex-direction: row;
+       flex-direction: row;
+       -webkit-flex-wrap: wrap;
+       flex-wrap: wrap;
+       /* Or do it all in one line with flex flow */
+       -webkit-flex-flow: row wrap;
+       flex-flow: row wrap;
+       /* tweak the where items line up on the row */
+       /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+       -webkit-align-content: flex-end;
+       align-content: flex-end;
+
         .clearfix;
         .post {
             width: 33.33333333%;
@@ -359,6 +413,18 @@
             .img-link {
                 float: none;
                 width: auto;
+                display: table;
+                width: 100%;
+                .img-container {
+                    display: table-cell;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: 100%;
+                    .img-responsive {
+                        display: inline-block;
+                    }
+                }
+                .clearfix;
                 .img-container {
                     max-width: none;
                 };
@@ -380,7 +446,8 @@
 
     .post-inner {
         .clearfix;
-        .box-shadow(3px 2px 8px rgba(0, 0, 0, 0.11));
+        .box-shadow(2px 2px 8px 2px rgba(0,0,0,.11));
+        // .box-shadow(3px 2px 8px rgba(0, 0, 0, 0.11));
     }
 
    .post {
@@ -497,4 +564,15 @@ li {
     height: 35px;
     // overflow: hidden;
   }
+}
+
+
+.comments {
+    padding: 30px 0;
+    .comments-tile {
+        color: @color-gray-light;
+        font-size: 18px;
+        border-bottom: 1px solid #ecebeb;
+        padding: 0 0 20px;
+    }
 }

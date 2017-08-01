@@ -7,11 +7,16 @@
                 </div>
             </a>
             <div class="post-content">
-                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
-                <div class="criteria-comliance" ng-if="::vm.criteriaCompliance" ng-show="decision.criteriaCompliancePercentage">
-                    {{ vm.criteriaComplianceTitle || 'Criteria compliance:'}} <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>% | <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                    </small>
-                </div>
+            
+                <div class="criteria-block" ng-if="::vm.criteriaCompliance" ng-show="decision.criteriaCompliancePercentage">
+                    <div class="counters">
+                        <span ng-bind="::decision.criteriaCompliancePercentage"></span>% 
+                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                    </div>
+                    <div class="text-uppercase">
+                        {{ vm.criteriaComplianceTitle || 'Criteria compliance:'}}
+                    </div>
+                </div>                
 
                 <div class="post-description"  ng-bind-html="::decision.description"></div>
 
