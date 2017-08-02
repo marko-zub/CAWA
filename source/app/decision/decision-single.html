@@ -60,8 +60,9 @@
                 </div>
             </div>
 
-            <div class="post post-single">
+            <div class="post post-single with-rating">
 
+                <!-- TODO: move to componetns -->
                 <div class="app-votes">
                     <a href="#" class="up">
                         <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
@@ -138,7 +139,7 @@
 
                 </div>
                 <div class="col-sm-12" ng-if="vm.isDecisionsParent">
-                
+
 
                     <div class="row">
                         <div class="col-md-8">
@@ -151,19 +152,19 @@
                             </div>
                             <!-- Filter Name -->
                         </div>
-                            
+
 
                         <div class="col-md-4">
 
                             <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
                                 Comparison Matrix
                             </a>
-  
+
                         </div>
-                    </div>                   
+                    </div>
 
                     <div class="decisions-list list-with-sm-icons" ng-style="{'min-height': vm.decisionsHeight}"  ng-if="vm.isDecisionsParent">
-   
+
                         <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                             <div class="post-inner">
                                 <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="left-side">
@@ -173,6 +174,17 @@
                                 </a>
 
                                 <div class="post-content">
+
+                                    <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                                        <div class="counters">
+                                            <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
+                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                                        </div>
+                                        <div class="text-uppercase">
+                                            criteria score
+                                        </div>
+                                    </div>
+
                                     <div class="post-header-content">
                                         <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
 
@@ -193,21 +205,11 @@
                                                 <a href="#" class="link-secondary">
                                                     <i class="fa fa-flag" aria-hidden="true"></i>
                                                 </a>
-                                            </div>                                            
-                                        </div> 
-                                    </div>   
-
-                                    <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
-
-                                    <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
-                                        <div class="counters">
-                                            <span ng-bind="::decision.criteriaCompliancePercentage"></span>% 
-                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                                        </div>
-                                        <div class="text-uppercase">
-                                            criteria score 
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
 
                                 </div>
                             </div>
@@ -233,7 +235,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>

@@ -20,14 +20,14 @@
     // Single post view
     &.post-single {
         margin: 0 0 32px;
-        padding: 0 0 0 50px;
         position: relative;
+        &.with-rating {
+            padding: 0 0 0 50px;
+        }
         .post-description {
             margin: 0 0 8px;
-        }    
+        }
     }
-
-
     .post-heading {
         height: 70px;
         padding: 8px;
@@ -107,7 +107,7 @@
     }
     .post-footer .comments-list .comment > .comments-list {
         margin-left: 50px;
-    }    
+    }
 
     .post-image {
         max-width: 33%;
@@ -158,7 +158,7 @@
    .info-divider {
       border-left: 1px solid @gray-light;
       float: left;
-      padding: 0 8px;      
+      padding: 0 8px;
       &:first-child {
         border-left-color: transparent;
         margin-left: 0;
@@ -356,7 +356,12 @@
 .decisions-list {
     &.list-with-sm-icons {
         .post-header-content {
-            padding-left: 100px;
+            // padding-left: 110px;
+        }
+        .criteria-block {
+            position: static;
+            float: left;
+            margin-right: 10px;
         }
         .post {
             .post-content {
@@ -378,7 +383,7 @@
             }
             .img-link {
                 width: 125px;
-            }            
+            }
         }
         .post-content {
             position: relative;

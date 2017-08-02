@@ -29,25 +29,29 @@
         </div>
     </div>
 
-    <div class="app-votes">
-        <a href="#" class="up">
-            <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
-        </a>
-        <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
-        </div>
-        <a href="#" class="down">
-            <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
-        </a>
 
-        <div class="decision-rating">
-            <span class="glyphicon icon glyphicon-star"></span>
-            <div class="total">
-                0
+    <div class="post post-single with-rating">
+
+        <!-- TODO: move to componetns -->
+        <div class="app-votes">
+            <a href="#" class="up">
+                <span class="app-vote-control app-sorter-top glyphicon glyphicon-triangle-top"></span>
+            </a>
+            <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
+            </div>
+            <a href="#" class="down">
+                <span class="app-vote-control app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+            </a>
+
+            <div class="app-votes-decision-rating">
+                <i class="icon fa fa-star" aria-hidden="true"></i>
+                <div class="total">
+                    0
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="post post-single">
+
         <div class="post-sub-header">
             <div class="row">
                 <div class="col-sm-8">
