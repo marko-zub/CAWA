@@ -162,7 +162,9 @@
 
                         </div>
                     </div>
+                    
 
+                    <!-- TODO: Use componnet -->
                     <div class="decisions-list list-with-sm-icons" ng-style="{'min-height': vm.decisionsHeight}"  ng-if="vm.isDecisionsParent">
 
                         <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
@@ -224,18 +226,11 @@
                     <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups"></criteria-list>
                 </div> -->
                 <!-- End Criteria -->
-                <div class="col-sm-12" ng-if="vm.isDecisionsParent">
-                    <div class="row app-pagination clearfix">
-                        <div class="col-md-12 text-center">
-                            <div class="paginator">
-                                <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
-                                <div class="app-pagination-pages">
-                                    <span class="app-pagination-pages-label">On page:</span>
-                                    <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm-12 text-center look-more" ng-if="vm.isDecisionsParent">
+                    Looking for more? Browse the 
+                    <a ui-sref="decisions.single.options"  class="text-bold">
+                        the complete list of decisions
+                    </a>
                 </div>
             </div>
         </div>

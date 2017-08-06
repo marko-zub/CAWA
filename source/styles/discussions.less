@@ -22,7 +22,8 @@
         margin: 0 0 32px;
         position: relative;
         &.with-rating {
-            padding: 0 0 0 50px;
+            padding: 0;
+            // padding: 0 0 0 50px;
         }
         .post-description {
             margin: 0 0 8px;
@@ -242,6 +243,7 @@
     position: relative;
     .app-votes {
         left: 0;
+        left: -40px;
         .total {
             // font-size: 16px;
         }
@@ -365,7 +367,7 @@
         }
         .post {
             .post-content {
-                width: calc(~"100% - 125px");
+                width: calc(~"100% - 135px");
                 padding: 0 0 5px;
             }
             .post-description {
@@ -377,12 +379,13 @@
             }
             .img-container {
                 max-width: 125px;
+                width: 125px;
                 // padding: 5px;
                 padding: 0;
                 min-height: auto;
             }
             .img-link {
-                width: 125px;
+                width: 135px;
             }
         }
         .post-content {

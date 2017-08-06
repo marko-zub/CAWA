@@ -35,7 +35,7 @@
                 link: 'decisions'
             }, {
                 title: vm.decision.name,
-                link: 'decision.single'
+                link: 'decisions.single'
             }, {
                 title: 'Nominations',
                 link: null

@@ -45,6 +45,19 @@
                 }
             })
 
+            .state('decisions.single.options', {
+                url: '/options',
+                cache: false,
+                views: {
+                    "@": {
+                        templateUrl: 'app/decision/decision-options.html',
+                        controller: 'DecisionOptionsController',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve: {}
+            })
+
             .state('decisions.single.nominations', {
                 url: '/nominations',
                 cache: false,

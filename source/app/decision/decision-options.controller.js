@@ -4,17 +4,18 @@
 
     angular
         .module('app.decision')
-        .controller('DecisionSingleController', DecisionSingleController);
+        .controller('DecisionOptionsController', DecisionOptionsController);
 
-    DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
+    DecisionOptionsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
         'Config'
     ];
 
-    function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
+    function DecisionOptionsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
         Config) {
 
+        // TODO: clean up controller make
         var
             vm = this;
 
@@ -39,22 +40,27 @@
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
             vm.activeTabSortChild = 0;
-            console.log('Decision Single Controller');
+            console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
             initPagination();
             getDecisionParents(vm.decision.id);
+            setPageData();
+        }
 
-            $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
+        function setPageData() {
+            $rootScope.pageTitle = vm.decision.name + ' Options | DecisionWanted.com';
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
             }, {
                 title: vm.decision.name,
+                link: 'decisions.single'
+            }, {
+                title: 'Options',
                 link: null
             }];
-
-        }
+        }        
 
         // TODO: Simplify logic
         function initSortMode(mode) {
@@ -94,16 +100,6 @@
                     vm.totalCount = vm.decision.totalChildDecisions;
                     vm.decisionsSpinnerChilds = true;
                     initSortMode($stateParams.tab);
-                }
-
-                // Recommended Decisions
-                if (vm.decisionParents.length) {
-                    vm.recommendedDecisionsListLoader = true;
-                    vm.activeRecommendedTab = {
-                        id: vm.decisionParents[0].id,
-                        name: vm.decisionParents[0].name
-                    };
-                    getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
                 }
 
                 return result;
@@ -146,26 +142,6 @@
                 vm.decisionsSpinnerChilds = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
-            });
-        }
-
-        // TODO: clean up
-        // Remove loop
-        function getDecisionParentsCriteriaCharacteristicts(parent) {
-            var sendData = {
-                includeChildDecisionIds: []
-            };
-            sendData.includeChildDecisionIds.push(vm.decision.id);
-            DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
-                var criteriaGroups;
-                $q.all([
-                    getCriteriaGroupsById(parent.id, result.decisionMatrixs[0].criteria),
-                    getCharacteristicsGroupsById(parent.id, result.decisionMatrixs[0].characteristics)
-                ]).then(function(values) {
-                    vm.criteriaGroups = values[0];
-                    vm.characteristicGroups = values[1];
-                });
-
             });
         }
 
@@ -312,45 +288,6 @@
         }
         // End Filter name
 
-
-        // Recommended decisions
-        vm.getRecommendedDecisions = getRecommendedDecisions;
-
-        function getRecommendedDecisions(decisionId, parent) {
-            if (!parent) return;
-            var sendData = {
-                includeCharacteristicIds: [-1]
-            };
-            sendData.excludeChildDecisionIds = [decisionId];
-
-            vm.activeRecommendedTab = {
-                id: parent.id,
-                name: parent.name,
-                nameSlug: parent.nameSlug
-            };
-
-            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = pickCriteriaIds(result);
-                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
-                    vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
-                    vm.recommendedDecisionsListLoader = false;
-                    vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
-                });
-            });
-        }
-
-
-        // TODO: move to service
-        function pickCriteriaIds(result) {
-            var criteriaGroupsIdsArray = [];
-            _.forEach(result, function(resultEl) {
-                _.forEach(resultEl.criteria, function(criteria) {
-                    criteriaGroupsIdsArray.push(criteria.id);
-                });
-            });
-            return criteriaGroupsIdsArray;
-        }
-
         function filterDecisionList(decisionMatrixs) {
             var list = [];
             _.forEach(decisionMatrixs, function(item) {
@@ -358,6 +295,7 @@
             });
             return list;
         }
+
 
     }
 })();
