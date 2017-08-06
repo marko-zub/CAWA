@@ -19,6 +19,9 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
                         </li>
+                        <li ng-if="vm.decisionParents.length">
+                            <a ui-sref="decisions.single.options">Options</a>
+                        </li>                        
                         <li ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
                         </li>

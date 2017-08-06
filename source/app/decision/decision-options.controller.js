@@ -44,6 +44,7 @@
             vm.navigation = navigationObj;
             initPagination();
             getDecisionMatrix(vm.decision.id);
+            getDecisionParents(vm.decision.id);
             setPageData();
         }
 
@@ -213,6 +214,20 @@
             });
         }
 
+
+        function getDecisionParents(id) {
+            DecisionDataService.getDecisionParents(id).then(function(result) {
+                // console.log(result);
+                vm.decisionParents = result;
+
+                if (vm.decision.totalChildDecisions > 0) {
+                    vm.isDecisionsParent = true;
+                    vm.decisionsSpinnerChilds = true;
+                }
+
+                return result;
+            });
+        }
         // TODO: make component
         // Filter
         vm.clearFilterName = clearFilterName;

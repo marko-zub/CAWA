@@ -10,6 +10,7 @@
     </div>
 </div>
 <div class="app-container-sm">
+
     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
     <div class="post-header">
         <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
@@ -19,7 +20,10 @@
                 <li>
                     <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                 </li>
-                <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                <li ng-if="vm.decisionParents.length">
+                    <a ui-sref="decisions.single.options">Options</a>
+                </li>
+                <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                 </li>
                 <li class="active">
