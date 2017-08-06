@@ -44,11 +44,37 @@
             vm.navigation = navigationObj;
             initPagination();
             
-            getDecisionParents(vm.decision.id).then(function(){
-                getDecisionMatrix(vm.decision.id);
+            getDecisionParents(vm.decision.id).then(function() {
+                setPageData();
             });
-            setPageData();
         }
+
+        // TODO: Simplify logic
+        function initSortMode(mode) {
+
+            var find = _.find(navigationObj, function(navItem) {
+                return navItem.key === mode;
+            });
+            if (find && find.key !== 'topRated') {
+                vm.tabMode = find.value;
+                getDecisionMatrix(vm.decision.id);
+                // Hide criterias
+                vm.criteriaGroups = [];
+            } else {
+                vm.tabMode = 'topRated';
+                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
+                    getDecisionMatrix(vm.decision.id);
+                });
+                vm.activeTabSort = 1;
+
+                $state.params.tab = null;
+                $state.transitionTo($state.current.name, $state.params, {
+                    reload: false,
+                    inherit: true,
+                    notify: false
+                });
+            }
+        }        
 
         function setPageData() {
             $rootScope.pageTitle = vm.decision.name + ' Options | DecisionWanted.com';
@@ -225,6 +251,7 @@
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
                     vm.decisionsSpinnerChilds = true;
+                    initSortMode($stateParams.tab);
                 } else {
                     $state.go('decisions.single', null, {location: 'replace'});
                     return;

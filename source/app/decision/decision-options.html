@@ -33,6 +33,25 @@
                 </ul>
             </div>
         </div>    
+
+
+        <div>
+            <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
+                <h4 class="tabs-title">
+                    <!-- All Options -->
+                </h4>
+                <span class="text-header">
+                    Can't find the necessary option? <a href="#">Add it</a>
+                </span>
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
+                        <a ui-sref="decisions.single.options(::{tab:item.key})">{{item.label}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
         <!-- TODO: make as component -->
         <!-- Filter  -->
         <div class="filter-name">
@@ -95,6 +114,8 @@
             </div>
         </div>
         
+        <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+
         <div class="row app-pagination clearfix">
             <div class="col-md-12 text-center">
                 <div class="paginator">

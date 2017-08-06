@@ -45,34 +45,40 @@
                 }
             })
 
-            .state('decisions.single.options', {
-                url: '/options',
-                cache: false,
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision-options.html',
-                        controller: 'DecisionOptionsController',
-                        controllerAs: 'vm',
-                    }
-                },
-                resolve: {}
-            })
-
-            .state('decisions.single.nominations', {
-                url: '/nominations',
-                cache: false,
-                views: {
-                    "@": {
-                        templateUrl: 'app/decision/decision-nominations.html',
-                        controller: 'DecisionNominationsController',
-                        controllerAs: 'vm',
-                    }
-                },
-                resolve: {
-                    // decisionBasicInfo: DecisionResolver,
-                    // decisionStateInfo: DecisionStateResolver
+        .state('decisions.single.options', {
+            url: '/options',
+            cache: false,
+            views: {
+                "@": {
+                    templateUrl: 'app/decision/decision-options.html',
+                    controller: 'DecisionOptionsController',
+                    controllerAs: 'vm',
                 }
-            })
+            },
+            resolve: {},
+            params: {
+                tab: {
+                    value: null,
+                    squash: true
+                }
+            }
+        })
+
+        .state('decisions.single.nominations', {
+            url: '/nominations',
+            cache: false,
+            views: {
+                "@": {
+                    templateUrl: 'app/decision/decision-nominations.html',
+                    controller: 'DecisionNominationsController',
+                    controllerAs: 'vm',
+                }
+            },
+            resolve: {
+                // decisionBasicInfo: DecisionResolver,
+                // decisionStateInfo: DecisionStateResolver
+            }
+        })
 
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {
@@ -92,7 +98,7 @@
                 },
                 resolve: {
                     // decisionStateInfo: DecisionStateResolver
-                        // decisionAnalysisInfo: DecisionAanalysisResolver
+                    // decisionAnalysisInfo: DecisionAanalysisResolver
                 },
             })
             // .state('decisions.single.comparison.analysis', {
@@ -155,7 +161,7 @@
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
-                if (toState.name === 'decisions.single' && 
+                if (toState.name === 'decisions.single' &&
                     ($stateParams.slug !== result.nameSlug)) {
 
                     $state.params.slug = result.nameSlug;
