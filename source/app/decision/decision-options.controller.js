@@ -43,7 +43,7 @@
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
             initPagination();
-            getDecisionParents(vm.decision.id);
+            getDecisionMatrix(vm.decision.id);
             setPageData();
         }
 
@@ -62,49 +62,6 @@
             }];
         }        
 
-        // TODO: Simplify logic
-        function initSortMode(mode) {
-
-            var find = _.find(navigationObj, function(navItem) {
-                return navItem.key === mode;
-            });
-            if (find && find.key !== 'topRated') {
-                vm.tabMode = find.value;
-                getDecisionMatrix(vm.decision.id);
-                // Hide criterias
-                vm.criteriaGroups = [];
-            } else {
-                vm.tabMode = 'topRated';
-                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                    getDecisionMatrix(vm.decision.id);
-                });
-                vm.activeTabSort = 1;
-
-                $state.params.tab = null;
-                $state.transitionTo($state.current.name, $state.params, {
-                    reload: false,
-                    inherit: true,
-                    notify: false
-                });
-            }
-        }
-
-        function getDecisionParents(id) {
-            DecisionDataService.getDecisionParents(id).then(function(result) {
-                // console.log(result);
-                vm.decisionParents = result;
-
-                if (vm.decision.totalChildDecisions > 0) {
-                    vm.isDecisionsParent = true;
-
-                    vm.totalCount = vm.decision.totalChildDecisions;
-                    vm.decisionsSpinnerChilds = true;
-                    initSortMode($stateParams.tab);
-                }
-
-                return result;
-            });
-        }
 
         function getDecisionMatrix(id, filter) {
             var sendData = {};
