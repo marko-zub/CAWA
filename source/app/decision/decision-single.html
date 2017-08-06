@@ -217,6 +217,14 @@
                                     <div class="post-description" ng-show="::decision.description" ng-bind-html="::decision.description"></div>
 
                                 </div>
+
+                                <!-- TODO: make as component -->
+                                <div class="clearfix">
+                                    <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
+                                        Add To Compare
+                                    </a>
+                                </div>
+                                                                
                             </div>
                         </div>
 

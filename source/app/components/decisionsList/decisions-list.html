@@ -36,7 +36,8 @@
                         <span ng-bind="::decision.totalViews"></span>
                     </div>
                 </div>
-
+                
+                <!-- TODO: make as component -->
                 <div ng-if="::vm.compare" class="clearfix">
                     <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
                         Add To Compare

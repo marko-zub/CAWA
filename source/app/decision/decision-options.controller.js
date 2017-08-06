@@ -8,12 +8,12 @@
 
     DecisionOptionsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config'
+        'Config', 'DecisionCompareNotificationService'
     ];
 
     function DecisionOptionsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config) {
+        Config, DecisionCompareNotificationService) {
 
         // TODO: clean up controller make
         var
@@ -273,6 +273,13 @@
             return list;
         }
 
+
+        vm.addToCompareList = addToCompareList;
+
+        function addToCompareList(decision) {
+            DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
+            decision.isInCompareList = true;
+        }
 
     }
 })();

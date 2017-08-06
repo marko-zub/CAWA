@@ -1,5 +1,5 @@
 (function() {
-
+    // TODO: clean up remove repeated code
     'use strict';
 
     angular
@@ -8,12 +8,12 @@
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config'
+        'Config', 'DecisionCompareNotificationService'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config) {
+        Config, DecisionCompareNotificationService) {
 
         var
             vm = this;
@@ -357,6 +357,13 @@
                 list.push(item.decision);
             });
             return list;
+        }
+
+        vm.addToCompareList = addToCompareList;
+
+        function addToCompareList(decision) {
+            DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
+            decision.isInCompareList = true;
         }
 
     }
