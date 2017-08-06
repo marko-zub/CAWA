@@ -39,8 +39,8 @@
             }
 
             return DecisionDataService.searchDecisions(searchData).then(function(result) {
-                vm.decisionsList = DecisionsUtils.descriptionTrustHtml(result.decisions);
-                vm.noResult = !vm.decisionsList.length;
+                vm.decisions = result.decisions;
+                vm.noResult = !vm.decisions.length;
                 changePaginationTotal(result.totalDecisions);
                 return result;
             }, function(err) {

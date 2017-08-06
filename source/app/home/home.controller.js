@@ -47,7 +47,7 @@
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
-                vm.decisionsList = result.decisions;
+                vm.decisions = result.decisions;
                 initPagination(result.totalDecisions);
                 vm.decisionsSpinner = false;
             }, function(error) {

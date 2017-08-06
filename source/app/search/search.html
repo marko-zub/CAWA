@@ -1,45 +1,26 @@
-<div class="app-top-panel">
-    <div class="app-container-sm">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1 class="app-header-sub-title pull-left">
-                    Search
-                </h1>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="app-container-sm">
-    <div class="app-main-panel main-panel">
-        <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
-        <div ng-show="vm.noResult">
-            <h4>Nothing found!</h4>
-        </div>
-        <div class="row" ng-show="!vm.noResult">
-            <div class="col-sm-8">
-                <ul class="discussions-list">
-                    <li ng-repeat="decision in vm.decisionsList track by decision.id">
-                        <div class="post">
-                            <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" class="left-side">
-                                <div class="img-container" ng-if="decision.imageUrl">
-                                    <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
-                                </div>
-                            </a>
+    <h1 class="app-header-sub-title">
+        Search
+    </h1>
+    <div class="app-page-content">
+        <div class="app-main-panel main-panel">
+            <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            <div ng-show="vm.noResult">
+                <h4>Nothing found!</h4>
+            </div>
+            <div ng-show="!vm.noResult">
+                <decisions-list compare="true" list="vm.decisions"></decisions-list>
 
-                            <div class="post-content">
-                                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null})" ng-bind="::decision.name"></a>
-                                <div class="post-description" ng-if="::decision.description" ng-bind-html="::decision.description"></div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
                 <!-- TODO: use as component -->
                 <div class="row app-pagination clearfix">
-                    <div class="col-md-10 col-sm-10 paginator text-center">
-                        <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
-                    </div>
-                    <div class="col-md-2 col-sm-2 counter">
-                        <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+                    <div class="col-md-12 text-center">
+                        <div class="paginator">
+                            <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
+                            <div class="app-pagination-pages">
+                                <span class="app-pagination-pages-label">On page:</span>
+                                <select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
