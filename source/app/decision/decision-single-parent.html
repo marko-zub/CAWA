@@ -1,3 +1,4 @@
+<!-- TODO: make as nested route -->
 <div class="app-top-panel">
     <div class="app-container-sm">
         <div class="row">
@@ -19,7 +20,7 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
                         </li>
-                        <li ng-if="vm.decisionParents.length">
+                        <li ng-if="vm.isDecisionsParent">
                             <a ui-sref="decisions.single.options">Options</a>
                         </li>                        
                         <li ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">

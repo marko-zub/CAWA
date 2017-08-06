@@ -21,7 +21,7 @@
                     <li>
                         <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                     </li>
-                    <li ng-if="vm.decisionParents.length" class="active">
+                    <li class="active">
                         <a ui-sref="decisions.single.options">Options</a>
                     </li>
                     <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
@@ -42,7 +42,7 @@
         </div>
         <!-- Filter Name -->
         <!-- TODO: Use componnet -->
-        <div class="decisions-list list-with-sm-icons" ng-style="{'min-height': vm.decisionsHeight}">
+        <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}">
             <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                 <div class="post-inner">
                     <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="left-side">

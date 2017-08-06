@@ -43,8 +43,10 @@
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
             initPagination();
-            getDecisionMatrix(vm.decision.id);
-            getDecisionParents(vm.decision.id);
+            
+            getDecisionParents(vm.decision.id).then(function(){
+                getDecisionMatrix(vm.decision.id);
+            });
             setPageData();
         }
 
@@ -216,13 +218,16 @@
 
 
         function getDecisionParents(id) {
-            DecisionDataService.getDecisionParents(id).then(function(result) {
+            return DecisionDataService.getDecisionParents(id).then(function(result) {
                 // console.log(result);
                 vm.decisionParents = result;
 
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
                     vm.decisionsSpinnerChilds = true;
+                } else {
+                    $state.go('decisions.single', null, {location: 'replace'});
+                    return;
                 }
 
                 return result;
