@@ -253,7 +253,7 @@
                     vm.decisionsSpinnerChilds = true;
                     initSortMode($stateParams.tab);
                 } else {
-                    $state.go('decisions.single', null, {location: 'replace'});
+                    // $state.go('decisions.single', null, {location: 'replace'});
                     return;
                 }
 

@@ -21,7 +21,7 @@
                         <li class="active">
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                         </li>
-                        <li ng-if="vm.isDecisionsParent">
+                        <li>
                             <a ui-sref="decisions.single.options">Options</a>
                         </li>                        
                         <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
@@ -95,6 +95,7 @@
                     <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
                 </div>
             </div>
+
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="vm.isDecisionsParent">
@@ -180,7 +181,7 @@
 
                                 <div class="post-content">
 
-                                    <div class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                                    <a ui-sref="decisions.single({id:decision.id, slug: decision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
                                         <div class="counters">
                                             <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                                             <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -188,7 +189,7 @@
                                         <div class="text-uppercase">
                                             criteria score
                                         </div>
-                                    </div>
+                                    </a>
 
                                     <div class="post-header-content">
                                         <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
@@ -244,6 +245,17 @@
                     </a>
                 </div>
             </div>
+
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="comments">
+                        <h3 class="comments-tile">Comments</h3>
+                        <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Recommended Start -->
@@ -271,15 +283,6 @@
 
         </div>
         <!-- End Recommended Start -->
-    </div>
-
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="comments">
-                <h3 class="comments-tile">Comments</h3>
-                <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
-            </div>
-        </div>
     </div>
 
 </div>
