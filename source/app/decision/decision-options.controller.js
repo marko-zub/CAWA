@@ -211,7 +211,7 @@
 
                         if (elEqual) {
                             el = _.merge(el, elEqual);
-                            el.html = ContentFormaterService.getTemplate(el.value, el.valueType);
+                            el.html = ContentFormaterService.getTemplate(el);
                             return el;
                         }
 

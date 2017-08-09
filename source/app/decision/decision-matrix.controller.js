@@ -378,7 +378,8 @@
                         characteristicsItem.description = $sce.trustAsHtml(characteristicsItem.description);
                     }
 
-                    if (characteristicsItem.valueType === 'STRINGARRAY' ||
+                    if (characteristicsItem.multiValue === true ||
+                        characteristicsItem.valueType === 'STRINGARRAY' ||
                         characteristicsItem.valueType === 'INTEGERARRAY') {
                         characteristicsItem.isSortable = false;
                     } else {

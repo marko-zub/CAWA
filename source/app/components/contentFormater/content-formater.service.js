@@ -30,44 +30,90 @@
             return html;
         }
 
-        function getTemplate(value, type, description, visualMode) {
-            if (!value || !type) return;
+        function contentFormaterArrayWithDescription(array, descriptions, totalHistoryValues) {
+            // console.log(str, descriptions);
+            // if (_.isObject(str) || !str) return;
+            // var array = JSON.stringify(str);
+            // array = JSON.parse(str);
+            // console.log(array);
+            // console.log(totalHistoryValues);
+
+            var content = _.map(array, function(el, index) {
+                var result;
+                // console.log(el);
+                var description = descriptions[index] ? ' <small>' + descriptions[index] + '</small>': '';
+                if (totalHistoryValues) {
+                    var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '';
+                    result = '<li>' + el + description + ' ' + totalHistoryValueHtml + '</li>';
+                } else {
+                     result = '<li>' + el + description  + '</li>';
+                }
+                return result;
+            }).join('\n');
+
+
+            var html = [
+                '<div class="app-iscroll-wrapper" dw-scroll-bar>',
+                '<ul class="app-list-sm">',
+                content,
+                '</ul>',
+                '</div>'
+            ].join('\n');
+            return html;
+        }        
+
+        function getTemplate(item) {
+            var value, type, description, visualMode;
+
+            value = item.value;
+            type = item.valueType;
+            description = item.description;
+            visualMode = item.visualMode;
+
+            // console.log(item);
+            if (!value ) return;
 
             // TODO: fix return obj
             // CASE Visual Mode
             var compile = false;
             var result = '';
-            switch (type.toUpperCase()) {
-                case "STRING":
-                    result = stringFullDescr(value).result;
-                    compile = stringFullDescr(value).compile;
-                    break;
-                case "DATETIME":
-                    result = Utils.dateToUI(value);
-                    break;
-                case "STRINGARRAY":
-                    result = contentFormaterArray(value);
-                    compile = true;
-                    break;
-                case "INTEGERARRAY":
-                    result = contentFormaterArray(value);
-                    compile = true;
-                    break;
-                case "BOOLEAN":
-                    result = contentFormaterBool(value);
-                    break;
-                case "LINK":
-                    result = contentFormaterLink(value);
-                    break;
-                default:
-                    result = value || '';
+
+            if (item.multiValue === true) {
+                // console.log(item);
+                result = contentFormaterArrayWithDescription(value, item.description, item.totalHistoryValues);
+                compile = true;
+            } else {
+                switch (type.toUpperCase()) {
+                    case "STRING":
+                        result = stringFullDescr(value).result;
+                        compile = stringFullDescr(value).compile;
+                        break;
+                    case "DATETIME":
+                        result = Utils.dateToUI(value);
+                        break;
+                    case "STRINGARRAY":
+                        result = contentFormaterArray(value);
+                        compile = true;
+                        break;
+                    case "INTEGERARRAY":
+                        result = contentFormaterArray(value);
+                        compile = true;
+                        break;
+                    case "BOOLEAN":
+                        result = contentFormaterBool(value);
+                        break;
+                    case "LINK":
+                        result = contentFormaterLink(value);
+                        break;
+                    default:
+                        result = value || '';
+                }
+                if (description)
+                    result += '<div class="description">' + description + '</div>';
+
+                if (visualMode && visualMode.toUpperCase() === 'LINK')
+                    result = contentFormaterLink(result);                
             }
-
-            if (description)
-                result += '<div class="description">' + description + '</div>';
-
-            if (visualMode && visualMode.toUpperCase() === 'LINK')
-                result = contentFormaterLink(result);
 
             return {
                 html: result,

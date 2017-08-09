@@ -37,15 +37,26 @@
 
         // TODO: make nested switch ?!
         // Find way to move in template function
-        // Need get access to vm in template function
+        // Because need get access to vm in template function
         function chooseValueType(item) {
             if (!item || !item.valueType || !item.visualMode) return;
             item.valueType = item.valueType.toUpperCase();
             item.visualMode = item.visualMode.toUpperCase();
 
-            // console.log(item);
-            // console.log(item.value, item.value && !_.isArray(item.value));
+            // TODO: add to swicth
+            if (item.multiValue === true) {
+                renderControl('checkbox-group');
+                return;                                 
+            }
+
+
             switch (true) {
+                // TODO:
+                // in swicth item.multivalue equals 'undefined'
+                // case ((item.multivalue === true)):
+                //     renderControl('checkbox-group');
+                //     console.log(item);
+                //     break;
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
                     renderControl('select');

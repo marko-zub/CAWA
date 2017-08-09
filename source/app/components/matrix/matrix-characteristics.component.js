@@ -24,7 +24,7 @@
 
         // Discussions
         vm.getComments = getComments;
-        vm.renderContent = ContentFormaterService.getTemplate;
+        // vm.renderContent = ContentFormaterService.getTemplate;
 
         // vm.$onInit = onInit;
         vm.$onChanges = onChanges;
