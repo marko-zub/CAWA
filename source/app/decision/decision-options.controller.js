@@ -39,6 +39,7 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
+            vm.decisionsSpinner = true;
             vm.activeTabSortChild = 0;
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
@@ -125,7 +126,7 @@
                     decisions.push(decision.decision);
                 });
                 vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
-                vm.decisionsSpinnerChilds = false;
+                vm.decisionsSpinner = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
@@ -250,7 +251,7 @@
 
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
-                    vm.decisionsSpinnerChilds = true;
+                    vm.decisionsSpinner = true;
                     initSortMode($stateParams.tab);
                 } else {
                     // $state.go('decisions.single', null, {location: 'replace'});
