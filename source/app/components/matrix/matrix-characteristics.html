@@ -15,7 +15,7 @@
                                           item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
                                           characteristic="::characteristic"></content-formater>
 
-                        <div class="app-item-additional-wrapper app-item-comments">
+                        <div class="app-item-additional-wrapper app-item-comments" ng-if="::!characteristic.multiValue">
                             <a ng-href="::" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
                             <a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a>
                             <a href="#" ng-if="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues"><i class="control fa fa-bar-chart" aria-hidden="tr"></i></a>

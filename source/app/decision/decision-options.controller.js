@@ -47,6 +47,7 @@
             
             getDecisionParents(vm.decision.id).then(function() {
                 setPageData();
+                vm.decisionsSpinner = false;
             });
         }
 
@@ -251,7 +252,6 @@
 
                 if (vm.decision.totalChildDecisions > 0) {
                     vm.isDecisionsParent = true;
-                    vm.decisionsSpinner = true;
                     initSortMode($stateParams.tab);
                 } else {
                     // $state.go('decisions.single', null, {location: 'replace'});
