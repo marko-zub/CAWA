@@ -1,0 +1,45 @@
+.media-wrapper {
+	margin: 32px 0;
+		
+	.media-content-table {
+		display: table;
+		height: 500px;
+		width: 100%;
+	}
+	.media-content {
+		display: table-cell;
+		vertical-align: middle;
+		height: 500px;
+	}
+	.nav {
+		&.nav-tabs {
+			& > li {
+				& > a {
+					padding: 4px 8px;
+					font-size: 14px;				
+					&:first-letter {
+					    text-transform:capitalize;
+					}
+				}
+			}
+		}
+	}
+	.tab-pane {
+		padding: 16px 0;
+	}
+
+	.media-image {
+		display: inline-block;
+		vertical-align: middle;
+		max-height: 100%;
+	}
+	.media-logo {
+		display: inline-block;
+	}
+	.media-link {
+		font-size: 18px;
+	}
+	iframe {
+		border: 0;
+	}
+}

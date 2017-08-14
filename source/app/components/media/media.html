@@ -1,0 +1,9 @@
+<div class="media-wrapper text-center">
+	<uib-tabset active="active">
+		<uib-tab index="$index" ng-repeat="media in vm.list" heading="{{::media.name}}">
+			<div class="media-content-table">
+				<div ng-bind-html="::media.html" class="mg-a media-content"></div>
+			</div>
+		</uib-tab>
+	</uib-tabset>	
+</div>

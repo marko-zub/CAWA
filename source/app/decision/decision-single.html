@@ -94,6 +94,11 @@
                     </div>
                     <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
                 </div>
+
+                <!-- Gallery -->
+                <media list="vm.decision.medias"></media>
+                <!-- End Gallery -->
+
             </div>
 
             <div class="row decision-childs">

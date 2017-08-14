@@ -2,7 +2,6 @@
 .nav-tabs {
   & > li {
     & > a {
-      border-top: 3px solid transparent;
       color: @color-dark;
       font-size: 20px;
       border-radius: 0;
@@ -11,22 +10,28 @@
       &:hover,
       &:focus {
         border: 1px solid #ddd;
-        padding-top: 8px;
         border-bottom-color: transparent;
       }
     }
     &.active {
       & > a {
         border: 1px solid #ddd;
-        border-top: 3px solid transparent;
-        border-top-color: @color-orange;;
         border-bottom-color: transparent;
+        position: relative;
+        &:before {
+          position: absolute;
+          top: 0;
+          margin: -1px 0;
+          right: -1px;
+          left: -1px;
+          background-color: @color-orange;
+          content: '';
+          height: 3px;
+        }
         &:hover,
         &:focus {
           border: 1px solid #ddd;
-          border-top: 3px solid @color-orange;
           border-bottom-color: transparent;
-          padding-top: 6px;
         }
       }
     }
