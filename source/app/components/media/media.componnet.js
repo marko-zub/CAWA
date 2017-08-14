@@ -47,6 +47,9 @@
                 case "VIMEOVIDEO":
                     html = '<iframe src="' + url + '" class="' + name + '" width="875" height="500"></iframe>';
                     break;
+                case "YOUTUBEVIDEO":
+                    html = '<iframe src="' + url + '" class="' + name + '" width="875" height="500"></iframe>';
+                    break;                    
                 case "LOGO":
                     html = '<img src="' + url + '" class="media-' + type.toLowerCase() + ' img-responsive"  alt="' + name + '">';
                     break;

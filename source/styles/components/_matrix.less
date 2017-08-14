@@ -74,6 +74,7 @@
   display: none;
 }
 
+// TODO: clean up
 .matrix {
     &.decision {
         .app-rating-votes {
@@ -86,6 +87,22 @@
                 color: @basic-active;
             }
         }
+    }
+    .matrix-col-content {
+        .control {
+            font-size: 13px;
+            display: inline-block;
+            padding: 0 4px 0 0;
+            margin: 0 4px 0 0;
+            color: @icon-color;
+            border-right: 1px solid @gray-light;
+            &:hover {
+                color: @basic-active;
+            }
+            &:last-child {
+                border-right-color: transparent;
+            }
+        }  
     }
     .app-item-comments {
         text-align: right;
@@ -1196,7 +1213,7 @@ a {
     .characteristic-groups-content {
         position: relative;
         min-height: 100px;
-        overflow: hidden;
+        // overflow: hidden;
         border-right: 1px solid @gray-light;
         .app-loader-small {
             left: -200px;

@@ -1,7 +1,7 @@
 <div class="matrix-g matrix-g-characteristics" ng-repeat="characteristic in ::vm.characteristics track by characteristic.uuid">
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
-            <div class="matrix-item matrix-g-item matrix-item-content text-center">
+            <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap">
                 Can't find the necessary characteristic? <a href="#">
                     Add it
                 </a>
