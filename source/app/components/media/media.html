@@ -1,9 +1,14 @@
 <div class="media-wrapper text-center">
-	<uib-tabset active="active">
-		<uib-tab index="$index" ng-repeat="media in vm.list" heading="{{::media.name}}">
-			<div class="media-content-table">
-				<div ng-bind-html="::media.html" class="mg-a media-content"></div>
-			</div>
-		</uib-tab>
-	</uib-tabset>	
+
+    <div index="$index" ng-repeat="media in ::vm.list track by $index" ng-show="vm.activeMediaTab == $index">
+        <div class="media-content-table">
+            <div ng-bind-html="::media.html" class="mg-a media-content"></div>
+        </div>
+    </div>
+
+    <div class="media-nav">
+    	<div ng-repeat="media in ::vm.list track by $index" ng-click="vm.activeMediaTab = $index" class="media-nav-item" ng-class="{'active': vm.activeMediaTab == $index}">
+    		<div ng-bind-html="::media.navHtml" class="media-nav-item-content"></div>
+    	</div>
+    </div>
 </div>

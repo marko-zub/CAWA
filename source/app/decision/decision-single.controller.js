@@ -46,6 +46,12 @@
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
+            var mediaLogo = _.find(vm.decision.medias, function(media) {
+                return media.type === 'LOGO';
+            }); 
+
+            vm.decision.imageUrlLogo = mediaLogo.url;
+
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'

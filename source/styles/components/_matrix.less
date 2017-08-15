@@ -1022,17 +1022,17 @@ a {
     }
 }
 
-
-
-
 .app-list-sm {
     list-style: none;
     padding: 0;
     margin: 0;
     text-align: left;
     li {
-        padding: 2px 8px;
+        padding: 2px 0 2px 8px;
         position: relative;
+        .control {
+            float: right;
+        }
         &:before {
             position: absolute;
             left: 0;
@@ -1135,7 +1135,6 @@ a {
         margin-top: 0px;
     }
 }
-
 
 // TODO: find better way
 // filter-control {

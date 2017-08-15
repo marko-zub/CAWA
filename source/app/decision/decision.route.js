@@ -140,13 +140,13 @@
         if (!result) return;
 
         // SLUG for Decision page firt time call
-        var decisionSlug = result.nameSlug ? result.nameSlug : '';
+        // var decisionSlug = result.nameSlug ? result.nameSlug : '';
 
-        if ($stateParams.slug === null ||
-            $stateParams.slug === 'comparison' ||
-            $stateParams.slug === 'list') {
-            $stateParams.slug = result.nameSlug;
-        }
+        // if ($stateParams.slug === null ||
+        //     $stateParams.slug === 'comparison' ||
+        //     $stateParams.slug === 'list') {
+        //     $stateParams.slug = result.nameSlug;
+        // }
 
         // TODO: optimize logic or remove from resolver
         var stateListener = $rootScope.$on('$stateChangeSuccess',
@@ -163,7 +163,6 @@
                 // Just added new slug
                 if (toState.name === 'decisions.single' &&
                     ($stateParams.slug !== result.nameSlug)) {
-
                     $state.params.slug = result.nameSlug;
                     $state.transitionTo($state.current.name, toParams, {
                         reload: false,
