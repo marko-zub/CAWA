@@ -50,7 +50,7 @@
                 return media.type === 'LOGO';
             }); 
 
-            vm.decision.imageUrlLogo = mediaLogo.url;
+            if (mediaLogo) vm.decision.imageUrlLogo = mediaLogo.url;
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
@@ -90,6 +90,7 @@
         }
 
         function getDecisionParents(id) {
+            vm.decisionsChildsLoader = true;
             DecisionDataService.getDecisionParents(id).then(function(result) {
                 // console.log(result);
                 vm.decisionParents = result;
@@ -98,7 +99,7 @@
                     vm.isDecisionsParent = true;
 
                     vm.totalCount = vm.decision.totalChildDecisions;
-                    vm.decisionsSpinnerChilds = true;
+                    
                     initSortMode($stateParams.tab);
                 }
 
@@ -149,7 +150,7 @@
                     decisions.push(decision.decision);
                 });
                 vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
-                vm.decisionsSpinnerChilds = false;
+                vm.decisionsChildsLoader = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });

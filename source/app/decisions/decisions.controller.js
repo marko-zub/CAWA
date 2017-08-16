@@ -73,13 +73,13 @@
 
         function updateStateParams() {
             // TODO: change page loop bug
-            $state.go($state.current.name, {
-                page: vm.pagination.pageNumber,
-                size: vm.pagination.pageSize
-            }, {
-                notify: false,
+            var params = $state.params;
+            params.page = vm.pagination.pageNumber;
+            params.size = vm.pagination.pageSize;
+            $state.transitionTo($state.current.name, params, {
                 reload: false,
-                location: false
+                inherit: true,
+                notify: false
             });
         }
 

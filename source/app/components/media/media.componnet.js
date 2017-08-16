@@ -30,7 +30,7 @@
         function prepareMedia(list) {
             // TODO: make chain
             var cleanList = _.filter(list, function(item) {
-                if (item.type !== 'LOGO') return item;
+                if (item.type !== 'LOGO' && item.type !== 'LINK') return item;
             });
             return _.map(cleanList, function(item) {
                 var obj = generateMediaHtml(item.type, item.url, item.name);

@@ -21,29 +21,30 @@
                 <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
 
                 <div class="post-description"  ng-bind-html="::decision.description"></div>
-
-                <div class="info">
-                    <div class="author info-divider">
-                        <i class="fa fa-user-o" aria-hidden="true"></i>
-                        <span ng-bind="::decision.createUser.username"></span>
-                    </div>
-                    <div class="date info-divider">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        <span ng-bind="::decision.createDate | date:'MM/dd/yyyy'"></span>
-                    </div>
-                    <div class="info-divider">
-                        <i class="fa fa-eye" aria-hidden="true"></i>
-                        <span ng-bind="::decision.totalViews"></span>
-                    </div>
-                </div>
                 
-                <!-- TODO: make as component -->
-                <div ng-if="::vm.compare" class="clearfix">
-                    <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
-                        Add To Compare
-                    </a>
+                <div class="post-footer">
+                    <div class="info">
+                        <div class="author info-divider">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <span ng-bind="::decision.createUser.username"></span>
+                        </div>
+                        <div class="date info-divider">
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                            <span ng-bind="::decision.createDate | date:'MM/dd/yyyy'"></span>
+                        </div>
+                        <div class="info-divider">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <span ng-bind="::decision.totalViews"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- TODO: make as component -->
+                    <div ng-if="::vm.compare" class="clearfix">
+                        <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
+                            Add To Compare
+                        </a>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>

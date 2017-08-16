@@ -42,12 +42,12 @@
                 var result;
                 // console.log(el);
                 var description = descriptions[index] ? ' <small>' + descriptions[index] + '</small>': '';
-                if (totalHistoryValues) {
-                    var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '';
-                    result = '<li>' + el + description + ' ' + totalHistoryValueHtml + '</li>';
-                } else {
+                // if (totalHistoryValues) {
+                //     var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '';
+                //     result = '<li>' + el + description + ' ' + totalHistoryValueHtml + '</li>';
+                // } else {
                      result = '<li>' + el + description  + '</li>';
-                }
+                // }
                 return result;
             }).join('\n');
 

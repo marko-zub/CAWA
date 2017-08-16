@@ -105,7 +105,8 @@
             ].join('\n');
 
             // Allow multiply values switcher OR/AND
-            if (item.valueType !== 'STRING') {
+            // if (item.valueType === 'STRING') {
+            if (item.multiValue === true) {
                 queryTypeHtml = [
                     '<div class="switcher">',
                     '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',

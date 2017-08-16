@@ -1,0 +1,5 @@
+<div class="media-links" ng-if="::vm.list">
+    <a ng-repeat="link in ::vm.list" target="_blank" href="{{link.url}}">
+        {{ link.name }}
+    </a>
+</div>

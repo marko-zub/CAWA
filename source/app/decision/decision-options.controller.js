@@ -39,7 +39,7 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
             vm.activeTabSortChild = 0;
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
@@ -47,7 +47,6 @@
             
             getDecisionParents(vm.decision.id).then(function() {
                 setPageData();
-                vm.decisionsSpinner = false;
             });
         }
 
@@ -121,13 +120,13 @@
 
             sendData.includeCharacteristicIds = [-1];
             DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
+                vm.decisionsLoader = false;
                 vm.decisions = [];
                 var decisions = [];
                 _.forEach(result.decisionMatrixs, function(decision) {
                     decisions.push(decision.decision);
                 });
                 vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
-                vm.decisionsSpinner = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
@@ -153,19 +152,25 @@
             };
 
             vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
-            // updateStateParams();
+            updateStateParams();
         }
 
         function updateStateParams() {
+            var params = $state.params;
+            params.page = vm.pagination.pageNumber;
+            params.size = vm.pagination.pageSize;
+            $state.transitionTo($state.current.name, params, {
+                reload: false,
+                inherit: true,
+                notify: false
+            });
+
             // $state.go($state.current.name, {
-            //     id: vm.decision.id,
             //     slug: vm.decision.nameSlug,
             //     page: vm.pagination.pageNumber.toString(),
             //     size: vm.pagination.pageSize.toString()
             // }, {
-            //     notify: true,
-            //     reload: true,
-            //     location: false
+            //     notify: false
             // });
         }
 
@@ -254,8 +259,9 @@
                     vm.isDecisionsParent = true;
                     initSortMode($stateParams.tab);
                 } else {
+                    vm.decisionsLoader = false;
                     // $state.go('decisions.single', null, {location: 'replace'});
-                    return;
+                    // return;
                 }
 
                 return result;

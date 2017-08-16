@@ -95,6 +95,10 @@
                     <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
                 </div>
 
+                <div class="text-right">
+                    <media-links list="vm.decision.medias"></media-links>
+                </div>
+
                 <!-- Gallery -->
                 <media list="vm.decision.medias"></media>
                 <!-- End Gallery -->
@@ -103,7 +107,7 @@
 
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
-                    <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="vm.isDecisionsParent">
+                    <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                         <h4 class="tabs-title">
                             All Options
                             <span class="title-counter">({{::vm.totalCount}})</span>
@@ -140,15 +144,14 @@
                                     There are no options yet, but you can be first to create them here.
                                 </div>
                             </div>
-                            <div class="col-sm-5 px-l-0" ng-show="vm.activeTabSortChild == 0">
+                           <!--  <div class="col-sm-5 px-l-0" ng-show="vm.activeTabSortChild == 0">
                                 <criteria-list list="::vm.criteriaGroups"></criteria-list>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
                 </div>
-                <div class="col-sm-12" ng-if="vm.isDecisionsParent">
-
+                <div class="col-sm-12" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -161,8 +164,6 @@
                             </div>
                             <!-- Filter Name -->
                         </div>
-
-
                         <div class="col-md-4">
 
                             <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
@@ -174,7 +175,7 @@
                     
 
                     <!-- TODO: Use componnet -->
-                    <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}"  ng-if="vm.isDecisionsParent">
+                    <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
                         <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                             <div class="post-inner">
@@ -236,7 +237,7 @@
 
                     </div>
 
-                    <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                    <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
                 </div>
                 <!-- Criteria -->
  <!--                <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">

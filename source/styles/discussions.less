@@ -65,50 +65,7 @@
     .post-description .stats .stat-item .icon {
         margin-right: 8px;
     }
-    .post-footer {
-        border-top: 1px solid #ddd;
-        padding: 15px;
-    }
-    .post-footer .input-group-addon a {
-        color: #454545;
-    }
-    .post-footer .comments-list {
-        padding: 0;
-        margin-top: 20px;
-        list-style-type: none;
-    }
-    .post-footer .comments-list .comment {
-        display: block;
-        width: 100%;
-        margin: 20px 0;
-    }
-    .post-footer .comments-list .comment .avatar {
-        width: 35px;
-        height: 35px;
-    }
-    .post-footer .comments-list .comment .comment-heading {
-        display: block;
-        width: 100%;
-    }
-    .post-footer .comments-list .comment .comment-heading .user {
-        font-size: 14px;
-        font-weight: bold;
-        display: inline;
-        margin-top: 0;
-        margin-right: 10px;
-    }
-    .post-footer .comments-list .comment .comment-heading .time {
-        font-size: 12px;
-        color: #aaa;
-        margin-top: 0;
-        display: inline;
-    }
-    .post-footer .comments-list .comment .comment-body {
-        margin-left: 50px;
-    }
-    .post-footer .comments-list .comment > .comments-list {
-        margin-left: 50px;
-    }
+    
 
     .post-image {
         max-width: 33%;
@@ -406,14 +363,24 @@
        flex-direction: row;
        -webkit-flex-wrap: wrap;
        flex-wrap: wrap;
-       /* Or do it all in one line with flex flow */
        -webkit-flex-flow: row wrap;
        flex-flow: row wrap;
-       /* tweak the where items line up on the row */
-       /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
        -webkit-align-content: flex-end;
        align-content: flex-end;
-
+        
+        .post-inner {
+            height: 100%;
+            position: relative;
+            padding-bottom: 64px;
+            .post-footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                left: 0;
+                padding: 0 20px 20px;
+                z-index: 11;
+            }
+        }
         .clearfix;
         .post {
             width: 33.33333333%;

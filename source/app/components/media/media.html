@@ -1,4 +1,4 @@
-<div class="media-wrapper text-center">
+<div class="media-wrapper text-center" ng-if="::vm.list">
 
     <div index="$index" ng-repeat="media in ::vm.list track by $index" ng-show="vm.activeMediaTab == $index">
         <div class="media-content-table">
@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <div class="media-nav">
+    <div class="media-nav" ng-if="vm.list.length > 1">
     	<div ng-repeat="media in ::vm.list track by $index" ng-click="vm.activeMediaTab = $index" class="media-nav-item" ng-class="{'active': vm.activeMediaTab == $index}">
     		<div ng-bind-html="::media.navHtml" class="media-nav-item-content"></div>
     	</div>

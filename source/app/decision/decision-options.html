@@ -36,30 +36,40 @@
             </div>    
 
 
-            <div ng-if="vm.decisions.length">
-                <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
-                    <!-- <h4 class="tabs-title">
-                        All Options
-                    </h4> -->
-                    <span class="text-header">
-                        Can't find the necessary option? <a href="#">Add it</a>
-                    </span>
-                    <ul class="nav nav-tabs nav-tabs-sm">
-                        <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                            <a ui-sref="decisions.single.options(::{tab:item.key})">{{item.label}}</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.isDecisionsParent && !vm.decisionsLoader">
+                <!-- <h4 class="tabs-title">
+                    All Options
+                </h4> -->
+                <span class="text-header">
+                    Can't find the necessary option? <a href="#">Add it</a>
+                </span>
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
+                        <a ui-sref="decisions.single.options(::{tab:item.key})">{{item.label}}</a>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- TODO: make as component -->
-                <!-- Filter  -->
-                <div class="filter-name">
-                    <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                    <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                    <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- TODO: make as component -->
+                    <!-- Filter  -->
+                    <div class="filter-name" ng-if="vm.isDecisionsParent && !vm.decisionsLoader">
+                        <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                        <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                        <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                    </div>
+
                 </div>
-                <!-- Filter Name -->
-                <!-- TODO: Use componnet -->
+                <div class="col-md-4">
+                    <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
+                        Comparison Matrix
+                    </a>
+                </div>
+            </div>      
+            <!-- Filter Name -->
+            <!-- TODO: Use componnet -->
+            <div ng-show="!vm.decisionsLoader && vm.decisions.length">
                 <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}">
                     <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                         <div class="post-inner">
@@ -114,7 +124,7 @@
                         </div>                
                     </div>
                 </div>
-
+            
                 <div class="row app-pagination clearfix">
                     <div class="col-md-12 text-center">
                         <div class="paginator">
@@ -128,9 +138,9 @@
                 </div>
             </div>
 
-            <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            <div ng-show="vm.decisionsLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
-            <div ng-if="!vm.decisions.length">
+            <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                 <span class="text-header">
                     There are no options yet, but you can be first to create them <a href="#">here</a>. 
                 </span>

@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('decisions.single', {
-                url: '/:id/{slug}?page&size',
+                url: '/:id/{slug}',
                 abstract: false,
                 cache: false,
                 views: {
@@ -27,18 +27,6 @@
                 },
                 params: {
                     slug: {
-                        value: null,
-                        squash: true
-                    },
-                    page: {
-                        value: null,
-                        squash: true
-                    },
-                    size: {
-                        value: null,
-                        squash: true
-                    },
-                    tab: {
                         value: null,
                         squash: true
                     }
@@ -57,7 +45,11 @@
             },
             resolve: {},
             params: {
-                tab: {
+                page: {
+                    value: null,
+                    squash: true
+                },
+                size: {
                     value: null,
                     squash: true
                 }
@@ -190,18 +182,21 @@
 
                 // TODO: find better way
                 // Remove size & page params
-                // if ($state.current.name !== 'decisions' ||
-                //     $state.current.name !== 'decisions.single') {
-                //     $state.go($state.current.name, {
-                //         page: null,
-                //         size: null,
-                //         sort: null
-                //     }, {
-                //         notify: false,
-                //         reload: false,
-                //         location: false
-                //     });
-                // }
+                var states = ['decisions', 'decisions.single.options'];
+                if (!_.includes(states, $state.current.name)) {
+                    var params = $state.params;
+                    params.page = null;
+                    params.size = null;
+                    params.sort = null;
+                    params.tab = null;
+                    $state.go($state.current.name, params, {
+                        notify: false,
+                        reload: false,
+                        // inherit: true,
+                        location: true
+                    });
+                    // debugger
+                }
 
                 //unsubscribe event listener
                 // stateListener();
