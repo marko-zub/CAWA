@@ -89,15 +89,14 @@
                         <img ng-if="::vm.decision.imageUrlLogo" ng-src="{{::vm.decision.imageUrlLogo}}" class="img-responsive" src-error>
                         <div ng-if="::!vm.decision.imageUrlLogo">
                             <img ng-src="/images/noimage.jpg" alt="" class="img-responsive mg-b-sm" >
-                            <a href="#" class="btn btn-sm btn-default">Change</a>
+                            <!-- <a href="#" class="btn btn-sm btn-default">Change</a> -->
                         </div>
                     </div>
                     <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
                 </div>
 
-                <div class="text-right">
-                    <media-links list="vm.decision.medias"></media-links>
-                </div>
+                
+                <media-links list="vm.decision.medias"></media-links>
 
                 <!-- Gallery -->
                 <media list="vm.decision.medias"></media>
@@ -130,11 +129,11 @@
                             <span class="text-header">
                                 Can't find the necessary option? <a href="#">Add it</a>
                             </span>
-                            <ul class="nav nav-tabs nav-tabs-sm">
+                           <!--  <ul class="nav nav-tabs nav-tabs-sm">
                                 <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSortChild == $index}">
                                     <a ng-click="vm.activeTabSortChild = $index">{{item.label}}</a>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
 
                         <!-- Tabs content -->
@@ -256,7 +255,7 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="comments">
-                        <h3 class="comments-tile">Comments</h3>
+                        <h4 class="comments-tile">Comments</h4>
                         <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
                     </div>
                 </div>

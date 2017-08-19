@@ -29,7 +29,11 @@
                     slug: {
                         value: null,
                         squash: true
-                    }
+                    },
+                    tab: {
+                        value: null,
+                        squash: true
+                    }                    
                 }
             })
 
@@ -188,7 +192,9 @@
                     params.page = null;
                     params.size = null;
                     params.sort = null;
-                    params.tab = null;
+                    if ($state.current.name !== 'decisions.single') {
+                        params.tab = null;
+                    }
                     $state.go($state.current.name, params, {
                         notify: false,
                         reload: false,
