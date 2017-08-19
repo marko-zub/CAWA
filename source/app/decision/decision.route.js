@@ -96,6 +96,9 @@
                     // decisionStateInfo: DecisionStateResolver
                     // decisionAnalysisInfo: DecisionAanalysisResolver
                 },
+                data: {
+                    bodyClass: 'matrix-page'
+                }
             })
             // .state('decisions.single.comparison.analysis', {
             //     url: '/analysis/:analysisId',

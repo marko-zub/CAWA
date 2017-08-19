@@ -34,6 +34,10 @@
                 }
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
+
+                if ($stateParams.data.bodyClass) {
+                    $rootScope.bodyClass = 'body-' + $stateParams.data.bodyClass;
+                }
             }
 
             $rootScope.pageUrl = $location.absUrl();

@@ -14,8 +14,26 @@
     }
 }
 
-.matrix {
+.matrix-page-wrapper {
     padding: 25px 0 0;
+}
+
+.body-matrix-page {
+    .app-header {
+        position: absolute;
+    }
+    .app-footer {
+        display: none !important;
+    }
+    .matrix {
+        .main-panel {
+            height: calc(~"100vh - 50px");
+        }
+    }
+}
+
+.matrix {
+    padding: 0;
     .app-panel {
         position: absolute;
         left: 0;
@@ -764,7 +782,6 @@ a {
 
 .matrix {
     .nav-tabs {
-        margin-top: 5px;
         .badge {
             padding: 3px 5px;
             font-size: 9px;
@@ -1025,15 +1042,34 @@ a {
     }
 }
 
+.characteristic-list {
+    .app-list-sm {
+        text-align: right;
+        li {
+            &:before {
+                color: @gray-mid;
+                position: static;
+                display: inline-block;
+                margin: 9px 6px 0;
+                font-size: 4px;
+                content: "\f111";
+                font-family: FontAwesome;
+                vertical-align: top;
+                background-color: transparent;           
+            }
+        }
+    }    
+}
+
 .app-list-sm {
     list-style: none;
     padding: 0;
     margin: 0;
-    text-align: right;
+    // text-align: right;
+    text-align: left;
     li {
         padding: 2px 0 2px 8px;
         position: relative;
-        display: inline-block;
         .control {
             float: right;
         }
