@@ -646,7 +646,7 @@
                 scrollbars: true,
                 scrollX: true,
                 scrollY: true,
-                mouseWheel: true,
+                mouseWheel: false,
                 interactiveScrollbars: true,
                 shrinkScrollbars: 'scale',
                 fadeScrollbars: false,
@@ -850,5 +850,18 @@
 
             $event.preventDefault();
         }
+
+
+        var scrollF = _.throttle(function() {
+            var scrollTopDoc = $(document).scrollTop();
+            // console.log(scrollTopDoc)
+            if (scrollTopDoc > 100 ) {
+                $('body').addClass('matrix-sticky');
+            } else {
+                $('body').removeClass('matrix-sticky');
+            }
+        }, 50);
+
+        $(window).scroll(scrollF);
     }
 })();

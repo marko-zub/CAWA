@@ -1,5 +1,6 @@
 .app-panel {
-    position: absolute;
+    // position: absolute;
+    position: static;
     left: 0;
     width: 100%;
     top: 0;
@@ -18,16 +19,20 @@
     padding: 25px 0 0;
 }
 
+.app-sticky {
+    position: fixed !important;
+}
+
 .body-matrix-page {
     .app-header {
         position: absolute;
     }
     .app-footer {
-        display: none !important;
+        // display: none !important;
     }
     .matrix {
         .main-panel {
-            height: calc(~"100vh - 50px");
+            // height: calc(~"100vh - 50px");
         }
     }
 }
@@ -35,7 +40,7 @@
 .matrix {
     padding: 0;
     .app-panel {
-        position: absolute;
+        position: static;
         left: 0;
         width: 100%;
         top: 0;
@@ -162,7 +167,7 @@
         overflow: hidden;
         position: relative;
         z-index: 2;
-        height: calc(~"100vh - 170px");
+        // height: calc(~"100vh - 170px");
         margin-bottom: -46px; //Pagination height
         padding-bottom: 46px;
     }
@@ -619,8 +624,40 @@ a {
 //     flex: 1 1 auto;
 // }
 
+.matrix-sticky {
+    .tabs-wrapper {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 85;
+        background: #fff;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .matrix .main-panel {
+        margin-top: 150px;
+    }
+
+    .matrix-header {
+        top: 38px;
+        position: fixed;
+        left: 0;
+        z-index: 85;
+        // padding-left: 15px;
+        left: 15px;
+        width: auto;
+        right: 15px;
+        overflow: hidden;
+        // padding-right: 15px;
+        border-bottom: 1px solid #ebebeb;
+    }
+}
+
 .matrix-body-wrapper {
-    position: absolute;
+    // position: absolute;
+    position: static;
     top: @matrix-header;
     // position: relative;
     // overflow: hidden;
@@ -637,7 +674,7 @@ a {
     right: 0;
     overflow: hidden;
     height: 100%;
-    position: absolute;
+    // position: absolute;
     z-index: 1;
     .matrix-aside {
         position: absolute;

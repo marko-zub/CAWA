@@ -1,24 +1,26 @@
 <div class="matrix-page-wrapper">
     <div class="decision matrix matrix-new">
         <div class="matrix-wrapper">
+            
+            <div class="tabs-wrapper">
+                <div class="nav-tabs-wrapper clearfix">
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
+                            <a ng-click="vm.changeMatrixMode('inclusion')">
+                                <span ng-bind="::vm.decision.name"></span>
+                                (<span ng-bind="vm.inclusionItemsLength || 0"></span>)
+                            </a>
+                        </li>
+                        <li ng-class="{'active':vm.matrixMode == 'exclusion'}">
+                            <a ng-click="vm.changeMatrixMode('exclusion')">Selected
+                                (<span ng-bind="vm.exclusionItemsLength || 0"></span>)
+                            </a>
+                        </li>
+                    </ul>
 
-            <div class="nav-tabs-wrapper clearfix">
-                <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
-                        <a ng-click="vm.changeMatrixMode('inclusion')">
-                            <span ng-bind="::vm.decision.name"></span>
-                            (<span ng-bind="vm.inclusionItemsLength || 0"></span>)
-                        </a>
-                    </li>
-                    <li ng-class="{'active':vm.matrixMode == 'exclusion'}">
-                        <a ng-click="vm.changeMatrixMode('exclusion')">Selected
-                            (<span ng-bind="vm.exclusionItemsLength || 0"></span>)
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="pull-right">
-                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    <div class="pull-right">
+                        <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    </div>
                 </div>
             </div>
 
