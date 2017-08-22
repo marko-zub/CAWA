@@ -13,7 +13,7 @@
 <div class="app-container-sm">
 
     <div class="row">
-        <div ng-class="vm.decisionParents.length ? 'col-sm-9' : 'col-sm-12'">
+        <div ng-class="vm.decisionParents.length ? 'col-sm-8' : 'col-sm-12'">
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="post-header">
                 <div class="nav-tabs-wrapper" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
@@ -264,27 +264,31 @@
         </div>
 
         <!-- Recommended Start -->
-        <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
-            <h4>
-                 Recommended
-            </h4>
+        <div class="col-sm-4 recommended-list">
+            <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
+            <div  ng-if="vm.decisionParents.length">
+                <h4>
+                     Recommended
+                </h4>
 
-            <div class="nav-tabs-wrapper tabs-left">
-                <ul class="nav nav-tabs nav-tabs-sm">
-                    <li  ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
-                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
-                    </li>
-                </ul>
-                <div class="pull-right text-header">
-                    <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
-                        See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
-                    </a>
+                <div class="nav-tabs-wrapper tabs-left">
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li  ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                            <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
+                        </li>
+                    </ul>
+                    <div class="pull-right text-header">
+                        <a ui-sref="decisions.single({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
+                            See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                        </a>
+                    </div>
                 </div>
+
+                <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+
+                <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            
             </div>
-
-            <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
-
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
 
         </div>
         <!-- End Recommended Start -->

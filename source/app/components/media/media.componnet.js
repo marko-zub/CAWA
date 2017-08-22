@@ -57,17 +57,17 @@
                     navItem = '<span class="media-ico bg-link">LINK <i class="fa fa-link" aria-hidden="true"></i></span>';
                     break;
                 case "VIMEOVIDEO":
-                    html = '<iframe src="' + url + '" class="' + name + '" width="875" height="480"></iframe>';
+                    html = '<iframe src="' + url + '" class="' + name + '" width="770" height="440"></iframe>';
                     navItem = '<span class="media-ico bg-play">PLAY <i class="fa fa-play" aria-hidden="true"></i></span>';
                     order = 2;
                     break;
                 case "YOUTUBEVIDEO":
-                    html = '<iframe src="' + url + '" class="' + name + '" width="875" height="480"></iframe>';
+                    html = '<iframe src="' + url + '" class="' + name + '" width="770" height="440"></iframe>';
                     navItem = '<span class="media-ico bg-play">PLAY <i class="fa fa-play" aria-hidden="true"></i></span>';
                     order = 1;
                     break;
                 case "WISTIAVIDEO":
-                    html = '<iframe src="' + url + '" class="' + name + '" width="875" height="480"></iframe>';
+                    html = '<iframe src="' + url + '" class="' + name + '" width="770" height="440"></iframe>';
                     navItem = '<span class="media-ico bg-play">PLAY <i class="fa fa-play" aria-hidden="true"></i></span>';
                     order = 3;
                     break;

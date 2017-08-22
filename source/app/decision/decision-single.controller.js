@@ -63,18 +63,33 @@
             getProperties(vm.decision.id);
         }
 
+        // Move to component
+        function getProperties(id) {
+            $q.all([
+                DecisionDataService.getDecisionsPropertyGroups(id),
+                DecisionDataService.getDecisionsProperties(id)
 
-        function getProperties (id) {
-            DecisionDataService.getDecisionsPropertyGroups(id).then(function(resp) {
-                // console.log(resp);
-                vm.decisionsPropertyGroups = resp;
+            ]).then(function(values) {
+
+                // vm.decisionsPropertyGroups = values[0];
+                // vm.decisionsProperties = values[1];
+
+                var propertiesValues = _.orderBy(values[1], 'id');
+                vm.properties = _.filter(values[0], function(item) {
+                    // console.log();
+                    return _.filter(item.properties, function(property) {
+                        property.value = _.find(propertiesValues, function(val) {
+                            return val.id === property.id;
+                        });
+                        return property;
+                    });
+
+                });
+                // console.log(values[0]);
+                // console.log(properties);
+                // console.log(propertiesValues);
             });
 
-            // vm.decisionsProperties = [];
-            DecisionDataService.getDecisionsProperties(id).then(function(resp) {
-                // console.log(resp);
-                vm.decisionsProperties = resp;
-            });
         }
 
         // TODO: Simplify logic

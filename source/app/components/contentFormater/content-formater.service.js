@@ -36,17 +36,22 @@
             // var array = JSON.stringify(str);
             // array = JSON.parse(str);
             // console.log(array);
+            // TODO: use reg exp
+            if (typeof array === 'string') {
+                array = array.replace(/\[/g, "").replace(/\]/g, "");
+                array = array.split(',');
+            }
             // console.log(totalHistoryValues);
 
             var content = _.map(array, function(el, index) {
                 var result;
                 // console.log(el);
-                var description = descriptions[index] ? ' <small>' + descriptions[index] + '</small>': '';
+                var description = descriptions && descriptions[index] ? ' <small>' + descriptions[index] + '</small>' : '';
                 // if (totalHistoryValues) {
                 //     var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '';
                 //     result = '<li>' + el + description + ' ' + totalHistoryValueHtml + '</li>';
                 // } else {
-                     result = '<li>' + el + description  + '</li>';
+                result = '<li>' + el + description + '</li>';
                 // }
                 return result;
             }).join('\n');
@@ -60,7 +65,7 @@
                 '</div>'
             ].join('\n');
             return html;
-        }        
+        }
 
         function getTemplate(item) {
             var value, type, description, visualMode;
@@ -71,18 +76,19 @@
             visualMode = item.visualMode;
 
             // console.log(item);
-            if (!value ) return;
+            if (!value) return;
 
             // TODO: fix return obj
             // CASE Visual Mode
             var compile = false;
             var result = '';
 
+            // console.log(item, visualMode, type);
             if (item.multiValue === true) {
-                // console.log(item);
                 result = contentFormaterArrayWithDescription(value, item.description, item.totalHistoryValues);
                 compile = true;
             } else {
+                // console.log(type.toUpperCase(), visualMode);
                 switch (type.toUpperCase()) {
                     case "STRING":
                         result = stringFullDescr(value).result;
@@ -111,8 +117,9 @@
                 if (description)
                     result += '<div class="description">' + description + '</div>';
 
-                if (visualMode && visualMode.toUpperCase() === 'LINK')
-                    result = contentFormaterLink(result);                
+                if (visualMode && visualMode.toUpperCase() === 'LINK') {
+                    result = contentFormaterLink(result);
+                }
             }
 
             return {
@@ -138,8 +145,19 @@
         }
 
         function contentFormaterLink(text) {
-            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-            return text.replace(exp, "<a href='$1' class=\"link\" target=\"_blank\">$1</a>");
+            //URLs starting with http://, https://, or ftp://
+            var replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+            var replacedText = text.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+            //URLs starting with www. (without // before it, or it'd re-link the ones done above)
+            var replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+            var replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+            //Change email addresses to mailto:: links
+            // var replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
+            // var replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+            return replacedText;
         }
 
         function contentFormaterBool(val) {

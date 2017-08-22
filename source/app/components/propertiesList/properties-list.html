@@ -1,0 +1,71 @@
+<!-- <pre>
+    {{vm.list | json}}
+</pre> -->
+<div class="app-list-panel">
+    <div class="app-header-block">
+        <div class="pull-left">
+            <h4 class="app-list-title">Properties</h4>
+        </div>
+        <div class="pull-right">
+            <div class="text">
+                Can't find the necessary characteristic? <a href="#">Add it</a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="::vm.list">
+        <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
+            <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
+                {{::group.name}}
+                <div class="controls">
+                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+            </h5>
+            <div uib-collapse="group.isCollapsed">
+                <ul class="discussions-list characteristic-list">
+                    <li ng-repeat="property in ::group.properties track by property.id">
+
+                            <div class="clearfix row-eq-height">
+                                <div class="col-sm-5 clearfix bg-gray-light-2">
+                                    <div class="discussions-list-content clearfix">
+                                        <div ng-switch="::(vm.links == true)" class="pull-left">
+                                            <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:property.id, critOrCharSlug:property.nameSlug})" ng-bind="::property.name"></a>
+                                            <span ng-switch-when="false" ng-bind="::property.name"></span>
+                                        </div>
+                                        <span ng-if="::property.description" class="link-secondary icon-info" popover-title="{{::property.name}}" uib-popover-html="::property.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                <div class="col-sm-10">
+                                    <div class="discussions-list-content">
+                                        <div ng-if="!property.value && vm.rating">
+                                            <a href="#">Provide value</a>
+                                        </div>
+<!--                                         <pre>
+                                            {{property.value}}
+                                        </pre>
+                                        <pre>
+                                            {{property}}
+                                        </pre> -->
+                                        <content-formater ng-if="property.value" item="property.value" characteristic="property.value"></content-formater>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 text-right">
+                                    <div class="discussions-list-content">
+                                        <div class="pull-right discussions-link" ng-if="::vm.discussion">
+                                 <!--            <a ui-sref="decisions.single.parent.properties({characteristicId: property.id,propertieslug: property.nameSlug})">
+                                                <i class="fa fa-link" aria-hidden="true"></i>
+                                            </a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+         
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p ng-if="!vm.list.length" class="app-action-content">
+        There are no properties yet, but you can be first to create them here.
+    </p>
+</div>
