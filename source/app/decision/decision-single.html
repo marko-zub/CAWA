@@ -23,7 +23,7 @@
                         </li>
                         <li>
                             <a ui-sref="decisions.single.options">Options</a>
-                        </li>                        
+                        </li>
                         <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                         </li>
@@ -95,7 +95,7 @@
                     <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
                 </div>
 
-                
+
                 <media-links list="vm.decision.medias"></media-links>
 
                 <!-- Gallery -->
@@ -171,7 +171,7 @@
 
                         </div>
                     </div>
-                    
+
 
                     <!-- TODO: Use componnet -->
                     <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
@@ -230,7 +230,7 @@
                                         Add To Compare
                                     </a>
                                 </div>
-                                                                
+
                             </div>
                         </div>
 
@@ -244,7 +244,7 @@
                 </div> -->
                 <!-- End Criteria -->
                 <div class="col-sm-12 text-center look-more" ng-if="vm.isDecisionsParent">
-                    Looking for more? Browse the 
+                    Looking for more? Browse the
                     <a ui-sref="decisions.single.options"  class="text-bold">
                         the complete list of decisions
                     </a>

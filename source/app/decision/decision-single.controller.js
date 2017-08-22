@@ -48,7 +48,7 @@
 
             var mediaLogo = _.find(vm.decision.medias, function(media) {
                 return media.type === 'LOGO';
-            }); 
+            });
 
             if (mediaLogo) vm.decision.imageUrlLogo = mediaLogo.url;
 
@@ -60,6 +60,21 @@
                 link: null
             }];
 
+            getProperties(vm.decision.id);
+        }
+
+
+        function getProperties (id) {
+            DecisionDataService.getDecisionsPropertyGroups(id).then(function(resp) {
+                // console.log(resp);
+                vm.decisionsPropertyGroups = resp;
+            });
+
+            // vm.decisionsProperties = [];
+            DecisionDataService.getDecisionsProperties(id).then(function(resp) {
+                // console.log(resp);
+                vm.decisionsProperties = resp;
+            });
         }
 
         // TODO: Simplify logic
@@ -99,7 +114,7 @@
                     vm.isDecisionsParent = true;
 
                     vm.totalCount = vm.decision.totalChildDecisions;
-                    
+
                     initSortMode($stateParams.tab);
                 }
 

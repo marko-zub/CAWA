@@ -48,6 +48,24 @@
                 }
             }),
 
+            decisionsPropertyGroups = $resource(decisionUrl + '/propertygroups', {
+                id: '@id'
+            }, {
+                getDecisionsPropertyGroups: {
+                    method: 'GET',
+                    isArray: true
+                }
+            }),
+
+            decisionsProperties = $resource(decisionUrl + '/properties', {
+                id: '@id'
+            }, {
+                getDecisionsProperties: {
+                    method: 'GET',
+                    isArray: true
+                }
+            }),
+
             decisionsCount = $resource(Config.endpointUrl + 'decisions/count', {}, {
                 getCount: {
                     method: 'GET',
@@ -130,6 +148,8 @@
             getDecisionParents: getDecisionParents,
             getDecisions: getDecisions,
             getDecisionMatrix: getDecisionMatrix,
+            getDecisionsPropertyGroups: getDecisionsPropertyGroups,
+            getDecisionsProperties: getDecisionsProperties,
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristicsGroupsById: getCharacteristicsGroupsById,
             getCharacteristicOptionsById: getCharacteristicOptionsById,
@@ -165,6 +185,14 @@
             return decisionsMatrix.getDecisionById({
                 id: id
             }, data).$promise;
+        }
+
+        function getDecisionsPropertyGroups(id) {
+            return decisionsPropertyGroups.getDecisionsPropertyGroups({ id: id }).$promise;
+        }
+
+        function getDecisionsProperties (id) {
+            return decisionsProperties.getDecisionsProperties({ id: id }).$promise;
         }
 
         function getCriteriaGroupsById(id) {
