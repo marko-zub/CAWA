@@ -30,6 +30,24 @@
             return html;
         }
 
+        function contentFormaterPrice(value) {
+            var n = Number(value);
+            return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+        }
+
+        function contentFormaterDate(value, mode) {
+            var result = '';
+            switch (mode.toUpperCase()) {
+                case "YEARPICKER":
+                    result = Utils.dateYearToUI(value);
+                    break;
+                default:
+                    result = Utils.dateToUI(value);
+            }
+            return result;
+        }
+
+
         function contentFormaterArrayWithDescription(array, descriptions, totalHistoryValues) {
             // console.log(str, descriptions);
             // if (_.isObject(str) || !str) return;
@@ -75,7 +93,6 @@
             description = item.description;
             visualMode = item.visualMode;
 
-            // console.log(item);
             if (!value) return;
 
             // TODO: fix return obj
@@ -83,6 +100,7 @@
             var compile = false;
             var result = '';
 
+            // console.log(type);
             // console.log(item, visualMode, type);
             if (item.multiValue === true) {
                 result = contentFormaterArrayWithDescription(value, item.description, item.totalHistoryValues);
@@ -95,7 +113,7 @@
                         compile = stringFullDescr(value).compile;
                         break;
                     case "DATETIME":
-                        result = Utils.dateToUI(value);
+                        result = contentFormaterDate(value, visualMode);
                         break;
                     case "STRINGARRAY":
                         result = contentFormaterArray(value);
@@ -110,6 +128,9 @@
                         break;
                     case "LINK":
                         result = contentFormaterLink(value);
+                        break;
+                    case "PRICE":
+                        result = contentFormaterPrice(value);
                         break;
                     default:
                         result = value || '';
@@ -151,7 +172,7 @@
 
             //URLs starting with www. (without // before it, or it'd re-link the ones done above)
             var replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-            var replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+            replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
 
             //Change email addresses to mailto:: links
             // var replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
