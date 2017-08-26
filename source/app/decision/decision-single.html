@@ -265,15 +265,16 @@
 
         <!-- Recommended Start -->
         <div class="col-sm-3 recommended-list">
-            <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
-            <div  ng-if="vm.decisionParents.length">
+            <div ng-if="vm.decisionParents.length">
+                <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
+                
                 <h4>
                      Recommended
                 </h4>
 
                 <div class="nav-tabs-wrapper tabs-left">
                     <ul class="nav nav-tabs nav-tabs-sm">
-                        <li  ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                        <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                             <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
                         </li>
                     </ul>

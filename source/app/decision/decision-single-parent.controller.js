@@ -69,7 +69,7 @@
             if (!id) return;
 
             DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = DecisionsUtils.descriptionTrustHtml(result.decisions);
+                vm.decisions = DecisionsUtils.prepareDecisionToUI(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
             });
         }
@@ -197,14 +197,14 @@
                 nameSlug: parent.nameSlug,
             };
 
-            // DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = criteriaIds;
+            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                sendData.sortCriteriaIds = pickCriteriaIds(result);
                 DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                     vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
                     vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
                 });
-            // });
+            });
         }
 
 

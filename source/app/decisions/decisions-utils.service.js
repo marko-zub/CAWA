@@ -1,34 +1,40 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.core')
-		.service('DecisionsUtils', DecisionsUtils);
+    angular
+        .module('app.core')
+        .service('DecisionsUtils', DecisionsUtils);
 
-    DecisionsUtils.$inject = ['$sce'];
+    DecisionsUtils.$inject = ['$sce', 'DecisionsConstant'];
 
-	function DecisionsUtils($sce) {
+    function DecisionsUtils($sce, DecisionsConstant) {
 
         // Move to Utils
-        function descriptionTrustHtml(list) {
+        function prepareDecisionToUI(list) {
             return _.map(list, function(el) {
-                if (!el.imageUrl) el.imageUrl = '/images/noimage.jpg';
-
-                // Move to constat
-                if (el.description && el.description.length > 350) {
-                    el.description = el.description.substring(0, 350) + '...';
+                if (!el.imageUrl) {
+                    el.imageUrl = el.logoUrl || '/images/noimage.jpg';
                 }
 
-                if (el.criteriaCompliancePercentage) el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
+                // Move to constat
+                if (el.description && el.description.length > DecisionsConstant.SHORT_TEXT_LENGTH) {
+                    el.description = el.description.substring(0, DecisionsConstant.SHORT_TEXT_LENGTH) + '...';
+                }
 
-                if(el.description) el.description = $sce.trustAsHtml(el.description);
+                if (el.criteriaCompliancePercentage) {
+                    el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
+                }
+
+                if (el.description) {
+                    el.description = $sce.trustAsHtml(el.description);
+                }
 
                 return el;
             });
         }
 
-		return {
-			descriptionTrustHtml: descriptionTrustHtml,
-		};
-	}
+        return {
+            prepareDecisionToUI: prepareDecisionToUI,
+        };
+    }
 })();

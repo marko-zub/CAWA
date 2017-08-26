@@ -14,13 +14,10 @@
                 value: 'updateDate',
                 label: 'Active'
             }, {
-                key: 'votes',
-                value: 'totalVotes',
-                label: 'Votes'
-            }, {
                 key: 'views',
                 value: 'totalViews',
                 label: 'Views'
-            }]
+            }],
+            SHORT_TEXT_LENGTH: 350
         });
 })();

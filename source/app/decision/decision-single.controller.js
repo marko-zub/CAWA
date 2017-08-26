@@ -179,7 +179,7 @@
                 _.forEach(result.decisionMatrixs, function(decision) {
                     decisions.push(decision.decision);
                 });
-                vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
+                vm.decisions = DecisionsUtils.prepareDecisionToUI(decisions);
                 vm.decisionsChildsLoader = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
@@ -304,9 +304,9 @@
                 result = _.filter(result, function(group) {
                     if (group.criteria.length > 0) return group;
                 });
-                vm.criteriaGroups = DecisionsUtils.descriptionTrustHtml(result);
+                vm.criteriaGroups = DecisionsUtils.prepareDecisionToUI(result);
                 _.forEach(result, function(resultEl) {
-                    DecisionsUtils.descriptionTrustHtml(resultEl.criteria);
+                    DecisionsUtils.prepareDecisionToUI(resultEl.criteria);
 
                     _.forEach(resultEl.criteria, function(criteria) {
                         criteriaGroupsIds.push(criteria.id);
@@ -349,7 +349,7 @@
         }
         // End Filter name
 
-
+        // TODO: move to login to recommended component
         // Recommended decisions
         vm.getRecommendedDecisions = getRecommendedDecisions;
 

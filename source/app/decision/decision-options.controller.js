@@ -126,7 +126,7 @@
                 _.forEach(result.decisionMatrixs, function(decision) {
                     decisions.push(decision.decision);
                 });
-                vm.decisions = DecisionsUtils.descriptionTrustHtml(decisions);
+                vm.decisions = DecisionsUtils.prepareDecisionToUI(decisions);
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
@@ -152,7 +152,7 @@
             };
 
             vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
-            updateStateParams();
+            // updateStateParams();
         }
 
         function updateStateParams() {
@@ -236,9 +236,9 @@
                 result = _.filter(result, function(group) {
                     if (group.criteria.length > 0) return group;
                 });
-                vm.criteriaGroups = DecisionsUtils.descriptionTrustHtml(result);
+                vm.criteriaGroups = DecisionsUtils.prepareDecisionToUI(result);
                 _.forEach(result, function(resultEl) {
-                    DecisionsUtils.descriptionTrustHtml(resultEl.criteria);
+                    DecisionsUtils.prepareDecisionToUI(resultEl.criteria);
 
                     _.forEach(resultEl.criteria, function(criteria) {
                         criteriaGroupsIds.push(criteria.id);

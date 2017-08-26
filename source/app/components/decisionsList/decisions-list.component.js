@@ -56,7 +56,7 @@
             if (changes.list && changes.list.currentValue &&
                 !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
                 vm.decisionsHeight = changes.list.currentValue.length * decisionsHeight + 'px';
-                vm.decisionsList = DecisionsUtils.descriptionTrustHtml(changes.list.currentValue);
+                vm.decisionsList = DecisionsUtils.prepareDecisionToUI(changes.list.currentValue);
 
                 handleChanges();
             }
