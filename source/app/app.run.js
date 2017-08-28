@@ -25,6 +25,7 @@
             });
 
         $rootScope.breadcrumbs = true;
+
         var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
             if (angular.isDefined($stateParams.data)) {
                 if ($stateParams.data.pageTitle) {
@@ -35,6 +36,10 @@
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
 
+                $rootScope.socialScriptType = 'default';
+                if ($stateParams.data.socialScriptType) {
+                    $rootScope.socialScriptType = $stateParams.data.socialScriptType;
+                }
                 if ($stateParams.data.bodyClass) {
                     $rootScope.bodyClass = 'body-' + $stateParams.data.bodyClass;
                 }

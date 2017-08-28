@@ -33,7 +33,7 @@
                     tab: {
                         value: null,
                         squash: true
-                    }                    
+                    }
                 }
             })
 
@@ -97,7 +97,8 @@
                     // decisionAnalysisInfo: DecisionAanalysisResolver
                 },
                 data: {
-                    bodyClass: 'matrix-page'
+                    bodyClass: 'matrix-page',
+                    socialScriptType: 'floating'
                 }
             })
             // .state('decisions.single.comparison.analysis', {
