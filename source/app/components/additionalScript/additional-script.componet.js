@@ -21,7 +21,14 @@
             vm = this,
             value;
 
+        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+
+        function onInit () {
+            $(window).on('load', function () {
+                toggleSharesByType(vm.socialType);
+            });
+        }
 
         function onChanges(changes) {
             if (!angular.equals(changes.socialType.currentValue, changes.socialType.previousValue)) {
