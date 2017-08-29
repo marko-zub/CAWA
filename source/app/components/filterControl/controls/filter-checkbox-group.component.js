@@ -89,8 +89,8 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input class="js-checkbox" type="checkbox" id="option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
-                    '<label for="option-' + option.id + '">' + option.value + '</label>',
+                    '<input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
+                    '<label for="' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                     '</div>'
                 ];
                 return html.join('\n');

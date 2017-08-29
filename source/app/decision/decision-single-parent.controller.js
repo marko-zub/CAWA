@@ -15,6 +15,7 @@
 
         var
             vm = this,
+            criteriaArray,
             stateId;
 
         vm.$onInit = onInit;
@@ -43,7 +44,7 @@
                 setPageData();
             });
 
-            if(vm.parent && vm.decision) {
+            if (vm.parent && vm.decision) {
                 setPageData();
             }
         }
@@ -85,6 +86,7 @@
         // TODO: clean up
         // Remove loop
         var criteriaIds = [];
+
         function getDecisionParentsCriteriaCharacteristicts(parentId, parentUid) {
             var sendData = {
                 includeChildDecisionIds: []
@@ -97,6 +99,7 @@
                 getCharacteristicsGroupsById(parentUid),
             ]).then(function(values) {
 
+                criteriaArray = values[0];
                 vm.characteristicGroups = _.filter(values[1], function(resultEl) {
                     resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
                     _.map(resultEl.characteristics, function(el) {
@@ -197,14 +200,13 @@
                 nameSlug: parent.nameSlug,
             };
 
-            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = pickCriteriaIds(result);
-                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
-                    vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
-                    vm.recommendedDecisionsListLoader = false;
-                    vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
-                });
+            sendData.sortCriteriaIds = pickCriteriaIds(criteriaArray);
+            DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
+                vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
+                vm.recommendedDecisionsListLoader = false;
+                vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
             });
+
         }
 
 

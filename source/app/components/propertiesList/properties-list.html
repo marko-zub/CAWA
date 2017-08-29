@@ -4,9 +4,6 @@
 <div class="app-list-panel properties-list">
     <div class="app-header-block">
         <h4 class="app-list-title">Properties</h4>
-        <div class="text">
-            Can't find the necessary property? <a href="#">Add it</a>
-        </div>
     </div>
     <div ng-if="::vm.list">
         <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
@@ -53,3 +50,7 @@
             There are no properties yet, but you can be first to create them here.
         </p>
     </div>
+    <div class="text text-right">
+        Can't find the necessary property? <a href="#">Add it</a>
+    </div>    
+</div>
