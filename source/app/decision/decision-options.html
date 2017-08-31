@@ -22,12 +22,12 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                         </li>
-                        <li class="active">
-                            <a ui-sref="decisions.single.options">Options</a>
-                        </li>
                         <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                         </li>
+                        <li class="active">
+                            <a ui-sref="decisions.single.options">Options</a>
+                        </li>                        
                         <li>
                             <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                         </li>

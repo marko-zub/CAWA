@@ -190,7 +190,10 @@
         function getRecommendedDecisions(decisionId, parent) {
             if (!parent) return;
             var sendData = {
-                includeCharacteristicIds: [-1]
+                includeCharacteristicIds: [-1],
+                sortWeightCriteriaDirection: 'DESC',
+                sortTotalVotesCriteriaDirection: 'DESC',
+                sortCriteriaIds: pickCriteriaIds(criteriaArray)
             };
             sendData.excludeChildDecisionIds = [decisionId];
 
@@ -200,13 +203,11 @@
                 nameSlug: parent.nameSlug,
             };
 
-            sendData.sortCriteriaIds = pickCriteriaIds(criteriaArray);
             DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
                 vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                 vm.recommendedDecisionsListLoader = false;
                 vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
             });
-
         }
 
 

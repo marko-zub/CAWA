@@ -65,6 +65,7 @@
 
         // Move to component
         function getProperties(id) {
+            vm.propertiesDecisionsListLoader = true;
             $q.all([
                 DecisionDataService.getDecisionsPropertyGroups(id),
                 DecisionDataService.getDecisionsProperties(id)
@@ -85,6 +86,7 @@
                     });
 
                 });
+                vm.propertiesDecisionsListLoader = false;
                 // console.log(values[0]);
                 // console.log(properties);
                 // console.log(propertiesValues);

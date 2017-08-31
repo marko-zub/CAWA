@@ -21,12 +21,12 @@
                         <li class="active">
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
                         </li>
-                        <li>
-                            <a ui-sref="decisions.single.options">Options</a>
-                        </li>
                         <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                         </li>
+                        <li>
+                            <a ui-sref="decisions.single.options">Options</a>
+                        </li>                        
                         <li>
                             <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                         </li>
@@ -148,7 +148,7 @@
                     </div>
 
                 </div>
-                <div class="col-sm-12" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
+                <div class="col-sm-12" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -260,12 +260,17 @@
             </div>
 
         </div>
+        <div ng-if="vm.decisionParents.length" class="col-sm-3">
 
-        <!-- Recommended Start -->
-        <div class="col-sm-3 recommended-list">
-            <div ng-if="vm.decisionParents.length">
+            <!-- Properties List -->
+            <div class="properties-list-wrapper">
                 <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
-                
+                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>                
+            </div>
+            <!-- End Properties List -->
+
+            <!-- Recommended Start -->
+            <div class="recommended-list">
                 <h4>
                      Recommended
                 </h4>
@@ -288,9 +293,8 @@
                 <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
             
             </div>
-
+            <!-- End Recommended Start -->            
         </div>
-        <!-- End Recommended Start -->
     </div>
 
 </div>
