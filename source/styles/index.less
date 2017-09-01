@@ -245,11 +245,14 @@ body {
   font-size: 9px;
   min-width: 100px;
   padding: 5px;
+  transition: background 0.3s ease-in 0s;
   span {
     font-weight: 600;
   }
+  &:focus,
   &:hover {
     color: #fff;
+    background-color: darken(@color-green, 7%);
   }
   .counters {
     font-size: 15px;

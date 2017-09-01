@@ -1,7 +1,7 @@
 <div class="matrix-page-wrapper">
     <div class="decision matrix matrix-new">
         <div class="matrix-wrapper">
-            
+
             <div class="tabs-wrapper">
                 <div class="nav-tabs-wrapper clearfix">
                     <ul class="nav nav-tabs nav-tabs-sm">
@@ -61,11 +61,11 @@
                             <div id="matrix-scroll-group" class="scroll-group">
                                 <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.id">
                                     <div class="matrix-col-content matrix-content-name decision-matrix-col">
-                                        <a class="matrix-col-link" ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                                        <a class="matrix-col-link" ui-sref="decisions.single(::{id:item.decision.id, slug: item.decision.nameSlug})">
                                             <!-- deep watch {discussionId:item.decision.id, discussionSlug:item.decision.nameSlug} -->
                                             <div class="app-title-inline">
                                                 <span ng-bind="::item.decision.name"></span>
-                                            </div>                                            
+                                            </div>
                                             <div class="clearfix">
                                                 <div class="decision-img-block">
                                                     <div class="matrix-img-container img-sm" >
@@ -73,15 +73,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="decision-content-block">
-                                                    <div class="decision-criteria-compilance" ng-show="item.decision.criteriaCompliancePercentage >= 0">                
-                                                    <div class="text-uppercase">
-                                                        criteria score 
-                                                    </div>                                                    
-                                                    <div class="counters">                           
-                                                        <span ng-bind="item.decision.criteriaCompliancePercentage"></span>% 
-                                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span><span ng-bind="item.decision.totalVotes"></span>   
-                                                        </div>   
-                                                    </div>
+                                                    <a class="decision-criteria-compilance" ng-show="item.decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                                                        <div class="text-uppercase">
+                                                            criteria score
+                                                        </div>
+                                                        <div class="counters">
+                                                            <span ng-bind="item.decision.criteriaCompliancePercentage"></span>%
+                                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span><span ng-bind="item.decision.totalVotes"></span>
+                                                        </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </a>
@@ -101,7 +101,7 @@
                             <!-- End Decisions Header -->
                         </div>
                     </div>
-                    
+
                     <filter-tags
                         criteria="vm.criteriaGroups"
                         characteristics="vm.characteristicGroupsArray"
@@ -236,4 +236,4 @@
         <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
     </div>
 </pageslide>
-<!-- End Comments -->    
+<!-- End Comments -->
