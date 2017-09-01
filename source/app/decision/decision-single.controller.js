@@ -140,7 +140,8 @@
                     vm.recommendedDecisionsListLoader = true;
                     vm.activeRecommendedTab = {
                         id: vm.decisionParents[0].id,
-                        name: vm.decisionParents[0].name
+                        name: vm.decisionParents[0].name,
+                        nameSlug: vm.decisionParents[0].nameSlug
                     };
                     getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
                 }

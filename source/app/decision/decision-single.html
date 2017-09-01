@@ -26,7 +26,7 @@
                         </li>
                         <li>
                             <a ui-sref="decisions.single.options">Options</a>
-                        </li>                        
+                        </li>
                         <li>
                             <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                         </li>
@@ -176,7 +176,7 @@
 
                         <div class="post" ng-repeat="decision in vm.decisions track by decision.id">
                             <div class="post-inner">
-                                <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="left-side">
+                                <a class="img-link" ui-sref="decisions.single({id:decision.id, slug: decision.nameSlug, tab: null})" class="left-side">
                                     <div class="img-container">
                                         <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                                     </div>
@@ -184,7 +184,7 @@
 
                                 <div class="post-content">
 
-                                    <a ui-sref="decisions.single({id:decision.id, slug: decision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                                    <a ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
                                         <div class="counters">
                                             <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                                             <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -195,7 +195,7 @@
                                     </a>
 
                                     <div class="post-header-content">
-                                        <a class="post-title" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
+                                        <a class="post-title" ui-sref="decisions.single({id:decision.id, slug: decision.nameSlug, tab: null})" ng-bind="::decision.name"></a>
 
                                         <div class="info">
                                             <div class="author info-divider">
@@ -265,7 +265,7 @@
             <!-- Properties List -->
             <div class="properties-list-wrapper">
                 <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
-                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>                
+                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
             </div>
             <!-- End Properties List -->
 
@@ -288,12 +288,12 @@
                     </div>
                 </div>
 
-                <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
+                <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" parent-decision="vm.activeRecommendedTab"></decisions-list>
 
                 <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
-            
+
             </div>
-            <!-- End Recommended Start -->            
+            <!-- End Recommended Start -->
         </div>
     </div>
 

@@ -9,9 +9,10 @@
             templateUrl: 'app/components/decisionsList/decisions-list.html',
             bindings: {
                 list: '<',
-                criteriaCompliance: '<',
+                // criteriaCompliance: '<',
                 criteriaComplianceTitle: '@',
                 compare: '<',
+                parentDecision: '<',
                 className: '<'
             },
             controller: 'DecisionsListController',
