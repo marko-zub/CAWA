@@ -27,7 +27,7 @@
 
             // vm.id = $stateParams.id;
             vm.decision = decisionBasicInfo || {};
-            $rootScope.pageTitle = vm.decision.name + ' Matrix | ' + Config.pagePrefix;
+            $rootScope.pageTitle = vm.decision.name + ' Comparison Matrix | ' + Config.pagePrefix;
 
             vm.decisionsSpinner = true;
 
