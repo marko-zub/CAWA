@@ -23,13 +23,13 @@
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                 </li>
-                <li>
+                <li class="active">
                     <a ui-sref="decisions.single.reviews">Reviews</a>
-                </li>                
+                </li>
                 <li>
                     <a ui-sref="decisions.single.options">Options</a>
                 </li>                
-                <li class="active">
+                <li>
                     <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
                 </li>
             </ul>
@@ -40,7 +40,7 @@
     <div class="post post-single with-rating">
 
         <!-- TODO: move to componetns -->
-        <div class="app-votes">
+<!--         <div class="app-votes">
             <a href="#" class="up">
             </a>
             <div class="total" ng-bind="::(vm.decision.totalLikes || 0)">
@@ -54,11 +54,11 @@
                     0
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <span class="text-header">
-            There are no nominations provided yet, but you can be first to create them <a href="#">here</a>.
-        </span>        
+            There are no reviews provided yet, but you can be first to create them <a href="#">here</a>.
+        </span>
     </div>
 
 

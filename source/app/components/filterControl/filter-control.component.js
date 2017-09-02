@@ -42,7 +42,7 @@
             if (!item || !item.valueType || !item.visualMode) return;
             item.valueType = item.valueType.toUpperCase();
             item.visualMode = item.visualMode.toUpperCase();
-
+            console.log(item);
             // TODO: add to swicth
             if (item.multiValue === true) {
                 renderControl('checkbox-group');
@@ -78,7 +78,8 @@
                     if(item.value && !_.isArray(item.value) && !item.options) item.options = [item.value];
                     renderControl('checkbox-group');
                     break;
-                case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
+                case ((item.valueType === 'BOOLEAN')):
+                // case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
                     renderControl('radio-group');
                     break;
                 default:

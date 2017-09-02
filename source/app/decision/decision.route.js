@@ -76,6 +76,18 @@
             }
         })
 
+        .state('decisions.single.reviews', {
+            url: '/reviews',
+            cache: false,
+            views: {
+                "@": {
+                    templateUrl: 'app/decision/decision-reviews.html',
+                    controller: 'DecisionReviewsController',
+                    controllerAs: 'vm',
+                }
+            }
+        })        
+
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {
                 url: '/comparison/{analysisId}',

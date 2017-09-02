@@ -236,23 +236,34 @@ body {
 
 
 // TODO: clean up
+a {
+  &.criteria-block {
+    &:focus,
+    &:hover {
+      color: #fff;
+      background-color: darken(@color-green, 7%);
+    }    
+  }
+}
 .criteria-block {
   position: absolute;
   left: 0;
   top: 0;
+  display: inline-block;
   background-color: @color-green;
   color: #fff;
   font-size: 9px;
   min-width: 100px;
   padding: 5px;
   transition: background 0.3s ease-in 0s;
+  &.static {
+    position: static;
+    .app-rating-star .bar:before {
+      background-image: url('../images/bg-star-active_no_bg.png');
+    }
+  }
   span {
     font-weight: 600;
-  }
-  &:focus,
-  &:hover {
-    color: #fff;
-    background-color: darken(@color-green, 7%);
   }
   .counters {
     font-size: 15px;

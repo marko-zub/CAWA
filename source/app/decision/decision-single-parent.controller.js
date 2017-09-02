@@ -124,7 +124,7 @@
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
 
-                    getRecommendedDecisions(vm.decision.id, vm.parent);
+                    getRecommendedDecisions(vm.decision.id, vm.parent, criteriaArray);
                 });
             });
         }
@@ -187,7 +187,7 @@
         // Recommended decisions
         vm.getRecommendedDecisions = getRecommendedDecisions;
 
-        function getRecommendedDecisions(decisionId, parent) {
+        function getRecommendedDecisions(decisionId, parent, criteriaGroups) {
             if (!parent) return;
             var sendData = {
                 includeCharacteristicIds: [-1],
@@ -203,7 +203,19 @@
                 nameSlug: parent.nameSlug,
             };
 
-            DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
+            if (criteriaGroups) {
+                sendData.sortCriteriaIds = pickCriteriaIds(criteriaGroups);
+                getRecommendedDecisionsRequest(parent.id, sendData);
+            } else {
+                DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
+                    sendData.sortCriteriaIds = pickCriteriaIds(result);
+                    getRecommendedDecisionsRequest(parent.id, sendData);
+                });
+            }
+        }
+
+        function getRecommendedDecisionsRequest(parentId, sendData) {
+            DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(result) {
                 vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                 vm.recommendedDecisionsListLoader = false;
                 vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
