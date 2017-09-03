@@ -396,6 +396,7 @@ a {
     position: relative;
     padding-right: 10px;
     font-size: 14px;
+    padding: 4px 0;
 }
 
 .app-sorter {
@@ -936,7 +937,7 @@ a {
         display: block;
     }
     .matrix-item {
-        min-height: 50px;
+        min-height: 49px;
         min-width: 100%;
         padding: 0 10px;
         &.matrix-g-item {
@@ -1414,8 +1415,11 @@ a {
 }
 
 .m-group-row {
-    height: 50px;
-    position: absolute;
+    min-height: 49px;
+    // position: absolute;
+    // position: static;
+    position: relative;
+    top: 0 !important;
     left: 0;
     width: 100%;
     border-bottom: 1px solid @gray-light;

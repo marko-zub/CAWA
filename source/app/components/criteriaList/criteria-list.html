@@ -16,7 +16,7 @@
                 <ul class="discussions-list">
                     <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'">
                         <div class="clearfix row-eq-height">
-                            <div class="col-sm-5 bg-gray-light-2 col-pr-sm">
+                            <div class="col-sm-6 bg-gray-light-2 col-pr-sm">
                                 <div class="discussions-list-content">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
                                         <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
@@ -25,7 +25,7 @@
                                     <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-7 text-right" ng-if="::vm.discussion">
+                            <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
                                 <div class="discussions-list-content">
                                     <div class="app-rating-inline">
                                         <div ng-if="::(!criteria.totalVotes && vm.rating)">

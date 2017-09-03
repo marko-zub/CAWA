@@ -64,7 +64,7 @@
                 case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER')):
                     renderControl('date-range');
                     break;
-                case ((item.valueType === 'DOUBLE') && (item.visualMode === 'DOUBLERANGESLIDER')):
+                case ((item.valueType === 'DOUBLE' || item.valueType === 'PRICE') && (item.visualMode === 'DOUBLERANGESLIDER')):
                     renderControl('range-slider');
                     break;
                 case ((item.valueType === 'INTEGER') && (item.visualMode === 'INTEGERRANGESLIDER')):

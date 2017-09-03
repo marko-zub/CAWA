@@ -147,7 +147,7 @@
                     // console.log(row);
                     var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex * 50 + 'px">',
+                        '<div class="m-group-row js-matrix-item-content" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex * 50 + 'px">',
                         decisionsRow,
                         '</div>'
                     ].join('\n');
@@ -156,7 +156,7 @@
 
                 // Content block
                 var content = [
-                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '" style="height: ' + container.criteria.length * 50 + 'px">',
+                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '">',
                     rows.join('\n'),
                     '</div>'
                 ].join('\n');

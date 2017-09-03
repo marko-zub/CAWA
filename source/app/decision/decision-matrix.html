@@ -130,10 +130,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="matrix-item matrix-control js-toggle-hide" ng-repeat="criteria in group.criteria track by criteria.id" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
+                                        <div class="matrix-item matrix-control js-item-aside js-toggle-hide" ng-repeat="criteria in group.criteria track by criteria.id" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
 
                                             <div class="matrix-title-wrapper">
-                                                <div class="matrix-title app-sorter-wrapper" ng-bind="::criteria.name"></div>
+                                                <div class="matrix-title app-sorter-wrapper">
+                                                    <span ng-bind="::criteria.name"></span>
+
+
+                                                <a href ng-if="::criteria.description" class="link-secondary icon-info" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>                                                    
+                                                </div>
                                                 <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                                     <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                                 </div>
@@ -141,9 +146,6 @@
                                                     <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
                                                     <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                                 </div>
-
-
-                                                <a href ng-if="::criteria.description" class="link-secondary icon-info title-descr" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                             </div>
 
