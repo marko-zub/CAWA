@@ -29,18 +29,14 @@
     "angular-daterangepicker": "^0.2.2",
     "moment": "^2.18.1",
     "jquery": "^3.2.1",
-    "angular-toastr": "^2.1.1"
+    "angular-toastr": "^2.1.1",
+    "fotorama": "^4.6.4"
   },
   "overrides": {
     "angular": {
       "main": [
         "./angular.js",
         "./angular-csp.css"
-      ]
-    },
-    "jquery": {
-      "main": [
-        "./dist/jquery.slim.js"
       ]
     },
     "iscroll": {

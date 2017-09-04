@@ -26,6 +26,7 @@
                 }
 
                 if (el.description) {
+                    el.description = el.description.replace(/(&#13;)?&#10;/g, '<br/>');
                     el.description = $sce.trustAsHtml(el.description);
                 }
 
