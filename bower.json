@@ -39,6 +39,11 @@
         "./angular-csp.css"
       ]
     },
+    "fotorama": {
+      "main": [
+        "fotorama.full.js"
+      ]
+    },
     "iscroll": {
       "main": [
         "./build/iscroll-probe.js"
