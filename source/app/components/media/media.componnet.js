@@ -104,7 +104,7 @@
                     "url": item.url,
                     "thumb": item.url,
                     // "caption": item.name,
-                    "type":  item.type
+                    "type": item.type
                 };
                 vm.media.push(media);
             });

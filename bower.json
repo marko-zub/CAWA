@@ -55,5 +55,8 @@
         "./ui-bootstrap-csp.css"
       ]
     }
+  },
+  "resolutions": {
+    "angular": ">=1.4.0"
   }
 }
