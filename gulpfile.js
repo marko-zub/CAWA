@@ -154,7 +154,7 @@ gulp.task('vendor-js', function() {
     return gulp.src(wiredep().js)
         .pipe(gconcat('vendor.js'))
         .pipe(rev())
-        .pipe(gulpIf(argv.prod, uglify()))
+        // .pipe(gulpIf(argv.prod, uglify()))
         .pipe(gulp.dest(config.temp));
 });
 

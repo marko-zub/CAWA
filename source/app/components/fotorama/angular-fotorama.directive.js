@@ -3,7 +3,7 @@
   'use strict';
 
   angular.module('app.components')
-    .directive('fotorama', ['$timeout', '$compile', function($timeout) {
+    .directive('appFotorama', ['$timeout', '$compile', function($timeout) {
       return {
         link: function(scope, element, attrs) {
           scope.$watch(attrs.item, function(value) {
@@ -29,10 +29,12 @@
 
                 });
 
-                $(element).fotorama({
-                  data: fotoramaKey,
-                  nav: 'thumbs'
-                });
+                if(!_.isEmpty(fotoramaKey)) {
+                  $(element).fotorama({
+                    data: fotoramaKey,
+                    nav: 'thumbs'
+                  });                  
+                }
               });
 
             }
