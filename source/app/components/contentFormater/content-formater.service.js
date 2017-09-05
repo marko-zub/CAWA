@@ -47,6 +47,9 @@
             return result;
         }
 
+        function stringBr(str) {
+            return str.replace(/(&#13;)?&#10;/g, '<br/>');
+        }
 
         function contentFormaterArrayWithDescription(array, descriptions, totalHistoryValues) {
             // console.log(str, descriptions);
@@ -64,7 +67,7 @@
             var content = _.map(array, function(el, index) {
                 var result;
                 // console.log(el);
-                var description = descriptions && descriptions[index] ? ' <small>' + descriptions[index] + '</small>' : '';
+                var description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
                 // if (totalHistoryValues) {
                 //     var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '';
                 //     result = '<li>' + el + description + ' ' + totalHistoryValueHtml + '</li>';

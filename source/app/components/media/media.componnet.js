@@ -41,7 +41,7 @@
                     var media = {
                         "url": item.url,
                         "thumb": item.url,
-                        "caption": item.name,
+                        "caption": item.name || item.description,
                         "type": item.type
                     };
 

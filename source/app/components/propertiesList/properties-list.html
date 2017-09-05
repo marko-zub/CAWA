@@ -26,7 +26,7 @@
                                     <span ng-if="::property.description" class="link-secondary icon-info" popover-title="{{::property.name}}" uib-popover-html="::property.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-7 text-left">
+                            <div class="col-sm-7 text-left col-pr-sm">
                                 <div class="discussions-list-content">
                                     <div ng-if="!property.value && vm.rating">
                                         <a href="#">Provide value</a>
@@ -40,10 +40,10 @@
                                     <content-formater ng-if="property.value" item="property.value" characteristic="property.value"></content-formater>
                                 </div>
                             </div>
-                        </div>                            
+                        </div>
                     </li>
                 </ul>
-                
+
             </div>
         </div>
         <p ng-if="!vm.list.length" class="app-action-content">
@@ -52,5 +52,5 @@
     </div>
     <div class="text text-right">
         Can't find the necessary property? <a href="#">Add it</a>
-    </div>    
+    </div>
 </div>

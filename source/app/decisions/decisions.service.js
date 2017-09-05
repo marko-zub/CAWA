@@ -21,6 +21,6 @@
 
         service.getData = function() {
             return service.data;
-        };    	
+        };
     }
 })();

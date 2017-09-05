@@ -28,10 +28,10 @@
             if (vm.item) {
                 // console.log(vm.item);
                 var item = {
-                    value: vm.item.value, 
-                    multiValue: vm.item.multiValue, 
-                    valueType: vm.characteristic.valueType, 
-                    description: vm.item.description, 
+                    value: vm.item.value,
+                    multiValue: vm.item.multiValue,
+                    valueType: vm.characteristic.valueType,
+                    description: vm.item.description,
                     visualMode: vm.characteristic.visualMode
                 };
                 var renderContent = ContentFormaterService.getTemplate(item);
@@ -45,11 +45,11 @@
                 var item = {
                     value: changes.item.currentValue.value,
                     multiValue: vm.characteristic.multiValue,
-                    valueType: vm.characteristic.valueType, 
-                    description: changes.item.currentValue.description, 
-                    totalHistoryValues: changes.item.currentValue.totalHistoryValues, 
+                    valueType: vm.characteristic.valueType,
+                    description: changes.item.currentValue.description,
+                    totalHistoryValues: changes.item.currentValue.totalHistoryValues,
                     visualMode: vm.characteristic.visualMode
-                };                
+                };
                 var renderContent = ContentFormaterService.getTemplate(item);
                 renderHtml(renderContent);
                 // console.log(changes.item.currentValue);
