@@ -38,11 +38,16 @@
                 .map(function(item) {
                     var obj = generateMediaHtml(item.type, item.url, item.name);
                     item = _.merge(item, obj);
+
+                    var caption = item.name || item.description;
+                    if (item.name && item.description) {
+                        caption = item.name + ' - ' + item.description;
+                    }
                     var media = {
-                        "url": item.url,
-                        "thumb": item.url,
-                        "caption": item.name || item.description,
-                        "type": item.type
+                        'url': item.url,
+                        // 'thumb': item.url,
+                        'caption': caption,
+                        'type': item.type
                     };
 
                     mediaArray.push(media);

@@ -32,8 +32,10 @@
                 if(!_.isEmpty(fotoramaKey)) {
                   $(element).fotorama({
                     data: fotoramaKey,
-                    nav: 'thumbs'
-                  });                  
+                    nav: 'thumbs',
+                    thumbwidth : 120,
+                    thumbheight : 100
+                  });
                 }
               });
 

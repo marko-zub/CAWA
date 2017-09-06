@@ -42,11 +42,11 @@
             if (!item || !item.valueType || !item.visualMode) return;
             item.valueType = item.valueType.toUpperCase();
             item.visualMode = item.visualMode.toUpperCase();
-            console.log(item);
+            // console.log(item);
             // TODO: add to swicth
             if (item.multiValue === true) {
                 renderControl('checkbox-group');
-                return;                                 
+                return;
             }
 
 

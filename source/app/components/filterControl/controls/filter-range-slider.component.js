@@ -58,10 +58,10 @@
 
         // TODO: move to separete template
         function initRangeSlider(item) {
-            var step = 1;
-            if(item.visualMode.toUpperCase() === 'DOUBLERANGESLIDER') {
-                step = 0.1;
-            }
+            var step = item.step || 1;
+            // if(item.visualMode.toUpperCase() === 'DOUBLERANGESLIDER') {
+            //     step = 0.1;
+            // }
 
             var minVal = Number(item.minValue);
             var maxVal = Number(item.maxValue);
