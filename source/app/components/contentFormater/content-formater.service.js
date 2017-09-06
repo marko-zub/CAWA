@@ -68,12 +68,12 @@
                 var result;
                 // console.log(el);
                 var description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
-                if (descriptions.length > 1) {
-                    var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<div class="clearfix"><a href="#" class="control pull-left"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a><a href="#" class="control pull-left"><i class="fa fa-flag" aria-hidden="true"></i></a></div>' : '';
+                // if (totalHistoryValues) {
+                    var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<div class="control-panel-sm clearfix"><a href="#" class="control pull-left"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a><a href="#" class="control pull-left"><i class="fa fa-flag" aria-hidden="true"></i> 0</a></div>' : '';
                     result = '<li><div>' + el + description + '</div> ' + totalHistoryValueHtml + '</li>';
-                } else {
-                result = '<li>' + el + description + '</li>';
-                }
+                // } else {
+                // result = '<li>' + el + description + '</li>';
+                // }
                 return result;
             }).join('\n');
 

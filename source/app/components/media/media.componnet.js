@@ -22,44 +22,55 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            // console.log(vm.list);
             vm.media = prepareMedia(vm.list);
+            // console.log(vm.media);
             vm.activeMediaTab = 0;
         }
 
         function prepareMedia(list) {
             // TODO: make chain
-            var mediaArray = [];
-            var cleanList = _.filter(list, function(item) {
-                if (item.type !== 'LOGO' && item.type !== 'LINK') return item;
-            });
-            _.chain(cleanList)
-                .sortBy('order')
-                .map(function(item) {
+
+            var cleanList = _.chain(list).filter(function(item) {
+                if (item.type !== 'LOGO' && item.type !== 'LINK') {
                     var obj = generateMediaHtml(item.type, item.url, item.name);
-                    item = _.merge(item, obj);
+                    return _.merge(item, obj);
+                }
+            }).sortBy('order').value();
 
-                    var caption = item.name || item.description;
-                    if (item.name && item.description) {
-                        caption = item.name + ' - ' + item.description;
-                    }
-                    var media = {
-                        'url': item.url,
-                        // 'thumb': item.url,
-                        'caption': caption,
-                        'type': item.type
-                    };
+            var mediaList = [];
 
-                    mediaArray.push(media);
-                    return item;
-                })
-                .value();
+            _.forEach(cleanList, function(item) {
+                var caption = item.name || item.description;
+                if (item.name && item.description) {
+                    caption = item.name + ' - ' + item.description;
+                }
+                var media = {
+                    'url': item.url,
+                    'caption': caption,
+                    'type': item.type
+                };
+                if (item.thumb) {
+                    media.thumb = item.thumb;
+                }
+                mediaList.push(media);
+            });
+            return mediaList;
 
-            return mediaArray;
+        }
+
+        function getWistaVideo (url) {
+            $.ajax({
+                url: 'http://fast.wistia.net/oembed?url=http://home.wistia.com/medias/6am62oqhz7',
+                success: function (resp) {
+                    console.log(resp);
+                    return resp.thumbnail_url;
+                }
+            });
         }
 
         function generateMediaHtml(type, url, name) {
             var order = 9;
+            var thumb = '';
             switch (type) {
                 case "IMAGE":
                     type = 'image';
@@ -78,6 +89,9 @@
                 case "WISTIAVIDEO":
                     type = 'video';
                     order = 3;
+                    console.log(url);
+                    thumb = 'http://embed.wistia.com/deliveries/5413caeac5fdf4064a2f9eab5c10a0848e42f19f.jpg?video_still_time=30';
+                    //getWistaVideo(url); 
                     break;
 
                 default:
@@ -87,7 +101,8 @@
 
             return {
                 type: type,
-                order: order
+                order: order,
+                thumb: thumb
             };
         }
     }
