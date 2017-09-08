@@ -30,7 +30,9 @@
     "angular-daterangepicker": "^0.2.2",
     "moment": "^2.18.1",
     "angular-toastr": "^2.1.1",
-    "fotorama": "^4.6.4"
+    "fotorama": "^4.6.4",
+    "angular-translate": "^2.15.2",
+    "angular-translate-loader-static-files": "^2.15.2"
   },
   "overrides": {
     "angular": {
@@ -63,5 +65,6 @@
   },
   "resolutions": {
     "angular": ">=1.4.0"
-  }
+  },
+  "devDependencies": {}
 }
