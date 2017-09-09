@@ -44,7 +44,7 @@
                                     <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
                                 </div>
                                 <div class="text-uppercase">
-                                    Criteria compliance
+                                    {{ 'Criteria compliance' | translate }}
                                 </div>
                                 <div ng-if="vm.decision.criteriaCompliancePercentage >= 0">
                                     <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
@@ -87,9 +87,7 @@
 
         <!-- Recommended Start -->
         <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
-            <h4>
-                 Recommended
-            </h4>
+            <h4>{{ "Recommended" | translate }}</h4>
 
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">

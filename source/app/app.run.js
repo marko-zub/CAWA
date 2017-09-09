@@ -5,9 +5,9 @@
         .module('app')
         .run(runBlock);
 
-    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config'];
+    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config', 'translateFilter'];
 
-    function runBlock($rootScope, $state, $location, Config) {
+    function runBlock($rootScope, $state, $location, Config, translateFilter) {
         var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
 
@@ -29,7 +29,7 @@
         var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
             if (angular.isDefined($stateParams.data)) {
                 if ($stateParams.data.pageTitle) {
-                    $rootScope.pageTitle = $stateParams.data.pageTitle + ' | ' + pageTitle;
+                    $rootScope.pageTitle = translateFilter($stateParams.data.pageTitle) + ' | ' + pageTitle;
                 } else {
                     $rootScope.pageTitle = pageTitle;
                 }

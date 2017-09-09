@@ -1,6 +1,6 @@
 {
-	"DECISIONS": "Decisions",
-	"USERS": "Users",
+	"Decisions": "Decisions",
+	"Users": "Users",
 	"SIGN UP": "Sign up",
 	"SEARCH": "Search...",
 	"Error 404": "Error 404",
@@ -20,5 +20,18 @@
 	"All Options": "All Options",
 	"Comments": "Comments",
 	"Comparison Matrix": "Comparison Matrix",
-	"Top Rated": "Top Rated"
+	"Top Rated": "Top Rated",
+	"Compare": "Compare",
+	"Sitemaps": "Sitemaps",
+	"Home": "Home",
+	"Criteria compliance": "Criteria compliance",
+	"Filter by name": "Filter by name",
+	"Can't find the necessary option?": "Can't find the necessary option?",
+	"Add it": "Add it",
+	"NO DESCRIPTION": "There are no description provided yet, but you can be first to create them here.",
+	"LOOKING MORE": "Looking for more? Browse the",
+	"the complete list of decisions": "the complete list of decisions",
+	"NO OPTIONS": "There are no options yet, but you can be first to create them here.",
+	"Can't find the necessary criterion?": "Can't find the necessary criterion?",
+	"Recommended": "Recommended"
 }

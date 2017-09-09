@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService'];
+    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService', 'translateFilter'];
 
-    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService) {
+    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService, translateFilter) {
         var
             vm = this;
 
@@ -31,7 +31,7 @@
 
             vm.navigation = navigationObj;
 
-            $rootScope.pageTitle = 'Decisions' + ' | DecisionWanted.com';
+            $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
             var data = checkStateParams($stateParams);
             getDecisions(data);
 

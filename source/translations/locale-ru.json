@@ -1,6 +1,6 @@
 {
-	"DECISIONS": "Решения",
-	"USERS": "Пользователи",
+	"Decisions": "Решения",
+	"Users": "Пользователи",
 	"SIGN UP": "Зарегистрироваться",
 	"SEARCH": "Поиск...",
 	"Error 404": "Помилка 404",
@@ -21,5 +21,18 @@
 	"All Options": "Все параметры",
 	"Comments": "Комментарии",
 	"Comparison Matrix": "Матрица сравнения",
-	"Top Rated": "Высоко оценены"
+	"Top Rated": "Высоко оценены",
+	"Compare": "Сравнить",
+	"Sitemaps": "Карта сайта",
+	"Home": "Главная",
+	"Criteria compliance": "Соответствие критериям",
+	"Filter by name": "Фильтровать по имени",
+	"Can't find the necessary option?": "Не можете найти нужный вариант?",
+	"Add it": "Добавьте его",
+	"NO DESCRIPTION": "Пока нет описания, но вы можете сначала создать их здесь.",
+	"LOOKING MORE": "Ищете больше? Посмотрите",
+	"the complete list of decisions": "полный перечень решений",
+	"NO OPTIONS": "Пока нет вариантов, но вы можете создать их здесь",
+	"Can't find the necessary criterion?": "Не можете найти необходимый критерий?",
+	"Recommended": "Рекомендуемые"
 }

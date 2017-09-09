@@ -93,7 +93,7 @@
                             <!-- <a href="#" class="btn btn-sm btn-default">Change</a> -->
                         </div>
                     </div>
-                    <div class="page-description" ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
+                    <div class="page-description" ng-bind-html="(vm.decision.description || 'NO DESCRIPTION' | translate)"></div>
                 </div>
 
 
@@ -113,7 +113,7 @@
                             <span class="title-counter">({{::vm.totalCount}})</span>
                         </h4>
                         <span class="text-header">
-                            Can't find the necessary option? <a href="#">Add it</a>
+                            {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                         </span>
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
@@ -128,7 +128,7 @@
                                 {{ 'All Options' | translate }}
                             </h4>
                             <span class="text-header">
-                                Can't find the necessary option? <a href="#">Add it</a>
+                                {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                             </span>
                            <!--  <ul class="nav nav-tabs nav-tabs-sm">
                                 <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSortChild == $index}">
@@ -141,7 +141,7 @@
                         <div class="row">
                             <div class="col-sm-7">
                                 <div class="mg-b-lg app-action-text">
-                                    There are no options yet, but you can be first to create them here.
+                                    {{ "NO OPTIONS" | translate }}
                                 </div>
                             </div>
                            <!--  <div class="col-sm-5 px-l-0" ng-show="vm.activeTabSortChild == 0">
@@ -158,7 +158,7 @@
                             <!-- TODO: make as component -->
                             <!-- Filter  -->
                             <div class="filter-name">
-                                <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
                                 <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
                                 <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
                             </div>
@@ -245,9 +245,9 @@
                 </div> -->
                 <!-- End Criteria -->
                 <div class="col-sm-12 text-center look-more" ng-if="vm.isDecisionsParent">
-                    Looking for more? Browse the
+                    {{ "LOOKING MORE" | translate }}
                     <a ui-sref="decisions.single.options"  class="text-bold">
-                        the complete list of decisions
+                        {{ "the complete list of decisions" | translate }}
                     </a>
                 </div>
             </div>
@@ -274,9 +274,7 @@
 
             <!-- Recommended Start -->
             <div class="recommended-list">
-                <h4>
-                     Recommended
-                </h4>
+                <h4>{{ "Recommended" | translate }}</h4>
 
                 <div class="nav-tabs-wrapper tabs-left">
                     <ul class="nav nav-tabs nav-tabs-sm">
