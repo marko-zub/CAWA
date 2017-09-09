@@ -97,6 +97,7 @@ gulp.task('fonts', function() {
 gulp.task('configFile', function() {
     log('Copying config file');
     return gulp.src(config.configFile)
+        .pipe(jsonminify())
         .pipe(gulpIf(argv.prod, jeditor(function(json) {
             json.mode = 'prod';
             return json;
