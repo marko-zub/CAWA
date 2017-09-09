@@ -17,7 +17,8 @@ var gulp = require('gulp'),
     del = require('del'),
     inject = require('gulp-inject'),
     jeditor = require('gulp-json-editor'),
-    ngAnnotate = require('gulp-ng-annotate');
+    ngAnnotate = require('gulp-ng-annotate'),
+    jsonminify = require('gulp-jsonminify');
 
 //=======config
 
@@ -33,6 +34,7 @@ var config = {
     allJsOrdered: ['source/app/app.js', 'source/app/**/*.module.js', 'source/app/**/*.js'],
     index: 'source/app/index.tpl.html',
     images: 'source/images',
+    translations: 'source/translations',
     configFile: 'source/app.config',
     release: 'release',
     temp: 'temp'
@@ -158,11 +160,18 @@ gulp.task('vendor-js', function() {
         .pipe(gulp.dest(config.temp));
 });
 
+gulp.task('translations', function() {
+    log('Creating translations JS');
+    return gulp.src(config.translations + '/*')
+        .pipe(jsonminify())
+        .pipe(gulp.dest(config.release + '/translations'));
+});
+
 //======= commands
 
 // create build ( default : dev, --prod key for production (minification + uglify))
 gulp.task('build', function() {
-    runSequence('clean', ['styles', 'vendor-styles', 'js', 'vendor-js'], ['images', 'fonts', 'configFile'],
+    runSequence('clean', ['styles', 'vendor-styles', 'js', 'vendor-js'], ['translations', 'images', 'fonts', 'configFile'],
         function() {
             var
                 styles = gulp.src([config.temp + '/vendor-*.css', config.temp + '/styles-*.css']),

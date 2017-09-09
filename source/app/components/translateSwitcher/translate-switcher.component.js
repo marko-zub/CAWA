@@ -19,9 +19,9 @@
         vm.$onInit = onInit;
 
         var LANGS = [
-        	{ name: 'UA', key: 'uk', selected: true},
-        	{ name: 'RUS', key: 'ru', selected: false},
-        	{ name: 'ENG', key: 'en', selected: false}
+        	{ name: 'ENG', key: 'en', selected: true},
+        	{ name: 'UA', key: 'uk', selected: false},
+        	{ name: 'RUS', key: 'ru', selected: false}
         ];
 
         function onInit() {
