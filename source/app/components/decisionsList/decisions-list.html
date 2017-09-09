@@ -18,7 +18,7 @@
                     </div>
                 </a>
 
-                <a class="post-title"  ng-bind="::decision.name"></a>
+                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
                 <div class="post-description" ng-bind-html="::decision.description"></div>
                 <div class="post-footer">
                     <div class="info">
