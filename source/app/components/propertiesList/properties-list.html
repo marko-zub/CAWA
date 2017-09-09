@@ -3,7 +3,7 @@
 </pre> -->
 <div class="app-list-panel properties-list">
     <div class="app-header-block">
-        <h4 class="app-list-title">Properties</h4>
+        <h4 class="app-list-title">{{ 'Properties' | translate }}</h4>
     </div>
     <div ng-if="::vm.list">
         <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">

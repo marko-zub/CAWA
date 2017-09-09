@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    <a href class="btn btn-primary-2 btn-sm">{{ 'Ask for Decision' | translate }}</a>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                         <h4 class="tabs-title">
-                            All Options
+                            {{ 'All Options' | translate }}
                             <span class="title-counter">({{::vm.totalCount}})</span>
                         </h4>
                         <span class="text-header">
@@ -125,7 +125,7 @@
                     <div ng-if="!vm.isDecisionsParent">
                         <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
                             <h4 class="tabs-title">
-                                All Options
+                                {{ 'All Options' | translate }}
                             </h4>
                             <span class="text-header">
                                 Can't find the necessary option? <a href="#">Add it</a>
@@ -167,7 +167,7 @@
                         <div class="col-md-4">
 
                             <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
-                                Comparison Matrix
+                                {{ 'Comparison Matrix' | translate }}
                             </a>
 
                         </div>
@@ -228,7 +228,7 @@
                                 <!-- TODO: make as component -->
                                 <div class="clearfix">
                                     <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
-                                        Add To Compare
+                                        {{ 'Add To Compare' | translate }}
                                     </a>
                                 </div>
 
@@ -256,7 +256,7 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="comments">
-                        <h4 class="comments-tile">Comments</h4>
+                        <h4 class="comments-tile">{{ 'Comments' | translate }}</h4>
                         <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
                     </div>
                 </div>
@@ -286,7 +286,7 @@
                     </ul>
                     <div class="pull-right text-header">
                         <a ui-sref="decisions.single.options({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
-                            See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                            {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                         </a>
                     </div>
                 </div>

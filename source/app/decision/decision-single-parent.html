@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    <a href class="btn btn-primary-2 btn-sm">{{ 'Ask for Decision' | translate }}</a>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                             <div class="clearfix">
                                 <div class="pull-right">
                                     <a ui-sref="decisions.single.options(::{id: vm.parent.id, slug: vm.parent.nameSlug})">
-                                        See All {{ ::vm.parent.name }}
+                                        {{ 'See All' | translate }} {{ ::vm.parent.name }}
                                     </a>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="Reviews" discussion="true"></criteria-list>
+                        <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="{{ 'Reviews' | translate }}" discussion="true"></criteria-list>
                     </div>
                     <div class="col-sm-6">
                         <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true"></characteristics-list>
@@ -99,7 +99,7 @@
                 </ul>
                 <div class="pull-right text-header">
                     <a ui-sref="decisions.single.options({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
-                        See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                        {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>
             </div>
@@ -114,6 +114,6 @@
     </div>
 
 <!--     <hr>
-    <h3>Comments</h3>
+    <h3>{{ 'Comments' | translate }}</h3>
     <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments> -->
 </div>

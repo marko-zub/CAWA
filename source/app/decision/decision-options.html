@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    <a href class="btn btn-primary-2 btn-sm">{{ 'Ask for Decision' | translate }}</a>
                 </div>
             </div>
         </div>
@@ -41,14 +41,14 @@
 
             <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.isDecisionsParent">
                 <!-- <h4 class="tabs-title">
-                    All Options
+                    {{ 'All Options' | translate }}
                 </h4> -->
                 <span class="text-header">
                     Can't find the necessary option? <a href="#">Add it</a>
                 </span>
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                        <a ui-sref="decisions.single.options(::{tab:item.key})">{{item.label}}</a>
+                        <a ui-sref="decisions.single.options(::{tab:item.key})">{{ item.label | translate }}</a>
                     </li>
                 </ul>
             </div>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-md-4">
                     <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right">
-                        Comparison Matrix
+                        {{ 'Comparison Matrix' | translate }}
                     </a>
                 </div>
             </div>
@@ -125,7 +125,7 @@
                                 <!-- TODO: make as component -->
                                 <div class="clearfix">
                                     <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
-                                        Add To Compare
+                                        {{ 'Add To Compare' | translate }}
                                     </a>
                                 </div>
 
