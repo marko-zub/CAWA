@@ -47,8 +47,9 @@
 
         	vm.langSelected = vm.langs[index];
         	vm.langs[index].selected = true;
-        	$translate.use(vm.langSelected.key);
-            $localStorage.translateCode = vm.langSelected.key;
+        	$translate.use(vm.langSelected.key).then(function() {
+                $localStorage.translateCode = vm.langSelected.key;
+            });
         }
 
     }
