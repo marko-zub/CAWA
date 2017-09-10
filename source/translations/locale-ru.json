@@ -17,7 +17,7 @@
 	"See All": "Увидеть все",
 	"Ask for Decision": "Запросите решение",
 	"Characteristics": "Характеристики",
-	"Properties": "Properties",
+	"Properties": "Свойства",
 	"All Options": "Все опции",
 	"Comments": "Комментарии",
 	"Comparison Matrix": "Матрица сравнения",
@@ -34,5 +34,8 @@
 	"the complete list of decisions": "полный перечень решений",
 	"NO OPTIONS": "Пока нет вариантов, но вы можете создать их здесь",
 	"Can't find the necessary criterion?": "Не можете найти необходимый критерий?",
-	"Recommended": "Рекомендуемые"
+	"Recommended": "Рекомендуемые",
+	"NO PROPERTIES": "Пока нет свойств, но вы можете сначала их создать.",
+	"CANT FIND PROPERTIES": "Не можете найти необходимое свойство?",
+	"PROVIDE VALUE": "Добавить значение"
 }

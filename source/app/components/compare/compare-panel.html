@@ -1,6 +1,6 @@
 <pageslide class="sidebar" ps-size="200px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
     <div class="container-fluid">
-        <div class="compare-panel-toggle" ng-click="vm.togglePanel()">
+        <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
             <i class="fa fa-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
             <span ng-show="vm.displayDecisions.length">({{vm.displayDecisions.length}})</span>
         </div>

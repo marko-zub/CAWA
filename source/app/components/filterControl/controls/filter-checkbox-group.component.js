@@ -127,7 +127,7 @@
                 content,
                 '</div>',
                 '</div>',
-                '<div ng-show="vm.filterSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>'
+                '<div ng-show="vm.filterSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>'
             ].join('\n');
 
             return html;

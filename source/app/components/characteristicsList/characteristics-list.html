@@ -1,7 +1,7 @@
 <div class="app-list-panel">
     <div class="app-header-block">
         <div class="pull-left">
-            <h4 class="app-list-title">{{ 'Characteristics' | translate }}</h4>
+            <h4 class="app-list-title" translate-cloak>{{ 'Characteristics' | translate }}</h4>
         </div>
     </div>
     <div ng-if="::vm.list">
@@ -30,7 +30,7 @@
                                 <div class="col-sm-6">
                                     <div class="discussions-list-content">
                                         <div ng-if="!characteristic.decision.value && vm.rating">
-                                            <a href="#">Provide value</a>
+                                            <a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                                         </div>
                                         <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
                                     </div>
@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="text text-right">
-        Can't find the necessary characteristic? <a href="#">{{ 'Add it' | translate }}</a>
+        Can't find the necessary characteristic? <a href="#" translate-cloak>{{ 'Add it' | translate }}</a>
     </div>
     <p ng-if="!vm.list.length" class="app-action-content">
         There are no characteristics yet, but you can be first to create them here.

@@ -3,7 +3,7 @@
 </pre> -->
 <div class="app-list-panel properties-list">
     <div class="app-header-block">
-        <h4 class="app-list-title">{{ 'Properties' | translate }}</h4>
+        <h4 class="app-list-title" translate-cloak>{{ 'Properties' | translate }}</h4>
     </div>
     <div ng-if="::vm.list">
         <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
@@ -29,14 +29,8 @@
                             <div class="col-sm-7 text-left col-pr-sm">
                                 <div class="discussions-list-content">
                                     <div ng-if="!property.value && vm.rating">
-                                        <a href="#">Provide value</a>
+                                        <a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                                     </div>
-                                    <!--                                         <pre>
-                                        {{property.value}}
-                                    </pre>
-                                    <pre>
-                                        {{property}}
-                                    </pre> -->
                                     <content-formater ng-if="property.value" item="property.value" characteristic="property.value"></content-formater>
                                 </div>
                             </div>
@@ -46,11 +40,11 @@
 
             </div>
         </div>
-        <p ng-if="!vm.list.length" class="app-action-content">
-            There are no properties yet, but you can be first to create them here.
+        <p ng-if="!vm.list.length" class="app-action-content" translate-cloak>
+            {{ 'NO PROPERTIES' | translate }}
         </p>
     </div>
-    <div class="text text-right">
-        Can't find the necessary property? <a href="#">{{ 'Add it' | translate }}</a>
+    <div class="text text-right" translate-cloak>
+        {{ 'CANT FIND PROPERTIES' | translate }} <a href="#">{{ 'Add it' | translate }}</a>
     </div>
 </div>

@@ -33,5 +33,9 @@
 	"the complete list of decisions": "the complete list of decisions",
 	"NO OPTIONS": "There are no options yet, but you can be first to create them here.",
 	"Can't find the necessary criterion?": "Can't find the necessary criterion?",
-	"Recommended": "Recommended"
+	"Recommended": "Recommended",
+	"Properties": "Properties",
+	"NO PROPERTIES": "There are no properties yet, but you can be first to create them here.",
+	"CANT FIND PROPERTIES": "Can't find the necessary property?",
+	"PROVIDE VALUE": "Provide value"
 }

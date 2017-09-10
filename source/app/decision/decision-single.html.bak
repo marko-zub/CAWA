@@ -189,7 +189,7 @@
                         </li>
                     </ul>
 
-                    <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                    <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
                 </div>
                 <!-- Criteria -->
                 <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
@@ -223,7 +223,7 @@
 
             <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
 
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
 
         </div>
         <!-- End Recommended Start -->

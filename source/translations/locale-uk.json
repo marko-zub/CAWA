@@ -17,7 +17,7 @@
 	"See All": "Переглянути усі",
 	"Ask for Decision": "Запитати про рішення",
 	"Characteristics": "Характеристика",
-	"Properties": "Properties",
+	"Properties": "Властивості",
 	"All Options": "Всі опції",
 	"Comments": "Коментарі",
 	"Comparison Matrix": "Порівняльна матриця",
@@ -34,5 +34,8 @@
 	"the complete list of decisions": "повний перелік рішень",
 	"NO OPTIONS": "Варіантів немає, але ви можете спочатку створити їх тут",
 	"Can't find the necessary criterion?": "Не можу знайти потрібний критерій?",
-	"Recommended": "Рекомендовано"
+	"Recommended": "Рекомендовано",
+	"NO PROPERTIES": "Ще немає властивостей, але ви можете спочатку створити їх тут.",
+	"CANT FIND PROPERTIES": "Не можете знайти необхідну власність?",
+	"PROVIDE VALUE": "Додати значення"
 }
