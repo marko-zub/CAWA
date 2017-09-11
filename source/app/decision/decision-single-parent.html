@@ -25,7 +25,7 @@
                         </li>
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
-                        </li>                        
+                        </li>
                         <li>
                             <a ui-sref="decisions.single.options" translate-cloak>{{ 'Options' | translate }}</a>
                         </li>
@@ -62,10 +62,10 @@
 
                 <div class="row">
                     <div class="col-sm-6">
-                        
+
                         <div class="clearfix">
                             <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
- 
+
                             <div class="criteria-block static pull-right" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
                                 <div class="counters">
                                     <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" parent-decision="vm.activeRecommendedTab"></decisions-list>
+            <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
 
             <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
 

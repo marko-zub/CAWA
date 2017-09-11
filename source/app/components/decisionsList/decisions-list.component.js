@@ -11,6 +11,8 @@
                 list: '<',
                 // criteriaCompliance: '<',
                 criteriaComplianceTitle: '@',
+                criteriaList: '<',
+                criteriaGroupsList: '<',
                 compare: '<',
                 parentDecision: '<',
                 className: '<'
@@ -68,6 +70,17 @@
             if (vm.compare === true) {
                 pickCompareDeicisions();
             }
+            if (vm.criteriaList === true ) {
+                // mergeCriteriaDecisions(vm.list, vm.criteriaGroupsList);
+                _.forEach(vm.list, function (decision, index) {
+                    // decision
+                    var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
+                    vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+                    vm.list[index].criteriaGroups.totalVotes = totalVotes;
+                });
+                // totalVotes = _.sumBy()
+                // console.log(vm.list, vm.criteriaGroupsList);
+            }
         }
 
         vm.addToCompareList = addToCompareList;
@@ -77,5 +90,20 @@
             decision.isInCompareList = true;
         }
 
+        function mergeCriteriaDecision(decision, criteriaGroupsArray) {
+            var currentDecisionCriteria = decision.criteria;
+            return _.filter(criteriaGroupsArray, function(resultEl) {
+                _.filter(resultEl.criteria, function(el) {
+
+                    var elEqual = _.find(currentDecisionCriteria, {
+                        id: el.id
+                    });
+
+                    if (elEqual) return _.merge(el, elEqual);
+                });
+
+                if (resultEl.criteria.length > 0) return resultEl;
+            });
+        }
     }
 })();

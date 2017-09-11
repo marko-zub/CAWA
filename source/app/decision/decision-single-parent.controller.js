@@ -242,6 +242,7 @@
         function filterDecisionList(decisionMatrixs) {
             var list = [];
             _.forEach(decisionMatrixs, function(item) {
+                item.decision.criteria = item.criteria;
                 list.push(item.decision);
             });
             return list;
