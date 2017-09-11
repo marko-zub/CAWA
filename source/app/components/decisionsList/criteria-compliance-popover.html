@@ -1,0 +1,22 @@
+<div>
+    <div class="clearfix criteria-popover-header">
+        <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
+        <div class="criteria-block static pull-right" ng-show="::(decision.criteriaCompliancePercentage >= 0)">
+            <div class="counters">
+                <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>%
+            </div>
+            <div class="counters criteria-block-votes">
+                <i class="app-icon glyphicon glyphicon-thumbs-up"></i> {{ ::decision.criteriaGroups.totalVotes }}
+            </div>
+            <div ng-if="decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                <rating-star class="text-left" percentage="::decision.criteriaCompliancePercentage"></rating-star>
+            </div>
+        </div>
+    </div>
+
+<!--     <pre>
+    	{{decision | json}}
+    </pre> -->
+    {{::decision.criteriaGroups}}
+    <criteria-list ng-if="::decision.criteriaGroups" list="::decision.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true"></criteria-list>
+</div>

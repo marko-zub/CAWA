@@ -22,9 +22,9 @@
         });
 
 
-    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', 'DecisionCompareService'];
+    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', 'DecisionCompareService', '$templateRequest', '$compile', '$interpolate', '$templateCache', '$scope'];
 
-    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, DecisionCompareService) {
+    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, DecisionCompareService, $templateRequest, $compile, $interpolate, $templateCache, $scope) {
         var
             vm = this;
 
@@ -72,12 +72,12 @@
             }
             if (vm.criteriaList === true ) {
                 // mergeCriteriaDecisions(vm.list, vm.criteriaGroupsList);
-                _.forEach(vm.list, function (decision, index) {
-                    // decision
-                    var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
-                    vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
-                    vm.list[index].criteriaGroups.totalVotes = totalVotes;
-                });
+                // _.forEach(vm.list, function (decision, index) {
+                //     // decision
+                //     var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
+                //     vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+                //     vm.list[index].criteriaGroups.totalVotes = totalVotes;
+                // });
                 // totalVotes = _.sumBy()
                 // console.log(vm.list, vm.criteriaGroupsList);
             }
@@ -105,5 +105,37 @@
                 if (resultEl.criteria.length > 0) return resultEl;
             });
         }
+
+        vm.popoverContent = popoverContent;
+
+        function popoverContent(id) {
+            return $('#'+id).html();
+        }
+
+        vm.popoverContentDynamic = popoverContentDynamic;
+
+        // TODO: use template cache
+        var popoverTemplate;
+        $templateRequest("app/components/decisionsList/criteria-compliance-popover.html").then(function(html) {
+            popoverTemplate = html;
+        });
+
+        function popoverContentDynamic(index) {
+            var decision = vm.list[index];
+            var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
+            decision.criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+            decision.criteriaGroups.totalVotes = totalVotes;
+
+            var context = {name: index};
+            // var html = $templateCache.get('app/components/decisionsList/criteria-compliance-popover.html')
+            // console.log(decision);
+            // var htmlPopover = $interpolate(popoverTemplate)({decision: decision});
+            // var htmlPopover = $('#popover-criteria').html(popoverTemplate);
+            console.log(popoverTemplate)
+            var x = $('#popover-criteria').html(popoverTemplate);
+            $compile(x.contents({decision: decision}))($scope.$new());
+            // console.log(htmlPopover);
+            // return $('#popover-criteria').html();
+        }        
     }
 })();
