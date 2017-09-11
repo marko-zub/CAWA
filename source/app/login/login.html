@@ -1,4 +1,9 @@
 <div class="login-btn clearfix">
+
+    <div class="pull-left">
+        <translate-switcher></translate-switcher>
+    </div>
+
 	<!-- Logged user -->
     <div ng-if="vm.loginService.getLoginStatus()">
         <div class="pull-right app-user-info" uib-dropdown>
@@ -20,8 +25,8 @@
     <!-- New user -->
     <ul class="nav navbar-nav pull-right nav-side" ng-if="!vm.loginService.getLoginStatus()">
         <li>
-            <a href="#">
-                Sign up
+            <a href="#" translate-cloak>
+                {{ 'SIGN UP' | translate }}
             </a>
         </li>    
         <li>

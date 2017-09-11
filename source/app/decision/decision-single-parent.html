@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="pull-right">
-                    <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                    <a href class="btn btn-primary-2 btn-sm" translate-cloak>{{ 'Ask for Decision' | translate }}</a>
                 </div>
             </div>
         </div>
@@ -18,19 +18,19 @@
                 <div class="nav-tabs-wrapper clearfix">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li>
-                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})">General Info</a>
+                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.reviews">Reviews</a>
+                            <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>                        
                         <li>
-                            <a ui-sref="decisions.single.options">Options</a>
+                            <a ui-sref="decisions.single.options" translate-cloak>{{ 'Options' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
+                            <a ui-sref="decisions.single.nominations({tab: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>
                 </div>
@@ -38,24 +38,11 @@
             <div class="post post-single">
                 <div class="post-sub-header">
                     <div class="row">
-                        <div class="col-sm-5">
-                            <div class="criteria-block static" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
-                                <div class="counters">
-                                    <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
-                                </div>
-                                <div class="text-uppercase">
-                                    Criteria compliance
-                                </div>
-                                <div ng-if="vm.decision.criteriaCompliancePercentage >= 0">
-                                    <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-12">
                             <div class="clearfix">
                                 <div class="pull-right">
-                                    <a ui-sref="decisions.single.options(::{id: vm.parent.id, slug: vm.parent.nameSlug})">
-                                        See All {{ ::vm.parent.name }}
+                                    <a ui-sref="decisions.single.options(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
+                                        {{ 'See All' | translate }} {{ ::vm.parent.name }}
                                     </a>
                                 </div>
                             </div>
@@ -75,7 +62,25 @@
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="Reviews" discussion="true"></criteria-list>
+                        
+                        <div class="clearfix">
+                            <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
+ 
+                            <div class="criteria-block static pull-right" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
+                                <div class="counters">
+                                    <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                                </div>
+                                <div class="counters criteria-block-votes">
+                                    <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
+                                    {{ vm.criteriaGroups.totalVotes }}
+                                </div>
+                                <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                    <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                                </div>
+                            </div>
+                        </div>
+
+                        <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true"></criteria-list>
                     </div>
                     <div class="col-sm-6">
                         <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true"></characteristics-list>
@@ -87,9 +92,7 @@
 
         <!-- Recommended Start -->
         <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
-            <h4>
-                 Recommended
-            </h4>
+            <h4>{{ "Recommended" | translate }}</h4>
 
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
@@ -99,14 +102,14 @@
                 </ul>
                 <div class="pull-right text-header">
                     <a ui-sref="decisions.single.options({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
-                        See All <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                        {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>
             </div>
 
             <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" parent-decision="vm.activeRecommendedTab"></decisions-list>
 
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
 
         </div>
         <!-- End Recommended Start -->
@@ -114,6 +117,6 @@
     </div>
 
 <!--     <hr>
-    <h3>Comments</h3>
+    <h3>{{ 'Comments' | translate }}</h3>
     <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments> -->
 </div>

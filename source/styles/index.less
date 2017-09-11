@@ -259,6 +259,20 @@ a {
   transition: background 0.3s ease-in 0s;
   &.static {
     position: static;
+    .counters {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0;
+    }
+    .criteria-block-votes {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 2px;
+    }
+    .criteria-block-rating {
+      display: inline-block;
+      vertical-align: top;
+    }
     .app-rating-star .bar:before {
       background-image: url('../images/bg-star-active_no_bg.png');
     }
@@ -328,4 +342,22 @@ a {
     margin: 0 2px;
     display: inline-block;
   }
+}
+
+
+// Lang switcher
+.lang-switcher {
+  margin: 15px 0;
+  .dropdown-menu {
+    min-width: auto;
+    width: 100%;
+  }
+  .btn {
+    padding: 6px 10px;
+    min-width: 60px;
+  }
+}
+
+.translate-cloak {
+  visibility: hidden;
 }

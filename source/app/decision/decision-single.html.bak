@@ -19,13 +19,13 @@
                 <div class="nav-tabs-wrapper clearfix" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li class="active">
-                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">General Info</a>
+                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">{{ 'General Info' | translate }}</a>
                         </li>
                         <li ng-show="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({tab: null})">Nominations</a>
+                            <a ui-sref="decisions.single.nominations({tab: null})">{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>                    
                 </div>
@@ -91,17 +91,17 @@
                             <a href="#" class="btn btn-sm btn-default">Change</a>
                         </div>
                     </div>
-                    <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>There are no description provided yet, but you can be first to create them here.</div>')"></div>
+                    <div ng-bind-html="::(vm.decision.description || '<div class=\'app-action-text\'>{{ "NO DESCRIPTION" | translate }}</div>')"></div>
                 </div>
             </div>
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="vm.isDecisionsParent">
                         <h4 class="tabs-title">
-                            All Options
+                            {{ 'All Options' | translate }}
                         </h4>
                         <span class="text-header">
-                            Can't find the necessary option? <a href="#">Add it</a>
+                            {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                         </span>
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
@@ -116,10 +116,10 @@
                     <div ng-if="!vm.isDecisionsParent">
                         <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
                             <h4 class="tabs-title">
-                                All Options
+                                {{ 'All Options' | translate }}
                             </h4>
                             <span class="text-header">
-                                Can't find the necessary option? <a href="#">Add it</a>
+                                {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                             </span>
                             <ul class="nav nav-tabs nav-tabs-sm">
                                 <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSortChild == $index}">
@@ -147,7 +147,7 @@
                     <!-- TODO: make as component -->
                     <!-- Filter  -->
                     <div class="filter-name">
-                        <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                        <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
                         <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
                         <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
                     </div>
@@ -189,7 +189,7 @@
                         </li>
                     </ul>
 
-                    <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                    <div ng-show="vm.decisionsSpinnerChilds" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
                 </div>
                 <!-- Criteria -->
                 <div class="col-sm-5 px-l-0" ng-if="vm.tabMode === 'topRated'">
@@ -223,14 +223,14 @@
 
             <decisions-list list="vm.recommendedDecisionsList" criteria-compliance="true"></decisions-list>
 
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
 
         </div>
         <!-- End Recommended Start -->
     </div>
 
     <hr>
-    <h3>Comments</h3>
+    <h3>{{ 'Comments' | translate }}</h3>
     <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
 
 </div>

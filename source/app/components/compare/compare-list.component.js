@@ -4,19 +4,19 @@
 
     angular
         .module('app.components')
-        .controller('CompareListontroller', CompareListontroller)
+        .controller('CompareListontrollerController', CompareListontrollerController)
         .component('compareList', {
             templateUrl: 'app/components/compare/compare-list.html',
             bindings: {
                 list: '<'
             },
-            controller: 'CompareListontroller',
+            controller: 'CompareListontrollerController',
             controllerAs: 'vm'
         });
 
-    CompareListontroller.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService'];
+    CompareListontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService'];
 
-    function CompareListontroller(DecisionCompareService, DecisionCompareNotificationService) {
+    function CompareListontrollerController(DecisionCompareService, DecisionCompareNotificationService) {
         var
             vm = this;
 

@@ -13,7 +13,8 @@
 			'rzModule',
 			'daterangepicker',
 			'textAngular',
-			'toastr'
+			'toastr',
+			'pascalprecht.translate'
 		]);
 
 })();

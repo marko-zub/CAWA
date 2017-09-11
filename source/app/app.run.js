@@ -5,11 +5,18 @@
         .module('app')
         .run(runBlock);
 
-    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config'];
+    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config', 'translateFilter', '$translate', '$localStorage', 'TranslateConstant'];
 
-    function runBlock($rootScope, $state, $location, Config) {
+    function runBlock($rootScope, $state, $location, Config, translateFilter, $translate, $localStorage, TranslateConstant) {
         var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
+
+        // Language
+        $rootScope.translateCode = 'en';
+        if ($localStorage.translateCode && _.includes(TranslateConstant.LANG_KEYS, $localStorage.translateCode)) {
+            $rootScope.translateCode = $localStorage.translateCode;
+        }
+        $translate.use($rootScope.translateCode);
 
         // TODO: simplify logic
         // Move to service
@@ -29,7 +36,7 @@
         var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
             if (angular.isDefined($stateParams.data)) {
                 if ($stateParams.data.pageTitle) {
-                    $rootScope.pageTitle = $stateParams.data.pageTitle + ' | ' + pageTitle;
+                    $rootScope.pageTitle = translateFilter($stateParams.data.pageTitle) + ' | ' + pageTitle;
                 } else {
                     $rootScope.pageTitle = pageTitle;
                 }

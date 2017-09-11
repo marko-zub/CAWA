@@ -1,7 +1,7 @@
 <header id="app-header" class="app-header">
 
     <div class="row">
-        <div class="col-xs-6 col-sm-10 header-menu-btn clearfix">
+        <div class="col-xs-6 col-sm-9 header-menu-btn clearfix">
             <div class="navbar-brand">
                 <a ui-sref="home" ui-sref-opts="{reload: true}">
                 <!-- Decision<span class="app-light">Wanted</span> -->
@@ -10,15 +10,15 @@
             </div>
 
             <nav class="header-nav">
-                <a ui-sref="decisions" ui-sref-active="active">Decisions</a>
-                <a ui-sref="users" ui-sref-active="active">Users</a>
+                <a ui-sref="decisions" translate-cloak ui-sref-active="active">{{ 'Decisions' | translate }}</a>
+                <a ui-sref="users" translate-cloak ui-sref-active="active">{{ 'Users' | translate }}</a>
             </nav>
 
             <div class="app-panel-search hidden-xs">
-                <search-bar placeholder="Search..."></search-bar>
+                <search-bar translate-cloak placeholder="{{'SEARCH' | translate}}"></search-bar>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-2 header-login">
+        <div class="col-xs-6 col-sm-3 header-login pl-0">
             <app-login></app-login>
         </div>
     </div>

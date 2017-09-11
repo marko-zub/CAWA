@@ -2,7 +2,7 @@
     <div class="post" ng-repeat="decision in vm.decisionsList track by decision.id">
         <div class="post-inner">
             <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" class="left-side">
-                <div class="img-container" ng-if="decision.imageUrl">
+                <div class="img-container" ng-if="::decision.imageUrl">
                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                 </div>
             </a>
@@ -13,8 +13,8 @@
                         <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                         <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
                     </div>
-                    <div class="text-uppercase">
-                        {{ vm.criteriaComplianceTitle || 'Criteria compliance'}}
+                    <div class="text-uppercase" translate-cloak>
+                        {{ ::vm.criteriaComplianceTitle || 'Criteria compliance' | translate }}
                     </div>
                 </a>
 
@@ -37,8 +37,8 @@
                     </div>
                     <!-- TODO: make as component -->
                     <div ng-if="::vm.compare" class="clearfix">
-                        <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}">
-                            Add To Compare
+                        <a ng-click="vm.addToCompareList(decision)" class="btn btn-default btn-sm pull-right btn-compare" ng-class="{'disabled': decision.isInCompareList}" translate-cloak>
+                            {{ 'Add To Compare' | translate }}
                         </a>
                     </div>
                 </div>

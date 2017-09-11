@@ -19,14 +19,14 @@
                     </ul>
 
                     <div class="pull-right">
-                        <a href class="btn btn-primary-2 btn-sm">Ask for Decision</a>
+                        <a href class="btn btn-primary-2 btn-sm">{{ 'Ask for Decision' | translate }}</a>
                     </div>
                 </div>
             </div>
 
             <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
                 <div id="panel" class="app-panel matrix-panel">
-                    <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                    <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
                     <!-- Header -->
                     <div class="matrix-header">
                         <div class="matrix-row">
@@ -40,7 +40,7 @@
                                     <!-- Filter  -->
                                     <div class="filter-wrapper">
                                         <div class="filter-name">
-                                            <input type="text" class="form-control input-sm" placeholder="Filter by name" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                            <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
                                             <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
                                             <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
                                         </div>
@@ -210,7 +210,7 @@
                                 <matrix-criteria ng-if="vm.criteriaGroups.length" decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                                 <div class="characteristic-groups-content">
-                                    <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span>LOADING...</div>
+                                    <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
 
                                     <!-- Hide to avoid reflow -->
                                     <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">

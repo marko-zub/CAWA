@@ -48,9 +48,9 @@
     // ].join('\n');
     // }
 
-    MatrixCriteriaController.$inject = ['DiscussionsNotificationService', '$element', '$scope', '$compile'];
+    MatrixCriteriaController.$inject = ['DiscussionsNotificationService', '$element', '$scope', '$compile', 'translateFilter'];
 
-    function MatrixCriteriaController(DiscussionsNotificationService, $element, $scope, $compile) {
+    function MatrixCriteriaController(DiscussionsNotificationService, $element, $scope, $compile, translateFilter) {
         var vm = this;
 
 
@@ -166,7 +166,7 @@
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
                     '<div class="m-group-title text-center">',
-                        'Can\'t find the necessary criterion? <a href="#">Add it</a>',
+                        translateFilter("Can\'t find the necessary criterion?") + "<a href='#'>" + translateFilter('Add it') + "</a>",
                     '</div>',
                     content,
                     '</div>'
