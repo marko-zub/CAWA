@@ -8,7 +8,7 @@
             </a>
             <div class="post-content">
 
-                <a ng-if="::vm.parentDecision" ng-show="decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
+                <a ng-if="::vm.parentDecision" ng-show="decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage"  uib-popover-html="vm.popoverContent($index)" popover-placement="left" popover-append-to-body="true" popover-class="criteria-popover" popover-trigger="'mouseenter'">
                     <div class="counters">
                         <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                         <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -17,41 +17,9 @@
                         {{ ::vm.criteriaComplianceTitle || 'Criteria compliance' | translate }}
                     </div>
                 </a>
-
                 <!-- Criteria compliance Tooltip -->
-                <div ng-if="decision.criteria && vm.criteriaList">
-                    <button class="btn" uib-popover-html="vm.popoverContent('criteria-{{::$index}}')" popover-placement="left" popover-append-to-body="true" popover-class="criteria-popover" popover-trigger="'mouseenter'">
-                    <!-- popover-trigger="'mouseenter'" -->
-                    View</button>
-
-                    <button class="btn" uib-popover-html="vm.popoverContentDynamic($index)" popover-placement="left" popover-append-to-body="true" popover-class="criteria-popover" >
-                    <!-- popover-trigger="'mouseenter'" -->
-                    Dynamic
-                    </button>
-                        
-                        <!-- TODO: make as compile component -->
-<!--                         <div id="criteria-{{$index}}" class="hide">
-                            <div class="clearfix criteria-popover-header">
-                                <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
-
-                                <div class="criteria-block static pull-right" ng-show="::(decision.criteriaCompliancePercentage >= 0)">
-                                    <div class="counters">
-                                        <strong ng-bind="::decision.criteriaCompliancePercentage"></strong>%
-                                    </div>
-                                    <div class="counters criteria-block-votes">
-                                        <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
-                                        {{ ::decision.criteriaGroups.totalVotes }}
-                                    </div>
-                                    <div ng-if="decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
-                                        <rating-star class="text-left" percentage="::decision.criteriaCompliancePercentage"></rating-star>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <criteria-list ng-if="::decision.criteriaGroups" list="::decision.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true"></criteria-list>
-
-                        </div> -->
-
+                <div class="hide" id="criteria-{{$index}}">
+                    <criteria-compliance-popover decision="decision"></criteria-compliance-popover>
                 </div>
                 <!-- Criteria compliance Tooltip -->
 
@@ -82,9 +50,4 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<div id="popover-criteria">
-    
 </div>

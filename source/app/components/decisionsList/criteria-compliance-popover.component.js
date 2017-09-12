@@ -4,19 +4,20 @@
 
 	angular
 		.module('app.components')
-		.component('decisionsListCriteriaCompliance', {
+        .controller('DecisionsListCriteriaComplianceController', DecisionsListCriteriaComplianceController)
+		.component('criteriaCompliancePopover', {
 			templateUrl: 'app/components/decisionsList/criteria-compliance-popover.html',
             bindings: {
                 decision: '<'
             },
-            controller: 'DecisionsListCriteriaCompliance',
-            controllerAs: 'vm',			
+            controller: 'DecisionsListCriteriaComplianceController',
+            controllerAs: 'vm'
 		});
-    DecisionsListCriteriaCompliance.$inject = [];
+    DecisionsListCriteriaComplianceController.$inject = [];
 
-    function DecisionsListCriteriaCompliance() {
+    function DecisionsListCriteriaComplianceController() {
         var
             vm = this;
-    }		
+    }
 
 })();

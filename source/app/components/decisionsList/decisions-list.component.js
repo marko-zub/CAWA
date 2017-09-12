@@ -72,13 +72,11 @@
             }
             if (vm.criteriaList === true ) {
                 // mergeCriteriaDecisions(vm.list, vm.criteriaGroupsList);
-                // _.forEach(vm.list, function (decision, index) {
-                //     // decision
-                //     var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
-                //     vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
-                //     vm.list[index].criteriaGroups.totalVotes = totalVotes;
-                // });
-                // totalVotes = _.sumBy()
+                _.forEach(vm.list, function (decision, index) {
+                    // decision
+                    vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+                    vm.list[index].criteriaGroups.totalVotes = _.sumBy(decision.criteria, 'totalVotes');
+                });
                 // console.log(vm.list, vm.criteriaGroupsList);
             }
         }
@@ -109,33 +107,32 @@
         vm.popoverContent = popoverContent;
 
         function popoverContent(id) {
-            return $('#'+id).html();
+            return $('#criteria-'+id).html();
         }
 
-        vm.popoverContentDynamic = popoverContentDynamic;
+        // TODO: maybe create some factory for popups ...
+        // Discover this Angular Ui popover
+        // vm.popoverContentDynamic = popoverContentDynamic;
 
-        // TODO: use template cache
-        var popoverTemplate;
-        $templateRequest("app/components/decisionsList/criteria-compliance-popover.html").then(function(html) {
-            popoverTemplate = html;
-        });
+        // // TODO: use template cache
+        // var popoverTemplate;
+        // $templateRequest("app/components/decisionsList/criteria-compliance-popover.html").then(function(html) {
+        //     popoverTemplate = html;
+        // });
 
-        function popoverContentDynamic(index) {
-            var decision = vm.list[index];
-            var totalVotes = _.sumBy(decision.criteria, 'totalVotes');
-            decision.criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
-            decision.criteriaGroups.totalVotes = totalVotes;
-
-            var context = {name: index};
-            // var html = $templateCache.get('app/components/decisionsList/criteria-compliance-popover.html')
-            // console.log(decision);
-            // var htmlPopover = $interpolate(popoverTemplate)({decision: decision});
-            // var htmlPopover = $('#popover-criteria').html(popoverTemplate);
-            console.log(popoverTemplate)
-            var x = $('#popover-criteria').html(popoverTemplate);
-            $compile(x.contents({decision: decision}))($scope.$new());
-            // console.log(htmlPopover);
-            // return $('#popover-criteria').html();
-        }        
+        // function popoverContentDynamic(index, obj) {
+        //     console.log(vm.list[index]);
+        //     var decision = angular.copy(obj);
+        //     if (!decision.renderPopup) {
+        //         decision.criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+        //         decision.criteriaGroups.totalVotes = _.sumBy(decision.criteria, 'totalVotes');
+        //         decision.renderPopup = true;
+        //     }
+        //     obj = angular.copy(decision);
+        //     $scope.$apply();
+        //     console.log(obj);
+        //     // debugger
+        //     // return $('#decision-' + index).html();
+        // }
     }
 })();
