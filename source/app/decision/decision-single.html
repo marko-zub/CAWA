@@ -87,11 +87,7 @@
 
                 <div class="clearfix text-justify">
                     <div class="post-image">
-                        <img ng-if="::vm.decision.imageUrlLogo" ng-src="{{::vm.decision.imageUrlLogo}}" class="img-responsive" src-error>
-                        <div ng-if="::!vm.decision.imageUrlLogo">
-                            <img ng-src="/images/noimage.jpg" alt="" class="img-responsive mg-b-sm" >
-                            <!-- <a href="#" class="btn btn-sm btn-default">Change</a> -->
-                        </div>
+                        <img ng-if="::vm.decision.imageUrlLogo" ng-src="{{::vm.decision.imageUrlLogo}}" class="img-responsive">
                     </div>
                     <div class="page-description" ng-bind-html="(vm.decision.description || 'NO DESCRIPTION' | translate)" translate-cloak></div>
                 </div>

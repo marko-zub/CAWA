@@ -8,7 +8,7 @@
             </a>
             <div class="post-content">
 
-                <a ng-if="::vm.parentDecision" ng-show="decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage"  uib-popover-html="vm.popoverContent($index)" popover-placement="left" popover-append-to-body="true" popover-class="criteria-popover" popover-trigger="'mouseenter'">
+                <a ng-if="::vm.parentDecision" ng-show="decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage"  uib-popover-html="vm.popoverContent($index)" popover-placement="left" popover-class="criteria-popover" popover-trigger="'mouseenter'" popover-hoverable="true">
                     <div class="counters">
                         <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                         <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -22,6 +22,10 @@
                     <criteria-compliance-popover decision="decision"></criteria-compliance-popover>
                 </div>
                 <!-- Criteria compliance Tooltip -->
+
+                <div dw-popover dw-popover-id="criteria-{{$index}}">
+                    Pop
+                </div>
 
                 <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
                 <div class="post-description" ng-bind-html="::decision.description"></div>

@@ -85,7 +85,7 @@
                 </div>
                 <div class="clearfix text-justify">
                     <div class="post-image">
-                        <img ng-if="::vm.decision.imageUrl" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive" src-error>
+                        <img ng-if="::vm.decision.imageUrl" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive"<a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>>
                         <div ng-if="::!vm.decision.imageUrl">
                             <img ng-src="/images/noimage.jpg" alt="" class="img-responsive mg-b-sm" >
                             <a href="#" class="btn btn-sm btn-default">Change</a>
@@ -158,7 +158,7 @@
                             <div class="post">
                                 <a class="img-link" ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="left-side">
                                     <div class="img-container">
-                                        <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
+                                        <img ng-src="{{::decision.imageUrl}}" class="img-responsive"<a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>>
                                     </div>
                                 </a>
                                 <div class="post-content">

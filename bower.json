@@ -32,7 +32,8 @@
     "angular-toastr": "^2.1.1",
     "fotorama": "^4.6.4",
     "angular-translate": "^2.15.2",
-    "angular-translate-loader-static-files": "^2.15.2"
+    "angular-translate-loader-static-files": "^2.15.2",
+    "popper.js": "^1.12.5"
   },
   "overrides": {
     "angular": {
