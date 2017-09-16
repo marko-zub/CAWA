@@ -8,7 +8,8 @@
 		.component('criteriaCompliancePopover', {
 			templateUrl: 'app/components/decisionsList/criteria-compliance-popover.html',
             bindings: {
-                decision: '<'
+                decision: '<',
+                parentDecision: '<',
             },
             controller: 'DecisionsListCriteriaComplianceController',
             controllerAs: 'vm'

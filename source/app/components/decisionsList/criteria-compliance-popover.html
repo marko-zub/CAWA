@@ -1,6 +1,14 @@
 <div>
     <div class="clearfix criteria-popover-header">
-        <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
+        <h5 class="app-list-title-sm pull-left" translate-cloak>{{ vm.decision.name }} - {{ 'Criteria compliance' | translate }} {{ vm.parentDecision.name }}
+        </h5>
+
+        <a ui-sref="decisions.single.parent({id:vm.decision.id, slug: vm.decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})">
+            {{ 'READ MORE' | translate }}
+        </a>
+
+
+
         <div class="criteria-block static pull-right" ng-show="(vm.decision.criteriaCompliancePercentage >= 0)">
             <div class="counters">
                 <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.components')
+        .module('app.directives')
         .directive('dwScrollBar', dwScrollBar);
 
     dwScrollBar.$inject = [];

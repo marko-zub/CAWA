@@ -181,8 +181,6 @@
                         el.decision = elEqual;
                         return el;
                     }
-
-
                 });
                 if (resultEl.characteristics.length > 0) return resultEl;
             });

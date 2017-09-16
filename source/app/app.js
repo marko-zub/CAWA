@@ -5,6 +5,7 @@
         'app.core',
         'app.home',
         'app.components',
+        'app.directives',
         'app.login',
         'app.decision',
         'app.discussions',

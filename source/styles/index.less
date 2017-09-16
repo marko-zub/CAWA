@@ -363,13 +363,31 @@ a {
 }
 
 .criteria-popover {
-  width: 400px;
+  width: 420px;
   max-width: none;
+  // display: none !important;
+  visibility: hidden;
+  opacity: 0;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 700;
+  transition: opacity 0.2s ease-in-out;
+
+  // &.left {
+  //   margin-left: -20px;
+  // }
+  &.in {
+    // display: block !important;
+    visibility: visible;
+    opacity: 1;
+  }
   .popover-content {
     width: 400px;
     padding: 4px 0;
     max-width: none;
-    max-height: 90vh;
+    max-height: 80vh;
   }
   .criteria-popover-header {
     padding: 0 8px;

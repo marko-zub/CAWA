@@ -369,12 +369,13 @@
                 nameSlug: parent.nameSlug
             };
 
-            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
-                sendData.sortCriteriaIds = pickCriteriaIds(result);
-                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(result) {
-                    vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
+            DecisionDataService.getCriteriaGroupsById(parent.id).then(function(resultCriteria) {
+                sendData.sortCriteriaIds = pickCriteriaIds(resultCriteria);
+                vm.criteriaGroups = DecisionsUtils.prepareDecisionToUI(resultCriteria);
+                DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(resultDecisions) {
+                    vm.recommendedDecisionsList = filterDecisionList(resultDecisions.decisionMatrixs);
                     vm.recommendedDecisionsListLoader = false;
-                    vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
+                    vm.activeRecommendedTab.total = resultDecisions.totalDecisionMatrixs;
                 });
             });
         }
@@ -394,6 +395,7 @@
         function filterDecisionList(decisionMatrixs) {
             var list = [];
             _.forEach(decisionMatrixs, function(item) {
+                item.decision.criteria = item.criteria;
                 list.push(item.decision);
             });
             return list;
