@@ -32,6 +32,7 @@
                 // Popover Hover on content
                 var popoverId = $('#' + $attrs.dwPopoverId);
                 var isPopoverHover = false;
+                popoverId.removeClass('hide');
                 $($el).on('mouseenter', function() {
                     if (!isPopoverHover) {
                         popoverId.addClass('in');
