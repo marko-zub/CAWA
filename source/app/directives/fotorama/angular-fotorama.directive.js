@@ -37,7 +37,7 @@
                                         thumbheight: 100
                                     });
                                 }
-                            });
+                            }, 0, false);
                         }
                     }, true);
                 }

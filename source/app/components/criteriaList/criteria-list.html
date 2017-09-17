@@ -5,7 +5,7 @@
         </div>
     </div>
     <div ng-if="vm.list.length">
-        <div class="app-list-group" ng-repeat="group in ::vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
+        <div class="app-list-group" ng-repeat="group in vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
             <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
                 {{::group.name}}
                 <div class="controls">
@@ -33,7 +33,7 @@
                                         </div>
                                         <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
                                     </div>
-                                    <a class="discussions-link" ui-sref="decisions.single.parent.reviews({reviewId: criteria.id,reviewSlug: criteria.nameSlug})">
+                                    <a class="discussions-link" ui-sref="decisions.single.parent.reviews(::{reviewId: criteria.id,reviewSlug: criteria.nameSlug})">
                                         <i class="fa fa-link" aria-hidden="true"></i>
                                     </a>
                                 </div>

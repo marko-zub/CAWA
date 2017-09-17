@@ -25,8 +25,12 @@
                 var reference = $el[0];
                 var popper = document.getElementById($attrs.dwPopoverId);
                 // console.log(popper)
-                new Popper(reference, popper, {
-                    placement: 'left-start'
+                if (!reference || !popper) {
+                    return;
+                }
+
+                var popover = new Popper(reference, popper, {
+                    placement: 'left'                 
                 });
 
                 // Popover Hover on content
@@ -43,7 +47,7 @@
                         if (!isPopoverHover) {
                             popoverId.removeClass('in');
                         }
-                    }, 150);
+                    }, 150, false);
                 });
 
                 popoverId.on('mouseenter', function() {
@@ -54,7 +58,14 @@
                     isPopoverHover = false;
                 });
 
-            }, 0);
+                // Update position
+                popoverId.on('click', '.app-list-group-title', function () {
+                    $timeout(function() {
+                        popover.update();
+                    }, 300, false);
+                });
+
+            }, 0, false);
         }
     }
 
