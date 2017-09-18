@@ -1,5 +1,5 @@
 <div class="decisions-list {{vm.className}}" ng-style="{'min-height': vm.decisionsHeight}">
-    <div class="post" ng-repeat="decision in ::vm.decisionsList track by decision.id">
+    <div class="post" ng-repeat="decision in vm.decisionsList track by decision.id">
         <div class="post-inner">
             <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" class="left-side">
                 <div class="img-container" ng-if="::decision.imageUrl">
