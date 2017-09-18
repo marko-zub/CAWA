@@ -30,7 +30,7 @@
                 }
 
                 var popover = new Popper(reference, popper, {
-                    placement: 'left'                 
+                    placement: 'left'
                 });
 
                 // Popover Hover on content

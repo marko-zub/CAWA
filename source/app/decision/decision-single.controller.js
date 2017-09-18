@@ -178,11 +178,7 @@
             sendData.includeCharacteristicIds = [-1];
             DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = [];
-                var decisions = [];
-                _.forEach(result.decisionMatrixs, function(decision) {
-                    decisions.push(decision.decision);
-                });
-                vm.decisions = DecisionsUtils.prepareDecisionToUI(decisions);
+                vm.decisions = filterDecisionList(result.decisionMatrixs);
                 vm.decisionsChildsLoader = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;

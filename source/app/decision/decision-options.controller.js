@@ -44,7 +44,7 @@
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
             initPagination();
-            
+
             getDecisionParents(vm.decision.id).then(function() {
                 setPageData();
             });
@@ -75,7 +75,7 @@
                     notify: false
                 });
             }
-        }        
+        }
 
         function setPageData() {
             $rootScope.pageTitle = vm.decision.name + ' Options | DecisionWanted.com';
@@ -90,7 +90,7 @@
                 title: 'Options',
                 link: null
             }];
-        }        
+        }
 
 
         function getDecisionMatrix(id, filter) {
@@ -120,13 +120,9 @@
 
             sendData.includeCharacteristicIds = [-1];
             DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
-                vm.decisionsLoader = false;
                 vm.decisions = [];
-                var decisions = [];
-                _.forEach(result.decisionMatrixs, function(decision) {
-                    decisions.push(decision.decision);
-                });
-                vm.decisions = DecisionsUtils.prepareDecisionToUI(decisions);
+                vm.decisions = filterDecisionList(result.decisionMatrixs);
+                vm.decisionsLoader = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
@@ -302,6 +298,7 @@
         function filterDecisionList(decisionMatrixs) {
             var list = [];
             _.forEach(decisionMatrixs, function(item) {
+                item.decision.criteria = item.criteria;
                 list.push(item.decision);
             });
             return list;
