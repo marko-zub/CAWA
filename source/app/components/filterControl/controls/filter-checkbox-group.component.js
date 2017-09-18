@@ -31,9 +31,7 @@
 
             // Lazy options
             if (vm.item.lazyOptions === true) {
-                // console.log(vm.item);
                 vm.filterSpinner = true;
-                // console.log($state)
                 getLazyOptions($state.params.id, vm.item.id);
                 return;
             }
@@ -44,6 +42,23 @@
         function onChanges(changes) {
             if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
                 selectCheckboxes(changes.selected.currentValue);
+            }
+
+            // TODO: check and/or, simplify logic
+            if (changes.item && !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
+                
+                if (changes.item.previousValue.selectedOperator === changes.item.currentValue.selectedOperator) {
+                    return;
+                }
+
+                var switcherEl = $($element).find('.js-switcher-checkbox');
+                if (changes.item.currentValue.selectedOperator === 'AND') {
+                    switcherEl.prop('checked', false);
+                    sendObj.operator = changes.item.currentValue.selectedOperator;
+                } else {
+                    switcherEl.prop('checked', true);
+                    sendObj.operator = 'OR';
+                }
             }
         }
 
@@ -65,7 +80,7 @@
         }
 
         // TODO:
-        // Realy need Juqery? or slow ng-repeat
+        // Realy need jQuery? or slow ng-repeat
         function selectCheckboxes(list) {
             checkedValues = !_.isEmpty(list) ? list : [];
             if (_.isNull(list)) {
@@ -98,9 +113,9 @@
 
             var queryTypeHtml = [
                 '<div class="switcher">',
-                    '<div class="switcher-label">',
-                        '<div class="switcher-text-label">OR</div>',
-                    '</div>',
+                '<div class="switcher-label">',
+                '<div class="switcher-text-label">OR</div>',
+                '</div>',
                 '</div>',
             ].join('\n');
 
@@ -162,9 +177,7 @@
             }
         });
         // END Control Checkboxes
-
         var sendRequestDebounce = _.debounce(sendRequest, 100);
-        // var sendRequestDebounce = _.debounce(sendRequest, 300, {leading: true});
 
         function sendRequest(sendObjCopy) {
             FilterControlsDataService.createFilterQuery(sendObjCopy);

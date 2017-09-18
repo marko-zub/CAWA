@@ -27,6 +27,10 @@
         function init() {
             vm.criteria = angular.copy(criteria);
             vm.coefficientList = DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST;
+            
+            if (!vm.criteria.coefficient) {
+                vm.criteria.coefficient = vm.coefficientList[2];
+            }
         }
     }
 })();

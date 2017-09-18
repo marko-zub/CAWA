@@ -89,7 +89,13 @@
 
         function renderControl(type) {
             if (!type) return;
-            var element = '<button class="btn btn-sm" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button><filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
+            var element = '<filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
+
+            // Modal full for checkboxes
+            if (type === 'checkbox-group') {
+                element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>' + element;            
+            }
+
             $element.html(element);
             $compile($element.contents())($scope);
         }
@@ -111,9 +117,9 @@
                     }
                 }
             });
-            modalInstance.result.then(function(result) {
-                console.log(result);
-            });
+            // modalInstance.result.then(function(result) {
+            //     // console.log(result);
+            // });
         }
 
         function pickSelectedOptions(options, selectedArray) {

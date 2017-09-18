@@ -21,8 +21,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-default btn-primary pull-right" type="submit">{{ "APPLY" | translate }}</button>
+        <div class="modal-footer text-right">
+            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ "CANCEL" | translate }}</button>
+            <button class="btn btn-primary" type="submit">{{ "APPLY" | translate }}</button>
         </div>
     </form>
 </div>

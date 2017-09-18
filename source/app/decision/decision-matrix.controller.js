@@ -264,6 +264,7 @@
 
             if (find >= 0) {
                 characteristicGroups[find].selectedValue = value;
+                characteristicGroups[find].selectedOperator = characteristic.operator;
                 if (optionId >= 0) characteristicGroups[find].optionId = optionId;
             }
 

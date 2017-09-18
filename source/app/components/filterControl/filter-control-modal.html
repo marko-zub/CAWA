@@ -5,22 +5,47 @@
     </div>
     <form class="form-horizontal" ng-submit="vm.apply()">
         <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="vm.filterQuery" placeholder="Filter by value...">
+            </div>
+            <div class="col-sm-2">
 
-        <input type="text" class="form-control" ng-model="vm.filterQuery" placeholder="Filter by value...">
+                <div class="switcher pull-right" ng-if="!vm.item.multiValue">
+                    <div class="switcher-label">
+                        <div class="switcher-text-label">OR</div>
+                    </div>                
+                </div>
+
+                <div class="switcher pull-right" ng-if="vm.item.multiValue">
+                    <input type="checkbox" name="toggle-{{vm.item.id}}" class="switcher-checkbox" id="toggle-{{vm.item.id}}" ng-checked="vm.selectedOperatorTrigger" ng-model="vm.selectedOperatorTrigger">
+                    <label class="switcher-label" for="toggle-{{vm.item.id}}">
+                        <span class="switcher-inner"></span>
+                        <span class="switcher-switch"></span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
 
         <div class="filter-item checkbox-list">
+
+<!--             <div class="filter-item-checkbox">
+                <input class="js-checkbox" type="checkbox" id="modal-all-options" name="modal-all-options" ng-value="option.value" ng-model="option.selected">
+                <label for="modal-all-options">Select All</label>
+            </div>
+ -->
             <div class="filter-item-checkbox" ng-repeat="option in vm.item.options | filter:vm.filterQuery track by option.id">
-                <input class="js-checkbox" type="checkbox" id="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" name=modal-"{{ ::vm.item.id }}-option-{{ ::option.id }}" ng-value="option.value" ng-model="option.selected">
+                <input class="js-checkbox" type="checkbox" id="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" name="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" ng-value="option.value" ng-model="option.selected">
                 <label for="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}">{{ ::option.value }}</label>
             </div>
         </div>
 
-<!--         <pre>
-            {{  vm.item.options | json }}
-        </pre> -->
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-default btn-primary pull-right" type="submit">{{ "APPLY" | translate }}</button>
+        <div class="modal-footer text-right">
+            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ "CANCEL" | translate }}</button>
+            <button class="btn btn-primary" type="submit">{{ "APPLY" | translate }}</button>
         </div>
     </form>
 </div>
