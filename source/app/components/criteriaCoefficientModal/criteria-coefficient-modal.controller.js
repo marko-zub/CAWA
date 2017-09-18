@@ -4,11 +4,11 @@
 
     angular
         .module('app.components')
-        .controller('CriteriaCoefficientPopupController', CriteriaCoefficientPopupController);
+        .controller('CriteriaCoefficientModalController', CriteriaCoefficientModalController);
 
-    CriteriaCoefficientPopupController.$inject = ['$uibModalInstance', 'criteria', 'DecisionCriteriaCoefficientsConstant'];
+    CriteriaCoefficientModalController.$inject = ['$uibModalInstance', 'criteria', 'DecisionCriteriaCoefficientsConstant'];
 
-    function CriteriaCoefficientPopupController($uibModalInstance, criteria, DecisionCriteriaCoefficientsConstant) {
+    function CriteriaCoefficientModalController($uibModalInstance, criteria, DecisionCriteriaCoefficientsConstant) {
         var vm = this;
 
         vm.apply = apply;
