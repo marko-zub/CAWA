@@ -1,0 +1,14 @@
+<div class="criteria-coefficient-popup">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-bind="::vm.item.name"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
+    </div>
+    <form class="form-horizontal" name="criteriaCoefficientForm" ng-submit="vm.apply()">
+        <div class="modal-body">
+            {{  vm.item | json }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default btn-primary pull-right" type="submit">{{ "APPLY" | translate }}</button>
+        </div>
+    </form>
+</div>

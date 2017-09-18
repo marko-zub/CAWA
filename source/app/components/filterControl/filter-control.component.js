@@ -12,9 +12,9 @@
 
 
 
-    FilterControlController.$inject = ['$element', '$compile', '$scope'];
+    FilterControlController.$inject = ['$element', '$compile', '$scope', '$uibModal'];
 
-    function FilterControlController($element, $compile, $scope) {
+    function FilterControlController($element, $compile, $scope, $uibModal) {
         var vm = this;
 
         vm.$onInit = onInit;
@@ -89,9 +89,31 @@
 
         function renderControl(type) {
             if (!type) return;
-            var element = '<filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
+            var element = '<button class="btn btn-sm" ng-click="vm.filterControlModalOpen(vm.item)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button><filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
+        }
+
+        // Modal
+        vm.filterControlModalOpen = filterControlModalOpen;
+
+        function filterControlModalOpen(item) {
+            console.log(item);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/components/filterControl/filter-control-modal.html',
+                controller: 'FilterControlModalController',
+                controllerAs: 'vm',
+                backdrop: true,
+                animation: false,
+                resolve: {
+                    item: function() {
+                        return item;
+                    }
+                }
+            });
+            modalInstance.result.then(function(result) {
+                console.log(result);
+            });
         }
     }
 })();
