@@ -17,7 +17,14 @@
         init();
 
         function apply() {
-            $uibModalInstance.close();
+            // vm.selectedOptions = [];
+             _.each(vm.item.options, function (option) {
+                if (option.selected === true) {
+                   vm.selectedOptions.push(option.value);
+                }
+            });
+
+            $uibModalInstance.close(vm.selectedOptions);
         }
 
         function close() {
@@ -25,7 +32,9 @@
         }
 
         function init() {
-            vm.item = item;
+            vm.selectedOptions = [];
+            vm.item = angular.copy(item);
+            vm.filterQuery = '';
         }
     }
 })();

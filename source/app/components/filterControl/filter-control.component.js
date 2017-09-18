@@ -75,11 +75,11 @@
                     (item.visualMode === 'CHECKBOX') ||
                     ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL'))):
-                    if(item.value && !_.isArray(item.value) && !item.options) item.options = [item.value];
+                    if (item.value && !_.isArray(item.value) && !item.options) item.options = [item.value];
                     renderControl('checkbox-group');
                     break;
                 case ((item.valueType === 'BOOLEAN')):
-                // case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
+                    // case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
                     renderControl('radio-group');
                     break;
                 default:
@@ -89,7 +89,7 @@
 
         function renderControl(type) {
             if (!type) return;
-            var element = '<button class="btn btn-sm" ng-click="vm.filterControlModalOpen(vm.item)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button><filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
+            var element = '<button class="btn btn-sm" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button><filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
             $element.html(element);
             $compile($element.contents())($scope);
         }
@@ -97,13 +97,13 @@
         // Modal
         vm.filterControlModalOpen = filterControlModalOpen;
 
-        function filterControlModalOpen(item) {
-            console.log(item);
+        function filterControlModalOpen(item, selected) {
+            item.options = pickSelectedOptions(item.options, selected);
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/components/filterControl/filter-control-modal.html',
                 controller: 'FilterControlModalController',
                 controllerAs: 'vm',
-                backdrop: true,
+                // backdrop: 'static',
                 animation: false,
                 resolve: {
                     item: function() {
@@ -114,6 +114,19 @@
             modalInstance.result.then(function(result) {
                 console.log(result);
             });
+        }
+
+        function pickSelectedOptions(options, selectedArray) {
+            _.each(selectedArray, function(selected) {
+                var index = _.findIndex(options, function(option) {
+                    return option.value === selected;
+                });
+
+                if (index >= 0) {
+                    options[index].selected = true;
+                }
+            });
+            return options;
         }
     }
 })();

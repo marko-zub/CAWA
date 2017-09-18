@@ -1,11 +1,23 @@
-<div class="criteria-coefficient-popup">
+<div class="filter-control-popup-content">
     <div class="modal-header">
         <h4 class="modal-title" ng-bind="::vm.item.name"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
     </div>
-    <form class="form-horizontal" name="criteriaCoefficientForm" ng-submit="vm.apply()">
+    <form class="form-horizontal" ng-submit="vm.apply()">
         <div class="modal-body">
-            {{  vm.item | json }}
+
+        <input type="text" class="form-control" ng-model="vm.filterQuery" placeholder="Filter by value...">
+
+        <div class="filter-item checkbox-list">
+            <div class="filter-item-checkbox" ng-repeat="option in vm.item.options | filter:vm.filterQuery track by option.id">
+                <input class="js-checkbox" type="checkbox" id="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" name=modal-"{{ ::vm.item.id }}-option-{{ ::option.id }}" ng-value="option.value" ng-model="option.selected">
+                <label for="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}">{{ ::option.value }}</label>
+            </div>
+        </div>
+
+<!--         <pre>
+            {{  vm.item.options | json }}
+        </pre> -->
         </div>
         <div class="modal-footer">
             <button class="btn btn-default btn-primary pull-right" type="submit">{{ "APPLY" | translate }}</button>

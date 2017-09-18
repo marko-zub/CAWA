@@ -696,7 +696,7 @@
             event.preventDefault();
             event.stopPropagation();
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/components/decisionCriteria/criteria-coefficient-popup.html',
+                templateUrl: 'app/components/criteriaCoefficientPopup/criteria-coefficient-popup.html',
                 controller: 'CriteriaCoefficientPopupController',
                 controllerAs: 'vm',
                 backdrop: 'static',
