@@ -6,7 +6,7 @@
 			'ui.router',
 			'ngResource',
 			'ui.bootstrap',
-			'ngAnimate',
+			// 'ngAnimate',
 			'ngStorage',
 			'angular-jwt',
 			'pageslide-directive',

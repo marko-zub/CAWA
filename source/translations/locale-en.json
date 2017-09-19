@@ -31,7 +31,7 @@
 	"NO DESCRIPTION": "There are no description provided yet, but you can be first to create them here.",
 	"LOOKING MORE": "Looking for more? Browse the",
 	"the complete list of decisions": "the complete list of decisions",
-	"NO OPTIONS": "There are no options yet, but you can be first to create them here.",
+	"NO OPTIONS": "There are no options yet, but you can be first to create thems",
 	"Can't find the necessary criterion?": "Can't find the necessary criterion?",
 	"Recommended": "Recommended",
 	"Properties": "Properties",
@@ -44,5 +44,10 @@
 	"APPLY": "Apply",
 	"CANCEL": "Cancel",
 	"CRITERIA": "Criteria",
-	"CHARACTERISTICS": "Characteristics"
+	"CHARACTERISTICS": "Characteristics",
+	"SELECTED": "Selected",
+	"SORTED BY": "Sorted by",
+	"FILTERED BY": "Filtered by",
+	"HERE": "here",
+	"NAME": "Name"
 }

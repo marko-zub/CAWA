@@ -38,7 +38,7 @@
         function onInit() {
             if (!vm.list) return;
             vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
-            vm.decisionsList = descriptionTrustHtml(vm.list);
+            vm.decisionsList = vm.list;
             if (vm.compare !== true) vm.compare = false;
 
             if(!vm.className) vm.className = 'list';

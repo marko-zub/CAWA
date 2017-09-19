@@ -12,7 +12,8 @@
                             </a>
                         </li>
                         <li ng-class="{'active':vm.matrixMode == 'exclusion'}">
-                            <a ng-click="vm.changeMatrixMode('exclusion')">Selected
+                            <a ng-click="vm.changeMatrixMode('exclusion')">
+                                {{ "SELECTED" | translate }}
                                 (<span ng-bind="vm.exclusionItemsLength || 0"></span>)
                             </a>
                         </li>
@@ -34,7 +35,7 @@
                             <div class="matrix-g-name">
                                 <div class="matrix-title-wrapper">
                                     <div class="matrix-title app-sorter-wrapper matrix-content-name">
-                                        Name
+                                        {{ "NAME" | translate }}
                                     </div>
 
                                     <!-- Filter  -->
@@ -157,7 +158,7 @@
                                 <div class="group-wrapper characteristic-content-aside" >
 
                                    <div class="group-wrapper-title">
-                                        
+
                                         {{ "CHARACTERISTICS" | translate }}
                                     </div>
 
@@ -183,7 +184,7 @@
 
                                                         <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                         <filter-control item="characteristic"></filter-control>
-                                                        
+
                                                         <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
                                                             <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
                                                             <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>

@@ -1,6 +1,6 @@
 <div id="filter-tags" class="filter-tags">
         <div class="filter-tags-group sorted-panel clearfix" ng-show="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name">
-            <div class="filter-tags-label">Sorted by: <span ng-show="vm.tagsSort.length > 0" class="display-inline-block">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span>
+            <div class="filter-tags-label">{{ "SORTED BY" | translate }}: <span ng-show="vm.tagsSort.length > 0" class="display-inline-block">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span>
                  for
             </span>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="filter-tags-group" ng-show="vm.tagsFilter.length > 0">
-            <div class="filter-tags-label">Filtered by: </div>
+            <div class="filter-tags-label">{{ "FILTERED BY" | translate }}: </div>
             <div class="tag-group-wrapper">
                 <div class="tag-group" ng-repeat="tag in vm.tagsFilter track by tag.characteristicId">
                     <span>{{::tag.name}}:</span>

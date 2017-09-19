@@ -117,7 +117,7 @@
                         </span>
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                                <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
+                                <a ui-sref="decisions.single(::{tab:item.key})">{{ item.label | translate }}</a>
                             </li>
                         </ul>
                     </div>
@@ -141,7 +141,7 @@
                         <div class="row">
                             <div class="col-sm-7">
                                 <div class="mg-b-lg app-action-text" translate-cloak>
-                                    {{ "NO OPTIONS" | translate }}
+                                    {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
                                 </div>
                             </div>
                            <!--  <div class="col-sm-5 px-l-0" ng-show="vm.activeTabSortChild == 0">
