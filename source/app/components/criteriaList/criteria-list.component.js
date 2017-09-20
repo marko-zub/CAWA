@@ -38,6 +38,6 @@
             if (changes.list && !angular.equals(changes.list.currentValue, changes.previousValue)) {
                 vm.list = angular.copy(changes.list.currentValue);
             }
-        }        
+        }
     }
 })();

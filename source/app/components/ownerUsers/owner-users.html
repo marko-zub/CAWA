@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-sm-6" ng-repeat="user in ::vm.list track by user.id">
+		<div class="user-owner">
+			<div class="user-owner-img">
+				<div class="avatar">
+					{{ ::user.avName }}
+				</div>
+			</div>
+			<div class="user-owner-content">
+				{{ ::user.firstName }} {{ ::user.lastName }}
+				<div class="user-owner-username">
+					<a href="#">
+						{{ ::user.username }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="text text-right">
+	{{ "BECOME OWNER USER"  | translate }}  {{ ::vm.becomeTitle }} <a href="#">{{ "APPLY" | translate }} </a>
+</div>

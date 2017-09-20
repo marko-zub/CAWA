@@ -49,5 +49,7 @@
 	"SORTED BY": "Sorted by",
 	"FILTERED BY": "Filtered by",
 	"HERE": "here",
-	"NAME": "Name"
+	"NAME": "Name",
+	"BECOME OWNER USER": "Want to become an administrator",
+	"APPLY": "Apply"
 }
