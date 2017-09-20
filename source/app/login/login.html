@@ -1,9 +1,4 @@
 <div class="login-btn clearfix">
-
-    <div class="pull-left">
-        <translate-switcher></translate-switcher>
-    </div>
-
 	<!-- Logged user -->
     <div ng-if="vm.loginService.getLoginStatus()">
         <div class="pull-right app-user-info" uib-dropdown>
@@ -28,7 +23,7 @@
             <a href="#" translate-cloak>
                 {{ 'SIGN UP' | translate }}
             </a>
-        </li>    
+        </li>
         <li>
             <a ng-click="vm.loginService.login()" class="item-btn">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
