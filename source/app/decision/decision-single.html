@@ -1,7 +1,8 @@
 <div class="app-container-sm">
 
     <div class="row">
-        <div ng-class="vm.decisionParents.length ? 'col-sm-9' : 'col-sm-12'">
+        <div class="col-sm-9">
+        <!-- <div ng-class="vm.decisionParents.length ? 'col-sm-9' : 'col-sm-12'"> -->
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="post-header">
                 <div class="nav-tabs-wrapper" ng-show="vm.criteriaGroups.length || vm.isDecisionsParent || vm.decisionParents.length">
@@ -191,7 +192,7 @@
             </div>
 
         </div>
-        <div ng-if="vm.decisionParents.length" class="col-sm-3">
+        <div class="col-sm-3">
 
             <!-- Properties List -->
             <div class="properties-list-wrapper">

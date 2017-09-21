@@ -560,6 +560,7 @@
         }
 
         function prepareMatrixData(data) {
+            var criteriaGroupsSelected = pickSelectedCriteria();
             var dataCopy = angular.copy(data);
             return _.map(dataCopy, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) {
@@ -571,6 +572,12 @@
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
                 }
+                if (decisionMatrixEl.criteria) {
+                    decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
+                    decisionMatrixEl.decision.criteriaGroups = mergeCriteriaDecision(decisionMatrixEl.decision, criteriaGroupsSelected) || {};
+                    decisionMatrixEl.decision.criteriaGroups.totalVotes = _.sumBy(decisionMatrixEl.decision.criteria, 'totalVotes');
+                }
+
                 return _.pick(decisionMatrixEl, 'decision');
             });
         }
@@ -860,7 +867,7 @@
         var scrollF = _.throttle(function() {
             var scrollTopDoc = $(document).scrollTop();
             // console.log(scrollTopDoc)
-            if (scrollTopDoc > 100 ) {
+            if (scrollTopDoc > 100) {
                 $('body').addClass('matrix-sticky');
             } else {
                 $('body').removeClass('matrix-sticky');
@@ -868,5 +875,37 @@
         }, 50);
 
         $(window).scroll(scrollF);
+
+
+        // TODO: Check if code DRY!
+        function pickSelectedCriteria () {
+            // TODO: remove from loop
+            // Pick selected criterias
+            var criteriaSelected = _.filter(angular.copy(vm.criteriaGroups), function(group) {
+                group.criteria = _.filter(group.criteria, function(criteria) {
+                    // console.log(criteria.isSelected);
+                    return criteria.isSelected;
+                });
+                return group;
+            });
+            return criteriaSelected;
+        }
+
+        function mergeCriteriaDecision(decision, criteriaGroupsArray) {
+            var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);
+            var currentDecisionCriteria = angular.copy(decision.criteria);
+            return _.filter(criteriaGroupsArrayCopy, function(resultEl) {
+                _.filter(resultEl.criteria, function(el) {
+
+                    var elEqual = _.find(currentDecisionCriteria, {
+                        id: el.id
+                    });
+
+                    if (elEqual) return _.merge(el, elEqual);
+                });
+
+                if (resultEl.criteria.length > 0) return resultEl;
+            });
+        }
     }
 })();

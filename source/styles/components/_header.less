@@ -252,7 +252,10 @@
 
 .app-search {
     float: right;
-    width: 350px;
+    width: 290px;
+    @media (min-width: @screen-lgx-min) {
+        width: 350px;
+    }
     &.open {
         .form-control {
             border: 1px solid darken(@header-background, 5%);

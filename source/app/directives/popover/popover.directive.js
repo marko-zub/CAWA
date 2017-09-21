@@ -30,7 +30,12 @@
                 }
 
                 var popover = new Popper(reference, popper, {
-                    placement: 'left'
+                    placement: $attrs.dwPopoverDirection || 'left',
+                    modifiers: {
+                        preventOverflow: {
+                            enabled: false
+                        }
+                    }
                 });
 
                 // Popover Hover on content

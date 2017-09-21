@@ -89,8 +89,9 @@
         }
 
         function mergeCriteriaDecision(decision, criteriaGroupsArray) {
-            var currentDecisionCriteria = decision.criteria;
-            return _.filter(criteriaGroupsArray, function(resultEl) {
+            var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);
+            var currentDecisionCriteria = angular.copy(decision.criteria);
+            return _.filter(criteriaGroupsArrayCopy, function(resultEl) {
                 _.filter(resultEl.criteria, function(el) {
 
                     var elEqual = _.find(currentDecisionCriteria, {

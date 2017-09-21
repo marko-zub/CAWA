@@ -574,8 +574,8 @@ a {
     position: relative;
     height: @matrix-header;
     top: 0;
-    overflow: hidden;
-    z-index: 3;
+    // overflow: hidden;
+    z-index: 4;
     background-color: #fff;
     padding: 0 10px 0 0;
     // border-bottom: 1px solid @gray-light;
@@ -670,12 +670,12 @@ a {
         top: 38px;
         position: fixed;
         left: 0;
-        z-index: 85;
+        z-index: 88;
         // padding-left: 15px;
         left: 15px;
         width: auto;
         right: 15px;
-        overflow: hidden;
+        // overflow: hidden;
         // padding-right: 15px;
         border-bottom: 1px solid #ebebeb;
     }
@@ -952,6 +952,7 @@ a {
     }
     .matrix-col-link {
         display: block;
+        position: relative;
     }
     .matrix-item {
         min-height: 49px;
