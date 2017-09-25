@@ -33,7 +33,8 @@
                     placement: $attrs.dwPopoverDirection || 'left',
                     modifiers: {
                         preventOverflow: {
-                            enabled: false
+                            // enabled: true,
+                            boundariesElement: document.body,
                         }
                     }
                 });
@@ -63,12 +64,12 @@
                     isPopoverHover = false;
                 });
 
-                // Update position
-                popoverId.on('click', '.app-list-group-title', function () {
-                    $timeout(function() {
-                        popover.update();
-                    }, 300, false);
-                });
+                // // Update position
+                // popoverId.on('click', '.app-list-group-title', function () {
+                //     $timeout(function() {
+                //         popover.update();
+                //     }, 300, false);
+                // });
 
             }, 0, false);
         }

@@ -11,12 +11,12 @@
 @import "helpers";
 @import "discussions";
 
-body,
 html {
   height: 100%;
 }
 
 body {
+  min-height: 100%;
     color: @color-dark;
     padding-top: @header-height;
     font-family: @font-medium;
@@ -61,7 +61,7 @@ body {
   padding-top: 0;
   padding-bottom: @footer-height;
   margin-bottom: -@footer-height;
-  min-height: calc(~"100vh - 82px");
+  min-height: calc(~"100vh - 114px");
 }
 
 .app-row-content-label {
@@ -164,6 +164,10 @@ body {
   }
 }
 
+
+.rating {
+  display: inline-block;
+}
 
 .decision-rating {
     margin: 8px 0;
@@ -518,9 +522,12 @@ a {
   }
   .user-owner-content {
     width: 70%;
+    vertical-align: middle;
   }
   .user-owner-username {
-    margin: 3px 0 0 0;
+    line-height: 40px;
+    vertical-align: middle;
+    margin: 0;
   }
 }
 

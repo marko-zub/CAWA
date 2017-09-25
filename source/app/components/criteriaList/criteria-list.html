@@ -6,9 +6,9 @@
     </div>
     <div ng-if="vm.list.length">
         <div class="app-list-group" ng-repeat="group in vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
-            <h5 class="app-list-group-title app-panel-title" ng-click="group.isCollapsed = !group.isCollapsed">
+            <h5 class="app-list-group-title app-panel-title" ng-click="vm.toggleCollapse($index)">
                 {{::group.name}}
-                <div class="controls">
+                <div class="controls" ng-if="vm.collapsed">
                     <i class="fa fa-angle-up" aria-hidden="true"></i>
                 </div>
             </h5>
@@ -28,7 +28,7 @@
                             <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
                                 <div class="discussions-list-content">
                                     <div class="app-rating-inline">
-                                        <div ng-if="::(!criteria.totalVotes && vm.rating)">
+                                        <div ng-if="::(vm.rating && !criteria.weight)">
                                             <a href="#">Rate it</a>
                                         </div>
                                         <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>

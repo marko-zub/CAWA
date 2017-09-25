@@ -114,7 +114,7 @@
             _.forEach(decisions, function(decision, decisionIndex) {
                 _.forEach(decision.criteria, function(criteria) {
                     var id = '#m-criteria-' + decisionIndex + '-' + criteria.id;
-                    var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '"></rating-star>';
+                    var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '" popover-placement="bottom" uib-popover="Average vote ' + _.floor(criteria.weight, 2) + ' out of 5" popover-trigger="\'mouseenter\'"></rating-star>';
                     $(id).find('.rating').html(rating);
                     // console.log(id, rating);
                 });
