@@ -6,30 +6,69 @@
         .module('app.directives')
         .directive('dwPopover', dwPopover);
 
-    dwPopover.$inject = ['$timeout'];
+    dwPopover.$inject = ['$timeout', '$compile'];
 
-    function dwPopover($timeout) {
+    function dwPopover($timeout, $compile) {
         var directive = {
             restrict: 'A',
-            link: link
+            link: link,
+            scope: {
+                decision: '=',
+                parentDecision: '=',
+            }
         };
 
         return directive;
 
         function link($scope, $el, $attrs) {
 
-            // TODO: avoid set timeout
-            $timeout(function() {
+            var isPopoverCompiled = false;
+            var popover;
+            var popoverContentId;
+            var isPopoverHover = false;
 
+            var htmlPopover = [
+                // '<div>{{decision}}</div>',
+                '<div class="poper-wrapper">',
+                '    <div id="criteria-{{::decision.id}}" class="poper criteria-popover hide text-left">',
+                '        <div class="arrow popper__arrow" x-arrow></div>',
+                '        <div class="popover-content popover-inner">',
+                '            <criteria-compliance-popover decision="::decision" parent-decision="::parentDecision"></criteria-compliance-popover>',
+                '        </div>',
+                '    </div>',
+                '</div>'
+            ].join('\n');
+
+            // TODO: avoid set timeout
+            // $timeout(function() {
+            $el.on('mouseenter', function() {
+                if (!isPopoverCompiled) {
+                    compilePopover();
+                }
+            });
+
+            function compilePopover() {
+                $el.append(htmlPopover);
+                $compile($el.find('.poper-wrapper').contents())($scope);
+                isPopoverCompiled = true;
+                $timeout(function() {
+                    initPopover();
+
+                    // Show first time
+                    popoverContentId = $('#' + $attrs.dwPopoverId);
+                    popoverContentId.removeClass('hide');
+                    popoverContentId.addClass('in');
+
+                    initEvents();
+                }, 0, false);
+            }
+
+            function initPopover() {
                 // Create poper js
                 var reference = $el[0];
                 var popper = document.getElementById($attrs.dwPopoverId);
-                // console.log(popper)
-                if (!reference || !popper) {
-                    return;
-                }
 
-                var popover = new Popper(reference, popper, {
+                popover = new Popper(reference, popper, {
                     placement: $attrs.dwPopoverDirection || 'left',
                     modifiers: {
                         preventOverflow: {
@@ -39,39 +78,44 @@
                     }
                 });
 
+                // Compile popover on first hover
+                $el.on('mouseenter', function() {
+                    if (!isPopoverCompiled) {
+                        $el.append(htmlPopover);
+                        $compile($element.contents())($scope);
+                        isPopoverCompiled = true;
+                    }   
+                }); 
+            }
+
+            function initEvents() {
+                // TODO: avoid set timeout
+                // Minimize code for 
                 // Popover Hover on content
-                var popoverId = $('#' + $attrs.dwPopoverId);
-                var isPopoverHover = false;
-                popoverId.removeClass('hide');
-                $($el).on('mouseenter', function() {
+
+                // TODO: bad case with dependency to '.popover-ref'
+                $el.find('.popover-ref').on('mouseenter', function() {
                     if (!isPopoverHover) {
-                        popoverId.addClass('in');
-                    }
+                        popoverContentId.addClass('in');
+                    }                
                 });
-                $($el).on('mouseleave', function() {
+
+                $el.find('.popover-ref').on('mouseleave', function() {
                     $timeout(function() {
                         if (!isPopoverHover) {
-                            popoverId.removeClass('in');
+                            popoverContentId.removeClass('in');
                         }
-                    }, 150, false);
-                });
+                    }, 100, false);
+                });                
 
-                popoverId.on('mouseenter', function() {
+                popoverContentId.on('mouseenter', function() {
                     isPopoverHover = true;
                 });
-                popoverId.on('mouseleave', function() {
-                    popoverId.removeClass('in');
+                popoverContentId.on('mouseleave', function() {
+                    popoverContentId.removeClass('in');
                     isPopoverHover = false;
                 });
-
-                // // Update position
-                // popoverId.on('click', '.app-list-group-title', function () {
-                //     $timeout(function() {
-                //         popover.update();
-                //     }, 300, false);
-                // });
-
-            }, 0, false);
+            }
         }
     }
 

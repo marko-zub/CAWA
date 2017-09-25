@@ -7,8 +7,8 @@
                 </div>
             </a>
             <div class="post-content">
-                <div ng-if="::vm.parentDecision">
-                    <a ng-show="::decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent(::{id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block" dw-popover dw-popover-id="criteria-{{::decision.id}}">
+                <div ng-if="::vm.parentDecision" dw-popover dw-popover-id="criteria-{{::decision.id}}" decision="::decision" parent-decision="::vm.parentDecision" class="criteria-block-wrapper">
+                    <a ng-show="::decision.criteriaCompliancePercentage" ui-sref="decisions.single.parent(::{id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block popover-ref">
                         <div class="counters">
                             <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                             <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -17,14 +17,6 @@
                             {{ ::vm.criteriaComplianceTitle || 'Criteria compliance' | translate }}
                         </div>
                     </a>
-
-                    <!-- Popver TODO: make factory -->
-                     <div id="criteria-{{::decision.id}}" class="poper criteria-popover left hide">
-                        <div class="arrow popper__arrow" x-arrow></div>
-                        <div class="popover-content popover-inner">
-                            <criteria-compliance-popover decision="::decision" parent-decision="::vm.parentDecision"></criteria-compliance-popover>
-                        </div>
-                    </div>
                 </div>
 
                 <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>

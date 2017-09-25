@@ -28,7 +28,7 @@
                             <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
                                 <div class="discussions-list-content">
                                     <div class="app-rating-inline">
-                                        <div ng-if="::(vm.rating && !criteria.weight)">
+                                        <div ng-show="::(vm.rating && !criteria.weight)">
                                             <a href="#">Rate it</a>
                                         </div>
                                         <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>

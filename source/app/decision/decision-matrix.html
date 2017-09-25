@@ -69,29 +69,23 @@
                                                         <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive" src-error>
                                                     </div>
                                                 </div>
-                                                <div class="decision-content-block">
-                                                    <a class="decision-criteria-compilance" ng-show="item.decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})"
-                                                    dw-popover dw-popover-id="criteria-{{::item.decision.id}}" dw-popover-direction="bottom">
-                                                        <div class="text-uppercase">
-                                                            criteria score
-                                                        </div>
-                                                        <div class="counters">
-                                                            <span ng-bind="item.decision.criteriaCompliancePercentage"></span>%
-                                                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span><span ng-bind="item.decision.totalVotes"></span>
-                                                        </div>
-                                                    </a>
-
-                                                    <!-- Popver TODO: make factory -->
-                                                     <div id="criteria-{{::item.decision.id}}" class="poper criteria-popover criteria-popover-matrix text-left hide" ng-class="{ 'last': $last }">
-                                                        <div class="arrow popper__arrow" x-arrow></div>
-                                                        <div class="popover-content popover-inner">
-                                                            <criteria-compliance-popover decision="item.decision" parent-decision="::vm.parentDecision"></criteria-compliance-popover>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
                                             </div>
                                         </a>
+                                        <div class="decision-content-block">
+
+                                            <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="::vm.decision" dw-popover-direction="bottom">
+                                                <a class="decision-criteria-compilance popover-ref" ng-show="item.decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                                                    <div class="text-uppercase">
+                                                        criteria score
+                                                    </div>
+                                                    <div class="counters">
+                                                        <span ng-bind="item.decision.criteriaCompliancePercentage"></span>%
+                                                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span><span ng-bind="item.decision.totalVotes"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>                                        
                                         <div class="clearfix">
                                             <div class="info">
                                                 <span ng-show="::item.decision.description" class="link-secondary icon-info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>

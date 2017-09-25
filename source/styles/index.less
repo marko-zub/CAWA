@@ -251,6 +251,19 @@ a {
     }
   }
 }
+.criteria-block-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  & > a {
+    white-space: nowrap;
+  }
+  .criteria-block {
+    position: static;
+  }
+}
+
 .criteria-block {
   position: absolute;
   left: 0;
@@ -379,6 +392,9 @@ a {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 1200;
   transition: opacity 0.2s ease-in-out;
+  color: #242729;
+  font-size: 14px;
+  font-weight: 500;
 
   &.criteria-popover-matrix {
     transform: translate3d(-111px, 20px, 0px) !important;
@@ -386,10 +402,6 @@ a {
       transform: translate3d(-222px, 20px, 0px) !important;
     }
   }
-
-  // &.left {
-  //   margin-left: -20px;
-  // }
 
   & > .popper__arrow {
       position: absolute;
@@ -482,6 +494,10 @@ a {
   .criteria-popover-header {
     padding: 0 8px;
   }
+  .criteria-popover-header-link {
+    display: inline-block;
+    padding: 5px 7px;
+  }  
   .text {
     padding: 0 8px;
   }
