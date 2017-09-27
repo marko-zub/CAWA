@@ -30,6 +30,7 @@
                     $rootScope.decisonViewsCount = true;
                 }
                 document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             });
 
         $rootScope.breadcrumbs = true;

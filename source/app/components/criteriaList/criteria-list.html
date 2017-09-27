@@ -19,10 +19,16 @@
                             <div class="col-sm-6 bg-gray-light-2 col-pr-sm">
                                 <div class="discussions-list-content">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
-                                        <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{::criteria.name}}</a>
-                                        <span ng-switch-when="false" ng-bind="::criteria.name"></span>
+                                        <div ng-switch-when="true">
+                                            <a ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{ ::criteria.name }}</a>
+                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                        </div>
+
+                                        <div ng-switch-when="false">
+                                            {{ ::criteria.name }}
+                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                        </div>
                                     </div>
-                                    <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
@@ -31,7 +37,7 @@
                                         <div ng-show="::(vm.rating && !criteria.weight)">
                                             <a href="#">Rate it</a>
                                         </div>
-                                        <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight"></rating-star>
+                                        <rating-star class="text-left" weight="::criteria.weight" total-votes="::criteria.totalVotes" ng-show="::criteria.weight" popover-placement="bottom" uib-popover="Average vote {{ ::criteria.weight }} out of 5" popover-trigger="'mouseenter'"></rating-star>
                                     </div>
                                     <a class="discussions-link" ui-sref="decisions.single.parent.reviews(::{reviewId: criteria.id,reviewSlug: criteria.nameSlug})">
                                         <i class="fa fa-link" aria-hidden="true"></i>
@@ -46,7 +52,7 @@
     </div>
     <div class="text text-right" translate-cloak>
         {{ "Can't find the necessary criterion?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
-    </div> 
+    </div>
     <p ng-if="!vm.list.length" class="app-action-content app-action-text">
         There are no criteria yet, but you can be first to create them here.
     </p>
