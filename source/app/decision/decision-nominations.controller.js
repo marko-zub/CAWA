@@ -23,7 +23,11 @@
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
             console.log('Decision Nominations Controller');
-            getDecisionParents(vm.decision.id);
+            vm.decisionParents = vm.decision.parentDecisions;
+            if (vm.decision.totalChildDecisions > 0) {
+                vm.isDecisionsParent = true;
+                vm.decisionsSpinnerChilds = true;
+            }
             setPageData();
         }
 
@@ -41,21 +45,6 @@
                 link: null
             }];
         }
-
-        function getDecisionParents(id) {
-            DecisionDataService.getDecisionParents(id).then(function(result) {
-                // console.log(result);
-                vm.decisionParents = result;
-
-                if (vm.decision.totalChildDecisions > 0) {
-                    vm.isDecisionsParent = true;
-                    vm.decisionsSpinnerChilds = true;
-                }
-
-                return result;
-            });
-        }
-
 
     }
 })();

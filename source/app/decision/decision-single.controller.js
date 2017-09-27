@@ -42,7 +42,7 @@
             console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
-            getDecisionParents(vm.decision.id);
+            getDecisionParents(vm.decision);
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
@@ -121,33 +121,29 @@
             }
         }
 
-        function getDecisionParents(id) {
+        function getDecisionParents(decision) {
             vm.decisionsChildsLoader = true;
-            DecisionDataService.getDecisionParents(id).then(function(result) {
-                // console.log(result);
-                vm.decisionParents = result;
+            vm.decisionParents = decision.parentDecisions;
 
-                if (vm.decision.totalChildDecisions > 0) {
-                    vm.isDecisionsParent = true;
+            if (vm.decision.totalChildDecisions > 0) {
+                vm.isDecisionsParent = true;
 
-                    vm.totalCount = vm.decision.totalChildDecisions;
+                vm.totalCount = vm.decision.totalChildDecisions;
 
-                    initSortMode($stateParams.tab);
-                }
+                initSortMode($stateParams.tab);
+            }
 
-                // Recommended Decisions
-                if (vm.decisionParents.length) {
-                    vm.recommendedDecisionsListLoader = true;
-                    vm.activeRecommendedTab = {
-                        id: vm.decisionParents[0].id,
-                        name: vm.decisionParents[0].name,
-                        nameSlug: vm.decisionParents[0].nameSlug
-                    };
-                    getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
-                }
+            // Recommended Decisions
+            if (vm.decisionParents.length) {
+                vm.recommendedDecisionsListLoader = true;
+                vm.activeRecommendedTab = {
+                    id: vm.decisionParents[0].id,
+                    name: vm.decisionParents[0].name,
+                    nameSlug: vm.decisionParents[0].nameSlug
+                };
+                getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
+            }
 
-                return result;
-            });
         }
 
         function getDecisionMatrix(id, filter) {

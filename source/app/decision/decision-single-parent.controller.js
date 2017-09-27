@@ -34,16 +34,13 @@
             stateId = parseInt($stateParams.parentId);
 
             // getDecisionNomimations(vm.decision.id);
-            getDecisionParents(vm.decision.id).then(function(result) {
-                vm.parent = _.find(result, function(parent) {
-                    return parent.id === stateId;
-                });
-
-                if (!vm.parent) return;
-
-                setPageData();
+            //
+            vm.decisionParents = vm.decision.parentDecisions;
+            vm.parent = _.find(vm.decisionParents, function(parent) {
+                return parent.id === stateId;
             });
-
+            if (!vm.parent) return;
+            setPageData();
             if (vm.parent && vm.decision) {
                 setPageData();
             }
@@ -72,14 +69,6 @@
             DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
                 vm.decisions = DecisionsUtils.prepareDecisionToUI(result.decisions);
                 vm.pagination.totalDecisions = result.totalDecisions;
-            });
-        }
-
-        function getDecisionParents(id) {
-            return DecisionDataService.getDecisionParents(id).then(function(result) {
-                // console.log(result);
-                vm.decisionParents = result;
-                return result;
             });
         }
 

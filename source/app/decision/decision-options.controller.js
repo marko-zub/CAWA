@@ -45,9 +45,14 @@
             vm.navigation = navigationObj;
             initPagination();
 
-            getDecisionParents(vm.decision.id).then(function() {
-                setPageData();
-            });
+            vm.decisionParents = vm.decision.parentDecisions;
+            if (vm.decision.totalChildDecisions > 0) {
+                vm.isDecisionsParent = true;
+                initSortMode($stateParams.tab);
+            } else {
+                vm.decisionsLoader = false;
+            }
+            setPageData();
         }
 
         // TODO: Simplify logic
@@ -246,23 +251,6 @@
         }
 
 
-        function getDecisionParents(id) {
-            return DecisionDataService.getDecisionParents(id).then(function(result) {
-                // console.log(result);
-                vm.decisionParents = result;
-
-                if (vm.decision.totalChildDecisions > 0) {
-                    vm.isDecisionsParent = true;
-                    initSortMode($stateParams.tab);
-                } else {
-                    vm.decisionsLoader = false;
-                    // $state.go('decisions.single', null, {location: 'replace'});
-                    // return;
-                }
-
-                return result;
-            });
-        }
         // TODO: make component
         // Filter
         vm.clearFilterName = clearFilterName;
