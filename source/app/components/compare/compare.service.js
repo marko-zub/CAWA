@@ -44,8 +44,9 @@
             return service.decisions;
         };
 
-        service.clear = function() {
+        service.clearList = function() {
             service.decisions = [];
+            saveListStorage([]);
         };
 
     }

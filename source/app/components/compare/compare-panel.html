@@ -2,11 +2,11 @@
     <div class="container-fluid">
         <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
             <i class="fa fa-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
-            <span ng-show="vm.displayDecisions.length">({{vm.displayDecisions.length}})</span>
+            <span ng-show="vm.decisions.length">({{vm.decisions.length}})</span>
         </div>
         <div class="compare-panel">
             <!-- <select name="" id=""></select> -->
-            <div class="deicision-card" ng-repeat="decision in vm.displayDecisions">
+            <div class="deicision-card" ng-repeat="decision in vm.decisions">
                 <div class="img-container" ng-if="decision.imageUrl">
                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                 </div>
@@ -17,16 +17,12 @@
                     <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>
                 </div>
             </div>
-            <div ng-show="!vm.displayDecisions.length">
+            <div ng-show="!vm.decisions.length">
                 <h3>Nothing to Compare</h3>
                 <span>Please add decisions</span>
             </div>
-            <!--         <pre>
-            {{vm.compareList}}
-        </pre> -->
-            <!-- <compare-list list=""></compare-list> -->
         </div>
-        <div class="clearfix compare-panel-footer" ng-show="vm.displayDecisions.length > 0">
+        <div class="clearfix compare-panel-footer" ng-show="vm.decisions.length > 0">
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">Clear All</button>
                 <a href="#" class="btn btn-primary btn-sm">

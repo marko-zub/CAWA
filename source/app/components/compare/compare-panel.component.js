@@ -25,11 +25,12 @@
         vm.clearCompare = clearCompare;
         vm.$onInit = onInit;
 
-        vm.compareList = []; //Not need to be displayed
-        vm.displayDecisions = [];
+
+        vm.decisions = [];
 
 
         function onInit() {
+            vm.compareList = []; //Not need to be displayed
             // TODO: get decision matrix
             initCompareList();
         }
@@ -41,13 +42,30 @@
 
         function initCompareList() {
             vm.compareList = DecisionCompareService.getList();
-            console.log(vm.compareList);
+            getDecisions(vm.compareList);
+        }
+
+        function getDecisions(ids) {
+            if (_.isEmpty(ids)) return;
+
+            var sendData = {
+                includeCharacteristicIds: [-1],
+                includeChildDecisionIds: _.uniq(ids)
+            };
+            vm.isPanelOpen = true;
+
+            console.log(sendData);
+            // DecisionDataService.getDecisions(sendData).then(function(result) {
+            //     console.log(result);
+            //     vm.decisions = result.decisions;
+            // });
         }
 
         function clearCompare() {
             // vm.isPanelOpen = false;
             vm.compareList = []; //Not need to be displayed
-            vm.displayDecisions = [];
+            vm.decisions = [];
+            DecisionCompareService.clearList();
         }
 
         // vm.compareList = [];
@@ -57,13 +75,7 @@
             DecisionCompareService.addItem(id);
 
             initCompareList();
-
-            // console.log(data);
-            vm.displayDecisions.push(data);
-            // getDecision(id).then(function(resp) {
-            //     console.log(resp);
-            // });
-
+            vm.decisions.push(data);
             if (vm.compareList.length > 0) {
                 vm.isPanelOpen = true;
             }
@@ -75,11 +87,11 @@
             DecisionCompareService.removeItem(id);
             vm.compareList = DecisionCompareService.getList();
 
-            var findIndex = _.findIndex(vm.displayDecisions, function(decision){
+            var findIndex = _.findIndex(vm.decisions, function(decision){
                 return decision.id === id;
             });
             if(findIndex >= 0) {
-                vm.displayDecisions.splice(findIndex, 1);
+                vm.decisions.splice(findIndex, 1);
             }
         }
 
