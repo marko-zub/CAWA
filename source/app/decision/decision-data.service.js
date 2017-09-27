@@ -70,7 +70,7 @@
                 getCount: {
                     method: 'GET',
                     isArray: false
-                    // cache: true
+                        // cache: true
                 }
             }),
 
@@ -114,16 +114,12 @@
                 }
             }),
 
+            decisionViews = $resource(Config.endpointUrl + 'decisions/:id/viewings', {
+                id: '@id'
+            }),
+
             decisionInfo = $resource(decisionUrl, {
-                id: '@id',
-                    method: 'GET',
-                    isArray: true                
-            }, {
-                // cache: true
-                search: {
-                    method: 'GET',
-                    isArray: false
-                }                
+                id: '@id'
             }),
 
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
@@ -159,7 +155,8 @@
             getCriteriaGroupsById: getCriteriaGroupsById,
             getCharacteristicsGroupsById: getCharacteristicsGroupsById,
             getCharacteristicOptionsById: getCharacteristicOptionsById,
-            getDecisionInfo: getDecisionInfo,
+            postDecisionViews: postDecisionViews,
+            getDecisionsInfo: getDecisionsInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
             getDecisionAnalysis: getDecisionAnalysis,
@@ -194,11 +191,15 @@
         }
 
         function getDecisionsPropertyGroups(id) {
-            return decisionsPropertyGroups.getDecisionsPropertyGroups({ id: id }).$promise;
+            return decisionsPropertyGroups.getDecisionsPropertyGroups({
+                id: id
+            }).$promise;
         }
 
-        function getDecisionsProperties (id) {
-            return decisionsProperties.getDecisionsProperties({ id: id }).$promise;
+        function getDecisionsProperties(id) {
+            return decisionsProperties.getDecisionsProperties({
+                id: id
+            }).$promise;
         }
 
         function getCriteriaGroupsById(id) {
@@ -213,11 +214,13 @@
             }, data).$promise;
         }
 
-        function getDecisionInfo(id, enableViews) {
-            enableViews = enableViews !== false ? true : false;
+        function postDecisionViews(id) {
+            return decisionViews.save({id: id}).$promise;
+        }
+
+        function getDecisionsInfo(id) {
             return decisionInfo.query({
                 id: id,
-                views: enableViews
             }).$promise;
         }
 

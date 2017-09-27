@@ -230,8 +230,11 @@
 
     function DecisionResolver(DecisionDataService, $stateParams, $state, msg, $rootScope) {
         var id = $stateParams.id;
-
-        return DecisionDataService.getDecisionInfo(id, $rootScope.decisonViewsCount).then(function(result) {
+        if ($rootScope.decisonViewsCount !== false) {
+            // Send views
+            DecisionDataService.postDecisionViews(id);
+        }
+        return DecisionDataService.getDecisionsInfo(id).then(function(result) {
             if (result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;

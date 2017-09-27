@@ -48,12 +48,11 @@
         function getDecisions(ids) {
             if (_.isEmpty(ids)) return;
 
-            var sendData = {
-                includeCharacteristicIds: [-1],
-                includeChildDecisionIds: _.uniq(ids)
-            };
-            // vm.isPanelOpen = true;
-
+            var sendIds = _.uniq(ids);
+            DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(result) {
+               vm.decisions = result; 
+               vm.isPanelOpen = true;
+            });
             // console.log(sendData);
             // DecisionDataService.getDecisions(sendData).then(function(result) {
             //     console.log(result);
@@ -96,7 +95,7 @@
         }
 
         function getDecision(id) {
-            return DecisionDataService.getDecisionInfo(id, false);
+            return DecisionDataService.getDecisionsInfo(id, false);
         }
     }
 })();

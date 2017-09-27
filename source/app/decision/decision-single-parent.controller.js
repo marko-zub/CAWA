@@ -40,7 +40,7 @@
                 return parent.id === stateId;
             });
             if (!vm.parent) return;
-            setPageData();
+
             if (vm.parent && vm.decision) {
                 setPageData();
             }
