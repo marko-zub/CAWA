@@ -100,6 +100,7 @@
 
             // TODO: fix return obj
             // CASE Visual Mode
+            // Clean up and simplify cases
             var compile = false;
             var result = '';
 
@@ -110,39 +111,41 @@
                 compile = true;
             } else {
                 // console.log(type.toUpperCase(), visualMode);
-                switch (type.toUpperCase()) {
-                    case "STRING":
-                        result = stringFullDescr(value).result;
-                        compile = stringFullDescr(value).compile;
-                        break;
-                    case "DATETIME":
-                        result = contentFormaterDate(value, visualMode);
-                        break;
-                    case "STRINGARRAY":
-                        result = contentFormaterArray(value);
-                        compile = true;
-                        break;
-                    case "INTEGERARRAY":
-                        result = contentFormaterArray(value);
-                        compile = true;
-                        break;
-                    case "BOOLEAN":
-                        result = contentFormaterBool(value);
-                        break;
-                    case "LINK":
-                        result = contentFormaterLink(value);
-                        break;
-                    case "PRICE":
-                        result = contentFormaterPrice(value);
-                        break;
-                    default:
-                        result = value || '';
-                }
-                if (description)
-                    result += '<div class="description">' + description + '</div>';
-
+                //
                 if (visualMode && visualMode.toUpperCase() === 'LINK') {
-                    result = contentFormaterLink(result);
+                    result = contentFormaterLink(value);
+                }
+                else {
+                    switch (type.toUpperCase()) {
+                        case "STRING":
+                            result = stringFullDescr(value).result;
+                            compile = stringFullDescr(value).compile;
+                            break;
+                        case "DATETIME":
+                            result = contentFormaterDate(value, visualMode);
+                            break;
+                        case "STRINGARRAY":
+                            result = contentFormaterArray(value);
+                            compile = true;
+                            break;
+                        case "INTEGERARRAY":
+                            result = contentFormaterArray(value);
+                            compile = true;
+                            break;
+                        case "BOOLEAN":
+                            result = contentFormaterBool(value);
+                            break;
+                        case "LINK":
+                            result = contentFormaterLink(value);
+                            break;
+                        case "PRICE":
+                            result = contentFormaterPrice(value);
+                            break;
+                        default:
+                            result = value || '';
+                    }
+                    if (description)
+                        result += '<div class="description">' + description + '</div>';
                 }
             }
 

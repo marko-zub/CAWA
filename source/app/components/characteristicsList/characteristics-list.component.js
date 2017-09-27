@@ -12,6 +12,7 @@
                 links: '<',
                 comments: '<',
                 rating: '<',
+                collapsed: '<',
                 discussion: '<'
             },
             controller: 'CharacteristicsListController',
@@ -31,6 +32,13 @@
             if(!!vm.comments) vm.comments = false;
             if (!vm.rating) vm.rating = false;
             if(vm.discussion !== true) vm.discussion = false;
+            if (vm.collapsed !== false) vm.collapsed = true;
+        }
+
+        vm.toggleCollapse = toggleCollapse;
+        function toggleCollapse(index) {
+            if (vm.collapsed === false) return;
+            vm.list[index].isCollapsed = !vm.list[index].isCollapsed;
         }
     }
 })();

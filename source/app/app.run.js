@@ -29,6 +29,7 @@
                 } else {
                     $rootScope.decisonViewsCount = true;
                 }
+                document.body.scrollTop = 0;
             });
 
         $rootScope.breadcrumbs = true;
@@ -67,7 +68,7 @@
         }
 
         if ($(window).width() > 1024) {
-            $(window).scroll(_.throttle(headerClass, 500));
+            $(window).scroll(_.throttle(headerClass, 300));
         }
 
     }
