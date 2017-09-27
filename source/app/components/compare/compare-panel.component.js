@@ -52,9 +52,9 @@
                 includeCharacteristicIds: [-1],
                 includeChildDecisionIds: _.uniq(ids)
             };
-            vm.isPanelOpen = true;
+            // vm.isPanelOpen = true;
 
-            console.log(sendData);
+            // console.log(sendData);
             // DecisionDataService.getDecisions(sendData).then(function(result) {
             //     console.log(result);
             //     vm.decisions = result.decisions;

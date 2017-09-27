@@ -115,9 +115,15 @@
             }),
 
             decisionInfo = $resource(decisionUrl, {
-                id: '@id'
+                id: '@id',
+                    method: 'GET',
+                    isArray: true                
             }, {
                 // cache: true
+                search: {
+                    method: 'GET',
+                    isArray: false
+                }                
             }),
 
             decisionCharacteristics = $resource(decisionUrl + '/decisions/:childId/characteristics', {
@@ -209,7 +215,7 @@
 
         function getDecisionInfo(id, enableViews) {
             enableViews = enableViews !== false ? true : false;
-            return decisionInfo.get({
+            return decisionInfo.query({
                 id: id,
                 views: enableViews
             }).$promise;

@@ -240,7 +240,7 @@
                 $state.go('404');
             }
 
-            return result;
+            return result[0];
         }).catch(function() {
             $state.go('404');
         });
