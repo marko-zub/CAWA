@@ -154,6 +154,9 @@
         // SLUG for Decision page firt time call
         // var decisionSlug = result.nameSlug ? result.nameSlug : '';
 
+        if ($stateParams.id !== result.id) {
+            $stateParams.id = result.id;
+        }
         // if ($stateParams.slug === null ||
         //     $stateParams.slug === 'comparison' ||
         //     $stateParams.slug === 'list') {
@@ -229,13 +232,13 @@
     DecisionResolver.$inject = ['DecisionDataService', '$stateParams', '$state', 'MsgService', '$rootScope'];
 
     function DecisionResolver(DecisionDataService, $stateParams, $state, msg, $rootScope) {
-        var id = $stateParams.id;
+        var id = parseInt($stateParams.id);
         if ($rootScope.decisonViewsCount !== false) {
             // Send views
             DecisionDataService.postDecisionViews(id);
         }
         return DecisionDataService.getDecisionsInfo(id).then(function(result) {
-            if (result.error && result.error.code === 404) {
+            if (_.isEmpty(result) || result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;
                 msg.error(errorMsg);
