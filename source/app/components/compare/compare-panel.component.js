@@ -73,7 +73,7 @@
             var id = data.id;
             DecisionCompareService.addItem(id);
 
-            initCompareList();
+            // initCompareList();
             vm.decisions.push(data);
             if (vm.compareList.length > 0) {
                 vm.isPanelOpen = true;
