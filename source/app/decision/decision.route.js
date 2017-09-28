@@ -86,7 +86,7 @@
                     controllerAs: 'vm',
                 }
             }
-        })        
+        })
 
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {

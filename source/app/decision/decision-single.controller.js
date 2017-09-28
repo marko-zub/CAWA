@@ -97,12 +97,13 @@
         // TODO: Simplify logic
         function initSortMode(mode) {
 
-            var find = _.find(navigationObj, function(navItem) {
+            var findIndex = _.findIndex(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
-            if (find && find.key !== 'topRated') {
-                vm.tabMode = find.value;
+            if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
+                vm.tabMode = navigationObj[findIndex].value;
                 getDecisionMatrix(vm.decision.id);
+                vm.activeTabSort = findIndex;
                 // Hide criterias
                 vm.criteriaGroups = [];
             } else {
@@ -110,7 +111,7 @@
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
                     getDecisionMatrix(vm.decision.id);
                 });
-                vm.activeTabSort = 1;
+                vm.activeTabSort = 0;
 
                 $state.params.tab = null;
                 $state.transitionTo($state.current.name, $state.params, {
@@ -398,6 +399,13 @@
         function addToCompareList(decision) {
             DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
             decision.isInCompareList = true;
+        }
+
+        // Change tab by click without reload page
+        vm.changeOptionTab = changeOptionTab;
+
+        function changeOptionTab(key) {
+            initSortMode(key);
         }
 
     }
