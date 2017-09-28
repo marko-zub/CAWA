@@ -238,14 +238,13 @@
             DecisionDataService.postDecisionViews(id);
         }
 
-        var decisionPromise;
+        // TODO: make each route new resolver
+        var params = { fetchParentDecisions: true };
         if ($rootScope.decisonFull) {
-            decisionPromise = DecisionDataService.getDecisionInfoFull(id);
-        } else {
-            decisionPromise = DecisionDataService.getDecisionsInfo(id);
+            params = { fetchOwnerUsers: true, fetchParentDecisions: true, fetchFollowingDecisions: true, fetchMedia: true };
         }
 
-        return decisionPromise.then(function(result) {
+        return DecisionDataService.getDecisionInfoFull(id, params).then(function(result) {
             if (_.isEmpty(result) || result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;

@@ -5,9 +5,9 @@
         .module('app')
         .run(runBlock);
 
-    runBlock.$inject = ['$rootScope', '$state', '$location', 'Config', 'translateFilter', '$translate', '$localStorage', 'TranslateConstant'];
+    runBlock.$inject = ['$rootScope', '$state', '$stateParams', '$location', 'Config', 'translateFilter', '$translate', '$localStorage', 'TranslateConstant'];
 
-    function runBlock($rootScope, $state, $location, Config, translateFilter, $translate, $localStorage, TranslateConstant) {
+    function runBlock($rootScope, $state, $stateParams, $location, Config, translateFilter, $translate, $localStorage, TranslateConstant) {
         var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
 
@@ -33,8 +33,19 @@
 
                 $rootScope.decisonFull = false;
                 // Get full deciison
-                if(toState.name === 'decisions.single') {
+                if($state.current.name !== toState.name && toState.name === 'decisions.single') {
                     $rootScope.decisonFull = true;
+                    // event.preventDefault();
+                    debugger
+                    $state.transitionTo(toState.name, toParams, {
+                        notify: false,
+                        reload: true,
+                    });
+
+
+
+                    // $state.reload();
+                    // event.preventDefault();
                 }
 
                 // Scroll to top page after change url

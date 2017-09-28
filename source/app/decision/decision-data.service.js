@@ -119,13 +119,13 @@
 
             decisionInfoFull = $resource(decisionUrl, {
                 id: '@id',
-                fetchOwnerUsers: true,
-                fetchParentDecisions: true,
-                fetchFollowingDecisions: true,
-                fetchMedia: true
+                fetchOwnerUsers: '@fetchOwnerUsers',
+                fetchParentDecisions: '@fetchParentDecisions',
+                fetchFollowingDecisions: '@fetchFollowingDecisions',
+                fetchMedia: '@fetchMedia'
             }),
 
-            decisionInfo = $resource(decisionUrl, {
+            decisionsInfo = $resource(decisionUrl, {
                 id: '@id'
             }),
 
@@ -229,15 +229,22 @@
         }
 
         function getDecisionsInfo(id) {
-            return decisionInfo.query({
+            return decisionsInfo.query({
                 id: id,
             }).$promise;
         }
 
-        function getDecisionInfoFull(id) {
-            return decisionInfoFull.query({
-                id: id,
-            }).$promise;
+        function getDecisionInfoFull(id, params) {
+            var sendParams = {
+                id: id
+            }
+
+            if (params.fetchOwnerUsers) { sendParams.fetchOwnerUsers = params.fetchOwnerUsers; }
+            if (params.fetchParentDecisions) { sendParams.fetchParentDecisions = params.fetchParentDecisions; }
+            if (params.fetchFollowingDecisions) { sendParams.fetchFollowingDecisions = params.fetchFollowingDecisions; }
+            if (params.fetchMedia) { sendParams.fetchMedia = params.fetchMedia; }
+
+            return decisionInfoFull.query(sendParams).$promise;
         }
 
         function getDecisionCharacteristics(id, childId) {
