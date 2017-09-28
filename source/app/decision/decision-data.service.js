@@ -119,12 +119,10 @@
 
             decisionInfoFull = $resource(decisionUrl, {
                 id: '@id',
-                params: {
-                    fetchOwnerUsers: true,
-                    fetchParentDecisions:true,
-                    fetchFollowingDecisions:true,
-                    fetchMedia:true
-                }
+                fetchOwnerUsers: true,
+                fetchParentDecisions: true,
+                fetchFollowingDecisions: true,
+                fetchMedia: true
             }),
 
             decisionInfo = $resource(decisionUrl, {
@@ -225,7 +223,9 @@
         }
 
         function postDecisionViews(id) {
-            return decisionViews.save({id: id}).$promise;
+            return decisionViews.save({
+                id: id
+            }).$promise;
         }
 
         function getDecisionsInfo(id) {

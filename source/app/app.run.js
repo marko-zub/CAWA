@@ -31,7 +31,7 @@
                 }
 
 
-                $rootScope.decisonFull = true;
+                $rootScope.decisonFull = false;
                 // Get full deciison
                 if(toState.name === 'decisions.single') {
                     $rootScope.decisonFull = true;
