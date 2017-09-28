@@ -33,19 +33,8 @@
 
                 $rootScope.decisonFull = false;
                 // Get full deciison
-                if($state.current.name !== toState.name && toState.name === 'decisions.single') {
+                if(toState.name === 'decisions.single') {
                     $rootScope.decisonFull = true;
-                    // event.preventDefault();
-                    debugger
-                    $state.transitionTo(toState.name, toParams, {
-                        notify: false,
-                        reload: true,
-                    });
-
-
-
-                    // $state.reload();
-                    // event.preventDefault();
                 }
 
                 // Scroll to top page after change url

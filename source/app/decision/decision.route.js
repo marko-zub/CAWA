@@ -47,7 +47,6 @@
                     controllerAs: 'vm',
                 }
             },
-            resolve: {},
             params: {
                 page: {
                     value: null,
@@ -220,7 +219,6 @@
                         // inherit: true,
                         location: true
                     });
-                    // debugger
                 }
 
                 //unsubscribe event listener

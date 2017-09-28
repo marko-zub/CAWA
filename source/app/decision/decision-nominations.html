@@ -9,19 +9,19 @@
 			<!-- TODO: make as dynamic navigation -->
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li>
-                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})">{{ 'General Info' | translate }}</a>
+                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                 </li>
                 <li ng-if="::vm.decisionParents.length" ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                 </li>
                 <li>
-                    <a ui-sref="decisions.single.reviews">{{ 'Reviews' | translate }}</a>
+                    <a ui-sref="decisions.single.reviews"  translate-cloak>{{ 'Reviews' | translate }}</a>
                 </li>
                 <li>
-                    <a ui-sref="decisions.single.options">{{ 'Options' | translate }}</a>
+                    <a ui-sref="decisions.single.options"  translate-cloak>{{ 'Options' | translate }}</a>
                 </li>
                 <li class="active">
-                    <a ui-sref="decisions.single.nominations({tab: null})">{{ 'Nominations' | translate }}</a>
+                    <a ui-sref="decisions.single.nominations({tab: null})"  translate-cloak>{{ 'Nominations' | translate }}</a>
                 </li>
             </ul>
         </div>

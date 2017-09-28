@@ -237,7 +237,7 @@
         function getDecisionInfoFull(id, params) {
             var sendParams = {
                 id: id
-            }
+            };
 
             if (params.fetchOwnerUsers) { sendParams.fetchOwnerUsers = params.fetchOwnerUsers; }
             if (params.fetchParentDecisions) { sendParams.fetchParentDecisions = params.fetchParentDecisions; }
