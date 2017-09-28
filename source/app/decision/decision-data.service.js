@@ -70,7 +70,6 @@
                 getCount: {
                     method: 'GET',
                     isArray: false
-                        // cache: true
                 }
             }),
 
@@ -118,6 +117,16 @@
                 id: '@id'
             }),
 
+            decisionInfoFull = $resource(decisionUrl, {
+                id: '@id',
+                params: {
+                    fetchOwnerUsers: true,
+                    fetchParentDecisions:true,
+                    fetchFollowingDecisions:true,
+                    fetchMedia:true
+                }
+            }),
+
             decisionInfo = $resource(decisionUrl, {
                 id: '@id'
             }),
@@ -156,6 +165,7 @@
             getCharacteristicsGroupsById: getCharacteristicsGroupsById,
             getCharacteristicOptionsById: getCharacteristicOptionsById,
             postDecisionViews: postDecisionViews,
+            getDecisionInfoFull: getDecisionInfoFull,
             getDecisionsInfo: getDecisionsInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
@@ -220,6 +230,12 @@
 
         function getDecisionsInfo(id) {
             return decisionInfo.query({
+                id: id,
+            }).$promise;
+        }
+
+        function getDecisionInfoFull(id) {
+            return decisionInfoFull.query({
                 id: id,
             }).$promise;
         }

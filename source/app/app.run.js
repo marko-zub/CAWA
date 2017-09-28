@@ -29,6 +29,15 @@
                 } else {
                     $rootScope.decisonViewsCount = true;
                 }
+
+
+                $rootScope.decisonFull = true;
+                // Get full deciison
+                if(toState.name === 'decisions.single') {
+                    $rootScope.decisonFull = true;
+                }
+
+                // Scroll to top page after change url
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             });

@@ -237,7 +237,15 @@
             // Send views
             DecisionDataService.postDecisionViews(id);
         }
-        return DecisionDataService.getDecisionsInfo(id).then(function(result) {
+
+        var decisionPromise;
+        if ($rootScope.decisonFull) {
+            decisionPromise = DecisionDataService.getDecisionInfoFull(id);
+        } else {
+            decisionPromise = DecisionDataService.getDecisionsInfo(id);
+        }
+
+        return decisionPromise.then(function(result) {
             if (_.isEmpty(result) || result.error && result.error.code === 404) {
                 console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;
