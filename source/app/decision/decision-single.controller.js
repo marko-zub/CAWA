@@ -134,7 +134,7 @@
             }
 
             // Recommended Decisions
-            if (vm.decisionParents.length) {
+            if (vm.decisionParents && vm.decisionParents.length) {
                 vm.recommendedDecisionsListLoader = true;
                 vm.activeRecommendedTab = {
                     id: vm.decisionParents[0].id,

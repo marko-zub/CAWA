@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils) {
         var
             vm = this;
 
@@ -50,7 +50,7 @@
 
             var sendIds = _.uniq(ids);
             DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(result) {
-               vm.decisions = result; 
+               vm.decisions = DecisionsUtils.prepareDecisionToUI(result);
                vm.isPanelOpen = true;
             });
             // console.log(sendData);
