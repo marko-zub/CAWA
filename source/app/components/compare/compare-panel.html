@@ -5,9 +5,8 @@
             <span ng-show="vm.decisions.length">({{vm.decisions.length}})</span>
         </div>
         <div class="compare-panel">
-            <!-- <select name="" id=""></select> -->
-            <div class="deicision-card" ng-repeat="decision in vm.decisions">
-                <div class="img-container" ng-if="decision.imageUrl">
+            <div class="deicision-card" ng-repeat="decision in vm.decisions track by $index">
+                <div class="img-container">
                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
                 </div>
                 <div>
@@ -17,10 +16,12 @@
                     <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>
                 </div>
             </div>
-            <div ng-show="!vm.decisions.length">
+
+            <div ng-show="!vm.list.length">
                 <h3>Nothing to Compare</h3>
                 <span>Please add decisions</span>
             </div>
+            <!-- <compare-list list="vm.decisions"></compare-list> -->
         </div>
         <div class="clearfix compare-panel-footer" ng-show="vm.decisions.length > 0">
             <div class="pull-right">

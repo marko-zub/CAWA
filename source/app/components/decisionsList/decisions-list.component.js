@@ -30,8 +30,7 @@
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
-        var decisionsHeight = 97;
-        // TODO: avoid height
+        var decisionsHeight = 97; // TODO: avoid height
 
         // TODO: break out to recommend list component
 
@@ -71,69 +70,24 @@
                 pickCompareDeicisions();
             }
             if (vm.criteriaList === true ) {
-                // mergeCriteriaDecisions(vm.list, vm.criteriaGroupsList);
                 _.forEach(vm.list, function (decision, index) {
                     // decision
-                    vm.list[index].criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
+                    vm.list[index].criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decision.criteria, vm.criteriaGroupsList) || {};
                     vm.list[index].criteriaGroups.totalVotes = _.sumBy(decision.criteria, 'totalVotes');
                 });
-                // console.log(vm.list, vm.criteriaGroupsList);
             }
         }
-
-        vm.addToCompareList = addToCompareList;
-
-        function addToCompareList(decision) {
-            DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
-            decision.isInCompareList = true;
-        }
-
-        function mergeCriteriaDecision(decision, criteriaGroupsArray) {
-            var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);
-            var currentDecisionCriteria = angular.copy(decision.criteria);
-            return _.filter(criteriaGroupsArrayCopy, function(resultEl) {
-                _.filter(resultEl.criteria, function(el) {
-
-                    var elEqual = _.find(currentDecisionCriteria, {
-                        id: el.id
-                    });
-
-                    if (elEqual) return _.merge(el, elEqual);
-                });
-
-                if (resultEl.criteria.length > 0) return resultEl;
+      
+        //Subscribe to notification events
+        DecisionCompareNotificationService.subscribeRemoveDecisionCompare(function(event, data) {
+            if (data.id <= 0) return;
+            var findIndex = _.findIndex(vm.list, function(decision){
+                return decision.id === data.id;
             });
-        }
+            if (findIndex >= 0) {
+                vm.list[findIndex].isInCompareList = false;
+            }
+        });  
 
-        vm.popoverContent = popoverContent;
-
-        function popoverContent(id) {
-            return $('#criteria-'+id).html();
-        }
-
-        // TODO: maybe create some factory for popups ...
-        // Discover this Angular Ui popover
-        // vm.popoverContentDynamic = popoverContentDynamic;
-
-        // // TODO: use template cache
-        // var popoverTemplate;
-        // $templateRequest("app/components/decisionsList/criteria-compliance-popover.html").then(function(html) {
-        //     popoverTemplate = html;
-        // });
-
-        // function popoverContentDynamic(index, obj) {
-        //     console.log(vm.list[index]);
-        //     var decision = angular.copy(obj);
-        //     if (!decision.renderPopup) {
-        //         decision.criteriaGroups = mergeCriteriaDecision(decision, vm.criteriaGroupsList) || {};
-        //         decision.criteriaGroups.totalVotes = _.sumBy(decision.criteria, 'totalVotes');
-        //         decision.renderPopup = true;
-        //     }
-        //     obj = angular.copy(decision);
-        //     $scope.$apply();
-        //     console.log(obj);
-        //     // debugger
-        //     // return $('#decision-' + index).html();
-        // }
     }
 })();

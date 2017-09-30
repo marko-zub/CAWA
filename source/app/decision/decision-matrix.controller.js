@@ -3,12 +3,12 @@
     angular.module('app.decision').controller('DecisionMatrixController', DecisionMatrixController);
     DecisionMatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', 'decisionBasicInfo', '$rootScope', '$scope', 'DecisionCriteriaCoefficientsConstant',
-        '$uibModal', '$sce', 'Utils', 'DiscussionsNotificationService', 'Config'
+        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'Config'
     ];
 
     function DecisionMatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, decisionBasicInfo, $rootScope, $scope, DecisionCriteriaCoefficientsConstant,
-        $uibModal, $sce, Utils, DiscussionsNotificationService, Config) {
+        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, Config) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -572,11 +572,11 @@
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
                 }
-                if (decisionMatrixEl.criteria) {
+                // if (decisionMatrixEl.criteria) {
                     decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
-                    decisionMatrixEl.decision.criteriaGroups = mergeCriteriaDecision(decisionMatrixEl.decision, criteriaGroupsSelected) || {};
+                    decisionMatrixEl.decision.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixEl.decision.criteria, criteriaGroupsSelected) || {};
                     decisionMatrixEl.decision.criteriaGroups.totalVotes = _.sumBy(decisionMatrixEl.decision.criteria, 'totalVotes');
-                }
+                // }
 
                 return _.pick(decisionMatrixEl, 'decision');
             });
@@ -889,23 +889,6 @@
                 return group;
             });
             return criteriaSelected;
-        }
-
-        function mergeCriteriaDecision(decision, criteriaGroupsArray) {
-            var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);
-            var currentDecisionCriteria = angular.copy(decision.criteria);
-            return _.filter(criteriaGroupsArrayCopy, function(resultEl) {
-                _.filter(resultEl.criteria, function(el) {
-
-                    var elEqual = _.find(currentDecisionCriteria, {
-                        id: el.id
-                    });
-
-                    if (elEqual) return _.merge(el, elEqual);
-                });
-
-                if (resultEl.criteria.length > 0) return resultEl;
-            });
         }
     }
 })();

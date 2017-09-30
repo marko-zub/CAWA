@@ -1,0 +1,23 @@
+<!-- Recommended Start -->
+<div class="recommended-list" translate-cloak>
+    <h4>{{ "Recommended" | translate }}</h4>
+
+    <div class="nav-tabs-wrapper tabs-left">
+        <ul class="nav nav-tabs nav-tabs-sm">
+            <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
+            </li>
+        </ul>
+        <div class="pull-right text-header">
+            <a ui-sref="decisions.single.options({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all" translate-cloak>
+                {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+            </a>
+        </div>
+    </div>
+
+    <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
+
+    <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+
+</div>
+<!-- End Recommended Start -->

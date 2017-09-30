@@ -27,10 +27,9 @@
         };
 
         // Public
-        service.addItem = function(id) {
+        service.addItem = function(id, parentId) {
             Utils.addItemToArray(id, service.decisions);
             saveListStorage(service.decisions);
-            // console.log(service.decisions);
         };
 
         service.removeItem = function(id) {

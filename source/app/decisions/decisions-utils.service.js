@@ -34,8 +34,28 @@
             });
         }
 
+        var emptyCriteria = { weight: 0, totalVotes: 0 };
+        function mergeCriteriaDecision(currentDecisionCriteria, criteriaGroupsArray) {
+            var currentDecisionCriteriaCopy = angular.copy(currentDecisionCriteria);
+            var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);
+
+            return _.filter(criteriaGroupsArrayCopy, function(resultEl) {
+               _.filter(resultEl.criteria, function(el) {
+
+                    var elEqual = _.find(currentDecisionCriteriaCopy, {
+                        id: el.id
+                    });
+
+                    if (elEqual) return _.merge(el, elEqual);
+                });
+
+                if (resultEl.criteria.length >= 0) return resultEl;
+            });
+        }        
+
         return {
             prepareDecisionToUI: prepareDecisionToUI,
+            mergeCriteriaDecision: mergeCriteriaDecision
         };
     }
 })();

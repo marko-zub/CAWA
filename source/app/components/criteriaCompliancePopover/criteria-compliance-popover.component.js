@@ -6,7 +6,7 @@
         .module('app.components')
         .controller('DecisionsListCriteriaComplianceController', DecisionsListCriteriaComplianceController)
         .component('criteriaCompliancePopover', {
-            templateUrl: 'app/components/decisionsList/criteria-compliance-popover.html',
+            templateUrl: 'app/components/criteriaCompliancePopover/criteria-compliance-popover.html',
             bindings: {
                 decision: '<',
                 parentDecision: '<',

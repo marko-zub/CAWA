@@ -8,12 +8,12 @@
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config', 'DecisionCompareNotificationService'
+        'Config'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config, DecisionCompareNotificationService) {
+        Config) {
 
         var
             vm = this;
@@ -149,6 +149,7 @@
         }
 
         function getDecisionMatrix(id, filter) {
+            vm.decisionsChildsLoaderRequest = true;
             var sendData = {};
             var pagination = _.clone(vm.pagination);
 
@@ -178,6 +179,7 @@
                 vm.decisions = [];
                 vm.decisions = filterDecisionList(result.decisionMatrixs);
                 vm.decisionsChildsLoader = false;
+                vm.decisionsChildsLoaderRequest = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
@@ -393,13 +395,6 @@
                 list.push(item.decision);
             });
             return list;
-        }
-
-        vm.addToCompareList = addToCompareList;
-
-        function addToCompareList(decision) {
-            DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
-            decision.isInCompareList = true;
         }
 
         // Change tab by click without reload page

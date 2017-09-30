@@ -1,3 +1,19 @@
-<div>
-	list
+<div class="deicision-card" ng-repeat="decision in vm.list track by decision.id">
+    <div class="img-container">
+        <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
+    </div>
+    <div>
+        <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
+    </div>
+    <div class="app-controls">
+        <i ng-click="vm.removeFromCompareList(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>
+    </div>
+    <pre>
+    	{{ decision | json }}
+    </pre>
+</div>
+
+<div ng-show="!vm.list.length">
+    <h3>Nothing to Compare</h3>
+    <span>Please add decisions</span>
 </div>

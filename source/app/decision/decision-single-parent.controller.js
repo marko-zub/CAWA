@@ -107,7 +107,7 @@
                 sendData.sortCriteriaIds = criteriaIds;
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    vm.criteriaGroups = mergeCriteriaDecisions(resp, values[0]);
+                    vm.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
 
                     vm.criteriaGroups.totalVotes = _.sumBy(vm.criteriaGroups, function(group) {
                         return _.sumBy(group.criteria, 'totalVotes');
@@ -129,24 +129,6 @@
                 return result;
             });
         }
-
-        function mergeCriteriaDecisions(decisions, criteriaGroupsArray) {
-            var currentDecisionCriteria = decisions.decisionMatrixs[0].criteria;
-            return _.filter(criteriaGroupsArray, function(resultEl) {
-                _.filter(resultEl.criteria, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-
-                    var elEqual = _.find(currentDecisionCriteria, {
-                        id: el.id
-                    });
-
-                    if (elEqual) return _.merge(el, elEqual);
-                });
-
-                if (resultEl.criteria.length > 0) return resultEl;
-            });
-        }
-
 
         function getCharacteristicsGroupsById(id, characteristicsArray) {
             return DecisionDataService.getCharacteristicsGroupsById(id, {

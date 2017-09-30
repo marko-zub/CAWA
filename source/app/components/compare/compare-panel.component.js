@@ -24,14 +24,11 @@
         vm.togglePanel = togglePanel;
         vm.clearCompare = clearCompare;
         vm.$onInit = onInit;
-
-
         vm.decisions = [];
-
+        var compareList = [];
 
         function onInit() {
-            vm.compareList = []; //Not need to be displayed
-            // TODO: get decision matrix
+            compareList = []; //Not need to be displayed
             initCompareList();
         }
 
@@ -41,8 +38,8 @@
         }
 
         function initCompareList() {
-            vm.compareList = DecisionCompareService.getList();
-            getDecisions(vm.compareList);
+            compareList = DecisionCompareService.getList();
+            getDecisions(compareList);
         }
 
         function getDecisions(ids) {
@@ -53,49 +50,42 @@
                vm.decisions = DecisionsUtils.prepareDecisionToUI(result);
                vm.isPanelOpen = true;
             });
-            // console.log(sendData);
-            // DecisionDataService.getDecisions(sendData).then(function(result) {
-            //     console.log(result);
-            //     vm.decisions = result.decisions;
-            // });
         }
 
         function clearCompare() {
             // vm.isPanelOpen = false;
-            vm.compareList = []; //Not need to be displayed
+            compareList = []; //Not need to be displayed
             vm.decisions = [];
             DecisionCompareService.clearList();
         }
 
-        // vm.compareList = [];
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeUpdateDecisionCompare(function(event, data) {
+            console.log(data);
+            var parentId = data.parentDecision.id;
             var id = data.id;
-            DecisionCompareService.addItem(id);
-
-            // initCompareList();
+            DecisionCompareService.addItem(id, parentId);
             vm.decisions.push(data);
-            if (vm.compareList.length > 0) {
-                vm.isPanelOpen = true;
-            }
+            if (compareList.length > 0) vm.isPanelOpen = true;
         });
+
+        function getDecision(id) {
+            return DecisionDataService.getDecisionsInfo(id, false);
+        }
 
         vm.removeFromCompareList = removeFromCompareList;
 
         function removeFromCompareList(id) {
             DecisionCompareService.removeItem(id);
-            vm.compareList = DecisionCompareService.getList();
+            compareList = DecisionCompareService.getList();
 
             var findIndex = _.findIndex(vm.decisions, function(decision){
                 return decision.id === id;
             });
-            if(findIndex >= 0) {
+            if (findIndex >= 0) {
+                DecisionCompareNotificationService.notifyRemoveDecisionCompare(vm.decisions[findIndex]);
                 vm.decisions.splice(findIndex, 1);
             }
-        }
-
-        function getDecision(id) {
-            return DecisionDataService.getDecisionsInfo(id, false);
-        }
+        }        
     }
 })();

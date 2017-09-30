@@ -39,16 +39,6 @@
                     </div>
                 </div>
 
-                <!-- <a ui-sref="decisions.single.parent({id:decision.id, slug: decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, tab: null})" class="criteria-block" ng-show="decision.criteriaCompliancePercentage">
-                    <div class="counters">
-                        <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
-                        <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
-                    </div>
-                    <div class="text-uppercase">
-                        criteria score
-                    </div>
-                </a> -->
-
                 <div class="row">
                     <div class="col-sm-6">
 
@@ -78,7 +68,8 @@
 
             </div>
         </div>
-
+    
+        <!-- TODO: move to component -->
         <!-- Recommended Start -->
         <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
             <h4>{{ "Recommended" | translate }}</h4>
@@ -105,7 +96,4 @@
 
     </div>
 
-<!--     <hr>
-    <h3>{{ 'Comments' | translate }}</h3>
-    <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments> -->
 </div>

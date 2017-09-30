@@ -15,9 +15,11 @@
         var service = {
             // Subscribe
             subscribeUpdateDecisionCompare: subscribeUpdateDecisionCompare,
+            subscribeRemoveDecisionCompare: subscribeRemoveDecisionCompare,
 
             // Notify
             notifyUpdateDecisionCompare: notifyUpdateDecisionCompare,
+            notifyRemoveDecisionCompare: notifyRemoveDecisionCompare,
         };
 
         return service;
@@ -42,11 +44,17 @@
         function subscribeUpdateDecisionCompare(callback) {
             subscribe('updateDecisionCompareList', callback);
         }
+        function subscribeRemoveDecisionCompare(callback) {
+            subscribe('removeDecisionCompareList', callback);
+        }        
 
         // Emitters
         function notifyUpdateDecisionCompare(data) {
             emit('updateDecisionCompareList', data);
         }
+        function notifyRemoveDecisionCompare(data) {
+            emit('removeDecisionCompareList', data);
+        }        
 
     }
 })();
