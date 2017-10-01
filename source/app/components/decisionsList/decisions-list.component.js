@@ -40,16 +40,21 @@
             vm.decisionsList = vm.list;
             if (vm.compare !== true) vm.compare = false;
 
-            if(!vm.className) vm.className = 'list';
+            if (!vm.className) vm.className = 'list';
         }
 
         function pickCompareDeicisions() {
             var compareList = DecisionCompareService.getList();
+
             vm.list = _.map(vm.list, function(decision) {
                 decision.isInCompareList = false;
-                if (_.includes(compareList, decision.id)) {
-                    decision.isInCompareList = true;
-                }
+
+                _.each(compareList, function(parentDecision) {
+                    if (_.includes(parentDecision.childDecisions, decision.id)) {
+                        decision.isInCompareList = true;
+                    }
+                });
+
                 return decision;
             });
         }
@@ -69,25 +74,25 @@
             if (vm.compare === true) {
                 pickCompareDeicisions();
             }
-            if (vm.criteriaList === true ) {
-                _.forEach(vm.list, function (decision, index) {
+            if (vm.criteriaList === true) {
+                _.forEach(vm.list, function(decision, index) {
                     // decision
                     vm.list[index].criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decision.criteria, vm.criteriaGroupsList) || {};
                     vm.list[index].criteriaGroups.totalVotes = _.sumBy(decision.criteria, 'totalVotes');
                 });
             }
         }
-      
+
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeRemoveDecisionCompare(function(event, data) {
             if (data.id <= 0) return;
-            var findIndex = _.findIndex(vm.list, function(decision){
+            var findIndex = _.findIndex(vm.list, function(decision) {
                 return decision.id === data.id;
             });
             if (findIndex >= 0) {
                 vm.list[findIndex].isInCompareList = false;
             }
-        });  
+        });
 
     }
 })();

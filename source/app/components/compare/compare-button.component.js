@@ -23,19 +23,18 @@
 
         vm.$onInit = onInit;
 
-        function onInit () {
-            console.log(vm.decision);
-            console.log(vm.parentDecision);
+        function onInit() {
+            // console.log(vm.decision);
+            // console.log(vm.parentDecision);
         }
 
         vm.addToCompareList = addToCompareList;
 
         function addToCompareList(decision) {
-            decision.parentDecisions = [];
-            decision.parentDecisions.push(vm.parentDecision);
+            if (!_.isEmpty(vm.parentDecision)) decision.parentDecisions = [vm.parentDecision];
             DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
             decision.isInCompareList = true;
-        }    
-          
+        }
+
     }
 })();

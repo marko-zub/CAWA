@@ -1,12 +1,17 @@
 .compare-panel {
-  padding: 16px 0 32px;
+  padding: 16px 0 10px;
   overflow-x: auto;
   margin: 0 -2px;
   white-space: nowrap;
   .clearfix;
+
+  .decision-card-group {
+    display: inline-block;
+    border: 1px solid #ebebeb;
+  }
 }
 
-.deicision-card {
+.decision-card {
   display: inline-block;
   padding: 8px 16px;
   margin: 0 8px;
@@ -16,6 +21,7 @@
   text-align: center;
   vertical-align: top;
   box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.11);
+  height: 135px;
   .app-controls {
     position: absolute;
     right: 0;
@@ -29,6 +35,12 @@
       margin: 0 auto;
       max-height: 80px; 
     }
+  }
+  .post-title {
+      font-weight: 400;
+      padding: 0 0 4px;
+      margin: 0;
+      font-size: 16px;
   }
 }
 .compare-panel-footer {
