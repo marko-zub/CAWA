@@ -88,9 +88,6 @@
 
                 });
                 vm.propertiesDecisionsListLoader = false;
-                // console.log(values[0]);
-                // console.log(properties);
-                // console.log(propertiesValues);
             });
 
         }

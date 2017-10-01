@@ -61,10 +61,10 @@
 
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeUpdateDecisionCompare(function(event, data) {
-            console.log(data);
-            var parentId = data.parentDecision.id;
+            addDecisionCompareList(data);
+            // var parentId = data.parentDecision.id;
             var id = data.id;
-            DecisionCompareService.addItem(id, parentId);
+            DecisionCompareService.addItem(id);
             vm.decisions.push(data);
             if (compareList.length > 0) vm.isPanelOpen = true;
         });
@@ -86,6 +86,43 @@
                 DecisionCompareNotificationService.notifyRemoveDecisionCompare(vm.decisions[findIndex]);
                 vm.decisions.splice(findIndex, 1);
             }
-        }        
+        }
+
+        // TODO: clean up code above
+        // Include parent decision
+        vm.compareList = [];
+        function addDecisionCompareList(decision) {
+            console.log(decision);
+            var decisionData = _.pick(decision, 'id', 'name', 'nameSlug');
+
+            // TODO: if decision has not parent need to make request
+            if (decision.parentDecisions) {
+                _.each(decision.parentDecisions, function (parentDecision) {
+                    var parentDecisionData = _.pick(parentDecision, 'id', 'name', 'nameSlug');
+
+                    var indexParentDecision = _.findIndex(vm.compareList, function (compareParentDecision) {
+                        return compareParentDecision.id === parentDecisionData.id;
+                    });
+                    if (indexParentDecision >= 0) {
+                        vm.compareList[indexParentDecision].childDecisions.push(decisionData);
+                    } else {
+                        parentDecisionData.childDecisions = [];
+                        parentDecisionData.childDecisions.push(decisionData);
+                        vm.compareList.push(parentDecisionData);
+                    }
+                });
+            }
+            console.log(vm.compareList);
+        }
+
+        vm.removeDecisionCompare = removeDecisionCompare;
+        function removeDecisionCompare(id) {
+            // var index = _.findIndex(vm.compareList, function (decision) {
+            //     return decision.id = id;
+            // });
+            // if (index) {
+
+            // }
+        }
     }
 })();

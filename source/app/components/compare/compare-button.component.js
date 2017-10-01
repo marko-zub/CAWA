@@ -24,14 +24,15 @@
         vm.$onInit = onInit;
 
         function onInit () {
-            // console.log(vm.decision);
-            // console.log(vm.parentDecision);
+            console.log(vm.decision);
+            console.log(vm.parentDecision);
         }
 
         vm.addToCompareList = addToCompareList;
 
         function addToCompareList(decision) {
-            decision.parentDecision = vm.parentDecision;
+            decision.parentDecisions = [];
+            decision.parentDecisions.push(vm.parentDecision);
             DecisionCompareNotificationService.notifyUpdateDecisionCompare(decision);
             decision.isInCompareList = true;
         }    
