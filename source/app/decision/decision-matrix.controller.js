@@ -31,8 +31,8 @@
 
             vm.decisionsSpinner = true;
 
-            // Reser filters
-            _fo = DecisionSharedService.setCleanFilterObject();
+            // Reset filters
+            // _fo = DecisionSharedService.setCleanFilterObject();
 
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
@@ -230,13 +230,11 @@
             return filterQueries;
         }
 
-
         // Discussions Subscrive
         vm.isCommentsOpen = false;
         DiscussionsNotificationService.subscribeOpenDiscussion(function(event, data) {
             vm.isCommentsOpen = true;
         });
-
 
         var selectedCharacteristicsIds = [];
         var selectedOptionsIds = [];
@@ -402,24 +400,8 @@
                 return resultEl;
             });
 
-
-
-            // TODO: finalize Superfast ng-repeat
-            // Make some batch load for ng-repeat
-            // for (var i = 0; i < characteristicsArraySize.length; i++) {
-            //     vm.characteristicGroupsArray = chunkCollection(characteristicsArray, 20);
-            // }
-            // vm.characteristicGroupsArray = [];
-
-            // var chunked = _.chunk(characteristicsArray, 5);
-            // for (var i = 0; i < chunked.length; i++) {
-            //     vm.characteristicGroupsArray = _.concat(vm.characteristicGroupsArray, chunked[i]);
-            // }
-
-
             vm.characteristicGroupsArray = characteristicsArray;
             characteristicGroupsArrayOriginal = angular.copy(characteristicsArray);
-            // console.log(vm.characteristicGroupsArray, _.uniq(vm.characteristicGroupsArray));
         }
 
         //Init sorters, when directives loaded
@@ -490,8 +472,6 @@
                 el.style.height = newH + 'px';
                 elAside.style.height = newH + 'px';
             }
-
-            // applySizes(matrixSizes);
         }
 
         function applySizes(matrixSizes) {
@@ -560,7 +540,7 @@
         }
 
         function prepareMatrixData(data) {
-            var criteriaGroupsSelected = pickSelectedCriteria();
+            var criteriaGroupsSelected = pickSelectedCriteria(vm.criteriaGroups);
             var dataCopy = angular.copy(data);
             return _.map(dataCopy, function(decisionMatrixEl) {
                 if (!decisionMatrixEl.decision.imageUrl) {
@@ -573,9 +553,9 @@
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
                 }
                 // if (decisionMatrixEl.criteria) {
-                    decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
-                    decisionMatrixEl.decision.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixEl.decision.criteria, criteriaGroupsSelected) || {};
-                    decisionMatrixEl.decision.criteriaGroups.totalVotes = _.sumBy(decisionMatrixEl.decision.criteria, 'totalVotes');
+                decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
+                decisionMatrixEl.decision.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixEl.decision.criteria, criteriaGroupsSelected) || {};
+                decisionMatrixEl.decision.criteriaGroups.totalVotes = _.sumBy(decisionMatrixEl.decision.criteria, 'totalVotes');
                 // }
 
                 return _.pick(decisionMatrixEl, 'decision');
@@ -727,6 +707,7 @@
                 vm.decisionsSpinner = false;
             });
         }
+
         vm.selectCriteria = selectCriteria;
 
         function selectCriteria(event, criteria, coefCall) {
@@ -738,7 +719,6 @@
             if (!coefCall) {
                 criteria.isSelected = !criteria.isSelected;
             }
-
             criteria.coefCall = coefCall;
             DecisionNotificationService.notifySelectCriteria(criteria);
         }
@@ -785,9 +765,11 @@
 
         function initMatrixMode() {
             vm.exclusionItemsLength = 0;
-            if (_fo.includeChildDecisionIds && _fo.includeChildDecisionIds.length > 0) {
+            if (!_.isEmpty(_fo.includeChildDecisionIds)) {
+                vm.matrixMode = 'exclusion';
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
-            } else if (_fo.excludeChildDecisionIds && _fo.excludeChildDecisionIds.length > 0) {
+            } else if (!_.isEmpty(_fo.excludeChildDecisionIds)) {
+                vm.matrixMode = 'inclusion';
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
             }
 
@@ -797,7 +779,7 @@
         function setMatrixModeCounters(mode) {
             // TODO: minimize code
             var inclusionItemsLength = vm.inclusionItemsLength >= 0 ? vm.inclusionItemsLength : vm.decisions.totalDecisionMatrixs;
-            _fo = DecisionSharedService.filterObject;
+            // _fo = DecisionSharedService.filterObject;
             if (mode === 'inclusion') {
                 _fo.excludeChildDecisionIds = _fo.includeChildDecisionIds;
                 if (_.isEmpty(_fo.excludeChildDecisionIds)) {
@@ -878,10 +860,9 @@
 
 
         // TODO: Check if code DRY!
-        function pickSelectedCriteria () {
-            // TODO: remove from loop
-            // Pick selected criterias
-            var criteriaSelected = _.filter(angular.copy(vm.criteriaGroups), function(group) {
+        function pickSelectedCriteria(criteriaGroups) {
+            var criteriaGroupsCopy = angular.copy(criteriaGroups);
+            var criteriaSelected = _.filter(criteriaGroupsCopy, function(group) {
                 group.criteria = _.filter(group.criteria, function(criteria) {
                     // console.log(criteria.isSelected);
                     return criteria.isSelected;

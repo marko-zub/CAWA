@@ -54,16 +54,16 @@
             } else {
                 saveListStorage(list);
             }
-        }
+        };
 
         service.total = function () {
             var list = service.getList();
             var total = 0;
             _.each(list, function(parentDecision) {
                 total +=  parentDecision.childDecisions.length;
-            })
+            });
             return total;
-        }
+        };
 
     }
 })();

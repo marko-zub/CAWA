@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService) {
         var
             vm = this;
 
@@ -26,6 +26,7 @@
         vm.clearCompare = clearCompare;
         vm.$onInit = onInit;
         vm.total = 0;
+        vm.activeTab = 0;
 
         var compareListStorage = DecisionCompareService.getList() || [];
         var compareList = [];
@@ -76,6 +77,7 @@
             vm.compareList = [];
             vm.total = 0;
             DecisionCompareService.clearList();
+            DecisionCompareNotificationService.notifyRemoveDecisionCompare(null);
         }
 
         //Subscribe to notification events
@@ -155,6 +157,18 @@
                 parentDecision.childDecisions = _.map(parentDecision.childDecisions, 'id');
                 return _.pick(parentDecision, 'id', 'childDecisions');
             });
+        }
+
+        vm.compareDecisions = compareDecisions;
+
+        function compareDecisions(index) {
+            var parentDecision = vm.compareList[index];
+
+            var cleanList = filterCompareList(vm.compareList);
+            var includeChildDecisionIds = cleanList[index].childDecisions;
+
+            DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
+            $state.go('decisions.single.comparison', {id: parentDecision.id, slug: parentDecision.nameSlug}, {reload: true});
         }
     }
 })();

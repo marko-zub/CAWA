@@ -85,6 +85,13 @@
 
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeRemoveDecisionCompare(function(event, data) {
+            if (_.isNull(data)) {
+                vm.list =_.map(vm.list, function (decision) {
+                    decision.isInCompareList = false;
+                    return decision;
+                });
+            }
+
             if (data.id <= 0) return;
             var findIndex = _.findIndex(vm.list, function(decision) {
                 return decision.id === data.id;

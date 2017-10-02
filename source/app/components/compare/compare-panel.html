@@ -1,15 +1,21 @@
-<pageslide class="sidebar" ps-size="290px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
+<pageslide class="sidebar" ps-size="300px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
     <div class="container-fluid">
         <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
             <i class="fa fa-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
             <span ng-show="vm.total">({{vm.total}})</span>
         </div>
         <div class="compare-panel">
-            <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id">
-                <div class="text-bold">
-                    {{ parentDecision.name }}
-                </div>
-                <div>
+
+            <div class="nav-tabs-wrapper clearfix">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ng-class="{'active': vm.activeTab == $index }" ng-repeat="parentDecision in vm.compareList track by parentDecision.id">
+                        <a ng-click="vm.activeTab = $index">{{ parentDecision.name }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id" ng-show="vm.activeTab == $index">
+                <div class="decision-card-group-content clearfix">
                     <div class="decision-card" ng-repeat="decision in parentDecision.childDecisions track by decision.id">
                         <div class="img-container">
                             <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
@@ -18,27 +24,25 @@
                             <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
                         </div>
                         <div class="app-controls">
-                            <i ng-click="vm.removeDecisionCompare(decision.id)" class="app-control fa fa-times" aria-hidden="true"></i>
+                            <i ng-click="vm.removeDecisionCompare(decision.id)" class="app-control link-secondary-light fa fa-times" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary-2">
-                    Compare
-                </button>
+
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">Clear All</button>
+                        <button class="btn btn-primary-2" ng-click="vm.compareDecisions($index)"  translate-cloak>
+                            {{ "Compare" | translate }}
+                        </button>
+                    </div>
+                </div>
             </div>
             <div ng-show="!vm.total">
                 <h3>Nothing to Compare</h3>
                 <span>Please add decisions</span>
             </div>
             <!-- <compare-list list="vm.decisions"></compare-list> -->
-        </div>
-        <div class="clearfix compare-panel-footer" ng-show="vm.total > 0">
-            <div class="pull-right">
-                <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">Clear All</button>
-                <!--                 <a href="#" class="btn btn-primary btn-sm">
-                    Compare
-                </a> -->
-            </div>
         </div>
     </div>
 </pageslide>
