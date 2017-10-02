@@ -767,13 +767,15 @@
             vm.exclusionItemsLength = 0;
             if (!_.isEmpty(_fo.includeChildDecisionIds)) {
                 vm.matrixMode = 'exclusion';
+                vm.inclusionItemsLength = vm.decision.totalChildDecisions - _fo.includeChildDecisionIds.length;
                 vm.exclusionItemsLength = _fo.includeChildDecisionIds.length;
             } else if (!_.isEmpty(_fo.excludeChildDecisionIds)) {
                 vm.matrixMode = 'inclusion';
                 vm.exclusionItemsLength = _fo.excludeChildDecisionIds.length;
+                vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
+            } else {
+                vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
             }
-
-            vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
         }
 
         function setMatrixModeCounters(mode) {
