@@ -8,9 +8,8 @@
 
     HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
 
-
     function HomeController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
-        // TODO: this controller copy of 
+        // TODO: this controller copy of
         // Decisions view
         // Move decisions for separete component
         var vm = this;
@@ -91,7 +90,7 @@
 
         function search() {
             vm.showTrigger = true;
-        }        
+        }
 
         // TODO: clean up
         vm.layoutClass = 'list';

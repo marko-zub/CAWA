@@ -4,6 +4,7 @@
     angular.module('app', [
         'app.core',
         'app.home',
+        'app.sendgrid',
         'app.components',
         'app.directives',
         'app.login',
