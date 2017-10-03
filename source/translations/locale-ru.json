@@ -52,5 +52,6 @@
 	"NAME": "Имя",
 	"BECOME OWNER USER": "Хотите стать администратором",
 	"APPLY": "Подайте заявку",
-	"ADMINISTRATION": "Администрация"
+	"ADMINISTRATION": "Администрация",
+	"CLEAR ALL": "Очистить все"
 }

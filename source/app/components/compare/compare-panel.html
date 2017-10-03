@@ -1,4 +1,4 @@
-<pageslide class="sidebar" ps-size="300px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
+<pageslide class="sidebar" ps-size="260px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
     <div class="container-fluid">
         <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
             <i class="fa fa-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
@@ -17,9 +17,9 @@
             <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id" ng-show="vm.activeTab == $index">
                 <div class="decision-card-group-content clearfix">
                     <div class="decision-card" ng-repeat="decision in parentDecision.childDecisions track by decision.id">
-                        <div class="img-container">
+                        <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" class="img-container">
                             <img ng-src="{{::decision.imageUrl}}" class="img-responsive" src-error>
-                        </div>
+                        </a>
                         <div>
                             <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
                         </div>
@@ -30,12 +30,13 @@
                 </div>
 
                 <div class="clearfix">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">Clear All</button>
-                        <button class="btn btn-primary-2" ng-click="vm.compareDecisions($index)"  translate-cloak>
+                    <!-- <div class="pull-right"> -->
+                        <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">  {{ "CLEAR ALL" | translate }}
+                        </button>
+                        <button class="btn btn-primary-2 btn-sm" ng-click="vm.compareDecisions($index)"  translate-cloak>
                             {{ "Compare" | translate }}
                         </button>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
             <div ng-show="!vm.total">

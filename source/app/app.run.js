@@ -60,6 +60,8 @@
                 }
                 if ($stateParams.data.bodyClass) {
                     $rootScope.bodyClass = 'body-' + $stateParams.data.bodyClass;
+                } else {
+                    $rootScope.bodyClass = 'body-' + $stateParams.name.replace(/\./g,'-');
                 }
             }
 
