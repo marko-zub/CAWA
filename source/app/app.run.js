@@ -66,7 +66,6 @@
             }
 
             $rootScope.pageUrl = $location.absUrl();
-            // console.log($rootScope.pageUrl);
         });
 
         // Box shadow on scroll for header
