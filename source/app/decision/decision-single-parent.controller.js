@@ -116,7 +116,7 @@
                     mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
 
                     var decisionMatrixs = resp.decisionMatrixs;
-                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2);
+                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
 
                     getRecommendedDecisions(vm.decision.id, vm.parent, criteriaArray);
                 });

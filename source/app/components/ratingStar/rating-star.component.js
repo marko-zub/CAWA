@@ -48,7 +48,7 @@
             } else {
                 // Use bindings weight and totalVotes
                 if (vm.weight) value = vm.weight.toString();
-                vm.weight = vm.weight ? _.floor(vm.weight, 2) : null;
+                vm.weight = vm.weight ? _.floor(vm.weight, 2).toFixed(2) : null;
                 vm.rating = value;
 
                 if (!vm.totalVotes) {

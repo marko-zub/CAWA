@@ -534,7 +534,7 @@
                     decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
                 }
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
-                    decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2);
+                    decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2).toFixed(2);
                 }
                 decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
                 decisionMatrixEl.decision.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixEl.decision.criteria, criteriaGroupsSelected) || {};

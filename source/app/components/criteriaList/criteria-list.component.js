@@ -52,7 +52,7 @@
             var copyList = angular.copy(list);
             return _.map(copyList, function (group) {
                 group.criteria = _.map(group.criteria, function (criteria) {
-                    criteria.weight = _.floor(criteria.weight, 2);
+                    criteria.weight = _.floor(criteria.weight, 2).toFixed(2);
                     return criteria;
                 });
                 return group;

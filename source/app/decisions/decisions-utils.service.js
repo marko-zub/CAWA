@@ -22,7 +22,7 @@
                 }
 
                 if (el.criteriaCompliancePercentage) {
-                    el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2);
+                    el.criteriaCompliancePercentage = _.floor(el.criteriaCompliancePercentage, 2).toFixed(2);
                 }
 
                 if (el.description) {
