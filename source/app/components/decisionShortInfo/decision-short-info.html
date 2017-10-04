@@ -1,0 +1,25 @@
+<div class="info">
+    <div class="author info-divider border-0">
+        <i class="fa fa-user-o" aria-hidden="true"></i>
+        <span ng-bind="::vm.decision.createUser.username" title="Author"></span>
+    </div>
+
+    <div class="author info-divider border-0">
+        <span ng-bind="::vm.decision.createUser.reputation" title="Reputation {{ ::vm.decision.createUser.reputation }}"></span>
+    </div>
+
+    <div class="date info-divider">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'" title="Create date"></span>
+    </div>
+    <div class="info-divider">
+        <i class="fa fa-eye" aria-hidden="true"></i>
+        <span ng-bind="::vm.decision.totalViews" title="Views"></span>
+    </div>
+
+    <div class="info-divider">
+        <a href="#" class="link-secondary">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>

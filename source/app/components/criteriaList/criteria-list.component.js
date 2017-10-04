@@ -16,7 +16,7 @@
                 criteriaTitle: '<'
             },
             controller: 'CriteriaListController',
-            controllerAs: 'vm',
+            controllerAs: 'vm'
         });
 
 

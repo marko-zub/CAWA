@@ -32,35 +32,10 @@
             <div class="post-sub-header">
                 <div class="row">
                     <div class="col-sm-8">
-                        <div class="info">
-                            <div class="author info-divider">
-                                <i class="fa fa-user-o" aria-hidden="true"></i>
-                                <span ng-bind="::vm.decision.createUser.username"></span>
-                            </div>
-                            <div class="date info-divider">
-                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                <span ng-bind="::vm.decision.createDate | date:'MM/dd/yyyy'"></span>
-                            </div>
-                            <div class="info-divider">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                <span ng-bind="::vm.decision.totalViews"></span>
-                            </div>
-
-                            <div class="info-divider">
-                                <a href="#" class="link-secondary">
-                                    <i class="fa fa-flag" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
+                        <decision-short-info decision="::vm.decision"></decision-short-info>
                     </div>
                 </div>
             </div>
-
-            <!-- <pre>
-                {{ vm.criteriaGroups | json }}
-            </pre> -->
 
             <div class="post post-single with-rating">
 
@@ -150,7 +125,7 @@
 
                     </div>
                 </div>
-                <div class="col-sm-12 text-center look-more" ng-if="vm.isDecisionsParent">
+                <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                     {{ "LOOKING MORE" | translate }}
                     <a ui-sref="decisions.single.options" class="text-bold" translate-cloak>
                         {{ "the complete list of decisions" | translate }}
