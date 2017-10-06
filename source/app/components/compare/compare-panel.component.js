@@ -74,8 +74,7 @@
                             decision.parentDecisions = [respParentDecision[0]];
                             addDecisionCompareList(decision);
                         });
-                        // console.log(respChildDecisions);
-                        vm.isPanelOpen = true;
+                        // vm.isPanelOpen = true;
                     });
                 });
             }
@@ -117,7 +116,7 @@
         }
 
         function saveDecisionCompareList(decision) {
-            var decisionData = angular.copy(decision); //_.pick(decision, 'id', 'name', 'nameSlug');
+            var decisionData = angular.copy(decision);
             _.each(decision.parentDecisions, function(parentDecision) {
                 var parentDecisionData = _.pick(parentDecision, 'id', 'name', 'nameSlug');
 
