@@ -21,7 +21,6 @@
             vm = this;
 
         // TODO: clean up, Simplify logic
-        vm.isPanelOpen = false;
         vm.togglePanel = togglePanel;
         vm.clearCompare = clearCompare;
         vm.$onInit = onInit;
@@ -36,19 +35,18 @@
             initCompareList();
 
             if ($localStorage.options && !_.isEmpty($localStorage.options.comparePanel)) {
+                if (!$localStorage.options.comparePanel) {
+                    $localStorage.options.comparePanel = {};
+                }
                 vm.isPanelOpen = $localStorage.options.comparePanel.isOpen;
             }
         }
 
-
         function togglePanel() {
             vm.isPanelOpen = !vm.isPanelOpen;
-            var comparenPanelOptions = {
-                comparePanel: {
-                    isOpen: vm.isPanelOpen
-                }
+            $localStorage.options.comparePanel = {
+                isOpen: vm.isPanelOpen
             };
-            $localStorage.options = comparenPanelOptions;
         }
 
         function initCompareList() {
@@ -133,9 +131,6 @@
             });
 
             updateCompareList();
-            if (vm.total === 1) {
-                vm.isPanelOpen = true;
-            }
         }
 
         vm.removeDecisionCompare = removeDecisionCompare;
@@ -177,7 +172,12 @@
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
-            $state.go('decisions.single.comparison', {id: parentDecision.id, slug: parentDecision.nameSlug}, {reload: true});
+            $state.go('decisions.single.comparison', {
+                id: parentDecision.id,
+                slug: parentDecision.nameSlug
+            }, {
+                reload: true
+            });
         }
     }
 })();
