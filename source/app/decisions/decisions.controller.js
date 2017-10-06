@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService', 'translateFilter'];
+    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage'];
 
-    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService, translateFilter) {
+    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService, translateFilter, $localStorage) {
         var
             vm = this;
 
@@ -41,6 +41,11 @@
 
             if (!$stateParams.tab) {
                 vm.activeTab = 1;
+            }
+
+            if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
+               var layoutMode = $localStorage.options.view.layoutMode || 'list';
+               toggleLayout(layoutMode);
             }
         }
 
@@ -128,12 +133,16 @@
         }
 
         // TODO: clean up
-        vm.layoutClass = 'list';
         vm.toggleLayout = toggleLayout;
         var allowedLayoutClass = ['list', 'cards'];
 
         function toggleLayout(type, $event) {
-            if (_.includes(allowedLayoutClass, type)) vm.layoutClass = type;
+            if (_.includes(allowedLayoutClass, type)) {
+                vm.layoutClass = type;
+                $localStorage.options.view = {
+                    layoutMode: type
+                };
+            }
         }
     }
 })();

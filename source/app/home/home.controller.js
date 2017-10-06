@@ -38,7 +38,6 @@
                 vm.activeTab = 1;
             }
 
-
             if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
                var layoutMode = $localStorage.options.view.layoutMode || 'list';
                toggleLayout(layoutMode);
