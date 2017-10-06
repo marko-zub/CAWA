@@ -42,8 +42,8 @@
             }
         }
 
-        function togglePanel() {
-            vm.isPanelOpen = !vm.isPanelOpen;
+        function togglePanel(isOpen) {
+            vm.isPanelOpen = _.isBoolean(isOpen) ? isOpen : !vm.isPanelOpen;
             $localStorage.options.comparePanel = {
                 isOpen: vm.isPanelOpen
             };
@@ -72,14 +72,12 @@
                             decision.parentDecisions = [respParentDecision[0]];
                             addDecisionCompareList(decision);
                         });
-                        // vm.isPanelOpen = true;
                     });
                 });
             }
         }
 
         function clearCompare() {
-            // vm.isPanelOpen = false;
             compareList = []; //Not need to be displayed
             vm.compareList = [];
             vm.total = 0;
@@ -91,7 +89,7 @@
         DecisionCompareNotificationService.subscribeUpdateDecisionCompare(function(event, data) {
             addDecisionCompareList(data);
             var id = data.id;
-            if (compareList.length > 0) vm.isPanelOpen = true;
+            if (compareList.length > 0) vm.togglePanel(true);
         });
 
         function getDecision(id) {
