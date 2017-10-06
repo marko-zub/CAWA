@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage) {
         var
             vm = this;
 
@@ -34,11 +34,21 @@
         function onInit() {
             compareList = []; //Not need to be displayed
             initCompareList();
+
+            if (!_.isEmpty($localStorage.options.comparePanel)) {
+                vm.isPanelOpen = $localStorage.options.comparePanel.isOpen;
+            }
         }
 
 
         function togglePanel() {
             vm.isPanelOpen = !vm.isPanelOpen;
+            var comparenPanelOptions = {
+                comparePanel: {
+                    isOpen: vm.isPanelOpen
+                }
+            };
+            $localStorage.options = comparenPanelOptions;
         }
 
         function initCompareList() {
