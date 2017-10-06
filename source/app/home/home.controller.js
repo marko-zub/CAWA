@@ -6,9 +6,9 @@
         .module('app.home')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant'];
+    HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', '$localStorage'];
 
-    function HomeController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant) {
+    function HomeController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, $localStorage) {
         // TODO: this controller copy of
         // Decisions view
         // Move decisions for separete component
@@ -36,6 +36,12 @@
 
             if (!$stateParams.tab) {
                 vm.activeTab = 1;
+            }
+
+
+            if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
+               var layoutMode = $localStorage.options.view.layoutMode || 'list';
+               toggleLayout(layoutMode);
             }
         }
 
@@ -93,12 +99,16 @@
         }
 
         // TODO: clean up
-        vm.layoutClass = 'list';
         vm.toggleLayout = toggleLayout;
         var allowedLayoutClass = ['list', 'cards'];
 
         function toggleLayout(type, $event) {
-            if (_.includes(allowedLayoutClass, type)) vm.layoutClass = type;
+            if (_.includes(allowedLayoutClass, type)) {
+                vm.layoutClass = type;
+                $localStorage.options.view = {
+                    layoutMode: type
+                };
+            }
         }
     }
 })();

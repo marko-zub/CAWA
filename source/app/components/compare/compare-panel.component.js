@@ -35,7 +35,7 @@
             compareList = []; //Not need to be displayed
             initCompareList();
 
-            if (!_.isEmpty($localStorage.options.comparePanel)) {
+            if ($localStorage.options && !_.isEmpty($localStorage.options.comparePanel)) {
                 vm.isPanelOpen = $localStorage.options.comparePanel.isOpen;
             }
         }
