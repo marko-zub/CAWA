@@ -4,7 +4,7 @@
         <span ng-show="vm.total">({{vm.total}})</span>
     </div>
     <div class="compare-panel">
-        <div ng-show="vm.total">
+        <div ng-show="!vm.compareLoader && vm.total">
             <div class="nav-tabs-wrapper clearfix">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-class="{'active': vm.activeTab == $index }" ng-repeat="parentDecision in vm.compareList track by parentDecision.id">
@@ -39,10 +39,13 @@
                 </div>
             </div>
             </div>
-        <div ng-show="!vm.total">
+        <div ng-show="!vm.total && !vm.compareLoader">
             <h3>{{ "NOTHING TO COMPARE" | translate }}</h3>
             <span>{{ "PLEASE ADD DECISIONS TO COMPARE" | translate }}</span>
         </div>
+
+        <div ng-show="vm.compareLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+
     </div>
 
 </pageslide>

@@ -90,6 +90,7 @@
                     decision.isInCompareList = false;
                     return decision;
                 });
+                return;
             }
 
             if (data.id <= 0) return;

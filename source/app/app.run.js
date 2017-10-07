@@ -11,7 +11,21 @@
         var pageTitle = Config.pagePrefix;
         $rootScope.url = '';
 
-        // Language
+        // Set default options object local storage
+        // Only view/layout options without any vital data
+        if (!$localStorage.options || 
+            ($localStorage.options && (!$localStorage.options.comparePanel || !$localStorage.options.view))) { //Remove in furue 
+            $localStorage.options = {
+                comparePanel: {
+                    isOpen: false
+                },
+                view: {
+                    layoutMode: 'list'
+                }
+            };
+        }
+
+        // Language Local storage
         $rootScope.translateCode = 'en';
         if ($localStorage.translateCode && _.includes(TranslateConstant.LANG_KEYS, $localStorage.translateCode)) {
             $rootScope.translateCode = $localStorage.translateCode;
@@ -33,7 +47,7 @@
 
                 $rootScope.decisonFull = false;
                 // Get full deciison
-                if(toState.name === 'decisions.single') {
+                if (toState.name === 'decisions.single') {
                     $rootScope.decisonFull = true;
                 }
 
@@ -61,7 +75,7 @@
                 if ($stateParams.data.bodyClass) {
                     $rootScope.bodyClass = 'body-' + $stateParams.data.bodyClass;
                 } else {
-                    $rootScope.bodyClass = 'body-' + $stateParams.name.replace(/\./g,'-');
+                    $rootScope.bodyClass = 'body-' + $stateParams.name.replace(/\./g, '-');
                 }
             }
 

@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q) {
         var
             vm = this;
 
@@ -26,6 +26,7 @@
         vm.$onInit = onInit;
         vm.total = 0;
         vm.activeTab = 0;
+        vm.compareLoader = true;
 
         var compareListStorage = DecisionCompareService.getList() || [];
         var compareList = [];
@@ -34,10 +35,7 @@
             compareList = []; //Not need to be displayed
             initCompareList();
 
-            if ($localStorage.options && !_.isEmpty($localStorage.options.comparePanel)) {
-                if (!$localStorage.options.comparePanel) {
-                    $localStorage.options.comparePanel = {};
-                }
+            if ($localStorage.options && $localStorage.options.comparePanel) {
                 vm.isPanelOpen = $localStorage.options.comparePanel.isOpen;
             }
         }
@@ -55,18 +53,30 @@
         }
 
         function getDecisions(ids) {
-            if (_.isEmpty(ids)) return;
+            if (_.isEmpty(ids)) {
+                vm.compareLoader = false;
+                return;
+            }
+
+            var getDecisionsParentsArray = [];
+
+            // TODO: clean code
+            // Dirty code to limit 15 parent calls
+            if (ids.length > 15) ids.length = 15;
             _.each(ids, function(parentDecision) {
-                getParentDecision(parentDecision);
+                getDecisionsParentsArray.push(getDecisionByParent(parentDecision));
+            });
+
+            $q.all(getDecisionsParentsArray).then(function(resp) {
+                vm.compareLoader = false;
             });
         }
 
-        function getParentDecision(parentDecision) {
+        function getDecisionByParent(parentDecision) {
             if (parentDecision.id >= 0 && !_.isEmpty(parentDecision.childDecisions)) {
-                DecisionDataService.getDecisionsInfo(parentDecision.id).then(function(respParentDecision) {
+                return DecisionDataService.getDecisionsInfo(parentDecision.id).then(function(respParentDecision) {
                     var sendIds = _.uniq(parentDecision.childDecisions);
-                    DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(respChildDecisions) {
-
+                    return DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(respChildDecisions) {
                         respChildDecisions = DecisionsUtils.prepareDecisionToUI(respChildDecisions);
                         _.each(respChildDecisions, function(decision) {
                             decision.parentDecisions = [respParentDecision[0]];

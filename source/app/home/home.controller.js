@@ -39,7 +39,7 @@
             }
 
             if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
-               var layoutMode = $localStorage.options.view.layoutMode || 'list';
+               var layoutMode = $localStorage.options.view.layoutMode;
                toggleLayout(layoutMode);
             }
         }
