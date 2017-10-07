@@ -108,7 +108,7 @@
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     vm.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
-
+                    
                     vm.criteriaGroups.totalVotes = _.sumBy(vm.criteriaGroups, function(group) {
                         return _.sumBy(group.criteria, 'totalVotes');
                     });

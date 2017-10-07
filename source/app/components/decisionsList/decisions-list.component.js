@@ -39,7 +39,6 @@
             vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
             vm.decisionsList = vm.list;
             if (vm.compare !== true) vm.compare = false;
-
             if (!vm.className) vm.className = 'list';
         }
 
