@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-sm-7 text-left col-pr-sm">
                                 <div class="discussions-list-content">
-                                    <div ng-if="!property.value && vm.rating">
+                                    <div ng-if="!property.value">
                                         <a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                                     </div>
                                     <content-formater ng-if="property.value" item="property.value" characteristic="property.value"></content-formater>
