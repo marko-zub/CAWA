@@ -51,10 +51,10 @@
                 vm.weight = vm.weight ? _.floor(vm.weight, 2).toFixed(2) : null;
                 vm.rating = value;
 
-                console.log(vm.totalVotes);
                 if (!vm.totalVotes) {
                     vm.totalVotes = 0;
-                    votes = '<a class="js-rating-rate" href>Rate it first</a>';
+                    // TODO: add compile
+                    votes = '<a class="js-rating-rate" href>Rate it</a>';
                 } else {
                     votes = [
                         '<div class="app-rating-votes">',

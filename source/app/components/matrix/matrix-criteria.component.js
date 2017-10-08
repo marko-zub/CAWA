@@ -92,7 +92,7 @@
         // TODO: any way faster render?
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
-            '<a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>',
+            '<a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>',
             '<span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
             '</div>',
         ].join('\n');
