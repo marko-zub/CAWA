@@ -56,7 +56,8 @@
         display: block;
         margin: 0;
         .app-rating-votes-weight {
-            display: none;
+            display: inline-block;
+            margin: 1px 6px;
         }
         &.empty {
             margin-top: 20px;
@@ -68,10 +69,10 @@
     }
 
     .app-rating-votes-likes {
-        // position: absolute;
-        // left: 32px;
-        // bottom: 5px;
-        padding: 2px 2px;
+        position: absolute;
+        left: 32px;
+        bottom: 5px;
+        padding: 0 2px;
         border-left: 1px solid @gray-light;
         display: inline-block;
     }
