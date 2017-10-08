@@ -33,6 +33,12 @@
                                     </div>
                                     <content-formater ng-if="property.value" item="property.value" characteristic="property.value"></content-formater>
                                 </div>
+
+                                <div ng-if="::(!property.multiValue)" class="control-panel-sm">
+                                    <a href="#" class="control">
+                                        <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::property.decision.totalHistoryValues || 0}}</a>
+                                    <a href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
+                                </div>                                 
                             </div>
                         </div>
                     </li>
