@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="pull-right">
-                            <!-- <compare-button decision="vm.decision" parent-decision="vm.decisionParents[0]"></compare-button> -->
+                            <compare-button decision="vm.decision" parent-decision="vm.decisionParents[0]"></compare-button>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
 
                 <div class="clearfix text-justify">
                     <div class="post-image">
-                        <img ng-if="::vm.decision.imageUrlLogo" ng-src="{{::vm.decision.imageUrlLogo}}" class="img-responsive">
+                        <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
                     </div>
                     <div class="page-description" ng-bind-html="(vm.decision.description || 'NO DESCRIPTION' | translate)" translate-cloak></div>
                 </div>

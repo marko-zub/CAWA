@@ -22,9 +22,9 @@
         });
 
 
-    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', 'DecisionCompareService', '$templateRequest', '$compile', '$interpolate', '$templateCache', '$scope'];
+    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', '$templateRequest', '$compile', '$interpolate', '$templateCache', '$scope'];
 
-    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, DecisionCompareService, $templateRequest, $compile, $interpolate, $templateCache, $scope) {
+    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, $templateRequest, $compile, $interpolate, $templateCache, $scope) {
         var
             vm = this;
 
@@ -42,22 +42,6 @@
             if (!vm.className) vm.className = 'list';
         }
 
-        function pickCompareDeicisions() {
-            var compareList = DecisionCompareService.getList();
-
-            vm.list = _.map(vm.list, function(decision) {
-                decision.isInCompareList = false;
-
-                _.each(compareList, function(parentDecision) {
-                    if (_.includes(parentDecision.childDecisions, decision.id)) {
-                        decision.isInCompareList = true;
-                    }
-                });
-
-                return decision;
-            });
-        }
-
         function onChanges(changes) {
             if (changes.list && changes.list.currentValue &&
                 !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
@@ -69,10 +53,6 @@
         }
 
         function handleChanges() {
-            // console.log(vm.compare);
-            if (vm.compare === true) {
-                pickCompareDeicisions();
-            }
             if (vm.criteriaList === true) {
                 _.forEach(vm.list, function(decision, index) {
                     // decision

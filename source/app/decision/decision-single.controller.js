@@ -51,7 +51,7 @@
                 return media.type === 'LOGO';
             });
 
-            if (mediaLogo) vm.decision.imageUrlLogo = mediaLogo.url;
+            if (mediaLogo) vm.decision.imageUrl = mediaLogo.url;
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',

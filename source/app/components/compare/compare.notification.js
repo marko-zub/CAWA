@@ -53,7 +53,7 @@
             emit('updateDecisionCompareList', data);
         }
         function notifyRemoveDecisionCompare(data) {
-            emit('removeDecisionCompareList', data);
+            broadcast('removeDecisionCompareList', data);
         }        
 
     }

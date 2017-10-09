@@ -99,7 +99,7 @@
         DecisionCompareNotificationService.subscribeUpdateDecisionCompare(function(event, data) {
             addDecisionCompareList(data);
             var id = data.id;
-            if (compareList.length > 0) vm.togglePanel(true);
+            vm.togglePanel(true);
         });
 
         function getDecision(id) {
