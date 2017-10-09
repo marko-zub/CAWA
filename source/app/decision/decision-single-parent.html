@@ -42,21 +42,28 @@
                 <div class="row">
                     <div class="col-sm-6">
 
-                        <div class="clearfix">
+                        <div class="clearfix" ng-show="vm.criteriaGroups">
                             <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
+                            
 
-                            <div class="criteria-block static pull-right" ng-show="vm.decision.criteriaCompliancePercentage >= 0">
-                                <div class="counters">
-                                    <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                            <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
+                                <div ng-switch-when="true" class="criteria-block static pull-right">
+                                    <div class="counters">
+                                        <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                                    </div>
+                                    <div class="counters criteria-block-votes">
+                                        <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
+                                        {{ vm.criteriaGroups.totalVotes }}
+                                    </div>
+                                    <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                        <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                                    </div>                                
                                 </div>
-                                <div class="counters criteria-block-votes">
-                                    <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
-                                    {{ vm.criteriaGroups.totalVotes }}
+                                <div ng-switch-when="false" class="pull-right mt-1">
+                                    <a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>
                                 </div>
-                                <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
-                                    <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
-                                </div>
-                            </div>
+
+                            </div>                            
                         </div>
 
                         <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" collapsed="false"></criteria-list>
