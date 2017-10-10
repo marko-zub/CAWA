@@ -43,7 +43,7 @@ body {
         transition: opacity 1s;
         opacity: 0.2;
         pointer-events: all;
-        z-index: 100;
+        z-index: @z-index-popup + 7 !important;
       }
       .app-header {
         z-index: 99;
@@ -124,7 +124,7 @@ body {
 
 // Sidebar
 .sidebar {
-  z-index: @z-index-popup + 10;
+  z-index: @z-index-popup + 10 !important;
   background: #fff;
   box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
 }

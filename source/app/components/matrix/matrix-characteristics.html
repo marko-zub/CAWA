@@ -12,7 +12,7 @@
                 <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.id" ng-click="vm.getComments($event)">
                     <div class="matrix-col-content">
 
-                        <a ng-if="::!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
+                        <a ng-if="::!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
 
                         <content-formater
                                           item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
