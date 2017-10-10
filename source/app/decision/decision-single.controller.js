@@ -72,13 +72,8 @@
                 DecisionDataService.getDecisionsProperties(id)
 
             ]).then(function(values) {
-
-                // vm.decisionsPropertyGroups = values[0];
-                // vm.decisionsProperties = values[1];
-
                 var propertiesValues = _.orderBy(values[1], 'id');
                 vm.properties = _.filter(values[0], function(item) {
-                    // console.log();
                     return _.filter(item.properties, function(property) {
                         property.value = _.find(propertiesValues, function(val) {
                             return val.id === property.id;
@@ -126,9 +121,7 @@
 
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
-
                 vm.totalCount = vm.decision.totalChildDecisions;
-
                 initSortMode($stateParams.tab);
             }
 
@@ -238,7 +231,6 @@
             // });
         }
 
-
         // TODO: move to service
         function getCriteriaGroupsById(id, criteriaArray) {
             // if(!criteriaArray) return false
@@ -259,7 +251,6 @@
                 });
             });
         }
-
 
         function getCharacteristicsGroupsById(id, characteristicsArray) {
             // if(!characteristicsArray) return;

@@ -25,6 +25,8 @@
             console.log('Decision Single Parent Controller');
 
             vm.decision = decisionBasicInfo || {};
+            vm.criteriaGroupsLoader = true;
+            vm.characteristicGroupsLoader = true;
 
             vm.isDecisionsParent = false;
             if (vm.decision.totalChildDecisions > 0) {
@@ -89,7 +91,7 @@
             ]).then(function(values) {
 
                 criteriaArray = values[0];
-                vm.characteristicGroups = _.filter(values[1], function(resultEl) {
+                var characteristicGroups = _.filter(values[1], function(resultEl) {
                     resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
                     _.map(resultEl.characteristics, function(el) {
                         return el;
@@ -107,16 +109,17 @@
                 sendData.sortCriteriaIds = criteriaIds;
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    vm.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
-                    
-                    vm.criteriaGroups.totalVotes = _.sumBy(vm.criteriaGroups, function(group) {
+                    var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
+                    criteriaGroups.totalVotes = _.sumBy(criteriaGroups, function(group) {
                         return _.sumBy(group.criteria, 'totalVotes');
                     });
+                    vm.criteriaGroups = criteriaGroups;
+                    vm.criteriaGroupsLoader = false;
 
-                    mergeCharacteristicsDecisions(resp, vm.characteristicGroups);
-
+                    vm.characteristicGroups = mergeCharacteristicsDecisions(resp, characteristicGroups);
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
+                    vm.characteristicGroupsLoader = false;
 
                     getRecommendedDecisions(vm.decision.id, vm.parent, criteriaArray);
                 });
@@ -140,7 +143,7 @@
 
         function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
             var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            var list = _.filter(characteristicsArray, function(resultEl) {
+            return _.filter(characteristicsArray, function(resultEl) {
                 _.map(resultEl.characteristics, function(el) {
                     el.description = $sce.trustAsHtml(el.description);
 
@@ -216,6 +219,5 @@
             });
             return list;
         }
-
     }
 })();

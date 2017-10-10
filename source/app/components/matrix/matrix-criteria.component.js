@@ -6,7 +6,6 @@
         .module('app.components')
         .controller('MatrixCriteriaController', MatrixCriteriaController)
         .component('matrixCriteria', {
-            // template: renderTemplate,
             bindings: {
                 decisions: '<',
                 criteria: '<'
@@ -15,49 +14,11 @@
             controllerAs: 'vm',
         });
 
-    // TODO: make same object as in matrix-characteristics.component.js
-    // renderTemplate.$inject = [];
-
-    // function renderTemplate() {
-    // return [
-    //     '<div class="matrix-g matrix-g-criteria" ng-repeat="group in vm.listDisplay track by group.id">',
-    //         '<div class="matrix-item matrix-g-item matrix-item-content">',
-    //         '</div>',
-    //         '<div class="matrix-row" ng-repeat="item in group.criteria track by item.id" ng-class="{\'hide\': group.isClosed}">',
-    //             '<div class="matrix-col matrix-criteria-group" ng-repeat="decisionCol in item.decisionsRow track by decisionCol.uuid" ng-click="vm.getComments($event)">',
-    //                 '<div class="matrix-col-content">',
-    //                     '<div ng-switch="::(decisionCol.criteria.totalVotes > 0)">',
-    //                         '<div ng-switch-when="true">',
-    //                             '<rating-star class="text-left" item="::decisionCol.criteria"></rating-star>',
-    //                         '</div>',
-    //                         '<div ng-switch-when="false">',
-    //                             '<div class="app-rating-votes">',
-    //                                 '<span><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
-    //                             '</div>',
-    //                         '</div>',
-    //                     '</div>',
-    //                     '<div class="app-item-additional-wrapper">',
-    //                         '<a class="app-item-comments control">',
-    //                             '<span class="glyphicon glyphicon-comment"></span>0',
-    //                         '</a>',
-    //                     '</div>',
-    //                 '</div>',
-    //             '</div>',
-    //         '</div>',
-    //     '</div>',
-    // ].join('\n');
-    // }
 
     MatrixCriteriaController.$inject = ['DiscussionsNotificationService', '$element', '$scope', '$compile', 'translateFilter'];
 
     function MatrixCriteriaController(DiscussionsNotificationService, $element, $scope, $compile, translateFilter) {
         var vm = this;
-
-
-        // ui-sref make deep watch
-        // ui-sref="decisions.single.comparison.child.option(::{discussionId: decisionCol.decision.id, discussionSlug: decisionCol.decision.nameSlug, critOrCharId: item.id, critOrCharSlug: item.nameSlug })"
-        // Create url in ctrl
-
         // Discussions
         vm.getComments = getComments;
         vm.$onInit = onInit;
@@ -76,6 +37,8 @@
                 // Generate base html
                 if (!changes.decisions.previousValue ||
                     changes.decisions.currentValue.length !== changes.decisions.previousValue.length) {
+
+                    // TODO: crop only size
                     generateBaseGrid(vm.criteria);
                 }
                 // Use index to add decision
@@ -87,7 +50,6 @@
                 }
             }
         }
-
 
         // TODO: any way faster render?
         var ratingEmptyHtml = [
@@ -139,16 +101,20 @@
 
         function generateBaseGrid(list) {
             var html = [];
-            // console.log(list);
-            _.forEach(list, function(container) {
 
+            _.forEach(list, function(container) {
                 // Rows
                 var rows = [];
                 _.forEach(container.criteria, function(row, rowIndex) {
                     // console.log(row);
+                    var currentHstyle = '';
+                    var currentH = $('#m-criteria-group-' + container.id + '-' + row.id + '').css('height');
+                    if (currentH) {
+                        currentHstyle = 'height: ' + currentH + '; ';
+                    }
                     var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row js-matrix-item-content" id="m-criteria-group-' + container.id + '-' + row.id + '" style="top: ' + rowIndex * 50 + 'px">',
+                        '<div class="m-group-row js-matrix-item-content" id="m-criteria-group-' + container.id + '-' + row.id + '" style="' + currentHstyle + 'top: ' + rowIndex * 50 + 'px">',
                         decisionsRow,
                         '</div>'
                     ].join('\n');
@@ -163,18 +129,16 @@
                 ].join('\n');
 
                 // Group block
-                // console.log(container);
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
                     '<div class="m-group-title text-center">',
-                        translateFilter("Can\'t find the necessary criterion?") + "<a href='#'>" + translateFilter('Add it') + "</a>",
+                    translateFilter("Can\'t find the necessary criterion?") + "<a href='#'>" + translateFilter('Add it') + "</a>",
                     '</div>',
                     content,
                     '</div>'
                 ].join('\n');
 
                 html.push(containerHtml);
-                // console.log(html);
             });
             render(html);
 
@@ -187,7 +151,6 @@
 
         function getComments($event) {
             vm.isGetCommentsOpen = true;
-            // console.log($event);
             DiscussionsNotificationService.notifyOpenDiscussion('data');
             $event.preventDefault();
         }

@@ -187,7 +187,7 @@
             sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
 
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
+                initMatrix(result.decisionMatrixs, false);
             });
             setCharacteristicChanges(query.filterQueries, data.optionId);
         });
