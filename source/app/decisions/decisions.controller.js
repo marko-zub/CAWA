@@ -16,11 +16,6 @@
         vm.changePage = changePage;
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
 
-        vm.pagination = {
-            pageNumber: parseInt($stateParams.page) || 1,
-            pageSize: parseInt($stateParams.size) || 10
-        };
-
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
         var decisionsData = DecisionsService.getData();
 
@@ -32,7 +27,7 @@
             vm.navigation = navigationObj;
 
             $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
-            var data = checkStateParams($stateParams);
+            var data = getStateParams($stateParams);
             getDecisions(data);
 
             getTotalDecisions();
@@ -51,10 +46,10 @@
 
         function getDecisions(data) {
             vm.decisionsSpinner = true;
-            var pagination = _.clone(vm.pagination);
-            pagination.pageNumber = pagination.pageNumber - 1;
 
-            DecisionDataService.getDecisions(pagination).then(function(result) {
+            var sendData = angular.copy(data);
+            sendData.pageNumber = sendData.pageNumber - 1;
+            DecisionDataService.getDecisions(sendData).then(function(result) {
                 vm.decisionsList = result.decisions;
                 initPagination(result.totalDecisions);
                 vm.decisionsSpinner = false;
@@ -65,21 +60,19 @@
 
         // Pagination
         function changePageSize(pagination) {
-            vm.pagination.pageNumber = 1;
             getDecisions(pagination);
-            updateStateParams();
+            updateStateParams(pagination);
         }
 
         function changePage(pagination) {
             getDecisions(pagination);
-            updateStateParams();
+            updateStateParams(pagination);
         }
 
-        function updateStateParams() {
-            // TODO: change page loop bug
+        function updateStateParams(pagination) {
             var params = $state.params;
-            params.page = vm.pagination.pageNumber;
-            params.size = vm.pagination.pageSize;
+            params.page = pagination.pageNumber || 1;
+            params.size = pagination.pageSize;
             $state.transitionTo($state.current.name, params, {
                 reload: false,
                 inherit: true,
@@ -87,12 +80,14 @@
             });
         }
 
-        function checkStateParams(stateParams) {
+        function getStateParams(stateParams) {
             if (!stateParams) return;
-            var data,
+            var data = {},
                 allowedSortParams;
 
-            data = vm.pagination;
+            data.pageNumber =  stateParams.page || 1;
+            data.pageSize = stateParams.size || 10;
+
             allowedSortParams = navigationObj;
 
             data.sortDirection = stateParams.sortDirection || 'DESC';
@@ -118,6 +113,10 @@
         }
 
         function initPagination(total) {
+            vm.pagination = {
+                pageNumber: parseInt($stateParams.page) || 1,
+                pageSize: parseInt($stateParams.size) || 10
+            };            
             vm.pagination.totalDecisions = total || 10;
         }
 

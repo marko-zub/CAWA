@@ -38,14 +38,12 @@
         };
 
         function onInit() {
-            // console.log(vm.criteriaOrder);
             vm.tagsFilter = [];
             vm.tagsSort = [];
             subscribe();
         }
 
         function onChanges(changes) {
-            // console.log(vm.filterObject);
             // Characteristics
             if (changes.characteristics &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
@@ -61,7 +59,6 @@
                 if (changes.filterObject.currentValue) {
                     vm.sortByCharacteristic = setCharacteristicsSortTag(changes.filterObject.currentValue.sortByCharacteristic);
                 }
-
             }
 
             // Criteria
@@ -77,7 +74,6 @@
             var characteristicsOrderTag = angular.copy(characteristic);
             var findCharacteristics = Utils.findGroupItemById(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
-            // debugger
             return characteristicsOrderTag;
         }
 
@@ -86,7 +82,6 @@
 
         function removeCriteriaTag(criteria) {
             if (criteria.id < 0) {
-                // console.log(criteria);
                 return;
             }
 
