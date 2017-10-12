@@ -31,7 +31,7 @@
             vm.pagination = {
                 pageNumber: vm.pageNumber,
                 pageSize: vm.pageSize,
-                totalDecisions: vm.total
+                totalDecisions: vm.total || PaginatorConstant.TOTAL
             }
             vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE_MATRIX;
         }
@@ -41,6 +41,7 @@
         }
 
         function changePageSize() {
+            vm.pagination.pageNumber = 1;
             vm.onChangeSize(vm.pagination);
         }
     }

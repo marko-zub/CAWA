@@ -64,14 +64,14 @@
         }
 
         // Pagination
-        function changePageSize() {
+        function changePageSize(pagination) {
             vm.pagination.pageNumber = 1;
-            getDecisions(vm.pagination);
+            getDecisions(pagination);
             updateStateParams();
         }
 
-        function changePage() {
-            getDecisions(vm.pagination);
+        function changePage(pagination) {
+            getDecisions(pagination);
             updateStateParams();
         }
 
@@ -127,7 +127,6 @@
                     vm.totalCount = resp.totalCount;
                     DecisionsService.setCount(vm.totalCount);
                 }
-
             });
         }
 
