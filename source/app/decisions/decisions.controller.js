@@ -63,7 +63,6 @@
             });
         }
 
-
         // Pagination
         function changePageSize() {
             vm.pagination.pageNumber = 1;

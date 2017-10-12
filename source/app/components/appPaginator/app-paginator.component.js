@@ -9,9 +9,13 @@
             templateUrl: 'app/components/appPaginator/app-paginator.html',
             controller: 'PaginatorController',
             controllerAs: 'vm'
-            // bindings: {
-            //     pagination: '<'
-            // }
+            bindings: {
+                pageNumber: '<',
+                pageSize: '<',
+                total: '<',
+                onChangePage: '&',
+                onChangeSize: '&'
+            }
         });
 
     PaginatorController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'PaginatorConstant'];
@@ -20,24 +24,24 @@
         var vm = this;
 
         vm.$onInit = onInit;
-
-        function onInit() {
-            vm.pagination = DecisionSharedService.getFilterObject().pagination;
-            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE_MATRIX;
-        }
-
         vm.changePage = changePage;
         vm.changePageSize = changePageSize;
 
+        function onInit() {
+            vm.pagination = {
+                pageNumber: vm.pageNumber,
+                pageSize: vm.pageSize,
+                totalDecisions: vm.total
+            }
+            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE_MATRIX;
+        }
+
         function changePage() {
-            DecisionSharedService.filterObject.persistent = false;
-            DecisionNotificationService.notifyPageChanged();
+            vm.onChangePage(vm.pagination);
         }
 
         function changePageSize() {
-            DecisionSharedService.filterObject.persistent = false;
-            DecisionSharedService.filterObject.pagination.pageNumber = 1;
-            DecisionNotificationService.notifyPageChanged();
+            vm.onChangeSize(vm.pagination);
         }
     }
 

@@ -20,7 +20,7 @@
                                 <i class="fa fa-th" aria-hidden="true"></i>
                             </a>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -34,7 +34,9 @@
                         <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
                     </div>
                     <!-- TODO: use as component -->
-                    <div class="row app-pagination clearfix">
+
+                    <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page-size="" on-change-page=""></app-paginator>
+<!--                     <div class="row app-pagination clearfix">
                         <div class="col-md-12 text-center">
                             <div class="paginator">
                                 <div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
@@ -44,7 +46,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

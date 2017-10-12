@@ -5,7 +5,7 @@
 
 			<div class="app-pagination-pages">
 				<span class="app-pagination-pages-label">On page:</span>
-				<select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in vm.itemsPerPage" ng-change="vm.changePageSize()"></select>        	
+				<select class="pagination form-control input-sm pull-right" ng-model="vm.pagination.pageSize" ng-options="item for item in ::vm.itemsPerPage track by $index" ng-change="vm.changePageSize()"></select>
 			</div>
 		</div>
 	</div>
