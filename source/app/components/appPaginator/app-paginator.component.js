@@ -31,12 +31,14 @@
         vm.pagination = {};
 
         function onInit() {
+            vm.itemsPerPage = vm.perPage || PaginatorConstant.ITEMS_PER_PAGE;
             vm.pagination = {
                 pageNumber: vm.pageNumber,
                 pageSize: vm.pageSize || PaginatorConstant.ITEMS_PER_PAGE[1],
                 totalDecisions: vm.total || PaginatorConstant.TOTAL
-            }
-            vm.itemsPerPage = vm.perPage || PaginatorConstant.ITEMS_PER_PAGE;
+            };
+            vm.pageField = vm.pagination.pageNumber; //undefined;
+            vm.paginationReady = true;
         }
 
         function onChanges(changes) {
@@ -59,6 +61,7 @@
         }
 
         function changePage() {
+            vm.pageField = vm.pagination.pageNumber; //undefined;
             vm.onChangePage({
                 pagination: vm.pagination
             });
@@ -66,6 +69,7 @@
 
         function changePageSize() {
             vm.pagination.pageNumber = 1;
+            vm.pageField = vm.pageNumber; //undefined;
             vm.onChangePageSize({
                 pagination: vm.pagination
             });
@@ -73,8 +77,14 @@
 
         function isVaildPageNumber(number) {
             var isValid = true;
-            var totalPages = parseInt(vm.pagination.totalDecisions)/parseInt(vm.pagination.pageSize);
-            if (number < 0 || number > totalPages) isValid = false;
+            var totalPages = parseInt(vm.pagination.totalDecisions) / parseInt(vm.pagination.pageSize) + 1;
+            if (number < 0) {
+                isValid = false;
+                vm.pageField = 0;
+            } else if (number > totalPages) {
+                vm.pageField = parseInt(totalPages);
+                isValid = false;
+            }
             return isValid;
         }
 
@@ -82,8 +92,7 @@
 
         function goToPage($event) {
             if ($event.keyCode === 13 && isVaildPageNumber($event.target.value)) {
-                // add limit to page
-                vm.pagination.pageNumber = parseInt($event.target.value);
+                vm.pagination.pageNumber = parseInt(vm.pageField);
                 changePage();
             }
         }

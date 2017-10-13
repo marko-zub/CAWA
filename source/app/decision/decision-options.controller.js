@@ -7,13 +7,13 @@
         .controller('DecisionOptionsController', DecisionOptionsController);
 
     DecisionOptionsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config'
+        '$stateParams', 'DecisionSharedService', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
+        'Config', 'PaginatioService'
     ];
 
     function DecisionOptionsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config) {
+        $stateParams, DecisionSharedService,  $state, DecisionsUtils, $q, ContentFormaterService,
+        Config, PaginatioService) {
 
         // TODO: clean up controller make
         var
@@ -21,7 +21,7 @@
 
         vm.decision = decisionBasicInfo || {};
 
-        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
+        vm.itemsPerPage = PaginatioService.itemsPerPage();
         vm.changePageSize = changePageSize;
         vm.changePage = changePage;
 
@@ -43,7 +43,6 @@
             vm.activeTabSortChild = 0;
             console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
-            initPagination();
 
             vm.decisionParents = vm.decision.parentDecisions;
             if (vm.decision.totalChildDecisions > 0) {
@@ -98,13 +97,13 @@
         }
 
 
-        function getDecisionMatrix(id, filter) {
+        function getDecisionMatrix(id, pagination, filter) {
             var sendData = {};
-            var pagination = _.clone(vm.pagination);
 
-            pagination.pageNumber = pagination.pageNumber - 1;
-            if (pagination) {
-                sendData.pageNumber = pagination.pageNumber;
+            if (!pagination) {
+                pagination = _.clone(vm.pagination);
+            } else {
+                sendData.pageNumber = pagination.pageNumber - 1;
                 sendData.pageSize = pagination.pageSize;
             }
 
@@ -129,38 +128,28 @@
                 vm.decisions = filterDecisionList(result.decisionMatrixs);
                 vm.decisionsLoader = false;
 
-                vm.pagination.totalDecisions = result.totalDecisionMatrixs;
+                vm.pagination = initPagination(result.totalDecisionMatrixs, $stateParams.page, $stateParams.size);
+                vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
                 vm.totalCount = result.totalDecisionMatrixs;
             });
         }
 
+
         // Pagination
-        function changePageSize() {
-            vm.pagination.pageNumber = 1;
-            getDecisionMatrix(vm.decision.id);
-            updateStateParams();
+        function changePageSize(pagination) {
+            getDecisionMatrix(vm.decision.id, pagination);
+            updateStateParams(pagination);
         }
 
-        function changePage() {
-            getDecisionMatrix(vm.decision.id);
-            updateStateParams();
+        function changePage(pagination) {
+            getDecisionMatrix(vm.decision.id, pagination);
+            updateStateParams(pagination);
         }
 
-        function initPagination() {
-            vm.pagination = {
-                pageNumber: parseInt($stateParams.page) || 1,
-                pageSize: parseInt($stateParams.size) || 10,
-                totalDecisions: vm.decision.totalChildDecisions || 10
-            };
-
-            vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
-            // updateStateParams();
-        }
-
-        function updateStateParams() {
+        function updateStateParams(pagination) {
             var params = $state.params;
-            params.page = vm.pagination.pageNumber;
-            params.size = vm.pagination.pageSize;
+            params.page = pagination.pageNumber || 1;
+            params.size = pagination.pageSize;
             $state.transitionTo($state.current.name, params, {
                 reload: false,
                 inherit: true,
@@ -168,6 +157,14 @@
             });
         }
 
+        function initPagination(total, pageNumber, pageSize) {
+             return {
+                 pageNumber: parseInt(pageNumber) || 1,
+                 pageSize: parseInt(pageSize) || 10,
+                 totalDecisions: parseInt(total) || 10
+             };
+        }
+        // End pagination
 
         // TODO: move to service
         function getCriteriaGroupsById(id, criteriaArray) {
@@ -266,7 +263,7 @@
         }
 
         function filterNameSend(value) {
-            getDecisionMatrix(vm.decision.id, value);
+            getDecisionMatrix(vm.decision.id, null, value);
         }
 
         function filterNameSubmitClick(value) {

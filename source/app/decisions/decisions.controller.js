@@ -6,15 +6,15 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage'];
+    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage', 'PaginatioService'];
 
-    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, DecisionsService, translateFilter, $localStorage) {
+    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, DecisionsConstant, DecisionsService, translateFilter, $localStorage, PaginatioService) {
         var
             vm = this;
 
         vm.changePageSize = changePageSize;
         vm.changePage = changePage;
-        vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
+        vm.itemsPerPage = PaginatioService.itemsPerPage();
 
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
         var decisionsData = DecisionsService.getData();
@@ -51,13 +51,14 @@
             sendData.pageNumber = sendData.pageNumber - 1;
             DecisionDataService.getDecisions(sendData).then(function(result) {
                 vm.decisionsList = result.decisions;
-                initPagination(result.totalDecisions);
+                vm.pagination = PaginatioService.initPagination(result.totalDecisions, $stateParams.page, $stateParams.size);
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
             });
         }
 
+        // TODO: make service
         // Pagination
         function changePageSize(pagination) {
             getDecisions(pagination);
@@ -65,7 +66,7 @@
         }
 
         function changePage(pagination) {
-            getDecisions(pagination);
+            getDecisions(pagination); // TODO: make as callback
             updateStateParams(pagination);
         }
 
@@ -79,6 +80,7 @@
                 notify: false
             });
         }
+        // End pagination
 
         function getStateParams(stateParams) {
             if (!stateParams) return;
@@ -110,14 +112,6 @@
                 }
             }
             return data;
-        }
-
-        function initPagination(total) {
-            vm.pagination = {
-                pageNumber: parseInt($stateParams.page) || 1,
-                pageSize: parseInt($stateParams.size) || 10
-            };            
-            vm.pagination.totalDecisions = total || 10;
         }
 
         function getTotalDecisions() {

@@ -1,11 +1,11 @@
-<div class="app-pagination">
+<div class="app-pagination clearfix" ng-if="vm.paginationReady">
 	<div class="text-center">
 		<div class="paginator">
 			<div uib-pagination ng-model="vm.pagination.pageNumber" boundary-links="true" boundary-link-numbers="true" total-items="vm.pagination.totalDecisions" items-per-page="vm.pagination.pageSize" ng-change="vm.changePage()" class="pagination-sm" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="4"></div>
 
 			<div class="app-pagination-pages">
 				<span class="app-pagination-pages-label">Page:</span>
-				<input type="number" class="form-control pagination-control form-number" ng-keyup="vm.goToPage($event)" min="0" step="1">
+				<input type="number" class="form-control input-sm pagination-control form-number" ng-keyup="vm.goToPage($event)" min="0" step="1" ng-model="vm.pageField">
 			</div>
 			<div class="app-pagination-pages">
 				<span class="app-pagination-pages-label">On page:</span>

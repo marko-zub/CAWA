@@ -29,7 +29,6 @@
 
         function getRecommendedDecision(id) {
             if(!_.isNumber(id)) return;
-
         }
     }
 })();

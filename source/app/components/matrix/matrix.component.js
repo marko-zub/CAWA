@@ -15,12 +15,12 @@
         });        
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
-        'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant',
+        'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
         '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
-        DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant,
+        DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
         $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService) {
         var vm = this,
             criteriaIds = [],
@@ -53,6 +53,10 @@
                     // Init only first time
                     initSorters(); //Hall of fame
                     initMatrixMode();
+
+                    // Init pagination
+                    vm.itemsPerPage = PaginatioService.itemsPerPageSm();
+                    vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs);
                 });
 
                 loadCharacteristics();
@@ -858,6 +862,22 @@
                 return group;
             });
             return criteriaSelected;
+        }
+
+        // TODO: clean up matrix servise
+        // Pagination
+        vm.itemsPerPage = PaginatioService.itemsPerPageSm();
+        vm.changePageSize = changePageSize;
+        vm.changePage = changePage;
+
+        function changePageSize(pagination) {
+            _fo.pagination = pagination;
+            DecisionNotificationService.notifyPageChanged();
+        }
+
+        function changePage(pagination) {
+            _fo.pagination = pagination;
+            DecisionNotificationService.notifyPageChanged();
         }
     }
 })();

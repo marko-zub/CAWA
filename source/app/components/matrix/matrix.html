@@ -68,8 +68,8 @@
                                                 <span ng-bind="::item.decision.name"></span>
                                             </div>
                                             <div class="clearfix">
-                                                <div class="decision-img-block">
-                                                    <div class="matrix-img-container img-sm" >
+                                                <div class="decision-img-block img-link">
+                                                    <div class="matrix-img-container img-sm img-wrapper">
                                                         <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive" '>
                                                     </div>
                                                 </div>
@@ -232,7 +232,9 @@
                 </div>
             </div>
             <div class="martix-footer">
-                <app-paginator></app-paginator>
+
+                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)" on-change-page-size="vm.changePageSize(pagination)" per-page="vm.itemsPerPage"></app-paginator>
+
             </div>
         </div>
     </div>
