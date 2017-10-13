@@ -511,7 +511,7 @@
 
                 // Update data if decision matrix response success
                 DecisionNotificationService.notifyFilterTags(sendData);
-
+                vm.pagination = PaginatioService.initPagination(result.totalDecisionMatrixs);
                 return result;
             });
         }
