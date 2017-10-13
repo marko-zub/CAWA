@@ -44,7 +44,7 @@
 
                         <div class="clearfix" ng-show="vm.criteriaGroups">
                             <h4 class="app-list-title pull-left" translate-cloak>{{ 'Criteria compliance' | translate }}</h4>
-                            
+
 
                             <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
                                 <div ng-switch-when="true" class="criteria-block static pull-right">
@@ -57,19 +57,19 @@
                                     </div>
                                     <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
                                         <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
-                                    </div>                                
+                                    </div>
                                 </div>
                                 <div ng-switch-when="false" class="pull-right mt-1">
                                     <a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>
                                 </div>
 
-                            </div>                            
+                            </div>
                         </div>
-                        
+
                         <div class="list-wrapper">
                             <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
-                            
-                            <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" collapsed="false"></criteria-list>                            
+
+                            <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" collapsed="false"></criteria-list>
 
                         </div>
 

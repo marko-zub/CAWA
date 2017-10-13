@@ -1,5 +1,5 @@
 .app-pagination {
-    .paginator, 
+    .paginator,
     .counter {
         padding: 0 16px;
     }
@@ -9,11 +9,16 @@
       margin: 0 auto;
       display: inline-block;
     }
-    .pagination {
+    .pagination,
+    .pagination-control {
       width: auto;
       color: @gray-mid;
       display: inline-block;
       margin: 5px 0;
+    }
+
+    .form-number {
+      max-width: 70px;
     }
 
     .app-pagination-pages {
@@ -39,20 +44,20 @@
   }
 }
 
-.pagination > .active > a, 
-.pagination > .active > span, 
-.pagination > .active > a:hover, 
-.pagination > .active > span:hover, 
-.pagination > .active > a:focus, 
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
 .pagination > .active > span:focus {
   background-color: @color-orange;
   border-color: @color-orange;
 }
 
 
-// .pagination-sm 
+// .pagination-sm
 .pagination-sm  {
-  & > li > a, 
+  & > li > a,
   & > li > span {
     padding: 6px 12px;
   }
@@ -60,5 +65,5 @@
 .pagination-sm > li:first-child > a, .pagination-sm > li:first-child > span,
 .pagination-sm > li:last-child > a, .pagination-sm > li:last-child > span {
   -webkit-border-radius: 0;
-          border-radius: 0;  
+          border-radius: 0;
 }

@@ -130,6 +130,7 @@
                 vm.decisionsLoader = false;
 
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
+                vm.totalCount = result.totalDecisionMatrixs;
             });
         }
 
@@ -165,14 +166,6 @@
                 inherit: true,
                 notify: false
             });
-
-            // $state.go($state.current.name, {
-            //     slug: vm.decision.nameSlug,
-            //     page: vm.pagination.pageNumber.toString(),
-            //     size: vm.pagination.pageSize.toString()
-            // }, {
-            //     notify: false
-            // });
         }
 
 

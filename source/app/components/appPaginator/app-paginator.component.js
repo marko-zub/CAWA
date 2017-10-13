@@ -70,6 +70,23 @@
                 pagination: vm.pagination
             });
         }
+
+        function isVaildPageNumber(number) {
+            var isValid = true;
+            var totalPages = parseInt(vm.pagination.totalDecisions)/parseInt(vm.pagination.pageSize);
+            if (number < 0 || number > totalPages) isValid = false;
+            return isValid;
+        }
+
+        vm.goToPage = goToPage;
+
+        function goToPage($event) {
+            if ($event.keyCode === 13 && isVaildPageNumber($event.target.value)) {
+                // add limit to page
+                vm.pagination.pageNumber = parseInt($event.target.value);
+                changePage();
+            }
+        }
     }
 
 })();
