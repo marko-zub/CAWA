@@ -20,7 +20,6 @@
             subscribeSelectCharacteristic: subscribeSelectCharacteristic,
             subscribeGetDetailedCharacteristics: subscribeGetDetailedCharacteristics,
             subscribeCharacteristicsGroups: subscribeCharacteristicsGroups,
-            subscribePageChanged: subscribePageChanged,
             subscribeChildDecisionExclusion: subscribeChildDecisionExclusion,
             subscribeFilterTags: subscribeFilterTags,
             subscribeFilterByName: subscribeFilterByName,
@@ -33,7 +32,6 @@
             notifySelectDecision: notifySelectDecision,
             notifySelectCharacteristic: notifySelectCharacteristic,
             notifyCharacteristicsGroups: notifyCharacteristicsGroups,
-            notifyPageChanged: notifyPageChanged,
             notifyInitSorter: notifyInitSorter,
             notifyChildDecisionExclusion: notifyChildDecisionExclusion,
             notifyFilterTags: notifyFilterTags,
@@ -84,10 +82,6 @@
             subscribe('characteristicsGroups', callback);
         }
 
-        function subscribePageChanged(callback) {
-            subscribe('pageChanged', callback);
-        }
-
         function subscribeChildDecisionExclusion(callback) {
             subscribe('decisionExclusionChanged', callback);
         }
@@ -127,10 +121,6 @@
 
         function notifyCharacteristicsGroups(data) {
             emit('characteristicsGroups', data);
-        }
-
-        function notifyPageChanged(data) {
-            emit('pageChanged', data);
         }
 
         function notifyInitSorter(data) {

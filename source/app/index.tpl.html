@@ -20,14 +20,14 @@
 
 <body ng-class="bodyClass">
     <app-header></app-header>
-
-    <div class="container-fluid">
+    
+    <div class="content container-fluid">
         <div class="breadcrumbs-wrapper" ng-if="breadcrumbs.length">
             <breadcrumbs items="breadcrumbs"></breadcrumbs>
         </div>
-    </div>
 
-    <div class="container-fluid content" ui-view></div>
+        <div ui-view></div>
+    </div>
     <app-footer></app-footer>
 
     <compare-panel></compare-panel>

@@ -130,12 +130,6 @@
             });
         });
 
-        DecisionNotificationService.subscribePageChanged(function() {
-            getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
-            });
-        });
-
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
@@ -834,7 +828,6 @@
 
         var scrollF = _.throttle(function() {
             var scrollTopDoc = $(document).scrollTop();
-            // console.log(scrollTopDoc)
             if (scrollTopDoc > 100) {
                 $('body').addClass('matrix-sticky');
             } else {
@@ -846,7 +839,6 @@
 
         function onDestroy() {
             _fo = DecisionSharedService.setCleanFilterObject();
-            // $(window).off('scroll', scrollF);
         }
 
         $(window).on('scroll', scrollF);
@@ -856,7 +848,6 @@
             var criteriaGroupsCopy = angular.copy(criteriaGroups);
             var criteriaSelected = _.filter(criteriaGroupsCopy, function(group) {
                 group.criteria = _.filter(group.criteria, function(criteria) {
-                    // console.log(criteria.isSelected);
                     return criteria.isSelected;
                 });
                 return group;
@@ -872,12 +863,16 @@
 
         function changePageSize(pagination) {
             _fo.pagination = pagination;
-            DecisionNotificationService.notifyPageChanged();
+            getDecisionMatrix(vm.decision.id).then(function(result) {
+                initMatrix(result.decisionMatrixs, true);
+            });
         }
 
         function changePage(pagination) {
             _fo.pagination = pagination;
-            DecisionNotificationService.notifyPageChanged();
+            getDecisionMatrix(vm.decision.id).then(function(result) {
+                initMatrix(result.decisionMatrixs, true);
+            });
         }
     }
 })();
