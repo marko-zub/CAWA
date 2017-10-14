@@ -121,9 +121,15 @@
                     rows.push(rowBlock);
                 });
 
+                // Check closed panels
+                var isClosed = '';
+                if ($('#matrix-aside-content [data-criteria-group=' + container.id + '] .matrix-g-title').hasClass('closed')) {
+                    isClosed = ' hide';
+                }
+
                 // Content block
                 var content = [
-                    '<div class="m-group js-toggle-hide" id="g-criteria-content-' + container.id + '">',
+                    '<div class="m-group js-toggle-hide' + isClosed + '" id="g-criteria-content-' + container.id + '">',
                     rows.join('\n'),
                     '</div>'
                 ].join('\n');

@@ -12,7 +12,7 @@
             templateUrl: 'app/components/matrix/matrix.html',
             controller: 'MatrixController',
             controllerAs: 'vm'
-        });        
+        });
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
@@ -826,14 +826,31 @@
             $event.preventDefault();
         }
 
+        var headerStickyPoint = $('.tabs-wrapper').offset().top;
         var scrollF = _.throttle(function() {
             var scrollTopDoc = $(document).scrollTop();
-            if (scrollTopDoc > 100) {
+
+            var fixedHaderHeight = $('.matrix-header').outerHeight() + $('#filter-tags').outerHeight() + $('.nav-tabs-wrapper').outerHeight();
+
+            var allowFixedHeader = true;
+            if ($('body').height() < $(window).height() + fixedHaderHeight) {
+                allowFixedHeader = false;
+            }
+
+            if (scrollTopDoc > headerStickyPoint) {
+                if (!allowFixedHeader) return;
+                $('#panel').css({
+                    'padding-top': fixedHaderHeight,
+                });
+
                 $('body').addClass('matrix-sticky');
             } else {
+                $('#panel').css({
+                    'padding-top': ''
+                });                
                 $('body').removeClass('matrix-sticky');
             }
-        }, 49);
+        }, 30);
 
         vm.$onDestroy = onDestroy;
 
