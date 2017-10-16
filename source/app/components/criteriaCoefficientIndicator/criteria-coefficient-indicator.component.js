@@ -15,12 +15,6 @@
         });
 
 
-    // renderTemplate.$inject = [];
-
-    // function renderTemplate() {
-    //     return '<div ng-bind-html="::vm.html" class="criteria-coefficient-indicator"></div>';
-    // }
-
     CriteriaCoefficientIndicatorController.$inject = ['DecisionCriteriaCoefficientsConstant', '$element', '$compile', '$scope'];
 
     function CriteriaCoefficientIndicatorController(DecisionCriteriaCoefficientsConstant, $element, $compile, $scope) {
@@ -39,7 +33,7 @@
                     c.class = coefficient.name.toLowerCase();
                 }
             });
-            renderComponent(vm.coefficientList);
+            renderComponent(vm.coefficientList, coefficient);
         }
 
         function onInit() {
@@ -57,14 +51,16 @@
             }
         }
 
-        function renderComponent(coefficientList) {
+        function renderComponent(coefficientList, coefficient) {
             // TODO: optimize loop
             var content = _(coefficientList).chain().map(function(coefficient) {
                 return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
             }).sortBy('value').reverse().value().join('\n');
 
+            // TOOD: move tooltip options to obj
+            // Create factory for tooltip?!
             var html = [
-            '<div class="criteria-coefficient-indicator">',
+            '<div class="criteria-coefficient-indicator" uib-tooltip="{{\'FACTOR OF IMPORTANCE\' | translate }}: ' + coefficient.name + '" tooltip-placement="right" tooltip-append-to-body="true" tooltip-class="tooltip-light">',
                 content,
             '</div>'
             ].join('\n');
