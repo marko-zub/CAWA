@@ -113,6 +113,7 @@
                         filter-name="vm.filterName"
                         on-change-criteria-order="vm.orderByCriteriaProperty(order, $event)"
                         filter-object="vm.fo"
+                        on-show-criteria-popup="vm.editCriteriaCoefficient($event, criteria)"
                         ></filter-tags>
 
                     <div id="matrix-body-wrapper" class="matrix-body-wrapper">
@@ -140,8 +141,6 @@
                                             <div class="matrix-title-wrapper">
                                                 <div class="matrix-title app-sorter-wrapper">
                                                     <span ng-bind="::criteria.name"></span>
-
-
                                                 <a href ng-if="::criteria.description" class="link-secondary icon-info" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
                                                 </div>
                                                 <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">

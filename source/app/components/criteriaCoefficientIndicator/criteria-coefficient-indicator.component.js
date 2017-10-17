@@ -53,15 +53,15 @@
 
         function renderComponent(coefficientList, coefficient) {
             // TODO: optimize loop
-            var content = _(coefficientList).chain().map(function(coefficient) {
-                return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
-            }).sortBy('value').reverse().value().join('\n');
+            // var content = _(coefficientList).chain().map(function(coefficient) {
+            //     return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
+            // }).sortBy('value').reverse().value().join('\n');
 
             // TOOD: move tooltip options to obj
             // Create factory for tooltip?!
             var html = [
-            '<div class="criteria-coefficient-indicator" uib-tooltip="{{\'FACTOR OF IMPORTANCE\' | translate }}: ' + coefficient.name + '" tooltip-placement="right" tooltip-append-to-body="true" tooltip-class="tooltip-light">',
-                content,
+            '<div class="criteria-coefficient-indicator-new" uib-tooltip="{{\'FACTOR OF IMPORTANCE\' | translate }}: ' + coefficient.name + '" tooltip-placement="right" tooltip-append-to-body="true" tooltip-class="tooltip-light">',
+                '<span class="indicator bg-color-' + coefficient.name + '"></span>',
             '</div>'
             ].join('\n');
 

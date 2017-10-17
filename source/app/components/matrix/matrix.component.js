@@ -654,6 +654,12 @@
         function setMatrixTableHeight(height) {
             $('#matrix-content').css('min-height', height);
         }
+
+        // vm.showEditCriteriaCoefficient = showEditCriteriaCoefficient;
+        // function showEditCriteriaCoefficient($event, criteria) {
+        //     debugger
+        // }
+
         // TODO: make as a separeted component
         // Criteria header
         vm.editCriteriaCoefficient = editCriteriaCoefficient;

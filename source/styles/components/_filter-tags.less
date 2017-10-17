@@ -18,6 +18,11 @@ filter-tags {
     }
     .tag-group-wrapper {
         overflow: hidden;
+        &.tag-group-wrapper-criteria {
+            .tag {
+                padding-left: 8px;
+            }
+        }
     }
     .tag-group {
         display: inline-block;
@@ -49,8 +54,21 @@ filter-tags {
         color: @light-black;
         margin: 2px 2px;
         padding: 2px 4px;
+        position: relative;
         &:hover {
             background-color: @gray-light;
+        }
+    }
+    .criteria-coefficient-indicator-new {
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        bottom: -1px;
+        width: 5px;
+        height: auto;
+        border-right: 1px solid @gray-light;
+        &:hover {
+            cursor: pointer;
         }
     }
 }

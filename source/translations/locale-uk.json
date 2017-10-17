@@ -51,11 +51,11 @@
 	"HERE": "тут",
 	"NAME": "Ім'я",
 	"BECOME OWNER USER": "Бажаєте стати адміністратором",
-	"APPLY": "Подайте заявку",
 	"ADMINISTRATION": "Адміністрація",
 	"CLEAR ALL": "Очистити все",
 	"NOTHING TO COMPARE": "Нічого в порівнянні",
 	"PLEASE ADD DECISIONS TO COMPARE": "Будь ласка, додайте рішення",
 	"RATE IT": "Оцініть це",
-	"FACTOR OF IMPORTANCE": "Фактор важливості"
+	"FACTOR OF IMPORTANCE": "Фактор важливості",
+	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете знайти потрібну характеристику?"
 }

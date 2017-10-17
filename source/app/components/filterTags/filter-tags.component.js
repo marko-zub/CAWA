@@ -12,6 +12,7 @@
                 filterObject: '<',
                 onChangeCriteriaOrder: '&',
                 onChangeCharacteristicsOrder: '&',
+                onShowCriteriaPopup: '&'
             },
             templateUrl: 'app/components/filterTags/filter-tags.html',
             controller: 'FilterTagsController',
@@ -98,7 +99,11 @@
                     var find = _.findIndex(vm.tagsSort, function(tag) {
                         return tag.id === criteriaItem.id;
                     });
-                    if (criteriaItem.isSelected === true && find < 0) {
+
+                    // TODO: simplify
+                    if (find >= 0 && criteriaItem.isSelected === true) {
+                        vm.tagsSort[find] = criteriaItem;
+                    } else if (criteriaItem.isSelected === true && find < 0) {
                         vm.tagsSort.push(criteriaItem);
                     } else if (!criteriaItem.isSelected && find >= 0) {
                         vm.tagsSort.splice(find, 1);
@@ -300,7 +305,11 @@
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
 
+        vm.showCriteriaPopup = showCriteriaPopup;
 
+        function showCriteriaPopup($event, criteria) {
+            vm.onShowCriteriaPopup({$event: $event, criteria: criteria})
+        }
 
     }
 

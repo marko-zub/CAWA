@@ -6,29 +6,29 @@
         .module('app.components')
         .constant('DecisionCriteriaCoefficientsConstant', {
             COEFFICIENT_LIST: [{
-                name: 'Lower',
+                name: 'lower',
                 value: 0.1
             },{
-                name: 'Low',
+                name: 'low',
                 value: 0.5
             }, {
-                name: 'Normal',
+                name: 'normal',
                 value: 1
             }, {
-                name: 'High',
+                name: 'high',
                 value: 1.5
             }, {
-                name: 'Important',
+                name: 'important',
                 value: 2.5
             }, {
-                name: 'Significant',
+                name: 'significant',
                 value: 4
             }, {
-                name: 'Critical',
+                name: 'critical',
                 value: 7
             }],
             COEFFICIENT_DEFAULT: {
-                name: 'Normal',
+                name: 'normal',
                 value: 1
             }
         });

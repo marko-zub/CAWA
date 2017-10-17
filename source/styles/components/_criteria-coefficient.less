@@ -35,3 +35,62 @@
         }
     }
 }
+
+.criteria-coefficient-indicator-new {
+    width: 5px;
+    height: 27px;
+    // margin: 0 1px;
+    // border: 1px solid @coefficientDefault;
+    background-color: @coefficientDefault;
+    &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        content: '';
+        background-image: url('../images/bg-indicator.png');
+        background-repeat: repeat-x;
+        background-size: 100% 100%;
+    }    
+    .indicator {
+        // height: 0;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
+        // 
+        background-color: @coefficientNormal;
+        height: @indicator-step*3;
+        &.bg-color-lower {
+            background-color: @coefficientLower;
+            height: @indicator-step*1;
+        }
+        &.bg-color-low {
+            background-color: @coefficientLow;
+            height: @indicator-step*2;
+        }
+        &.bg-color-normal {
+            background-color: @coefficientNormal;
+            height: @indicator-step*3;
+        }
+        &.bg-color-high {
+            background-color: @coefficientHigh;
+            height: @indicator-step*4;
+        }
+        &.bg-color-important {
+            background-color: @coefficientImportant;
+            height: @indicator-step*5;
+        }
+        &.bg-color-significant {
+            background-color: @coefficientSignificant;
+            height: @indicator-step*6;
+        }
+        &.bg-color-critical {
+            background-color: @coefficientCritical;
+            height: 100%;
+        }
+    }
+}

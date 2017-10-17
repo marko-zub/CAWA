@@ -138,7 +138,7 @@
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
                     '<div class="m-group-title text-center">',
-                    translateFilter("Can\'t find the necessary criterion?") + "<a href='#'>" + translateFilter('Add it') + "</a>",
+                    translateFilter("Can\'t find the necessary criterion?") + " <a href='#'>" + translateFilter('Add it') + "</a>",
                     '</div>',
                     content,
                     '</div>'
