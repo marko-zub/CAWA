@@ -58,4 +58,5 @@
             mergeCriteriaDecision: mergeCriteriaDecision
         };
     }
+    
 })();

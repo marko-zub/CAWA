@@ -22,7 +22,6 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            console.log('Decision Nominations Controller');
             vm.decisionParents = vm.decision.parentDecisions;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;

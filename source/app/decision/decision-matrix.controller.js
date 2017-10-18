@@ -13,10 +13,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Decision Matrix Controller');
-
             vm.decision = decisionBasicInfo || {};
-
             $rootScope.pageTitle = vm.decision.name + ' Comparison Matrix | ' + Config.pagePrefix;
         }
     }

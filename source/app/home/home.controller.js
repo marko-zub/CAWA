@@ -27,10 +27,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Home controller');
-
             vm.navigation = navigationObj;
-
             var data = checkStateParams($stateParams);
             getDecisions(data);
 
@@ -52,7 +49,6 @@
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
                 vm.decisions = result.decisions;
-                initPagination(result.totalDecisions);
                 vm.decisionsSpinner = false;
             }, function(error) {
                 console.log(error);
@@ -87,10 +83,6 @@
                 }
             }
             return data;
-        }
-
-        function initPagination(total) {
-            vm.pagination.totalDecisions = total || 10;
         }
 
         function search() {

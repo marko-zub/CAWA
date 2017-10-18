@@ -242,7 +242,6 @@
 
                 $state.go('404');
             }
-
             return result[0];
         }).catch(function() {
             $state.go('404');
@@ -277,7 +276,6 @@
 
                 // Set analysis obj
                 // DecisionSharedService.setFilterObject(resp);
-
                 return resp;
             }, function(req) {
                 console.log(req);
@@ -285,6 +283,5 @@
         }
 
     }
-
 
 })();

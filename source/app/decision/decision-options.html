@@ -64,7 +64,7 @@
             <div ng-show="!vm.decisionsLoader && vm.decisions.length">
                 <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
 
-                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)" on-change-page-size="vm.changePageSize(pagination)"></app-paginator>
+                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
             </div>
 
             <div ng-show="vm.decisionsLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>

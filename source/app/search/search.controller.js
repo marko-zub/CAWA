@@ -50,13 +50,8 @@
             if (val) return val;
         }
 
-        vm.changePageSize = changePageSize;
         vm.changePage = changePage;
-
-        function changePageSize(pagination) {
-            getSearch(vm.query, pagination);
-        }
-
+        
         function changePage(pagination) {
             getSearch(vm.query, pagination);
         }

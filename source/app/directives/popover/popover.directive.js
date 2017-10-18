@@ -105,7 +105,7 @@
                         if (!isPopoverHover) {
                             popoverContentId.removeClass('in');
                         }
-                    }, 100, false);
+                    }, 60, false);
                 });                
 
                 popoverContentId.on('mouseenter', function() {

@@ -20,11 +20,7 @@
             vm = this;
 
         vm.decision = decisionBasicInfo || {};
-
         vm.itemsPerPage = PaginatioService.itemsPerPage();
-        vm.changePageSize = changePageSize;
-        vm.changePage = changePage;
-
         vm.$onInit = onInit;
 
         var criteriaGroupsIds = [];
@@ -41,9 +37,7 @@
         function onInit() {
             vm.decisionsLoader = true;
             vm.activeTabSortChild = 0;
-            console.log('Decision Opions Controller');
             vm.navigation = navigationObj;
-
             vm.decisionParents = vm.decision.parentDecisions;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
@@ -136,11 +130,7 @@
 
 
         // Pagination
-        function changePageSize(pagination) {
-            getDecisionMatrix(vm.decision.id, pagination);
-            updateStateParams(pagination);
-        }
-
+        vm.changePage = changePage;
         function changePage(pagination) {
             getDecisionMatrix(vm.decision.id, pagination);
             updateStateParams(pagination);

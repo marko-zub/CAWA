@@ -11,9 +11,6 @@
     function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, DecisionsConstant, DecisionsService, translateFilter, $localStorage, PaginatioService) {
         var
             vm = this;
-
-        vm.changePageSize = changePageSize;
-        vm.changePage = changePage;
         vm.itemsPerPage = PaginatioService.itemsPerPage();
 
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
@@ -22,16 +19,11 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Decisions controller');
-
             vm.navigation = navigationObj;
-
             $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
             var data = getStateParams($stateParams);
             getDecisions(data);
-
             getTotalDecisions();
-
             vm.totalCount = decisionsData.totalDecisions;
 
             if (!$stateParams.tab) {
@@ -60,10 +52,7 @@
 
         // TODO: make service
         // Pagination
-        function changePageSize(pagination) {
-            getDecisions(pagination);
-            updateStateParams(pagination);
-        }
+        vm.changePage = changePage;
 
         function changePage(pagination) {
             getDecisions(pagination); // TODO: make as callback

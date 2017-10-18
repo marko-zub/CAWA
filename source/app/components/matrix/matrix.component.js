@@ -885,15 +885,7 @@
         // TODO: clean up matrix servise
         // Pagination
         vm.itemsPerPage = PaginatioService.itemsPerPageSm();
-        vm.changePageSize = changePageSize;
         vm.changePage = changePage;
-
-        function changePageSize(pagination) {
-            _fo.pagination = pagination;
-            getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
-            });
-        }
 
         function changePage(pagination) {
             _fo.pagination = pagination;

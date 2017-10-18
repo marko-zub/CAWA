@@ -14,8 +14,7 @@
                 pageSize: '<',
                 perPage: '<',
                 total: '<',
-                onChangePage: '&',
-                onChangePageSize: '&'
+                onChangePage: '&'
             }
         });
 
@@ -70,7 +69,7 @@
         function changePageSize() {
             vm.pagination.pageNumber = 1;
             vm.pageField = vm.pageNumber; //undefined;
-            vm.onChangePageSize({
+            vm.onChangePage({
                 pagination: vm.pagination
             });
         }

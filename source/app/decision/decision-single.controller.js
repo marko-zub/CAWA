@@ -19,11 +19,7 @@
             vm = this;
 
         vm.decision = decisionBasicInfo || {};
-
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
-        vm.changePageSize = changePageSize;
-        vm.changePage = changePage;
-
         vm.$onInit = onInit;
 
         var criteriaGroupsIds = [];
@@ -195,18 +191,7 @@
             });
         }
 
-        // Pagination
-        function changePageSize() {
-            vm.pagination.pageNumber = 1;
-            getDecisionMatrix(vm.decision.id);
-            updateStateParams();
-        }
-
-        function changePage() {
-            getDecisionMatrix(vm.decision.id);
-            updateStateParams();
-        }
-
+        // TODO: remove pagination
         function initPagination() {
             vm.pagination = {
                 pageNumber: parseInt($stateParams.page) || 1,
@@ -215,20 +200,6 @@
             };
 
             vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
-            // updateStateParams();
-        }
-
-        function updateStateParams() {
-            // $state.go($state.current.name, {
-            //     id: vm.decision.id,
-            //     slug: vm.decision.nameSlug,
-            //     page: vm.pagination.pageNumber.toString(),
-            //     size: vm.pagination.pageSize.toString()
-            // }, {
-            //     notify: true,
-            //     reload: true,
-            //     location: false
-            // });
         }
 
         // TODO: move to service
@@ -363,7 +334,6 @@
                 });
             });
         }
-
 
         // TODO: move to service
         function pickCriteriaIds(result) {
