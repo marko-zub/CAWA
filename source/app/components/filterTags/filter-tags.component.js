@@ -23,6 +23,7 @@
     FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', '$scope', '$element'];
 
     function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope, $element) {
+        // TODO: simplify logic
         var vm = this,
             _fo;
         vm.removeTag = removeTag;
@@ -86,13 +87,16 @@
                 return;
             }
 
-            var criteriaCopy = criteria;
+            var criteriaCopy = angular.copy(criteria);
             criteriaCopy.isSelected = false;
+            criteriaCopy.isRemoveSelected = true;
             DecisionNotificationService.notifySelectCriteria(criteriaCopy);
         }
 
         function generateCriteriaTags(criteria) {
             var criteriaSelectedList = [];
+
+            // TODO: optimize loops
             _.forEach(criteria, function(group) {
                 _.forEach(group.criteria, function(criteriaItem) {
 
@@ -117,8 +121,6 @@
         // End Criteria
 
         function generateCharacteristicsTags(characteristics) {
-            // console.log(characteristics);
-            // _.forEach(characteristics, function(group) {
             _.forEach(characteristics, function(characteristic) {
                 var find = _.findIndex(vm.tagsFilter, function(tag) {
                     return tag.id === characteristic.id;
@@ -129,9 +131,7 @@
                     vm.tagsFilter.splice(find, 1);
                 }
             });
-            // });
         }
-
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
@@ -170,7 +170,6 @@
             }
         }
 
-
         // TODO: update remove logic
         // Optimize
         function removeTag(item, value) {
@@ -201,9 +200,7 @@
                     // vm.tagsFilter.splice(index, 1);
                     itemCopy.value = null;
                 }
-
                 // Filter Name
-
             }
 
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
@@ -261,7 +258,6 @@
             }
         }
 
-
         function caseQueryType(item) {
             var data = [];
             // TODO: use Switch Case ?!
@@ -286,6 +282,7 @@
             });
         }
 
+        // Criteria Popup
         function changeCharacteristicsOrder(order, orderId) {
             var defaultOrder = 'DESC';
             if (order === defaultOrder) defaultOrder = 'ASC';
@@ -308,7 +305,7 @@
         vm.showCriteriaPopup = showCriteriaPopup;
 
         function showCriteriaPopup($event, criteria) {
-            vm.onShowCriteriaPopup({$event: $event, criteria: criteria})
+            vm.onShowCriteriaPopup({$event: $event, criteria: criteria});
         }
 
     }

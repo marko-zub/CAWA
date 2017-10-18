@@ -8,10 +8,9 @@
                 <div class="tag-group">
                     <div class="tag-wrapper" ng-repeat="tag in vm.tagsSort track by tag.id" ng-show="vm.tagsSort.length > 0">
                         <div class="tag">
-                            <div ng-click="vm.showCriteriaPopup($event, tag)" uib-tooltip="{{ 'FACTOR OF IMPORTANCE' | translate }}: {{ tag.coefficient.name || 'Normal' }}" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip-class="tooltip-light" class="criteria-coefficient-indicator-new">
+                            <div ng-click="vm.showCriteriaPopup($event, tag)" uib-tooltip="{{ 'FACTOR OF IMPORTANCE' | translate }}: {{ tag.coefficient.name || 'normal' }}" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip-class="tooltip-light" class="criteria-coefficient-indicator-new">
                                 <span class="indicator bg-color-{{ tag.coefficient.name }}"></span>
                             </div>
-
                             {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div><span ng-show="!$last" class="tag-divider">and</span>
                     </div>

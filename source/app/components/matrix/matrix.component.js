@@ -708,20 +708,24 @@
             DecisionNotificationService.notifySelectCriteria(criteria);
         }
 
+        // TODO: clean up function
         function formDataForSearchRequest(criteria, coefCall) {
             if (!criteria.id) return;
 
             var foSelectedCriteria = DecisionSharedService.getFilterObject().selectedCriteria;
             var position = foSelectedCriteria.sortCriteriaIds.indexOf(criteria.id);
-            //select criteria
-            if (position === -1) {
+
+            if (position >= 0 && criteria.isRemoveSelected) {
+                foSelectedCriteria.sortCriteriaIds.splice(position, 1);
+                delete foSelectedCriteria.sortCriteriaCoefficients[criteria.id];
+            } else if (position === -1) {
                 foSelectedCriteria.sortCriteriaIds.push(criteria.id);
                 //don't add default coefficient
                 if (criteria.coefficient && criteria.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                     foSelectedCriteria.sortCriteriaCoefficients[criteria.id] = criteria.coefficient.value;
                 }
                 //add only coefficient (but not default)
-            } else if (coefCall && criteria.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
+            } else if (!criteria.isRemoveSelected && coefCall && criteria.coefficient.value !== DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT.value) {
                 foSelectedCriteria.sortCriteriaCoefficients[criteria.id] = criteria.coefficient.value;
                 //unselect criteria
             } else {
