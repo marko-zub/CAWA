@@ -136,7 +136,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="matrix-item matrix-control js-item-aside js-toggle-hide" ng-repeat="criteria in group.criteria track by criteria.id" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}">
+                                        <div class="matrix-item matrix-control js-toggle-hide" ng-repeat="criteria in group.criteria track by criteria.id" ng-click="vm.selectCriteria($event, criteria)" ng-class="{'selected' : criteria.isSelected, 'hide': group.isClosed}" data-aside="m-criteria-group-{{::criteria.id}}">
 
                                             <div class="matrix-title-wrapper">
                                                 <div class="matrix-title app-sorter-wrapper">
@@ -211,8 +211,10 @@
                         <div id="matrix-body" class="matrix-body">
                             <!-- Table Content -->
                             <div id="matrix-content" class="matrix-content">
-
-                                <matrix-criteria ng-if="vm.criteriaGroups.length" decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
+                                
+                                <div id="m-criteria-wrapper" class="matrix-criteria-wrapper">
+                                    <matrix-criteria ng-if="vm.criteriaGroups.length" decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
+                                </div>
 
                                 <div class="characteristic-groups-content">
                                     <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span></span></div>

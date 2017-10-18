@@ -21,12 +21,7 @@
         var vm = this;
         // Discussions
         vm.getComments = getComments;
-        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
-
-        function onInit() {
-            // vm.listDisplay = angular.copy(vm.decisions);
-        }
 
         function onChanges(changes) {
             // TODO: check for performance
@@ -99,7 +94,8 @@
             return html.join('\n');
         }
 
-        function generateBaseGrid(list) {
+        function generateBaseGrid(list) {    
+
             var html = [];
 
             _.forEach(list, function(container) {
@@ -107,14 +103,18 @@
                 var rows = [];
                 _.forEach(container.criteria, function(row, rowIndex) {
                     // console.log(row);
-                    var currentHstyle = '';
-                    var currentH = $('#m-criteria-group-' + container.id + '-' + row.id + '').css('height');
-                    if (currentH) {
-                        currentHstyle = 'height: ' + currentH + '; ';
+                    var currentHstyle;
+                    var currentH = $('#m-criteria-group-' + container.id + '-' + row.id).css('height');
+                    // console.log(currentH, currentH === '0px');
+                    if (!currentH) {
+                        var asideRowH = $('[data-aside=m-criteria-group-' + row.id + ']').outerHeight();
+                        currentH = asideRowH + 'px';
                     }
+                    currentHstyle = 'height: ' + currentH + '; ';
+
                     var decisionsRow = generateDecisionsRow(vm.decisions, row.id);
                     var rowBlock = [
-                        '<div class="m-group-row js-matrix-item-content" id="m-criteria-group-' + container.id + '-' + row.id + '" style="' + currentHstyle + 'top: ' + rowIndex * 50 + 'px">',
+                        '<div class="m-group-row" id="m-criteria-group-' + container.id + '-' + row.id + '" style="' + currentHstyle + '">',
                         decisionsRow,
                         '</div>'
                     ].join('\n');

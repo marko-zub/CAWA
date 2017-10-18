@@ -42,17 +42,20 @@
             vm.characteristicGroupsContentLoader = true;
             getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
 
+                updateCriteriaGroupContainerHeight();
+
                 getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
                     initMatrixScroller();
                     // Render html matrix
-                    var decisionMatrixs = matrixResp.decisionMatrixs;
+
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
-                    renderMatrix();
+                    // renderMatrix();
 
                     // Init only first time
                     initSorters(); //Hall of fame
                     initMatrixMode();
+                    vm.decisionsSpinner = false;
 
                     // Init pagination
                     vm.itemsPerPage = PaginatioService.itemsPerPageSm();
@@ -438,7 +441,10 @@
         var matrixRowsH = [];
 
         function calcMatrixRowHeight() {
+            updateCriteriaGroupContainerHeight();
+
             var matrixSizes = [];
+            // Calc only characteristics rows
             $('.js-item-aside').css('height', 'auto');
             $('.js-matrix-item-content').css('height', 'auto');
 
@@ -857,7 +863,7 @@
             } else {
                 $('#panel').css({
                     'padding-top': ''
-                });                
+                });
                 $('body').removeClass('matrix-sticky');
             }
         }, 30);
@@ -892,6 +898,17 @@
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
             });
+        }
+
+        function updateCriteriaGroupContainerHeight() {
+            // TODO: avoid timeout
+            setTimeout(function() {
+                // Fix for load criteria group
+                var criteriaWrapperH = $('#matrix-aside-content .criteria-list').outerHeight();
+                $('#m-criteria-wrapper').css({
+                    'min-height': criteriaWrapperH
+                });
+            }, 0);
         }
     }
 })();
