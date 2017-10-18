@@ -1,11 +1,8 @@
 <div class="app-container-sm">
-
     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
     <div class="post-header">
         <app-votes></app-votes>
-
         <div class="nav-tabs-wrapper clearfix">
-
 			<!-- TODO: make as dynamic navigation -->
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li>
@@ -15,24 +12,20 @@
                     <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null})"> {{::parent.name}}</a>
                 </li>
                 <li>
-                    <a ui-sref="decisions.single.reviews"  translate-cloak>{{ 'Reviews' | translate }}</a>
+                    <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
                 </li>
                 <li>
-                    <a ui-sref="decisions.single.options"  translate-cloak>{{ 'Options' | translate }}</a>
+                    <a ui-sref="decisions.single.options" translate-cloak>{{ 'Options' | translate }}</a>
                 </li>
                 <li class="active">
-                    <a ui-sref="decisions.single.nominations({tab: null})"  translate-cloak>{{ 'Nominations' | translate }}</a>
+                    <a ui-sref="decisions.single.nominations({tab: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                 </li>
             </ul>
         </div>
     </div>
-
-
     <div class="post post-single with-rating">
         <span class="text-header"  translate-cloak>
             {{ "NO NOMINATIONS" | translate}} <a href="#">{{ "HERE" | translate }}</a>.
         </span>
     </div>
-
-
 </div>

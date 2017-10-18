@@ -78,11 +78,13 @@
         function isVaildPageNumber(number) {
             var isValid = true;
             var totalPages = parseInt(vm.pagination.totalDecisions) / parseInt(vm.pagination.pageSize) + 1;
-            if (number < 0) {
+            if (number <= 0) {
                 isValid = false;
-                vm.pageField = 0;
+                vm.pageField = 1;
             } else if (number > totalPages) {
                 vm.pageField = parseInt(totalPages);
+                isValid = false;
+            } else if (!number) {
                 isValid = false;
             }
             return isValid;

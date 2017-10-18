@@ -15,7 +15,7 @@
         $stateParams, DecisionSharedService,  $state, DecisionsUtils, $q, ContentFormaterService,
         Config, PaginatioService) {
 
-        // TODO: clean up controller make
+        // TODO: clean up controller
         var
             vm = this;
 

@@ -6,22 +6,20 @@
         .module('app.discussions')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService', 'DecisionsUtils', 'PaginatorConstant'];
+    SearchController.$inject = ['$rootScope', '$state', '$stateParams', 'DecisionDataService', 'DecisionsUtils', 'PaginatioService'];
 
-    function SearchController($rootScope, $state, $stateParams, DecisionDataService, DecisionsUtils, PaginatorConstant) {
+    function SearchController($rootScope, $state, $stateParams, DecisionDataService, DecisionsUtils, PaginatioService) {
         var vm = this;
         vm.noResult = false;
 
         vm.query = $stateParams.query || '';
         $rootScope.pageTitle = 'Search' + ' | DecisionWanted.com';
 
-        init();
+        vm.$onInit = onInit;
 
-        function init() {
-            console.log('Search controller');
-            // console.log($stateParams);
-            initPagination();
-            getSearch(vm.query);
+        function onInit() {
+            var pagination = PaginatioService.initPagination();
+            getSearch(vm.query, pagination);
         }
 
         function getSearch(query, pagination) {
@@ -41,7 +39,7 @@
             return DecisionDataService.searchDecisions(searchData).then(function(result) {
                 vm.decisions = result.decisions;
                 vm.noResult = !vm.decisions.length;
-                changePaginationTotal(result.totalDecisions);
+                vm.pagination = PaginatioService.initPagination(result.totalDecisions);
                 return result;
             }, function(err) {
                 console.log(err);
@@ -49,37 +47,18 @@
         }
 
         function cleanQuery(val) {
-            if (!val) return;
-            // val = val.toString();
-            return val;
+            if (val) return val;
         }
 
-
-        // TODO: move to component
         vm.changePageSize = changePageSize;
         vm.changePage = changePage;
 
-        function changePageSize() {
-            vm.pagination.pageNumber = 1;
-            getSearch(vm.query, vm.pagination);
+        function changePageSize(pagination) {
+            getSearch(vm.query, pagination);
         }
 
-        function changePage() {
-            getSearch(vm.query, vm.pagination);
-        }
-
-        function initPagination() {
-            vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
-
-            vm.pagination = {
-                pageNumber:  1,
-                pageSize:  10,
-                totalDecisions: 10
-            };
-        }
-
-        function changePaginationTotal(total) {
-            vm.pagination.totalDecisions = total;
+        function changePage(pagination) {
+            getSearch(vm.query, pagination);
         }
 
     }

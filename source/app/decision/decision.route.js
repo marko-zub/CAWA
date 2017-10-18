@@ -68,10 +68,6 @@
                     controller: 'DecisionNominationsController',
                     controllerAs: 'vm',
                 }
-            },
-            resolve: {
-                // decisionBasicInfo: DecisionResolver,
-                // decisionStateInfo: DecisionStateResolver
             }
         })
 
@@ -102,10 +98,6 @@
                         value: null,
                         squash: true
                     }
-                },
-                resolve: {
-                    // decisionStateInfo: DecisionStateResolver
-                    // decisionAnalysisInfo: DecisionAanalysisResolver
                 },
                 data: {
                     bodyClass: 'matrix-page',
@@ -221,7 +213,7 @@
                     });
                 }
 
-                //unsubscribe event listener
+                // unsubscribe event listener
                 // stateListener();
             });
     }

@@ -15,10 +15,8 @@
     appInterceptor.$inject = ['$injector'];
 
     function appInterceptor($injector) {
-        // var analysisCallsArr = [];
         return {
             request: function(config) {
-                // console.log(config);
                 return config;
             },
             response: function(resp) {
@@ -67,7 +65,7 @@
                 var notification = $injector.get('MsgService');
                 // var msg = rejection.status + ': ' + rejection.statusText;
                 if(rejection.status === -1){
-                    notification.error('No API connection ' + rejection.statusText);  
+                    notification.error('No API connection ' + rejection.statusText);
                 }
 
                 return rejection;
