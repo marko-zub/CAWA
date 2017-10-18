@@ -27,7 +27,7 @@
 
             <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
                 <div id="panel" class="app-panel matrix-panel">
-                    <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                    <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span></span></div>
                     <!-- Header -->
                     <div class="matrix-header">
                         <div class="matrix-row">
@@ -215,7 +215,7 @@
                                 <matrix-criteria ng-if="vm.criteriaGroups.length" decisions="vm.decisions.decisionMatrixs" criteria="vm.criteriaGroups"></matrix-criteria>
 
                                 <div class="characteristic-groups-content">
-                                    <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                                    <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span></span></div>
 
                                     <!-- Hide to avoid reflow -->
                                     <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">

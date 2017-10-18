@@ -123,10 +123,10 @@
                     <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                         <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
 
-                        <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                        <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
 
                         <!-- TODO: remove second loader -->
-                        <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                        <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
 
                     </div>
                 </div>
@@ -154,7 +154,7 @@
             <!-- Properties List -->
             <div class="properties-list-wrapper">
                 <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
-                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span></span></div>
             </div>
             <!-- End Properties List -->
 
@@ -182,7 +182,7 @@
 
                 <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
 
-                <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span class="glyphicon glyphicon-refresh app-loader-animation"></span></div>
+                <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span></span></div>
 
             </div>
             <!-- End Recommended Start -->
