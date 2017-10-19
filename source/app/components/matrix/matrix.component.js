@@ -853,8 +853,7 @@
                 allowFixedHeader = false;
             }
 
-            if (scrollTopDoc > headerStickyPoint) {
-                if (!allowFixedHeader) return;
+            if (scrollTopDoc > headerStickyPoint && allowFixedHeader) {
                 $('#panel').css({
                     'padding-top': fixedHaderHeight,
                 });
@@ -866,7 +865,7 @@
                 });
                 $('body').removeClass('matrix-sticky');
             }
-        }, 30);
+        }, 21);
 
         vm.$onDestroy = onDestroy;
 
