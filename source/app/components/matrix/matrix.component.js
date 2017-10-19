@@ -125,7 +125,15 @@
 
         //Subscribe to notification events
         DecisionNotificationService.subscribeSelectCriteria(function(event, data) {
-            formDataForSearchRequest(data, data.coefCall);
+
+            if (_.isNull(data)) {
+                // TODO: make service method
+                // Reset all criteria
+                _fo.selectedCriteria.sortCriteriaIds = [];
+            } else {
+                formDataForSearchRequest(data, data.coefCall);
+            }
+
             // DecisionSharedService.filterObject.persistent = true;
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initSorters();
@@ -158,34 +166,40 @@
         });
 
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-            var query = data.query;
-            var sendFo = DecisionSharedService.filterObject;
-            sendFo.persistent = true;
-            //TODO: Clean up code
-            if (!sendFo.filterQueries)
-                sendFo.filterQueries = [];
-
-            var find = _.findIndex(sendFo.filterQueries, function(filterQuery) {
-                return filterQuery.characteristicId == query.filterQueries.characteristicId;
-            });
-            if (find >= 0) {
-                // TODO: find better solution
-                if (!_.isBoolean(query.filterQueries.value) && _.isEmpty(query.filterQueries.value) &&
-                    _.isEmpty(query.filterQueries.queries)) {
-                    sendFo.filterQueries.splice(find, 1);
-
-                } else {
-                    sendFo.filterQueries[find] = query.filterQueries;
-                }
+            
+            if (_.isNull(data)) {
+                // Reset all characeristics
+                _fo.filterQueries = null;
             } else {
-                sendFo.filterQueries.push(query.filterQueries);
-            }
+                var query = data.query;
+                var sendFo = DecisionSharedService.filterObject;
+                sendFo.persistent = true;
+                //TODO: Clean up code
+                if (!sendFo.filterQueries)
+                    sendFo.filterQueries = [];
 
-            if (_.isEmpty(sendFo.filterQueries) ||
-                (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
-                sendFo.filterQueries = null;
+                var find = _.findIndex(sendFo.filterQueries, function(filterQuery) {
+                    return filterQuery.characteristicId == query.filterQueries.characteristicId;
+                });
+                if (find >= 0) {
+                    // TODO: find better solution
+                    if (!_.isBoolean(query.filterQueries.value) && _.isEmpty(query.filterQueries.value) &&
+                        _.isEmpty(query.filterQueries.queries)) {
+                        sendFo.filterQueries.splice(find, 1);
+
+                    } else {
+                        sendFo.filterQueries[find] = query.filterQueries;
+                    }
+                } else {
+                    sendFo.filterQueries.push(query.filterQueries);
+                }
+
+                if (_.isEmpty(sendFo.filterQueries) ||
+                    (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
+                    sendFo.filterQueries = null;
+                }
+                sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
             }
-            sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
 
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);

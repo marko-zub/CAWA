@@ -12,7 +12,6 @@
                     </li>
                 </ul>
             </div>
-
             <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id" ng-show="vm.activeTab == $index">
                 <div class="decision-card-group-content clearfix">
                     <div class="decision-card" ng-repeat="decision in parentDecision.childDecisions track by decision.id">
@@ -30,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="clearfix">
+                <div class="clearfix" translate-cloak>
                     <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">  {{ "CLEAR ALL" | translate }}
                     </button>
                     <button class="btn btn-primary-2 btn-sm" ng-click="vm.compareDecisions($index)"  translate-cloak>

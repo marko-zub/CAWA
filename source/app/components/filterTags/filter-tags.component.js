@@ -305,9 +305,23 @@
         vm.showCriteriaPopup = showCriteriaPopup;
 
         function showCriteriaPopup($event, criteria) {
-            vm.onShowCriteriaPopup({$event: $event, criteria: criteria});
+            vm.onShowCriteriaPopup({
+                $event: $event,
+                criteria: criteria
+            });
         }
 
+        vm.clearAllCriteria = clearAllCriteria;
+
+        function clearAllCriteria() {
+            DecisionNotificationService.notifySelectCriteria(null);
+        }
+
+        vm.clearAllCharacterisrics = clearAllCharacterisrics;
+
+        function clearAllCharacterisrics() {
+            DecisionNotificationService.notifySelectCharacteristic(null);
+        }
     }
 
 })();
