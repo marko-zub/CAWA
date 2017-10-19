@@ -166,12 +166,13 @@
         });
 
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
-            
+            var query;
             if (_.isNull(data)) {
                 // Reset all characeristics
                 _fo.filterQueries = null;
+                _fo.decisionNameFilterPattern = null;
             } else {
-                var query = data.query;
+                query = data.query;
                 var sendFo = DecisionSharedService.filterObject;
                 sendFo.persistent = true;
                 //TODO: Clean up code
@@ -204,7 +205,7 @@
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
-            setCharacteristicChanges(query.filterQueries, data.optionId);
+            setCharacteristicChanges(query.filterQueries || null, data.optionId);
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {

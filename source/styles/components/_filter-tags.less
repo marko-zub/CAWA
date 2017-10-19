@@ -21,6 +21,9 @@ filter-tags {
         &.tag-group-wrapper-criteria {
             .tag {
                 padding-left: 8px;
+                &.tag-btn {
+                    padding: 2px 8px;
+                }
             }
         }
     }
@@ -55,13 +58,20 @@ filter-tags {
         margin: 2px 2px;
         padding: 2px 4px;
         position: relative;
+        .transition(~"border-color ease-in-out .15s, background-color ease-in-out .15s, color ease-in-out .15s");
         &:hover {
-            background-color: @gray-light;
+            border: 1px solid darken(@gray-light, 10%);
         }
         &.tag-btn {
-            margin-left: 10px;
+            border-radius: 0;
+            margin-left: 5px;
+            padding: 2px 8px;
+            background-color: @gray-light;
+            cursor: pointer;
             &:hover {
-                cursor: pointer;
+                background-color: @color-orange-darken;
+                border-color: @color-orange-darken;
+                color: #fff;
             }
         }
     }

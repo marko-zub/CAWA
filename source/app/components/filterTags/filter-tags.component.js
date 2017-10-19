@@ -320,6 +320,7 @@
         vm.clearAllCharacterisrics = clearAllCharacterisrics;
 
         function clearAllCharacterisrics() {
+            vm.tagsFilter = [];
             DecisionNotificationService.notifySelectCharacteristic(null);
         }
     }
