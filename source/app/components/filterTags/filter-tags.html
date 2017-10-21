@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="tag-group"> 
-                <div class="tag-wrapper">
+                <div class="tag-wrapper" ng-show="vm.tagsFilter.length > 0 && vm.tagsFilter[0].data.length > 1">
                     <div class="tag tag-btn" ng-click="vm.clearAllCharacterisrics()" translate-cloak>
                         {{ "CLEAR ALL" | translate }}
                     </div>

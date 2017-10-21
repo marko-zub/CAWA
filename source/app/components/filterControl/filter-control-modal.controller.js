@@ -45,10 +45,24 @@
             vm.filterQuery = '';
 
             if (!vm.item.selectedOperator || vm.item.selectedOperator === 'OR') {
-                vm.selectedOperatorTrigger =  true;
+                vm.selectedOperatorTrigger = true;
             } else {
                 vm.selectedOperatorTrigger = false;
             }
+            vm.itemCopy = angular.copy(vm.item);
+        }
+
+        vm.searchFilterQuery = searchFilterQuery;
+
+        function searchFilterQuery() {
+            // console.log(vm.item);
+            var hiddenOptions = _.filter(vm.item.options, function(option) {
+                return option.value && option.value.toLowerCase().indexOf(vm.filterQuery.toLowerCase()) >= 0;
+            });
+
+            var itemCopy = angular.copy(vm.item);
+            itemCopy.options = hiddenOptions;
+            vm.itemCopy = itemCopy;
         }
     }
 })();

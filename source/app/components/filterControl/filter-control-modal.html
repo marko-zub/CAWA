@@ -8,7 +8,7 @@
 
         <div class="row">
             <div class="col-sm-10">
-                <input type="text" class="form-control" ng-model="vm.filterQuery" placeholder="Filter by value...">
+                <input type="text" class="form-control" ng-model="vm.filterQuery" ng-keyup="vm.searchFilterQuery()" placeholder="Filter by value...">
             </div>
             <div class="col-sm-2">
 
@@ -28,19 +28,8 @@
 
             </div>
         </div>
-
-        <div class="filter-item checkbox-list">
-
-<!--             <div class="filter-item-checkbox">
-                <input class="js-checkbox" type="checkbox" id="modal-all-options" name="modal-all-options" ng-value="option.value" ng-model="option.selected">
-                <label for="modal-all-options">Select All</label>
-            </div>
- -->
-            <div class="filter-item-checkbox" ng-repeat="option in vm.item.options | filter:vm.filterQuery track by option.id">
-                <input class="js-checkbox" type="checkbox" id="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" name="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}" ng-value="option.value" ng-model="option.selected">
-                <label for="modal-{{ ::vm.item.id }}-option-{{ ::option.id }}">{{ ::option.value }}</label>
-            </div>
-        </div>
+        
+        <div dw-light-list collection="vm.itemCopy" class="filter-item checkbox-list"></div>
 
         </div>
         <div class="modal-footer text-right">
