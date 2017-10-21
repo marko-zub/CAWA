@@ -42,13 +42,11 @@
                         {{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div><span ng-show="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>
                 </div>
-            </div>
-            <div class="tag-group"> 
-                <div class="tag-wrapper" ng-show="vm.tagsFilter.length > 0 && vm.tagsFilter[0].data.length > 1">
+                <div class="tag-wrapper" ng-if="$last && vm.tagsFilter.length > 1 || $last && vm.tagsFilter.length > 0 && vm.tagsFilter[0].data.length > 1">
                     <div class="tag tag-btn" ng-click="vm.clearAllCharacterisrics()" translate-cloak>
                         {{ "CLEAR ALL" | translate }}
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </div>
