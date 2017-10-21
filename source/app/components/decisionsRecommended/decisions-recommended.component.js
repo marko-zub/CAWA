@@ -15,9 +15,9 @@
         });
 
 
-    DecisionsRecommendedController.$inject = ['$sce'];
+    DecisionsRecommendedController.$inject = [];
 
-    function DecisionsRecommendedController($sce) {
+    function DecisionsRecommendedController() {
         var
             vm = this;
 

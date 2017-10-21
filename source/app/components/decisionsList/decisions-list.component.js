@@ -22,9 +22,9 @@
         });
 
 
-    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', '$templateRequest', '$compile', '$interpolate', '$templateCache', '$scope'];
+    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService'];
 
-    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, $templateRequest, $compile, $interpolate, $templateCache, $scope) {
+    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService) {
         var
             vm = this;
 

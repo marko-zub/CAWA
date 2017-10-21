@@ -15,9 +15,9 @@
         });
 
 
-    MediaLinksController.$inject = ['$sce'];
+    MediaLinksController.$inject = [];
 
-    function MediaLinksController($sce) {
+    function MediaLinksController() {
         var vm = this;
         vm.$onInit = onInit;
 

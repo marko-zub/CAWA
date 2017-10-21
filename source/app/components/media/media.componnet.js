@@ -15,9 +15,9 @@
         });
 
 
-    MediaController.$inject = ['$sce'];
+    MediaController.$inject = [];
 
-    function MediaController($sce) {
+    function MediaController() {
         var vm = this;
         vm.$onInit = onInit;
 
@@ -32,7 +32,7 @@
 
             var cleanList = _.chain(list).filter(function(item) {
                 if (item.type !== 'LOGO' && item.type !== 'LINK') {
-                    var obj = generateMediaHtml(item.type, item.url, item.name);
+                    var obj = generateMediaHtml(item.type);
                     return _.merge(item, obj);
                 }
             }).sortBy('order').value();
@@ -58,38 +58,38 @@
 
         }
 
-        function getWistaVideo (url) {
-            $.ajax({
-                url: 'http://fast.wistia.net/oembed?url=http://home.wistia.com/medias/6am62oqhz7',
-                success: function (resp) {
-                    console.log(resp);
-                    return resp.thumbnail_url;
-                }
-            });
-        }
+        // function getWistaVideo() {
+        //     $.ajax({
+        //         url: 'http://fast.wistia.net/oembed?url=http://home.wistia.com/medias/6am62oqhz7',
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             return resp.thumbnail_url;
+        //         }
+        //     });
+        // }
 
-        function generateMediaHtml(type, url, name) {
+        function generateMediaHtml(type) {
             var order = 9;
             var thumb = '';
             switch (type) {
-                case "IMAGE":
+                case 'IMAGE':
                     type = 'image';
                     break;
-                case "LINK":
+                case 'LINK':
                     type = 'image';
                     break;
-                case "VIMEOVIDEO":
+                case 'VIMEOVIDEO':
                     type = 'video';
                     order = 2;
                     break;
-                case "YOUTUBEVIDEO":
+                case 'YOUTUBEVIDEO':
                     type = 'video';
                     order = 1;
                     break;
-                case "WISTIAVIDEO":
+                case 'WISTIAVIDEO':
                     type = 'video';
                     order = 3;
-                    console.log(url);
+                    // console.log(url);
                     thumb = 'http://embed.wistia.com/deliveries/5413caeac5fdf4064a2f9eab5c10a0848e42f19f.jpg?video_still_time=30';
                     //getWistaVideo(url); 
                     break;

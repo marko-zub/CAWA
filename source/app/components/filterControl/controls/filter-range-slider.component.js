@@ -85,8 +85,7 @@
             };
         }
 
-
-        function changeRangeSlider(sliderId, min, max, type) {
+        function changeRangeSlider(sliderId, min, max) {
             var value = (_.isNumber(max) && _.isNumber(min)) ? [min, max] : null;
             var query = {
                 'type': 'RangeQuery',

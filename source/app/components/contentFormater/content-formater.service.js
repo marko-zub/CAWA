@@ -38,7 +38,7 @@
         function contentFormaterDate(value, mode) {
             var result = '';
             switch (mode.toUpperCase()) {
-                case "YEARPICKER":
+                case 'YEARPICKER':
                     result = Utils.dateYearToUI(value);
                     break;
                 default:
@@ -59,7 +59,7 @@
             // console.log(array);
             // TODO: use reg exp
             if (typeof array === 'string') {
-                array = array.replace(/\[/g, "").replace(/\]/g, "");
+                array = array.replace(/\[/g, '').replace(/\]/g, '');
                 array = array.split(',');
             }
             // console.log(totalHistoryValues);
@@ -117,28 +117,28 @@
                 }
                 else {
                     switch (type.toUpperCase()) {
-                        case "STRING":
+                        case 'STRING':
                             result = stringFullDescr(value).result;
                             compile = stringFullDescr(value).compile;
                             break;
-                        case "DATETIME":
+                        case 'DATETIME':
                             result = contentFormaterDate(value, visualMode);
                             break;
-                        case "STRINGARRAY":
+                        case 'STRINGARRAY':
                             result = contentFormaterArray(value);
                             compile = true;
                             break;
-                        case "INTEGERARRAY":
+                        case 'INTEGERARRAY':
                             result = contentFormaterArray(value);
                             compile = true;
                             break;
-                        case "BOOLEAN":
+                        case 'BOOLEAN':
                             result = contentFormaterBool(value);
                             break;
-                        case "LINK":
+                        case 'LINK':
                             result = contentFormaterLink(value);
                             break;
-                        case "PRICE":
+                        case 'PRICE':
                             result = contentFormaterPrice(value);
                             break;
                         default:
@@ -192,9 +192,9 @@
             var html = '';
             val = val.toLowerCase();
             // Switch ?!
-            if (val == 'yes' || val == 'true') {
+            if (val === 'yes' || val === 'true') {
                 html = '<i class="fa fa-check color-green" aria-hidden="true"></i>';
-            } else if (val == 'no' || val == 'false') {
+            } else if (val === 'no' || val === 'false') {
                 html = '<i class="fa fa-times color-light-red" aria-hidden="true"></i>';
             }
 

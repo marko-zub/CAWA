@@ -31,7 +31,7 @@
             // Check only item need to remove vm.selected
             if (changes.item && changes.item.currentValue &&
                 !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
-                vm.selected = changes.item.currentValue.selectedValue;
+                vm.selected = angular.copy(changes.item.currentValue.selectedValue);
             }
         }
 
@@ -51,12 +51,6 @@
 
 
             switch (true) {
-                // TODO:
-                // in swicth item.multivalue equals 'undefined'
-                // case ((item.multivalue === true)):
-                //     renderControl('checkbox-group');
-                //     console.log(item);
-                //     break;
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
                     renderControl('select');
@@ -71,7 +65,6 @@
                     renderControl('range-slider');
                     break;
                 case (
-                    // (item.value && !_.isArray(item.value)) ||
                     (item.visualMode === 'CHECKBOX') ||
                     ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL'))):
@@ -79,7 +72,6 @@
                     renderControl('checkbox-group');
                     break;
                 case ((item.valueType === 'BOOLEAN')):
-                    // case ((item.valueType === 'BOOLEAN') && (item.visualMode === 'RADIOGROUP')):
                     renderControl('radio-group');
                     break;
                 default:
@@ -93,7 +85,7 @@
 
             // Modal full for checkboxes
             if (type === 'checkbox-group') {
-                element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>' + element;            
+                element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>' + element;
             }
 
             $element.html(element);
@@ -105,7 +97,7 @@
 
         function filterControlModalOpen(item, selected) {
             item.options = pickSelectedOptions(item.options, selected);
-            var modalInstance = $uibModal.open({
+            $uibModal.open({
                 templateUrl: 'app/components/filterControl/filter-control-modal.html',
                 controller: 'FilterControlModalController',
                 controllerAs: 'vm',
@@ -117,9 +109,6 @@
                     }
                 }
             });
-            // modalInstance.result.then(function(result) {
-            //     // console.log(result);
-            // });
         }
 
         function pickSelectedOptions(options, selectedArray) {

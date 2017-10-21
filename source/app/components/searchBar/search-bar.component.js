@@ -18,8 +18,7 @@
 
     function SearchBarController($element, DecisionDataService, $state, $rootScope, $stateParams) {
         var
-            vm = this,
-            value;
+            vm = this;
 
         vm.search = search;
         vm.searchSuggestedDecisions = searchSuggestedDecisions;
@@ -37,7 +36,7 @@
         }
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams) {
+            function(event, toState, toParams) {
                 vm.searchQuery = toParams.query ? decodeURI(toParams.query) : null;
             });
 
@@ -50,7 +49,7 @@
             $($event.target).siblings('.form-control').focus();
         }
 
-        function shouldSelectSuggestedDecisions($event, model) {
+        function shouldSelectSuggestedDecisions($event) {
             var query;
             if ($event.keyCode === 13) {
                 if (!vm.searchQuery) return;
@@ -61,7 +60,7 @@
             }
         }
 
-        function selectSuggestedDecisions($item, $model) {
+        function selectSuggestedDecisions($item) {
             changeState($item.name.toString());
         }
 

@@ -22,8 +22,8 @@
     PropertiesListController.$inject = [];
 
     function PropertiesListController() {
-        var
-            vm = this;
+        // var
+        //     vm = this;
 
         // vm.$onInit = onInit;
         // function onInit() {

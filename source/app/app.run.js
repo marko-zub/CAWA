@@ -36,7 +36,7 @@
         // Move to service
         $rootScope.decisonViewsCount = true;
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams) {
+            function(event, toState, toParams, fromState) {
                 if (toState && fromState && toState.name === fromState.name ||
                     (fromState.name === 'decisions.single' && toState.name.indexOf('decisions.single') >= 0)) {
                     $rootScope.decisonViewsCount = false;

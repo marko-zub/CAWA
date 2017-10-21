@@ -16,7 +16,7 @@
 
         return directive;
 
-        function link($scope, $el, $attrs) {
+        function link($scope, $el) {
             var martrixScroll;
 
             var wrapper = $el[0];
@@ -49,7 +49,7 @@
             }
 
             // Table scroll
-            var tableBody,
+            var 
                 tableHeader,
                 tableAside;
             tableAside = document.getElementById('matrix-aside-content');
@@ -60,13 +60,13 @@
                 tableHeader.style.left = scrollLeft + 'px';
             }
 
-            function reinitMatrixScroller() {
-                // TODO: avoid jquery height
-                if (martrixScroll) {
-                    martrixScroll.refresh();
-                    // updatePosition(martrixScroll);
-                }
-            }
+            // function reinitMatrixScroller() {
+            //     // TODO: avoid jquery height
+            //     if (martrixScroll) {
+            //         martrixScroll.refresh();
+            //         // updatePosition(martrixScroll);
+            //     }
+            // }
 
             initScroller();
 

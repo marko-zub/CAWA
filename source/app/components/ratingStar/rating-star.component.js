@@ -22,9 +22,9 @@
         return '<div ng-bind-html="::vm.html"></div>';
     }
 
-    RatingStarController.$inject = ['$element', 'AppRatingStarConstant', '$scope', '$compile'];
+    RatingStarController.$inject = ['$element', 'AppRatingStarConstant'];
 
-    function RatingStarController($element, AppRatingStarConstant, $scope, $compile) {
+    function RatingStarController($element, AppRatingStarConstant) {
         var
             vm = this,
             value;

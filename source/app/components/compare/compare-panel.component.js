@@ -67,7 +67,7 @@
                 getDecisionsParentsArray.push(getDecisionByParent(parentDecision));
             });
 
-            $q.all(getDecisionsParentsArray).then(function(resp) {
+            $q.all(getDecisionsParentsArray).then(function() {
                 vm.compareLoader = false;
             });
         }
@@ -98,13 +98,8 @@
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeUpdateDecisionCompare(function(event, data) {
             addDecisionCompareList(data);
-            var id = data.id;
             vm.togglePanel(true);
         });
-
-        function getDecision(id) {
-            return DecisionDataService.getDecisionsInfo(id, false);
-        }
 
         // TODO: clean up code above
         // Include parent decision

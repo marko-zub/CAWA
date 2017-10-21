@@ -12,7 +12,7 @@
 
                             $timeout(function() {
                                 var fotoramaKey = [];
-                                angular.forEach(val, function(val, key) {
+                                angular.forEach(val, function(val) {
                                     var fotoObj = {};
 
                                     if (val.type === 'image') {

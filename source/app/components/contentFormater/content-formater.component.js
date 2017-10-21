@@ -20,24 +20,7 @@
         var
             vm = this;
 
-        // vm.$onInit = onInit;
         vm.$onChanges = onChanges;
-
-        function onInit() {
-            // console.log(vm.value, vm.type);
-            if (vm.item) {
-                // console.log(vm.item);
-                var item = {
-                    value: vm.item.value,
-                    multiValue: vm.item.multiValue,
-                    valueType: vm.characteristic.valueType,
-                    description: vm.item.description,
-                    visualMode: vm.characteristic.visualMode
-                };
-                var renderContent = ContentFormaterService.getTemplate(item);
-                renderHtml(renderContent);
-            }
-        }
 
         function onChanges(changes) {
             if (changes.item && !angular.equals(changes.item.currentValue, changes.previousValue)) {
@@ -52,7 +35,6 @@
                 };
                 var renderContent = ContentFormaterService.getTemplate(item);
                 renderHtml(renderContent);
-                // console.log(changes.item.currentValue);
             }
         }
 

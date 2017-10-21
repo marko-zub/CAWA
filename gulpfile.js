@@ -64,7 +64,7 @@ gulp.task('jshint', function() {
                 this.emit('end');
             }
         }))
-        .pipe(jshint())
+        .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'));
 });
 

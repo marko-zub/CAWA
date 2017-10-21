@@ -40,7 +40,7 @@
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
-            getCriteriaGroupsById(vm.decision.id).then(function(criteriaResp) {
+            getCriteriaGroupsById(vm.decision.id).then(function() {
 
                 updateCriteriaGroupContainerHeight();
 
@@ -50,7 +50,7 @@
 
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
-                    // renderMatrix();
+                    renderMatrix();
 
                     // Init only first time
                     initSorters(); //Hall of fame
@@ -67,8 +67,6 @@
             });
         }
 
-        var isloadCharacteristics = false;
-
         function loadCharacteristics() {
             getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
                 // 3. Render characteristics
@@ -77,7 +75,6 @@
                 vm.characteristicGroupsContentLoader = false;
             });
         }
-
 
         // TODO: move to separate component
         // Filter name
@@ -119,7 +116,7 @@
         }
         // End Filter name
 
-        DecisionNotificationService.subscribeUpdateMatrixSize(function(event, data) {
+        DecisionNotificationService.subscribeUpdateMatrixSize(function() {
             initMatrix(true);
         });
 
@@ -150,7 +147,7 @@
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
             DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function(result) {
-                data.characteristics = prepareDataToDisplay(result);
+                data.characteristics = result;
             }).finally(function() {
                 data.detailsSpinner = false;
             });
@@ -171,6 +168,9 @@
                 // Reset all characeristics
                 _fo.filterQueries = null;
                 _fo.decisionNameFilterPattern = null;
+
+                vm.filterName = null;
+                resetSelectedCharacteristics();
             } else {
                 query = data.query;
                 var sendFo = DecisionSharedService.filterObject;
@@ -180,11 +180,12 @@
                     sendFo.filterQueries = [];
 
                 var find = _.findIndex(sendFo.filterQueries, function(filterQuery) {
-                    return filterQuery.characteristicId == query.filterQueries.characteristicId;
+                    return filterQuery.characteristicId === query.filterQueries.characteristicId;
                 });
                 if (find >= 0) {
                     // TODO: find better solution
-                    if (!_.isBoolean(query.filterQueries.value) && _.isEmpty(query.filterQueries.value) &&
+                    if (!_.isBoolean(query.filterQueries.value) &&
+                        _.isEmpty(query.filterQueries.value) &&
                         _.isEmpty(query.filterQueries.queries)) {
                         sendFo.filterQueries.splice(find, 1);
 
@@ -196,16 +197,18 @@
                 }
 
                 if (_.isEmpty(sendFo.filterQueries) ||
-                    (_.isArray(sendFo.filterQueries.value) && _.isEmpty(sendFo.filterQueries.value))) {
+                    (_.isArray(sendFo.filterQueries.value) &&
+                    _.isEmpty(sendFo.filterQueries.value))) {
                     sendFo.filterQueries = null;
                 }
                 sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
+                setCharacteristicChanges(query.filterQueries, data.optionId);
             }
 
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, false);
             });
-            setCharacteristicChanges(query.filterQueries || null, data.optionId);
+
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
@@ -220,7 +223,8 @@
             // if (!query.value) return filterQueries;
             var removeCharacteristics = [];
             _.forEach(characteristicGroupsArrayOriginal, function(characteristic) {
-                if ((characteristic.parentCharacteristicId && characteristic.parentCharacteristicId >= 0) &&
+                if ((characteristic.parentCharacteristicId && 
+                    characteristic.parentCharacteristicId >= 0) &&
                     characteristic.parentCharacteristicId === query.characteristicId) {
                     removeCharacteristics.push(characteristic.id);
                 }
@@ -237,7 +241,7 @@
 
         // Discussions Subscrive
         vm.isCommentsOpen = false;
-        DiscussionsNotificationService.subscribeOpenDiscussion(function(event, data) {
+        DiscussionsNotificationService.subscribeOpenDiscussion(function() {
             vm.isCommentsOpen = true;
         });
 
@@ -246,8 +250,6 @@
 
         function setCharacteristicChanges(characteristic, optionId) {
             if (!characteristic) return;
-
-            // if (optionId >= 0 && !_.includes(selectedOptionsIds, optionId)) selectedOptionsIds.push(optionId);
 
             var characteristicCopy = angular.copy(characteristic);
             var value = characteristicCopy.value;
@@ -259,9 +261,8 @@
 
             var characteristicGroups = angular.copy(vm.characteristicGroupsArray);
             var find = _.findIndex(characteristicGroups, function(characteristicFind) {
-                // console.log(characteristicFind);
                 if (characteristicFind.characteristicGroupId && characteristicFind.characteristicGroupId >= 0) {
-                    return characteristicFind.id == characteristic.characteristicId;
+                    return characteristicFind.id === characteristic.characteristicId;
                 }
             });
 
@@ -292,7 +293,6 @@
                     if (_.includes(selectedCharacteristicsIds, characteristic.parentCharacteristicId)) {
                         characteristic.disabled = false;
                         characteristic.options = pickChildOptions(characteristicGroupsFull[index].options, selectedOptionsIds, characteristic.selectedValue);
-                        // console.log(characteristicGroupsFull[index].options, characteristic.options)
                     } else {
                         characteristic.selectedValue = null;
                         characteristic.disabled = true;
@@ -315,7 +315,6 @@
                     } else if (!selected && !_.isEmpty(parentOptionIdsInArray) && parentOptionIdsInArray.length === optionsIds.length) {
                         optionsFiltered.push(option);
                     }
-
                 }
             });
 
@@ -441,7 +440,7 @@
         function findCoefNameByValue(valueSearch) {
             valueSearch = valueSearch;
             return _.find(DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST, function(record) {
-                return record.value == valueSearch;
+                return record.value === valueSearch;
             });
         }
 
@@ -452,9 +451,6 @@
         matrixAsideRow = document.getElementsByClassName('js-item-aside');
         matrixRows = document.getElementsByClassName('js-matrix-item-content');
 
-        var matrixAsideRowH = [];
-        var matrixRowsH = [];
-
         function calcMatrixRowHeight() {
             updateCriteriaGroupContainerHeight();
 
@@ -463,8 +459,6 @@
             $('.js-item-aside').css('height', 'auto');
             $('.js-matrix-item-content').css('height', 'auto');
 
-            var asideArray = [],
-                contentArray = [];
             if (!matrixRows.length) return;
             for (var i = 0; i < matrixRows.length; i++) {
                 var el,
@@ -479,25 +473,6 @@
                 // Set new height
                 el.style.height = newH + 'px';
                 elAside.style.height = newH + 'px';
-            }
-        }
-
-        function applySizes(matrixSizes) {
-            var titleH = 24;
-            var matrixSizesCopy = angular.copy(matrixSizes);
-            var characteristicsCopy = angular.copy(vm.characteristicGroups);
-
-            _.forEach(characteristicsCopy, function(group) {
-                var array = matrixSizesCopy.splice(0, group.characteristics.length);
-                var size = _.sum(array) + titleH;
-                $('.matrix-g-characteristics[data-characteristic-group=' + group.id + ']').css({
-                    'height': size
-                });
-            });
-
-            for (var i = 0; i < matrixSizes.length; i++) {
-                matrixRows[i].style.height = matrixSizes[i] + 'px';
-                matrixAsideRow[i].style.height = matrixSizes[i] + 'px';
             }
         }
 
@@ -538,7 +513,6 @@
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
             initSorters();
             renderMatrix(calcHeight);
-
             initIncExcCounters();
         }
 
@@ -549,7 +523,8 @@
                 if (!decisionMatrixEl.decision.imageUrl) {
                     decisionMatrixEl.decision.imageUrl = decisionMatrixEl.decision.logoUrl || '/images/noimage.jpg';
                 }
-                if (decisionMatrixEl.decision.description && !_.isObject(decisionMatrixEl.decision.description)) {
+                if (decisionMatrixEl.decision.description && 
+                    !_.isObject(decisionMatrixEl.decision.description)) {
                     decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
                 }
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
@@ -577,7 +552,7 @@
                     id: field,
                     order: (order === 'ASC' || !order) ? 'DESC' : 'ASC'
                 },
-                mode: "sortByDecisionProperty"
+                mode: 'sortByDecisionProperty'
             };
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
@@ -588,7 +563,7 @@
                 sort: {
                     order: (order === 'ASC' || !order) ? 'DESC' : 'ASC'
                 },
-                mode: "sortByCriteria"
+                mode: 'sortByCriteria'
             };
             DecisionNotificationService.notifySelectSorter(sortObj);
             var parentCriteria = $($event.target).parents('.matrix-item');
@@ -606,12 +581,10 @@
                     id: field,
                     order: order
                 },
-                mode: "sortByCharacteristic"
+                mode: 'sortByCharacteristic'
             };
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
-
-        var characteristicsBlock = $('#matrix-content');
 
         function updatePosition(martrixScroll) {
             var _this = martrixScroll || this; // jshint ignore:line
@@ -620,7 +593,7 @@
         }
 
         // Table scroll
-        var tableBody,
+        var
             tableHeader,
             tableAside;
         tableAside = document.getElementById('matrix-aside-content');
@@ -675,11 +648,6 @@
         function setMatrixTableHeight(height) {
             $('#matrix-content').css('min-height', height);
         }
-
-        // vm.showEditCriteriaCoefficient = showEditCriteriaCoefficient;
-        // function showEditCriteriaCoefficient($event, criteria) {
-        //     debugger
-        // }
 
         // TODO: make as a separeted component
         // Criteria header
@@ -763,7 +731,6 @@
         // Inclusion/Exclusion criteria
         vm.changeMatrixMode = changeMatrixMode;
         vm.updateExclusionList = updateExclusionList;
-        vm.matrixMode = 'inclusion';
 
         function initIncExcCounters() {
             if (vm.matrixMode === 'inclusion') {
@@ -785,6 +752,7 @@
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
             } else {
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
+                vm.matrixMode = 'inclusion';
             }
         }
 
@@ -815,9 +783,9 @@
                 vm.matrixMode = mode;
                 setMatrixModeCounters(mode);
 
-                var send_fo = _fo;
-                send_fo.persistent = false;
-                DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
+                var sendFo = _fo;
+                sendFo.persistent = false;
+                DecisionNotificationService.notifyChildDecisionExclusion(sendFo);
             }
         }
 
@@ -834,9 +802,9 @@
                 vm.inclusionItemsLength++;
             }
 
-            var send_fo = _fo;
-            send_fo.persistent = true;
-            DecisionNotificationService.notifyChildDecisionExclusion(send_fo);
+            var sendFo = _fo;
+            sendFo.persistent = true;
+            DecisionNotificationService.notifyChildDecisionExclusion(sendFo);
         }
 
 
@@ -923,6 +891,16 @@
                     'min-height': criteriaWrapperH
                 });
             }, 0);
+        }
+
+        function resetSelectedCharacteristics() {
+            // Reset characteriscs selected Valude
+            var characteristicGroupsArray = angular.copy(vm.characteristicGroupsArray);
+            vm.characteristicGroupsArray = _.filter(characteristicGroupsArray, function(characteristic) {
+                characteristic.selectedValue = null;
+                characteristic.selectedOperator = 'OR';
+                return characteristic;
+            });
         }
     }
 })();

@@ -101,7 +101,7 @@
             _.forEach(list, function(container) {
                 // Rows
                 var rows = [];
-                _.forEach(container.criteria, function(row, rowIndex) {
+                _.forEach(container.criteria, function(row) {
                     // console.log(row);
                     var currentHstyle;
                     var currentH = $('#m-criteria-group-' + container.id + '-' + row.id).css('height');
@@ -138,7 +138,7 @@
                 var containerHtml = [
                     '<div data-criteria-group="' + container.id + '" class="m-group" id="g-criteria-' + container.id + '">',
                     '<div class="m-group-title text-center">',
-                    translateFilter("Can\'t find the necessary criterion?") + " <a href='#'>" + translateFilter('Add it') + "</a>",
+                    translateFilter('Can\'t find the necessary criterion?') + ' <a href="#">' + translateFilter('Add it') + '</a>',
                     '</div>',
                     content,
                     '</div>'

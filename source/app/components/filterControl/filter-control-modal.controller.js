@@ -35,7 +35,7 @@
         }
 
         function close() {
-            $uibModalInstance.dismiss();
+            $uibModalInstance.dismiss('cancel');
         }
 
         function init() {

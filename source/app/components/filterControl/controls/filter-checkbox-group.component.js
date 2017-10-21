@@ -41,12 +41,12 @@
 
         function onChanges(changes) {
             if (changes.selected && !angular.equals(changes.selected.currentValue, changes.selected.previousValue)) {
-                selectCheckboxes(changes.selected.currentValue);
+                selectCheckboxes(angular.copy(changes.selected.currentValue));
             }
 
             // TODO: check and/or, simplify logic
             if (changes.item && !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
-                
+
                 if (changes.item.previousValue.selectedOperator === changes.item.currentValue.selectedOperator) {
                     return;
                 }
@@ -82,19 +82,20 @@
         // TODO:
         // Realy need jQuery? or slow ng-repeat
         function selectCheckboxes(list) {
-            checkedValues = !_.isEmpty(list) ? list : [];
-            if (_.isNull(list)) {
+            if (_.isEmpty(list)) {
+                checkedValues = [];
                 $($element).find('.filter-item-checkbox input.js-checkbox:checked').prop('checked', false);
-                return;
+            } else {
+                checkedValues = list;
+                $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
+                    var val = $(this).val();
+                    if (_.includes(list, val)) {
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                });
             }
-            $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
-                var val = $(this).val();
-                if (_.includes(list, val)) {
-                    $(this).prop('checked', true);
-                } else {
-                    $(this).prop('checked', false);
-                }
-            });
         }
 
         function renderCheckboxes(item) {
@@ -170,7 +171,7 @@
             } else {
                 sendObj.operator = 'AND';
             }
-
+            sendObj.value = checkedValues;
             if (!_.isEmpty(sendObj.value)) {
                 var sendObjCopy = angular.copy(sendObj);
                 sendRequestDebounce(sendObjCopy);

@@ -18,7 +18,7 @@
     DecisionShortInfoController.$inject = [];
 
     function DecisionShortInfoController() {
-        var
-            vm = this;
+        // var
+        //     vm = this;
     }
 })();

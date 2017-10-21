@@ -16,9 +16,9 @@
         });
 
 
-    OwnerUsersController.$inject = ['$sce'];
+    OwnerUsersController.$inject = [];
 
-    function OwnerUsersController($sce) {
+    function OwnerUsersController() {
         var vm = this;
         vm.$onInit = onInit;
 

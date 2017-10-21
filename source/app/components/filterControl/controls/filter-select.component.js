@@ -83,7 +83,9 @@
 
         // Contorl SELECT
         function renderSelect(item) {
-            if (!item) return;
+            if (!item) {
+                return;
+            }
             var options = _.sortBy(item.options, 'name');
             options.unshift(selectAllObj);
             // var content = _.map(options, function(option) {

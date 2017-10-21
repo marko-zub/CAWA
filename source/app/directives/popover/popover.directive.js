@@ -82,7 +82,7 @@
                 $el.on('mouseenter', function() {
                     if (!isPopoverCompiled) {
                         $el.append(htmlPopover);
-                        $compile($element.contents())($scope);
+                        $compile($el.contents())($scope);
                         isPopoverCompiled = true;
                     }   
                 }); 

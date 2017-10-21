@@ -20,9 +20,9 @@
         });
 
 
-    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', '$scope', '$element'];
+    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils'];
 
-    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, $scope, $element) {
+    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils) {
         // TODO: simplify logic
         var vm = this,
             _fo;
@@ -32,12 +32,6 @@
         vm.$onChanges = onChanges;
         vm.changeCriteriaOrder = changeCriteriaOrder;
         vm.changeCharacteristicsOrder = changeCharacteristicsOrder;
-
-        var filterByNameTag = {
-            'id': -1,
-            'characteristicId': -1,
-            'name': 'Name'
-        };
 
         function onInit() {
             vm.tagsFilter = [];
@@ -94,8 +88,6 @@
         }
 
         function generateCriteriaTags(criteria) {
-            var criteriaSelectedList = [];
-
             // TODO: optimize loops
             _.forEach(criteria, function(group) {
                 _.forEach(group.criteria, function(criteriaItem) {
@@ -119,19 +111,6 @@
             }, 0);
         }
         // End Criteria
-
-        function generateCharacteristicsTags(characteristics) {
-            _.forEach(characteristics, function(characteristic) {
-                var find = _.findIndex(vm.tagsFilter, function(tag) {
-                    return tag.id === characteristic.id;
-                });
-                if (characteristic.selectedValue && find < 0) {
-                    vm.tagsFilter.push(characteristic);
-                } else if (!characteristic.isSelected && find >= 0) {
-                    vm.tagsFilter.splice(find, 1);
-                }
-            });
-        }
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
@@ -291,7 +270,7 @@
                     id: orderId,
                     order: defaultOrder
                 },
-                mode: "sortByCharacteristic"
+                mode: 'sortByCharacteristic'
             };
 
             if (_.isNull(order)) {

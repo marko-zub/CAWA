@@ -25,7 +25,7 @@
                     var listHtml = '';
                     _.each(item.options, function(option) {
                         listHtml += [
-                            '<div class="filter-item-checkbox" id="option-' + option.id + '">',
+                            '<div class="filter-item-checkbox" id="' + option.id + '">',
                             '    <input class="js-checkbox" type="checkbox" id="modal-' + item.id + '-option-' + option.id + '" name="modal-' + item.id + '-option-' + option.id + '" ng-value="option.value" ng-model="option.selected">',
                             '    <label for="modal-' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                             '</div>'
@@ -39,7 +39,7 @@
                         // TODO: hide other ids
                         $(el).find('.filter-item-checkbox').addClass('hide');
                         _.each(showIds, function(id) {
-                            $(el).find('#option-' + id).removeClass('hide');
+                            $(el).find('#' + id).removeClass('hide');
                         });
                     } else {
                         $(el).find('.filter-item-checkbox').addClass('hide');

@@ -6,9 +6,9 @@
         .module('app.decision')
         .service('FilterControlsDataService', FilterControlsDataService);
 
-    FilterControlsDataService.$inject = ['DecisionNotificationService', '$filter'];
+    FilterControlsDataService.$inject = ['DecisionNotificationService'];
 
-    function FilterControlsDataService(DecisionNotificationService, $filter) {
+    function FilterControlsDataService(DecisionNotificationService) {
 
 
         function createFilterQuery(data, optionId) {
