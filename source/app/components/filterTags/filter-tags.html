@@ -13,23 +13,21 @@
                         {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div><span ng-show="!$last" class="tag-divider">and</span>
                 </div>
-            </div>           
-            <div class="tag-group">
+
                 <div class="tag-wrapper" ng-show="vm.sortByCharacteristic.name">
                     <div class="tag">
                         {{vm.sortByCharacteristic.name}}
                         <span class="app-link text-bold" ng-click="vm.changeCharacteristicsOrder(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{vm.sortByCharacteristic.order}}</span>
                         <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div>
-                </div>            
-            </div>
-            <div class="tag-group" ng-show="vm.tagsSort.length > 1">
-                <div class="tag-wrapper">
+                </div>
+                <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1">
                     <div class="tag tag-btn" ng-click="vm.clearAllCriteria()" translate-cloak>
                         {{ "CLEAR ALL" | translate }}
                     </div>
-                </div>
-            </div>                     
+                </div> 
+
+            </div>                             
         </div>
     </div>
     <div class="filter-tags-group" ng-show="vm.tagsFilter.length > 0">

@@ -717,7 +717,7 @@
         vm.selectCriteria = selectCriteria;
 
         function selectCriteria(event, criteria, coefCall) {
-            if ($(event.target).hasClass('title-descr')) return;
+            if ($(event.target).hasClass('link-secondary')) return;
             vm.decisionsSpinner = true;
             if (coefCall && !criteria.isSelected) {
                 return;
