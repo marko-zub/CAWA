@@ -21,7 +21,7 @@
                         <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div>
                 </div>
-                <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1">
+                <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1 || vm.sortByCharacteristic.name && vm.tagsSort.length > 0">
                     <div class="tag tag-btn" ng-click="vm.clearAllCriteria()" translate-cloak>
                         {{ "CLEAR ALL" | translate }}
                     </div>

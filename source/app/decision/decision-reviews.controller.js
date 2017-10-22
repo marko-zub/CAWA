@@ -6,12 +6,9 @@
         .module('app.decision')
         .controller('DecisionReviewsController', DecisionReviewsController);
 
-    DecisionReviewsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
-        'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
-    ];
+    DecisionReviewsController.$inject = ['$rootScope', 'decisionBasicInfo'];
 
-    function DecisionReviewsController($rootScope, decisionBasicInfo, DecisionDataService,
-        DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+    function DecisionReviewsController($rootScope, decisionBasicInfo) {
 
         var vm = this;
 

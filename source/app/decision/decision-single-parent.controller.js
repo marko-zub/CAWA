@@ -7,11 +7,11 @@
         .controller('DecisionSingleParentController', DecisionSingleParentController);
 
     DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsUtils',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService', 'Utils'
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q'
     ];
 
     function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsUtils,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService, Utils) {
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q) {
 
         var
             vm = this,
@@ -34,9 +34,6 @@
             }
 
             stateId = parseInt($stateParams.parentId);
-
-            // getDecisionNomimations(vm.decision.id);
-            //
             vm.decisionParents = vm.decision.parentDecisions;
             vm.parent = _.find(vm.decisionParents, function(parent) {
                 return parent.id === stateId;
@@ -65,15 +62,6 @@
             $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted.com';
         }
 
-        function getDecisionNomimations(id) {
-            if (!id) return;
-
-            DecisionDataService.getDecisionNomination(id, pagination).then(function(result) {
-                vm.decisions = DecisionsUtils.prepareDecisionToUI(result.decisions);
-                vm.pagination.totalDecisions = result.totalDecisions;
-            });
-        }
-
         // TODO: clean up
         // Remove loop
         var criteriaIds = [];
@@ -84,7 +72,6 @@
             };
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
-            var criteriaGroups;
             $q.all([
                 getCriteriaGroupsById(parentId),
                 getCharacteristicsGroupsById(parentUid),
@@ -133,7 +120,7 @@
             });
         }
 
-        function getCharacteristicsGroupsById(id, characteristicsArray) {
+        function getCharacteristicsGroupsById(id) {
             return DecisionDataService.getCharacteristicsGroupsById(id, {
                 options: false
             }).then(function(result) {

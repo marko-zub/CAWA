@@ -13,9 +13,9 @@
         'app.tags'
     ]);
 
-    var initInjector = angular.injector(["ng"]),
-        $http = initInjector.get("$http"),
-        $sce = initInjector.get("$sce");
+    var initInjector = angular.injector(['ng']),
+        $http = initInjector.get('$http'),
+        $sce = initInjector.get('$sce');
 
     // Changed because want to avoid jQuery
     // Now we use jQuery Slim without Ajax functionality

@@ -155,61 +155,6 @@
         }
         // End pagination
 
-        // TODO: move to service
-        function getCriteriaGroupsById(id, criteriaArray) {
-            // if(!criteriaArray) return false
-            // Criteria
-            return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {
-                // vm.criteriaGroups = result;
-                _.filter(result, function(resultEl) {
-                    _.filter(resultEl.criteria, function(el) {
-                        el.description = $sce.trustAsHtml(el.description);
-                        var elEqual = _.find(criteriaArray, {
-                            id: el.id
-                        });
-
-                        if (elEqual) return _.merge(el, elEqual);
-                    });
-
-                    return resultEl;
-                });
-            });
-        }
-
-
-        function getCharacteristicsGroupsById(id, characteristicsArray) {
-            // if(!characteristicsArray) return;
-            // Characteristicts
-            return DecisionDataService.getCharacteristicsGroupsById(id, {
-                options: false
-            }).then(function(result) {
-                // vm.characteristicGroups = result;
-                var list = _.map(result, function(resultEl) {
-                    resultEl.isCollapsed = true;
-                    _.map(resultEl.characteristics, function(el) {
-                        el.description = $sce.trustAsHtml(el.description);
-
-                        var elEqual = _.find(characteristicsArray, {
-                            id: el.id
-                        });
-
-                        // console.log(el);
-
-                        if (elEqual) {
-                            el = _.merge(el, elEqual);
-                            el.html = ContentFormaterService.getTemplate(el);
-                            return el;
-                        }
-
-
-                    });
-                    return resultEl;
-                });
-                list[0].isCollapsed = false;
-                return list;
-            });
-        }
-
         function getCriteriaGroupsByParentId(id) {
             // Criteria
             return DecisionDataService.getCriteriaGroupsById(id).then(function(result) {

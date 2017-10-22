@@ -15,7 +15,7 @@
         // Only view/layout options without any vital data
         if (!$localStorage.options ||
             ($localStorage.options && (!$localStorage.options.comparePanel ||
-            !$localStorage.options.view))) { // Remove in furue
+            !$localStorage.options.view))) { // Remove in future
             $localStorage.options = {
                 comparePanel: {
                     isOpen: false
@@ -59,7 +59,7 @@
 
         $rootScope.breadcrumbs = true;
 
-        var stateListener = $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
+        $rootScope.$on('$stateChangeSuccess', function($state, $stateParams) {
             if (angular.isDefined($stateParams.data)) {
                 if ($stateParams.data.pageTitle) {
                     $rootScope.pageTitle = translateFilter($stateParams.data.pageTitle) + ' | ' + pageTitle;

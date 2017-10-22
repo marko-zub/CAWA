@@ -68,7 +68,10 @@
         function setCharacteristicsSortTag(characteristic) {
             if (!characteristic) return;
             var characteristicsOrderTag = angular.copy(characteristic);
-            var findCharacteristics = Utils.findGroupItemById(characteristicsOrderTag.id, vm.characteristics, 'characteristics');
+            var findCharacteristics = _.find(vm.characteristics, function(characteristicItem) {
+                return characteristicItem.hasOwnProperty('lazyOptions') &&
+                    characteristic.id === characteristicItem.id;
+            });
             characteristicsOrderTag.name = findCharacteristics ? findCharacteristics.name : '';
             return characteristicsOrderTag;
         }
@@ -293,6 +296,7 @@
         vm.clearAllCriteria = clearAllCriteria;
 
         function clearAllCriteria() {
+            vm.changeCharacteristicsOrder(null);
             DecisionNotificationService.notifySelectCriteria(null);
         }
 
