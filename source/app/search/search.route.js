@@ -13,7 +13,7 @@
             .state('search', {
                 url: '/search?page&size&query',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/search/search.html',
                         controller: 'SearchController',
                         controllerAs: 'vm'

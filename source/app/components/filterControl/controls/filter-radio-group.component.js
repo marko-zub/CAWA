@@ -14,8 +14,7 @@
     FilterRadioGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope'];
 
     function FilterRadioGroupController(FilterControlsDataService, $element, $compile, $scope) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.changeRadio = changeRadio;
 

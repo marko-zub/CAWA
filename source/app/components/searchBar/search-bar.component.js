@@ -17,8 +17,7 @@
     SearchBarController.$inject = ['$element', 'DecisionDataService', '$state', '$rootScope', '$stateParams'];
 
     function SearchBarController($element, DecisionDataService, $state, $rootScope, $stateParams) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.search = search;
         vm.searchSuggestedDecisions = searchSuggestedDecisions;

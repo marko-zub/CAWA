@@ -31,9 +31,9 @@
             $rootScope.$broadcast(event, data);
         }
 
-        function emit(event, data) {
-            $rootScope.$emit(event, data);
-        }
+        // function emit(event, data) {
+        //     $rootScope.$emit(event, data);
+        // }
 
         function subscribeOpenDiscussion(callback) {
             subscribe('OpenDiscussion', callback);

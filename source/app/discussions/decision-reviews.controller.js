@@ -6,9 +6,9 @@
         .module('app.discussions')
         .controller('DeicisionReviewsController', DeicisionReviewsController);
 
-    DeicisionReviewsController.$inject = ['$rootScope', '$stateParams'];
+    DeicisionReviewsController.$inject = [];
 
-    function DeicisionReviewsController($rootScope, $stateParams) {
+    function DeicisionReviewsController() {
         var vm = this;
 
         vm.$onInit = onInit;

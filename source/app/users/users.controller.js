@@ -9,8 +9,7 @@
     UsersController.$inject = [];
 
     function UsersController() {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
 

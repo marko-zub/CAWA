@@ -13,7 +13,7 @@
 //             .state('tags', {
 //                 url: '/tags',
 //                 views: {
-//                     "@": {
+//                     '@': {
 //                         templateUrl: 'app/tags/tags.html',
 //                         controller: 'TagsController',
 //                         controllerAs: 'vm'

@@ -6,9 +6,9 @@
         .module('app.decision')
         .service('DecisionSharedService', DecisionSharedService);
 
-    DecisionSharedService.$inject = ['$rootScope'];
+    DecisionSharedService.$inject = [];
 
-    function DecisionSharedService($rootScope) {
+    function DecisionSharedService() {
         var service = this;
 
         var emptyFilterObject = {

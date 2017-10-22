@@ -17,9 +17,7 @@
     AdditionalScriptController.$inject = [];
 
     function AdditionalScriptController() {
-        var
-            vm = this,
-            value;
+        var vm = this;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
@@ -38,7 +36,7 @@
 
         // TODO: Avoid Jquery
         // Addthis provide 2 shares widgets in one JS file
-        function toggleSharesByType(type) {
+        function toggleSharesByType() {
             if (vm.socialType === 'floating') {
                 toggleShares(true);
             } else {

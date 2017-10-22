@@ -18,8 +18,7 @@
     DecisionsRecommendedController.$inject = [];
 
     function DecisionsRecommendedController() {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
 

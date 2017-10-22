@@ -9,8 +9,7 @@
     TagsController.$inject = [];
 
     function TagsController() {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
 

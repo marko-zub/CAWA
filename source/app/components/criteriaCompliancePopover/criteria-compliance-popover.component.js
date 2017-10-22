@@ -17,8 +17,7 @@
     DecisionsListCriteriaComplianceController.$inject = [];
 
     function DecisionsListCriteriaComplianceController() {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onChanges = onChanges;
 

@@ -37,6 +37,7 @@
             vm.characteristicLimit = 4;
             vm.decisionsSpinner = true;
 
+            iniMatrixModeTabs();
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
@@ -48,13 +49,13 @@
                     initMatrixScroller();
                     // Render html matrix
 
+                    initMatrixMode();
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
                     renderMatrix();
 
                     // Init only first time
                     initSorters(); //Hall of fame
-                    initMatrixMode();
                     vm.decisionsSpinner = false;
 
                     // Init pagination
@@ -740,8 +741,18 @@
             }
         }
 
+
+        function iniMatrixModeTabs() {
+            if (!_.isEmpty(_fo.includeChildDecisionIds)) {
+                vm.matrixMode = 'exclusion';
+            } else if (!_.isEmpty(_fo.excludeChildDecisionIds)) {
+                vm.matrixMode = 'inclusion';
+            } else {
+                vm.matrixMode = 'inclusion';
+            }
+        }
+
         function initMatrixMode() {
-            vm.exclusionItemsLength = 0;
             if (!_.isEmpty(_fo.includeChildDecisionIds)) {
                 vm.matrixMode = 'exclusion';
                 vm.inclusionItemsLength = vm.decision.totalChildDecisions - _fo.includeChildDecisionIds.length;
@@ -753,6 +764,7 @@
             } else {
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
                 vm.matrixMode = 'inclusion';
+                vm.exclusionItemsLength = 0;
             }
         }
 

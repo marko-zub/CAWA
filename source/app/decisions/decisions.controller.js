@@ -9,8 +9,7 @@
     DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage', 'PaginatioService'];
 
     function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, DecisionsConstant, DecisionsService, translateFilter, $localStorage, PaginatioService) {
-        var
-            vm = this;
+        var vm = this;
         vm.itemsPerPage = PaginatioService.itemsPerPage();
 
         var navigationObj = DecisionsConstant.NAVIGATON_STATES;
@@ -116,7 +115,7 @@
         vm.toggleLayout = toggleLayout;
         var allowedLayoutClass = ['list', 'cards'];
 
-        function toggleLayout(type, $event) {
+        function toggleLayout(type) {
             if (_.includes(allowedLayoutClass, type)) {
                 vm.layoutClass = type;
                 $localStorage.options.view = {

@@ -18,7 +18,9 @@
     BreadcrumbsController.$inject = [];
 
     function BreadcrumbsController() {
-        var vm = this;        
+        var vm = this;
+        vm.$onInit = onInit;
+        function onInit() {}          
         // vm.$onChanges = onChanges;
 
         // function onChanges(changes) {

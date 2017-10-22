@@ -25,8 +25,7 @@
     DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService'];
 
     function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;

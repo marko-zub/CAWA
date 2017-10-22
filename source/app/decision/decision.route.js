@@ -15,7 +15,7 @@
                 abstract: false,
                 cache: false,
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/decision/decision-single.html',
                         controller: 'DecisionSingleController',
                         controllerAs: 'vm',
@@ -41,7 +41,7 @@
             url: '/options',
             cache: false,
             views: {
-                "@": {
+                '@': {
                     templateUrl: 'app/decision/decision-options.html',
                     controller: 'DecisionOptionsController',
                     controllerAs: 'vm',
@@ -63,7 +63,7 @@
             url: '/nominations',
             cache: false,
             views: {
-                "@": {
+                '@': {
                     templateUrl: 'app/decision/decision-nominations.html',
                     controller: 'DecisionNominationsController',
                     controllerAs: 'vm',
@@ -75,7 +75,7 @@
             url: '/reviews',
             cache: false,
             views: {
-                "@": {
+                '@': {
                     templateUrl: 'app/decision/decision-reviews.html',
                     controller: 'DecisionReviewsController',
                     controllerAs: 'vm',
@@ -87,7 +87,7 @@
         .state('decisions.single.comparison', {
                 url: '/comparison/{analysisId}',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/decision/decision-matrix.html',
                         controller: 'DecisionMatrixController',
                         controllerAs: 'vm',
@@ -118,7 +118,7 @@
                 abstract: false,
                 cache: true,
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/decision/decision-single-parent.html',
                         controller: 'DecisionSingleParentController',
                         controllerAs: 'vm',
@@ -155,11 +155,10 @@
         // }
 
         // TODO: optimize logic or remove from resolver
-        var stateListener = $rootScope.$on('$stateChangeSuccess',
-            function(event, toState, toParams, fromState, fromParams) {
-                var
-                    currentState,
-                    decisionSlug;
+        // var stateListener = 
+        $rootScope.$on('$stateChangeSuccess',
+            function(event, toState, toParams) {
+                var currentState;
 
                 currentState = $state.current.name;
 
@@ -249,9 +248,9 @@
     }
 
     // Analysis
-    DecisionAanalysisResolver.$inject = ['$stateParams', 'DecisionDataService', '$location', 'DecisionSharedService'];
+    DecisionAanalysisResolver.$inject = ['$stateParams', 'DecisionDataService', '$location'];
 
-    function DecisionAanalysisResolver($stateParams, DecisionDataService, $location, DecisionSharedService) {
+    function DecisionAanalysisResolver($stateParams, DecisionDataService, $location) {
 
         // TODO: find better way
         // UI route bug https://github.com/angular-ui/ui-router/issues/1856#issuecomment-93025037

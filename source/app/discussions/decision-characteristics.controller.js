@@ -6,9 +6,9 @@
         .module('app.discussions')
         .controller('DeicisionCharacteristicsController', DeicisionCharacteristicsController);
 
-    DeicisionCharacteristicsController.$inject = ['$rootScope', '$stateParams'];
+    DeicisionCharacteristicsController.$inject = [];
 
-    function DeicisionCharacteristicsController($rootScope, $stateParams) {
+    function DeicisionCharacteristicsController() {
         var vm = this;
 
         vm.$onInit = onInit;

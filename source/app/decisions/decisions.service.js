@@ -6,9 +6,9 @@
         .module('app.decision')
         .service('DecisionsService', DecisionsService);
 
-    DecisionsService.$inject = ['$rootScope'];
+    DecisionsService.$inject = [];
 
-    function DecisionsService($rootScope) {
+    function DecisionsService() {
     	var service = this;
 
     	service.data = {

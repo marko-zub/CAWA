@@ -34,7 +34,6 @@
             });
         }
 
-        var emptyCriteria = { weight: 0, totalVotes: 0 };
         function mergeCriteriaDecision(currentDecisionCriteria, criteriaGroupsArray) {
             var currentDecisionCriteriaCopy = angular.copy(currentDecisionCriteria);
             var criteriaGroupsArrayCopy = angular.copy(criteriaGroupsArray);

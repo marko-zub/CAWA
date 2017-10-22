@@ -15,11 +15,10 @@
             controllerAs: 'vm'
         });
 
-    CommentsController.$inject = ['DiscussionsDataService'];
+    CommentsController.$inject = [];
 
-    function CommentsController(DiscussionsDataService) {
-        var
-            vm = this;
+    function CommentsController() {
+        var vm = this;
 
         vm.$onInit = onInit;
         function onInit() {
@@ -27,15 +26,15 @@
             // searchCommentableVotesWeight();
         }
 
-        function searchCommentableVotesWeight(discussionId, critOrCharId) {
-            if (!discussionId || !critOrCharId) return;
-            DiscussionsDataService.searchCommentableVotesWeight(discussionId, critOrCharId)
-                .then(function(resp) {
-                    // console.log(resp);
-                    vm.discussion.votes = resp;
-                }).catch(function(err) {
-                    console.log(err);
-                });
-        }
+        // function searchCommentableVotesWeight(discussionId, critOrCharId) {
+        //     if (!discussionId || !critOrCharId) return;
+        //     DiscussionsDataService.searchCommentableVotesWeight(discussionId, critOrCharId)
+        //         .then(function(resp) {
+        //             // console.log(resp);
+        //             vm.discussion.votes = resp;
+        //         }).catch(function(err) {
+        //             console.log(err);
+        //         });
+        // }
     }
 })();

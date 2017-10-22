@@ -17,8 +17,7 @@
     ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q'];
 
     function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q) {
-        var
-            vm = this;
+        var vm = this;
 
         // TODO: clean up, Simplify logic
         vm.togglePanel = togglePanel;

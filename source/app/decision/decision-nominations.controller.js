@@ -6,15 +6,11 @@
         .module('app.decision')
         .controller('DecisionNominationsController', DecisionNominationsController);
 
-    DecisionNominationsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
-    ];
+    DecisionNominationsController.$inject = ['$rootScope', 'decisionBasicInfo'];
 
-    function DecisionNominationsController($rootScope, decisionBasicInfo, DecisionDataService,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+    function DecisionNominationsController($rootScope, decisionBasicInfo) {
 
-        var
-            vm = this;
+        var vm = this;
 
         vm.decision = decisionBasicInfo || {};
 

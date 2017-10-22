@@ -16,8 +16,7 @@
         Config, PaginatioService) {
 
         // TODO: clean up controller
-        var
-            vm = this;
+        var vm = this;
 
         vm.decision = decisionBasicInfo || {};
         vm.itemsPerPage = PaginatioService.itemsPerPage();

@@ -7,14 +7,13 @@
         .controller('DecisionReviewsController', DecisionReviewsController);
 
     DecisionReviewsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
+        'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q', 'ContentFormaterService'
     ];
 
     function DecisionReviewsController($rootScope, decisionBasicInfo, DecisionDataService,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
+        DecisionSharedService, PaginatorConstant, $state, $sce, $q, ContentFormaterService) {
 
-        var
-            vm = this;
+        var vm = this;
 
         vm.decision = decisionBasicInfo || {};
 

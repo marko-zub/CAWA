@@ -18,8 +18,7 @@
     CompareButtonController.$inject = ['DecisionCompareNotificationService', '$scope', 'DecisionCompareService'];
 
     function CompareButtonController(DecisionCompareNotificationService, $scope, DecisionCompareService) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.addToCompareList = addToCompareList;
         vm.$onInit = onInit;

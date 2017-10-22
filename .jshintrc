@@ -17,7 +17,7 @@
   "undef"    : true,
   "unused"   : true,
   "strict"   : true,
-  "trailing" : false,
+  "trailing" : true,
   "smarttabs": true,
   "white"    : false,
   "globals"   : {
@@ -46,7 +46,8 @@
     "xdescribe"            : false,
     "Popper"               : false,
     "IScroll"              : false,
-    "$sce"              : false,
-    "vm"                   : false
+    "$sce"                 : false,
+    "vm"                   : false,
+    "moment": false
   }
 }

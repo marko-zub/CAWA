@@ -42,7 +42,7 @@
         }
 
 
-        function getDecisions(data) {
+        function getDecisions() {
             vm.decisionsSpinner = true;
             var pagination = _.clone(vm.pagination);
             pagination.pageNumber = pagination.pageNumber - 1;
@@ -93,7 +93,7 @@
         vm.toggleLayout = toggleLayout;
         var allowedLayoutClass = ['list', 'cards'];
 
-        function toggleLayout(type, $event) {
+        function toggleLayout(type) {
             if (_.includes(allowedLayoutClass, type)) {
                 vm.layoutClass = type;
                 $localStorage.options.view = {

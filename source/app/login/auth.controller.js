@@ -9,10 +9,8 @@
 
 	function AuthController(LoginService, $stateParams, $window) {
 		var vm = this;
-
-		init();
-
-		function init() {
+        vm.$onInit = onInit;
+        function onInit() {
 			if($stateParams.token) {
 				var token = $window.location.href.split('access_token=')[1];
 				LoginService.saveToken(token);

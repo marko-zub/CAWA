@@ -26,8 +26,7 @@
     FilterRangeSliderController.$inject = ['FilterControlsDataService'];
 
     function FilterRangeSliderController(FilterControlsDataService) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.changeRangeSlider = changeRangeSlider;
 

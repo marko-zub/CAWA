@@ -13,8 +13,7 @@
     FilterDateRangeController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope'];
 
     function FilterDateRangeController(FilterControlsDataService, $element, $compile, $scope) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
 

@@ -13,7 +13,7 @@
             .state('decisions', {
                 url: '/decisions?page&size&tab',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/decisions/decisions.html',
                         controller: 'DecisionsController',
                         controllerAs: 'vm'

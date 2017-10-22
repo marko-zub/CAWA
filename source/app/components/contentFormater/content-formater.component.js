@@ -17,8 +17,7 @@
     ContentFormaterController.$inject = ['ContentFormaterService', '$element', '$compile', '$scope'];
 
     function ContentFormaterController(ContentFormaterService, $element, $compile, $scope) {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onChanges = onChanges;
 

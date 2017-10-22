@@ -13,7 +13,7 @@
             .state('discussions', {
                 url: '/discussions',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/discussions/discussions.html',
                         controller: 'DiscussionsController',
                         controllerAs: 'vm'
@@ -29,7 +29,7 @@
             .state('decisions.single.parent.characteristics', {
                 url: '/characteristics/:characteristicId/:characteristicSlug',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/discussions/decision-characteristics.html',
                         controller: 'DeicisionCharacteristicsController',
                         controllerAs: 'vm',
@@ -42,7 +42,7 @@
             .state('decisions.single.parent.reviews', {
                 url: '/reviews/:reviewId/:reviewSlug',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/discussions/decision-reviews.html',
                         controller: 'DeicisionReviewsController',
                         controllerAs: 'vm',

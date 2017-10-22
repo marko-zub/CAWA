@@ -11,11 +11,12 @@
 			controllerAs: 'vm'
 		});
 
-	HeaderController.$inject = ['$state', '$stateParams'];
+	HeaderController.$inject = [];
 
-	function HeaderController($state, $stateParams) {
+	function HeaderController() {
 		var vm = this;
-
+        vm.$onInit = onInit;
+        function onInit() {}  
 	}
 
 })();

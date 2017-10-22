@@ -6,9 +6,9 @@
         .module('app.discussions')
         .controller('DiscussionsController', DiscussionsController);
 
-    DiscussionsController.$inject = ['$rootScope', '$stateParams'];
+    DiscussionsController.$inject = [];
 
-    function DiscussionsController($rootScope, $stateParams) {
+    function DiscussionsController() {
         var vm = this;
 
         vm.$onInit = onInit;

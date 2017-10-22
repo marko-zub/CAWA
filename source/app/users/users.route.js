@@ -13,7 +13,7 @@
             .state('users', {
                 url: '/users',
                 views: {
-                    "@": {
+                    '@': {
                         templateUrl: 'app/users/users.html',
                         controller: 'UsersController',
                         controllerAs: 'vm'

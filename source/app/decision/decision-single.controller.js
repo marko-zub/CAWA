@@ -15,8 +15,7 @@
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
         Config) {
 
-        var
-            vm = this;
+        var vm = this;
 
         vm.decision = decisionBasicInfo || {};
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;

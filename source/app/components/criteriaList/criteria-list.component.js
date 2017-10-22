@@ -23,8 +23,7 @@
     CriteriaListController.$inject = [];
 
     function CriteriaListController() {
-        var
-            vm = this;
+        var vm = this;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;

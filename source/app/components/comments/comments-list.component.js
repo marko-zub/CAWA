@@ -17,7 +17,9 @@
     CommentsListController.$inject = [];
 
     function CommentsListController() {
-        var
-            vm = this;
+        var vm = this;
+
+        vm.$onInit = onInit;
+        function onInit() {}      
     }
 })();

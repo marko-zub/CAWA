@@ -26,8 +26,7 @@
     CommentPostFormController.$inject = [];
 
     function CommentPostFormController() {
-        var
-            vm = this;
+        var vm = this;
         vm.saveComment = saveComment;
 
         vm.$onInit = onInit;
