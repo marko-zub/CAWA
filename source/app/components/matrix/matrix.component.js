@@ -16,12 +16,12 @@
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
-        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService'
+        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
-        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService) {
+        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -199,7 +199,7 @@
 
                 if (_.isEmpty(sendFo.filterQueries) ||
                     (_.isArray(sendFo.filterQueries.value) &&
-                    _.isEmpty(sendFo.filterQueries.value))) {
+                        _.isEmpty(sendFo.filterQueries.value))) {
                     sendFo.filterQueries = null;
                 }
                 sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);
@@ -224,8 +224,8 @@
             // if (!query.value) return filterQueries;
             var removeCharacteristics = [];
             _.forEach(characteristicGroupsArrayOriginal, function(characteristic) {
-                if ((characteristic.parentCharacteristicId && 
-                    characteristic.parentCharacteristicId >= 0) &&
+                if ((characteristic.parentCharacteristicId &&
+                        characteristic.parentCharacteristicId >= 0) &&
                     characteristic.parentCharacteristicId === query.characteristicId) {
                     removeCharacteristics.push(characteristic.id);
                 }
@@ -415,6 +415,11 @@
             _fo = DecisionSharedService.getFilterObject();
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
+
+            // if (!vm.fo.sortByDecisionProperty.id) {
+            //     vm.fo.sortByDecisionProperty = vm.sortDecisionPropertyOptions[0];
+            // }
+
             // Set Criteria for Hall of fame
             var copyCriteria = _.filter(vm.criteriaGroups, function(criteriaGroupsArray) {
                 _.map(criteriaGroupsArray.criteria, function(el) {
@@ -524,7 +529,7 @@
                 if (!decisionMatrixEl.decision.imageUrl) {
                     decisionMatrixEl.decision.imageUrl = decisionMatrixEl.decision.logoUrl || '/images/noimage.jpg';
                 }
-                if (decisionMatrixEl.decision.description && 
+                if (decisionMatrixEl.decision.description &&
                     !_.isObject(decisionMatrixEl.decision.description)) {
                     decisionMatrixEl.decision.description = $sce.trustAsHtml(decisionMatrixEl.decision.description);
                 }
@@ -546,17 +551,28 @@
         // TODO: make as component
         // Simplify sortObj
         // DNRY
-        function orderByDecisionProperty(field, order) {
-            if (!field) return;
+        var orderByDecisionPropertyId = null;
+
+        function orderByDecisionProperty(data) {
             var sortObj = {
                 sort: {
-                    id: field,
-                    order: (order === 'ASC' || !order) ? 'DESC' : 'ASC'
+                    id: null,
+                    order: null
                 },
                 mode: 'sortByDecisionProperty'
             };
+            if (!_.isNull(data) || data && !_.isNull(data.id)) {
+                sortObj.sort = {
+                    id: data.id || 'name',
+                    order: orderByDecisionPropertyId === data.id && (data.order === 'DESC' || !data.order) ? 'ASC' : 'DESC'
+                };
+                orderByDecisionPropertyId = data.id;
+            }
+
             DecisionNotificationService.notifySelectSorter(sortObj);
         }
+
+        vm.sortDecisionPropertyOptions = DecisionsConstant.SORT_DECISION_PROPERTY_OPTIONS;
 
         function orderByCriteriaProperty(order, $event) {
             var sortObj;
@@ -566,6 +582,7 @@
                 },
                 mode: 'sortByCriteria'
             };
+            vm.fo.sortByDecisionProperty.order = sortObj.order;
             DecisionNotificationService.notifySelectSorter(sortObj);
             var parentCriteria = $($event.target).parents('.matrix-item');
             if (parentCriteria.hasClass('selected')) {

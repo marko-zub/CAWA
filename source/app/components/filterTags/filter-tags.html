@@ -1,5 +1,5 @@
 <div id="filter-tags" class="filter-tags">
-    <div class="filter-tags-group sorted-panel clearfix" ng-show="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name">
+    <div class="filter-tags-group sorted-panel clearfix" ng-show="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name">
         <div class="filter-tags-label">{{ "SORTED BY" | translate }}: <span ng-show="vm.tagsSort.length > 0" class="display-inline-block">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span> for
             </span>
         </div>
@@ -16,12 +16,22 @@
 
                 <div class="tag-wrapper" ng-show="vm.sortByCharacteristic.name">
                     <div class="tag">
-                        {{vm.sortByCharacteristic.name}}
-                        <span class="app-link text-bold" ng-click="vm.changeCharacteristicsOrder(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{vm.sortByCharacteristic.order}}</span>
+                        {{ vm.sortByCharacteristic.name }}
+                        <span class="app-link text-bold" ng-click="vm.changeCharacteristicsOrder(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{ vm.sortByCharacteristic.order }}</span>
                         <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div>
                 </div>
-                <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1 || vm.sortByCharacteristic.name && vm.tagsSort.length > 0">
+
+                <div class="tag-wrapper" ng-show="vm.sortByDecisionProperty.name">
+                    <div class="tag">
+                        {{ vm.sortByDecisionProperty.name }}
+                        <span class="app-link text-bold" ng-click="vm.changeSortByDecisionPropertyOrder(vm.sortByDecisionProperty, $event)">{{ vm.sortByDecisionProperty.order }}</span>
+                        <span ng-click="vm.changeSortByDecisionPropertyOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+    
+                <!-- TODO: simplify conditions move to conroller -->
+                <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1 || (vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name) && vm.tagsSort.length > 0">
                     <div class="tag tag-btn" ng-click="vm.clearAllCriteria()" translate-cloak>
                         {{ "CLEAR ALL" | translate }}
                     </div>

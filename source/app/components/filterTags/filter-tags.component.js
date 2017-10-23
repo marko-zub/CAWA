@@ -12,7 +12,8 @@
                 filterObject: '<',
                 onChangeCriteriaOrder: '&',
                 onChangeCharacteristicsOrder: '&',
-                onShowCriteriaPopup: '&'
+                onShowCriteriaPopup: '&',
+                onSortByDecisionPropertyOrder: '&'
             },
             templateUrl: 'app/components/filterTags/filter-tags.html',
             controller: 'FilterTagsController',
@@ -20,9 +21,9 @@
         });
 
 
-    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils'];
+    FilterTagsController.$inject = ['DecisionSharedService', 'DecisionNotificationService', 'Utils', 'DecisionsConstant'];
 
-    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils) {
+    function FilterTagsController(DecisionSharedService, DecisionNotificationService, Utils, DecisionsConstant) {
         // TODO: simplify logic
         var vm = this,
             _fo;
@@ -53,7 +54,11 @@
             if (changes.filterObject &&
                 !angular.equals(changes.filterObject.currentValue, changes.filterObject.previousValue)) {
                 if (changes.filterObject.currentValue) {
-                    vm.sortByCharacteristic = setCharacteristicsSortTag(changes.filterObject.currentValue.sortByCharacteristic);
+                    var _fo = changes.filterObject.currentValue;
+                    vm.sortByCharacteristic = setCharacteristicsSortTag(_fo.sortByCharacteristic);
+                    vm.sortByDecisionProperty = setSortByDecisionProperty(_fo.sortByDecisionProperty);
+                    // sortByDecisionProperty
+                    // vm.sortByCharacteristic 
                 }
             }
 
@@ -63,6 +68,15 @@
                 generateCriteriaTags(vm.criteria);
                 updateMatrixHeight();
             }
+        }
+
+        function setSortByDecisionProperty(sortByDecisionProperty) {
+            var find = _.find(DecisionsConstant.SORT_DECISION_PROPERTY_OPTIONS, function(propery) {
+                return propery.id === sortByDecisionProperty.id;
+            });
+            find = _.merge(sortByDecisionProperty, find);
+
+            return find;
         }
 
         function setCharacteristicsSortTag(characteristic) {
@@ -264,6 +278,15 @@
             });
         }
 
+        vm.changeSortByDecisionPropertyOrder = changeSortByDecisionPropertyOrder;
+
+        function changeSortByDecisionPropertyOrder(order, $event) {
+            vm.onSortByDecisionPropertyOrder({
+                'order': order,
+                '$event': $event
+            });
+        }
+
         // Criteria Popup
         function changeCharacteristicsOrder(order, orderId) {
             var defaultOrder = 'DESC';
@@ -297,6 +320,7 @@
 
         function clearAllCriteria() {
             vm.changeCharacteristicsOrder(null);
+            vm.changeSortByDecisionPropertyOrder(null);
             DecisionNotificationService.notifySelectCriteria(null);
         }
 

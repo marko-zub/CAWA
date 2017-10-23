@@ -18,6 +18,25 @@
                 value: 'totalViews',
                 label: 'Views'
             }],
-            SHORT_TEXT_LENGTH: 350
+            SHORT_TEXT_LENGTH: 350,
+            SORT_DECISION_PROPERTY_OPTIONS: [{
+                id: 'name',
+                name: 'Name'
+            }, {
+                id: 'createDate',
+                name: 'Create Date'
+            }, {
+                id: 'updateDate',
+                name: 'Update Date'
+            }, {
+                id: 'totalViews',
+                name: 'Total Views'
+            }, {
+                id: 'totalFlags',
+                name: 'Total Flags'
+            }, {
+                id: 'likeSum',
+                name: 'Like Sum'
+            }]
         });
 })();

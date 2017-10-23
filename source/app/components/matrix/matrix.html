@@ -34,7 +34,9 @@
                         <div class="matrix-g-name">
                             <div class="matrix-title-wrapper">
                                 <div class="matrix-title app-sorter-wrapper matrix-content-name">
-                                    {{ "NAME" | translate }}
+                                    <select class="form-control input-sm" ng-model="vm.fo.sortByDecisionProperty.id" ng-options="item.id as item.name for item in ::vm.sortDecisionPropertyOptions" ng-change="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty, $event)">
+                                        <option value="">Sort by Decision Property</option>
+                                    </select>
                                 </div>
 
                                 <!-- Filter  -->
@@ -47,10 +49,11 @@
                                 </div>
                                 <!-- Filter Name -->
 
-                                <div class="app-sorter active" ng-class="vm.fo.sortByDecisionProperty.order.toLowerCase()"  ng-click="vm.orderByDecisionProperty('name', vm.fo.sortByDecisionProperty.order)">
+                                <div class="app-sorter active" ng-class="vm.fo.sortByDecisionProperty.order.toLowerCase()" ng-click="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty)">
                                     <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
                                     <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                 </div>
+
                             </div>
                         </div>
 
@@ -111,6 +114,7 @@
                     characteristics="vm.characteristicGroupsArray"
                     filter-name="vm.filterName"
                     on-change-criteria-order="vm.orderByCriteriaProperty(order, $event)"
+                    on-sort-by-decision-property-order="vm.orderByDecisionProperty(order, $event)"
                     filter-object="vm.fo"
                     on-show-criteria-popup="vm.editCriteriaCoefficient($event, criteria)"
                     ></filter-tags>
