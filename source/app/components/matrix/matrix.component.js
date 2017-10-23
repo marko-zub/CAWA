@@ -561,7 +561,7 @@
                 },
                 mode: 'sortByDecisionProperty'
             };
-            if (!_.isNull(data) || data && !_.isNull(data.id)) {
+            if (!_.isNull(data) || data && data.id) {
                 sortObj.sort = {
                     id: data.id || 'name',
                     order: orderByDecisionPropertyId === data.id && (data.order === 'DESC' || !data.order) ? 'ASC' : 'DESC'
