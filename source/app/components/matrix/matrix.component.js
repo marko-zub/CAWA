@@ -834,6 +834,15 @@
             // Incorect height calc
             initMatrix(true);
 
+            var parent = $($event.target).parents('.group-wrapper');
+            var typeList = parent.find('.matrix-g-title');
+            var typeListHidden = parent.find('.matrix-g-title.closed');
+            if (typeList.length && typeListHidden.length && typeList.length === typeListHidden.length) {
+                parent.addClass('hidden-all');
+            } else {
+                parent.removeClass('hidden-all');
+            }
+
             $event.preventDefault();
         }
 
