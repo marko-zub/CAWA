@@ -554,6 +554,7 @@
         var orderByDecisionPropertyId = null;
 
         function orderByDecisionProperty(data) {
+            // debugger
             var sortObj = {
                 sort: {
                     id: null,
@@ -561,7 +562,7 @@
                 },
                 mode: 'sortByDecisionProperty'
             };
-            if (!_.isNull(data) || data && data.id) {
+            if (data && data.id) {
                 sortObj.sort = {
                     id: data.id || 'name',
                     order: orderByDecisionPropertyId === data.id && (data.order === 'DESC' || !data.order) ? 'ASC' : 'DESC'
