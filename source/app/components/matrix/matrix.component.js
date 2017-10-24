@@ -27,14 +27,12 @@
             _fo = DecisionSharedService.filterObject,
             characteristicGroupsArrayOriginal;
 
-
         // TODO: simplify conttoller and move to different componnts
         vm.$onInit = onInit;
 
         function onInit() {
             // console.log('Decision Matrix Controller');
             vm.filterName = null;
-            vm.characteristicLimit = 4;
             vm.decisionsLoader = true;
 
             iniMatrixModeTabs();
@@ -213,7 +211,7 @@
         });
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
-            _fo.decisionNameFilterPattern = _.escape(data) || null;
+            _fo.decisionNameFilterPattern = data || null;
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initMatrix(result.decisionMatrixs, true);
                 vm.filterName = data;
@@ -221,7 +219,6 @@
         });
 
         function filterObjectClearConditionCharacterisctics(filterQueries, query) {
-            // if (!query.value) return filterQueries;
             var removeCharacteristics = [];
             _.forEach(characteristicGroupsArrayOriginal, function(characteristic) {
                 if ((characteristic.parentCharacteristicId &&
@@ -313,14 +310,15 @@
                     var parentOptionIdsInArray = _.intersection(optionsIds, option.parentOptionIds);
                     if (selected && !_.isEmpty(parentOptionIdsInArray)) {
                         optionsFiltered.push(option);
-                    } else if (!selected && !_.isEmpty(parentOptionIdsInArray) && parentOptionIdsInArray.length === optionsIds.length) {
+                    } else if (!selected &&
+                        !_.isEmpty(parentOptionIdsInArray) &&
+                        parentOptionIdsInArray.length === optionsIds.length) {
                         optionsFiltered.push(option);
                     }
                 }
             });
 
             return optionsFiltered;
-
         }
 
         function getCriteriaGroupsById(id) {
@@ -345,7 +343,6 @@
 
                 // / titles + criteria col height + characteristic wrapper
                 var criteriahHeight = criteriaSize.length * 24 + _.sum(criteriaSize) * 49 + 100;
-                // console.log(criteriahHeight);
                 setMatrixTableHeight(criteriahHeight);
 
                 if ($state.params.analysisId === 'hall-of-fame') {
@@ -536,6 +533,11 @@
                 if (decisionMatrixEl.decision.criteriaCompliancePercentage >= 0) {
                     decisionMatrixEl.decision.criteriaCompliancePercentage = _.floor(decisionMatrixEl.decision.criteriaCompliancePercentage, 2).toFixed(2);
                 }
+
+                if (decisionMatrixEl.decision.name.length > 50) {
+                    decisionMatrixEl.decision.name = decisionMatrixEl.decision.name.substring(0, 50) + '...';
+                }
+
                 decisionMatrixEl.decision.criteria = decisionMatrixEl.criteria;
                 decisionMatrixEl.decision.criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixEl.decision.criteria, criteriaGroupsSelected) || {};
                 decisionMatrixEl.decision.criteriaGroups.totalVotes = _.sumBy(decisionMatrixEl.decision.criteria, 'totalVotes');
@@ -544,6 +546,7 @@
             });
         }
         // TODO: make as in sorter directive
+        // use vm.fo
         vm.orderByDecisionProperty = orderByDecisionProperty;
         vm.orderByCharacteristicProperty = orderByCharacteristicProperty;
         vm.orderByCriteriaProperty = orderByCriteriaProperty;
@@ -911,7 +914,6 @@
 
         // TODO: clean up matrix servise
         // Pagination
-        vm.itemsPerPage = PaginatioService.itemsPerPageSm();
         vm.changePage = changePage;
 
         function changePage(pagination) {

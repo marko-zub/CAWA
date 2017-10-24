@@ -9,8 +9,7 @@
             templateUrl: 'app/components/matrix/matrix-characteristics.html',
             bindings: {
                 characteristics: '<',
-                decisions: '<',
-                characteristicLimit: '<'
+                decisions: '<'
             },
             controller: 'MatrixCharacteristicsController',
             controllerAs: 'vm'
@@ -27,11 +26,6 @@
         vm.$onChanges = onChanges;
 
         function onChanges(changes) {
-            if(changes.characteristicLimit &&
-                !angular.equals(changes.characteristicLimit.currentValue, changes.characteristicLimit.previousValue)) {
-                vm.characteristicLimit = changes.characteristicLimit.currentValue;
-            }
-
             if(changes.decisions && changes.decisions.currentValue &&
                 !angular.equals(changes.decisions.currentValue, changes.decisions.previousValue)) {
                     setDecisions(changes.decisions.currentValue);

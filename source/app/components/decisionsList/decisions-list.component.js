@@ -35,7 +35,7 @@
 
         function onInit() {
             if (!vm.list) return;
-            // vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
+            vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
             vm.decisionsList = vm.list;
             if (vm.compare !== true) vm.compare = false;
             if (!vm.className) vm.className = 'list';

@@ -50,6 +50,7 @@
 	"FILTERED BY": "Filtered by",
 	"HERE": "here",
 	"NAME": "Name",
+	"BECOME OWNER USER": "Want to become an administrator",
 	"ADMINISTRATION": "Administration",
 	"CLEAR ALL": "Clear All",
 	"NOTHING TO COMPARE": "Nothing to Compare",
@@ -58,10 +59,10 @@
 	"FACTOR OF IMPORTANCE": "Factor of Importance",
 	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Can't find the necessary characteristic?",
 	"SORT BY PROPERTY": "Sort by property",
-	"CREATE DATE": "Create Date",
-	"UPDATE DATE": "Update Date",
-	"TOTAL VIEWS": "Total Views",
-	"TOTAL FLAGS": "Total Flags",
-	"LIKE SUM": "Like Sum",
+	"CREATE DATE": "Create date",
+	"UPDATE DATE": "Update date",
+	"TOTAL VIEWS": "Total views",
+	"TOTAL FLAGS": "Total flags",
+	"LIKE SUM": "Like sum",
 	"CRITERIA SCORE": "Criteria score"
 }

@@ -60,9 +60,9 @@
 	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете знайти потрібну характеристику?",
 	"SORT BY PROPERTY": "Сортувати за властивістю",
 	"CREATE DATE": "Дата створення",
-	"UPDATE DATE": "Дата Оновлення",
-	"TOTAL VIEWS": "Кількусть Перегядів",
-	"TOTAL FLAGS": "Кількусть Прапорів",
+	"UPDATE DATE": "Дата оновлення",
+	"TOTAL VIEWS": "Кількість перегядів",
+	"TOTAL FLAGS": "Кількість прапорів",
 	"LIKE SUM": "Сума лайків",
 	"CRITERIA SCORE": "Оцінка критеріїв"
 }

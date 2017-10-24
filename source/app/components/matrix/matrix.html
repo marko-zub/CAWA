@@ -33,7 +33,7 @@
 
                         <div class="matrix-g-name">
                             <div class="matrix-title-wrapper">
-                                <div class="matrix-title app-sorter-wrapper matrix-content-name" translate-cloak>
+                                <div class="matrix-title app-sorter-wrapper m-content-name" translate-cloak>
                                     <select class="form-control input-sm" ng-model="vm.fo.sortByDecisionProperty.id" ng-options="item.id as item.name | translate for item in vm.sortDecisionPropertyOptions" ng-change="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty, $event)">
                                         <option value="">{{ "SORT BY PROPERTY" | translate }} </option>
                                     </select>
@@ -63,7 +63,7 @@
                         <!-- Decisions Header -->
                         <div id="matrix-scroll-group" class="scroll-group">
                             <div class="matrix-col matrix-col-name matrix-g" ng-repeat="item in vm.decisionMatrixList track by item.decision.id">
-                                <div class="matrix-col-content matrix-content-name decision-matrix-col">
+                                <div class="m-col-content m-content-name decision-matrix-col">
                                     <a class="matrix-col-link" ui-sref="decisions.single(::{id:item.decision.id, slug: item.decision.nameSlug})">
                                         <!-- deep watch {discussionId:item.decision.id, discussionSlug:item.decision.nameSlug} -->
                                         <div class="app-title-inline">

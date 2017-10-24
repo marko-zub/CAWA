@@ -1,4 +1,4 @@
-<div class="matrix-g matrix-g-characteristics" ng-repeat="characteristic in ::vm.characteristics track by characteristic.uuid">
+<div class="matrix-g m-g-characteristics" ng-repeat="characteristic in ::vm.characteristics track by characteristic.uuid">
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap" translate-cloak>
@@ -10,7 +10,7 @@
         <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
             <div class="matrix-row js-matrix-item-content js-toggle-hide">
                 <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.id" ng-click="vm.getComments($event)">
-                    <div class="matrix-col-content">
+                    <div class="m-col-content">
 
                         <a ng-if="::!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
 
@@ -18,7 +18,7 @@
                                           item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
                                           characteristic="::characteristic"></content-formater>
 
-                        <div class="app-item-additional-wrapper app-item-comments control-panel-sm">
+                        <div class="dw-additional-wrapper dw-comments control-panel-sm">
                             <a ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
                             <!-- <a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a> -->
 

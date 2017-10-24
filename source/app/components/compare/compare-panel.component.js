@@ -177,8 +177,6 @@
             $state.go('decisions.single.comparison', {
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
-            }, {
-                reload: true
             });
         }
     }

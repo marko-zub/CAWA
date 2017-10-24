@@ -88,8 +88,8 @@
         function renderStars(percentage, votes) {
             votes = votes || '';
             return [
-                '<div class="app-rating-star-wrapper">',
-                '<div class="app-rating-star">',
+                '<div class="dw-stars-wrapper">',
+                '<div class="dw-stars">',
                 '<span class="bar" style="width:' + percentage + '"></span>',
                 '</div>',
                 votes,

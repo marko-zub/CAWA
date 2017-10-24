@@ -58,23 +58,25 @@
             '<div class="rating">',
             ratingEmptyHtml,
             '</div>',
-            '<div class="app-item-additional-wrapper app-item-comments">',
+            '<div class="dw-additional-wrapper dw-comments">',
             '<a class="control" href="#">',
             '<span class="glyphicon glyphicon-comment"></span>0',
             '</a>',
-            '</div>'
+            '</div>',
+            '<span class="app-rating-votes-likes control"><i class="app-icon glyphicon glyphicon-thumbs-up"></i><span class="app-rating-votes-likes-count">0</span></span>'
         ].join('\n');
 
         function generateCriteriaMatrix(decisions) {
             // TODO: do we need clear all cells html?
             // Empty criterion?!
             $($element).find('.m-group-col').html(emptyCol);
-            _.forEach(decisions, function(decision, decisionIndex) {
-                _.forEach(decision.criteria, function(criteria) {
+            _.each(decisions, function(decision, decisionIndex) {
+                _.each(decision.criteria, function(criteria) {
                     var id = '#m-criteria-' + decisionIndex + '-' + criteria.id;
-                    var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '" popover-placement="bottom" popover-append-to-body="true" uib-popover="Average vote ' + _.floor(criteria.weight, 2).toFixed(2) + ' out of 5" popover-trigger="\'mouseenter\'"></rating-star>';
+                    var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '" popover-placement="bottom" popover-append-to-body="true" popover-animation="false" uib-popover="Average vote ' + _.floor(criteria.weight, 2).toFixed(2) + ' out of 5" popover-trigger="\'mouseenter\'"></rating-star>';
+                    // rating += '<span class="app-rating-votes-likes control"><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + criteria.totalVotes + '</span>';
                     $(id).find('.rating').html(rating);
-                    // console.log(id, rating);
+                    $(id).find('.app-rating-votes-likes-count').html(criteria.totalVotes);
                 });
             });
 

@@ -38,7 +38,7 @@
         height: auto;
         padding: 0;
     }
-    .app-rating-star-wrapper {
+    .dw-stars-wrapper {
         display: block;
     }
 
@@ -57,7 +57,11 @@
             margin: 0 2px;
         }
     }
-
+    .app-rating-votes {
+        .app-rating-votes-likes {
+            display: none;
+        }    
+    }
     .app-rating-votes-likes {
         position: absolute;
         left: 32px;
@@ -125,7 +129,16 @@
             }
         }
     }
-    .matrix-col-content {
+    .control {
+        font-size: 13px;
+        display: inline-block;
+        color: @icon-color;
+        &:hover {
+            color: @basic-active;
+        }
+    }
+
+    .m-col-content {
         .control {
             font-size: 13px;
             display: inline-block;
@@ -141,7 +154,7 @@
             }
         }
     }
-    .app-item-comments {
+    .dw-comments {
         text-align: right;
         display: inline-block;
         margin: 0;
@@ -284,7 +297,7 @@
 }
 
 // Colors
-.matrix-col-content {
+.m-col-content {
     font-size: 13px;
     &.color-1 {
         background-color: @coefficientLower;
@@ -316,7 +329,7 @@
     }
 }
 
-.app-item-additional-wrapper {
+.dw-additional-wrapper {
     display: inline-block;
     // width: 100%;
     position: absolute;
@@ -325,7 +338,7 @@
     z-index: 12;
 }
 
-.matrix-col-content {
+.m-col-content {
     padding: 2px 0 24px 4px;
     width: 120px; // TODO: avoid
     position: relative;
@@ -340,7 +353,7 @@
 
 // Remove it
 // Width for cols
-.matrix-content-name {
+.m-content-name {
     width: 165px;
     min-width: 165px;
     select {
@@ -544,7 +557,7 @@ a {
 
 .matrix-aside-content{
     position: absolute;
-    .matrix-col-content {
+    .m-col-content {
         padding-top: 4px;
         padding-bottom: 2px;
         .img-container.img-sm {
@@ -881,7 +894,7 @@ a {
     }
     .matrix-col.matrix-g {
         border-right: 1px solid #ebebeb;
-        .matrix-col-content & > a {
+        .m-col-content & > a {
             margin-right: 10px;
         }
         .app-panel-controls {
@@ -937,7 +950,7 @@ a {
             border-bottom: 1px solid transparent;
         }
     }
-    .matrix-col-content {
+    .m-col-content {
         width: 200px;
         max-width: 200px;
         min-height: 49px;
@@ -957,7 +970,7 @@ a {
         right: 0;
         bottom: 20px;
     }
-    .matrix-header .matrix-col-content {
+    .matrix-header .m-col-content {
         padding: 0;
         & > a {
             padding: 5px;
@@ -972,6 +985,7 @@ a {
         height: 30px;
         font-family: @font-bold;
         font-weight: 600;
+        padding-right: 12px;
         span {
             display: inline-block;
             line-height: 16px;
@@ -1415,7 +1429,7 @@ a {
 }
 
 .matrix-body-wrapper {
-    .matrix-col-content {
+    .m-col-content {
         transition: background-color 0.1s ease-in-out;
         &:hover {
             background-color: @matrix-col-hover;
