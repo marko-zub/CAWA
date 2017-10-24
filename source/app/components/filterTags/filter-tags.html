@@ -24,7 +24,7 @@
 
                 <div class="tag-wrapper" ng-show="vm.sortByDecisionProperty.name">
                     <div class="tag">
-                        {{ vm.sortByDecisionProperty.name }}
+                        {{ vm.sortByDecisionProperty.name | translate}}
                         <span class="app-link text-bold" ng-click="vm.changeSortByDecisionPropertyOrder(vm.sortByDecisionProperty, $event)">{{ vm.sortByDecisionProperty.order }}</span>
                         <span ng-click="vm.changeSortByDecisionPropertyOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
                     </div>
