@@ -36,7 +36,7 @@
 	"Can't find the necessary criterion?": "Не можу знайти потрібний критерій?",
 	"Recommended": "Рекомендовано",
 	"NO PROPERTIES": "Ще немає властивостей, але ви можете спочатку створити їх тут.",
-	"CANT FIND PROPERTIES": "Не можете знайти необхідну власність?",
+	"CANT FIND PROPERTIES": "Не можете знайти необхідну властивість?",
 	"PROVIDE VALUE": "Додати значення",
 	"NO NOMINATIONS": "Жодних номінацій ще немає, але ви можете спочатку створити їх",
 	"NO REVIEWS": "Поки номінацій ще немає, але ви можете спочатку створити їх",
@@ -57,5 +57,11 @@
 	"PLEASE ADD DECISIONS TO COMPARE": "Будь ласка, додайте рішення",
 	"RATE IT": "Оцініть це",
 	"FACTOR OF IMPORTANCE": "Фактор важливості",
-	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете знайти потрібну характеристику?"
+	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете знайти потрібну характеристику?",
+	"SORT BY PROPERTY": "Сортувати за властивістю",
+	"CREATE DATE": "Дата створення",
+	"UPDATE DATE": "Дата Оновлення",
+	"TOTAL VIEWS": "Кількусть Перегядів",
+	"TOTAL FLAGS": "Кількусть Прапорів",
+	"LIKE SUM": "Сума лайків"
 }

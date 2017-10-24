@@ -58,7 +58,7 @@
                     vm.sortByCharacteristic = setCharacteristicsSortTag(_fo.sortByCharacteristic);
                     vm.sortByDecisionProperty = setSortByDecisionProperty(_fo.sortByDecisionProperty);
                     // sortByDecisionProperty
-                    // vm.sortByCharacteristic 
+                    // vm.sortByCharacteristic
                 }
             }
 

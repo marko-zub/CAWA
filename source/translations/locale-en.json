@@ -56,5 +56,11 @@
 	"PLEASE ADD DECISIONS TO COMPARE": "Please add decisions",
 	"RATE IT": "Rate it",
 	"FACTOR OF IMPORTANCE": "Factor of Importance",
-	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Can't find the necessary characteristic?"
+	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Can't find the necessary characteristic?",
+	"SORT BY PROPERTY": "Sort by property",
+	"CREATE DATE": "Create Date",
+	"UPDATE DATE": "Update Date",
+	"TOTAL VIEWS": "Total Views",
+	"TOTAL FLAGS": "Total Flags",
+	"LIKE SUM": "Like Sum"
 }

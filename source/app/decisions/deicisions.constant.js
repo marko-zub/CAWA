@@ -21,22 +21,22 @@
             SHORT_TEXT_LENGTH: 350,
             SORT_DECISION_PROPERTY_OPTIONS: [{
                 id: 'name',
-                name: 'Name'
+                name: 'NAME'
             }, {
                 id: 'createDate',
-                name: 'Create Date'
+                name: 'CREATE DATE'
             }, {
                 id: 'updateDate',
-                name: 'Update Date'
+                name: 'UPDATE DATE'
             }, {
                 id: 'totalViews',
-                name: 'Total Views'
+                name: 'TOTAL VIEWS'
             }, {
                 id: 'totalFlags',
-                name: 'Total Flags'
+                name: 'TOTAL FLAGS'
             }, {
                 id: 'likeSum',
-                name: 'Like Sum'
+                name: 'LIKE SUM'
             }]
         });
 })();

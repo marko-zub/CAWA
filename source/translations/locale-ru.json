@@ -57,5 +57,11 @@
 	"PLEASE ADD DECISIONS TO COMPARE": "Пожалуйста, добавьте решения",
 	"RATE IT": "Оценить",
 	"FACTOR OF IMPORTANCE": "Фактор важности",
-	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете найти необходимую характеристику?"
+	"CAN'T FIND THE NECESSARY CHARACTERISTIC?": "Не можете найти необходимую характеристику?",
+	"SORT BY PROPERTY": "Сортировать по свойству",
+	"CREATE DATE": "Дата создания",
+	"UPDATE DATE": "Дата Обновление",
+	"TOTAL VIEWS": "Килькусть Перегядив",
+	"TOTAL FLAGS": "Килькусть Флагов",
+	"LIKE SUM": "Сумма лайков"
 }

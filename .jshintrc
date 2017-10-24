@@ -48,6 +48,6 @@
     "IScroll"              : false,
     "$sce"                 : false,
     "vm"                   : false,
-    "moment": false
+    "moment"               : false
   }
 }
