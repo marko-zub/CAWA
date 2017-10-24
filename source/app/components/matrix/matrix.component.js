@@ -35,7 +35,7 @@
             // console.log('Decision Matrix Controller');
             vm.filterName = null;
             vm.characteristicLimit = 4;
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
 
             iniMatrixModeTabs();
             // First call
@@ -56,7 +56,7 @@
 
                     // Init only first time
                     initSorters(); //Hall of fame
-                    vm.decisionsSpinner = false;
+                    vm.decisionsLoader = false;
 
                     // Init pagination
                     vm.itemsPerPage = PaginatioService.itemsPerPageSm();
@@ -490,12 +490,12 @@
                 reinitMatrixScroller();
             }, 0);
             $scope.$applyAsync(function() {
-                vm.decisionsSpinner = false;
+                vm.decisionsLoader = false;
             });
         }
 
         function getDecisionMatrix(id, persistent) {
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
             var sendData = DecisionSharedService.getRequestFilterObject();
             if (persistent === true) sendData.persistent = true;
 
@@ -697,7 +697,7 @@
                 });
                 vm.criteriaGroups[groupIndex].criteria[criteriaIndex] = result;
                 selectCriteria(event, result, criteria.isSelected);
-                vm.decisionsSpinner = false;
+                vm.decisionsLoader = false;
             });
         }
 
@@ -705,7 +705,7 @@
 
         function selectCriteria(event, criteria, coefCall) {
             if ($(event.target).hasClass('link-secondary')) return;
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
             if (coefCall && !criteria.isSelected) {
                 return;
             }

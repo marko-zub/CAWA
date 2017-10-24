@@ -36,14 +36,14 @@
         }
 
         function getDecisions(data) {
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
 
             var sendData = angular.copy(data);
             sendData.pageNumber = sendData.pageNumber - 1;
             DecisionDataService.getDecisions(sendData).then(function(result) {
                 vm.decisionsList = result.decisions;
                 vm.pagination = PaginatioService.initPagination(result.totalDecisions, $stateParams.page, $stateParams.size);
-                vm.decisionsSpinner = false;
+                vm.decisionsLoader = false;
             }, function(error) {
                 console.log(error);
             });

@@ -21,7 +21,7 @@
             vm.decisionParents = vm.decision.parentDecisions;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
-                vm.decisionsSpinnerChilds = true;
+                vm.decisionsLoaderChilds = true;
             }
             setPageData();
         }

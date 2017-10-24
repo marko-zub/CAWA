@@ -35,7 +35,7 @@
 
         function onInit() {
             if (!vm.list) return;
-            vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
+            // vm.decisionsHeight = vm.list.length * decisionsHeight + 'px';
             vm.decisionsList = vm.list;
             if (vm.compare !== true) vm.compare = false;
             if (!vm.className) vm.className = 'list';
@@ -44,7 +44,7 @@
         function onChanges(changes) {
             if (changes.list && changes.list.currentValue &&
                 !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
-                vm.decisionsHeight = changes.list.currentValue.length * decisionsHeight + 'px';
+                // vm.decisionsHeight = changes.list.currentValue.length * decisionsHeight + 'px';
                 vm.decisionsList = DecisionsUtils.prepareDecisionToUI(changes.list.currentValue);
 
                 handleChanges();

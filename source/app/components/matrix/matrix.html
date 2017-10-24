@@ -26,7 +26,7 @@
 
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
             <div id="panel" class="app-panel matrix-panel">
-                <div ng-show="vm.decisionsSpinner" class="app-loader-small"><span></span></div>
+                <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
                 <!-- Header -->
                 <div class="matrix-header">
                     <div class="matrix-row">
@@ -34,7 +34,7 @@
                         <div class="matrix-g-name">
                             <div class="matrix-title-wrapper">
                                 <div class="matrix-title app-sorter-wrapper matrix-content-name" translate-cloak>
-                                    <select class="form-control input-sm" ng-model="vm.fo.sortByDecisionProperty.id" ng-options="item.id as item.name | translate for item in ::vm.sortDecisionPropertyOptions" ng-change="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty, $event)">
+                                    <select class="form-control input-sm" ng-model="vm.fo.sortByDecisionProperty.id" ng-options="item.id as item.name | translate for item in vm.sortDecisionPropertyOptions" ng-change="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty, $event)">
                                         <option value="">{{ "SORT BY PROPERTY" | translate }} </option>
                                     </select>
                                 </div>
@@ -220,7 +220,7 @@
                             </div>
 
                             <div class="characteristic-groups-content">
-                                <div ng-show="!vm.decisionsSpinner && vm.characteristicGroupsContentLoader" class="app-loader-small"><span></span></div>
+                                <div ng-show="!vm.decisionsLoader && vm.characteristicGroupsContentLoader" class="app-loader-small"><span></span></div>
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">

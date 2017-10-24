@@ -43,13 +43,13 @@
 
 
         function getDecisions() {
-            vm.decisionsSpinner = true;
+            vm.decisionsLoader = true;
             var pagination = _.clone(vm.pagination);
             pagination.pageNumber = pagination.pageNumber - 1;
 
             DecisionDataService.getDecisions(pagination).then(function(result) {
                 vm.decisions = result.decisions;
-                vm.decisionsSpinner = false;
+                vm.decisionsLoader = false;
             }, function(error) {
                 console.log(error);
             });
