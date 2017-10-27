@@ -28,7 +28,7 @@
 	"Criteria compliance": "Відповідність критеріям",
 	"Filter by name": "Фільтрувати за назвою",
 	"Can't find the necessary option?": "Не можете знайти потрібний варіант?",
-	"Add it": "Додати його"	,
+	"Add it": "Додати його",
 	"NO DESCRIPTION": "Поки немає опису, але ви можете спочатку створити їх тут.",
 	"LOOKING MORE": "Шукаєте більше? Перегляньте",
 	"the complete list of decisions": "повний перелік рішень",
@@ -64,5 +64,10 @@
 	"TOTAL VIEWS": "Кількість перегядів",
 	"TOTAL FLAGS": "Кількість прапорів",
 	"LIKE SUM": "Сума лайків",
-	"CRITERIA SCORE": "Оцінка критеріїв"
+	"CRITERIA SCORE": "Оцінка критеріїв",
+	"YES": "так",
+	"NO": "ні",
+	"ALL": "все",
+	"OR": "або",
+	"AND": "і"
 }

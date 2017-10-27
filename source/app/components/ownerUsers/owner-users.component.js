@@ -16,9 +16,9 @@
         });
 
 
-    OwnerUsersController.$inject = [];
+    OwnerUsersController.$inject = ['Utils'];
 
-    function OwnerUsersController() {
+    function OwnerUsersController(Utils) {
         var vm = this;
         vm.$onInit = onInit;
 
@@ -29,6 +29,7 @@
         function prepareList (list) {
         	return _.map(list, function (user) {
         		user.avName = (user.firstName && user.lastName) && (user.firstName[0] && user.lastName[0]) ? user.firstName[0] + user.lastName[0] : user.userName[0];
+                user.reputation = Utils.numberToUi(user.reputation, 2);
         		return user;
         	});
         }

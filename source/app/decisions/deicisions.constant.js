@@ -37,6 +37,16 @@
             }, {
                 id: 'likeSum',
                 name: 'LIKE SUM'
+            }],
+            RADIO_GROUP_OPTIONS: [{
+                value: null,
+                label: 'All'
+            }, {
+                value: true,
+                label: 'Yes'
+            }, {
+                value: false,
+                label: 'No'
             }]
         });
 })();

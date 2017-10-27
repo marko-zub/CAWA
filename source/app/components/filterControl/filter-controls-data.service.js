@@ -10,7 +10,6 @@
 
     function FilterControlsDataService(DecisionNotificationService) {
 
-
         function createFilterQuery(data, optionId) {
             if (!data) return;
 
@@ -37,7 +36,6 @@
             }
             characteristicChange(sendData.characteristicId, query, optionId);
         }
-
 
         function characteristicChange(characteristicId, query, optionId) {
             if (!characteristicId || !query) return;

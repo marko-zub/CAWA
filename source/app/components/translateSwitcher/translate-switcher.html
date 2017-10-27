@@ -3,7 +3,7 @@
     {{ vm.langSelected.name }} <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-    <li ng-repeat="lang in vm.langs track by lang.key">
+    <li ng-repeat="lang in ::vm.langs track by lang.key">
       <a href="#" ng-click="vm.changeLanguage($index)" ng-hide="lang.selected" ng-bind="::lang.name"></a>
     </li>
   </ul>

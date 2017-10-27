@@ -49,8 +49,8 @@
         // TODO: any way faster render?
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
-            '<a href="#" translate-cloak class="sm-link">{{ "RATE IT" | translate }}</a>',
-            '<span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
+            '   <a href="#" translate-cloak class="sm-link">{{ "RATE IT" | translate }}</a>',
+            '   <span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
             '</div>',
         ].join('\n');
 
@@ -59,11 +59,14 @@
             ratingEmptyHtml,
             '</div>',
             '<div class="dw-additional-wrapper dw-comments">',
-            '<a class="control" href="#">',
-            '<span class="glyphicon glyphicon-comment"></span>0',
-            '</a>',
+            '   <a class="control" href="#">',
+            '       <span class="glyphicon glyphicon-comment"></span>0',
+            '   </a>',
             '</div>',
-            '<span class="app-rating-votes-likes control"><i class="app-icon glyphicon glyphicon-thumbs-up"></i><span class="app-rating-votes-likes-count">0</span></span>'
+            '<span class="app-rating-votes-likes control">',
+            '   <i class="app-icon glyphicon glyphicon-thumbs-up"></i>',
+            '   <span class="app-rating-votes-likes-count">0</span>',
+            '</span>'
         ].join('\n');
 
         function generateCriteriaMatrix(decisions) {
@@ -85,7 +88,7 @@
 
         function generateDecisionsRow(decisions, id) {
             var html = [];
-            _.forEach(decisions, function(decision, decisionIndex) {
+            _.each(decisions, function(decision, decisionIndex) {
                 var col = [
                     '<div class="m-group-col" id="m-criteria-' + decisionIndex + '-' + id + '" style="left: ' + decisionIndex * 200 + 'px" ng-click="vm.getComments($event)">',
                     '</div>'
@@ -96,18 +99,16 @@
             return html.join('\n');
         }
 
-        function generateBaseGrid(list) {    
+        function generateBaseGrid(list) {
 
             var html = [];
 
-            _.forEach(list, function(container) {
+            _.each(list, function(container) {
                 // Rows
                 var rows = [];
-                _.forEach(container.criteria, function(row) {
-                    // console.log(row);
+                _.each(container.criteria, function(row) {
                     var currentHstyle;
                     var currentH = $('#m-criteria-group-' + container.id + '-' + row.id).css('height');
-                    // console.log(currentH, currentH === '0px');
                     if (!currentH) {
                         var asideRowH = $('[data-aside=m-criteria-group-' + row.id + ']').outerHeight();
                         currentH = asideRowH + 'px';

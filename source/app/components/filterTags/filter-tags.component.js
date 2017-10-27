@@ -57,8 +57,6 @@
                     var _fo = changes.filterObject.currentValue;
                     vm.sortByCharacteristic = setCharacteristicsSortTag(_fo.sortByCharacteristic);
                     vm.sortByDecisionProperty = setSortByDecisionProperty(_fo.sortByDecisionProperty);
-                    // sortByDecisionProperty
-                    // vm.sortByCharacteristic
                 }
             }
 
@@ -116,10 +114,10 @@
                     // TODO: simplify
                     if (find >= 0 && criteriaItem.isSelected === true) {
                         vm.tagsSort[find] = criteriaItem;
-                    } else if (criteriaItem.isSelected === true && find < 0) {
-                        vm.tagsSort.push(criteriaItem);
                     } else if (!criteriaItem.isSelected && find >= 0) {
                         vm.tagsSort.splice(find, 1);
+                    } else if (criteriaItem.isSelected === true && find < 0) {
+                        vm.tagsSort.push(criteriaItem);
                     }
                 });
             });
@@ -132,8 +130,6 @@
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
                 // TODO: use selectedValue
-                // console.log(vm.characteristics);
-
                 if (data.characteristicId === -1) {
                     if (_.isNull(data.value)) {
                         removeTag(data);
@@ -156,10 +152,7 @@
         function updateMatrixHeight() {
             var matrixHeaderHeight = $('.matrix-header').height();
             var height = $('#filter-tags').height() + matrixHeaderHeight;
-            // - $('.martix-footer').height();
-
             if (height >= 0) {
-                // console.log(height);
                 $('#matrix-body-wrapper').css({
                     'top': height
                 });

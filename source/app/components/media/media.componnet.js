@@ -58,16 +58,6 @@
 
         }
 
-        // function getWistaVideo() {
-        //     $.ajax({
-        //         url: 'http://fast.wistia.net/oembed?url=http://home.wistia.com/medias/6am62oqhz7',
-        //         success: function(resp) {
-        //             console.log(resp);
-        //             return resp.thumbnail_url;
-        //         }
-        //     });
-        // }
-
         function generateMediaHtml(type) {
             var order = 9;
             var thumb = '';
@@ -89,9 +79,7 @@
                 case 'WISTIAVIDEO':
                     type = 'video';
                     order = 3;
-                    // console.log(url);
                     thumb = 'http://embed.wistia.com/deliveries/5413caeac5fdf4064a2f9eab5c10a0848e42f19f.jpg?video_still_time=30';
-                    //getWistaVideo(url); 
                     break;
 
                 default:

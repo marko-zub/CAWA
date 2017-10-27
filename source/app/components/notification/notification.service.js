@@ -9,7 +9,7 @@
     MsgService.$inject = ['$injector'];
 
     function MsgService($injector) {
-        var toastr = $injector.get('toastr');   
+        var toastr = $injector.get('toastr');
 
         var success = function(title, message) {
             toastr.success(title, message);

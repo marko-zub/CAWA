@@ -64,5 +64,10 @@
 	"TOTAL VIEWS": "Total views",
 	"TOTAL FLAGS": "Total flags",
 	"LIKE SUM": "Like sum",
-	"CRITERIA SCORE": "Criteria score"
+	"CRITERIA SCORE": "Criteria score",
+	"YES": "yes",
+	"NO": "no",
+	"ALL": "all",
+	"OR": "or",
+	"AND": "and"
 }

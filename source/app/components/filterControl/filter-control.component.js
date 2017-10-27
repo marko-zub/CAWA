@@ -10,8 +10,6 @@
             controllerAs: 'vm'
         });
 
-
-
     FilterControlController.$inject = ['$element', '$compile', '$scope', '$uibModal'];
 
     function FilterControlController($element, $compile, $scope, $uibModal) {
@@ -48,7 +46,6 @@
                 renderControl('checkbox-group');
                 return;
             }
-
 
             switch (true) {
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||

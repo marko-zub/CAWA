@@ -61,6 +61,14 @@
         //     return isValueDate;
         // }
 
+        function numberToUi(n, d) {
+            var x = ('' + n).length;
+            var p = Math.pow;
+            d = p(10, d);
+            x -= x % 3;
+            return Math.round(n * d / p(10, x)) / d + ' kMGTPE' [x / 3];
+        }
+
         return {
             addItemToArray: addItemToArray,
             removeItemFromArray: removeItemFromArray,
@@ -68,7 +76,8 @@
             dateToDB: dateToDB,
             dateToUI: dateToUI,
             dateYearToUI: dateYearToUI,
-            findGroupItemById: findGroupItemById
+            findGroupItemById: findGroupItemById,
+            numberToUi: numberToUi
         };
     }
 })();

@@ -615,9 +615,9 @@
         }
 
         // Table scroll
-        var
-            tableHeader,
+        var tableHeader,
             tableAside;
+
         tableAside = document.getElementById('matrix-aside-content');
         tableHeader = document.getElementById('matrix-scroll-group');
 
@@ -773,6 +773,7 @@
             }
         }
 
+        // TODO: combine with initMatrixMode
         function initMatrixMode() {
             if (!_.isEmpty(_fo.includeChildDecisionIds)) {
                 vm.matrixMode = 'exclusion';
@@ -855,6 +856,7 @@
             // Incorect height calc
             initMatrix(true);
 
+            // Hode group names
             var parent = $($event.target).parents('.group-wrapper');
             var typeList = parent.find('.matrix-g-title');
             var typeListHidden = parent.find('.matrix-g-title.closed');

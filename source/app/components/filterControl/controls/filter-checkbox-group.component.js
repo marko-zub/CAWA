@@ -105,8 +105,8 @@
             var content = _.map(options, function(option) {
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '<input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
-                    '<label for="' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
+                    '   <input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
+                    '   <label for="' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                     '</div>'
                 ];
                 return html.join('\n');
@@ -114,9 +114,9 @@
 
             var queryTypeHtml = [
                 '<div class="switcher">',
-                '<div class="switcher-label">',
-                '<div class="switcher-text-label">OR</div>',
-                '</div>',
+                '   <div class="switcher-label">',
+                '       <div class="switcher-text-label">OR</div>',
+                '   </div>',
                 '</div>',
             ].join('\n');
 
@@ -139,9 +139,9 @@
                 queryTypeHtml,
                 '</div>',
                 '<div class="filter-item checkbox-list" dw-scroll-bar>',
-                '<div>',
+                '   <div>',
                 content,
-                '</div>',
+                '   </div>',
                 '</div>',
                 '<div ng-show="vm.filterSpinner" class="app-loader-small"><span></span></div>'
             ].join('\n');

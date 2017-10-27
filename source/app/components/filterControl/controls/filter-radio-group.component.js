@@ -11,9 +11,9 @@
             controllerAs: 'vm'
         });
 
-    FilterRadioGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope'];
+    FilterRadioGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'DecisionsConstant'];
 
-    function FilterRadioGroupController(FilterControlsDataService, $element, $compile, $scope) {
+    function FilterRadioGroupController(FilterControlsDataService, $element, $compile, $scope, DecisionsConstant) {
         var vm = this;
 
         vm.changeRadio = changeRadio;
@@ -40,22 +40,13 @@
         // Contorl RADIOGROUP
         function renderRadiogroup(item) {
 
-            var options = [{
-                value: null,
-                label: 'All'
-            }, {
-                value: true,
-                label: 'Yes'
-            }, {
-                value: false,
-                label: 'No'
-            }];
+            var options = DecisionsConstant.RADIO_GROUP_OPTIONS;
 
             vm.radio = options[0].value;
             var content = _.map(options, function(option) {
                 return [
                     '<label class="filter-list-item">',
-                    '<input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.id + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
+                    '    <input ng-model-options="vm.controlOptions" ng-change="vm.changeRadio(vm.radio)" name="radio ' + item.id + '" type="radio" ng-model="vm.radio" ng-value="' + option.value + '">' + option.label + '</label>',
                     '</label>'
                 ].join('\n');
             }).join('\n');

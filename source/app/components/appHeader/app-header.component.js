@@ -16,7 +16,7 @@
 	function HeaderController() {
 		var vm = this;
         vm.$onInit = onInit;
-        function onInit() {}  
+        function onInit() {}
 	}
 
 })();

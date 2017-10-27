@@ -49,9 +49,9 @@
             }
 
             // Table scroll
-            var 
-                tableHeader,
+            var tableHeader,
                 tableAside;
+
             tableAside = document.getElementById('matrix-aside-content');
             tableHeader = document.getElementById('matrix-scroll-group');
 
@@ -59,14 +59,6 @@
                 tableAside.style.top = scrollTop + 'px';
                 tableHeader.style.left = scrollLeft + 'px';
             }
-
-            // function reinitMatrixScroller() {
-            //     // TODO: avoid jquery height
-            //     if (martrixScroll) {
-            //         martrixScroll.refresh();
-            //         // updatePosition(martrixScroll);
-            //     }
-            // }
 
             initScroller();
 

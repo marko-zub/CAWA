@@ -13,8 +13,6 @@
 
         vm.$onInit = onInit;
 
-        function onInit() {
-            console.log('Tags controller');
-        }
+        function onInit() {}
     }
 })();
