@@ -15,14 +15,12 @@
         });
 
 
-    DecisionShortInfoController.$inject = ['Utils'];
+    DecisionShortInfoController.$inject = [];
 
-    function DecisionShortInfoController(Utils) {
+    function DecisionShortInfoController() {
         var vm = this;
         vm.$onInit = onInit;
 
-        function onInit() {
-            vm.decision.createUser.reputation = Utils.numberToUi(vm.decision.createUser.reputation, 2);
-        }
+        function onInit() {}
     }
 })();
