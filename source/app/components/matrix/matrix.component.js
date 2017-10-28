@@ -58,7 +58,10 @@
 
                     // Init pagination
                     vm.itemsPerPage = PaginatioService.itemsPerPageSm();
-                    vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs);
+                    vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs, _fo.pagination.pageNumber, _fo.pagination.pageSize);
+
+                    // Init characteristicFilterQueries
+                    initCharacteristicsFilterQueries(_fo.filterQueries);                      
                 });
 
                 loadCharacteristics();
@@ -72,6 +75,8 @@
                 prepareCharacteristicsGroups(resp);
                 renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
+
+                             
             });
         }
 
@@ -275,7 +280,7 @@
             // Simplify logic
             selectedCharacteristicsIds = [];
             selectedOptionsIds = [];
-            _.forEach(characteristicGroups, function(characteristicItem) {
+            _.each(characteristicGroups, function(characteristicItem) {
                 if (characteristicItem.selectedValue) {
                     selectedCharacteristicsIds.push(characteristicItem.id);
                     if (characteristicItem.optionId && characteristicItem.optionId >= 0) {
@@ -409,7 +414,6 @@
         //Init sorters, when directives loaded
         function initSorters() {
             // Set filter by name
-            _fo = DecisionSharedService.getFilterObject();
             _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
 
@@ -438,6 +442,12 @@
             });
 
             vm.criteriaGroups = angular.copy(copyCriteria);
+        }
+
+        function initCharacteristicsFilterQueries(filterQueries) {
+            _.each(filterQueries, function(query) {
+                setCharacteristicChanges(query);
+            });
         }
 
         function findCoefNameByValue(valueSearch) {
@@ -496,16 +506,16 @@
             var sendData = DecisionSharedService.getRequestFilterObject();
             if (persistent === true) sendData.persistent = true;
 
-            return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
-                vm.decisions = result;
+            return DecisionDataService.getDecisionMatrix(id, sendData).then(function(resp) {
+                vm.decisions = resp;
                 vm.decisionMatrixList = prepareMatrixData(vm.decisions.decisionMatrixs);
                 prevTotal = vm.decisionMatrixList.length;
                 setMatrixTableWidth(vm.decisionMatrixList.length);
 
                 // Update data if decision matrix response success
                 DecisionNotificationService.notifyFilterTags(sendData);
-                vm.pagination = PaginatioService.initPagination(result.totalDecisionMatrixs);
-                return result;
+                vm.pagination = PaginatioService.initPagination(vm.decisions.totalDecisionMatrixs, sendData.pageNumber, sendData.pageSize);
+                return resp;
             });
         }
 
@@ -545,6 +555,7 @@
                 return _.pick(decisionMatrixEl, 'decision');
             });
         }
+
         // TODO: make as in sorter directive
         // use vm.fo
         vm.orderByDecisionProperty = orderByDecisionProperty;

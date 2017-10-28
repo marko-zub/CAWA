@@ -30,6 +30,7 @@
         vm.pagination = {};
 
         function onInit() {
+            // TODO: do we need vm.perPage?!
             vm.itemsPerPage = vm.perPage || PaginatorConstant.ITEMS_PER_PAGE;
             vm.pagination = {
                 pageNumber: vm.pageNumber,
@@ -41,9 +42,9 @@
         }
 
         function onChanges(changes) {
-            if (changes.itemsPerPage &&
-                !angular.equals(changes.itemsPerPage.currentValue, changes.itemsPerPage.previousValue)) {
-                vm.itemsPerPage = angular.copy(changes.itemsPerPage.currentValue);
+            if (changes.perPage &&
+                !angular.equals(changes.perPage.currentValue, changes.perPage.previousValue)) {
+                vm.itemsPerPage = angular.copy(changes.perPage.currentValue);
             }
             if (changes.pageNumber &&
                 !angular.equals(changes.pageNumber.currentValue, changes.pageNumber.previousValue)) {

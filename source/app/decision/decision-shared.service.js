@@ -21,7 +21,6 @@
                 pageSize: 10,
                 totalDecisions: 0
             },
-            selectedCharacteristics: {},
             sorters: {
                 sortByCriteria: {
                     order: 'DESC'
@@ -113,7 +112,6 @@
                     pageSize: obj.pageSize || 10,
                     totalDecisions: obj.totalDecisions || (obj.pageNumber + 1) * obj.pageSize //Need to be sended in analysis or in endpoint api/v1.0/decisions/16003
                 },
-                selectedCharacteristics: {},
                 sorters: {
                     sortByCriteria: {
                         order: obj.sortWeightCriteriaDirection || 'DESC'
@@ -132,8 +130,8 @@
                 },
                 includeChildDecisionIds: obj.includeChildDecisionIds || null,
                 excludeChildDecisionIds: obj.excludeChildDecisionIds || null,
-                persistent: false, //obj.persistent || false,
-                filterQueries: obj.filterQueries || null,
+                persistent: obj.persistent || false,
+                filterQueries: obj.characteristicFilterQueries || null,
                 decisionNameFilterPattern: obj.decisionNameFilterPattern || null
             };
 
