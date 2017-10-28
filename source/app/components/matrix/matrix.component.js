@@ -130,7 +130,7 @@
                 formDataForSearchRequest(data, data.coefCall);
             }
 
-            // DecisionSharedService.filterObject.persistent = true;
+            DecisionSharedService.filterObject.persistent = true;
             getDecisionMatrix(vm.decision.id).then(function(result) {
                 initSorters();
                 initMatrix(result.decisionMatrixs, true);

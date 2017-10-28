@@ -76,7 +76,7 @@
                 sortDecisionPropertyDirection: _fo.sorters.sortByDecisionProperty.order,
 
                 decisionsIds: _fo.selectedDecision.decisionsIds,
-                persistent: false, //_fo.persistent,
+                persistent: _fo.persistent,
                 includeChildDecisionIds: _fo.includeChildDecisionIds,
                 excludeChildDecisionIds: _fo.excludeChildDecisionIds,
                 filterQueries: _fo.filterQueries,

@@ -73,8 +73,9 @@
                 }
             }),
 
-            decisionsAnalysis = $resource(Config.endpointUrl + 'decisions/analysis/:id', {
-                id: '@id'
+            decisionsAnalysis = $resource(Config.endpointUrl + 'decisions/:id/analysis/:anlysisId', {
+                id: '@id',
+                anlysisId: '@anlysisId'
             }, {
                 getDecisionAnalysis: {
                     method: 'POST',
@@ -261,9 +262,10 @@
             }).$promise;
         }
 
-        function getDecisionAnalysis(id) {
+        function getDecisionAnalysis(id, anlysisId) {
             return decisionsAnalysis.get({
-                id: id
+                id: id,
+                anlysisId: anlysisId
             }).$promise;
         }
 

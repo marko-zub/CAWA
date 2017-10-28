@@ -23,7 +23,8 @@
                 },
                 resolve: {
                     decisionBasicInfo: DecisionResolver,
-                    decisionStateInfo: DecisionStateResolver
+                    decisionStateInfo: DecisionStateResolver,
+                    decisionAanalysisResolver: DecisionAanalysisResolver
                 },
                 params: {
                     slug: {
@@ -248,9 +249,9 @@
     }
 
     // Analysis
-    DecisionAanalysisResolver.$inject = ['$stateParams', 'DecisionDataService', '$location'];
+    DecisionAanalysisResolver.$inject = ['$stateParams', 'DecisionDataService', '$location', 'DecisionSharedService'];
 
-    function DecisionAanalysisResolver($stateParams, DecisionDataService, $location) {
+    function DecisionAanalysisResolver($stateParams, DecisionDataService, $location, DecisionSharedService) {
 
         // TODO: find better way
         // UI route bug https://github.com/angular-ui/ui-router/issues/1856#issuecomment-93025037
@@ -267,14 +268,14 @@
 
         // console.log(analysisSlug, analysisId);
         if (analysisSlug === 'comparison' && analysisId && analysisId !== 'hall-of-fame') {
-            return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
+            return DecisionDataService.getDecisionAnalysis($stateParams.id, analysisId).then(function(resp) {
                 if (resp.error) {
                     console.log(resp.error);
                     return;
                 }
 
                 // Set analysis obj
-                // DecisionSharedService.setFilterObject(resp);
+                DecisionSharedService.setFilterObject(resp);
                 return resp;
             }, function(req) {
                 console.log(req);
