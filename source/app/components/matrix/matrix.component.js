@@ -271,7 +271,9 @@
 
             if (find >= 0) {
                 characteristicGroups[find].selectedValue = value;
-                characteristicGroups[find].selectedOperator = characteristic.operator;
+                if (characteristic.type === 'AnyInQuery') {
+                    characteristicGroups[find].selectedOperator = characteristic.operator || 'OR';
+                }
                 if (optionId >= 0) characteristicGroups[find].optionId = optionId;
             }
 
@@ -446,6 +448,7 @@
 
         function initCharacteristicsFilterQueries(filterQueries) {
             _.each(filterQueries, function(query) {
+                console.log(query)
                 setCharacteristicChanges(query);
             });
         }

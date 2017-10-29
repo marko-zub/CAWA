@@ -11,7 +11,7 @@
                             <span class="indicator bg-color-{{ tag.coefficient.name }}"></span>
                         </div>
                         {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
-                    </div><span ng-show="!$last" class="tag-divider">and</span>
+                    </div><span ng-show="!$last" class="tag-divider">{{ 'AND' | translate }}</span>
                 </div>
 
                 <div class="tag-wrapper" ng-show="vm.sortByCharacteristic.name">
@@ -48,7 +48,9 @@
                 <div class="tag-wrapper" ng-repeat="tagVal in tag.data track by $index">
                     <div class="tag">
                         {{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
-                    </div><span ng-show="tag.data.length > 1 && !$last" ng-bind="tag.operator" class="tag-divider"></span>
+                    </div><span ng-show="tag.data.length > 1 && !$last" class="tag-divider">
+                        {{ tag.operator | translate }}
+                    </span>
                 </div>
                 <div class="tag-wrapper" ng-if="$last && vm.tagsFilter.length > 1 || $last && vm.tagsFilter.length > 0 && vm.tagsFilter[0].data.length > 1">
                     <div class="tag tag-btn" ng-click="vm.clearAllCharacterisrics()" translate-cloak>
