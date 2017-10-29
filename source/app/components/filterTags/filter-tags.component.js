@@ -238,7 +238,7 @@
             if (!_.isEmpty(item)) {
                 var find = findCharacteristic(item.characteristicId);
                 item = _.merge(item, find);
-                item.operator = item.operator ? item.operator.toUpperCase() : 'OR';
+                item.operator = (item.type === 'AnyInQuery') ? 'OR' : 'AND';
                 var index = tagIndexInList(item.characteristicId);
                 if (index >= 0) {
                     vm.tagsFilter[index] = caseQueryType(item);

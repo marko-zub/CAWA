@@ -61,7 +61,7 @@
                     vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs, _fo.pagination.pageNumber, _fo.pagination.pageSize);
 
                     // Init characteristicFilterQueries
-                    initCharacteristicsFilterQueries(_fo.filterQueries);                      
+                    initCharacteristicsFilterQueries(_fo.filterQueries);
                 });
 
                 loadCharacteristics();
@@ -76,7 +76,7 @@
                 renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
 
-                             
+
             });
         }
 
@@ -271,9 +271,7 @@
 
             if (find >= 0) {
                 characteristicGroups[find].selectedValue = value;
-                if (characteristic.type === 'AnyInQuery') {
-                    characteristicGroups[find].selectedOperator = characteristic.operator || 'OR';
-                }
+                characteristicGroups[find].selectedOperator = (characteristic.type === 'AnyInQuery') ? 'OR' : 'AND';
                 if (optionId >= 0) characteristicGroups[find].optionId = optionId;
             }
 
@@ -448,7 +446,6 @@
 
         function initCharacteristicsFilterQueries(filterQueries) {
             _.each(filterQueries, function(query) {
-                console.log(query)
                 setCharacteristicChanges(query);
             });
         }

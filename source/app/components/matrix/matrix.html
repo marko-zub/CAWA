@@ -80,7 +80,10 @@
                                     <div class="decision-content-block">
 
                                         <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="::vm.decision" dw-popover-direction="bottom">
-                                            <a class="decision-criteria-compilance popover-ref" ng-show="item.decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                                            <a 
+                                                class="decision-criteria-compilance popover-ref" 
+                                                ng-show="item.decision.criteriaCompliancePercentage >= 0" 
+                                                ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
                                                 <div class="text-uppercase" translate-cloak>
                                                     {{ "CRITERIA SCORE" | translate }}
                                                 </div>
