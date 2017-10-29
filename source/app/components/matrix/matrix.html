@@ -14,7 +14,7 @@
                     </li>
                     <li ng-class="{'active':vm.matrixMode == 'exclusion'}">
                         <a ng-click="vm.changeMatrixMode('exclusion')">
-                            {{ "SELECTED" | translate }}
+                            {{ 'SELECTED' | translate }}
                             <span ng-show="vm.exclusionItemsLength >= 0">
                             (<span ng-bind="vm.exclusionItemsLength"></span>)
                             </span>
@@ -35,7 +35,7 @@
                             <div class="matrix-title-wrapper">
                                 <div class="matrix-title app-sorter-wrapper m-content-name" translate-cloak>
                                     <select class="form-control input-sm" ng-model="vm.fo.sortByDecisionProperty.id" ng-options="item.id as item.name | translate for item in vm.sortDecisionPropertyOptions" ng-change="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty, $event)">
-                                        <option value="">{{ "SORT BY PROPERTY" | translate }} </option>
+                                        <option value="">{{ 'SORT BY PROPERTY' | translate }} </option>
                                     </select>
                                 </div>
 
@@ -78,14 +78,13 @@
                                         </div>
                                     </a>
                                     <div class="decision-content-block">
-
-                                        <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="::vm.decision" dw-popover-direction="bottom">
+                                        <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="vm.decision" dw-popover-direction="bottom">
                                             <a 
                                                 class="decision-criteria-compilance popover-ref" 
                                                 ng-show="item.decision.criteriaCompliancePercentage >= 0" 
                                                 ui-sref="decisions.single.parent(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
                                                 <div class="text-uppercase" translate-cloak>
-                                                    {{ "CRITERIA SCORE" | translate }}
+                                                    {{ 'CRITERIA SCORE' | translate }}
                                                 </div>
                                                 <div class="counters">
                                                     <span ng-bind="item.decision.criteriaCompliancePercentage"></span>%
@@ -131,7 +130,7 @@
                             <!-- Criteria Aside -->
                             <div class="criteria-list group-wrapper" ng-if="vm.criteriaGroups.length">
                                 <div class="group-wrapper-title">
-                                    {{ "CRITERIA" | translate }}
+                                    {{ 'CRITERIA' | translate }}
                                 </div>
                                 <div data-criteria-group="{{::group.id}}" class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
                                     <div class="matrix-item matrix-g-item">
@@ -168,7 +167,7 @@
 
                                <div class="group-wrapper-title">
 
-                                    {{ "CHARACTERISTICS" | translate }}
+                                    {{ 'CHARACTERISTICS' | translate }}
                                 </div>
 
                                 <div ng-repeat="characteristic in vm.characteristicGroupsArray track by characteristic.uuid">

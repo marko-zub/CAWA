@@ -59,9 +59,6 @@
                     // Init pagination
                     vm.itemsPerPage = PaginatioService.itemsPerPageSm();
                     vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs, _fo.pagination.pageNumber, _fo.pagination.pageSize);
-
-                    // Init characteristicFilterQueries
-                    initCharacteristicsFilterQueries(_fo.filterQueries);
                 });
 
                 loadCharacteristics();
@@ -75,8 +72,8 @@
                 prepareCharacteristicsGroups(resp);
                 renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
-
-
+                // Init characteristicFilterQueries
+                initCharacteristicsFilterQueries(_fo.filterQueries);
             });
         }
 
@@ -136,21 +133,21 @@
             }
 
             DecisionSharedService.filterObject.persistent = true;
-            getDecisionMatrix(vm.decision.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id).then(function() {
                 initSorters();
-                initMatrix(result.decisionMatrixs, true);
+                initMatrix(true);
             });
         });
 
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-            getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
+            getDecisionMatrix(vm.decision.id).then(function() {
+                initMatrix(true);
             });
         });
 
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
-            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function(result) {
+            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function() {
                 data.characteristics = result;
             }).finally(function() {
                 data.detailsSpinner = false;
@@ -162,7 +159,7 @@
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs);
+                initMatrix(true);
             });
         });
 
@@ -210,7 +207,7 @@
             }
 
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, false);
+                initMatrix(false);
             });
 
         });
@@ -218,7 +215,7 @@
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
             _fo.decisionNameFilterPattern = data || null;
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
+                initMatrix(true);
                 vm.filterName = data;
             });
         });
@@ -442,6 +439,7 @@
             });
 
             vm.criteriaGroups = angular.copy(copyCriteria);
+            // vm.decision.criteriaGroups = angular.copy(copyCriteria);
         }
 
         function initCharacteristicsFilterQueries(filterQueries) {
@@ -519,7 +517,7 @@
             });
         }
 
-        function initMatrix(data, calcHeight) {
+        function initMatrix(calcHeight) {
             // var performance = window.performance;
             // var t0 = performance.now();
             // var t1 = performance.now();
@@ -880,6 +878,7 @@
             $event.preventDefault();
         }
 
+        var winH = $(window).height();
         var headerStickyPoint = $('.tabs-wrapper').offset().top;
         var scrollF = _.throttle(function() {
             var scrollTopDoc = $(document).scrollTop();
@@ -887,7 +886,7 @@
             var fixedHaderHeight = $('.matrix-header').outerHeight() + $('#filter-tags').outerHeight() + $('.nav-tabs-wrapper').outerHeight();
 
             var allowFixedHeader = true;
-            if ($('body').height() < $(window).height() + fixedHaderHeight) {
+            if ($('body').height() < winH + fixedHaderHeight) {
                 allowFixedHeader = false;
             }
 
@@ -932,7 +931,7 @@
         function changePage(pagination) {
             _fo.pagination = pagination;
             getDecisionMatrix(vm.decision.id).then(function(result) {
-                initMatrix(result.decisionMatrixs, true);
+                initMatrix(true);
             });
         }
 

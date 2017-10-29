@@ -16,7 +16,9 @@
     function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils, DecisionDataService, $state, DecisionNotificationService) {
         var
             vm = this,
-            sendObj,
+            sendObj = {
+                'operator': 'OR'
+            },
             checkedValues = [];
 
         vm.$onInit = onInit;
@@ -102,10 +104,16 @@
             // String Array type
             var options = _.sortBy(item.options, 'name');
 
+            console.log(item);
             var content = _.map(options, function(option) {
+
+                var checked = '';
+                if (_.includes(item.selectedValue, option.value)) {
+                    checked = ' checked';
+                }
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '   <input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '">',
+                    '   <input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '"' + checked + '>',
                     '   <label for="' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                     '</div>'
                 ];

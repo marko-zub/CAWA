@@ -94,7 +94,7 @@
         }
 
         if ($(window).width() > 1024) {
-            $(window).scroll(_.throttle(headerClass, 300));
+            $(window).on('scroll', _.throttle(headerClass, 300));
         }
 
     }
