@@ -16,10 +16,12 @@
             // Subscribe
             subscribeUpdateDecisionCompare: subscribeUpdateDecisionCompare,
             subscribeRemoveDecisionCompare: subscribeRemoveDecisionCompare,
+            subscribeToggleCompare: subscribeToggleCompare,
 
             // Notify
             notifyUpdateDecisionCompare: notifyUpdateDecisionCompare,
             notifyRemoveDecisionCompare: notifyRemoveDecisionCompare,
+            notifyToggleCompare: notifyToggleCompare
         };
 
         return service;
@@ -46,7 +48,10 @@
         }
         function subscribeRemoveDecisionCompare(callback) {
             subscribe('removeDecisionCompareList', callback);
-        }        
+        }    
+        function subscribeToggleCompare(callback) {
+            subscribe('toggleDecisionCompareList', callback);
+        }    
 
         // Emitters
         function notifyUpdateDecisionCompare(data) {
@@ -55,6 +60,8 @@
         function notifyRemoveDecisionCompare(data) {
             broadcast('removeDecisionCompareList', data);
         }        
-
+        function notifyToggleCompare(data) {
+            broadcast('toggleDecisionCompareList', data);
+        } 
     }
 })();

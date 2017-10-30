@@ -12,12 +12,13 @@ filter-tags {
     border-bottom: 1px solid @gray-light;
     position: relative;
     z-index: 3;
-    // box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    // box-shadow: 0 0 0 1px @gray-light;
     .tag-wrapper {
         display: inline-block;
     }
     .tag-group-wrapper {
         overflow: hidden;
+        display: inline-block;
         &.tag-group-wrapper-criteria {
             .tag {
                 padding-left: 8px;
@@ -29,19 +30,20 @@ filter-tags {
     }
     .tag-group {
         display: inline-block;
-        margin: 0 5px;
+        margin: 0 3px;
         padding: 1px;
     }
     .filter-tags-group {
-        border-bottom: 1px solid @gray-light;
-        padding: 2px 0;
+        // border-bottom: 1px solid @gray-light;
+        // display: inline-block;
+        // padding: 2px 0;
         background-color: #fff;
         .display-inline {
             margin-left: 12px;
         }
-        &:last-child {
-            border-bottom: 0;
-        }
+        // &:last-child {
+        //     border-bottom: 0;
+        // }
     }
     .tag-divider {
         color: @gray-mid;
@@ -56,18 +58,25 @@ filter-tags {
         border: 1px solid @gray-light;
         color: @light-black;
         margin: 2px 2px;
-        padding: 2px 4px;
+        padding: 2px 0px 2px 4px;
         position: relative;
+        &.tag-criteria {
+            padding-left: 8px;
+        }
         .transition(~"border-color ease-in-out .15s, background-color ease-in-out .15s, color ease-in-out .15s");
         &:hover {
             border: 1px solid darken(@gray-light, 10%);
         }
         &.tag-btn {
             border-radius: 0;
-            margin-left: 5px;
+            margin: 0 10px;
+            border-right: 1px solid @gray-light;
             padding: 2px 8px;
             background-color: @gray-light;
             cursor: pointer;
+            &:last-child {
+                border-right-color: transparent;
+            }
             &:hover {
                 background-color: @color-orange-darken;
                 border-color: @color-orange-darken;
@@ -93,7 +102,7 @@ filter-tags {
     cursor: pointer;
     display: inline-block;
     color: @gray-mid;
-    margin: 0 2px;
+    padding: 0 4px 0 2px;
     &:hover {
         color: @light-black;
     }
@@ -106,5 +115,6 @@ filter-tags {
 .filter-tags-label {
     font-weight: 600;
     margin: 6px 0;
-    float: left;
+    // float: left;
+    display: inline-block;
 }

@@ -183,13 +183,15 @@
                 function(event, toState, toParams) {
                     if ($state.current.name === 'decisions.single.comparison') {
 
-                        // TODO: avoid seTimeout
-                        setTimeout(function() {
-                            togglePanel(false);
-                        }, 0)
+                        // Add notification service for compare panel
+                        togglePanel(false);
                     }
                 }
             );
         }
+
+        // DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
+        //     togglePanel(data.isOpen);
+        // });        
     }
 })();

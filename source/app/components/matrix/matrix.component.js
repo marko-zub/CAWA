@@ -16,12 +16,14 @@
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
-        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant'
+        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant',
+        'DecisionCompareNotificationService'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
-        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant) {
+        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant,
+        DecisionCompareNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -74,6 +76,8 @@
                 vm.characteristicGroupsContentLoader = false;
                 // Init characteristicFilterQueries
                 initCharacteristicsFilterQueries(_fo.filterQueries);
+
+                // DecisionCompareNotificationService.notifyToggleCompare({isOpen: false});
             });
         }
 
