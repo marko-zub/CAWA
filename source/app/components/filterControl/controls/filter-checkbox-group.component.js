@@ -104,7 +104,7 @@
             // String Array type
             var options = _.sortBy(item.options, 'name');
 
-            console.log(item);
+            // console.log(item);
             var content = _.map(options, function(option) {
 
                 var checked = '';

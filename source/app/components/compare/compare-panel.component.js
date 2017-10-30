@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q', '$rootScope'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q, $rootScope) {
         var vm = this;
 
         // TODO: clean up, Simplify logic
@@ -178,6 +178,18 @@
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
             });
+
+            $rootScope.$on('$stateChangeSuccess',
+                function(event, toState, toParams) {
+                    if ($state.current.name === 'decisions.single.comparison') {
+
+                        // TODO: avoid seTimeout
+                        setTimeout(function() {
+                            togglePanel(false);
+                        }, 0)
+                    }
+                }
+            );
         }
     }
 })();

@@ -502,7 +502,11 @@
         function getDecisionMatrix(id, persistent) {
             vm.decisionsLoader = true;
             var sendData = DecisionSharedService.getRequestFilterObject();
-            if (persistent === true) sendData.persistent = true;
+            if (persistent) {
+                sendData.persistent = persistent;
+            } else {
+                sendData.persistent = false;
+            }
 
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(resp) {
                 vm.decisions = resp;
@@ -512,7 +516,7 @@
 
                 // Update data if decision matrix response success
                 DecisionNotificationService.notifyFilterTags(sendData);
-                vm.pagination = PaginatioService.initPagination(vm.decisions.totalDecisionMatrixs, sendData.pageNumber, sendData.pageSize);
+                vm.pagination = PaginatioService.initPagination(vm.decisions.totalDecisionMatrixs, sendData.pageNumber + 1, sendData.pageSize);
                 return resp;
             });
         }
@@ -930,7 +934,7 @@
 
         function changePage(pagination) {
             _fo.pagination = pagination;
-            getDecisionMatrix(vm.decision.id).then(function(result) {
+            getDecisionMatrix(vm.decision.id, true).then(function(result) {
                 initMatrix(true);
             });
         }
