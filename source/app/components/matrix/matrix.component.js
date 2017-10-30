@@ -44,13 +44,17 @@
             getCriteriaGroupsById(vm.decision.id).then(function() {
 
                 updateCriteriaGroupContainerHeight();
-                initCriteriaSelected(); //Hall of fame
+                initSortets(); //Hall of fame
                 getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
                     // TODO: check if we need this code
                     initMatrixScroller();
                     // Render html matrix
 
                     initMatrixMode();
+
+                    // TODO: clean up
+                    vm.fo = angular.copy(_fo.sorters);
+                    
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
                     renderMatrix();
@@ -137,7 +141,7 @@
             }
 
             getDecisionMatrix(vm.decision.id, true).then(function() {
-                initCriteriaSelected();
+                initSortets();
                 initMatrix(true);
             });
         });
@@ -412,7 +416,7 @@
         }
 
         //Init sorters, when directives loaded
-        function initCriteriaSelected() {
+        function initSortets() {
             // Set filter by name
             // _fo.pagination.totalDecisions = vm.decisions.totalDecisionMatrixs;
             vm.fo = angular.copy(_fo.sorters);
@@ -529,7 +533,7 @@
             // var t0 = performance.now();
             // var t1 = performance.now();
             // console.log("Call create matrix " + (t1 - t0) + " milliseconds.");
-            initCriteriaSelected();
+            initSortets();
             renderMatrix(calcHeight);
             initIncExcCounters();
         }
