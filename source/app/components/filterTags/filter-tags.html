@@ -26,7 +26,7 @@
             </div>
         </div>
         <!-- TODO: simplify conditions move to conroller -->
-        <div class="tag-wrapper" ng-show="vm.tagsSort.length > 1 || (vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name) && vm.tagsSort.length > 0">
+        <div class="tag-wrapper tag-clear-wrapper" ng-show="vm.tagsSort.length > 1 || (vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name) && vm.tagsSort.length > 0">
             <div class="tag tag-btn" ng-click="vm.clearAllCriteria()" translate-cloak>
                 {{ "CLEAR ALL" | translate }}
             </div>

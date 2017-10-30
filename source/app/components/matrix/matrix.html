@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="clearfix">
                                         <div class="info">
-                                            <span ng-show="::item.decision.description" class="link-secondary icon-info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{$last ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <span ng-show="::item.decision.description" class="link-secondary icon-info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{ ($last && $index === vm.pagination.pageSize) ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
                                     <div class="app-panel-controls">
