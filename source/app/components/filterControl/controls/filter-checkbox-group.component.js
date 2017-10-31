@@ -123,7 +123,7 @@
             var queryTypeHtml = [
                 '<div class="switcher">',
                 '   <div class="switcher-label">',
-                '       <div class="switcher-text-label">OR</div>',
+                '       <div class="switcher-text-label">{{ "OR" | translate }}</div>',
                 '   </div>',
                 '</div>',
             ].join('\n');
@@ -135,7 +135,10 @@
                     '<div class="switcher">',
                     '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
                     '<label class="switcher-label" for="toggle-' + item.id + '">',
-                    '<span class="switcher-inner"></span>',
+                    '<span class="switcher-inner">',
+                    '   <span class="operator-before">{{ "OR" | translate }}</span>',
+                    '   <span class="operator-after">{{ "AND" | translate }}</span>',
+                    '</span>',
                     '<span class="switcher-switch"></span>',
                     '</label>',
                     '</div>',

@@ -24,9 +24,13 @@
                     var item = newValue;
                     var listHtml = '';
                     _.each(item.options, function(option) {
+                        var checked = '';
+                        if (_.includes(item.selectedValue, option.value)) {
+                            checked = ' checked';
+                        }                        
                         listHtml += [
                             '<div class="filter-item-checkbox" id="' + option.id + '">',
-                            '    <input class="js-checkbox" type="checkbox" id="modal-' + item.id + '-option-' + option.id + '" name="modal-' + item.id + '-option-' + option.id + '" ng-value="option.value" ng-model="option.selected">',
+                            '    <input class="js-checkbox" type="checkbox" id="modal-' + item.id + '-option-' + option.id + '" name="modal-' + item.id + '-option-' + option.id + '" ' + checked + '>',
                             '    <label for="modal-' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                             '</div>'
                         ].join('\n');

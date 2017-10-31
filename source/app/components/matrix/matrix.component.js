@@ -41,6 +41,8 @@
             // First call
             // 1. Render criteria and decisions for fast delivery info for user
             vm.characteristicGroupsContentLoader = true;
+
+            vm.fo = angular.copy(_fo.sorters);
             getCriteriaGroupsById(vm.decision.id).then(function() {
 
                 updateCriteriaGroupContainerHeight();
@@ -52,9 +54,6 @@
 
                     initMatrixMode();
 
-                    // TODO: clean up
-                    vm.fo = angular.copy(_fo.sorters);
-                    
                     // 2. render list of criterias
                     // createMatrixContentCriteria(decisionMatrixs);
                     renderMatrix();

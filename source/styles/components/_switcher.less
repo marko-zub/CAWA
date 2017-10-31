@@ -1,0 +1,84 @@
+// Controls
+// Switcher
+.switcher {
+    position: relative;
+     width: 44px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.switcher-checkbox {
+    display: none;
+}
+.switcher-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.switcher-inner {
+    .operator-before,
+    .operator-after {    
+        display: block;
+        float: left;
+        width: 50%;
+        height: 18px;
+        padding: 0;
+        line-height: 18px;
+        font-size: 11px;
+        box-sizing: border-box;
+        color: #999999;
+        text-align: center;
+        text-transform: uppercase;        
+    }
+}
+.switcher-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;    
+    .operator-before {
+        content: "OR";
+        padding-left: 0;
+        padding-right: 10px;
+        background-color: #EEEEEE;
+    }
+    .operator-after {
+        content: "AND";
+        padding-right: 5px;
+        padding-left: 15px;
+        background-color: #EEEEEE;
+        text-align: center;    
+    }    
+}
+
+.switcher-switch {
+    display: block; width: 11px;
+    margin: 3px 4px;
+    background: #FFFFFF;
+    position: absolute; top: 0;
+    bottom: 0;
+    right: 25px;
+    height: 11px;
+    transition: right 0.3s ease-in 0s;
+    border-radius: 6px;
+}
+.switcher-checkbox:checked + .switcher-label .switcher-inner {
+    margin-left: 0;
+}
+.switcher-checkbox:checked + .switcher-label .switcher-switch {
+    right: 0px;
+}
+
+.switcher-text-label {
+    padding-left: 5px;
+    background-color: #EEEEEE;
+    color: #999999;
+    height: 18px;
+    padding: 0;
+    line-height: 18px;
+    font-size: 11px;
+    text-align: center;
+    font-weight: 600;
+    pointer-events: none;
+}
