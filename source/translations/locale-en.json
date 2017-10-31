@@ -3,7 +3,7 @@
 	"Users": "Users",
 	"SIGN UP": "Sign up",
 	"SEARCH": "Search...",
-	"Error 404": "Error 404",
+	"ERROR 404": "Error 404",
 	"All Decisions": "All Decisions",
 	"General Info": "General Info",
 	"Reviews": "Reviews",
@@ -23,7 +23,7 @@
 	"Top Rated": "Top Rated",
 	"Compare": "Compare",
 	"Sitemaps": "Sitemaps",
-	"Home": "Home",
+	"HOME": "Home",
 	"Criteria compliance": "Criteria compliance",
 	"Filter by name": "Filter by name",
 	"Can't find the necessary option?": "Can't find the necessary option?",
@@ -69,5 +69,7 @@
 	"NO": "no",
 	"ALL": "all",
 	"OR": "or",
-	"AND": "and"
+	"AND": "and",
+	"PAGE NOT FOUND!": "Page Not Found!",
+	"PLEASE VISIT": "Pelase visit"
 }
