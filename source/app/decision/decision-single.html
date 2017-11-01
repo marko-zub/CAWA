@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-sm-12" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
-                    <div class="row decision-childs">
+                    <div class="row">
                         <div class="col-md-8">
                             <!-- TODO: make as component -->
                             <!-- Filter  -->
@@ -139,7 +139,7 @@
             </div>
 
 
-            <div class="row">
+            <div class="row" ng-show="!vm.decisionsChildsLoader">
                 <div class="col-sm-8">
                     <div class="comments">
                         <h4 class="comments-tile" translate-cloak>{{ 'Comments' | translate }}</h4>
