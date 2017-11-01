@@ -334,6 +334,7 @@
 
         function clearAllCharacterisrics() {
             vm.tagsFilter = [];
+            vm.isTagsFilterClearBtn = false;
             DecisionNotificationService.notifySelectCharacteristic(null);
         }
     }
