@@ -37,6 +37,7 @@
         function onInit() {
             vm.tagsFilter = [];
             vm.tagsSort = [];
+            vm.isTagsFilterClearBtn = false;
             subscribe();
         }
 
@@ -232,6 +233,17 @@
             _.forEach(filterQueries, function(item) {
                 addToTagsList(item);
             });
+
+            // Toggle celar btn
+            if (
+                vm.tagsFilter.length > 0 &&
+                (vm.tagsFilter[0].data.length > 1 ||
+                    (!!vm.tagsFilter[0].data && !!vm.tagsFilter[1].data))
+            ) {
+                vm.isTagsFilterClearBtn = true;
+            } else {
+                vm.isTagsFilterClearBtn = false;
+            }
         }
 
         function addToTagsList(item) {

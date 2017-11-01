@@ -71,5 +71,7 @@
 	"OR": "or",
 	"AND": "and",
 	"PAGE NOT FOUND!": "Page Not Found!",
-	"PLEASE VISIT": "Pelase visit"
+	"PLEASE VISIT": "Pelase visit",
+	"CLEAR ALL FILTERS": "Clear all filters",
+	"CLEAR ALL SORTERS": "Clear all sorters"
 }
