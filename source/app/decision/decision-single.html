@@ -60,7 +60,7 @@
 
             </div>
 
-            <div class="row decision-childs">
+            <div class="row">
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                         <h4 class="tabs-title" translate-cloak>
@@ -90,7 +90,7 @@
                         <!-- Tabs content -->
                         <div class="row">
                             <div class="col-sm-7">
-                                <div class="mg-b-lg app-action-text" translate-cloak>
+                                <div class="mg-b-md app-action-text" translate-cloak>
                                     {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-sm-12" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
-                    <div class="row">
+                    <div class="row decision-childs">
                         <div class="col-md-8">
                             <!-- TODO: make as component -->
                             <!-- Filter  -->
