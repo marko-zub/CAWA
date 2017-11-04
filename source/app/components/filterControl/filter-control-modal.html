@@ -1,4 +1,4 @@
-<div class="filter-control-popup-content">
+<div id="filter-control-popup" class="filter-control-popup-content">
     <div class="modal-header">
         <h4 class="modal-title" ng-bind="::vm.item.name"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
@@ -14,14 +14,17 @@
 
                 <div class="switcher pull-right" ng-if="!vm.item.multiValue">
                     <div class="switcher-label">
-                        <div class="switcher-text-label">OR</div>
+                        <div class="switcher-text-label">{{ 'OR' | translate }}</div>
                     </div>
                 </div>
 
                 <div class="switcher pull-right" ng-if="vm.item.multiValue">
                     <input type="checkbox" name="toggle-{{vm.item.id}}" class="switcher-checkbox" id="toggle-{{vm.item.id}}" ng-checked="vm.selectedOperatorTrigger" ng-model="vm.selectedOperatorTrigger">
                     <label class="switcher-label" for="toggle-{{vm.item.id}}">
-                        <span class="switcher-inner"></span>
+                        <span class="switcher-inner">
+                            <span class="operator-before">{{ 'OR' | translate }}</span>
+                            <span class="operator-after">{{ 'AND' | translate }}</span>        
+                        </span>
                         <span class="switcher-switch"></span>
                     </label>
                 </div>
@@ -33,8 +36,8 @@
 
         </div>
         <div class="modal-footer text-right">
-            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ "CANCEL" | translate }}</button>
-            <button class="btn btn-primary" type="submit">{{ "APPLY" | translate }}</button>
+            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ 'CANCEL' | translate }}</button>
+            <button class="btn btn-primary" type="submit" disabled>{{ 'APPLY' | translate }}</button>
         </div>
     </form>
 </div>

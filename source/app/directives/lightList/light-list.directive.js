@@ -27,10 +27,10 @@
                         var checked = '';
                         if (_.includes(item.selectedValue, option.value)) {
                             checked = ' checked';
-                        }                        
+                        }
                         listHtml += [
                             '<div class="filter-item-checkbox" id="' + option.id + '">',
-                            '    <input class="js-checkbox" type="checkbox" id="modal-' + item.id + '-option-' + option.id + '" name="modal-' + item.id + '-option-' + option.id + '" ' + checked + '>',
+                            '    <input class="js-checkbox" type="checkbox" id="modal-' + item.id + '-option-' + option.id + '" name="modal-' + item.id + '-option-' + option.id + '" value="' + option.value + '" ' + checked + '>',
                             '    <label for="modal-' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                             '</div>'
                         ].join('\n');

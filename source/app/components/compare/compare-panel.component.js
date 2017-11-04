@@ -180,7 +180,7 @@
             });
 
             $rootScope.$on('$stateChangeSuccess',
-                function(event, toState, toParams) {
+                function() {
                     if ($state.current.name === 'decisions.single.comparison') {
 
                         // Add notification service for compare panel

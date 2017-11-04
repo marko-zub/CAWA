@@ -6,9 +6,9 @@
         .module('app.components')
         .controller('FilterControlModalController', FilterControlModalController);
 
-    FilterControlModalController.$inject = ['$uibModalInstance', 'item', 'FilterControlsDataService'];
+    FilterControlModalController.$inject = ['$uibModalInstance', 'item', 'FilterControlsDataService', 'Utils'];
 
-    function FilterControlModalController($uibModalInstance, item, FilterControlsDataService) {
+    function FilterControlModalController($uibModalInstance, item, FilterControlsDataService, Utils) {
         var vm = this;
 
         vm.apply = apply;
@@ -16,26 +16,22 @@
 
         init();
 
+        var checkedValues;
+
         function apply() {
-            // vm.selectedOptions = [];
-            _.each(vm.item.options, function(option) {
-                if (option.selected === true) {
-                    vm.selectedOptions.push(option.value);
-                }
-            });
             var sendObj = {
-                'type': 'AllInQuery',
                 'characteristicId': vm.item.id,
                 'operator': vm.selectedOperatorTrigger === true ? 'OR' : 'AND',
-                'value': vm.selectedOptions
+                'value': checkedValues
             };
-            // console.log(vm.selectedOptions, vm.item.id, sendObj);
             FilterControlsDataService.createFilterQuery(sendObj);
-            $uibModalInstance.close(vm.selectedOptions);
+            $uibModalInstance.close(checkedValues);
+            onDestroy();
         }
 
         function close() {
             $uibModalInstance.dismiss('cancel');
+            onDestroy();
         }
 
         function init() {
@@ -49,13 +45,24 @@
             } else {
                 vm.selectedOperatorTrigger = false;
             }
+
+            checkedValues = [];
+            _.each(vm.item.options, function(option) {
+                if (option.selected === true) {
+                    checkedValues.push(option.value);
+                }
+            });
+
+            // TODO: avoid setTimeout
+            setTimeout(function() {
+                toggleSubmitBtn();
+            }, 0);
             vm.itemCopy = angular.copy(vm.item);
         }
 
         vm.searchFilterQuery = searchFilterQuery;
 
         function searchFilterQuery() {
-            // console.log(vm.item);
             var hiddenOptions = _.filter(vm.item.options, function(option) {
                 return option.value && option.value.toLowerCase().indexOf(vm.filterQuery.toLowerCase()) >= 0;
             });
@@ -64,5 +71,33 @@
             itemCopy.options = hiddenOptions;
             vm.itemCopy = itemCopy;
         }
+
+        // TODO: remove document
+        $(document).on('change', '#filter-control-popup .filter-item-checkbox input.js-checkbox', function() {
+            var checkbox,
+                value;
+            checkbox = $(this);
+            value = checkbox.val();
+            if (checkbox.is(':checked')) {
+                Utils.addItemToArray(value, checkedValues);
+            } else {
+                Utils.removeItemFromArray(value, checkedValues);
+            }
+            toggleSubmitBtn();
+        });
+
+        function toggleSubmitBtn() {
+            if (checkedValues.length >= 1) {
+                $('#filter-control-popup button[type="submit"]').prop('disabled', false);
+            } else {
+                $('#filter-control-popup button[type="submit"]').prop('disabled', true);
+            }            
+        }
+
+        function onDestroy () {
+            checkedValues = [];
+            $(document).off('change', '#filter-control-popup .filter-item-checkbox input.js-checkbox');
+        }
+
     }
 })();

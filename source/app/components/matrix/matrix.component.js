@@ -16,14 +16,12 @@
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
-        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant',
-        'DecisionCompareNotificationService'
+        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
-        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant,
-        DecisionCompareNotificationService) {
+        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -47,7 +45,7 @@
 
                 updateCriteriaGroupContainerHeight();
                 initSortets(); //Hall of fame
-                getDecisionMatrix(vm.decision.id).then(function(matrixResp) {
+                getDecisionMatrix(vm.decision.id).then(function() {
                     // TODO: check if we need this code
                     initMatrixScroller();
                     // Render html matrix
@@ -63,7 +61,6 @@
 
                     // Init pagination
                     vm.itemsPerPage = PaginatioService.itemsPerPageSm();
-                    // vm.pagination = PaginatioService.initPagination(matrixResp.totalDecisionMatrixs, _fo.pagination.pageNumber, _fo.pagination.pageSize);
                 });
 
                 loadCharacteristics();
@@ -153,7 +150,7 @@
 
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
-            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function() {
+            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function(result) {
                 data.characteristics = result;
             }).finally(function() {
                 data.detailsSpinner = false;
@@ -164,7 +161,7 @@
             // TODO: clean up DecisionSharedService in controller maake one object
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
-            getDecisionMatrix(vm.decision.id, true).then(function(result) {
+            getDecisionMatrix(vm.decision.id, true).then(function() {
                 initMatrix(true);
             });
         });
@@ -212,7 +209,7 @@
                 setCharacteristicChanges(query.filterQueries, data.optionId);
             }
 
-            getDecisionMatrix(vm.decision.id, true).then(function(result) {
+            getDecisionMatrix(vm.decision.id, true).then(function() {
                 initMatrix(false);
             });
 
@@ -220,7 +217,7 @@
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
             _fo.decisionNameFilterPattern = data || null;
-            getDecisionMatrix(vm.decision.id, false).then(function(result) {
+            getDecisionMatrix(vm.decision.id, false).then(function() {
                 initMatrix(true);
                 vm.filterName = data;
             });
@@ -940,7 +937,7 @@
 
         function changePage(pagination) {
             _fo.pagination = pagination;
-            getDecisionMatrix(vm.decision.id, true).then(function(result) {
+            getDecisionMatrix(vm.decision.id, true).then(function() {
                 initMatrix(true);
             });
         }

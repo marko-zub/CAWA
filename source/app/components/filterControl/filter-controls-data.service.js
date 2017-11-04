@@ -13,6 +13,7 @@
         function createFilterQuery(data, optionId) {
             if (!data) return;
 
+            // TODO: clean up 
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
             if (sendData.value === 'all') sendData.value = null;
@@ -20,8 +21,7 @@
             var query = {
                 'type': sendData.type || 'AllInQuery',
                 'characteristicId': sendData.characteristicId || null,
-                'value': sendVal,
-                'operator': sendData.operator
+                'value': sendVal
             };
             if (sendData.operator && _.isArray(sendVal)) {
                 query.operator = sendData.operator;
@@ -29,8 +29,7 @@
                     query = {
                         'type': 'AnyInQuery',
                         'characteristicId': sendData.characteristicId || null,
-                        'value': sendVal,
-                        'operator': sendData.operator
+                        'value': sendVal
                     };
                 }
             }
