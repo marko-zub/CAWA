@@ -178,7 +178,7 @@
             // _fo.excludeChildDecisionIds = null;
             // _fo.includeChildDecisionIds = includeChildDecisionIds;
 
-            DecisionSharedService.filterObject.excludeChildDecisionIds = null;
+            // DecisionSharedService.filterObject.excludeChildDecisionIds = null;
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
             // _fo.persistent = true;
             // DecisionSharedService.setFilterObject(_fo);

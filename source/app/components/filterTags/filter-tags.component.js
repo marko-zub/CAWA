@@ -130,9 +130,8 @@
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
-                if (!data) return;
                 // TODO: use selectedValue
-                if (data.characteristicId === -1) {
+                if (data && data.characteristicId === -1) {
                     if (_.isNull(data.value)) {
                         removeTag(data);
                     } else {
@@ -166,9 +165,6 @@
         function removeTag(item, value) {
             var itemCopy = angular.copy(item);
             var index = tagIndexInList(itemCopy.characteristicId);
-            if (index < 0) return;
-
-
             if (index >= 0) {
 
                 if (_.isUndefined(itemCopy.data)) {
@@ -192,6 +188,8 @@
                     itemCopy.value = null;
                 }
                 // Filter Name
+            } else {
+                return;
             }
 
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
