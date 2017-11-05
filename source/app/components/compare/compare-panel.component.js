@@ -14,9 +14,9 @@
             controllerAs: 'vm'
         });
 
-    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q', '$rootScope'];
+    ComparePanelontrollerController.$inject = ['DecisionCompareService', 'DecisionCompareNotificationService', 'DecisionDataService', 'DecisionsUtils', '$state', 'DecisionSharedService', '$localStorage', '$q', '$rootScope', 'DecisionNotificationService'];
 
-    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q, $rootScope) {
+    function ComparePanelontrollerController(DecisionCompareService, DecisionCompareNotificationService, DecisionDataService, DecisionsUtils, $state, DecisionSharedService, $localStorage, $q, $rootScope, DecisionNotificationService) {
         var vm = this;
 
         // TODO: clean up, Simplify logic
@@ -173,11 +173,25 @@
             var cleanList = filterCompareList(vm.compareList);
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
+
+            // var _fo = DecisionSharedService.setCleanFilterObject();
+            // _fo.excludeChildDecisionIds = null;
+            // _fo.includeChildDecisionIds = includeChildDecisionIds;
+
+            DecisionSharedService.filterObject.excludeChildDecisionIds = null;
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
+            // _fo.persistent = true;
+            // DecisionSharedService.setFilterObject(_fo);
+
             $state.go('decisions.single.comparison', {
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
             });
+
+            if ($state.current.name === 'decisions.single.comparison') {
+                // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+                // debugger
+            }
 
             $rootScope.$on('$stateChangeSuccess',
                 function() {

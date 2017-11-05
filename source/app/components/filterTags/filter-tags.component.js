@@ -130,6 +130,7 @@
 
         function subscribe() {
             DecisionNotificationService.subscribeFilterTags(function(event, data) {
+                if (!data) return;
                 // TODO: use selectedValue
                 if (data.characteristicId === -1) {
                     if (_.isNull(data.value)) {

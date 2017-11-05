@@ -442,13 +442,14 @@
             });
 
             vm.criteriaGroups = angular.copy(copyCriteria);
-            // vm.decision.criteriaGroups = angular.copy(copyCriteria);
         }
 
         function initCharacteristicsFilterQueries(filterQueries) {
             _.each(filterQueries, function(query) {
                 setCharacteristicChanges(query);
             });
+            // TODO: we call notify twice for first matrix init
+            DecisionNotificationService.notifyFilterTags(filterQueries);
         }
 
         function findCoefNameByValue(valueSearch) {
