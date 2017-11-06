@@ -16,12 +16,14 @@
 
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
-        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant'
+        '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant',
+        'DecisionCompareNotificationService'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
-        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant) {
+        $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant,
+        DecisionCompareNotificationService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -34,6 +36,8 @@
             // console.log('Decision Matrix Controller');
             vm.filterName = null;
             vm.decisionsLoader = true;
+
+            _fo = DecisionSharedService.getFilterObject();
 
             iniMatrixModeTabs();
             // First call
@@ -76,8 +80,6 @@
                 vm.characteristicGroupsContentLoader = false;
                 // Init characteristicFilterQueries
                 initCharacteristicsFilterQueries(_fo.filterQueries);
-
-                // DecisionCompareNotificationService.notifyToggleCompare({isOpen: false});
             });
         }
 
@@ -145,6 +147,24 @@
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
             getDecisionMatrix(vm.decision.id, true).then(function() {
                 initMatrix(true);
+            });
+        });
+
+        // Use for compare panel
+        DecisionNotificationService.subscribeChangeDecisionMatrixMode(function(event, data) {
+
+            // var _fo = DecisionSharedService.getCleanFilterObject();
+            //
+            // DecisionSharedService.changeFilterObject(_fo);
+            _fo = DecisionSharedService.setCleanFilterObject();
+            _fo.includeChildDecisionIds = data.ids;
+            _fo.excludeChildDecisionIds = null;
+            // console.log(_fo);
+            vm.matrixMode = 'exclusion';
+            // DecisionSharedService.changeFilterObject(_fo);
+
+            DecisionCompareNotificationService.notifyToggleCompare({
+                isOpen: false
             });
         });
 
@@ -779,7 +799,6 @@
             }
         }
 
-
         function iniMatrixModeTabs() {
             if (!_.isEmpty(_fo.includeChildDecisionIds)) {
                 vm.matrixMode = 'exclusion';
@@ -825,6 +844,7 @@
                     _fo.includeChildDecisionIds = [];
                 }
             }
+            DecisionSharedService.changeFilterObject(_fo);
             vm.inclusionItemsLength = inclusionItemsLength;
         }
 
@@ -833,10 +853,7 @@
             if (_.includes(allowMode, mode)) {
                 vm.matrixMode = mode;
                 setMatrixModeCounters(mode);
-
-                var sendFo = _fo;
-                sendFo.persistent = false;
-                DecisionNotificationService.notifyChildDecisionExclusion(sendFo);
+                DecisionNotificationService.notifyChildDecisionExclusion();
             }
         }
 
@@ -853,9 +870,7 @@
                 vm.inclusionItemsLength++;
             }
 
-            var sendFo = _fo;
-            sendFo.persistent = true;
-            DecisionNotificationService.notifyChildDecisionExclusion(sendFo);
+            DecisionNotificationService.notifyChildDecisionExclusion();
         }
 
 

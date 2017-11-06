@@ -173,30 +173,21 @@
             var cleanList = filterCompareList(vm.compareList);
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
-
-            // var _fo = DecisionSharedService.setCleanFilterObject();
-            // _fo.excludeChildDecisionIds = null;
-            // _fo.includeChildDecisionIds = includeChildDecisionIds;
-
-            // DecisionSharedService.filterObject.excludeChildDecisionIds = null;
-            DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
-            // _fo.persistent = true;
-            // DecisionSharedService.setFilterObject(_fo);
+            DecisionNotificationService.notifyChangeDecisionMatrixMode({ mode: 'exclusion', ids: includeChildDecisionIds });
 
             $state.go('decisions.single.comparison', {
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
             });
 
-            if ($state.current.name === 'decisions.single.comparison') {
-                // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
-                // debugger
-            }
+            // if ($state.current.name === 'decisions.single.comparison') {
+            //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+            //     // debugger
+            // }
 
             $rootScope.$on('$stateChangeSuccess',
                 function() {
                     if ($state.current.name === 'decisions.single.comparison') {
-
                         // Add notification service for compare panel
                         togglePanel(false);
                     }
@@ -204,8 +195,8 @@
             );
         }
 
-        // DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
-        //     togglePanel(data.isOpen);
-        // });        
+        DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
+            togglePanel(data.isOpen);
+        });        
     }
 })();

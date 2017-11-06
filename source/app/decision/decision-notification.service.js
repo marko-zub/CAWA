@@ -24,6 +24,7 @@
             subscribeFilterTags: subscribeFilterTags,
             subscribeFilterByName: subscribeFilterByName,
             subscribeUpdateMatrixSize: subscribeUpdateMatrixSize,
+            subscribeChangeDecisionMatrixMode: subscribeChangeDecisionMatrixMode,
 
             // Notify
             notifySelectSorter: notifySelectSorter,
@@ -36,7 +37,8 @@
             notifyChildDecisionExclusion: notifyChildDecisionExclusion,
             notifyFilterTags: notifyFilterTags,
             notifyFilterByName: notifyFilterByName,
-            notifyUpdateMatrixSize: notifyUpdateMatrixSize
+            notifyUpdateMatrixSize: notifyUpdateMatrixSize,
+            notifyChangeDecisionMatrixMode: notifyChangeDecisionMatrixMode
         };
 
         return service;
@@ -98,6 +100,10 @@
             subscribe('updateMatrixSize', callback);
         }
 
+        function subscribeChangeDecisionMatrixMode(callback) {
+            subscribe('changeMatrixMode', callback);
+        }        
+
         // Emitters
         function notifySelectSorter(data) {
             emit('selectSorter', data);
@@ -141,6 +147,10 @@
 
         function notifyUpdateMatrixSize(data) {
             emit('updateMatrixSize', data);
+        }
+
+        function notifyChangeDecisionMatrixMode(data) {
+            broadcast('changeMatrixMode', data);
         }
 
     }
