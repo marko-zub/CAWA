@@ -50,13 +50,21 @@
 
                 if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
+
+                // TODO: check it request with characteristics come later
+                if (_fo && _fo.filterQueries) {
+                    createTagsList(_fo.filterQueries);
+                    updateMatrixHeight();                    
+                }
             }
 
             if (changes.filterObject &&
                 !angular.equals(changes.filterObject.currentValue, changes.filterObject.previousValue)) {
                 if (changes.filterObject.currentValue) {
-                    var _fo = changes.filterObject.currentValue;
-                    vm.sortByCharacteristic = setCharacteristicsSortTag(_fo.sortByCharacteristic);
+                    _fo = changes.filterObject.currentValue;
+                    if (vm.characteristics) {
+                        vm.sortByCharacteristic = setCharacteristicsSortTag(_fo.sortByCharacteristic);
+                    }
                     vm.sortByDecisionProperty = setSortByDecisionProperty(_fo.sortByDecisionProperty);
                 }
             }
@@ -143,7 +151,7 @@
 
                 // Parese Filter Object
                 _fo = angular.copy(data);
-                if (_fo) {
+                if (_fo && vm.characteristics) {
                     createTagsList(_fo.filterQueries);
                     updateMatrixHeight();
                 }

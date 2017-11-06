@@ -449,7 +449,7 @@
                 setCharacteristicChanges(query);
             });
             // TODO: we call notify twice for first matrix init
-            DecisionNotificationService.notifyFilterTags({ filterQueries: filterQueries });
+            // DecisionNotificationService.notifyFilterTags({ filterQueries: filterQueries });
         }
 
         function findCoefNameByValue(valueSearch) {
