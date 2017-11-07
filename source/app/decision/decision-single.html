@@ -62,73 +62,65 @@
 
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
-                    <div class="nav-tabs-wrapper clearfix tabs-right" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
+                    <div class="nav-tabs-wrapper clearfix tabs-right">
                         <h4 class="tabs-title" translate-cloak>
                             {{ 'All Options' | translate }}
-                            <span class="title-counter" translate-cloak>({{::vm.totalCount}})</span>
+                            <span ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader" class="title-counter" translate-cloak>({{::vm.totalCount}})</span>
                         </h4>
                         <span class="text-header" translate-cloak>
                             {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                         </span>
-                        <ul class="nav nav-tabs nav-tabs-sm">
+                        <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
                                 <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
                             </li>
                         </ul>
                     </div>
-
-                    <div ng-if="!vm.isDecisionsParent">
-                        <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right">
-                            <h4 class="tabs-title" translate-cloak>
-                                {{ 'All Options' | translate }}
-                            </h4>
-                            <span class="text-header" translate-cloak>
-                                {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
-                            </span>
-                        </div>
-
-                        <!-- Tabs content -->
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <div class="mg-b-md app-action-text" translate-cloak>
-                                    {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="col-sm-12" ng-show="!vm.decisionsChildsLoader && vm.isDecisionsParent">
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            <!-- TODO: make as component -->
-                            <!-- Filter  -->
-                            <div class="filter-name">
-                                <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                                <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                                <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                <!-- Tabs content -->
+                <div ng-if="!vm.isDecisionsParent">
+                    <div class="col-sm-7">
+                        <div class="mg-b-md app-action-text" translate-cloak>
+                            {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    
+                    <div ng-show="vm.isDecisionsParent">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- TODO: make as component -->
+                                <!-- Filter  -->
+                                <div class="filter-name">
+                                    <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                                    <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                                    <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                                </div>
+                                <!-- Filter Name -->
                             </div>
-                            <!-- Filter Name -->
+                            <div class="col-md-4">
+
+                                <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                                    {{ 'Comparison Matrix' | translate }}
+                                </a>
+
+                            </div>
                         </div>
-                        <div class="col-md-4">
 
-                            <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
-                                {{ 'Comparison Matrix' | translate }}
-                            </a>
+                        <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
+                            <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
 
+                            <!-- TODO: remove second loader -->
+                            <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
                         </div>
+
+
+                        <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
                     </div>
-
-                    <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
-                        <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
-
-                        <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
-
-                        <!-- TODO: remove second loader -->
-                        <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
-
-                    </div>
+        
                 </div>
                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                     {{ "LOOKING MORE" | translate }}

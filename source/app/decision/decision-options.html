@@ -41,33 +41,36 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="loader-container">
+                <div class="row" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
+                    <div class="col-md-8">
+                        <!-- TODO: make as component -->
+                        <!-- Filter  -->
+                        <div class="filter-name" translate-cloak>
+                            <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
+                            <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                            <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                        </div>
 
-            <div class="row" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
-                <div class="col-md-8">
-                    <!-- TODO: make as component -->
-                    <!-- Filter  -->
-                    <div class="filter-name" translate-cloak>
-                        <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                        <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                        <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
                     </div>
-
+                    <div class="col-md-4">
+                        <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                            {{ 'Comparison Matrix' | translate }}
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
-                        {{ 'Comparison Matrix' | translate }}
-                    </a>
+                <!-- Filter Name -->
+            
+            
+                <div ng-show="!vm.decisionsLoader && vm.decisions.length">
+                    <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
+
+                    <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
                 </div>
+
+                <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
             </div>
-            <!-- Filter Name -->
-
-            <div ng-show="!vm.decisionsLoader && vm.decisions.length">
-                <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
-
-                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
-            </div>
-
-            <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
 
             <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                 <span class="text-header">
