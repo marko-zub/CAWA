@@ -173,13 +173,16 @@
             var cleanList = filterCompareList(vm.compareList);
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
-            DecisionNotificationService.notifyChangeDecisionMatrixMode({ mode: 'exclusion', ids: includeChildDecisionIds });
-
             $state.go('decisions.single.comparison', {
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
             });
 
+            // if state !== 'decisions.single.comparison'
+            DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
+            DecisionSharedService.filterObject.excludeChildDecisionIds = null;
+
+            DecisionNotificationService.notifyChangeDecisionMatrixMode({ mode: 'exclusion', ids: includeChildDecisionIds });
             // if ($state.current.name === 'decisions.single.comparison') {
             //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
             //     // debugger

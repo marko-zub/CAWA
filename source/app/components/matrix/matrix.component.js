@@ -152,16 +152,15 @@
 
         // Use for compare panel
         DecisionNotificationService.subscribeChangeDecisionMatrixMode(function(event, data) {
-
-            // var _fo = DecisionSharedService.getCleanFilterObject();
-            //
-            // DecisionSharedService.changeFilterObject(_fo);
             _fo = DecisionSharedService.setCleanFilterObject();
             _fo.includeChildDecisionIds = data.ids;
             _fo.excludeChildDecisionIds = null;
-            // console.log(_fo);
             vm.matrixMode = 'exclusion';
-            // DecisionSharedService.changeFilterObject(_fo);
+
+            getDecisionMatrix(vm.decision.id, true).then(function() {
+                initMatrix(true);
+                initMatrixMode();
+            });
 
             DecisionCompareNotificationService.notifyToggleCompare({
                 isOpen: false
@@ -700,7 +699,7 @@
         function setMatrixTableWidth(total) {
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
-            table.style.width = tableWidth;
+            if (table) table.style.width = tableWidth;
 
         }
 
@@ -810,6 +809,7 @@
         }
 
         // TODO: combine with initMatrixMode
+        // Simplify
         function initMatrixMode() {
             if (!_.isEmpty(_fo.includeChildDecisionIds)) {
                 vm.matrixMode = 'exclusion';
