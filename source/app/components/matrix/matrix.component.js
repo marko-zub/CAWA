@@ -1021,7 +1021,12 @@
         }
 
         function updateMartrixFakeScrollPosition() {
-            if (this) martrixScroll.scrollTo(this.x, this.y); // jshint ignore:line
+            /* jshint ignore:start */
+            if (this) {
+                martrixScroll.scrollTo(this.x, this.y);
+                scrollHandler(this.y, this.x);
+            }
+            /* jshint ignore:end */
         }
     }
 })();
