@@ -33,6 +33,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
+            $('body').addClass('matrix-sticky-footer');
             // console.log('Decision Matrix Controller');
             vm.filterName = null;
             vm.decisionsLoader = true;
@@ -52,6 +53,8 @@
                 getDecisionMatrix(vm.decision.id).then(function() {
                     // TODO: check if we need this code
                     initMatrixScroller();
+
+                    initMartrixFakeScroll();
                     // Render html matrix
 
                     initMatrixMode();
@@ -152,7 +155,8 @@
 
         // Use for compare panel
         DecisionNotificationService.subscribeChangeDecisionMatrixMode(function(event, data) {
-            _fo = DecisionSharedService.setCleanFilterObject();
+            // _fo = DecisionSharedService.setCleanFilterObject();
+            _fo = DecisionSharedService.getFilterObject();
             _fo.includeChildDecisionIds = data.ids;
             _fo.excludeChildDecisionIds = null;
             vm.matrixMode = 'exclusion';
@@ -516,6 +520,7 @@
             setTimeout(function() {
                 if (calcHeight !== false) calcMatrixRowHeight();
                 reinitMatrixScroller();
+                reinitFakeScroll();
             }, 0);
             $scope.$applyAsync(function() {
                 vm.decisionsLoader = false;
@@ -647,7 +652,9 @@
         function updatePosition(martrixScroll) {
             var _this = martrixScroll || this; // jshint ignore:line
             scrollHandler(_this.y, _this.x);
+            martrixFakeScroll.scrollTo(_this.x, _this.y);
             $('.matrix-g .app-control').toggleClass('selected', false);
+
         }
 
         // Table scroll
@@ -664,25 +671,27 @@
         // Custom scroll
         var martrixScroll;
 
+        var scrollOptions = {
+            scrollbars: true,
+            scrollX: true,
+            scrollY: false,
+            mouseWheel: false,
+            interactiveScrollbars: true,
+            shrinkScrollbars: 'scale',
+            fadeScrollbars: false,
+            probeType: 3,
+            useTransition: false,
+            bindToWrapper: true,
+            disablePointer: true,
+            disableTouch: false,
+            // bounce: false,
+            momentum: false,
+            disableMouse: false
+        };
+
         function initMatrixScroller() {
             var wrapper = document.getElementById('matrix-body');
-            martrixScroll = new IScroll(wrapper, {
-                scrollbars: true,
-                scrollX: true,
-                scrollY: true,
-                mouseWheel: false,
-                interactiveScrollbars: true,
-                shrinkScrollbars: 'scale',
-                fadeScrollbars: false,
-                probeType: 3,
-                useTransition: false,
-                bindToWrapper: true,
-                disablePointer: true,
-                disableTouch: false,
-                // bounce: false,
-                momentum: false,
-                disableMouse: false
-            });
+            martrixScroll = new IScroll(wrapper, scrollOptions);
         }
 
         function reinitMatrixScroller() {
@@ -697,10 +706,14 @@
         var prevTotal;
 
         function setMatrixTableWidth(total) {
+            // Matrix scroll
             var tableWidth = total * 200 + 'px';
             var table = document.getElementById('matrix-content');
             if (table) table.style.width = tableWidth;
 
+            // Fake scroll
+            var fakeScroll = document.getElementById('matrix-fake-scroll-body');
+            if (fakeScroll) fakeScroll.style.width = tableWidth;
         }
 
         function setMatrixTableHeight(height) {
@@ -902,28 +915,39 @@
         }
 
         var winH = $(window).height();
+        var bodyH;
+
         var headerStickyPoint = $('.tabs-wrapper').offset().top;
         var scrollF = _.throttle(function() {
-            var scrollTopDoc = $(document).scrollTop();
+            var scrollTopDocumnet = $(document).scrollTop();
 
             var fixedHaderHeight = $('.matrix-header').outerHeight() + $('#filter-tags').outerHeight() + $('.nav-tabs-wrapper').outerHeight();
+
+            bodyH = $('body').height();
 
             var allowFixedHeader = true;
             if ($('body').height() < winH + fixedHaderHeight) {
                 allowFixedHeader = false;
             }
 
-            if (scrollTopDoc > headerStickyPoint && allowFixedHeader) {
+            if (scrollTopDocumnet > headerStickyPoint && allowFixedHeader) {
                 $('#panel').css({
                     'padding-top': fixedHaderHeight,
                 });
 
-                $('body').addClass('matrix-sticky');
+                $('body')
+                    .addClass('matrix-sticky')
+                    .addClass('matrix-sticky-footer');
             } else {
                 $('#panel').css({
                     'padding-top': ''
                 });
                 $('body').removeClass('matrix-sticky');
+            }
+
+            // Sticky pagination
+            if (winH + scrollTopDocumnet > bodyH) {
+                $('body').removeClass('matrix-sticky-footer');
             }
         }, 21);
 
@@ -977,6 +1001,27 @@
                 characteristic.selectedOperator = 'OR';
                 return characteristic;
             });
+        }
+
+
+        // Custom Fake scroll
+        var martrixFakeScroll;
+
+        function initMartrixFakeScroll() {
+            var wrapper = document.getElementById('matrix-fake-scroll');
+            martrixFakeScroll = new IScroll(wrapper, scrollOptions);
+        }
+
+        function reinitFakeScroll() {
+            // TODO: avoid jquery height
+            if (martrixFakeScroll) {
+                martrixFakeScroll.refresh();
+                martrixFakeScroll.on('scroll', updateMartrixFakeScrollPosition);
+            }
+        }
+
+        function updateMartrixFakeScrollPosition() {
+            if (this) martrixScroll.scrollTo(this.x, this.y); // jshint ignore:line
         }
     }
 })();

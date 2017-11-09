@@ -212,12 +212,44 @@
 }
 
 .martix-footer {
-    border-top: 1px solid @gray-light;
     padding: 0 0 0 @matrix-aside-width;
     height: 46px;
     position: relative;
     z-index: 11;
-    background: #fff;
+    background-color: #fff;
+    .martix-footer-pagination {
+        background-color: #fff;
+        border-top: 1px solid @gray-light;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+#matrix-fake-scroll {
+    display: none;
+}
+.matrix-sticky-footer {
+    #matrix-fake-scroll {
+        display: block;
+        // height: 20px;
+        position: absolute;
+        top: 0;
+        left: 215px;
+        right: 15px;
+        width: auto;
+    }
+    .martix-footer-pagination {
+        position: fixed;
+        box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.matrix-body {
+    .iScrollHorizontalScrollbar  {
+        bottom: 2px !important;
+    }
 }
 
 .matrix .matrix-col.matrix-g {

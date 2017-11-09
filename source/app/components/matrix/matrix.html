@@ -238,9 +238,18 @@
             </div>
         </div>
         <div class="martix-footer">
+            <div class="martix-footer-pagination">
 
-            <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)" per-page="vm.itemsPerPage"></app-paginator>
-
+                <!-- Fake scrollbar -->
+                <div id="matrix-fake-scroll">
+                    <div id="matrix-fake-scroll-body">
+                        
+                    </div>
+                </div>
+                <!-- End Fake scrollbar -->
+            
+                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)" per-page="vm.itemsPerPage"></app-paginator>
+            </div>
         </div>
     </div>
 </div>
