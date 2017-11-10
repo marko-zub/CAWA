@@ -15,9 +15,14 @@ filter-tags {
     // box-shadow: 0 0 0 1px @gray-light;
     .tag-wrapper {
         display: inline-block;
-        &.tag-clear-wrapper {
-            border-right: 1px solid @gray-light;
-            margin-right: 8px;      
+
+        // TODO: simplify border
+        &:not(.ng-hide) {
+            & ~ .filter-tags-label {
+                border-left: 1px solid @gray-light;
+                padding-left: 10px;
+                margin-left: 10px;
+            }
         }
     }
     .tag-group-wrapper {
@@ -27,7 +32,7 @@ filter-tags {
             .tag {
                 padding-left: 8px;
                 &.tag-btn {
-                    padding: 2px 8px;
+                    padding: 2px 4px;
                 }
             }
         }
@@ -73,7 +78,7 @@ filter-tags {
         }
         &.tag-btn {
             border-radius: 0;
-            margin: 2px 10px;
+            margin: 2px 0px 2px 8px;
             border-right: 1px solid @gray-light;
             padding: 2px 8px;
             background-color: @gray-light;
