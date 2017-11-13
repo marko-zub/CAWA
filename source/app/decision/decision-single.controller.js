@@ -144,10 +144,18 @@
                 console.log(vm.decisionGroups);
 
                 var sendData = {};
-                // sendData.includeCharacteristicIds = [-1];
+                sendData.includeCharacteristicIds = [-1];
+                // sendData.sortDecisionPropertyName = vm.tabMode;
+                sendData.sortDecisionPropertyDirection = 'DESC';                
                 DecisionDataService.getDecisionGroups(vm.decisionGroups[0].id, sendData).then(function(result) {
                     // console.log(result)
-                    vm.childDecisionGroups = result.decisionMatrixs;
+                    var childDecisionGroups = [];
+                    vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
+                        childDecisionGroups.push(decision.decision);
+                    });
+
+                    vm.childDecisionGroups = childDecisionGroups;
+                    // vm.childDecisionGroups = result.decisionMatrixs;
                 });
             }
         }
