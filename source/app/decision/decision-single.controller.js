@@ -142,6 +142,10 @@
                     name: vm.decisionGroups[0].name,
                     nameSlug: vm.decisionGroups[0].nameSlug
                 };
+                console.log(vm.decisionGroups[0].id);
+                // getDecisionMatrix(vm.decisionGroups[0].id).then(function(resp) {
+                //     console.log(resp);
+                // })
             }
 
         }
