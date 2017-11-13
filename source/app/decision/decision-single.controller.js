@@ -131,17 +131,20 @@
                 getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
             }
 
+
             // decisionGroups
             vm.parentDecisionGroups = decision.parentDecisionGroups;
             vm.activeDecisionGroupsTabIndex = 0;
             vm.decisionGroups = decision.decisionGroups;
+
+            vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
             if (vm.decisionGroups) {
+                vm.decisionsChildsLoader = true;
                 vm.activeDecisionGroupsTab = {
                     id: vm.decisionGroups[0].id,
                     name: vm.decisionGroups[0].name,
                     nameSlug: vm.decisionGroups[0].nameSlug
                 };
-                console.log(vm.decisionGroups);
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];
@@ -155,6 +158,7 @@
                     });
 
                     vm.childDecisionGroups = childDecisionGroups;
+                    vm.decisionsChildsLoader = false;
                     // vm.childDecisionGroups = result.decisionMatrixs;
                 });
             }

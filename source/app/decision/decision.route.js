@@ -60,6 +60,28 @@
             }
         })
 
+        .state('decisions.single.options.child', {
+            url: '/:optionChildId/:optionChildSlug',
+            cache: false,
+            views: {
+                '@': {
+                    templateUrl: 'app/decision/decision-options.html',
+                    controller: 'DecisionOptionsController',
+                    controllerAs: 'vm',
+                }
+            },
+            params: {
+                slug: {
+                    value: null,
+                    squash: true
+                },
+                tab: {
+                    value: null,
+                    squash: true
+                }
+            }
+        })        
+
         .state('decisions.single.nominations', {
             url: '/nominations',
             cache: false,
@@ -229,7 +251,7 @@
         }
 
         // TODO: make each route new resolver
-        var params = { fetchParentDecisions: true };
+        var params = { fetchParentDecisions: true, fetchParentDecisionGroups: true };
         if ($rootScope.decisonFull) {
             params = { fetchOwnerUsers: true, fetchParentDecisions: true, fetchFollowingDecisions: true, fetchMedia: true, fetchDecisionGroups: true, fetchParentDecisionGroups: true };
         }
