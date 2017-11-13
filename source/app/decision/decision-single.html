@@ -89,20 +89,20 @@
                     </div>
                 </div>
 
-                <div class="mg-b-lg">
-                    <div class="row">
-                        <div class="col-xs-12 mg-sm-b">
 
-                            <decisions-list compare="true" list="vm.childDecisionGroups" parent-decision="vm.decision"></decisions-list>
+                <div class="row">
+                    <div class="col-xs-12 mg-sm-b">
 
-               <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
-                                <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
-                                    <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
-                                </li>
-                            </ul> -->
-                        </div>
+                        <decisions-list compare="true" list="vm.childDecisionGroups" parent-decision="vm.decision"></decisions-list>
+
+           <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
+                            <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
+                                <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
+                            </li>
+                        </ul> -->
                     </div>
                 </div>
+        
 
                 <div class="col-sm-12">
 
@@ -139,7 +139,7 @@
                     </div>
 
                 </div>
-                <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
+                <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
                     {{ "LOOKING MORE" | translate }}
                     <a ui-sref="decisions.single.options" class="text-bold" translate-cloak>
                         {{ "the complete list of decisions" | translate }}

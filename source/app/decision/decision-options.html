@@ -27,7 +27,7 @@
             </div>
 
 
-            <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.isDecisionsParent">
+            <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.decision.decisionGroups.length">
                 <h4 class="tabs-title" translate-cloak>
                     {{ 'All Options' | translate }}
                     <span class="title-counter" translate-cloak ng-show="vm.totalCount">({{vm.totalCount}})</span>
@@ -36,8 +36,8 @@
                     {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                 </span>
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                        <a ui-sref="decisions.single.options(::{tab:item.key})" translate-cloak>{{ item.label | translate }}</a>
+                    <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
+                        <a ui-sref="decisions.single.options.child(::{optionChildId: item.id, optionChildSlug: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.name | translate }}</a>
                     </li>
                 </ul>
             </div>

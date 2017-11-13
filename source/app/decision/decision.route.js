@@ -251,7 +251,7 @@
         }
 
         // TODO: make each route new resolver
-        var params = { fetchParentDecisions: true, fetchParentDecisionGroups: true };
+        var params = { fetchParentDecisions: true, fetchParentDecisionGroups: true, fetchDecisionGroups: true };
         if ($rootScope.decisonFull) {
             params = { fetchOwnerUsers: true, fetchParentDecisions: true, fetchFollowingDecisions: true, fetchMedia: true, fetchDecisionGroups: true, fetchParentDecisionGroups: true };
         }
