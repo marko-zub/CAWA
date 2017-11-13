@@ -111,8 +111,9 @@
         }
 
         function getDecisionParents(decision) {
+            console.log(decision);
             vm.decisionsChildsLoader = true;
-            vm.decisionParents = decision.parentDecisions;
+            vm.decisionParents = decision.parentDecisionGroups;
 
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;

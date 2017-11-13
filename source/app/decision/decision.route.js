@@ -231,7 +231,7 @@
         // TODO: make each route new resolver
         var params = { fetchParentDecisions: true };
         if ($rootScope.decisonFull) {
-            params = { fetchOwnerUsers: true, fetchParentDecisions: true, fetchFollowingDecisions: true, fetchMedia: true };
+            params = { fetchOwnerUsers: true, fetchParentDecisions: true, fetchFollowingDecisions: true, fetchMedia: true, fetchDecisionGroups: true, fetchParentDecisionGroups: true };
         }
 
         return DecisionDataService.getDecisionInfoFull(id, params).then(function(result) {

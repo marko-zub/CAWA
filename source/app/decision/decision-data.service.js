@@ -123,7 +123,8 @@
                 fetchOwnerUsers: '@fetchOwnerUsers',
                 fetchParentDecisions: '@fetchParentDecisions',
                 fetchFollowingDecisions: '@fetchFollowingDecisions',
-                fetchMedia: '@fetchMedia'
+                fetchMedia: '@fetchMedia',
+                fetchDecisionGroups: '@fetchDecisionGroups'
             }),
 
             decisionsInfo = $resource(decisionUrl, {
@@ -244,6 +245,8 @@
             if (params.fetchParentDecisions) { sendParams.fetchParentDecisions = params.fetchParentDecisions; }
             if (params.fetchFollowingDecisions) { sendParams.fetchFollowingDecisions = params.fetchFollowingDecisions; }
             if (params.fetchMedia) { sendParams.fetchMedia = params.fetchMedia; }
+            if (params.fetchDecisionGroups) { sendParams.fetchDecisionGroups = params.fetchDecisionGroups; }
+            if (params.fetchParentDecisionGroups) { sendParams.fetchParentDecisionGroups = params.fetchParentDecisionGroups; }
 
             return decisionInfoFull.query(sendParams).$promise;
         }
