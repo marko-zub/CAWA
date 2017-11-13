@@ -48,6 +48,15 @@
                 }
             }),
 
+            decisionsGroups = $resource(Config.endpointUrl + 'decisiongroups/:id/decisions/matrix', {
+                id: '@id'
+            }, {
+                getDecisionById: {
+                    method: 'POST',
+                    isArray: false
+                }
+            }),            
+
             decisionsPropertyGroups = $resource(decisionUrl + '/propertygroups', {
                 id: '@id'
             }, {
@@ -159,6 +168,7 @@
             getDecisionParents: getDecisionParents,
             getDecisions: getDecisions,
             getDecisionMatrix: getDecisionMatrix,
+            getDecisionGroups: getDecisionGroups,
             getDecisionsPropertyGroups: getDecisionsPropertyGroups,
             getDecisionsProperties: getDecisionsProperties,
             getCriteriaGroupsById: getCriteriaGroupsById,
@@ -198,6 +208,12 @@
             return decisionsMatrix.getDecisionById({
                 id: id
             }, data).$promise;
+        }
+
+        function getDecisionGroups(id, data) {
+            return decisionsGroups.getDecisionById({
+                id: id
+            }, data).$promise;            
         }
 
         function getDecisionsPropertyGroups(id) {

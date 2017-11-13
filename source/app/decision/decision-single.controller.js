@@ -111,9 +111,8 @@
         }
 
         function getDecisionParents(decision) {
-            console.log(decision);
             vm.decisionsChildsLoader = true;
-            vm.decisionParents = decision.parentDecisionGroups;
+            vm.decisionParents = decision.parentDecisions;
 
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
@@ -132,8 +131,8 @@
                 getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
             }
 
-
             // decisionGroups
+            vm.parentDecisionGroups = decision.parentDecisionGroups;
             vm.activeDecisionGroupsTabIndex = 0;
             vm.decisionGroups = decision.decisionGroups;
             if (vm.decisionGroups) {
@@ -142,12 +141,15 @@
                     name: vm.decisionGroups[0].name,
                     nameSlug: vm.decisionGroups[0].nameSlug
                 };
-                console.log(vm.decisionGroups[0].id);
-                // getDecisionMatrix(vm.decisionGroups[0].id).then(function(resp) {
-                //     console.log(resp);
-                // })
-            }
+                console.log(vm.decisionGroups);
 
+                var sendData = {};
+                // sendData.includeCharacteristicIds = [-1];
+                DecisionDataService.getDecisionGroups(vm.decisionGroups[0].id, sendData).then(function(result) {
+                    // console.log(result)
+                    vm.childDecisionGroups = result.decisionMatrixs;
+                });
+            }
         }
 
         function getDecisionMatrix(id, filter) {
