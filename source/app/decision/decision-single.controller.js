@@ -132,6 +132,18 @@
                 getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
             }
 
+
+            // decisionGroups
+            vm.activeDecisionGroupsTabIndex = 0;
+            vm.decisionGroups = decision.decisionGroups;
+            if (vm.decisionGroups) {
+                vm.activeDecisionGroupsTab = {
+                    id: vm.decisionGroups[0].id,
+                    name: vm.decisionGroups[0].name,
+                    nameSlug: vm.decisionGroups[0].nameSlug
+                };
+            }
+
         }
 
         function getDecisionMatrix(id, filter) {

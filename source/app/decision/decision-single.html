@@ -60,7 +60,28 @@
 
             </div>
 
+            <div class="mg-b-lg">
+                <div class="row">
+                    <div class="col-xs-12 mg-sm-b">
+                        <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.decisionGroups">
+                            <li ng-repeat="item in ::vm.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
+                                <!-- {{ item }} -->
+                                <a ui-sref ui-sref-opts="{notify: false}">{{ item.name }}</a>
+                                <!-- <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a> -->
+                            </li>
+                        </ul>
+
+           <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
+                            <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
+                                <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </div>
+
             <div class="row decision-childs">
+
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper clearfix tabs-right">
                         <h4 class="tabs-title" translate-cloak>
@@ -88,7 +109,7 @@
                 </div>
 
                 <div class="col-sm-12">
-                    
+
                     <div ng-show="vm.isDecisionsParent">
                         <div class="row">
                             <div class="col-md-8">
@@ -120,7 +141,7 @@
 
                         <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
                     </div>
-        
+
                 </div>
                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                     {{ "LOOKING MORE" | translate }}
@@ -129,7 +150,7 @@
                     </a>
                 </div>
             </div>
-            
+
 
             <div class="row" ng-show="!vm.decisionsChildsLoader">
                 <div class="col-sm-8">
