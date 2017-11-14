@@ -1,14 +1,14 @@
 <div class="decisions-list {{vm.className}}" ng-style="{'min-height': vm.decisionsHeight}">
     <div class="post" ng-repeat="decision in vm.decisionsList track by decision.id">
         <div class="post-inner">
-            <a class="img-link left-side" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})">
+            <a class="img-link left-side" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null, category: null})">
                 <div class="img-container">
                     <img ng-src="{{::decision.imageUrl}}" class="img-responsive" '>
                 </div>
             </a>
             <div class="post-content">
                 <div ng-if="::vm.parentDecision" dw-popover dw-popover-id="criteria-{{::decision.id}}" decision="::decision" parent-decision="::vm.parentDecision" class="criteria-block-wrapper">
-                    <a ng-show="::decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null})" class="criteria-block popover-ref">
+                    <a ng-show="::decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.parent(::{id:decision.id, slug: decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, tab: null, category: null})" class="criteria-block popover-ref">
                         <div class="counters">
                             <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
                             <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
@@ -19,7 +19,7 @@
                     </a>
                 </div>
 
-                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ng-bind="::decision.name"></a>
+                <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null, category: null})" ng-bind="::decision.name"></a>
                 <div class="post-description" ng-bind-html="::decision.description"></div>
                 <div class="post-footer">
                     <decision-short-info decision="::decision"></decision-short-info>

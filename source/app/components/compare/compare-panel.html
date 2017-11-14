@@ -15,13 +15,13 @@
             <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id" ng-show="vm.activeTab == $index">
                 <div class="decision-card-group-content clearfix">
                     <div class="decision-card" ng-repeat="decision in parentDecision.childDecisions track by decision.id">
-                        <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ui-sref-opts="{reload: true}" class="img-container">
+                        <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null, category: null})" ui-sref-opts="{reload: true}" class="img-container">
                             <div class="img-container">
                                 <img ng-src="{{::decision.imageUrl}}" class="img-responsive" '>
                             </div>
                         </a>
                         <div>
-                            <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null})" ui-sref-opts="{reload: true}" ng-bind="::decision.name"></a>
+                            <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, tab: null, category: null})" ui-sref-opts="{reload: true}" ng-bind="::decision.name"></a>
                         </div>
                         <div class="app-controls">
                             <i ng-click="vm.removeDecisionCompare(decision.id)" class="app-control link-secondary-light fa fa-times" aria-hidden="true"></i>

@@ -42,12 +42,12 @@
                 }
             })
 
-        .state('decisions.single.options', {
-            url: '/options',
+        .state('decisions.single.categories', {
+            url: '/categories',
             cache: false,
             views: {
                 '@': {
-                    templateUrl: 'app/decision/decision-options.html',
+                    templateUrl: 'app/decision/decision-categories.html',
                     controller: 'DecisionOptionsController',
                     controllerAs: 'vm',
                 }
@@ -64,12 +64,12 @@
             }
         })
 
-        .state('decisions.single.options.child', {
+        .state('decisions.single.categories.child', {
             url: '/:optionChildId/:optionChildSlug',
             cache: false,
             views: {
                 '@': {
-                    templateUrl: 'app/decision/decision-options.html',
+                    templateUrl: 'app/decision/decision-categories.html',
                     controller: 'DecisionOptionsController',
                     controllerAs: 'vm',
                 }
@@ -222,7 +222,7 @@
 
                 // TODO: find better way
                 // Remove size & page params
-                var states = ['decisions', 'decisions.single.options'];
+                var states = ['decisions', 'decisions.single.categories'];
                 if (!_.includes(states, $state.current.name)) {
                     var params = $state.params;
                     params.page = null;

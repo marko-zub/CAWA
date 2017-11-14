@@ -16,7 +16,7 @@
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.options" translate-cloak>{{ 'Options' | translate }}</a>
+                            <a ui-sref="decisions.single.categories" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
                         </li>
                         <li>
                             <a ui-sref="decisions.single.nominations({tab: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
@@ -30,7 +30,7 @@
                         <div class="col-sm-12">
                             <div class="clearfix">
                                 <div class="pull-right">
-                                    <a ui-sref="decisions.single.options(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
+                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
                                         {{ 'See All' | translate }} {{ ::vm.parent.name }}
                                     </a>
                                 </div>
@@ -98,7 +98,7 @@
                     </li>
                 </ul>
                 <div class="pull-right text-header">
-                    <a ui-sref="decisions.single.options(::{id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null})" class="see-all">
+                    <a ui-sref="decisions.single.categories(::{id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null, category: null})" class="see-all">
                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>
