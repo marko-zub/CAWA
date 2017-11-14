@@ -58,9 +58,25 @@
 
             getProperties(vm.decision.id);
 
+            initSortMode($stateParams.tab);
+            changeDecisionGroupsTab($stateParams.category);
+
             if (!$state.params.tab) {
                 vm.activeDecisionGroupsTabIndex = 0;
             }            
+        }
+
+        vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
+
+        function changeDecisionGroupsTab(mode) {
+            // console.log(vm.decisionGroups);
+
+            var findIndex = _.findIndex(vm.decisionGroups, function(navItem) {
+                return navItem.nameSlug === mode;
+            });
+            if (findIndex >= 0) {
+                vm.activeDecisionGroupsTabIndex = findIndex;
+            }
         }
 
         // Move to component
@@ -91,13 +107,12 @@
             var findIndex = _.findIndex(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
-            if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
+            if (findIndex >= 0) {
                 vm.tabMode = navigationObj[findIndex].value;
                 getDecisionMatrix(vm.decision.id);
                 vm.activeTabSort = findIndex;
                 // Hide criterias
                 vm.criteriaGroups = [];
-                vm.activeDecisionGroupsTabIndex = -1;
             } else {
                 vm.tabMode = 'topRated';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {

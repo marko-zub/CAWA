@@ -44,7 +44,22 @@
             } else {
                 vm.decisionsLoader = false;
             }
+
+            initTabs();
             setPageData();
+        }
+
+        function initTabs() {
+            if (vm.decision.decisionGroups.length) {
+                var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
+                    return decisionGroup.nameSlug === $stateParams.optionChildSlug;
+                });
+                vm.activeDecisionGroupsTabIndex = index;
+            } 
+
+            if (!$stateParams.optionChildSlug) {
+                vm.activeDecisionGroupsTabIndex = 0;
+            }
         }
 
         // TODO: Simplify logic

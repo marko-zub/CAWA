@@ -11,7 +11,7 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('decisions.single', {
-                url: '/:id/{slug}',
+                url: '/:id/{slug}?category',
                 abstract: false,
                 cache: false,
                 views: {
@@ -28,6 +28,10 @@
                 },
                 params: {
                     slug: {
+                        value: null,
+                        squash: true
+                    },
+                    category: {
                         value: null,
                         squash: true
                     },
