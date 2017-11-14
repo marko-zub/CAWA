@@ -72,10 +72,13 @@
                         <span class="text-header" translate-cloak>
                             {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                         </span>
-                        <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
-                            <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
+                        <ul class="nav nav-tabs nav-tabs-sm">
+                            <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
                                 <a ui-sref="decisions.single.options.child(::{optionChildId: item.id, optionChildSlug: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.name | translate }}</a>
                             </li>
+                            <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
+                                <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
+                            </li>                            
                         </ul>
                     </div>
                 </div>

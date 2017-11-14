@@ -57,6 +57,10 @@
             }];
 
             getProperties(vm.decision.id);
+
+            if (!$state.params.tab) {
+                vm.activeDecisionGroupsTabIndex = 0;
+            }            
         }
 
         // Move to component
@@ -84,7 +88,6 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-
             var findIndex = _.findIndex(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
@@ -94,13 +97,13 @@
                 vm.activeTabSort = findIndex;
                 // Hide criterias
                 vm.criteriaGroups = [];
+                vm.activeDecisionGroupsTabIndex = -1;
             } else {
                 vm.tabMode = 'topRated';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
                     getDecisionMatrix(vm.decision.id);
                 });
                 vm.activeTabSort = 0;
-
                 $state.params.tab = null;
                 $state.transitionTo($state.current.name, $state.params, {
                     reload: false,
@@ -134,7 +137,6 @@
 
             // decisionGroups
             vm.parentDecisionGroups = decision.parentDecisionGroups;
-            vm.activeDecisionGroupsTabIndex = 0;
             vm.decisionGroups = decision.decisionGroups;
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
