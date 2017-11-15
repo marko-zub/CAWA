@@ -8,10 +8,10 @@
                     <!-- TODO: make as dynamic navigation -->
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li>
-                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, tab: null, category: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
+                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li ng-if="::vm.decision.parentDecisionGroups.length" ng-repeat="parent in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, tab: null, category: null})"> {{::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
+                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, sort: null, category: null})"> {{::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
                         </li>
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
@@ -20,7 +20,7 @@
                             <a ui-sref="decisions.single.categories" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({tab: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
+                            <a ui-sref="decisions.single.nominations({sort: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>
                 </div>
@@ -43,11 +43,11 @@
                         <a ui-sref="decisions.single.categories.child(::{optionChildId: item.id, optionChildSlug: item.nameSlug})" >{{ item.name | translate }}</a>
                     </li>
                     <!-- <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
-                        <a ui-sref="decisions.single(::{tab:item.key})">{{item.label}}</a>
-                    </li>  -->                    
+                        <a ui-sref="decisions.single(::{sort:item.key})">{{item.label}}</a>
+                    </li>  -->
                 </ul>
-            </div>            
-            
+            </div>
+
             <div class="loader-container">
                 <div class="row" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
                     <div class="col-md-8">
@@ -67,8 +67,8 @@
                     </div>
                 </div>
                 <!-- Filter Name -->
-            
-            
+
+
                 <div ng-show="!vm.decisionsLoader && vm.decisions.length">
                     <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
 

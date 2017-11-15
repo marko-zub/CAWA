@@ -31,7 +31,7 @@
             var data = checkStateParams($stateParams);
             getDecisions(data);
 
-            if (!$stateParams.tab) {
+            if (!$stateParams.sort) {
                 vm.activeTab = 1;
             }
 
@@ -64,18 +64,18 @@
             allowedTabParams = navigationObj;
 
             data.sortDirection = stateParams.sortDirection || 'DESC';
-            if (stateParams.tab) {
+            if (stateParams.sort) {
                 var checkObj, allowed;
 
                 checkObj = {
-                    key: stateParams.tab
+                    key: stateParams.sort
                 };
                 allowed = _.find(allowedTabParams, checkObj);
                 if (_.isObject(allowed)) {
                     data.sort = allowed.value;
                 } else {
                     $state.go($state.current.name, {
-                        tab: null
+                        sort: null
                     }, {
                         reload: false,
                         notify: false

@@ -19,7 +19,7 @@
                             <a ui-sref="decisions.single.categories" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({tab: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
+                            <a ui-sref="decisions.single.nominations({sort: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>
                 </div>
@@ -98,7 +98,7 @@
                     </li>
                 </ul>
                 <div class="pull-right text-header">
-                    <a ui-sref="decisions.single.categories(::{id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, tab: null, category: null})" class="see-all">
+                    <a ui-sref="decisions.single.categories(::{id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, sort: null, category: null})" class="see-all">
                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
                     </a>
                 </div>

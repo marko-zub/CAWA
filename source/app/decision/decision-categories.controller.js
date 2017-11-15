@@ -40,7 +40,7 @@
             vm.decisionParents = vm.decision.parentDecisions;
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
-                initSortMode($stateParams.tab);
+                initSortMode($stateParams.sort);
             } else {
                 vm.decisionsLoader = false;
             }
@@ -80,7 +80,7 @@
                 });
                 vm.activeTabSort = 1;
 
-                $state.params.tab = null;
+                $state.params.sort = null;
                 $state.transitionTo($state.current.name, $state.params, {
                     reload: false,
                     inherit: true,

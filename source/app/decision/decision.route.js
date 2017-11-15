@@ -35,7 +35,7 @@
                         value: null,
                         squash: true
                     },
-                    tab: {
+                    sort: {
                         value: null,
                         squash: true
                     }
@@ -79,12 +79,12 @@
                     value: null,
                     squash: true
                 },
-                tab: {
+                sort: {
                     value: null,
                     squash: true
                 }
             }
-        })        
+        })
 
         .state('decisions.single.nominations', {
             url: '/nominations',
@@ -182,7 +182,7 @@
         // }
 
         // TODO: optimize logic or remove from resolver
-        // var stateListener = 
+        // var stateListener =
         $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams) {
                 var currentState;
@@ -229,7 +229,8 @@
                     params.size = null;
                     params.sort = null;
                     if ($state.current.name !== 'decisions.single') {
-                        params.tab = null;
+                        params.sort = null;
+                        params.category = null;
                     }
                     $state.go($state.current.name, params, {
                         notify: false,

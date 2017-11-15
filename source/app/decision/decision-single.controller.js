@@ -58,12 +58,12 @@
 
             getProperties(vm.decision.id);
 
-            initSortMode($stateParams.tab);
+            initSortMode($stateParams.sort);
             changeDecisionGroupsTab($stateParams.category);
 
-            if (!$state.params.tab) {
+            if (!$state.params.sort) {
                 vm.activeDecisionGroupsTabIndex = 0;
-            }            
+            }
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
@@ -107,7 +107,7 @@
             var findIndex = _.findIndex(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
-            if (findIndex >= 0) {
+            if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
                 vm.tabMode = navigationObj[findIndex].value;
                 getDecisionMatrix(vm.decision.id);
                 vm.activeTabSort = findIndex;
@@ -119,7 +119,7 @@
                     getDecisionMatrix(vm.decision.id);
                 });
                 vm.activeTabSort = 0;
-                $state.params.tab = null;
+                $state.params.sort = null;
                 $state.transitionTo($state.current.name, $state.params, {
                     reload: false,
                     inherit: true,
@@ -135,7 +135,7 @@
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
                 vm.totalCount = vm.decision.totalChildDecisions;
-                initSortMode($stateParams.tab);
+                initSortMode($stateParams.sort);
             }
 
             // Recommended Decisions
@@ -162,11 +162,17 @@
                     name: vm.decisionGroups[0].name,
                     nameSlug: vm.decisionGroups[0].nameSlug
                 };
+                $state.params.category = vm.decisionGroups[0].nameSlug;
+                $state.transitionTo($state.current.name, $state.params, {
+                    reload: false,
+                    inherit: true,
+                    notify: false
+                });
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];
                 // sendData.sortDecisionPropertyName = vm.tabMode;
-                sendData.sortDecisionPropertyDirection = 'DESC';                
+                sendData.sortDecisionPropertyDirection = 'DESC';
                 DecisionDataService.getDecisionGroups(vm.decisionGroups[0].id, sendData).then(function(result) {
                     // console.log(result)
                     var childDecisionGroups = [];
