@@ -74,23 +74,23 @@
                                 <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }}</a>
 
                                                          <!-- <a ui-sref="decisions.single(::{category:item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.nameSlug)">{{ item.name | translate }}</a> -->
-                                
-                            </li>                          
+
+                            </li>
                         </ul>
                     </div>
                     <span class="text-header" translate-cloak>
                         {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
-                    </span>                    
+                    </span>
                 </div>
-                
+
                 <div>
                     <div class="nav-tabs-wrapper clearfix tabs-right">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
                                 <a ui-sref="decisions.single(::{tab:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
-                            </li>  
+                            </li>
                         </ul>
-                    </div>                    
+                    </div>
                 </div>
 
                 <!-- Tabs content -->
@@ -115,7 +115,7 @@
                         </ul> -->
                     </div>
                 </div>
-        
+
 
                 <div class="col-sm-12">
 

@@ -39,7 +39,7 @@
                 }
             }),
 
-            decisionsMatrix = $resource(decisionUrl + '/decisions/matrix', {
+            decisionsMatrix = $resource(Config.endpointUrl + 'decisiongroups/:id/decisions/matrix', {
                 id: '@id'
             }, {
                 getDecisionById: {
@@ -55,7 +55,7 @@
                     method: 'POST',
                     isArray: false
                 }
-            }),            
+            }),
 
             decisionsPropertyGroups = $resource(decisionUrl + '/propertygroups', {
                 id: '@id'
@@ -130,10 +130,9 @@
             decisionInfoFull = $resource(decisionUrl, {
                 id: '@id',
                 fetchOwnerUsers: '@fetchOwnerUsers',
-                fetchParentDecisions: '@fetchParentDecisions',
-                fetchFollowingDecisions: '@fetchFollowingDecisions',
                 fetchMedia: '@fetchMedia',
-                fetchDecisionGroups: '@fetchDecisionGroups'
+                fetchDecisionGroups: '@fetchDecisionGroups',
+                fetchParentDecisionGroups: '@fetchParentDecisionGroups'
             }),
 
             decisionsInfo = $resource(decisionUrl, {
@@ -145,9 +144,9 @@
                 childId: '@childId'
             }, {}),
 
-            criteriasGroups = $resource(decisionUrl + '/criteriongroups'),
+            criteriasGroups = $resource(Config.endpointUrl + 'decisiongroups/:id/criteriongroups'),
 
-            characteristictsGroups = $resource(decisionUrl + '/characteristicgroups', {
+            characteristictsGroups = $resource(Config.endpointUrl + 'decisiongroups/:id/characteristicgroups', {
                 options: '@options'
             }),
 
@@ -213,7 +212,7 @@
         function getDecisionGroups(id, data) {
             return decisionsGroups.getDecisionById({
                 id: id
-            }, data).$promise;            
+            }, data).$promise;
         }
 
         function getDecisionsPropertyGroups(id) {
@@ -258,8 +257,6 @@
             };
 
             if (params.fetchOwnerUsers) { sendParams.fetchOwnerUsers = params.fetchOwnerUsers; }
-            if (params.fetchParentDecisions) { sendParams.fetchParentDecisions = params.fetchParentDecisions; }
-            if (params.fetchFollowingDecisions) { sendParams.fetchFollowingDecisions = params.fetchFollowingDecisions; }
             if (params.fetchMedia) { sendParams.fetchMedia = params.fetchMedia; }
             if (params.fetchDecisionGroups) { sendParams.fetchDecisionGroups = params.fetchDecisionGroups; }
             if (params.fetchParentDecisionGroups) { sendParams.fetchParentDecisionGroups = params.fetchParentDecisionGroups; }
