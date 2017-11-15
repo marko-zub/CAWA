@@ -139,15 +139,15 @@
             }
 
             // Recommended Decisions
-            if (vm.decisionParents && vm.decisionParents.length) {
-                vm.recommendedDecisionsListLoader = true;
-                vm.activeRecommendedTab = {
-                    id: vm.decisionParents[0].id,
-                    name: vm.decisionParents[0].name,
-                    nameSlug: vm.decisionParents[0].nameSlug
-                };
-                getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
-            }
+            // if (vm.decisionParents && vm.decisionParents.length) {
+            //     vm.recommendedDecisionsListLoader = true;
+            //     vm.activeRecommendedTab = {
+            //         id: vm.decisionParents[0].id,
+            //         name: vm.decisionParents[0].name,
+            //         nameSlug: vm.decisionParents[0].nameSlug
+            //     };
+            //     getRecommendedDecisions(vm.decision.id, vm.decisionParents[0]);
+            // }
 
 
             // decisionGroups
@@ -184,6 +184,10 @@
                     vm.decisionsChildsLoader = false;
                     // vm.childDecisionGroups = result.decisionMatrixs;
                 });
+            }
+
+            if (vm.parentDecisionGroups.length) {
+                getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
             }
         }
 

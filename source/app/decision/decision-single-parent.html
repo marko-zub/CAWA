@@ -94,7 +94,7 @@
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
-                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
+                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)">{{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
                     </li>
                 </ul>
                 <div class="pull-right text-header">

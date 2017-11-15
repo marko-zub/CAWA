@@ -40,7 +40,7 @@
             <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
-                        <a ui-sref="decisions.single.categories.child(::{optionChildId: item.id, optionChildSlug: item.nameSlug})" >{{ item.name | translate }}</a>
+                        <a ui-sref="decisions.single.categories.child(::{optionChildSlug: item.nameSlug})" >{{ item.name | translate }}</a>
                     </li>
                     <!-- <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index + 1}">
                         <a ui-sref="decisions.single(::{sort:item.key})">{{item.label}}</a>

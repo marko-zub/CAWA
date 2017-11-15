@@ -65,7 +65,7 @@
         })
 
         .state('decisions.single.categories.child', {
-            url: '/:optionChildId/:optionChildSlug',
+            url: '/:optionChildSlug',
             cache: false,
             views: {
                 '@': {
