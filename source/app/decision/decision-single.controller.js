@@ -162,12 +162,12 @@
                     name: vm.decisionGroups[0].name,
                     nameSlug: vm.decisionGroups[0].nameSlug
                 };
-                $state.params.category = vm.decisionGroups[0].nameSlug;
-                $state.transitionTo($state.current.name, $state.params, {
-                    reload: false,
-                    inherit: true,
-                    notify: false
-                });
+                // $state.params.category = vm.decisionGroups[0].nameSlug;
+                // $state.transitionTo($state.current.name, $state.params, {
+                //     reload: false,
+                //     inherit: true,
+                //     notify: false
+                // });
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];

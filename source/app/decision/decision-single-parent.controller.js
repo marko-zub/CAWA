@@ -34,8 +34,8 @@
             }
 
             stateId = parseInt($stateParams.parentId);
-            vm.decisionParents = vm.decision.parentDecisions;
-            vm.parent = _.find(vm.decisionParents, function(parent) {
+            vm.ParentDecisionGroups = vm.decision.parentDecisionGroups;
+            vm.parent = _.find(vm.ParentDecisionGroups, function(parent) {
                 return parent.id === stateId;
             });
             if (!vm.parent) return;
@@ -47,7 +47,7 @@
 
         function setPageData() {
             vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-            getDecisionParentsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
+            getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
@@ -66,7 +66,7 @@
         // Remove loop
         var criteriaIds = [];
 
-        function getDecisionParentsCriteriaCharacteristicts(parentId, parentUid) {
+        function getParentDecisionGroupsCriteriaCharacteristicts(parentId, parentUid) {
             var sendData = {
                 includeChildDecisionIds: []
             };

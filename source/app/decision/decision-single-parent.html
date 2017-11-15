@@ -9,8 +9,8 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
-                        <li ng-repeat="parent in vm.decisionParents track by $index" ui-sref-active="active">
-                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.name }}</a>
+                        <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ui-sref-active="active">
+                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
                         </li>
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
@@ -88,12 +88,12 @@
 
         <!-- TODO: move to component -->
         <!-- Recommended Start -->
-        <div class="col-sm-3 recommended-list" ng-if="vm.decisionParents.length">
+        <div class="col-sm-3 recommended-list" ng-if="vm.ParentDecisionGroups.length">
             <h4>{{ "Recommended" | translate }}</h4>
 
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-repeat="parent in vm.decisionParents track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                    <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                         <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{::parent.name}}</a>
                     </li>
                 </ul>

@@ -64,7 +64,7 @@
             <div class="row decision-childs">
 
                 <div class="col-xs-12 mg-sm-b">
-                    <div class="nav-tabs-wrapper clearfix">
+                    <div class="nav-tabs-wrapper tabs-left clearfix">
                         <h4 class="tabs-title" translate-cloak>
                             {{ 'All Options' | translate }}
                             <span ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader" class="title-counter" translate-cloak>({{::vm.totalCount}})</span>
@@ -77,13 +77,18 @@
 
                             </li>
                         </ul>
+                        <div class="pull-right text-header">
+                            <a ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
+                                {{ 'See All' | translate }}
+                            </a>
+                        </div>                        
                     </div>
                     <span class="text-header" translate-cloak>
                         {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
                     </span>
                 </div>
 
-                <div>
+                <div ng-if="vm.childDecisionGroups.length">
                     <div class="nav-tabs-wrapper clearfix tabs-right">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
@@ -161,14 +166,14 @@
             </div>
 
 
-            <div class="row" ng-show="!vm.decisionsChildsLoader">
+<!--             <div class="row" ng-show="!vm.decisionsChildsLoader">
                 <div class="col-sm-8">
                     <div class="comments">
                         <h4 class="comments-tile" translate-cloak>{{ 'Comments' | translate }}</h4>
                         <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
         <div class="col-sm-3">
