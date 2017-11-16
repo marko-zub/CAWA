@@ -186,8 +186,10 @@
                 });
             }
 
-            if (vm.parentDecisionGroups.length) {
+            if (vm.parentDecisionGroups && vm.parentDecisionGroups.length) {
                 getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
+            } else {
+                getRecommendedDecisions(vm.decision.id, vm.decision);
             }
         }
 
