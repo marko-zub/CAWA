@@ -81,11 +81,11 @@
                             <a ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
                                 {{ 'See All' | translate }}
                             </a>
-                        </div>                        
+                        </div>
                     </div>
-                    <span class="text-header" translate-cloak>
+     <!--                <span class="text-header" translate-cloak>
                         {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
-                    </span>
+                    </span> -->
                 </div>
 
                 <div ng-if="vm.childDecisionGroups.length">
@@ -102,7 +102,7 @@
                 <div ng-if="!vm.childDecisionGroups.length && !vm.decisionsChildsLoader">
                     <div class="col-sm-7">
                         <div class="mg-b-md app-action-text" translate-cloak>
-                            {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
+                            {{ "NO OPTIONS" | translate }}
                         </div>
                     </div>
                 </div>

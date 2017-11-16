@@ -35,7 +35,7 @@
                                     <a href="#" class="control">
                                         <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::property.decision.totalHistoryValues || 0}}</a>
                                     <a href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
-                                </div>                                 
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -46,8 +46,5 @@
         <p ng-if="!vm.list.length" class="app-action-content" translate-cloak>
             {{ 'NO PROPERTIES' | translate }}
         </p>
-    </div>
-    <div class="text text-right" translate-cloak>
-        {{ 'CANT FIND PROPERTIES' | translate }} <a href="#">{{ 'Add it' | translate }}</a>
     </div>
 </div>
