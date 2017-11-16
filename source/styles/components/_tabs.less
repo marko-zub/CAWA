@@ -38,17 +38,61 @@
   }
 }
 
+// Pills
+.nav {
+  &.nav-pills {
+    & > li {
+      float: left;
+      & > a {
+        padding: 7px 16px;
+        font-size: 16px;
+        color: @color-dark;
+        background: transparent;
+        border-radius: 0;        
+        position: relative; 
+        &:focus {
+          background-color: transparent;
+          color: @color-dark;
+        }
+        &:hover {
+          background-color: #eeeeee;
+          color: @color-dark;
+        }
+        &:before {
+          position: absolute;
+          bottom: 0;
+          background-color: @color-orange;
+          content: '';
+          height: 3px;
+          visibility: hidden;
+          width: 100%;
+          left: 0;
+        }     
+      }
+      &.active {
+        & > a {   
+          &:before {
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+}
+
 .nav-tabs-wrapper {
     .clearfix;
     &.tabs-left {
          border-bottom: 1px solid #ddd;
+        .nav-pills,
         .nav-tabs {
             float: left;
             border-bottom: 0;
-        }         
+        }     
     }
     &.tabs-right {
         border-bottom: 1px solid #ddd;
+        .nav-pills,
         .nav-tabs {
             float: right;
             border-bottom: 0;

@@ -60,7 +60,11 @@
                 size: {
                     value: null,
                     squash: true
-                }
+                },
+                sort: {
+                    value: null,
+                    squash: true
+                }                
             }
         })
 

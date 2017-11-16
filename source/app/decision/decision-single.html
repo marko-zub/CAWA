@@ -66,15 +66,12 @@
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper tabs-left clearfix">
                         <h4 class="tabs-title" translate-cloak>
-                            {{ 'All Options' | translate }}
+                            {{ 'ALL CATEGORIES' | translate }}
                             <span ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader" class="title-counter" translate-cloak>({{::vm.totalCount}})</span>
                         </h4>
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
                                 <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }}</a>
-
-                                                         <!-- <a ui-sref="decisions.single(::{category:item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.nameSlug)">{{ item.name | translate }}</a> -->
-
                             </li>
                         </ul>
                         <div class="pull-right text-header">
@@ -83,14 +80,11 @@
                             </a>
                         </div>
                     </div>
-     <!--                <span class="text-header" translate-cloak>
-                        {{ "Can't find the necessary option?" | translate }} <a href="#">{{ 'Add it' | translate }}</a>
-                    </span> -->
                 </div>
-
-                <div ng-if="vm.childDecisionGroups.length">
-                    <div class="nav-tabs-wrapper clearfix tabs-right">
-                        <ul class="nav nav-tabs nav-tabs-sm">
+                
+                <div class="col-xs-12" ng-if="vm.childDecisionGroups.length">
+                    <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                        <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
                                 <a ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
                             </li>
