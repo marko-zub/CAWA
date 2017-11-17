@@ -38,7 +38,15 @@
                     sort: {
                         value: null,
                         squash: true
-                    }
+                    },
+                    page: {
+                        value: null,
+                        squash: true
+                    },
+                    size: {
+                        value: null,
+                        squash: true
+                    },                    
                 }
             })
 

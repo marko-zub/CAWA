@@ -141,6 +141,8 @@
 
                         <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
                             <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
+                            
+                            <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
 
                             <!-- TODO: remove second loader -->
                             <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
@@ -151,12 +153,13 @@
                     </div>
 
                 </div>
-                <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
+<!--                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
                     {{ "LOOKING MORE" | translate }}
                     <a ui-sref="decisions.single.categories" class="text-bold" translate-cloak>
                         {{ "the complete list of decisions" | translate }}
                     </a>
-                </div>
+                </div> -->
+                
             </div>
 
 
@@ -173,10 +176,10 @@
         <div class="col-sm-3">
 
             <!-- Properties List -->
-            <div class="properties-list-wrapper">
+<!--             <div class="properties-list-wrapper">
                 <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
                 <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span></span></div>
-            </div>
+            </div> -->
             <!-- End Properties List -->
 
             <!-- Owners -->

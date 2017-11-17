@@ -193,16 +193,17 @@
             }
         }
 
-        function getDecisionMatrix(id, filter) {
+        function getDecisionMatrix(id, pagination, filter) {
             vm.decisionsChildsLoaderRequest = true;
             var sendData = {};
-            var pagination = _.clone(vm.pagination);
 
-            pagination.pageNumber = pagination.pageNumber - 1;
-            if (pagination) {
-                sendData.pageNumber = pagination.pageNumber;
+            if (!pagination) {
+                pagination = _.clone(vm.pagination);
+            } else {
+                sendData.pageNumber = pagination.pageNumber - 1;
                 sendData.pageSize = pagination.pageSize;
             }
+
 
             if (vm.tabMode === 'topRated') {
                 sendData.sortCriteriaIds = criteriaGroupsIds;
@@ -226,20 +227,12 @@
                 vm.decisionsChildsLoader = false;
                 vm.decisionsChildsLoaderRequest = false;
 
+                vm.pagination = initPagination(result.totalDecisionMatrixs, $stateParams.page, $stateParams.size);
                 vm.pagination.totalDecisions = result.totalDecisionMatrixs;
             });
         }
 
         // TODO: remove pagination
-        function initPagination() {
-            vm.pagination = {
-                pageNumber: parseInt($stateParams.page) || 1,
-                pageSize: parseInt($stateParams.size) || 10,
-                totalDecisions: vm.decision.totalChildDecisions || 10
-            };
-
-            vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
-        }
 
         function getCriteriaGroupsByParentId(id) {
             // Criteria
@@ -346,6 +339,37 @@
         function changeOptionTab(key) {
             initSortMode(key);
         }
+
+        // Pagination
+        vm.changePage = changePage;
+
+        function changePage(pagination) {
+            getDecisionMatrix(vm.decision.id, pagination);
+            updateStateParams(pagination);
+        }
+
+        function updateStateParams(pagination) {
+            var params = $state.params;
+            params.page = pagination.pageNumber || 1;
+            params.size = pagination.pageSize;
+            $state.transitionTo($state.current.name, params, {
+                reload: false,
+                inherit: true,
+                notify: false
+            });
+        }
+
+        function initPagination(total, pageNumber, pageSize) {
+            if (pageSize) {
+                vm.decisionsHeight = pageSize * 70 + 'px';
+            }
+            return {
+                pageNumber: parseInt(pageNumber) || 1,
+                pageSize: parseInt(pageSize) || 10,
+                totalDecisions: parseInt(total) || 10
+            };
+        }
+        // End pagination        
 
     }
 })();
