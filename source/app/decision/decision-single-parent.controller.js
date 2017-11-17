@@ -47,7 +47,7 @@
 
         function setPageData() {
             vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-            getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id, vm.parent.id);
+            getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id);
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
@@ -66,7 +66,7 @@
         // Remove loop
         var criteriaIds = [];
 
-        function getParentDecisionGroupsCriteriaCharacteristicts(parentId, parentUid) {
+        function getParentDecisionGroupsCriteriaCharacteristicts(parentId) {
             var sendData = {
                 includeChildDecisionIds: []
             };
@@ -74,7 +74,7 @@
 
             $q.all([
                 getCriteriaGroupsById(parentId),
-                getCharacteristicsGroupsById(parentUid),
+                getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
 
                 criteriaArray = values[0];

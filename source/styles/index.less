@@ -576,6 +576,9 @@ a {
   min-height: 320px;
   position: relative;
   overflow: hidden;
+  &.sm {
+    min-height: 100px;
+  }
 }
 
 .body-decisions-single {
@@ -599,4 +602,19 @@ a {
 .decision-childs-height {
   position: relative;
   min-height: 100px;
+}
+
+.decision-aside {
+  .app-list-title {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .col-sm-6 {
+    width: 58.33333333%;
+  }
+  .criteria-block.static .counters.percentage {
+    width: 58px;
+    text-align: right;
+  }
 }

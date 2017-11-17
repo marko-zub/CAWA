@@ -1,13 +1,10 @@
 <div class="app-container-sm">
-
     <div class="row">
         <div class="col-sm-9">
-        <!-- <div ng-class="vm.parentDecisionGroups.length ? 'col-sm-9' : 'col-sm-12'"> -->
+            <!-- <div ng-class="vm.parentDecisionGroups.length ? 'col-sm-9' : 'col-sm-12'"> -->
             <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
             <div class="post-header">
-
                 <app-votes></app-votes>
-
                 <div class="nav-tabs-wrapper">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li class="active">
@@ -28,7 +25,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="post-sub-header">
                 <div class="row">
                     <div class="col-sm-8">
@@ -41,28 +37,19 @@
                     </div>
                 </div>
             </div>
-
             <div class="post post-single with-rating">
-
                 <div class="clearfix text-justify">
                     <div class="post-image">
                         <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
                     </div>
                     <div class="page-description" ng-bind-html="(vm.decision.description || 'NO DESCRIPTION' | translate)" translate-cloak></div>
                 </div>
-
-
                 <media-links list="vm.decision.medias"></media-links>
-
                 <!-- Gallery -->
                 <media list="vm.decision.medias"></media>
                 <!-- End Gallery -->
-
             </div>
-
-
             <div class="row decision-childs">
-
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper tabs-left clearfix">
                         <h4 class="tabs-title" translate-cloak>
@@ -81,7 +68,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-xs-12" ng-if="vm.childDecisionGroups.length">
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
@@ -91,7 +77,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <!-- Tabs content -->
                 <div ng-if="!vm.childDecisionGroups.length && !vm.decisionsChildsLoader">
                     <div class="col-sm-7">
@@ -100,24 +85,17 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-xs-12 mg-sm-b">
-
                         <!-- <decisions-list compare="true" list="vm.childDecisionGroups" parent-decision="vm.decision"></decisions-list> -->
-
-           <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
+                        <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
                                 <a ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
                             </li>
                         </ul> -->
                     </div>
                 </div>
-
-
                 <div class="col-sm-12">
-
                     <div ng-show="vm.childDecisionGroups.length">
                         <div class="row">
                             <div class="col-md-8">
@@ -131,39 +109,28 @@
                                 <!-- Filter Name -->
                             </div>
                             <div class="col-md-4">
-
                                 <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
                                     {{ 'Comparison Matrix' | translate }}
                                 </a>
-
                             </div>
                         </div>
-
                         <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
                             <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
-                            
                             <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
-
                             <!-- TODO: remove second loader -->
                             <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
                         </div>
-
-
                         <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
                     </div>
-
                 </div>
-<!--                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
+                <!--                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
                     {{ "LOOKING MORE" | translate }}
                     <a ui-sref="decisions.single.categories" class="text-bold" translate-cloak>
                         {{ "the complete list of decisions" | translate }}
                     </a>
                 </div> -->
-                
             </div>
-
-
-<!--             <div class="row" ng-show="!vm.decisionsChildsLoader">
+            <!--             <div class="row" ng-show="!vm.decisionsChildsLoader">
                 <div class="col-sm-8">
                     <div class="comments">
                         <h4 class="comments-tile" translate-cloak>{{ 'Comments' | translate }}</h4>
@@ -171,26 +138,66 @@
                     </div>
                 </div>
             </div> -->
-
         </div>
         <div class="col-sm-3">
 
-            <!-- Properties List -->
-<!--             <div class="properties-list-wrapper">
-                <properties-list list="::vm.properties" ng-if="vm.properties.length"></properties-list>
-                <div ng-show="vm.propertiesDecisionsListLoader" class="app-loader-small"><span></span></div>
-            </div> -->
-            <!-- End Properties List -->
+            <!-- Parent criteria & characteristics -->
+            <div class="decision-aside" ng-if="vm.parentDecisionGroups.length">
+                <div class="nav-tabs-wrapper tabs-left">
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li ng-repeat="parent in vm.parentDecisionGroups track by $index" class="active">
+                            <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
+                        </li>
+                    </ul>
+                    <div class="pull-right text-header">
+                        <a ui-sref="decisions.single.categories({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
+                            {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="clearfix" ng-show="vm.criteriaGroupsCompilance">
+                    <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
+
+
+                    <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroupsCompilance.totalVotes > 0">
+                        <div ng-switch-when="true" class="criteria-block static pull-right">
+                            <div class="counters percentage">
+                                <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                            </div>
+                            <div class="counters criteria-block-votes">
+                                <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
+                                {{ vm.criteriaGroupsCompilance.totalVotes }}
+                            </div>
+                            <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                            </div>
+                        </div>
+                        <div ng-switch-when="false" class="pull-right mt-1">
+                            <a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="list-wrapper sm">
+                    <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
+                    <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" collapsed="false"></criteria-list>
+                </div>
+                <div class="list-wrapper sm">
+                    <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
+                    <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="false" collapsed="false"></characteristics-list>
+                </div>
+            </div>
+            <!-- End Parent criteria & characteristics -->
 
             <!-- Owners -->
             <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
             <!-- End Owners -->
-
             <!-- Recommended Start -->
             <!-- TODO: move to component -->
             <div class="recommended-list" translate-cloak>
                 <h4>{{ "Recommended" | translate }}</h4>
-
                 <div class="nav-tabs-wrapper tabs-left">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
@@ -203,14 +210,10 @@
                         </a>
                     </div>
                 </div>
-
                 <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
-
                 <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span></span></div>
-
             </div>
             <!-- End Recommended Start -->
         </div>
     </div>
-
 </div>
