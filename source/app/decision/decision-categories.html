@@ -29,11 +29,11 @@
 
             <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.decision.decisionGroups.length">
                 <h4 class="tabs-title" translate-cloak>
-                    {{ 'ALL CATEGORIES' | translate }}
+                    {{ 'CATEGORIES' | translate }}
                     <span class="title-counter" translate-cloak ng-show="vm.totalCount">({{vm.totalCount}})</span>
                 </h4>
             </div>
-            
+
   <!--           <pre>
                 {{ vm.decision | json }}
             </pre> -->
@@ -85,7 +85,7 @@
 
                 <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
             </div>
-<!-- 
+<!--
             <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                 <span class="text-header">
                     {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.

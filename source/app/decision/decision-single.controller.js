@@ -134,7 +134,6 @@
 
             if (vm.decision.totalChildDecisions > 0) {
                 vm.isDecisionsParent = true;
-                vm.totalCount = vm.decision.totalChildDecisions;
                 initSortMode($stateParams.sort);
             }
 
@@ -168,6 +167,7 @@
                 //     inherit: true,
                 //     notify: false
                 // });
+                //
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];
