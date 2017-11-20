@@ -114,6 +114,8 @@
                 sendData.pageSize = pagination.pageSize;
             }
 
+            sendData.sortDecisionPropertyName = 'createDate';
+            sendData.sortDecisionPropertyDirection = 'DESC';
             if (vm.tabMode === 'topRated') {
                 sendData.sortCriteriaIds = criteriaGroupsIds;
                 sendData.sortWeightCriteriaDirection = 'DESC';
@@ -123,8 +125,6 @@
                 sendData.sortDecisionPropertyDirection = 'DESC';
             }
 
-            sendData.sortDecisionPropertyName = 'createDate';
-            sendData.sortDecisionPropertyDirection = 'DESC';
             if (_.isNull(filter) || filter) {
                 sendData.decisionNameFilterPattern = filter;
             } else if (vm.filterName) {

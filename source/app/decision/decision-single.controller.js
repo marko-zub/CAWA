@@ -166,6 +166,8 @@
             }
 
 
+            sendData.sortDecisionPropertyName = 'createDate';
+            sendData.sortDecisionPropertyDirection = 'DESC';
             if (vm.tabMode === 'topRated') {
                 sendData.sortCriteriaIds = criteriaGroupsIds;
                 sendData.sortWeightCriteriaDirection = 'DESC';
@@ -328,10 +330,10 @@
                 totalDecisions: parseInt(total) || 10
             };
         }
-        // End pagination        
+        // End pagination
 
 
-        // TODO: simplify right block 
+        // TODO: simplify right block
         // Remove second criteria call
         function getCharacteristicsGroupsById(id) {
             return DecisionDataService.getCharacteristicsGroupsById(id, {
@@ -358,7 +360,7 @@
                 });
                 if (resultEl.characteristics.length > 0) return resultEl;
             });
-        }        
+        }
 
         function getParentDecisionGroupsCriteriaCharacteristicts(parentId) {
             var sendData = {
