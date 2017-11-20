@@ -41,7 +41,7 @@
             <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
-                        <a ui-sref="decisions.single.categories.child(::{optionChildSlug: item.nameSlug})" >{{ item.name | translate }}</a>
+                        <a ui-sref="decisions.single.categories.child(::{categorySlug: item.nameSlug})" >{{ item.name | translate }}</a>
                     </li>
                 </ul>
             </div>

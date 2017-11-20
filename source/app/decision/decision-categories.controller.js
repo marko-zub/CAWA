@@ -4,14 +4,14 @@
 
     angular
         .module('app.decision')
-        .controller('DecisionOptionsController', DecisionOptionsController);
+        .controller('DecisionCategoriesController', DecisionCategoriesController);
 
-    DecisionOptionsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
+    DecisionCategoriesController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
         'Config', 'PaginatioService'
     ];
 
-    function DecisionOptionsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
+    function DecisionCategoriesController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, $state, DecisionsUtils, $q, ContentFormaterService,
         Config, PaginatioService) {
 
@@ -52,12 +52,12 @@
         function initTabs() {
             if (vm.decision.decisionGroups.length) {
                 var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
-                    return decisionGroup.nameSlug === $stateParams.optionChildSlug;
+                    return decisionGroup.nameSlug === $stateParams.categorySlug;
                 });
                 vm.activeDecisionGroupsTabIndex = index;
             }
 
-            if (!$stateParams.optionChildSlug) {
+            if (!$stateParams.categorySlug) {
                 vm.activeDecisionGroupsTabIndex = 0;
             }
         }

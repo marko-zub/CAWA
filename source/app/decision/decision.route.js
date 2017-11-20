@@ -46,7 +46,7 @@
                     size: {
                         value: null,
                         squash: true
-                    },                    
+                    },
                 }
             })
 
@@ -56,7 +56,7 @@
             views: {
                 '@': {
                     templateUrl: 'app/decision/decision-categories.html',
-                    controller: 'DecisionOptionsController',
+                    controller: 'DecisionCategoriesController',
                     controllerAs: 'vm',
                 }
             },
@@ -72,17 +72,17 @@
                 sort: {
                     value: null,
                     squash: true
-                }                
+                }
             }
         })
 
         .state('decisions.single.categories.child', {
-            url: '/:optionChildSlug',
+            url: '/:categorySlug',
             cache: false,
             views: {
                 '@': {
                     templateUrl: 'app/decision/decision-categories.html',
-                    controller: 'DecisionOptionsController',
+                    controller: 'DecisionCategoriesController',
                     controllerAs: 'vm',
                 }
             },
@@ -153,7 +153,7 @@
             //     },
             // })
             .state('decisions.single.parent', {
-                url: '/:parentId/{parentSlug}',
+                url: '/characteristics/:parentId/{parentSlug}',
                 abstract: false,
                 cache: true,
                 views: {
@@ -167,6 +167,33 @@
                     parentSlug: {
                         value: null,
                         squash: false
+                    }
+                }
+            })
+
+            .state('decisions.single.parent.characteristic', {
+                url: '/:characteristicSLug',
+                abstract: false,
+                cache: false,
+                views: {
+                    '@': {
+                        templateUrl: 'app/decision/decision-single-parent.html',
+                        controller: 'DecisionSingleParentController',
+                        controllerAs: 'vm',
+                    }
+                },
+                params: {
+                    page: {
+                        value: null,
+                        squash: true
+                    },
+                    size: {
+                        value: null,
+                        squash: true
+                    },
+                    sort: {
+                        value: null,
+                        squash: true
                     }
                 }
             });
@@ -268,9 +295,18 @@
         }
 
         // TODO: make each route new resolver
-        var params = { fetchParentDecisions: true, fetchParentDecisionGroups: true, fetchDecisionGroups: true };
+        var params = {
+            fetchParentDecisions: true,
+            fetchParentDecisionGroups: true,
+            fetchDecisionGroups: true
+        };
         if ($rootScope.decisonFull) {
-            params = { fetchOwnerUsers: true, fetchMedia: true, fetchDecisionGroups: true, fetchParentDecisionGroups: true };
+            params = {
+                fetchOwnerUsers: true,
+                fetchMedia: true,
+                fetchDecisionGroups: true,
+                fetchParentDecisionGroups: true
+            };
         }
 
         return DecisionDataService.getDecisionInfoFull(id, params).then(function(result) {

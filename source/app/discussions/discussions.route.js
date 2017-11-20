@@ -26,19 +26,19 @@
                     }]
                 },
             })
-            .state('decisions.single.parent.characteristics', {
-                url: '/characteristics/:characteristicId/:characteristicSlug',
-                views: {
-                    '@': {
-                        templateUrl: 'app/discussions/decision-characteristics.html',
-                        controller: 'DeicisionCharacteristicsController',
-                        controllerAs: 'vm',
-                    }
-                }
-                // resolve: {
-                //     decisionDiscussionInfo: DecisionSingleDiscussionResolver
-                // }
-            })            
+            // .state('decisions.single.parent.characteristics', {
+            //     url: '/characteristics/:characteristicId/:characteristicSlug',
+            //     views: {
+            //         '@': {
+            //             templateUrl: 'app/discussions/decision-characteristics.html',
+            //             controller: 'DeicisionCharacteristicsController',
+            //             controllerAs: 'vm',
+            //         }
+            //     }
+            //     // resolve: {
+            //     //     decisionDiscussionInfo: DecisionSingleDiscussionResolver
+            //     // }
+            // })            
             .state('decisions.single.parent.reviews', {
                 url: '/reviews/:reviewId/:reviewSlug',
                 views: {
