@@ -12,7 +12,7 @@
     ];
 
     function DecisionOptionsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
-        $stateParams, DecisionSharedService,  $state, DecisionsUtils, $q, ContentFormaterService,
+        $stateParams, DecisionSharedService, $state, DecisionsUtils, $q, ContentFormaterService,
         Config, PaginatioService) {
 
         // TODO: clean up controller
@@ -55,7 +55,7 @@
                     return decisionGroup.nameSlug === $stateParams.optionChildSlug;
                 });
                 vm.activeDecisionGroupsTabIndex = index;
-            } 
+            }
 
             if (!$stateParams.optionChildSlug) {
                 vm.activeDecisionGroupsTabIndex = 0;
@@ -123,6 +123,8 @@
                 sendData.sortDecisionPropertyDirection = 'DESC';
             }
 
+            sendData.sortDecisionPropertyName = 'createDate';
+            sendData.sortDecisionPropertyDirection = 'DESC';
             if (_.isNull(filter) || filter) {
                 sendData.decisionNameFilterPattern = filter;
             } else if (vm.filterName) {
@@ -144,6 +146,7 @@
 
         // Pagination
         vm.changePage = changePage;
+
         function changePage(pagination) {
             getDecisionMatrix(vm.decision.id, pagination);
             updateStateParams(pagination);
@@ -161,11 +164,11 @@
         }
 
         function initPagination(total, pageNumber, pageSize) {
-             return {
-                 pageNumber: parseInt(pageNumber) || 1,
-                 pageSize: parseInt(pageSize) || 10,
-                 totalDecisions: parseInt(total) || 10
-             };
+            return {
+                pageNumber: parseInt(pageNumber) || 1,
+                pageSize: parseInt(pageSize) || 10,
+                totalDecisions: parseInt(total) || 10
+            };
         }
         // End pagination
 
