@@ -181,6 +181,9 @@
                 </div>
 
                 <div class="list-wrapper sm">
+                    <h5 ng-show="vm.decisionIndexInParentGroup >= 0">
+                        Number in Top {{ vm.decisionIndexInParentGroup }}
+                    </h5>
                     <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
                     <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" collapsed="false"></criteria-list>
                 </div>
@@ -194,26 +197,7 @@
             <!-- Owners -->
             <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
             <!-- End Owners -->
-            <!-- Recommended Start -->
-            <!-- TODO: move to component -->
-            <div class="recommended-list" translate-cloak>
-                <h4>{{ "Recommended" | translate }}</h4>
-                <div class="nav-tabs-wrapper tabs-left">
-                    <ul class="nav nav-tabs nav-tabs-sm">
-                        <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
-                            <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
-                        </li>
-                    </ul>
-                    <div class="pull-right text-header">
-                        <a ui-sref="decisions.single.categories({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
-                            {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
-                        </a>
-                    </div>
-                </div>
-                <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
-                <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span></span></div>
-            </div>
-            <!-- End Recommended Start -->
+
         </div>
     </div>
 </div>

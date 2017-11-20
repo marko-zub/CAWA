@@ -155,7 +155,18 @@
                 decisionId: '@decisionId'
             }, {}),
 
-            characteristicOptions = $resource(decisionUrl + '/characteristics/:optionId/characteristicoptions', {
+            criteriaByDecisionIndex = $resource(Config.endpointUrl + 'decisiongroups/:parentDecisionId/criteria/:criteriaIds/decisions/:decisionId/index', {
+                criteriaIds: '@criteriaIds',
+                decisionId: '@decisionId',
+                parentDecisionId: '@parentDecisionId'
+            }, {
+                query: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),
+
+            characteristicOptions = $resource(Config.endpointUrl + 'decisiongroups/', {
                 id: '@id',
                 optionId: '@optionId'
             }, {});
@@ -178,6 +189,7 @@
             getDecisionsInfo: getDecisionsInfo,
             getDecisionCharacteristics: getDecisionCharacteristics,
             getCriteriaByDecision: getCriteriaByDecision,
+            getCriteriaByDecisionIndex: getCriteriaByDecisionIndex,
             getDecisionAnalysis: getDecisionAnalysis,
             getDecisionNomination: getDecisionNomination,
             searchDecisions: searchDecisions,
@@ -256,10 +268,18 @@
                 id: id
             };
 
-            if (params.fetchOwnerUsers) { sendParams.fetchOwnerUsers = params.fetchOwnerUsers; }
-            if (params.fetchMedia) { sendParams.fetchMedia = params.fetchMedia; }
-            if (params.fetchDecisionGroups) { sendParams.fetchDecisionGroups = params.fetchDecisionGroups; }
-            if (params.fetchParentDecisionGroups) { sendParams.fetchParentDecisionGroups = params.fetchParentDecisionGroups; }
+            if (params.fetchOwnerUsers) {
+                sendParams.fetchOwnerUsers = params.fetchOwnerUsers;
+            }
+            if (params.fetchMedia) {
+                sendParams.fetchMedia = params.fetchMedia;
+            }
+            if (params.fetchDecisionGroups) {
+                sendParams.fetchDecisionGroups = params.fetchDecisionGroups;
+            }
+            if (params.fetchParentDecisionGroups) {
+                sendParams.fetchParentDecisionGroups = params.fetchParentDecisionGroups;
+            }
 
             return decisionInfoFull.query(sendParams).$promise;
         }
@@ -289,6 +309,14 @@
             return criteriaByDecision.query({
                 criterionId: criterionId,
                 decisionId: decisionId
+            }).$promise;
+        }
+
+        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIds) {
+            return criteriaByDecisionIndex.query({
+                decisionId: decisionId,
+                parentDecisionId: parentDecisionId,
+                criteriaIds: criteriaIds
             }).$promise;
         }
 

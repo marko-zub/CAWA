@@ -147,10 +147,10 @@
             }
 
             if (vm.parentDecisionGroups && vm.parentDecisionGroups.length) {
-                getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
+                // getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0].id);
             } else {
-                getRecommendedDecisions(vm.decision.id, vm.decision);
+                // getRecommendedDecisions(vm.decision.id, vm.decision);
             }
         }
 
@@ -389,6 +389,8 @@
 
                 sendData.sortCriteriaIds = criteriaGroupsIds;
 
+                getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);
+
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
                     criteriaGroups.totalVotes = _.sumBy(criteriaGroups, function(group) {
@@ -402,6 +404,14 @@
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
                 });
+            });
+        }
+
+        function getCriteriaByDecisionIndex (decisionId, parentDecisionId, criteriaIds) {
+            if (_.isEmpty(criteriaIds)) return;
+            var criteriaIdsString = criteriaIds.join(',');
+            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
+                vm.decisionIndexInParentGroup = resp.number;
             });
         }
     }
