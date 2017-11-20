@@ -108,7 +108,7 @@
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
 
-                    getRecommendedDecisions(vm.decision.id, vm.parent, criteriaArray);
+                    // getRecommendedDecisions(vm.decision.id, vm.parent, criteriaArray);
                 });
             });
         }
