@@ -33,7 +33,7 @@
             if (!!vm.links) vm.links = true;
             if (!vm.rating) vm.rating = false;
             if (vm.discussion !== true) vm.discussion = false;
-            if (vm.discussionLink !== true) vm.discussionLink = false;
+            if (vm.discussionLink !== false) vm.discussionLink = true;
             if (vm.collapsed !== false) vm.collapsed = true;
         }
 

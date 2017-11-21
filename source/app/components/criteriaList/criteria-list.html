@@ -16,7 +16,7 @@
                 <ul class="discussions-list">
                     <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'">
                         <div class="clearfix row-eq-height">
-                            <div class="col-sm-7 bg-gray-light-2 col-pr-sm">
+                            <div class="col-sm-6 bg-gray-light-2 col-pr-sm">
                                 <div class="discussions-list-content">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
                                         <div ng-switch-when="true">
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5 col-pl-sm text-right" ng-if="::vm.discussion">
+                            <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
                                 <div class="discussions-list-content">
                                     <div class="app-rating-inline">
                                         <div ng-switch="::(vm.rating && criteria.weight >= 0 && criteria.totalVotes > 0 )">
