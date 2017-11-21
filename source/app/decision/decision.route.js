@@ -76,7 +76,7 @@
             }
         })
 
-        .state('decisions.single.categories.child', {
+        .state('decisions.single.categories.category', {
             url: '/:categorySlug',
             cache: false,
             views: {
@@ -152,49 +152,45 @@
             //         decisionStateInfo: DecisionStateResolver
             //     },
             // })
-            .state('decisions.single.parent', {
-                url: '/characteristics/:parentId/{parentSlug}',
+            .state('decisions.single.characteristics', {
+                url: '/characteristics',
                 abstract: false,
                 cache: true,
                 views: {
                     '@': {
-                        templateUrl: 'app/decision/decision-single-parent.html',
-                        controller: 'DecisionSingleParentController',
+                        templateUrl: 'app/decision/decision-characteristics.html',
+                        controller: 'DecisionCharacteristicsController',
                         controllerAs: 'vm',
                     }
                 },
                 params: {
-                    parentSlug: {
-                        value: null,
-                        squash: false
-                    }
                 }
             })
 
-            .state('decisions.single.parent.characteristic', {
-                url: '/:characteristicSLug',
+            .state('decisions.single.characteristics.characteristic', {
+                url: '/:characteristicSlug',
                 abstract: false,
                 cache: false,
                 views: {
                     '@': {
-                        templateUrl: 'app/decision/decision-single-parent.html',
-                        controller: 'DecisionSingleParentController',
+                        templateUrl: 'app/decision/decision-characteristics.html',
+                        controller: 'DecisionCharacteristicsController',
                         controllerAs: 'vm',
                     }
                 },
                 params: {
-                    page: {
-                        value: null,
-                        squash: true
-                    },
-                    size: {
-                        value: null,
-                        squash: true
-                    },
-                    sort: {
-                        value: null,
-                        squash: true
-                    }
+                    // page: {
+                    //     value: null,
+                    //     squash: true
+                    // },
+                    // size: {
+                    //     value: null,
+                    //     squash: true
+                    // },
+                    // sort: {
+                    //     value: null,
+                    //     squash: true
+                    // }
                 }
             });
     }

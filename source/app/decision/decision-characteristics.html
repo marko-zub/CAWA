@@ -9,9 +9,12 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
-                        <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ui-sref-active="active">
+                        <li class="active">
+                            <a href="#" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
+                        </li>                        
+<!--                         <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ui-sref-active="active">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
@@ -25,21 +28,29 @@
                 </div>
             </div>
             <div class="post post-single">
-                <div class="post-sub-header">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="clearfix">
-                                <div class="pull-right">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
-                                        {{ 'See All' | translate }} {{ ::vm.parent.name }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                <div class="nav-tabs-wrapper border-0 mg-b-sm clearfix tabs-right" ng-if="vm.decision.decisionGroups.length">
+                    <h4 class="tabs-title" translate-cloak>
+                        {{ 'CHARACTERISTICS' | translate }} {{ vm.parent.ownerDecision.name }}
+                        <span class="title-counter" translate-cloak ng-show="vm.totalCount">({{vm.totalCount}})</span>
+                    </h4>
+                    <div class="pull-right text-header">
+                        <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
+                            {{ 'See All' | translate }} {{ ::vm.parent.name }}
+                        </a>
+                    </div>                       
                 </div>
 
-                <div class="row">
+                <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix" ng-if="vm.decision.decisionGroups.length">
+                    <ul class="nav nav-tabs nav-tabs-sm">
+                        <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
+                            <a ui-sref="decisions.single.characteristics.characteristic(::{characteristicSlug:parent.nameSlug, sort: null, category: null})" >{{ ::parent.name }}</a>
+                        </li>
+                    </ul>
+                 
+                </div>
+ 
+                <div class="row" ng-if="vm.parent">
                     <div class="col-sm-6">
 
                         <div class="clearfix" ng-show="vm.criteriaGroups">

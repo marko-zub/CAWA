@@ -4,25 +4,24 @@
 
     angular
         .module('app.decision')
-        .controller('DecisionSingleParentController', DecisionSingleParentController);
+        .controller('DecisionCharacteristicsController', DecisionCharacteristicsController);
 
-    DecisionSingleParentController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsUtils',
+    DecisionCharacteristicsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsUtils',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', '$sce', '$q'
     ];
 
-    function DecisionSingleParentController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsUtils,
+    function DecisionCharacteristicsController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsUtils,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, $sce, $q) {
 
         var
             vm = this,
-            criteriaArray,
-            stateId;
+            criteriaArray;
 
         vm.$onInit = onInit;
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            console.log('Decision Single Parent Controller');
+            console.log('Decision Characteristics Controller');
 
             vm.decision = decisionBasicInfo || {};
             vm.criteriaGroupsLoader = true;
@@ -33,16 +32,24 @@
                 vm.isDecisionsParent = true;
             }
 
-            stateId = parseInt($stateParams.parentId);
             vm.ParentDecisionGroups = vm.decision.parentDecisionGroups;
-            vm.parent = _.find(vm.ParentDecisionGroups, function(parent) {
-                return parent.id === stateId;
-            });
-            if (!vm.parent) return;
 
+            if ($stateParams.characteristicSlug) {
+                vm.parent = findParentId($stateParams.characteristicSlug);
+                if (!vm.parent) {
+                    vm.parent = vm.decision.parentDecisionGroups[0];
+                }
+            }
+            
             if (vm.parent && vm.decision) {
                 setPageData();
             }
+        }
+
+        function findParentId(slug) {
+            return _.find(vm.decision.parentDecisionGroups, function(parentDecision) {
+                return parentDecision.nameSlug === slug;
+            });
         }
 
         function setPageData() {
