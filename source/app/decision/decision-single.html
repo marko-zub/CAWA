@@ -99,14 +99,7 @@
                     <div ng-show="vm.childDecisionGroups.length">
                         <div class="row">
                             <div class="col-md-8">
-                                <!-- TODO: make as component -->
-                                <!-- Filter  -->
-                                <div class="filter-name">
-                                    <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                                    <i class="filter-btn fa fa-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                                    <i class="fa fa-times icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
-                                </div>
-                                <!-- Filter Name -->
+                                <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
                             </div>
                             <div class="col-md-4">
                                 <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
@@ -178,7 +171,7 @@
                 </div>
                 <div class="list-wrapper sm">
                     <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
-                    <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" collapsed="false"></criteria-list>
+                    <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
                 </div>
                 <div class="list-wrapper sm">
                     <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>

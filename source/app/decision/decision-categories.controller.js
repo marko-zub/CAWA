@@ -191,38 +191,11 @@
             });
         }
 
+        vm.changeFilter = changeFilter;
 
-        // TODO: make component
-        // Filter
-        vm.clearFilterName = clearFilterName;
-        vm.filterNameSubmit = filterNameSubmit;
-        vm.filterNameSubmitClick = filterNameSubmitClick;
-        vm.controlOptions = {
-            debounce: 50
-        };
-
-        function clearFilterName() {
-            vm.filterName = null;
-            filterNameSend(null);
-        }
-
-        function filterNameSubmit(event, value) {
-            if (event.keyCode === 13) {
-                filterNameSend(value);
-                event.preventDefault();
-            }
-        }
-
-        function filterNameSend(value) {
+        function changeFilter(value) {
             getDecisionMatrix(vm.decision.id, null, value);
         }
-
-        function filterNameSubmitClick(value) {
-            // if (!value) return;
-            // TODO: first request if ng-touched
-            filterNameSend(value);
-        }
-        // End Filter name
 
         function filterDecisionList(decisionMatrixs) {
             var list = [];

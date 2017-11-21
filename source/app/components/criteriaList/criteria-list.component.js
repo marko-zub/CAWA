@@ -12,6 +12,7 @@
                 links: '<',
                 rating: '<',
                 discussion: '<',
+                discussionLink: '<',
                 collapsed: '<',
                 criteriaTitle: '<'
             },
@@ -32,6 +33,7 @@
             if (!!vm.links) vm.links = true;
             if (!vm.rating) vm.rating = false;
             if (vm.discussion !== true) vm.discussion = false;
+            if (vm.discussionLink !== true) vm.discussionLink = false;
             if (vm.collapsed !== false) vm.collapsed = true;
         }
 

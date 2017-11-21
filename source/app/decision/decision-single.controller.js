@@ -219,37 +219,11 @@
             });
         }
 
-        // TODO: make component
-        // Filter
-        vm.clearFilterName = clearFilterName;
-        vm.filterNameSubmit = filterNameSubmit;
-        vm.filterNameSubmitClick = filterNameSubmitClick;
-        vm.controlOptions = {
-            debounce: 50
-        };
+        vm.changeFilter = changeFilter;
 
-        function clearFilterName() {
-            vm.filterName = null;
-            filterNameSend(null);
+        function changeFilter(value) {
+            getDecisionMatrix(vm.decision.id, null, value);
         }
-
-        function filterNameSubmit(event, value) {
-            if (event.keyCode === 13) {
-                filterNameSend(value);
-                event.preventDefault();
-            }
-        }
-
-        function filterNameSend(value) {
-            getDecisionMatrix(vm.decision.id, value);
-        }
-
-        function filterNameSubmitClick(value) {
-            // if (!value) return;
-            // TODO: first request if ng-touched
-            filterNameSend(value);
-        }
-        // End Filter name
 
         // TODO: move to login to recommended component
         // Recommended decisions

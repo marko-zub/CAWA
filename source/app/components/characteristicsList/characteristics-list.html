@@ -32,13 +32,13 @@
                                         <a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                                     </div>
                                     <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
-                                    
+
 
                                     <div ng-if="::(!characteristic.multiValue)" class="control-panel-sm">
                                         <a href="#" class="control">
                                             <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::characteristic.decision.totalHistoryValues || 0}}</a>
                                         <a href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
-                                    </div>                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-1 text-right">
