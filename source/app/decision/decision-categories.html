@@ -26,18 +26,6 @@
                 </div>
             </div>
 
-
-            <div class="nav-tabs-wrapper mg-b-sm clearfix tabs-right" ng-if="vm.decision.decisionGroups.length">
-                <h4 class="tabs-title" translate-cloak>
-                    {{ 'CATEGORIES' | translate }}
-                    <span class="title-counter" translate-cloak ng-show="vm.totalCount">({{vm.totalCount}})</span>
-                </h4>
-            </div>
-
-  <!--           <pre>
-                {{ vm.decision | json }}
-            </pre> -->
-
             <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
@@ -50,7 +38,7 @@
                 <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
-                            <a ui-sref="decisions.single.categories(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
+                            <a ui-sref="decisions.single.categories.category(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
                         </li>
                     </ul>
                 </div>

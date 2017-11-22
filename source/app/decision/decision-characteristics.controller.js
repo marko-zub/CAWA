@@ -44,6 +44,22 @@
             if (vm.parent && vm.decision) {
                 setPageData();
             }
+
+            if ($stateParams.category) {
+                changeCategory($stateParams.category);
+            }
+        }
+
+        function changeCategory(slug) {
+            var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
+                return parentDecisionGroup.nameSlug === slug;
+            });
+            vm.categoryTabIndex = categoryIndex;
+        }
+
+        vm.changeCategoryTab = changeCategoryTab;
+        function changeCategoryTab (slug) {
+            changeCategory(slug);
         }
 
         function findParentId(slug) {

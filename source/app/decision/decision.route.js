@@ -179,6 +179,10 @@
                     }
                 },
                 params: {
+                    category: {
+                        value: null,
+                        squash: true
+                    }                    
                     // page: {
                     //     value: null,
                     //     squash: true
@@ -263,7 +267,8 @@
                     params.page = null;
                     params.size = null;
                     params.sort = null;
-                    if ($state.current.name !== 'decisions.single') {
+                    if ($state.current.name !== 'decisions.single' &&
+                        $state.current.name !== 'decisions.single.characteristics.characteristic') {
                         params.sort = null;
                         params.category = null;
                     }

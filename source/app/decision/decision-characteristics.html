@@ -29,27 +29,29 @@
             </div>
             <div class="post post-single">
 
-                <div class="nav-tabs-wrapper border-0 mg-b-sm clearfix tabs-right" ng-if="vm.decision.decisionGroups.length">
-                    <h4 class="tabs-title" translate-cloak>
-                        {{ 'CHARACTERISTICS' | translate }} {{ vm.parent.ownerDecision.name }}
-                        <span class="title-counter" translate-cloak ng-show="vm.totalCount">({{vm.totalCount}})</span>
-                    </h4>
-                    <div class="pull-right text-header">
-                        <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.nameSlug})" translate-cloak>
-                            {{ 'See All' | translate }} {{ ::vm.parent.name }}
-                        </a>
-                    </div>                       
+                <div ng-if="vm.decision.parentDecisionGroups.length">
+
+                    <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix">
+                        <ul class="nav nav-tabs nav-tabs-sm">
+                            <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
+                                <a ui-sref="decisions.single.characteristics.characteristic(::{characteristicSlug:parent.nameSlug, sort: null, category: null})" >{{ ::parent.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 
+                    <pre>
+                        {{ vm.decision.parentDecisionGroups | json }}
+                    </pre> -->
+
+                    <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                        <ul class="nav nav-pills nav-tabs-sm">
+                            <li ng-repeat="characteristic in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':vm.categoryTabIndex === $index}">
+                                <a ui-sref="decisions.single.characteristics.characteristic(::{category:characteristic.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeCategoryTab(characteristic.nameSlug)">{{ characteristic.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix" ng-if="vm.decision.decisionGroups.length">
-                    <ul class="nav nav-tabs nav-tabs-sm">
-                        <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
-                            <a ui-sref="decisions.single.characteristics.characteristic(::{characteristicSlug:parent.nameSlug, sort: null, category: null})" >{{ ::parent.name }}</a>
-                        </li>
-                    </ul>
-                 
-                </div>
- 
                 <div class="row" ng-if="vm.parent">
                     <div class="col-sm-6">
 
