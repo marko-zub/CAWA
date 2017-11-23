@@ -35,12 +35,13 @@
             vm.ParentDecisionGroups = vm.decision.parentDecisionGroups;
 
             if ($stateParams.characteristicSlug) {
-                vm.parent = findParentId($stateParams.characteristicSlug);
-                if (!vm.parent) {
-                    vm.parent = vm.decision.parentDecisionGroups[0];
-                }
+                // console.log($stateParams.characteristicSlug);
+                vm.parent = changeCategory($stateParams.characteristicSlug);
+            } else {
+                vm.parent = vm.decision.parentDecisionGroups[0];
+                vm.categoryTabIndex = 0;
             }
-            
+
             if (vm.parent && vm.decision) {
                 setPageData();
             }
@@ -52,21 +53,23 @@
 
         function changeCategory(slug) {
             var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
-                return parentDecisionGroup.nameSlug === slug;
+                return parentDecisionGroup.ownerDecision.nameSlug === slug;
             });
             vm.categoryTabIndex = categoryIndex;
+            return vm.decision.parentDecisionGroups[categoryIndex];
         }
 
         vm.changeCategoryTab = changeCategoryTab;
-        function changeCategoryTab (slug) {
+
+        function changeCategoryTab(slug) {
             changeCategory(slug);
         }
 
-        function findParentId(slug) {
-            return _.find(vm.decision.parentDecisionGroups, function(parentDecision) {
-                return parentDecision.nameSlug === slug;
-            });
-        }
+        // function findParentId(slug) {
+        //     return _.find(vm.decision.parentDecisionGroups, function(parentDecision) {
+        //         return parentDecision.nameSlug === slug;
+        //     });
+        // }
 
         function setPageData() {
             vm.parent.description = $sce.trustAsHtml(vm.parent.description);

@@ -11,7 +11,7 @@
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li ng-if="vm.decision.parentDecisionGroups.length">
-                            <a ui-sref="decisions.single.characteristics.characteristic(::{characteristicSlug:vm.decision.parentDecisionGroups[0].nameSlug, sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
+                            <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
 <!--                         <li ng-repeat="parent in vm.parentDecisionGroupsTabs track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
                             <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, sort: null, category: null})" translate-cloak>{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>

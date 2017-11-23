@@ -34,19 +34,20 @@
                     <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
-                                <a ui-sref="decisions.single.characteristics.characteristic(::{characteristicSlug:parent.nameSlug, sort: null, category: null})" >{{ ::parent.name }}</a>
+                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" >{{ ::parent.name }}</a>
                             </li>
                         </ul>
                     </div>
-                    <!-- 
-                    <pre>
-                        {{ vm.decision.parentDecisionGroups | json }}
-                    </pre> -->
+                        
 
+     <!--                <pre>
+                        {{ vm.decision.parentDecisionGroups | json }}
+                    </pre>
+ -->
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
-                            <li ng-repeat="characteristic in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':vm.categoryTabIndex === $index}">
-                                <a ui-sref="decisions.single.characteristics.characteristic(::{category:characteristic.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeCategoryTab(characteristic.nameSlug)">{{ characteristic.name }}</a>
+                            <li ng-repeat="parentDecision in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':vm.categoryTabIndex === $index}">
+                                <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeCategoryTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
                             </li>
                         </ul>
                     </div>
@@ -82,7 +83,7 @@
                         <div class="list-wrapper">
                             <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
 
-                            <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" collapsed="false"></criteria-list>
+                            <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
 
                         </div>
 
@@ -91,7 +92,7 @@
                         <div class="list-wrapper">
                             <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
 
-                            <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" collapsed="false"></characteristics-list>
+                            <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
                         </div>
                     </div>
                 </div>

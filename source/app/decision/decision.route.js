@@ -153,7 +153,7 @@
             //     },
             // })
             .state('decisions.single.characteristics', {
-                url: '/characteristics',
+                url: '/characteristics/{characteristicSlug}',
                 abstract: false,
                 cache: true,
                 views: {
@@ -164,39 +164,13 @@
                     }
                 },
                 params: {
-                }
-            })
-
-            .state('decisions.single.characteristics.characteristic', {
-                url: '/:characteristicSlug',
-                abstract: false,
-                cache: false,
-                views: {
-                    '@': {
-                        templateUrl: 'app/decision/decision-characteristics.html',
-                        controller: 'DecisionCharacteristicsController',
-                        controllerAs: 'vm',
-                    }
-                },
-                params: {
-                    category: {
+                    characteristicSlug: {
                         value: null,
                         squash: true
-                    }                    
-                    // page: {
-                    //     value: null,
-                    //     squash: true
-                    // },
-                    // size: {
-                    //     value: null,
-                    //     squash: true
-                    // },
-                    // sort: {
-                    //     value: null,
-                    //     squash: true
-                    // }
+                    },                    
                 }
             });
+
     }
 
 
