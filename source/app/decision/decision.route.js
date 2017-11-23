@@ -167,7 +167,11 @@
                     characteristicSlug: {
                         value: null,
                         squash: true
-                    },                    
+                    },
+                    category: {
+                        value: null,
+                        squash: true
+                    }
                 }
             });
 
@@ -242,7 +246,7 @@
                     params.size = null;
                     params.sort = null;
                     if ($state.current.name !== 'decisions.single' &&
-                        $state.current.name !== 'decisions.single.characteristics.characteristic') {
+                        $state.current.name !== 'decisions.single.characteristics') {
                         params.sort = null;
                         params.category = null;
                     }
