@@ -194,8 +194,11 @@
             };
 
             if (criteriaGroups) {
-                sendData.sortCriteriaIds = pickCriteriaIds(criteriaGroups);
+                var criteriaGroupsIds = pickCriteriaIds(criteriaGroups);
+                sendData.sortCriteriaIds = criteriaGroupsIds;
                 getRecommendedDecisionsRequest(parent.id, sendData);
+
+                getCriteriaByDecisionIndex(vm.decision.id, parent.id, criteriaGroupsIds);
             } else {
                 DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
                     sendData.sortCriteriaIds = pickCriteriaIds(result);
@@ -232,5 +235,15 @@
             });
             return list;
         }
+
+        function getCriteriaByDecisionIndex (decisionId, parentDecisionId, criteriaIds) {
+            if (_.isEmpty(criteriaIds)) return;
+            var criteriaIdsString = criteriaIds.join(',');
+            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
+                if (_.isNumber(resp.number)) {
+                    vm.decisionIndexInParentGroup = resp.number + 1;
+                }
+            });
+        }        
     }
 })();
