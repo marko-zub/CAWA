@@ -29,7 +29,7 @@
             <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
-                        <a ui-sref="decisions.single.categories.category(::{categorySlug: item.nameSlug, sort: null, category: null})" >{{ item.name | translate }}</a>
+                        <a ui-sref="decisions.single.categories(::{categorySlug: item.nameSlug, sort: null, category: null})" >{{ item.name | translate }}</a>
                     </li>
                 </ul>
             </div>
@@ -38,7 +38,7 @@
                 <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
-                            <a ui-sref="decisions.single.categories.category(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
+                            <a ui-sref="decisions.single.categories(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
                         </li>
                     </ul>
                 </div>

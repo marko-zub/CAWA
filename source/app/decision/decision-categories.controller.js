@@ -47,6 +47,16 @@
 
             initTabs();
             setPageData();
+
+            // Init first time slugs
+            if (!$stateParams.categorySlug) {
+                var params = $state.params;
+                params.categorySlug = vm.decision.decisionGroups[0].nameSlug;
+                $state.go($state.current.name, params ,{
+                    reload: false,
+                    notify: false
+                });
+            }
         }
 
         function initTabs() {

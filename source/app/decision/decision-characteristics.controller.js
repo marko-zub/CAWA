@@ -40,6 +40,15 @@
             } else {
                 vm.parent = vm.decision.parentDecisionGroups[0];
                 vm.categoryTabIndex = 0;
+
+                // Init first time slugs
+                var params = $state.params;
+                params.characteristicSlug = vm.decision.parentDecisionGroups[0].ownerDecision.nameSlug;
+                params.category = vm.decision.parentDecisionGroups[0].nameSlug;
+                $state.go($state.current.name, params ,{
+                    reload: false,
+                    notify: false
+                });
             }
 
             if (vm.parent && vm.decision) {
@@ -48,6 +57,8 @@
 
             if ($stateParams.category) {
                 changeCategory($stateParams.category);
+            } else {
+                
             }
         }
 

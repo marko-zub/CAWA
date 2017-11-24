@@ -51,7 +51,7 @@
             })
 
         .state('decisions.single.categories', {
-            url: '/categories',
+            url: '/categories/{categorySlug}',
             cache: false,
             views: {
                 '@': {
@@ -66,28 +66,6 @@
                     squash: true
                 },
                 size: {
-                    value: null,
-                    squash: true
-                },
-                sort: {
-                    value: null,
-                    squash: true
-                }
-            }
-        })
-
-        .state('decisions.single.categories.category', {
-            url: '/:categorySlug',
-            cache: false,
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-categories.html',
-                    controller: 'DecisionCategoriesController',
-                    controllerAs: 'vm',
-                }
-            },
-            params: {
-                slug: {
                     value: null,
                     squash: true
                 },
