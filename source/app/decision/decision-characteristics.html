@@ -58,48 +58,59 @@
 
                 </div>
 
-                <div class="row" ng-if="vm.parent">
-                    <div class="col-sm-12">
-                        <h5 ng-show="vm.decisionIndexInParentGroup >= 0">
-                            <strong>#{{ vm.decisionIndexInParentGroup }}</strong> {{ 'IN' | translate }} {{ vm.parent.name }}
-                        </h5> 
-                    </div>
-                    <div class="col-sm-6">
-
-                        <div class="clearfix" ng-show="vm.criteriaGroups">
-
-                            <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
-                            <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
-                                <div ng-switch-when="true" class="criteria-block static pull-right">
-                                    <div class="counters">
-                                        <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
-                                    </div>
-                                    <div class="counters criteria-block-votes">
-                                        <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
-                                        {{ vm.criteriaGroups.totalVotes }}
-                                    </div>
-                                    <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
-                                        <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
-                                    </div>
+                <div ng-if="vm.parent">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="clearfix">
+                                <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                                    <strong>#{{ vm.decisionIndexInParentGroup }}</strong> {{ 'IN' | translate }} {{ vm.parent.name }}
+                                </h5> 
+                                <div class="pull-right text-header" ng-if="vm.activeRecommendedTab.total >= 0">
+                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
+                                        {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
+                                    </a>
                                 </div>
-                  
+                            </div>             
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+
+                            <div class="clearfix" ng-show="vm.criteriaGroups">
+
+                                <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
+                                <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
+                                    <div ng-switch-when="true" class="criteria-block static pull-right">
+                                        <div class="counters">
+                                            <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                                        </div>
+                                        <div class="counters criteria-block-votes">
+                                            <i class="app-icon glyphicon glyphicon-thumbs-up"></i>
+                                            {{ vm.criteriaGroups.totalVotes }}
+                                        </div>
+                                        <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                            <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                                        </div>
+                                    </div>
+                      
+
+                                </div>
+                            </div>
+
+                            <div class="list-wrapper">
+                                <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
+
+                                <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
 
                             </div>
-                        </div>
-
-                        <div class="list-wrapper">
-                            <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
-
-                            <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
 
                         </div>
+                        <div class="col-sm-6">
+                            <div class="list-wrapper">
+                                <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
 
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="list-wrapper">
-                            <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
-
-                            <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
+                                <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
+                            </div>
                         </div>
                     </div>
                 </div>
