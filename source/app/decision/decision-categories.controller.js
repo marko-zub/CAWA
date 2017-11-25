@@ -40,8 +40,9 @@
             vm.navigation = navigationObj;
             vm.decisionParents = vm.decision.parentDecisions;
             initSortMode($stateParams.sort);
-            if (vm.decision.totalChildDecisions > 0) {
-                vm.isDecisionsParent = true;
+
+            if (vm.decision.decisionGroups.length) {
+                vm.decisionsChildsLoader = true;
             } else {
                 vm.decisionsLoader = false;
             }
@@ -161,6 +162,7 @@
                 vm.totalCount = result.totalDecisionMatrixs;
 
                 scrollToDecision($stateParams.decisionId);
+                vm.decisionsChildsLoader = false;
             });
         }
 
@@ -239,6 +241,7 @@
 
         function changeOptionTab(key) {
             initSortMode(key);
+            vm.decisionsChildsLoader = true;
         }
 
         function scrollToDecision(id) {

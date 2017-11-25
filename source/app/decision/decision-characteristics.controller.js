@@ -38,8 +38,10 @@
                 // console.log($stateParams.characteristicSlug);
                 vm.parent = changeCategory($stateParams.characteristicSlug);
             } else {
-                vm.parent = vm.decision.parentDecisionGroups[0];
-                vm.categoryTabIndex = 0;
+                if (vm.decision.parentDecisionGroups) {
+                    vm.parent = vm.decision.parentDecisionGroups[0];
+                    vm.categoryTabIndex = 0;
+                }
 
                 // Init first time slugs
                 // var params = $state.params;

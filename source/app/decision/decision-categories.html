@@ -10,7 +10,7 @@
                         <li>
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
-                        <li ng-if="vm.decision.parentDecisionGroups.length">
+                        <li>
                             <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
                         <li>
@@ -42,30 +42,35 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+           
 
-            <div class="loader-container">
-                <div class="row" ng-if="!vm.decisionsChildsLoader && vm.isDecisionsParent">
-                    <div class="col-md-8">
-                        <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
+                <div class="loader-container decision-childs">
+                    <div class="row" ng-if="vm.decision.decisionGroups.length">
+                        <div class="col-md-8">
+                            <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
+                        </div>
+                        <div class="col-md-4">
+                            <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                                {{ 'Comparison Matrix' | translate }}
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <a ui-sref="decisions.single.comparison({analysisId:null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
-                            {{ 'Comparison Matrix' | translate }}
-                        </a>
+                    <!-- Filter Name -->
+
+
+                    <div ng-show="!vm.decisionsLoader && vm.decisions.length" class="decisions-list">
+                        <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
+
+                        <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
+                        <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
+                        
                     </div>
-                </div>
-                <!-- Filter Name -->
 
-
-                <div ng-show="!vm.decisionsLoader && vm.decisions.length">
-                    <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
-
-                    <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
+                    
+                    <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
                 </div>
 
-                <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
-            </div>
+             </div>            
 <!--
             <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                 <span class="text-header">
