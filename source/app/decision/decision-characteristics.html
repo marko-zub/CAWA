@@ -13,7 +13,7 @@
                             <a href="#" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>                        
 <!--                         <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ui-sref-active="active">
-                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
+                            <a ui-sref="decisions.single.characteristics(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
                         </li> -->
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
@@ -72,7 +72,7 @@
                                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
                                     </a>
                                 </div>
-                            </div>             
+                            </div>
                         </div>
                     </div>
                     <div class="row">

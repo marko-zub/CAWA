@@ -13,8 +13,8 @@
                         <li ng-if="vm.decision.parentDecisionGroups.length">
                             <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
-<!--                         <li ng-repeat="parent in vm.parentDecisionGroupsTabs track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                            <a ui-sref="decisions.single.parent(::{parentId:parent.id, parentSlug:parent.nameSlug, sort: null, category: null})" translate-cloak>{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
+                        <!--                         <li ng-repeat="parent in vm.parentDecisionGroupsTabs track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                            <a ui-sref="decisions.single.characteristics(::{parentId:parent.id, parentSlug:parent.nameSlug, sort: null, category: null})" translate-cloak>{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
                         </li> -->
                         <li>
                             <a ui-sref="decisions.single.reviews({sort: null, category: null})" translate-cloak>{{ 'Reviews' | translate }}</a>
@@ -145,15 +145,30 @@
                         </li>
                     </ul>
                     <div class="pull-right text-header">
-                        <a ui-sref="decisions.single.categories({id:vm.activeRecommendedTab.id, slug:vm.activeRecommendedTab.nameSlug, size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
-                            {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total || 0}})</span>
+                        <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                            {{ 'See All' | translate }} <span class="info">({{vm.activeParentTab.totalChildDecisions}})</span>
                         </a>
                     </div>
+
                 </div>
                 <div class="clearfix" ng-show="vm.criteriaGroupsCompilance">
-                    <h5 ng-show="vm.decisionIndexInParentGroup >= 0">
-                        <strong>#{{ vm.decisionIndexInParentGroup }}</strong> {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
-                    </h5>
+                    <!-- Make as component -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="clearfix">
+                                <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                                    <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                                    <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a> 
+                                        {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
+                                </h5>
+                                <!--  <div class="pull-right text-header" ng-if="vm.activeParentTab.total >= 0">
+                                    <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                                        {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
+                                    </a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
                     <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
                     <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroupsCompilance.totalVotes > 0">
                         <div ng-switch-when="true" class="criteria-block static pull-right">
@@ -167,7 +182,7 @@
                                 <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
                             </div>
                         </div>
-      <!--                   <div ng-switch-when="false" class="pull-right mt-1">
+                        <!--                   <div ng-switch-when="false" class="pull-right mt-1">
                             <a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>
                         </div> -->
                     </div>

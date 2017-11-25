@@ -96,7 +96,7 @@
                     getDecisionMatrix(vm.decision.id);
                 });
                 vm.activeTabSort = 0;
-                $state.params.sort = null;
+                // $state.params.sort = null;
                 $state.transitionTo($state.current.name, $state.params, {
                     reload: false,
                     inherit: true,
@@ -242,7 +242,7 @@
         }
 
         function scrollToDecision(id) {
-            if (scrolled !== true && id >= 0) {
+            if (scrolled !== true && !!id && id >= 0) {
                 // TODO: avoid set Timeout
                 // Move to decision list component
                 setTimeout(function() {

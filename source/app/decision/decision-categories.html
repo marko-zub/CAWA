@@ -35,7 +35,7 @@
             </div>
 
             <div ng-if="vm.decision.decisionGroups.length">
-                <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-md">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
                             <a ui-sref="decisions.single.categories(::{sort:item.key, categorySlug: vm.activeDecisionGroupsTab.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>

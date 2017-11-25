@@ -26,7 +26,7 @@
                     }]
                 },
             })
-            // .state('decisions.single.parent.characteristics', {
+            // .state('decisions.single.characteristics.characteristics', {
             //     url: '/characteristics/:characteristicId/:characteristicSlug',
             //     views: {
             //         '@': {
@@ -39,7 +39,7 @@
             //     //     decisionDiscussionInfo: DecisionSingleDiscussionResolver
             //     // }
             // })            
-            .state('decisions.single.parent.reviews', {
+            .state('decisions.single.characteristics.reviews', {
                 url: '/reviews/:reviewId/:reviewSlug',
                 views: {
                     '@': {

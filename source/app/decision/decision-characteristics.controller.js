@@ -245,6 +245,7 @@
             return list;
         }
 
+        // Move to component
         function getCriteriaByDecisionIndex (decisionId, parentDecisionId, criteriaIds) {
             if (_.isEmpty(criteriaIds)) return;
             var criteriaIdsString = criteriaIds.join(',');
