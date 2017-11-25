@@ -217,7 +217,7 @@
         }
 
         function getRecommendedDecisionsRequest(parentId, sendData) {
-            DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(result) {
+            return DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(result) {
                 vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                 vm.recommendedDecisionsListLoader = false;
                 vm.activeRecommendedTab.total = result.totalDecisionMatrixs;
@@ -251,6 +251,7 @@
             DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
                 if (_.isNumber(resp.number)) {
                     vm.decisionIndexInParentGroup = resp.number + 1;
+                    vm.decisionIndexInParentGroupPage = _.floor(resp.number/10) + 1;
                 }
             });
         }        

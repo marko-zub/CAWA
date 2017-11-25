@@ -51,7 +51,7 @@
             })
 
         .state('decisions.single.categories', {
-            url: '/categories/{categorySlug}',
+            url: '/categories/{categorySlug}?decisionId',
             cache: false,
             views: {
                 '@': {
@@ -76,6 +76,10 @@
                 sort: {
                     value: null,
                     squash: true
+                },
+                decisionId: {
+                    value: null,
+                    squash: true 
                 }
             }
         })

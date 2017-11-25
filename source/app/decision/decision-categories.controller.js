@@ -21,6 +21,7 @@
         vm.decision = decisionBasicInfo || {};
         vm.itemsPerPage = PaginatioService.itemsPerPage();
         vm.$onInit = onInit;
+        var scrolled = false;
 
         var criteriaGroupsIds = [];
         var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
@@ -57,6 +58,8 @@
             //         notify: false
             //     });
             // }
+
+
         }
 
         function initTabs() {
@@ -121,12 +124,14 @@
         function getDecisionMatrix(id, pagination, filter) {
             var sendData = {};
 
+            if (!vm.pagination) {
+                vm.pagination = initPagination(null, $stateParams.page, $stateParams.size);
+            }
             if (!pagination) {
                 pagination = _.clone(vm.pagination);
-            } else {
-                sendData.pageNumber = pagination.pageNumber - 1;
-                sendData.pageSize = pagination.pageSize;
             }
+            sendData.pageNumber = pagination.pageNumber - 1;
+            sendData.pageSize = pagination.pageSize;
 
             sendData.sortDecisionPropertyName = 'createDate';
             sendData.sortDecisionPropertyDirection = 'DESC';
@@ -154,6 +159,8 @@
                 vm.pagination = initPagination(result.totalDecisionMatrixs, $stateParams.page, $stateParams.size);
                 vm.decisionsHeight = vm.pagination.pageSize * 70 + 'px';
                 vm.totalCount = result.totalDecisionMatrixs;
+
+                scrollToDecision($stateParams.decisionId);
             });
         }
 
@@ -164,6 +171,13 @@
         function changePage(pagination) {
             getDecisionMatrix(vm.decision.id, pagination);
             updateStateParams(pagination);
+
+            var params = $stateParams;
+            params.decisionId = null;
+            $state.go($state.current.name, params, {
+                notify: false,
+                reload: false
+            });
         }
 
         function updateStateParams(pagination) {
@@ -225,6 +239,24 @@
 
         function changeOptionTab(key) {
             initSortMode(key);
+        }
+
+        function scrollToDecision(id) {
+            if (scrolled !== true && id >= 0) {
+                // TODO: avoid set Timeout
+                // Move to decision list component
+                setTimeout(function() {
+
+                    var decision = $('#decision-' + id);
+                    decision.addClass('animate-highlight');
+                    $('html, body').animate({
+                        scrollTop: decision.offset().top - 100
+                    }, 350);
+
+
+                }, 0);
+            }
+            scrolled = true;
         }
 
     }

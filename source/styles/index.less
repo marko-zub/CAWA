@@ -624,3 +624,14 @@ a {
     display: none !important;
   }
 }
+
+
+.animate-highlight {
+    animation-delay: 0.35s;
+    animation: highlightItem 1.4s;
+}
+
+@keyframes highlightItem {
+    0% { box-shadow: 0 0 10px 10px #f48024; }
+    100% { box-shadow: 0 0 0px 0px #f48024; }
+}
