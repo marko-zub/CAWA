@@ -61,6 +61,10 @@
                 }
             },
             params: {
+                categorySlug: {
+                    value: null,
+                    squash: true
+                },                
                 page: {
                     value: null,
                     squash: true
@@ -102,56 +106,56 @@
 
         // TODO: matrix and single.parent state have some bugs
         .state('decisions.single.comparison', {
-                url: '/comparison/{analysisId}',
-                views: {
-                    '@': {
-                        templateUrl: 'app/decision/decision-matrix.html',
-                        controller: 'DecisionMatrixController',
-                        controllerAs: 'vm',
-                    }
-                },
-                params: {
-                    analysisId: {
-                        value: null,
-                        squash: true
-                    }
-                },
-                data: {
-                    bodyClass: 'matrix-page',
-                    socialScriptType: 'floating'
+            url: '/comparison/{analysisId}',
+            views: {
+                '@': {
+                    templateUrl: 'app/decision/decision-matrix.html',
+                    controller: 'DecisionMatrixController',
+                    controllerAs: 'vm',
                 }
-            })
-            // .state('decisions.single.comparison.analysis', {
-            //     url: '/analysis/:analysisId',
-            //     templateUrl: 'app/decision/decision.html',
-            //     controller: 'DecisionController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         decisionStateInfo: DecisionStateResolver
-            //     },
-            // })
-            .state('decisions.single.characteristics', {
-                url: '/characteristics/{characteristicSlug}',
-                abstract: false,
-                cache: true,
-                views: {
-                    '@': {
-                        templateUrl: 'app/decision/decision-characteristics.html',
-                        controller: 'DecisionCharacteristicsController',
-                        controllerAs: 'vm',
-                    }
-                },
-                params: {
-                    characteristicSlug: {
-                        value: null,
-                        squash: true
-                    },
-                    category: {
-                        value: null,
-                        squash: true
-                    }
+            },
+            params: {
+                analysisId: {
+                    value: null,
+                    squash: true
                 }
-            });
+            },
+            data: {
+                bodyClass: 'matrix-page',
+                socialScriptType: 'floating'
+            }
+        })
+        // .state('decisions.single.comparison.analysis', {
+        //     url: '/analysis/:analysisId',
+        //     templateUrl: 'app/decision/decision.html',
+        //     controller: 'DecisionController',
+        //     controllerAs: 'vm',
+        //     resolve: {
+        //         decisionStateInfo: DecisionStateResolver
+        //     },
+        // })
+        .state('decisions.single.characteristics', {
+            url: '/characteristics/{characteristicSlug}',
+            abstract: false,
+            cache: true,
+            views: {
+                '@': {
+                    templateUrl: 'app/decision/decision-characteristics.html',
+                    controller: 'DecisionCharacteristicsController',
+                    controllerAs: 'vm',
+                }
+            },
+            params: {
+                characteristicSlug: {
+                    value: null,
+                    squash: true
+                },
+                category: {
+                    value: null,
+                    squash: true
+                }
+            }
+        });
 
     }
 

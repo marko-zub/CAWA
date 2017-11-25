@@ -48,15 +48,15 @@
             initTabs();
             setPageData();
 
-            // Init first time slugs
-            if (!$stateParams.categorySlug) {
-                var params = $state.params;
-                params.categorySlug = vm.decision.decisionGroups[0].nameSlug;
-                $state.go($state.current.name, params ,{
-                    reload: false,
-                    notify: false
-                });
-            }
+            // // Init first time slugs
+            // if (!$stateParams.categorySlug) {
+            //     var params = $state.params;
+            //     params.categorySlug = vm.decision.decisionGroups[0].nameSlug;
+            //     $state.go($state.current.name, params ,{
+            //         reload: false,
+            //         notify: false
+            //     });
+            // }
         }
 
         function initTabs() {
@@ -64,11 +64,15 @@
                 var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
                     return decisionGroup.nameSlug === $stateParams.categorySlug;
                 });
-                vm.activeDecisionGroupsTabIndex = index;
+                if (index >= 0) {
+                    vm.activeDecisionGroupsTabIndex = index;
+                    vm.activeDecisionGroupsTab = vm.decision.decisionGroups[index];
+                }
             }
 
             if (!$stateParams.categorySlug) {
                 vm.activeDecisionGroupsTabIndex = 0;
+                vm.activeDecisionGroupsTab = vm.decision.decisionGroups[0];
             }
         }
 

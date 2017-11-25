@@ -41,7 +41,7 @@
                     <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="parentDecision in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':parentDecision.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug}">
-                                <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeCategoryTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
+                                <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug, category: null})" ui-sref-opts="{notify: false}" ng-click="vm.changeCategoryTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
 
                             </li>
                         </ul>
@@ -51,7 +51,7 @@
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
-                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug})" >{{ ::parent.name }}</a>
+                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug, characteristicSlug:parent.ownerDecision.nameSlug})" >{{ ::parent.name }}</a>
                             </li>
                         </ul>
                     </div>
