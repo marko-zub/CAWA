@@ -6,7 +6,6 @@
         .module('app.components')
         .controller('AdditionalScriptController', AdditionalScriptController)
         .component('additionalScript', {
-            // templateUrl: 'app/components/additionalScript/additional-script.html',
             bindings: {
                 socialType: '<',
             },
@@ -21,9 +20,10 @@
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+        var addThisUrl = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-593e99ada6e43adc';
 
         function onInit () {
-            $(window).on('load', function () {
+            $.getScript(addThisUrl, function() {
                 toggleSharesByType(vm.socialType);
             });
         }
@@ -46,11 +46,9 @@
 
         function toggleShares(enableFloating) {
             if (enableFloating === true) {
-                $('.at-expanding-share-button').show();
-                $('#at4-share').hide();
+               $('body').removeClass('addthis-floating').addClass('addthis-expanding');
             } else {
-                $('.at-expanding-share-button').hide();
-                $('#at4-share').show();
+                $('body').addClass('addthis-floating').removeClass('addthis-expanding');
             }
         }
     }
