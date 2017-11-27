@@ -38,8 +38,8 @@
 	"NO PROPERTIES": "There are no properties yet, but you can be first to create them here.",
 	"CANT FIND PROPERTIES": "Can't find the necessary property?",
 	"PROVIDE VALUE": "Provide value",
-	"NO NOMINATIONS": "There are no nominations provided yet, but you can be first to create them",
-	"NO REVIEWS": "There are no nominations provided yet, but you can be first to create them",
+	"NO NOMINATIONS": "There are no nominations yet",
+	"NO REVIEWS": "There are no reviews yet",
 	"READ MORE": "Read more",
 	"APPLY": "Apply",
 	"CANCEL": "Cancel",
@@ -76,5 +76,7 @@
 	"CLEAR ALL SORTERS": "Clear all sorters",
 	"CATEGORIES": "Categories",
 	"ALL CATEGORIES": "All Categories",
-	"IN": "in"
+	"IN": "in",
+	"NO CHARACTERISTICS": "There are no characteristics yet",
+	"NO CATEGORIES": "There are no categories yet"
 }

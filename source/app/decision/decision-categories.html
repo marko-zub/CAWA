@@ -74,9 +74,15 @@
 <!--
             <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                 <span class="text-header">
-                    {{ "NO OPTIONS" | translate }} <a href="#">{{ "HERE" | translate }}</a>.
+                    {{ 'NO OPTIONS' | translate }} <a href="#">{{ "HERE" | translate }}</a>.
                 </span>
             </div> -->
+
+            <div ng-if="!vm.decision.decisionGroups.length">
+                <span class="text-header"  translate-cloak>
+                    {{ 'NO CATEGORIES' | translate }}.
+                </span>
+            </div>
 
         </div>
 

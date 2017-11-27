@@ -30,12 +30,7 @@
             <div class="post post-single">
 
                 <div ng-if="vm.decision.parentDecisionGroups.length">
-                        
-
-     <!--                <pre>
-                        {{ vm.decision.parentDecisionGroups | json }}
-                    </pre>
- -->
+                    
 
                     
                     <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix">
@@ -58,6 +53,12 @@
 
                 </div>
 
+                <div ng-if="!vm.decision.parentDecisionGroups.length">
+                    <span class="text-header"  translate-cloak>
+                        {{ 'NO CHARACTERISTICS' | translate }}.
+                    </span>
+                </div>
+
                 <div ng-if="vm.parent">
                     <div class="row">
                         <div class="col-sm-6">
@@ -67,7 +68,7 @@
                                     <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a> 
                                         {{ 'IN' | translate }} {{ vm.parent.name }}
                                 </h5> 
-                                <div class="pull-right text-header" ng-if="vm.activeRecommendedTab.total >= 0">
+                                <div class="pull-left text-header" ng-if="vm.activeRecommendedTab.total >= 0">
                                     <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
                                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
                                     </a>
@@ -114,6 +115,8 @@
                                 <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
 
