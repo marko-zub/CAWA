@@ -308,7 +308,7 @@
 
         // console.log(analysisSlug, analysisId);
         if (analysisSlug === 'comparison' && analysisId && analysisId !== 'hall-of-fame') {
-            return DecisionDataService.getDecisionAnalysis($stateParams.id, analysisId).then(function(resp) {
+            return DecisionDataService.getDecisionAnalysis(analysisId).then(function(resp) {
                 if (resp.error) {
                     console.log(resp.error);
                     return;

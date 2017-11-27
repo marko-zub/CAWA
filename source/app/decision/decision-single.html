@@ -13,9 +13,6 @@
                         <li>
                             <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
-                        <!--                         <li ng-repeat="parent in vm.parentDecisionGroupsTabs track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
-                            <a ui-sref="decisions.single.characteristics(::{parentId:parent.id, parentSlug:parent.nameSlug, sort: null, category: null})" translate-cloak>{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
-                        </li> -->
                         <li>
                             <a ui-sref="decisions.single.reviews({sort: null, category: null})" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
@@ -119,21 +116,7 @@
                         <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
                     </div>
                 </div>
-                <!--                 <div class="col-sm-12 text-center look-more" ng-if="!vm.decisionsChildsLoader && vm.childDecisionGroups.length">
-                    {{ "LOOKING MORE" | translate }}
-                    <a ui-sref="decisions.single.categories" class="text-bold" translate-cloak>
-                        {{ "the complete list of decisions" | translate }}
-                    </a>
-                </div> -->
             </div>
-            <!--             <div class="row" ng-show="!vm.decisionsChildsLoader">
-                <div class="col-sm-8">
-                    <div class="comments">
-                        <h4 class="comments-tile" translate-cloak>{{ 'Comments' | translate }}</h4>
-                        <comments decision-id="::vm.discussion.decision.totalChildDecisions" option-id="vm.discussion.childCriteria.criteriaId"></comments>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div class="col-sm-3">
             <!-- Parent criteria & characteristics -->
@@ -144,29 +127,19 @@
                             <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
                         </li>
                     </ul>
-                    <div class="pull-right text-header">
-                        <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
-                            {{ 'See All' | translate }} <span class="info">({{vm.activeParentTab.totalChildDecisions}})</span>
-                        </a>
-                    </div>
-
                 </div>
                 <div class="clearfix" ng-show="vm.criteriaGroupsCompilance">
                     <!-- Make as component -->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="clearfix">
-                                <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
-                                    <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a> 
-                                        {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
-                                </h5>
-                                <!--  <div class="pull-right text-header" ng-if="vm.activeParentTab.total >= 0">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
-                                        {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
-                                    </a>
-                                </div> -->
-                            </div>
+                    <div class="clearfix">
+                        <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                            <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                            <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a> 
+                                {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
+                        </h5>
+                        <div class="pull-left text-header">
+                            <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                                {{ 'See All' | translate }} <span class="info">({{vm.activeParentTab.totalChildDecisions}})</span>
+                            </a>
                         </div>
                     </div>
                     <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>

@@ -82,8 +82,7 @@
                 }
             }),
 
-            decisionsAnalysis = $resource(Config.endpointUrl + 'decisions/:id/analysis/:anlysisId', {
-                id: '@id',
+            decisionsAnalysis = $resource(Config.endpointUrl + 'analysis/:anlysisId', {
                 anlysisId: '@anlysisId'
             }, {
                 getDecisionAnalysis: {
@@ -298,9 +297,8 @@
             }).$promise;
         }
 
-        function getDecisionAnalysis(id, anlysisId) {
+        function getDecisionAnalysis(anlysisId) {
             return decisionsAnalysis.get({
-                id: id,
                 anlysisId: anlysisId
             }).$promise;
         }
