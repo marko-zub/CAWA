@@ -84,6 +84,28 @@
             }
         })
 
+        // TODO: matrix and single.parent state have some bugs
+        .state('decisions.single.categories.comparison', {
+            url: '/comparison/{analysisId}',
+            views: {
+                '@': {
+                    templateUrl: 'app/decision/decision-matrix.html',
+                    controller: 'DecisionMatrixController',
+                    controllerAs: 'vm',
+                }
+            },
+            params: {
+                analysisId: {
+                    value: null,
+                    squash: true
+                }
+            },
+            data: {
+                bodyClass: 'matrix-page',
+                socialScriptType: 'floating'
+            }
+        })
+
         .state('decisions.single.nominations', {
             url: '/nominations',
             cache: false,
@@ -108,36 +130,6 @@
             }
         })
 
-        // TODO: matrix and single.parent state have some bugs
-        .state('decisions.single.comparison', {
-            url: '/comparison/{analysisId}',
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-matrix.html',
-                    controller: 'DecisionMatrixController',
-                    controllerAs: 'vm',
-                }
-            },
-            params: {
-                analysisId: {
-                    value: null,
-                    squash: true
-                }
-            },
-            data: {
-                bodyClass: 'matrix-page',
-                socialScriptType: 'floating'
-            }
-        })
-        // .state('decisions.single.comparison.analysis', {
-        //     url: '/analysis/:analysisId',
-        //     templateUrl: 'app/decision/decision.html',
-        //     controller: 'DecisionController',
-        //     controllerAs: 'vm',
-        //     resolve: {
-        //         decisionStateInfo: DecisionStateResolver
-        //     },
-        // })
         .state('decisions.single.characteristics', {
             url: '/characteristics/{characteristicSlug}',
             abstract: false,
@@ -208,8 +200,8 @@
 
                 // TODO: fix it
                 // BreadCrumbs
-                if ($state.current.name === 'decisions.single.comparison' ||
-                    $state.current.name === 'decisions.single.comparison.analysis') {
+                if ($state.current.name === 'decisions.single.categories.comparison' ||
+                    $state.current.name === 'decisions.single.categories.comparison.analysis') {
                     $rootScope.breadcrumbs = [{
                         title: 'Decisions',
                         link: 'decisions'

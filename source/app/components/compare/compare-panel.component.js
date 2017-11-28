@@ -173,24 +173,24 @@
             var cleanList = filterCompareList(vm.compareList);
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
-            $state.go('decisions.single.comparison', {
+            $state.go('decisions.single.categories.comparison', {
                 id: parentDecision.id,
                 slug: parentDecision.nameSlug
             });
 
-            // if state !== 'decisions.single.comparison'
+            // if state !== 'decisions.single.categories.comparison'
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
             DecisionSharedService.filterObject.excludeChildDecisionIds = null;
 
             DecisionNotificationService.notifyChangeDecisionMatrixMode({ mode: 'exclusion', ids: includeChildDecisionIds });
-            // if ($state.current.name === 'decisions.single.comparison') {
+            // if ($state.current.name === 'decisions.single.categories.comparison') {
             //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
             //     // debugger
             // }
 
             $rootScope.$on('$stateChangeSuccess',
                 function() {
-                    if ($state.current.name === 'decisions.single.comparison') {
+                    if ($state.current.name === 'decisions.single.categories.comparison') {
                         // Add notification service for compare panel
                         togglePanel(false);
                     }

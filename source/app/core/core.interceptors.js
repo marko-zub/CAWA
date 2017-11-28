@@ -31,7 +31,7 @@
                 // if (currentState === 'decisions.matrix' || currentState === 'decisions.matrix.analysis')
 
                 // Disable analysis
-                if (($state.is('decisions.single.comparison') || $state.is('decisions.single.comparison.analysis')) &&
+                if (($state.is('decisions.single.categories.comparison') || $state.is('decisions.single.categories.comparison.analysis')) &&
                     resp.data && (resp.data.decisionMatrixs || resp.data.decisions) &&
                     resp.data.decisionAnalysisId) {
 
@@ -48,7 +48,7 @@
                         'criteria': $stateParams.criteria,
                         'analysisId': decisionAnalysisId
                     };
-                    $state.go('decisions.single.comparison', decisionAnalysisStateParams, {
+                    $state.go('decisions.single.categories.comparison', decisionAnalysisStateParams, {
                         notify: false,
                         reload: false,
                         location: true

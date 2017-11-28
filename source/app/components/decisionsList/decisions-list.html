@@ -12,7 +12,7 @@
                     <a ng-show="::decision.criteriaCompliancePercentage >= 0" ui-sref="decisions.single.characteristics(::{id: decision.id, slug: decision.nameSlug, sort: null, category: vm.parentDecision.nameSlug, characteristicSlug:vm.parentDecision.nameSlug, page: null, size: null, category: vm.parentDecision.decisionGroups[0].nameSlug})" class="criteria-block popover-ref">
                         <div class="counters">
                             <span ng-bind="::decision.criteriaCompliancePercentage"></span>%
-                            <span class="app-icon glyphicon glyphicon-thumbs-up"></span> {{::decision.totalVotes}}
+                            <span class="icon-svg-vote"></span> {{::decision.totalVotes}}
                         </div>
                         <div class="text-uppercase" translate-cloak>
                             {{ ::vm.criteriaComplianceTitle || 'CRITERIA COMPLIANCE' | translate }}

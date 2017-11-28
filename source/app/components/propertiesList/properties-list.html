@@ -17,7 +17,7 @@
                             <div class="col-sm-5 clearfix bg-gray-light-2">
                                 <div class="discussions-list-content clearfix">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
-                                        <a ng-switch-when="true" ui-sref="decisions.single.comparison.child.option(::{critOrCharId:property.id, critOrCharSlug:property.nameSlug})" ng-bind="::property.name"></a>
+                                        <a ng-switch-when="true" ui-sref="decisions.single.categories.comparison.child.option(::{critOrCharId:property.id, critOrCharSlug:property.nameSlug})" ng-bind="::property.name"></a>
                                         <span ng-switch-when="false" ng-bind="::property.name"></span>
                                     </div>
                                     <span ng-if="::property.description" class="link-secondary icon-info" popover-title="{{::property.name}}" uib-popover-html="::property.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>

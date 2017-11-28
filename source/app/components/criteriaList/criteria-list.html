@@ -20,7 +20,7 @@
                                 <div class="discussions-list-content">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
                                         <div ng-switch-when="true">
-                                            <a ui-sref="decisions.single.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{ ::criteria.name }}</a>
+                                            <a ui-sref="decisions.single.categories.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{ ::criteria.name }}</a>
                                             <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
 

@@ -64,7 +64,7 @@
             '   </a>',
             '</div>',
             '<span class="app-rating-votes-likes control">',
-            '   <i class="app-icon glyphicon glyphicon-thumbs-up"></i>',
+            '   <i class="icon-svg-vote"></i>',
             '   <span class="app-rating-votes-likes-count">0</span>',
             '</span>'
         ].join('\n');
@@ -77,7 +77,7 @@
                 _.each(decision.criteria, function(criteria) {
                     var id = '#m-criteria-' + decisionIndex + '-' + criteria.id;
                     var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '" popover-placement="bottom" popover-append-to-body="true" popover-animation="false" uib-popover="Average vote ' + _.floor(criteria.weight, 2).toFixed(2) + ' out of 5" popover-trigger="\'mouseenter\'"></rating-star>';
-                    // rating += '<span class="app-rating-votes-likes control"><i class="app-icon glyphicon glyphicon-thumbs-up"></i>' + criteria.totalVotes + '</span>';
+                    // rating += '<span class="app-rating-votes-likes control"><i class="icon-svg-vote"></i>' + criteria.totalVotes + '</span>';
                     $(id).find('.rating').html(rating);
                     $(id).find('.app-rating-votes-likes-count').html(criteria.totalVotes);
                 });
