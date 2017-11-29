@@ -103,7 +103,7 @@
                                 <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
                             </div>
                             <div class="col-md-4">
-                                <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.activeDecisionGroupsTab.nameSlug })" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                                <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.activeDecisionGroupsTab.nameSlug, size: null, page: null, sort: null, decisionId: null })" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
                                     {{ 'Comparison Matrix' | translate }}
                                 </a>
                             </div>

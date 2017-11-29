@@ -42,15 +42,6 @@
                     vm.parent = vm.decision.parentDecisionGroups[0];
                     vm.categoryTabIndex = 0;
                 }
-
-                // Init first time slugs
-                // var params = $state.params;
-                // params.characteristicSlug = vm.decision.parentDecisionGroups[0].ownerDecision.nameSlug;
-                // params.category = vm.decision.parentDecisionGroups[0].nameSlug;
-                // $state.go($state.current.name, params ,{
-                //     reload: false,
-                //     notify: false
-                // });
             }
 
             if (vm.parent && vm.decision) {
@@ -58,7 +49,7 @@
             }
 
             if ($stateParams.category) {
-                changeCategory($stateParams.category);
+                vm.categoryTab = changeCategory($stateParams.category);
             }
         }
 
@@ -85,16 +76,33 @@
         function setPageData() {
             vm.parent.description = $sce.trustAsHtml(vm.parent.description);
             getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id);
-            $rootScope.breadcrumbs = [{
+
+            var breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
             }, {
                 title: vm.decision.name,
                 link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
             }, {
-                title: vm.parent.name,
+                title: 'Characteristics',
                 link: null
             }];
+
+            if ($stateParams.characteristicSlug) {
+                // vm.parent.name
+                breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics';
+                breadcrumbs.push({
+                    title: vm.parent.name,
+                    link: null
+                });
+            }
+
+            if ($stateParams.category) {
+                // vm.categoryTab 
+                console.log(vm.categoryTab);
+            }
+
+            $rootScope.breadcrumbs = breadcrumbs;
 
             $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted.com';
         }
@@ -248,15 +256,15 @@
         }
 
         // Move to component
-        function getCriteriaByDecisionIndex (decisionId, parentDecisionId, criteriaIds) {
+        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIds) {
             if (_.isEmpty(criteriaIds)) return;
             var criteriaIdsString = criteriaIds.join(',');
             DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
                 if (_.isNumber(resp.number)) {
                     vm.decisionIndexInParentGroup = resp.number + 1;
-                    vm.decisionIndexInParentGroupPage = _.floor(resp.number/10) + 1;
+                    vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;
                 }
             });
-        }        
+        }
     }
 })();
