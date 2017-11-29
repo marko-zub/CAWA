@@ -107,18 +107,36 @@
         }
 
         function setPageData() {
-            $rootScope.pageTitle = vm.decision.name + ' Options | DecisionWanted.com';
+            $rootScope.pageTitle = vm.decision.name + ' Categories | DecisionWanted.com';
 
-            $rootScope.breadcrumbs = [{
+            var breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
             }, {
                 title: vm.decision.name,
                 link: 'decisions.single'
-            }, {
-                title: 'Options',
-                link: null
-            }];
+            }, ];
+
+            if ($stateParams.categorySlug) {
+                var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
+                    return decisionGroup.nameSlug === $stateParams.categorySlug;
+                });
+
+                var data = [{
+                    title: 'Categories',
+                    link: 'decisions.single.categories({categorySlug: null})'
+                }, {
+                    title: vm.decision.decisionGroups[index].name,
+                    link: null
+                }];
+                breadcrumbs = _.concat(breadcrumbs, data);
+            } else {
+                breadcrumbs.push({
+                    title: 'Categories',
+                    link: null
+                });
+            }
+            $rootScope.breadcrumbs = breadcrumbs;
         }
 
 
@@ -242,6 +260,7 @@
         function changeOptionTab(key) {
             initSortMode(key);
             vm.decisionsChildsLoader = true;
+            setPageData();
         }
 
         function scrollToDecision(id) {

@@ -200,20 +200,20 @@
 
                 // TODO: fix it
                 // BreadCrumbs
-                if ($state.current.name === 'decisions.single.categories.comparison' ||
-                    $state.current.name === 'decisions.single.categories.comparison.analysis') {
-                    $rootScope.breadcrumbs = [{
-                        title: 'Decisions',
-                        link: 'decisions'
-                    }, {
-                        title: result.name,
-                        link: 'decisions.single'
-                    }, {
-                        title: 'Comparison Matrix',
-                        link: null
-                    }];
+                // if ($state.current.name === 'decisions.single.categories.comparison' ||
+                //     $state.current.name === 'decisions.single.categories.comparison.analysis') {
+                //     $rootScope.breadcrumbs = [{
+                //         title: 'Decisions',
+                //         link: 'decisions'
+                //     }, {
+                //         title: result.name,
+                //         link: 'decisions.single'
+                //     }, {
+                //         title: 'Comparison Matrix',
+                //         link: null
+                //     }];
 
-                }
+                // }
 
                 // TODO: find better way
                 // Remove size & page params
