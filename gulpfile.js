@@ -89,7 +89,7 @@ gulp.task('inject', ['jshint', 'less'], function() {
 gulp.task('fonts', function() {
     log('Copying fonts');
     return gulp.src([
-        config.fonts + '/*',
+        config.fonts + '/**/*',
         config.fontAwesome + '/*'])
         .pipe(gulp.dest(config.release + '/fonts'));
 });
@@ -110,7 +110,7 @@ gulp.task('configFile', function() {
 
 gulp.task('images', function() {
     log('Optimzating images');
-    return gulp.src(config.images + '/*')
+    return gulp.src(config.images + '/**/*')
         .pipe(imagemin())
         .pipe(gulp.dest(config.release + '/images'));
 });
