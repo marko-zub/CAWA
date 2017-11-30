@@ -30,7 +30,7 @@
             var htmlPopover = [
                 // '<div>{{decision}}</div>',
                 '<div class="poper-wrapper">',
-                '    <div id="criteria-{{::decision.id}}" class="poper criteria-popover hide text-left">',
+                '    <div id="criteria-{{::decision.id}}" class="poper hide criteria-popover text-left">',
                 '        <div class="arrow popper__arrow" x-arrow></div>',
                 '        <div class="popover-content popover-inner">',
                 '            <criteria-compliance-popover decision="decision" parent-decision="::parentDecision"></criteria-compliance-popover>',
