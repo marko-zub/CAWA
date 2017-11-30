@@ -2,9 +2,7 @@
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap" translate-cloak>
-                {{ "CAN'T FIND THE NECESSARY CHARACTERISTIC?" | translate }} <a href="#">
-                    {{ 'Add it' | translate }}
-                </a>
+                {{ "CHARACTERISTICS" | translate }}
             </div>
         </div>
         <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
@@ -14,8 +12,7 @@
 
                         <a ng-if="::!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
 
-                        <content-formater
-                                          item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
+                        <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
                                           characteristic="::characteristic"></content-formater>
 
                         <div class="dw-additional-wrapper dw-comments control-panel-sm">
