@@ -6,7 +6,7 @@
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-class="{'active':vm.matrixMode == 'inclusion'}">
                         <a ng-click="vm.changeMatrixMode('inclusion')">
-                            <span ng-bind="::vm.decision.name"></span>
+                            <span ng-bind="::vm.decisionGroupActive.name"></span>
                             <span ng-show="vm.inclusionItemsLength >= 0">
                                 (<span ng-bind="vm.inclusionItemsLength"></span>)
                             </span>

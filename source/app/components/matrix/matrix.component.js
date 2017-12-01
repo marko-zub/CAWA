@@ -38,6 +38,14 @@
             vm.filterName = null;
             vm.decisionsLoader = true;
 
+            var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
+                return decisionGroup.nameSlug === $stateParams.categorySlug;
+            });
+
+            if (index >= 0) {
+                vm.decisionGroupActive = vm.decision.decisionGroups[index];
+            }
+
             _fo = DecisionSharedService.getFilterObject();
 
             iniMatrixModeTabs();

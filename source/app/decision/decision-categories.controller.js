@@ -49,18 +49,6 @@
 
             initTabs();
             setPageData();
-
-            // // Init first time slugs
-            // if (!$stateParams.categorySlug) {
-            //     var params = $state.params;
-            //     params.categorySlug = vm.decision.decisionGroups[0].nameSlug;
-            //     $state.go($state.current.name, params ,{
-            //         reload: false,
-            //         notify: false
-            //     });
-            // }
-
-
         }
 
         function initTabs() {
@@ -258,7 +246,7 @@
         // Change tab by click without reload page
         vm.changeOptionTab = changeOptionTab;
 
-        function changeOptionTab(key, slug) {
+        function changeOptionTab(key) {
             initSortMode(key);
             vm.decisionsChildsLoader = true;
             setPageData(vm.activeDecisionGroupsTab.nameSlug);
