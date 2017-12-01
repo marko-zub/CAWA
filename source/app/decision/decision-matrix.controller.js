@@ -31,7 +31,7 @@
                     link: 'decisions.single'
                 }, {
                     title: 'Categories',
-                    link: 'decisions.single.categories'
+                    link: 'decisions.single.categories({categorySlug: null})'
                 }, {
                     title: vm.decision.decisionGroups[index].name,
                     link: 'decisions.single.categories({categorySlug: "' + vm.decision.decisionGroups[index].nameSlug + '"})'

@@ -84,8 +84,8 @@
                         $el.append(htmlPopover);
                         $compile($el.contents())($scope);
                         isPopoverCompiled = true;
-                    }   
-                }); 
+                    }
+                });
             }
 
             function initEvents() {
@@ -96,8 +96,9 @@
                 // TODO: bad case with dependency to '.popover-ref'
                 $el.find('.popover-ref').on('mouseenter', function() {
                     if (!isPopoverHover) {
+                        $('.poper').not(popoverContentId).removeClass('in');
                         popoverContentId.addClass('in');
-                    }                
+                    }
                 });
 
                 $el.find('.popover-ref').on('mouseleave', function() {
@@ -106,7 +107,7 @@
                             popoverContentId.removeClass('in');
                         }
                     }, 60, false);
-                });                
+                });
 
                 popoverContentId.on('mouseenter', function() {
                     isPopoverHover = true;
