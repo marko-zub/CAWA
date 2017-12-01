@@ -36,7 +36,7 @@
 
             if ($stateParams.characteristicSlug) {
                 // console.log($stateParams.characteristicSlug);
-                vm.parent = changeCategory($stateParams.characteristicSlug);
+                vm.parent = changeCharacteristicSlug($stateParams.characteristicSlug);
             } else {
                 if (vm.decision.parentDecisionGroups) {
                     vm.parent = vm.decision.parentDecisionGroups[0];
@@ -44,16 +44,25 @@
                 }
             }
 
+            // TODO: check if we dublicate code
+            if ($stateParams.category) {
+                vm.categoryTab = changeCharacteristicCategorySlug($stateParams.category);
+            }
+
             if (vm.parent && vm.decision) {
                 setPageData();
             }
-
-            if ($stateParams.category) {
-                vm.categoryTab = changeCategory($stateParams.category);
-            }
         }
 
-        function changeCategory(slug) {
+        function changeCharacteristicCategorySlug(slug) {
+            var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
+                return parentDecisionGroup.nameSlug === slug;
+            });
+            vm.categoryTabIndex = categoryIndex;
+            return vm.decision.parentDecisionGroups[categoryIndex];                        
+        }
+
+        function changeCharacteristicSlug(slug) {
             var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
                 return parentDecisionGroup.ownerDecision.nameSlug === slug;
             });
@@ -61,10 +70,10 @@
             return vm.decision.parentDecisionGroups[categoryIndex];
         }
 
-        vm.changeCategoryTab = changeCategoryTab;
+        vm.changeCharacteristicSlugTab = changeCharacteristicSlugTab;
 
-        function changeCategoryTab(slug) {
-            changeCategory(slug);
+        function changeCharacteristicSlugTab(slug) {
+            changeCharacteristicSlug(slug);
         }
 
         // function findParentId(slug) {
@@ -82,7 +91,7 @@
                 link: 'decisions'
             }, {
                 title: vm.decision.name,
-                link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '"})'
+                link: 'decisions.single({id:' + vm.decision.id + ', slug:"' + vm.decision.nameSlug + '", category: null})'
             }, {
                 title: 'Characteristics',
                 link: null
@@ -90,17 +99,26 @@
 
             if ($stateParams.characteristicSlug) {
                 // vm.parent.name
-                breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics';
-                breadcrumbs.push({
-                    title: vm.parent.name,
-                    link: null
-                });
+                breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics({characteristicSlug:null, category: null})';
+
+                if ($stateParams.category) {
+                    breadcrumbs.push({
+                        title: vm.parent.ownerDecision.name,
+                        link: 'decisions.single.characteristics({characteristicSlug: "' + $stateParams.characteristicSlug + '", category: null})'
+                    });
+                    breadcrumbs.push({
+                        title: vm.parent.name,
+                        link: null
+                    });
+                } else {
+                    breadcrumbs.push({
+                        title: vm.parent.ownerDecision.name,
+                        link: null
+                    });
+                }
             }
 
-            if ($stateParams.category) {
-                // vm.categoryTab 
-                console.log(vm.categoryTab);
-            }
+
 
             $rootScope.breadcrumbs = breadcrumbs;
 

@@ -106,7 +106,7 @@
             }
         }
 
-        function setPageData() {
+        function setPageData(categorySlug) {
             $rootScope.pageTitle = vm.decision.name + ' Categories | DecisionWanted.com';
 
             var breadcrumbs = [{
@@ -117,14 +117,15 @@
                 link: 'decisions.single'
             }, ];
 
-            if ($stateParams.categorySlug) {
+            categorySlug = categorySlug || $stateParams.categorySlug;
+            if (categorySlug) {
                 var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
-                    return decisionGroup.nameSlug === $stateParams.categorySlug;
+                    return decisionGroup.nameSlug === categorySlug;
                 });
 
                 var data = [{
                     title: 'Categories',
-                    link: 'decisions.single.categories({categorySlug: null})'
+                    link: 'decisions.single.categories({categorySlug: null, sort: null})'
                 }, {
                     title: vm.decision.decisionGroups[index].name,
                     link: null
@@ -257,10 +258,10 @@
         // Change tab by click without reload page
         vm.changeOptionTab = changeOptionTab;
 
-        function changeOptionTab(key) {
+        function changeOptionTab(key, slug) {
             initSortMode(key);
             vm.decisionsChildsLoader = true;
-            setPageData();
+            setPageData(vm.activeDecisionGroupsTab.nameSlug);
         }
 
         function scrollToDecision(id) {
