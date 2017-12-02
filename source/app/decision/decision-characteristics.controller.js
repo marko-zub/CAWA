@@ -51,6 +51,7 @@
 
             if (vm.parent && vm.decision) {
                 setPageData();
+                getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id);
             }
         }
 
@@ -59,7 +60,7 @@
                 return parentDecisionGroup.nameSlug === slug;
             });
             vm.categoryTabIndex = categoryIndex;
-            return vm.decision.parentDecisionGroups[categoryIndex];                        
+            return vm.decision.parentDecisionGroups[categoryIndex];
         }
 
         function changeCharacteristicSlug(slug) {
@@ -82,9 +83,8 @@
         //     });
         // }
 
-        function setPageData() {
+        function setPageData(slug) {
             vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-            getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id);
 
             var breadcrumbs = [{
                 title: 'Decisions',
@@ -97,14 +97,15 @@
                 link: null
             }];
 
-            if ($stateParams.characteristicSlug) {
+            slug = $stateParams.characteristicSlug || slug;
+            if (slug) {
                 // vm.parent.name
                 breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics({characteristicSlug:null, category: null})';
 
                 if ($stateParams.category) {
                     breadcrumbs.push({
                         title: vm.parent.ownerDecision.name,
-                        link: 'decisions.single.characteristics({characteristicSlug: "' + $stateParams.characteristicSlug + '", category: null})'
+                        link: 'decisions.single.characteristics({characteristicSlug: "' + slug + '", category: null})'
                     });
                     breadcrumbs.push({
                         title: vm.parent.name,
@@ -118,11 +119,15 @@
                 }
             }
 
-
-
             $rootScope.breadcrumbs = breadcrumbs;
 
             $rootScope.pageTitle = vm.decision.name + ' ' + vm.parent.name + ' | DecisionWanted.com';
+        }
+
+        vm.changeOwnerDecisionyTab = changeOwnerDecisionyTab;
+
+        function changeOwnerDecisionyTab(slug) {
+            setPageData(slug);
         }
 
         // TODO: clean up
