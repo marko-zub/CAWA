@@ -1,4 +1,4 @@
-<pageslide class="compare-panel-wrapper" ps-size="260px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
+<pageslide class="compare-panel-wrapper" ps-size="280px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
     <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
         <i class="fa fa-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
         <span ng-show="vm.total">({{vm.total}})</span>
@@ -8,10 +8,21 @@
             <div class="nav-tabs-wrapper clearfix">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-class="{'active': vm.activeTab == $index }" ng-repeat="parentDecision in vm.compareList track by parentDecision.id">
-                        <a ng-click="vm.activeTab = $index">{{ parentDecision.name }}</a>
+                        <a ng-click="vm.activeTab = $index">{{ ::parentDecision.name }}</a>
                     </li>
                 </ul>
             </div>
+            <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                <ul class="nav nav-pills nav-tabs-sm">
+                    <li ng-repeat="parentDecision in vm.parentDecisionActive.decisionGroups track by parentDecision.id" ng-class="{'active': vm.activeTab == $index }">
+                        <a ng-click="vm.changeParentDecisionActiveDecisionGroupsIndex($index)">{{ ::parentDecision.name }}</a>
+                    </li>
+                </ul>
+            </div>        
+
+<!--             <pre>
+                {{ vm.compareList | json}}
+            </pre> -->
             <div class="decision-card-group" ng-repeat="parentDecision in vm.compareList track by parentDecision.id" ng-show="vm.activeTab == $index">
                 <div class="decision-card-group-content clearfix">
                     <div class="decision-card" ng-repeat="decision in parentDecision.childDecisions track by decision.id">

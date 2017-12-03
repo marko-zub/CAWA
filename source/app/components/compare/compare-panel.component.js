@@ -73,8 +73,15 @@
 
         function getDecisionByParent(parentDecision) {
             if (parentDecision.id >= 0 && !_.isEmpty(parentDecision.childDecisions)) {
-                return DecisionDataService.getDecisionsInfo(parentDecision.id).then(function(respParentDecision) {
+
+                var params = {
+                    fetchDecisionGroups: true
+                };
+
+                return DecisionDataService.getDecisionInfoFull(parentDecision.id, params).then(function(respParentDecision) {
                     var sendIds = _.uniq(parentDecision.childDecisions);
+                    vm.parentDecisionActive = respParentDecision[0];
+                    // console.log(vm.parentDecisionActive);
                     return DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(respChildDecisions) {
                         respChildDecisions = DecisionsUtils.prepareDecisionToUI(respChildDecisions);
                         _.each(respChildDecisions, function(decision) {
@@ -165,6 +172,12 @@
             });
         }
 
+        // TODO: simplify name
+        vm.changeParentDecisionActiveDecisionGroupsIndex = changeParentDecisionActiveDecisionGroupsIndex;
+        function changeParentDecisionActiveDecisionGroupsIndex(index) {
+            vm.parentDecisionActiveDecisionGroupsIndex = index;
+        }
+
         vm.compareDecisions = compareDecisions;
 
         function compareDecisions(index) {
@@ -173,16 +186,27 @@
             var cleanList = filterCompareList(vm.compareList);
             var includeChildDecisionIds = cleanList[index].childDecisions;
 
+            // TODO: pick selected vm.parentDecisionActive.decisionGroups[0]
+            vm.parentDecisionActiveDecisionGroupsIndex = 0;
             $state.go('decisions.single.categories.comparison', {
                 id: parentDecision.id,
-                slug: parentDecision.nameSlug
+                slug: vm.parentDecisionActive.nameSlug,
+                analysisId: null,
+                categorySlug: vm.parentDecisionActive.decisionGroups[vm.parentDecisionActiveDecisionGroupsIndex].nameSlug, 
+                size: null,
+                page: null,
+                sort: null,
+                decisionId: null
             });
 
             // if state !== 'decisions.single.categories.comparison'
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
             DecisionSharedService.filterObject.excludeChildDecisionIds = null;
 
-            DecisionNotificationService.notifyChangeDecisionMatrixMode({ mode: 'exclusion', ids: includeChildDecisionIds });
+            DecisionNotificationService.notifyChangeDecisionMatrixMode({
+                mode: 'exclusion',
+                ids: includeChildDecisionIds
+            });
             // if ($state.current.name === 'decisions.single.categories.comparison') {
             //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
             //     // debugger
@@ -200,6 +224,6 @@
 
         DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
             togglePanel(data.isOpen);
-        });        
+        });
     }
 })();
