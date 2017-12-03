@@ -125,11 +125,20 @@
                 <div class="nav-tabs-wrapper tabs-left">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.index == $index}">
-                            <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
+                            <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="clearfix" ng-show="vm.criteriaGroupsCompilance">
+
+                <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                    <ul class="nav nav-pills nav-tabs-sm">
+                        <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.index == $index}">
+                            <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="clearfix mg-b-sm" ng-show="vm.criteriaGroupsCompilance">
                     <!-- Make as component -->
                     <div class="clearfix">
                         <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">

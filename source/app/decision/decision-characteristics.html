@@ -131,7 +131,7 @@
             <div class="nav-tabs-wrapper tabs-left">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
-                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)">{{ ::parent.ownerDecision.name }}/{{::parent.name}}</a>
+                        <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)">{{ ::parent.ownerDecision.name }}</a>
                     </li>
                 </ul>
                 <div class="pull-right text-header">
@@ -140,6 +140,16 @@
                     </a>
                 </div>
             </div>
+
+            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
+                <ul class="nav nav-pills nav-tabs-sm">
+                    <li ng-repeat="parent in  vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                        <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+
 
             <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
 
