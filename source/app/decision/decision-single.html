@@ -130,7 +130,7 @@
                     </ul>
                 </div>
 
-                <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+                <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.index == $index}">
                             <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>

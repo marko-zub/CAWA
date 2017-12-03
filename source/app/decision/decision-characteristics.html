@@ -141,7 +141,7 @@
                 </div>
             </div>
 
-            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
+            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-md">
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="parent in  vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                         <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
