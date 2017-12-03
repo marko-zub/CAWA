@@ -82,7 +82,7 @@
                                             <a
                                                 class="decision-criteria-compilance popover-ref"
                                                 ng-show="item.decision.criteriaCompliancePercentage >= 0"
-                                                ui-sref="decisions.single.characteristics(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug})">
+                                                ui-sref="decisions.single.characteristics(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, sort: null, category: vm.decisionGroupActive.nameSlug, characteristicSlug:vm.decision.nameSlug})">
                                                 <div class="text-uppercase" translate-cloak>
                                                     {{ 'CRITERIA SCORE' | translate }}
                                                 </div>

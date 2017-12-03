@@ -126,6 +126,7 @@
                     } else if (!criteriaItem.isSelected && find >= 0) {
                         vm.tagsSort.splice(find, 1);
                     } else if (criteriaItem.isSelected === true && find < 0) {
+                        if (_.isUndefined(vm.tagsSort)) vm.tagsSort = [];
                         vm.tagsSort.push(criteriaItem);
                     }
                 });
