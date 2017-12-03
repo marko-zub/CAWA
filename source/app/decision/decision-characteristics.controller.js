@@ -229,11 +229,11 @@
             };
             sendData.excludeChildDecisionIds = [decisionId];
 
-            vm.activeRecommendedTab = {
-                id: parent.id,
-                name: parent.name,
-                nameSlug: parent.nameSlug,
-            };
+            if (parent.ownerDecision) {
+                vm.activeRecommendedTab = parent.ownerDecision;
+            } else {
+                vm.activeRecommendedTab = parent;
+            }
 
             if (criteriaGroups) {
                 var criteriaGroupsIds = pickCriteriaIds(criteriaGroups);

@@ -2,8 +2,8 @@
     <div class="clearfix criteria-popover-header">
         <h5 class="app-list-title-sm pull-left" translate-cloak>{{ ::vm.decision.name }} - {{ 'CRITERIA COMPLIANCE' | translate }} {{ ::vm.parentDecision.name }}
         </h5>
-
-        <a class="criteria-popover-header-link" ui-sref="decisions.single.characteristics(::{id:vm.decision.id, slug: vm.decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, sort: null, category: null})">
+        
+        <a class="criteria-popover-header-link" ui-sref="decisions.single.characteristics(::{id:vm.decision.id, slug: vm.decision.nameSlug, parentId:vm.parentDecision.id, parentSlug:vm.parentDecision.nameSlug, sort: null, characteristicSlug:vm.parentDecision.nameSlug, page: null, size: null, category: vm.parentDecision.decisionGroups[0].nameSlug})">
             {{ 'READ MORE' | translate }}
         </a>
 
