@@ -122,7 +122,7 @@
         <div class="col-sm-3">
             <!-- Parent criteria & characteristics -->
             <div class="decision-aside" ng-if="vm.parentDecisionGroups.length">
-                <div class="nav-tabs-wrapper tabs-left">
+                <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.index == $index}">
                             <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)"> {{ ::parent.ownerDecision.name }}</a>

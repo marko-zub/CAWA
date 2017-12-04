@@ -33,7 +33,7 @@
 
 
 
-                    <div class="nav-tabs-wrapper mg-b-md tabs-left clearfix">
+                    <div class="nav-tabs-wrapper mg-b-sm tabs-left clearfix">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="parentDecision in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':parentDecision.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug}">
                                 <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug, category: null})" ui-sref-opts="{notify: false}" ng-click="vm.changeOwnerDecisionyTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
@@ -128,7 +128,7 @@
         <div class="col-sm-3 recommended-list" ng-if="vm.ParentDecisionGroups.length">
             <h4>{{ "Recommended" | translate }}</h4>
 
-            <div class="nav-tabs-wrapper tabs-left">
+            <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                         <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)">{{ ::parent.ownerDecision.name }}</a>
@@ -141,7 +141,7 @@
                 </div>
             </div>
 
-            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-md">
+            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                         <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
