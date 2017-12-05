@@ -25,13 +25,13 @@
                 $rootScope.pageTitle = vm.decision.name + ' Comparison Matrix | ' + Config.pagePrefix;
                 $rootScope.breadcrumbs = [{
                     title: 'Decisions',
-                    link: 'decisions'
+                    link: 'decisions({sort: null, size: null, page: null, sort: null, decisionId: null})'
                 }, {
                     title: vm.decision.name,
-                    link: 'decisions.single'
+                    link: 'decisions.single({sort: null, size: null, page: null, sort: null, decisionId: null})'
                 }, {
                     title: 'Categories',
-                    link: 'decisions.single.categories({categorySlug: null})'
+                    link: 'decisions.single.categories({categorySlug: null, sort: null, size: null, page: null, sort: null, decisionId: null})'
                 }, {
                     title: vm.decision.decisionGroups[index].name,
                     link: 'decisions.single.categories({categorySlug: "' + vm.decision.decisionGroups[index].nameSlug + '"})'

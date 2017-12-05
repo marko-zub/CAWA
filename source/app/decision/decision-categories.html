@@ -10,16 +10,16 @@
                             <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
+                            <a ui-sref="decisions.single.characteristics({sort: null, size: null, page: null, sort: null, decisionId: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
+                            <a ui-sref="decisions.single.reviews({sort: null, size: null, page: null, sort: null, decisionId: null})" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
                         <li class="active">
-                            <a ui-sref="decisions.single.categories" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
+                            <a ui-sref="decisions.single.categories({sort: null, size: null, page: null, sort: null, decisionId: null})" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({sort: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
+                            <a ui-sref="decisions.single.nominations({sort: null, size: null, page: null, sort: null, decisionId: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +61,7 @@
                     <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
                     <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
                         <span class="text-header">
-                    {{ 'NO OPTIONS' | translate }} <a href="#">{{ "HERE" | translate }}</a>.
+                    {{ 'NO OPTIONS' | translate }}.
                 </span>
                     </div>
                 </div>

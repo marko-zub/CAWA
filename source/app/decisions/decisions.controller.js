@@ -104,8 +104,8 @@
 
         function getTotalDecisions() {
             DecisionDataService.getDecisionsCount().then(function(resp) {
-                if (vm.totalCount !== resp.totalCount) {
-                    vm.totalCount = resp.totalCount;
+                if (vm.totalCount !== resp.number) {
+                    vm.totalCount = resp.number;
                     DecisionsService.setCount(vm.totalCount);
                 }
             });

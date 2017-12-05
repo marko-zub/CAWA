@@ -170,6 +170,11 @@
                 Utils.removeItemFromArray(value, checkedValues);
             }
 
+            // TODO: simplify Check if exist text only switcher
+            if ($($element).find('.switcher-text-label').length) {
+                sendObj.operator = 'OR';
+            }
+
             sendObj.value = checkedValues;
             var sendObjCopy = angular.copy(sendObj);
             sendRequestDebounce(sendObjCopy);
