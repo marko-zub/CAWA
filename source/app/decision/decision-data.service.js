@@ -154,13 +154,12 @@
                 decisionId: '@decisionId'
             }, {}),
 
-            criteriaByDecisionIndex = $resource(Config.endpointUrl + 'decisiongroups/:parentDecisionId/criteria/:criteriaIds/decisions/:decisionId/index', {
-                criteriaIds: '@criteriaIds',
+            criteriaByDecisionIndex = $resource(Config.endpointUrl + 'decisiongroups/:parentDecisionId/decisions/:decisionId/index', {
                 decisionId: '@decisionId',
                 parentDecisionId: '@parentDecisionId'
             }, {
                 query: {
-                    method: 'GET',
+                    method: 'POST',
                     isArray: false
                 }
             }),
@@ -310,12 +309,11 @@
             }).$promise;
         }
 
-        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIds) {
+        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, data) {
             return criteriaByDecisionIndex.query({
                 decisionId: decisionId,
                 parentDecisionId: parentDecisionId,
-                criteriaIds: criteriaIds
-            }).$promise;
+            }, data).$promise;
         }
 
         function getDecisionNomination(id, data) {

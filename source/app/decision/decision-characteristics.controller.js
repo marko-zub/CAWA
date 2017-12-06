@@ -240,7 +240,14 @@
                 sendData.sortCriteriaIds = criteriaGroupsIds;
                 getRecommendedDecisionsRequest(parent.id, sendData);
 
-                getCriteriaByDecisionIndex(vm.decision.id, parent.id, criteriaGroupsIds);
+                var params = {
+                    sortCriteriaIds: criteriaGroupsIds,
+                    sortDecisionPropertyName: 'createDate',
+                    sortDecisionPropertyDirection: 'DESC',
+                    sortWeightCriteriaDirection: 'DESC',
+                    sortTotalVotesCriteriaDirection: 'DESC'
+                };
+                getCriteriaByDecisionIndex(vm.decision.id, parent.id, params);
             } else {
                 DecisionDataService.getCriteriaGroupsById(parent.id).then(function(result) {
                     sendData.sortCriteriaIds = pickCriteriaIds(result);
@@ -279,10 +286,8 @@
         }
 
         // Move to component
-        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIds) {
-            if (_.isEmpty(criteriaIds)) return;
-            var criteriaIdsString = criteriaIds.join(',');
-            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
+        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, params) {
+            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, params).then(function(resp) {
                 if (_.isNumber(resp.number)) {
                     vm.decisionIndexInParentGroup = resp.number + 1;
                     vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;

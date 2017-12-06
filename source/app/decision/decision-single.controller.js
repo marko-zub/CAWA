@@ -369,7 +369,14 @@
 
                 sendData.sortCriteriaIds = criteriaGroupsIds;
 
-                getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);
+                var params = {
+                    sortCriteriaIds: criteriaGroupsIds,
+                    sortDecisionPropertyName: 'createDate',
+                    sortDecisionPropertyDirection: 'DESC',
+                    sortWeightCriteriaDirection: 'DESC',
+                    sortTotalVotesCriteriaDirection: 'DESC'
+                };
+                getCriteriaByDecisionIndex(vm.decision.id, parentId, params);
 
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
                     var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
@@ -388,15 +395,13 @@
         }
 
         // Move to component
-        function getCriteriaByDecisionIndex (decisionId, parentDecisionId, criteriaIds) {
-            if (_.isEmpty(criteriaIds)) return;
-            var criteriaIdsString = criteriaIds.join(',');
-            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaIdsString).then(function(resp) {
+        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, params) {
+            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, params).then(function(resp) {
                 if (_.isNumber(resp.number)) {
                     vm.decisionIndexInParentGroup = resp.number + 1;
-                    vm.decisionIndexInParentGroupPage = _.floor(resp.number/10) + 1;
+                    vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;
                 }
             });
-        }  
+        }
     }
 })();
