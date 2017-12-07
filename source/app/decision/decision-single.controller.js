@@ -361,12 +361,6 @@
                 });
 
                 // Criterias IDs
-                _.forEach(values[0], function(criteriaItem) {
-                    _.forEach(criteriaItem.criteria, function(criteria) {
-                        criteriaGroupsIds.push(criteria.id);
-                    });
-                });
-
                 sendData.sortCriteriaIds = criteriaGroupsIds;
 
                 var params = {
