@@ -19,7 +19,8 @@
             sendObj = {
                 'operator': 'OR'
             },
-            checkedValues = [];
+            checkedValues = [],
+            optionIds = [];
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
@@ -85,9 +86,11 @@
         function selectCheckboxes(list) {
             if (_.isEmpty(list)) {
                 checkedValues = [];
+                optionIds = [];
                 $($element).find('.filter-item-checkbox input.js-checkbox:checked').prop('checked', false);
             } else {
                 checkedValues = list;
+                optionIds = list;
                 $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
                     var val = $(this).val();
                     if (_.includes(list, val)) {
@@ -104,15 +107,23 @@
             var options = _.sortBy(item.options, 'name');
 
             // console.log(item);
+            var isValuesLinkedToOption = false;
+            if (item.valuesLinkedToOption) {
+                isValuesLinkedToOption = true;
+            }
             var content = _.map(options, function(option) {
 
+                var dataOptionId = '';
                 var checked = '';
                 if (_.includes(item.selectedValue, option.value)) {
                     checked = ' checked';
                 }
+                if (isValuesLinkedToOption) {
+                    dataOptionId = ' data-option-id="' + option.id + '"';
+                }
                 var html = [
                     '<div class="filter-item-checkbox">',
-                    '   <input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '"' + checked + '>',
+                    '   <input class="js-checkbox" type="checkbox" id="' + item.id + '-option-' + option.id + '" name="option-' + option.id + '" value="' + option.value + '"' + checked + dataOptionId + '>',
                     '   <label for="' + item.id + '-option-' + option.id + '">' + option.value + '</label>',
                     '</div>'
                 ];
@@ -163,21 +174,42 @@
             var checkbox,
                 value;
             checkbox = $(this);
-            value = checkbox.val();
-            if (checkbox.is(':checked')) {
-                Utils.addItemToArray(value, checkedValues);
+
+            if (checkbox.data('option-id')) {
+                value = parseInt(checkbox.data('option-id'), 10);
+                if (checkbox.is(':checked')) {
+                    Utils.addItemToArray(value, optionIds);
+                } else {
+                    Utils.removeItemFromArray(value, optionIds);
+                }
+
+                // TODO: simplify Check if exist text only switcher
+                if ($($element).find('.switcher-text-label').length) {
+                    sendObj.operator = 'OR';
+                }
+
+                sendObj.optionIds = optionIds;
+                var sendObjCopy = angular.copy(sendObj);
+                // console.log(sendObjCopy)
+                sendRequestDebounce(sendObjCopy);
+
             } else {
-                Utils.removeItemFromArray(value, checkedValues);
-            }
+                value = checkbox.val();
+                if (checkbox.is(':checked')) {
+                    Utils.addItemToArray(value, checkedValues);
+                } else {
+                    Utils.removeItemFromArray(value, checkedValues);
+                }
 
-            // TODO: simplify Check if exist text only switcher
-            if ($($element).find('.switcher-text-label').length) {
-                sendObj.operator = 'OR';
-            }
+                // TODO: simplify Check if exist text only switcher
+                if ($($element).find('.switcher-text-label').length) {
+                    sendObj.operator = 'OR';
+                }
 
-            sendObj.value = checkedValues;
-            var sendObjCopy = angular.copy(sendObj);
-            sendRequestDebounce(sendObjCopy);
+                sendObj.value = checkedValues;
+                var sendObjCopy = angular.copy(sendObj);
+                sendRequestDebounce(sendObjCopy);
+            }
         });
 
         $($element).on('change', '.query-type-wrapper input.js-switcher-checkbox', function() {

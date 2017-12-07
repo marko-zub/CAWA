@@ -12,18 +12,27 @@
 
         function createFilterQuery(data, optionId) {
             if (!data) return;
+            // console.log(data);
 
             // TODO: clean up 
             // Make constructor for Filter Query
             var sendData = angular.copy(data);
             if (sendData.value === 'all') sendData.value = null;
-            var sendVal = (_.isBoolean(sendData.value) || !_.isEmpty(sendData.value)) ? sendData.value : null;
+            // 
             var query = {
                 'type': sendData.type || 'AllInQuery',
                 'characteristicId': sendData.characteristicId || null,
-                'value': sendVal
             };
-            if (sendData.operator && _.isArray(sendVal)) {
+
+            var sendVal = (_.isBoolean(sendData.value) || !_.isEmpty(sendData.value)) ? sendData.value : null;
+            if (!sendVal && data.optionIds) {
+                query.optionIds = data.optionIds;
+            } else {
+                query.value = sendVal;
+            }
+
+            // if (sendData.operator && _.isArray(sendVal)) {
+            if (sendData.operator && (_.isArray(sendVal) || _.isArray(query.optionIds))) {
                 query.operator = sendData.operator;
                 if (sendData.operator === 'OR') {
                     query = {
@@ -31,7 +40,18 @@
                         'characteristicId': sendData.characteristicId || null,
                         'value': sendVal
                     };
+                    if (sendVal) {
+                        query.value = sendVal;
+                    } else if (data.optionIds) {
+                        query.optionIds = data.optionIds;
+                    } else {
+                        query.value = null;
+                    }
                 }
+            }
+
+            if (_.isArray(query.optionIds) && _.isEmpty(query.optionIds)) {
+                query.optionIds = null;
             }
             characteristicChange(sendData.characteristicId, query, optionId);
         }
