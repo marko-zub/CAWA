@@ -52,6 +52,8 @@
 
             if (_.isArray(query.optionIds) && _.isEmpty(query.optionIds)) {
                 query.optionIds = null;
+            } else if (!_.isEmpty(query.optionIds)) {
+                delete query.value;
             }
             characteristicChange(sendData.characteristicId, query, optionId);
         }

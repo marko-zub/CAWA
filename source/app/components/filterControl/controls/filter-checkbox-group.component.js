@@ -118,7 +118,7 @@
                 if (_.includes(item.selectedValue, option.value)) {
                     checked = ' checked';
                 }
-                if (isValuesLinkedToOption) {
+                if (isValuesLinkedToOption === true) {
                     dataOptionId = ' data-option-id="' + option.id + '"';
                 }
                 var html = [
@@ -218,10 +218,20 @@
             } else {
                 sendObj.operator = 'AND';
             }
-            sendObj.value = checkedValues;
-            if (!_.isEmpty(sendObj.value)) {
-                var sendObjCopy = angular.copy(sendObj);
-                sendRequestDebounce(sendObjCopy);
+            if (vm.item.valuesLinkedToOption) {
+                delete sendObj.value;
+                sendObj.optionIds = optionIds;
+                if (!_.isEmpty(sendObj.optionIds)) {
+                    var sendObjCopy = angular.copy(sendObj);
+                    sendRequestDebounce(sendObjCopy);
+                }
+            } else {
+                delete sendObj.optionIds;
+                sendObj.value = checkedValues;
+                if (!_.isEmpty(sendObj.value)) {
+                    var sendObjCopy = angular.copy(sendObj);
+                    sendRequestDebounce(sendObjCopy);
+                }
             }
         });
         // END Control Checkboxes
