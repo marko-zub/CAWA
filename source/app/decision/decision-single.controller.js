@@ -68,6 +68,7 @@
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
+        var decisionGroupActiveId;
 
         function changeDecisionGroupsTab(mode) {
             // console.log(vm.decisionGroups);
@@ -77,24 +78,30 @@
             });
             if (findIndex >= 0) {
                 vm.activeDecisionGroupsTabIndex = findIndex;
+                vm.decisionGroupActive = vm.decision.decisionGroups[vm.activeDecisionGroupsTabIndex];
+                decisionGroupActiveId = vm.decisionGroupActive.id;
+            } else if (vm.decision.decisionGroups) {
+                vm.decisionGroupActive = vm.decision.decisionGroups[0];
+                decisionGroupActiveId = vm.decisionGroupActive.id;
             }
         }
 
         // TODO: Simplify logic
         function initSortMode(mode) {
+            if (!decisionGroupActiveId) return;
             var findIndex = _.findIndex(navigationObj, function(navItem) {
                 return navItem.key === mode;
             });
             if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
                 vm.tabMode = navigationObj[findIndex].value;
-                getDecisionMatrix(vm.decision.id);
+                getDecisionMatrix(decisionGroupActiveId);
                 vm.activeTabSort = findIndex;
                 // Hide criterias
                 vm.criteriaGroups = [];
             } else {
                 vm.tabMode = 'topRated';
                 getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                    getDecisionMatrix(vm.decision.id).then(function() {
+                    getDecisionMatrix(decisionGroupActiveId).then(function() {
                         vm.criteriaGroupsLoader = false;
                     });
                 });
@@ -223,7 +230,7 @@
         vm.changeFilter = changeFilter;
 
         function changeFilter(value) {
-            getDecisionMatrix(vm.decision.id, null, value);
+            getDecisionMatrix(decisionGroupActiveId, null, value);
         }
 
         // TODO: move to login to recommended component
@@ -285,7 +292,7 @@
         vm.changePage = changePage;
 
         function changePage(pagination) {
-            getDecisionMatrix(vm.decision.id, pagination);
+            getDecisionMatrix(decisionGroupActiveId, pagination);
             updateStateParams(pagination);
         }
 

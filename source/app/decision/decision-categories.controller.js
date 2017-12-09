@@ -41,7 +41,7 @@
             vm.decisionParents = vm.decision.parentDecisions;
             initSortMode($stateParams.sort);
 
-            if (vm.decision.decisionGroups.length) {
+            if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionsChildsLoader = true;
             } else {
                 vm.decisionsLoader = false;
@@ -52,7 +52,7 @@
         }
 
         function initTabs() {
-            if (vm.decision.decisionGroups.length) {
+            if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
                     return decisionGroup.nameSlug === $stateParams.categorySlug;
                 });
@@ -62,7 +62,7 @@
                 }
             }
 
-            if (!$stateParams.categorySlug) {
+            if (!$stateParams.categorySlug && vm.decision.decisionGroups) {
                 vm.activeDecisionGroupsTabIndex = 0;
                 vm.activeDecisionGroupsTab = vm.decision.decisionGroups[0];
             }

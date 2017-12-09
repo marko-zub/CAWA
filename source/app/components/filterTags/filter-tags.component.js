@@ -227,7 +227,7 @@
                 return characteristic.id === id;
             });
 
-            if (find) return _.pick(find, 'name', 'valueType');
+            if (find) return _.pick(find, 'name', 'valueType', 'options');
         }
 
         // TODO: Remove it
@@ -257,7 +257,26 @@
         function addToTagsList(item) {
             if (!_.isEmpty(item)) {
                 var find = findCharacteristic(item.characteristicId);
+                // console.log(item, find);
                 item = _.merge(item, find);
+
+                if (item.value) {
+                    item.valueTemp = item.value;
+                }
+
+                if (item.hasOwnProperty('optionIds')) {
+                    if (_.isEmpty(item.valueTemp)) {
+                        item.valueTemp = [];
+                    }
+                    _.forEach(item.optionIds, function(option) {
+                        var findOption = _.find(item.options, function(itemOption) {
+                            return itemOption.id === option;
+                        });
+                        item.valueTemp.push(findOption.value);
+                    });
+                    console.log(item);
+                }
+
                 item.operator = (item.type === 'AnyInQuery') ? 'OR' : 'AND';
                 var index = tagIndexInList(item.characteristicId);
                 if (index >= 0) {
@@ -272,14 +291,14 @@
             var data = [];
             // TODO: use Switch Case ?!
             if (item.valueType && item.valueType.toLowerCase() === 'datetime') {
-                data[0] = Utils.dateToUI(item.value[0]) + ' - ' + Utils.dateToUI(item.value[1]);
+                data[0] = Utils.dateToUI(item.valueTemp[0]) + ' - ' + Utils.dateToUI(item.valueTemp[1]);
             } else if (item.valueType && item.valueType.toLowerCase() === 'boolean') {
-                if (item.value === true) data[0] = 'Yes';
-                if (item.value === false) data[0] = 'No';
+                if (item.valueTemp === true) data[0] = 'Yes';
+                if (item.valueTemp === false) data[0] = 'No';
             } else if (item.type && item.type.toLowerCase() === 'rangequery') {
-                data[0] = item.value[0] + ' - ' + item.value[1];
+                data[0] = item.valueTemp[0] + ' - ' + item.valueTemp[1];
             } else {
-                data = _.isArray(item.value) ? item.value : [item.value];
+                data = _.isArray(item.valueTemp) ? item.valueTemp : [item.valueTemp];
             }
             item.data = data;
             return item;

@@ -54,11 +54,12 @@
             vm.characteristicGroupsContentLoader = true;
 
             vm.fo = angular.copy(_fo.sorters);
-            getCriteriaGroupsById(vm.decision.id).then(function() {
+            getCriteriaGroupsById(vm.decisionGroupActive.id).then(function() {
 
                 updateCriteriaGroupContainerHeight();
                 initSortets(); //Hall of fame
-                getDecisionMatrix(vm.decision.id).then(function() {
+                // console.log(vm.decision);
+                getDecisionMatrix(vm.decisionGroupActive.id).then(function() {
                     // TODO: check if we need this code
                     initMatrixScroller();
 
@@ -84,7 +85,7 @@
         }
 
         function loadCharacteristics() {
-            getCharacteristicsGroupsById(vm.decision.id).then(function(resp) {
+            getCharacteristicsGroupsById(vm.decisionGroupActive.id).then(function(resp) {
                 // 3. Render characteristics
                 prepareCharacteristicsGroups(resp);
                 renderMatrix(true);
@@ -149,14 +150,14 @@
                 formDataForSearchRequest(data, data.coefCall);
             }
 
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initSortets();
                 initMatrix(true);
             });
         });
 
         DecisionNotificationService.subscribeChildDecisionExclusion(function() {
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initMatrix(true);
             });
         });
@@ -169,7 +170,7 @@
             _fo.excludeChildDecisionIds = null;
             vm.matrixMode = 'exclusion';
 
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initMatrix(true);
                 initMatrixMode();
             });
@@ -181,7 +182,7 @@
 
         DecisionNotificationService.subscribeGetDetailedCharacteristics(function(event, data) {
             data.detailsSpinner = true;
-            DecisionDataService.getDecisionCharacteristics(vm.decision.id, data.id).then(function(result) {
+            DecisionDataService.getDecisionCharacteristics(vm.decisionGroupActive.id, data.id).then(function(result) {
                 data.characteristics = result;
             }).finally(function() {
                 data.detailsSpinner = false;
@@ -192,7 +193,7 @@
             // TODO: clean up DecisionSharedService in controller maake one object
             DecisionSharedService.filterObject.sorters[data.mode] = data.sort;
             DecisionSharedService.filterObject.persistent = true;
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initMatrix(true);
             });
         });
@@ -240,7 +241,7 @@
                 setCharacteristicChanges(query.filterQueries, data.optionId);
             }
 
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initMatrix(false);
             });
 
@@ -248,7 +249,7 @@
 
         DecisionNotificationService.subscribeFilterByName(function(event, data) {
             _fo.decisionNameFilterPattern = data || null;
-            getDecisionMatrix(vm.decision.id, false).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, false).then(function() {
                 initMatrix(true);
                 vm.filterName = data;
             });
@@ -985,7 +986,7 @@
 
         function changePage(pagination) {
             _fo.pagination = pagination;
-            getDecisionMatrix(vm.decision.id, true).then(function() {
+            getDecisionMatrix(vm.decisionGroupActive.id, true).then(function() {
                 initMatrix(true);
             });
         }
