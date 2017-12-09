@@ -17,7 +17,7 @@
 
         var vm = this;
 
-        vm.decision = decisionBasicInfo || {};
+        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, false) || {};
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         vm.$onInit = onInit;
 
@@ -67,6 +67,23 @@
 
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
+
+            setImageSize();
+        }
+
+        function setImageSize() {
+            // Set only for svg
+            $(window).on('load', function() {
+                if (vm.decision.imageStyle) {
+                    var img = $('.post-image img');
+                    if (img) {
+                        img.css({
+                            height: img[0].naturalHeight < 200 ? img[0].naturalHeight + 'px' : 200,
+                            width: img[0].naturalWidth < 200 ? img[0].naturalWidth + 'px' : 200
+                        });
+                    }
+                }
+            });
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;

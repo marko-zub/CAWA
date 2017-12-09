@@ -41,6 +41,7 @@
                 <div class="clearfix text-justify">
                     <div class="post-image">
                         <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                        <div ng-bind="vm.decision.imageBlock"> </div>
                     </div>
                     <div class="page-description" ng-bind-html="(vm.decision.description || 'NO DESCRIPTION' | translate)" translate-cloak></div>
                 </div>
