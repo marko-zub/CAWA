@@ -59,6 +59,8 @@
             changeDecisionGroupsTab($stateParams.category);
             initSortMode($stateParams.sort);
 
+            vm.decision.description = $sce.trustAsHtml(_.unescape(vm.decision.description));
+
             if (!$state.params.sort) {
                 vm.activeDecisionGroupsTabIndex = 0;
             }

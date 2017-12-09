@@ -26,8 +26,8 @@
                 }
 
                 if (el.description) {
-                    el.description = el.description.replace(/(&#13;)?&#10;/g, '<br/>');
-                    el.description = $sce.trustAsHtml(el.description);
+                    el.description = _.unescape(el.description.replace(/(&#13;)?&#10;/g, '<br/>'));
+                    el.description = $sce.trustAsHtml(_.unescape(el.description));
                 }
 
                 return el;
