@@ -56,8 +56,8 @@
                 link: null
             }];
 
-            initSortMode($stateParams.sort);
             changeDecisionGroupsTab($stateParams.category);
+            initSortMode($stateParams.sort);
 
             if (!$state.params.sort) {
                 vm.activeDecisionGroupsTabIndex = 0;
@@ -88,30 +88,31 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (!decisionGroupActiveId) return;
-            var findIndex = _.findIndex(navigationObj, function(navItem) {
-                return navItem.key === mode;
-            });
-            if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
-                vm.tabMode = navigationObj[findIndex].value;
-                getDecisionMatrix(decisionGroupActiveId);
-                vm.activeTabSort = findIndex;
-                // Hide criterias
-                vm.criteriaGroups = [];
-            } else {
-                vm.tabMode = 'topRated';
-                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                    getDecisionMatrix(decisionGroupActiveId).then(function() {
-                        vm.criteriaGroupsLoader = false;
+            if (decisionGroupActiveId) {
+                var findIndex = _.findIndex(navigationObj, function(navItem) {
+                    return navItem.key === mode;
+                });
+                if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
+                    vm.tabMode = navigationObj[findIndex].value;
+                    getDecisionMatrix(decisionGroupActiveId);
+                    vm.activeTabSort = findIndex;
+                    // Hide criterias
+                    vm.criteriaGroups = [];
+                } else {
+                    vm.tabMode = 'topRated';
+                    getCriteriaGroupsByParentId(vm.decision.id).then(function() {
+                        getDecisionMatrix(decisionGroupActiveId).then(function() {
+                            vm.criteriaGroupsLoader = false;
+                        });
                     });
-                });
-                vm.activeTabSort = 0;
-                $state.params.sort = null;
-                $state.transitionTo($state.current.name, $state.params, {
-                    reload: false,
-                    inherit: true,
-                    notify: false
-                });
+                    vm.activeTabSort = 0;
+                    $state.params.sort = null;
+                    $state.transitionTo($state.current.name, $state.params, {
+                        reload: false,
+                        inherit: true,
+                        notify: false
+                    });
+                }
             }
         }
 

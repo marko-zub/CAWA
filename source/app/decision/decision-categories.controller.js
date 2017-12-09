@@ -30,6 +30,7 @@
             value: null,
             label: 'Top Rated'
         };
+        var decisionGroupActiveId;
 
         navigationObj.unshift(newState);
 
@@ -39,14 +40,16 @@
             vm.activeTabSortChild = 0;
             vm.navigation = navigationObj;
             vm.decisionParents = vm.decision.parentDecisions;
-            initSortMode($stateParams.sort);
+
 
             if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionsChildsLoader = true;
+                decisionGroupActiveId = vm.decision.decisionGroups[0].id;
             } else {
                 vm.decisionsLoader = false;
             }
 
+            initSortMode($stateParams.sort);
             initTabs();
             setPageData();
         }
@@ -70,27 +73,29 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            var findIndex = _.findIndex(navigationObj, function(navItem) {
-                return navItem.key === mode;
-            });
-            if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
-                vm.tabMode = navigationObj[findIndex].value;
-                getDecisionMatrix(vm.decision.id);
-                vm.activeTabSort = findIndex;
-                // Hide criterias
-                vm.criteriaGroups = [];
-            } else {
-                vm.tabMode = 'topRated';
-                getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                    getDecisionMatrix(vm.decision.id);
+            if (decisionGroupActiveId) {
+                var findIndex = _.findIndex(navigationObj, function(navItem) {
+                    return navItem.key === mode;
                 });
-                vm.activeTabSort = 0;
-                // $state.params.sort = null;
-                $state.transitionTo($state.current.name, $state.params, {
-                    reload: false,
-                    inherit: true,
-                    notify: false
-                });
+                if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
+                    vm.tabMode = navigationObj[findIndex].value;
+                    getDecisionMatrix(decisionGroupActiveId);
+                    vm.activeTabSort = findIndex;
+                    // Hide criterias
+                    vm.criteriaGroups = [];
+                } else {
+                    vm.tabMode = 'topRated';
+                    getCriteriaGroupsByParentId(decisionGroupActiveId).then(function() {
+                        getDecisionMatrix(decisionGroupActiveId);
+                    });
+                    vm.activeTabSort = 0;
+                    // $state.params.sort = null;
+                    $state.transitionTo($state.current.name, $state.params, {
+                        reload: false,
+                        inherit: true,
+                        notify: false
+                    });
+                }
             }
         }
 

@@ -64,12 +64,12 @@
                         <div class="col-sm-6">
                             <div class="clearfix">
                                 <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.parent.nameSlug, decisionId: vm.decision.id})">
+                                    <a ui-sref="decisions.single.categories(::{id: vm.ownerDecision.parent.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.parent.nameSlug, decisionId: vm.decision.id})">
                                     <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
                                         {{ 'IN' | translate }} {{ vm.parent.name }}
                                 </h5>
                                 <div class="pull-left text-header" ng-if="vm.activeRecommendedTab.total >= 0">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
+                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.ownerDecision.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
                                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
                                     </a>
                                 </div>
