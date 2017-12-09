@@ -57,13 +57,8 @@
             }];
 
             changeDecisionGroupsTab($stateParams.category);
-            initSortMode($stateParams.sort);
 
             vm.decision.description = $sce.trustAsHtml(_.unescape(vm.decision.description));
-
-            if (!$state.params.sort) {
-                vm.activeDecisionGroupsTabIndex = 0;
-            }
 
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
@@ -96,14 +91,16 @@
             var findIndex = _.findIndex(vm.decisionGroups, function(navItem) {
                 return navItem.nameSlug === mode;
             });
+
             if (findIndex >= 0) {
-                vm.activeDecisionGroupsTabIndex = findIndex;
-                vm.decisionGroupActive = vm.decision.decisionGroups[vm.activeDecisionGroupsTabIndex];
+                vm.decisionGroupActive = vm.decision.decisionGroups[findIndex];
                 decisionGroupActiveId = vm.decisionGroupActive.id;
             } else if (vm.decision.decisionGroups) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
                 decisionGroupActiveId = vm.decisionGroupActive.id;
             }
+
+            initSortMode($stateParams.sort);         
         }
 
         // TODO: Simplify logic

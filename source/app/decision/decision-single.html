@@ -56,8 +56,9 @@
                         <h4 class="tabs-title" translate-cloak>
                             {{ 'CATEGORIES' | translate }}
                         </h4>
+
                         <ul class="nav nav-tabs nav-tabs-sm">
-                            <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
+                            <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.decisionGroupActive.id == item.id}" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
                                 <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }} ({{::item.totalChildDecisions}})
                                 </a>
                             </li>
@@ -86,16 +87,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 mg-sm-b">
-                        <!-- <decisions-list compare="true" list="vm.childDecisionGroups" parent-decision="vm.decision"></decisions-list> -->
-                        <!--              <ul class="nav nav-tabs nav-tabs-sm" ng-if="vm.isDecisionsParent && !vm.decisionsChildsLoader">
-                            <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort === $index }">
-                                <a ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{ item.label | translate }}</a>
-                            </li>
-                        </ul> -->
-                    </div>
-                </div>
                 <div class="col-sm-12">
                     <div ng-show="vm.childDecisionGroups.length">
 
@@ -104,7 +95,7 @@
                                 <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
                             </div>
                             <div class="col-md-4">
-                                <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.activeDecisionGroupsTab.nameSlug, size: null, page: null, sort: null, decisionId: null })" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                                <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.decisionGroupActive.nameSlug, size: null, page: null, sort: null, decisionId: null })" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
                                     {{ 'Comparison Matrix' | translate }}
                                 </a>
                             </div>
@@ -134,7 +125,7 @@
                 <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.index == $index}">
-                            <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
+                            <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{ ::parent.name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -149,7 +140,7 @@
                         </h5>
                         <div class="pull-left text-header">
                             <a ui-sref="decisions.single.categories(::{id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
-                                {{ 'See All' | translate }} <span class="info">({{vm.activeParentTab.totalChildDecisions}})</span>
+                                {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
                             </a>
                         </div>
                     </div>
@@ -166,9 +157,6 @@
                                 <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
                             </div>
                         </div>
-                        <!--                   <div ng-switch-when="false" class="pull-right mt-1">
-                            <a href="#" translate-cloak>{{ "RATE IT" | translate }}</a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="list-wrapper sm">

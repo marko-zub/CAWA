@@ -26,8 +26,8 @@
             </div>
             <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.activeDecisionGroupsTabIndex === $index }">
-                        <a ui-sref="decisions.single.categories(::{categorySlug: item.nameSlug, sort: null, category: null})">{{ item.name | translate }}</a>
+                    <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active': vm.decisionGroupActive.id == item.id }">
+                        <a ui-sref="decisions.single.categories(::{categorySlug: item.nameSlug, sort: null, category: null})">{{ item.name | translate }} ({{::item.totalChildDecisions}})</a>
                     </li>
                 </ul>
             </div>
@@ -36,7 +36,7 @@
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-md">
                         <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
-                                <a ui-sref="decisions.single.categories(::{sort:item.key, categorySlug: vm.activeDecisionGroupsTab.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
+                                <a ui-sref="decisions.single.categories(::{sort:item.key, categorySlug: vm.decisionGroupActive.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
                             </li>
                         </ul>
                     </div>
@@ -47,7 +47,7 @@
                             <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
                         </div>
                         <div class="col-md-4">
-                            <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.activeDecisionGroupsTab.nameSlug, size: null, page: null, sort: null, decisionId: null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
+                            <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.decisionGroupActive.nameSlug, size: null, page: null, sort: null, decisionId: null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
                                 {{ 'Comparison Matrix' | translate }}
                             </a>
                         </div>

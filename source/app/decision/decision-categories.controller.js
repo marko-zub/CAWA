@@ -30,7 +30,6 @@
             value: null,
             label: 'Top Rated'
         };
-        var decisionGroupActiveId;
 
         navigationObj.unshift(newState);
 
@@ -44,12 +43,12 @@
 
             if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionsChildsLoader = true;
-                decisionGroupActiveId = vm.decision.decisionGroups[0].id;
+                vm.decisionGroupActive = vm.decision.decisionGroups[0].id;
             } else {
                 vm.decisionsLoader = false;
             }
 
-            initSortMode($stateParams.sort);
+            
             initTabs();
             setPageData();
         }
@@ -60,33 +59,34 @@
                     return decisionGroup.nameSlug === $stateParams.categorySlug;
                 });
                 if (index >= 0) {
-                    vm.activeDecisionGroupsTabIndex = index;
-                    vm.activeDecisionGroupsTab = vm.decision.decisionGroups[index];
+                    vm.decisionGroupActive = vm.decision.decisionGroups[index];
+                } else {
+                    vm.decisionGroupActive = vm.decision.decisionGroups[0];
                 }
             }
 
             if (!$stateParams.categorySlug && vm.decision.decisionGroups) {
-                vm.activeDecisionGroupsTabIndex = 0;
-                vm.activeDecisionGroupsTab = vm.decision.decisionGroups[0];
+                vm.decisionGroupActive = vm.decision.decisionGroups[0];
             }
+            initSortMode($stateParams.sort);
         }
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (decisionGroupActiveId) {
+            if (vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
                 });
                 if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
                     vm.tabMode = navigationObj[findIndex].value;
-                    getDecisionMatrix(decisionGroupActiveId);
+                    getDecisionMatrix(vm.decisionGroupActive.id);
                     vm.activeTabSort = findIndex;
                     // Hide criterias
                     vm.criteriaGroups = [];
                 } else {
                     vm.tabMode = 'topRated';
-                    getCriteriaGroupsByParentId(decisionGroupActiveId).then(function() {
-                        getDecisionMatrix(decisionGroupActiveId);
+                    getCriteriaGroupsByParentId(vm.decisionGroupActive.id).then(function() {
+                        getDecisionMatrix(vm.decisionGroupActive.id);
                     });
                     vm.activeTabSort = 0;
                     // $state.params.sort = null;
@@ -183,7 +183,7 @@
         vm.changePage = changePage;
 
         function changePage(pagination) {
-            getDecisionMatrix(vm.decision.id, pagination);
+            getDecisionMatrix(vm.decisionGroupActive.id, pagination);
             updateStateParams(pagination);
 
             var params = $stateParams;
@@ -236,7 +236,7 @@
         vm.changeFilter = changeFilter;
 
         function changeFilter(value) {
-            getDecisionMatrix(vm.decision.id, null, value);
+            getDecisionMatrix(vm.decisionGroupActive.id, null, value);
         }
 
         function filterDecisionList(decisionMatrixs) {
@@ -254,7 +254,7 @@
         function changeOptionTab(key) {
             initSortMode(key);
             vm.decisionsChildsLoader = true;
-            setPageData(vm.activeDecisionGroupsTab.nameSlug);
+            setPageData(vm.decisionGroupActive.nameSlug);
         }
 
         function scrollToDecision(id) {
