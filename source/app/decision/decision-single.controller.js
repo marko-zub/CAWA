@@ -73,16 +73,17 @@
 
         function setImageSize() {
             // Set only for svg
-            $(window).on('load', function() {
+            angular.element(document).ready(function () {
                 if (vm.decision.imageStyle) {
                     var img = $('.post-image img');
                     if (img) {
                         img.css({
-                            height: img[0].naturalHeight < 200 ? img[0].naturalHeight + 'px' : 200,
-                            width: img[0].naturalWidth < 200 ? img[0].naturalWidth + 'px' : 200
+                            height: (img[0].naturalHeight > 0 && img[0].naturalHeight < 180) ? img[0].naturalHeight + 'px' : '180px',
+                            width: (img[0].naturalWidth > 0 && img[0].naturalWidth < 180) ? img[0].naturalWidth + 'px' : '180px'
                         });
                     }
                 }
+
             });
         }
 
