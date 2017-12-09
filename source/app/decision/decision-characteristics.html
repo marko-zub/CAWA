@@ -12,9 +12,6 @@
                         <li class="active">
                             <a href="#" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
-<!--                         <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ui-sref-active="active">
-                            <a ui-sref="decisions.single.characteristics(::{parentId:parent.id, parentSlug:parent.nameSlug})">{{ ::parent.ownerDecision.name }}/{{ ::parent.name }}</a>
-                        </li> -->
                         <li>
                             <a ui-sref="decisions.single.reviews" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
@@ -121,6 +118,9 @@
                 </div>
 
             </div>
+      <!--       <pre>
+                {{ vm.activeRecommendedTab | json }}
+            </pre> -->
         </div>
 
         <!-- TODO: move to component -->
@@ -130,7 +130,7 @@
 
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                    <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id == parent.id}">
                         <a ng-click="vm.getRecommendedDecisions(vm.decision.id, parent)">{{ ::parent.ownerDecision.name }}</a>
                     </li>
                 </ul>
@@ -140,10 +140,10 @@
                     </a>
                 </div>
             </div>
-
+            
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                 <ul class="nav nav-pills nav-tabs-sm">
-                    <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
+                    <li ng-repeat="parent in vm.activeRecommendedTab.ownerDecision.decisionGroups track by parent.id" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
                         <a ng-click="vm.getParrentDecisions(vm.decision.id, parent)">{{::parent.name}}</a>
                     </li>
                 </ul>

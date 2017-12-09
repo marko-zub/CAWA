@@ -229,11 +229,13 @@
             };
             sendData.excludeChildDecisionIds = [decisionId];
 
-            if (parent.ownerDecision) {
-                vm.activeRecommendedTab = parent.ownerDecision;
-            } else {
-                vm.activeRecommendedTab = parent;
-            }
+            console.log(parent);
+             vm.activeRecommendedTab = parent;
+            // if (parent.ownerDecision) {
+            //     vm.activeRecommendedTab = parent.ownerDecision;
+            // } else {
+            //     vm.activeRecommendedTab = parent;
+            // }
 
             if (criteriaGroups) {
                 var criteriaGroupsIds = pickCriteriaIds(criteriaGroups);
