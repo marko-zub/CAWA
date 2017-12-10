@@ -164,9 +164,8 @@
                 }
             }),
 
-            characteristicOptions = $resource(Config.endpointUrl + 'decisiongroups/', {
-                id: '@id',
-                optionId: '@optionId'
+            characteristicOptions = $resource(Config.endpointUrl + 'characteristics/:characteristicId/characteristicoptions', {
+                characteristicId: '@characteristicId'
             }, {});
 
 
@@ -289,10 +288,9 @@
             }).$promise;
         }
 
-        function getCharacteristicOptionsById(id, optionId) {
+        function getCharacteristicOptionsById(characteristicId) {
             return characteristicOptions.query({
-                id: id,
-                optionId: optionId
+                characteristicId: characteristicId
             }).$promise;
         }
 

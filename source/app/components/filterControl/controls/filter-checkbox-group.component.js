@@ -34,7 +34,7 @@
             // Lazy options
             if (vm.item.lazyOptions === true) {
                 vm.filterSpinner = true;
-                getLazyOptions($state.params.id, vm.item.id);
+                getLazyOptions(vm.item.id);
                 return;
             }
 
@@ -70,8 +70,8 @@
             $compile($element.contents())($scope);
         }
 
-        function getLazyOptions(id, optionId) {
-            return DecisionDataService.getCharacteristicOptionsById(id, optionId)
+        function getLazyOptions(optionId) {
+            return DecisionDataService.getCharacteristicOptionsById(optionId)
                 .then(function(resp) {
                     vm.item.options = resp;
                     vm.filterSpinner = false;
