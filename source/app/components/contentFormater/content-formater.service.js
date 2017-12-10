@@ -77,7 +77,7 @@
                         (item.historicalValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '',
                         (item.flaggableValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>' : '',
                         '</div>'
-                    ].join('\n');;
+                    ].join('\n');
                 }
 
                 result = '<li><div>' + el + description + '</div> ' + totalHistoryValueHtml + '</li>';
