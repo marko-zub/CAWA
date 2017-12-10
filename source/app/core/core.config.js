@@ -29,6 +29,7 @@
 
     function taOptions(taRegisterTool, taOptions) {
         // $delegate is the taOptions we are decorating
+        taOptions.forceTextAngularSanitize = false;
         taOptions.toolbar = [
             ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
             ['html', 'insertImage', 'insertLink', 'insertVideo']
