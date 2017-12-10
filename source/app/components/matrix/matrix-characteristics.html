@@ -14,11 +14,11 @@
                         <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
                                           characteristic="::characteristic"></content-formater>
                         <div class="dw-additional-wrapper dw-comments control-panel-sm">
-                            <a ng-if="::characteristic.commentableValue" ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
+                            <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
-                                <a ng-if="::characteristic.historicalValue" href="#" class="control">
+                                <a ng-if="::characteristic.historicalValue !== false" href="#" class="control">
                                     <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues || 0}}</a>
-                                <a ng-if="::characteristic.flaggableValue" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
+                                <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
                             </span>
                         </div>
                         </a>

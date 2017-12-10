@@ -30,8 +30,16 @@
                     valueType: vm.characteristic.valueType,
                     description: changes.item.currentValue.description,
                     totalHistoryValues: changes.item.currentValue.totalHistoryValues,
-                    visualMode: vm.characteristic.visualMode
+                    visualMode: vm.characteristic.visualMode,
+                    historicalValue: vm.characteristic.historicalValue,
+                    acceptUserValues: vm.characteristic.acceptUserValues,
+                    commentableValue: vm.characteristic.commentableValue,
+                    flaggableValue: vm.characteristic.flaggableValue
                 };
+                // if (vm.characteristic.hasOwnProperty('historicalValue')) {
+                //     console.log(vm.characteristic);
+                // }
+
                 var renderContent = ContentFormaterService.getTemplate(item);
                 renderHtml(renderContent);
             }

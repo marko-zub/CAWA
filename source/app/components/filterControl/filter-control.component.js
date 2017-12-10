@@ -46,13 +46,13 @@
                 renderControl('checkbox-group');
                 return;
             }
-
+            // console.log(item.name + ' : ' + item.valueType + '  ' + item.visualMode);
             switch (true) {
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
                     renderControl('select');
                     break;
-                case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER')):
+                case ((item.valueType === 'DATETIME') && (item.visualMode === 'DATERANGEPICKER' || item.visualMode === 'DATETIMERANGEPICKER')):
                     renderControl('date-range');
                     break;
                 case ((item.valueType === 'DOUBLE' || item.valueType === 'PRICE') && (item.visualMode === 'DOUBLERANGESLIDER')):

@@ -51,7 +51,9 @@
             return str.replace(/(&#13;)?&#10;/g, '<br/>');
         }
 
-        function contentFormaterArrayWithDescription(array, descriptions, totalHistoryValues) {
+        function contentFormaterArrayWithDescription(array, descriptions, item) {
+            var totalHistoryValues = item.totalHistoryValues;
+            // console.log(item);
             // console.log(str, descriptions);
             // if (_.isObject(str) || !str) return;
             // var array = JSON.stringify(str);
@@ -66,14 +68,19 @@
 
             var content = _.map(array, function(el, index) {
                 var result;
-                // console.log(el);
                 var description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
-                // if (totalHistoryValues) {
-                    var totalHistoryValueHtml = (totalHistoryValues[index] >= 0) ? '<div class="control-panel-sm clearfix"><a href="#" class="control pull-left"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a><a href="#" class="control pull-left"><i class="fa fa-flag" aria-hidden="true"></i> 0</a></div>' : '';
-                    result = '<li><div>' + el + description + '</div> ' + totalHistoryValueHtml + '</li>';
-                // } else {
-                // result = '<li>' + el + description + '</li>';
-                // }
+
+                var totalHistoryValueHtml = '';
+                if (totalHistoryValues[index] >= 0) {
+                    totalHistoryValueHtml = [
+                        '<div class="control-panel-sm clearfix">',
+                        (item.historicalValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa fa-bar-chart" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '',
+                        (item.flaggableValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>' : '',
+                        '</div>'
+                    ].join('\n');;
+                }
+
+                result = '<li><div>' + el + description + '</div> ' + totalHistoryValueHtml + '</li>';
                 return result;
             }).join('\n');
 
@@ -107,15 +114,14 @@
             // console.log(type);
             // console.log(item, visualMode, type);
             if (item.multiValue === true) {
-                result = contentFormaterArrayWithDescription(value, item.description, item.totalHistoryValues);
+                result = contentFormaterArrayWithDescription(value, item.description, item);
                 compile = true;
             } else {
                 // console.log(type.toUpperCase(), visualMode);
                 //
                 if (visualMode && visualMode.toUpperCase() === 'LINK') {
                     result = contentFormaterLink(value);
-                }
-                else {
+                } else {
                     switch (type.toUpperCase()) {
                         case 'STRING':
                             result = stringFullDescr(value).result;
