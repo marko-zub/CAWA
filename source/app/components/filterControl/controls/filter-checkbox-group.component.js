@@ -189,9 +189,8 @@
                 }
 
                 sendObj.optionIds = optionIds;
-                var sendObjCopy = angular.copy(sendObj);
                 // console.log(sendObjCopy)
-                sendRequestDebounce(sendObjCopy);
+                sendRequestDebounce(angular.copy(sendObj));
 
             } else {
                 value = checkbox.val();
@@ -207,8 +206,7 @@
                 }
 
                 sendObj.value = checkedValues;
-                var sendObjCopy = angular.copy(sendObj);
-                sendRequestDebounce(sendObjCopy);
+                sendRequestDebounce(angular.copy(sendObj));
             }
         });
 

@@ -100,7 +100,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="decisions-list" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
+                        <div class="decisions-list mg-b-md" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
                             <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
                             <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
                             <!-- TODO: remove second loader -->
@@ -174,4 +174,7 @@
             <!-- End Owners -->
         </div>
     </div>
+<!--         <pre>
+            {{ vm.decision | json }}
+        </pre>   -->  
 </div>

@@ -1,9 +1,15 @@
 .form-control {
   border-radius: @border-radius;
   box-shadow: none;
+  border: 1px solid #ccc;
   &:focus,
   &:hover {
       box-shadow: none;
       border-color: @basic-active;
+  }
+  &[disabled]:focus,
+  &[disabled]:hover {
+      box-shadow: none;
+      border: 1px solid #ccc;
   }
 }
