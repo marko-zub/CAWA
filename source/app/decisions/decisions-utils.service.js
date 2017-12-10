@@ -69,7 +69,7 @@
 
             if (decision.description) {
                 decision.description = _.unescape(decision.description.replace(/(&#13;)?&#10;/g, '<br/>'));
-                decision.description = $sce.trustAsHtml(_.unescape(decision.description));
+                decision.description = $sce.trustAsHtml(decision.description);
             }
 
             return decision;
