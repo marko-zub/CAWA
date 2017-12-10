@@ -170,11 +170,6 @@
         if ($stateParams.id !== result.id) {
             $stateParams.id = result.id;
         }
-        // if ($stateParams.slug === null ||
-        //     $stateParams.slug === 'comparison' ||
-        //     $stateParams.slug === 'list') {
-        //     $stateParams.slug = result.nameSlug;
-        // }
 
         // TODO: optimize logic or remove from resolver
         // var stateListener =
@@ -190,6 +185,12 @@
                 // Just added new slug
                 if (toState.name === 'decisions.single' &&
                     ($stateParams.slug !== result.nameSlug)) {
+
+                    // Set empty slug
+                    if (!result.nameSlug) {
+                        result.nameSlug = '-';
+                    }
+
                     $state.params.slug = result.nameSlug;
                     $state.transitionTo($state.current.name, toParams, {
                         reload: false,
@@ -198,25 +199,8 @@
                     });
                 }
 
-                // TODO: fix it
-                // BreadCrumbs
-                // if ($state.current.name === 'decisions.single.categories.comparison' ||
-                //     $state.current.name === 'decisions.single.categories.comparison.analysis') {
-                //     $rootScope.breadcrumbs = [{
-                //         title: 'Decisions',
-                //         link: 'decisions'
-                //     }, {
-                //         title: result.name,
-                //         link: 'decisions.single'
-                //     }, {
-                //         title: 'Comparison Matrix',
-                //         link: null
-                //     }];
-
-                // }
-
                 // TODO: find better way
-                // Remove size & page params
+                // Remove to unnecessary size & page ... params
                 var states = ['decisions', 'decisions.single.categories'];
                 if (!_.includes(states, $state.current.name)) {
                     var params = $state.params;
@@ -231,13 +215,9 @@
                     $state.go($state.current.name, params, {
                         notify: false,
                         reload: false,
-                        // inherit: true,
                         location: true
                     });
                 }
-
-                // unsubscribe event listener
-                // stateListener();
             });
     }
 

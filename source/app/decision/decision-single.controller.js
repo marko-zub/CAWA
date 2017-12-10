@@ -58,8 +58,6 @@
 
             changeDecisionGroupsTab($stateParams.category);
 
-            vm.decision.description = $sce.trustAsHtml(_.unescape(vm.decision.description));
-
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
 

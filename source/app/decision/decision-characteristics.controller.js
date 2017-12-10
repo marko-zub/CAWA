@@ -84,8 +84,6 @@
         // }
 
         function setPageData(slug) {
-            vm.parent.description = $sce.trustAsHtml(vm.parent.description);
-
             var breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
@@ -229,7 +227,6 @@
             };
             sendData.excludeChildDecisionIds = [decisionId];
 
-            console.log(parent);
              vm.activeRecommendedTab = parent;
             // if (parent.ownerDecision) {
             //     vm.activeRecommendedTab = parent.ownerDecision;

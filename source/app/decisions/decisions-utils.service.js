@@ -67,7 +67,7 @@
                 decision.criteriaCompliancePercentage = _.floor(decision.criteriaCompliancePercentage, 2).toFixed(2);
             }
 
-            if (decision.description) {
+            if (decision.description && typeof decision.description === 'string') {
                 decision.description = _.unescape(decision.description.replace(/(&#13;)?&#10;/g, '<br/>'));
                 decision.description = $sce.trustAsHtml(decision.description);
             }
