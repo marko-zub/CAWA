@@ -10,15 +10,12 @@
                 <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.id" ng-click="vm.getComments($event)">
                     <div class="m-col-content">
 
-                        <a ng-if="::!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
-
+                        <a ng-if="::(!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && characteristic.acceptUserValues !== false)" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                         <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"
                                           characteristic="::characteristic"></content-formater>
 
                         <div class="dw-additional-wrapper dw-comments control-panel-sm">
                             <a ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
-                            <!-- <a href="#" class="control readonly"><i class="fa fa-bar-chart" aria-hidden="true"></i> 0</a> -->
-
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
                                 <a href="#" class="control">
                                     <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues || 0}}</a>
