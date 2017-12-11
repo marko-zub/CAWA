@@ -58,7 +58,7 @@
                         </h4>
 
                         <ul class="nav nav-tabs nav-tabs-sm">
-                            <li ng-repeat="item in vm.decisionGroups track by $index" ng-class="{'active':vm.decisionGroupActive.id == item.id}" ng-if="vm.decisionGroups && !vm.decisionsChildsLoader">
+                            <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.decisionGroupActive.id == item.id}" ng-if="vm.decision.decisionGroups && !vm.decisionsChildsLoader">
                                 <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }} ({{::item.totalChildDecisions}})
                                 </a>
                             </li>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12" ng-if="vm.childDecisionGroups.length">
+                <div class="col-xs-12" ng-if="vm.decisions.length">
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <!-- Tabs content -->
-                <div ng-if="!vm.childDecisionGroups.length && !vm.decisionsChildsLoader">
+                <div ng-if="!vm.decisions.length && !vm.decisionsChildsLoader">
                     <div class="col-sm-7">
                         <div class="mg-b-md app-action-text" translate-cloak>
                             {{ "NO OPTIONS" | translate }}
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <div ng-show="vm.childDecisionGroups.length">
+                    <div ng-show="vm.decisions.length">
 
                         <div class="row">
                             <div class="col-md-8">
@@ -100,7 +100,9 @@
                                 </a>
                             </div>
                         </div>
+
                         <div class="decisions-list mg-b-md" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
+       
                             <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
                             <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
                             <!-- TODO: remove second loader -->

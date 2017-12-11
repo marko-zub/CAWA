@@ -13,7 +13,8 @@
 
 		function onInit() {
 			if ($stateParams.token) {
-				var token = $window.location.href.split('access_token=')[1];
+				var linkToken = $stateParams.token;
+				var token = linkToken.split('access_token=')[1];
 				LoginService.saveToken(token);
 				$window.close();
 			}

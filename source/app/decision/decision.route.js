@@ -201,7 +201,7 @@
 
                 // TODO: find better way
                 // Remove to unnecessary size & page ... params
-                var states = ['decisions', 'decisions.single.categories'];
+                var states = ['decisions', 'decisions.single.categories', 'decisions.single'];
                 if (!_.includes(states, $state.current.name)) {
                     var params = $state.params;
                     params.page = null;

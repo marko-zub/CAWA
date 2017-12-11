@@ -38,7 +38,7 @@
             console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
-            getDecisionParents(vm.decision);
+            
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
@@ -57,6 +57,7 @@
             }];
 
             changeDecisionGroupsTab($stateParams.category);
+            getDecisionParents(vm.decision);
 
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
@@ -66,7 +67,7 @@
 
         function setImageSize() {
             // Set only for svg
-            angular.element(document).ready(function () {
+            angular.element(document).ready(function() {
                 if (vm.decision.imageStyle) {
                     var img = $('.post-image img');
                     if (img) {
@@ -81,48 +82,50 @@
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
-        var decisionGroupActiveId;
 
         function changeDecisionGroupsTab(mode) {
             // console.log(vm.decisionGroups);
 
-            var findIndex = _.findIndex(vm.decisionGroups, function(navItem) {
+            var findIndex = _.findIndex(vm.decision.decisionGroups, function(navItem) {
                 return navItem.nameSlug === mode;
             });
 
             if (findIndex >= 0) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[findIndex];
-                decisionGroupActiveId = vm.decisionGroupActive.id;
-            } else if (vm.decision.decisionGroups) {
+            } else if (vm.decision.decisionGroups.length) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
-                decisionGroupActiveId = vm.decisionGroupActive.id;
             }
 
-            initSortMode($stateParams.sort);         
+            initSortMode($stateParams.sort);
         }
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (decisionGroupActiveId) {
+            if (vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
                 });
-                if (findIndex >= 0 && navigationObj[findIndex].key !== 'topRated') {
+                getDecisionMatrix(vm.decisionGroupActive.id);
+
+                if (findIndex >= 0) {
                     vm.tabMode = navigationObj[findIndex].value;
-                    getDecisionMatrix(decisionGroupActiveId);
+                    getDecisionMatrix(vm.decisionGroupActive.id);
                     vm.activeTabSort = findIndex;
                     // Hide criterias
                     vm.criteriaGroups = [];
                 } else {
                     vm.tabMode = 'topRated';
                     getCriteriaGroupsByParentId(vm.decision.id).then(function() {
-                        getDecisionMatrix(decisionGroupActiveId).then(function() {
+                        getDecisionMatrix(vm.decisionGroupActive.id).then(function() {
                             vm.criteriaGroupsLoader = false;
                         });
                     });
+
                     vm.activeTabSort = 0;
-                    $state.params.sort = null;
-                    $state.transitionTo($state.current.name, $state.params, {
+                    
+                    var params = $state.params;
+                    params.sort = null;
+                    $state.transitionTo($state.current.name, params, {
                         reload: false,
                         inherit: true,
                         notify: false
@@ -135,29 +138,23 @@
             vm.decisionsChildsLoader = true;
             vm.decisionParents = decision.parentDecisions;
 
-            if (vm.decision.totalChildDecisions > 0) {
-                vm.isDecisionsParent = true;
-                initSortMode($stateParams.sort);
-            }
-
             // decisionGroups
             vm.parentDecisionGroups = decision.parentDecisionGroups;
-            vm.decisionGroups = decision.decisionGroups;
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
-            if (vm.decisionGroups) {
+            if (vm.decision.decisionGroups) {
                 vm.decisionsChildsLoader = true;
                 vm.activeDecisionGroupsTab = {
-                    id: vm.decisionGroups[0].id,
-                    name: vm.decisionGroups[0].name,
-                    nameSlug: vm.decisionGroups[0].nameSlug
+                    id: vm.decisionGroupActive.id,
+                    name: vm.decisionGroupActive.name,
+                    nameSlug: vm.decisionGroupActive.nameSlug
                 };
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];
                 // sendData.sortDecisionPropertyName = vm.tabMode;
                 sendData.sortDecisionPropertyDirection = 'DESC';
-                DecisionDataService.getDecisionGroups(vm.decisionGroups[0].id, sendData).then(function(result) {
+                DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
                     // console.log(result)
                     var childDecisionGroups = [];
                     vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
@@ -174,12 +171,6 @@
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0].id);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
                 vm.activeParentTab.index = 0;
-                // vm.activeParentTab = {
-                //     index: 0,
-                //     name: vm.parentDecisionGroups[0].name,
-                // };
-            } else {
-                // getRecommendedDecisions(vm.decision.id, vm.decision);
             }
         }
 
@@ -246,7 +237,7 @@
         vm.changeFilter = changeFilter;
 
         function changeFilter(value) {
-            getDecisionMatrix(decisionGroupActiveId, null, value);
+            getDecisionMatrix(vm.decisionGroupActive.id, null, value);
         }
 
         // TODO: move to login to recommended component
@@ -294,7 +285,7 @@
                 item.decision.criteria = item.criteria;
                 list.push(item.decision);
             });
-            return list;
+            return angular.copy(list);
         }
 
         // Change tab by click without reload page
@@ -308,7 +299,7 @@
         vm.changePage = changePage;
 
         function changePage(pagination) {
-            getDecisionMatrix(decisionGroupActiveId, pagination);
+            getDecisionMatrix(vm.decisionGroupActive.id, pagination);
             updateStateParams(pagination);
         }
 

@@ -10,8 +10,14 @@
 	function configuration($stateProvider) {
 		$stateProvider
 			.state('login', {
-				url: '/login/:token',
-				controller: 'AuthController'
+				url: '/login?token',
+				controller: 'AuthController',
+				params: {
+					token: {
+						value: null,
+						squash: false
+					},
+				}
 			});
 	}
 
