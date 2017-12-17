@@ -37,7 +37,7 @@
             if ($stateParams.characteristicSlug) {
                 // console.log($stateParams.characteristicSlug);
                 changeCharacteristicSlug($stateParams.characteristicSlug);
-            } else {
+            } else if(vm.decision.parentDecisionGroups) {
                 changeCharacteristicSlug();
             }
 
@@ -63,7 +63,7 @@
                     return parentDecisionGroup.ownerDecision.nameSlug === slug;
                 });
                 parent = vm.decision.parentDecisionGroups[categoryIndex];
-            } else {
+            } else if (vm.decision.parentDecisionGroups) {
                 parent = vm.decision.parentDecisionGroups[0];
             }
 
