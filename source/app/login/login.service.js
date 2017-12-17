@@ -38,7 +38,7 @@
             //TODO extract to config or constants
             var
                 loginUrl = 'oauth/authorize?response_type=token&client_id=decisionwanted_client_id&redirect_uri=',
-                returnUrl = Config.baseUrl + 'login?token=';
+                returnUrl = Config.baseUrl + 'login';
                 // TODO: remove from url /& 
 
             $window.open(Config.authUrl +

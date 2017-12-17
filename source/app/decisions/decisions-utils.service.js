@@ -44,7 +44,7 @@
 
             if (!decision.imageUrl) {
                 decision.imageUrl = decision.logoUrl;
-                if (!!hideEmptyImage && !url) {
+                if (hideEmptyImage !== true && !decision.imageUrl) {
                     decision.imageUrl = '/images/noimage.jpg';
                 }
             }

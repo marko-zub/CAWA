@@ -272,7 +272,10 @@
                         var findOption = _.find(item.options, function(itemOption) {
                             return itemOption.id === option;
                         });
-                        item.valueTemp.push(findOption.value);
+
+                        if (findOption && !!findOption.value) {
+                            item.valueTemp.push(findOption.value);
+                        }
                     });
                     console.log(item);
                 }

@@ -199,6 +199,8 @@
         });
 
         DecisionNotificationService.subscribeSelectCharacteristic(function(event, data) {
+            // TODO: simplify
+            // console.log(data);
             var query;
             if (_.isNull(data)) {
                 // Reset all characeristics
@@ -222,9 +224,9 @@
                     // TODO: find better solution
                     if (!_.isBoolean(query.filterQueries.value) &&
                         _.isEmpty(query.filterQueries.value) &&
+                        _.isEmpty(query.filterQueries.optionIds) &&
                         _.isEmpty(query.filterQueries.queries)) {
                         sendFo.filterQueries.splice(find, 1);
-
                     } else {
                         sendFo.filterQueries[find] = query.filterQueries;
                     }
@@ -234,7 +236,10 @@
 
                 if (_.isEmpty(sendFo.filterQueries) ||
                     (_.isArray(sendFo.filterQueries.value) &&
-                        _.isEmpty(sendFo.filterQueries.value))) {
+                        _.isEmpty(sendFo.filterQueries.value)) &&
+                    (_.isArray(sendFo.filterQueries.optionIds) &&
+                        _.isEmpty(sendFo.filterQueries.optionIds))
+                ) {
                     sendFo.filterQueries = null;
                 }
                 sendFo.filterQueries = filterObjectClearConditionCharacterisctics(sendFo.filterQueries, query.filterQueries);

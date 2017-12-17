@@ -220,15 +220,15 @@
                 delete sendObj.value;
                 sendObj.optionIds = optionIds;
                 if (!_.isEmpty(sendObj.optionIds)) {
-                    var sendObjCopy = angular.copy(sendObj);
-                    sendRequestDebounce(sendObjCopy);
+                    var sendObjCopyValue = angular.copy(sendObj);
+                    sendRequestDebounce(sendObjCopyValue);
                 }
             } else {
                 delete sendObj.optionIds;
                 sendObj.value = checkedValues;
                 if (!_.isEmpty(sendObj.value)) {
-                    var sendObjCopy = angular.copy(sendObj);
-                    sendRequestDebounce(sendObjCopy);
+                    var sendObjCopyOptionIds = angular.copy(sendObj);
+                    sendRequestDebounce(sendObjCopyOptionIds);
                 }
             }
         });

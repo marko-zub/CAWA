@@ -15,7 +15,7 @@
         // Only view/layout options without any vital data
         if (!$localStorage.options ||
             ($localStorage.options && (!$localStorage.options.comparePanel ||
-            !$localStorage.options.view))) { // Remove in future
+                !$localStorage.options.view))) { // Remove in future
             $localStorage.options = {
                 comparePanel: {
                     isOpen: false
@@ -38,6 +38,19 @@
         $rootScope.decisonViewsCount = true;
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState) {
+
+                // Set auth token
+                // Oauth return link with hash '#' for social login
+                // but for login/pass without
+                var url = $location.absUrl();
+                if (url.indexOf('#access_token') >= 0) {
+                    // debugger
+                    var accessToken = $location.hash().split('&')[0];
+                    if (accessToken) {
+                        toParams.access_token = accessToken.replace('access_token=', '');
+                    }
+                } 
+
                 if (toState && fromState && toState.name === fromState.name ||
                     (fromState.name === 'decisions.single' && toState.name.indexOf('decisions.single') >= 0)) {
                     $rootScope.decisonViewsCount = false;
