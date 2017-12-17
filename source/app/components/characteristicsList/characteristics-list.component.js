@@ -26,12 +26,20 @@
         var vm = this;
 
         vm.$onInit = onInit;
+        vm.$onChanges = onChanges;
         function onInit() {
             if(!!vm.links) vm.links = true;
             if(!!vm.comments) vm.comments = false;
             if (!vm.rating) vm.rating = false;
             if(vm.discussion !== true) vm.discussion = false;
             if (vm.collapsed !== false) vm.collapsed = true;
+        }
+
+        function onChanges(changes) {
+            if (changes.list &&
+                !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
+                vm.list = changes.list.currentValue;
+            }
         }
 
         vm.toggleCollapse = toggleCollapse;

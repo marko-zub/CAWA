@@ -39,10 +39,10 @@
                         </ul>
                     </div>
 
-
+    <!-- ng-if="parent.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug" -->
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
-                            <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug }">
+                            <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug && parent.id === vm.parent.id }">
                                 <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug, characteristicSlug:parent.ownerDecision.nameSlug})" >{{ ::parent.name }}</a>
                             </li>
                         </ul>
@@ -59,7 +59,7 @@
                 <div ng-if="vm.parent">
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="clearfix">
+                            <div class="clearfix top-link">
                                 <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
                                     <a ui-sref="decisions.single.categories(::{id: vm.parent.ownerDecision.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.parent.nameSlug, decisionId: vm.decision.id})">
                                     <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
@@ -75,29 +75,30 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-
-                            <div class="clearfix" ng-show="vm.criteriaGroups">
-
-                                <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
-                                <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
-                                    <div ng-switch-when="true" class="criteria-block static pull-right">
-                                        <div class="counters">
-                                            <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
-                                        </div>
-                                        <div class="counters criteria-block-votes">
-                                            <i class="dw-icon-vote"></i>
-                                            {{ vm.criteriaGroups.totalVotes }}
-                                        </div>
-                                        <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
-                                            <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
                             <div class="list-wrapper">
+
+                                <div class="clearfix" ng-show="vm.criteriaGroups">
+
+                                    <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
+                                    <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
+                                        <div ng-switch-when="true" class="criteria-block static pull-right">
+                                            <div class="counters">
+                                                <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                                            </div>
+                                            <div class="counters criteria-block-votes">
+                                                <i class="dw-icon-vote"></i>
+                                                {{ vm.criteriaGroups.totalVotes }}
+                                            </div>
+                                            <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                                <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            
                                 <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
 
                                 <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
@@ -105,6 +106,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-sm-6">
                             <div class="list-wrapper">
                                 <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>

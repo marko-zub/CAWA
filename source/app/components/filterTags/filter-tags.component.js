@@ -47,6 +47,7 @@
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
                 vm.characteristics = angular.copy(changes.characteristics.currentValue);
                 // generateCharacteristicsTags(vm.characteristics);
+                console.log(vm.characteristics);
 
                 if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
@@ -277,7 +278,7 @@
                             item.valueTemp.push(findOption.value);
                         }
                     });
-                    console.log(item);
+                    // console.log(item);
                 }
 
                 item.operator = (item.type === 'AnyInQuery') ? 'OR' : 'AND';

@@ -110,26 +110,37 @@
         // TODO: clean up code above
         // Include parent decision
         vm.compareList = [];
+        vm.compareListOwnerDecisions = [];
 
         function addDecisionCompareList(decision) {
-            if (decision.parentDecisions) {
-                saveDecisionCompareList(decision);
-            } else {
-                DecisionDataService.getDecisionParents(decision.id).then(function(decisionParents) {
-                    decision.parentDecisions = decisionParents;
-                    saveDecisionCompareList(decision);
-                });
-            }
+            console.log(decision);
+            saveDecisionCompareList(decision);
         }
 
         function saveDecisionCompareList(decision) {
             var decisionData = angular.copy(decision);
-            _.each(decision.parentDecisions, function(parentDecision) {
-                var parentDecisionData = _.pick(parentDecision, 'id', 'name', 'nameSlug');
+            _.each(decision.parentDecisionGroups, function(parentDecision) {
+                // Compare panel new flow
+                // var ownerDecision = _.pick(parentDecision.ownerDecision, 'id', 'name', 'nameSlug');
+                // if (!_.includes(ownerDecision, vm.compareListOwnerDecisions)) {
+                //     vm.compareListOwnerDecisions.push(ownerDecision);
+                // } else {
+                //     var findIndexOwnerDecision = _.findIndex(vm.compareListOwnerDecisions, function(compareListOwnerDecision) {
+                //         return compareListOwnerDecision.id === ownerDecision.id;
+                //     });
+                //     if (findIndexOwnerDecision >= 0) {
+                //         // vm.compareListOwnerDecisions[findIndexOwnerDecision]
+                //     }
+                // }
+                // vm.compareListOwnerDecisions = 
+                // console.log(parentDecision);
+                var parentDecisionData = _.pick(parentDecision.ownerDecision, 'id', 'name', 'nameSlug');
 
                 var indexParentDecision = _.findIndex(vm.compareList, function(compareParentDecision) {
                     return compareParentDecision.id === parentDecisionData.id;
                 });
+
+                console.log(parentDecision);
                 if (indexParentDecision >= 0) {
                     vm.compareList[indexParentDecision].childDecisions.push(decisionData);
                 } else {
@@ -139,6 +150,7 @@
                 }
             });
 
+            // console.log(vm.compareListOwnerDecisions);
             updateCompareList();
         }
 

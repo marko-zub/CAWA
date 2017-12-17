@@ -818,9 +818,9 @@
         vm.updateExclusionList = updateExclusionList;
 
         function initIncExcCounters() {
-            if (vm.matrixMode === 'inclusion') {
+            if (vm.matrixMode === 'inclusion' && vm.decisions) {
                 vm.inclusionItemsLength = vm.decisions.totalDecisionMatrixs;
-            } else if (vm.matrixMode === 'exclusion') {
+            } else if (vm.matrixMode === 'exclusion' && vm.decisions) {
                 vm.exclusionItemsLength = vm.decisions.totalDecisionMatrixs;
             }
         }

@@ -36,7 +36,7 @@
 
             if ($stateParams.characteristicSlug) {
                 // console.log($stateParams.characteristicSlug);
-                vm.parent = changeCharacteristicSlug($stateParams.characteristicSlug);
+                changeCharacteristicSlug($stateParams.characteristicSlug);
             } else {
                 if (vm.decision.parentDecisionGroups) {
                     vm.parent = vm.decision.parentDecisionGroups[0];
@@ -47,11 +47,6 @@
             // TODO: check if we dublicate code
             if ($stateParams.category) {
                 vm.categoryTab = changeCharacteristicCategorySlug($stateParams.category);
-            }
-
-            if (vm.parent && vm.decision) {
-                setPageData();
-                getParentDecisionGroupsCriteriaCharacteristicts(vm.parent.id);
             }
         }
 
@@ -67,7 +62,11 @@
             var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
                 return parentDecisionGroup.ownerDecision.nameSlug === slug;
             });
-            vm.categoryTabIndex = categoryIndex;
+            var parentId = vm.decision.parentDecisionGroups[categoryIndex].id;
+            getParentDecisionGroupsCriteriaCharacteristicts(parentId).then(function() {
+                vm.parent = vm.decision.parentDecisionGroups[categoryIndex];
+                setPageData(slug);
+            });
             return vm.decision.parentDecisionGroups[categoryIndex];
         }
 
@@ -125,7 +124,7 @@
         vm.changeOwnerDecisionyTab = changeOwnerDecisionyTab;
 
         function changeOwnerDecisionyTab(slug) {
-            setPageData(slug);
+            changeCharacteristicSlug(slug);
         }
 
         // TODO: clean up
@@ -133,12 +132,14 @@
         var criteriaIds = [];
 
         function getParentDecisionGroupsCriteriaCharacteristicts(parentId) {
+            vm.characteristicGroupsLoader = true;
+            vm.criteriaGroupsLoader = true;
             var sendData = {
                 includeChildDecisionIds: []
             };
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
-            $q.all([
+            return $q.all([
                 getCriteriaGroupsById(parentId),
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
@@ -256,6 +257,7 @@
         }
 
         function getRecommendedDecisionsRequest(parentId, sendData) {
+            vm.recommendedDecisionsListLoader = true;
             return DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(result) {
                 vm.recommendedDecisionsList = filterDecisionList(result.decisionMatrixs);
                 vm.recommendedDecisionsListLoader = false;
