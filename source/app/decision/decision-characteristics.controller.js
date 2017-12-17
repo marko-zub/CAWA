@@ -38,10 +38,7 @@
                 // console.log($stateParams.characteristicSlug);
                 changeCharacteristicSlug($stateParams.characteristicSlug);
             } else {
-                if (vm.decision.parentDecisionGroups) {
-                    vm.parent = vm.decision.parentDecisionGroups[0];
-                    vm.categoryTabIndex = 0;
-                }
+                changeCharacteristicSlug();
             }
 
             // TODO: check if we dublicate code
@@ -59,12 +56,19 @@
         }
 
         function changeCharacteristicSlug(slug) {
-            var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
-                return parentDecisionGroup.ownerDecision.nameSlug === slug;
-            });
-            var parentId = vm.decision.parentDecisionGroups[categoryIndex].id;
-            getParentDecisionGroupsCriteriaCharacteristicts(parentId).then(function() {
-                vm.parent = vm.decision.parentDecisionGroups[categoryIndex];
+            vm.decisionIndexInParentGroupLoader = true;
+
+            if (slug) {
+                var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
+                    return parentDecisionGroup.ownerDecision.nameSlug === slug;
+                });
+                parent = vm.decision.parentDecisionGroups[categoryIndex];
+            } else {
+                parent = vm.decision.parentDecisionGroups[0];
+            }
+
+            getParentDecisionGroupsCriteriaCharacteristicts(parent.id).then(function() {
+                vm.parent = parent;
                 setPageData(slug);
             });
             return vm.decision.parentDecisionGroups[categoryIndex];
@@ -140,8 +144,8 @@
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
             return $q.all([
-                getCriteriaGroupsById(parentId),
                 getCharacteristicsGroupsById(parentId),
+                getCriteriaGroupsById(parentId),
             ]).then(function(values) {
 
                 criteriaArray = values[0];
@@ -228,7 +232,7 @@
             };
             sendData.excludeChildDecisionIds = [decisionId];
 
-             vm.activeRecommendedTab = parent;
+            vm.activeRecommendedTab = parent;
             // if (parent.ownerDecision) {
             //     vm.activeRecommendedTab = parent.ownerDecision;
             // } else {
@@ -288,11 +292,13 @@
 
         // Move to component
         function getCriteriaByDecisionIndex(decisionId, parentDecisionId, params) {
+            vm.decisionIndexInParentGroupLoader = true;
             DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, params).then(function(resp) {
                 if (_.isNumber(resp.number)) {
                     vm.decisionIndexInParentGroup = resp.number + 1;
                     vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;
                 }
+                vm.decisionIndexInParentGroupLoader = false;
             });
         }
     }

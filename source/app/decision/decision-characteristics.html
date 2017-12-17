@@ -25,50 +25,43 @@
                 </div>
             </div>
             <div class="post post-single">
-
                 <div ng-if="vm.decision.parentDecisionGroups.length">
-
-
-
                     <div class="nav-tabs-wrapper mg-b-sm tabs-left clearfix">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="parentDecision in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':parentDecision.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug}">
                                 <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug, category: null})" ui-sref-opts="{notify: false}" ng-click="vm.changeOwnerDecisionyTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
-
                             </li>
                         </ul>
                     </div>
-
-    <!-- ng-if="parent.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug" -->
+                    <!-- ng-if="parent.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug" -->
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug && parent.id === vm.parent.id }">
-                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug, characteristicSlug:parent.ownerDecision.nameSlug})" >{{ ::parent.name }}</a>
+                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug, characteristicSlug:parent.ownerDecision.nameSlug})">{{ ::parent.name }}</a>
                             </li>
                         </ul>
                     </div>
-
                 </div>
-
                 <div ng-if="!vm.decision.parentDecisionGroups.length">
-                    <span class="text-header"  translate-cloak>
+                    <span class="text-header" translate-cloak>
                         {{ 'NO CHARACTERISTICS' | translate }}.
                     </span>
                 </div>
-
                 <div ng-if="vm.parent">
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="clearfix top-link">
-                                <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                            <div class="top-link">
+                                <div class="clearfix" ng-show="!vm.decisionIndexInParentGroupLoader">
+                                    <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
                                     <a ui-sref="decisions.single.categories(::{id: vm.parent.ownerDecision.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.parent.nameSlug, decisionId: vm.decision.id})">
                                     <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
                                         {{ 'IN' | translate }} {{ vm.parent.name }}
                                 </h5>
-                                <div class="pull-left text-header" ng-if="vm.activeRecommendedTab.total >= 0">
-                                    <a ui-sref="decisions.single.categories(::{id: vm.parent.ownerDecision.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
+                                    <div class="pull-left text-header" ng-if="vm.activeRecommendedTab.total >= 0">
+                                        <a ui-sref="decisions.single.categories(::{id: vm.parent.ownerDecision.id, slug: vm.parent.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.parent.nameSlug})" class="see-all">
                                         {{ 'See All' | translate }} <span class="info">({{vm.activeRecommendedTab.total}})</span>
                                     </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,9 +69,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="list-wrapper">
-
                                 <div class="clearfix" ng-show="vm.criteriaGroups">
-
                                     <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
                                     <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroups.totalVotes > 0">
                                         <div ng-switch-when="true" class="criteria-block static pull-right">
@@ -86,50 +77,35 @@
                                                 <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
                                             </div>
                                             <div class="counters criteria-block-votes">
-                                                <i class="dw-icon-vote"></i>
-                                                {{ vm.criteriaGroups.totalVotes }}
+                                                <i class="dw-icon-vote"></i> {{ vm.criteriaGroups.totalVotes }}
                                             </div>
                                             <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
                                                 <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
-
-                            
                                 <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
-
                                 <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
-
                             </div>
-
                         </div>
-
                         <div class="col-sm-6">
                             <div class="list-wrapper">
                                 <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
-
                                 <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-
             </div>
-      <!--       <pre>
+            <!--       <pre>
                 {{ vm.activeRecommendedTab | json }}
             </pre> -->
         </div>
-
         <!-- TODO: move to component -->
         <!-- Recommended Start -->
         <div class="col-sm-3 recommended-list" ng-if="vm.ParentDecisionGroups.length">
             <h4>{{ "Recommended" | translate }}</h4>
-
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active':vm.activeRecommendedTab.id == parent.id}">
@@ -142,7 +118,6 @@
                     </a>
                 </div>
             </div>
-            
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="parent in vm.activeRecommendedTab.ownerDecision.decisionGroups track by parent.id" ng-class="{'active':vm.activeRecommendedTab.id === parent.id}">
@@ -150,16 +125,9 @@
                     </li>
                 </ul>
             </div>
-
-
-
             <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
-
             <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span></span></div>
-
         </div>
         <!-- End Recommended Start -->
-
     </div>
-
 </div>
