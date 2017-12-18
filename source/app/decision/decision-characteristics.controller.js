@@ -144,8 +144,8 @@
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
             return $q.all([
+                getCriteriaGroupsById(parentId),                
                 getCharacteristicsGroupsById(parentId),
-                getCriteriaGroupsById(parentId),
             ]).then(function(values) {
 
                 criteriaArray = values[0];
