@@ -170,7 +170,6 @@
                 // getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0].id);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
-                vm.activeParentTab.index = 0;
             }
         }
 
@@ -357,6 +356,8 @@
         }
 
         function getParentDecisionGroupsCriteriaCharacteristicts(parentId) {
+            vm.criteriaGroupsLoader = true;
+            vm.characteristicGroupsLoader = true;            
             var sendData = {
                 includeChildDecisionIds: []
             };
@@ -410,6 +411,12 @@
                     vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;
                 }
             });
+        }
+
+        vm.getParrentDecisions = getParrentDecisions;
+        function getParrentDecisions(parent) {
+            vm.activeParentTab = parent;
+            getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab.id);
         }
     }
 })();
