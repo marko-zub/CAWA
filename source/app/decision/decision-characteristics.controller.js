@@ -69,6 +69,7 @@
 
             getParentDecisionGroupsCriteriaCharacteristicts(parent.id).then(function() {
                 vm.parent = parent;
+                vm.activeChildTab = vm.parent.ownerDecision.decisionGroups[0];
                 setPageData(slug);
             });
             return vm.decision.parentDecisionGroups[categoryIndex];

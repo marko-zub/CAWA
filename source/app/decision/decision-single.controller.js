@@ -170,6 +170,7 @@
                 // getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0].id);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
+                vm.activeChildTab =  vm.activeParentTab.ownerDecision.decisionGroups[0];
             }
         }
 
@@ -416,6 +417,13 @@
         vm.getParrentDecisions = getParrentDecisions;
         function getParrentDecisions(parent) {
             vm.activeParentTab = parent;
+            vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
+            getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab.id);
+        }
+
+        vm.getChildDecisions = getChildDecisions;
+        function getChildDecisions(child) {
+            vm.activeChildTab = child;
             getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab.id);
         }
     }

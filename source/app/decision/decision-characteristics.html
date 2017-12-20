@@ -36,8 +36,8 @@
                     <!-- ng-if="parent.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug" -->
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                         <ul class="nav nav-pills nav-tabs-sm">
-                            <li ng-repeat="parent in vm.ParentDecisionGroups track by $index" ng-class="{'active': parent.nameSlug === vm.parent.nameSlug && parent.id === vm.parent.id }">
-                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: parent.nameSlug, characteristicSlug:parent.ownerDecision.nameSlug})">{{ ::parent.name }}</a>
+                            <li ng-repeat="child in vm.parent.ownerDecision.decisionGroups track by child.id" ng-class="{'active': vm.activeChildTab.id === child.id }">
+                                <a ui-sref="decisions.single.characteristics(::{sort: null, category: child.nameSlug, characteristicSlug:child.ownerDecision.nameSlug})">{{ ::child.name }}</a>
                             </li>
                         </ul>
                     </div>
