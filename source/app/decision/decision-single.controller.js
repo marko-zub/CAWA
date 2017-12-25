@@ -38,7 +38,7 @@
             console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
-            
+
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
@@ -92,7 +92,7 @@
 
             if (findIndex >= 0) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[findIndex];
-            } else if (vm.decision.decisionGroups.length) {
+            } else if (vm.decisionGroupActive && vm.decision.decisionGroups.length) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
             }
 
@@ -101,7 +101,7 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (vm.decisionGroupActive.id) {
+            if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
                 });
@@ -122,7 +122,7 @@
                     });
 
                     vm.activeTabSort = 0;
-                    
+
                     var params = $state.params;
                     params.sort = null;
                     $state.transitionTo($state.current.name, params, {
@@ -358,7 +358,7 @@
 
         function getParentDecisionGroupsCriteriaCharacteristicts(parentId) {
             vm.criteriaGroupsLoader = true;
-            vm.characteristicGroupsLoader = true;            
+            vm.characteristicGroupsLoader = true;
             var sendData = {
                 includeChildDecisionIds: []
             };

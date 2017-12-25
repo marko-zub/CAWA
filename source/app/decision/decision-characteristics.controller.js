@@ -56,16 +56,19 @@
         }
 
         function changeCharacteristicSlug(slug) {
+            var parent;
             vm.decisionIndexInParentGroupLoader = true;
 
-            if (slug) {
-                var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
+               var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
                     return parentDecisionGroup.ownerDecision.nameSlug === slug;
                 });
+
+            if (slug && categoryIndex>=0) {
                 parent = vm.decision.parentDecisionGroups[categoryIndex];
             } else if (vm.decision.parentDecisionGroups) {
                 parent = vm.decision.parentDecisionGroups[0];
             }
+
 
             getParentDecisionGroupsCriteriaCharacteristicts(parent.id).then(function() {
                 vm.parent = parent;
@@ -145,7 +148,7 @@
             sendData.includeChildDecisionIds.push(vm.decision.id);
 
             return $q.all([
-                getCriteriaGroupsById(parentId),                
+                getCriteriaGroupsById(parentId),
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
 

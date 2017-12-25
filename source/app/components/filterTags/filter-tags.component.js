@@ -47,7 +47,7 @@
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
                 vm.characteristics = angular.copy(changes.characteristics.currentValue);
                 // generateCharacteristicsTags(vm.characteristics);
-                console.log(vm.characteristics);
+                // console.log(vm.characteristics);
 
                 if (vm.characteristics && vm.sortByCharacteristic && !vm.sortByCharacteristic.name)
                     vm.sortByCharacteristic = setCharacteristicsSortTag(vm.sortByCharacteristic);
@@ -55,7 +55,7 @@
                 // TODO: check it request with characteristics come later
                 if (_fo && _fo.filterQueries) {
                     createTagsList(_fo.filterQueries);
-                    updateMatrixHeight();                    
+                    updateMatrixHeight();
                 }
             }
 

@@ -48,7 +48,7 @@
                 vm.decisionsLoader = false;
             }
 
-            
+
             initTabs();
             setPageData();
         }
@@ -73,7 +73,7 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (vm.decisionGroupActive.id) {
+            if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
                 });

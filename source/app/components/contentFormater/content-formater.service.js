@@ -120,7 +120,7 @@
                 // console.log(type.toUpperCase(), visualMode);
                 //
                 if (visualMode && visualMode.toUpperCase() === 'LINK') {
-                    result = contentFormaterLink(value);
+                    result = contentFormaterLink(value, item.description);
                 } else {
                     switch (type.toUpperCase()) {
                         case 'STRING':
@@ -177,7 +177,10 @@
             };
         }
 
-        function contentFormaterLink(text) {
+        function contentFormaterLink(text, description) {
+            if (description) {
+                return '<a href="' + text + '" target="_blank">' + description + '</a>';
+            }
             //URLs starting with http://, https://, or ftp://
             var replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
             var replacedText = text.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
