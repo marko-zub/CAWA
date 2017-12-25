@@ -17,7 +17,7 @@
 
         var vm = this;
 
-        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, false, false) || {};
+        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         vm.$onInit = onInit;
 
