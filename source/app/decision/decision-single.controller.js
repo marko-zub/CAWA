@@ -17,7 +17,7 @@
 
         var vm = this;
 
-        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, false) || {};
+        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, false, false) || {};
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         vm.$onInit = onInit;
 
@@ -142,7 +142,7 @@
             vm.parentDecisionGroups = decision.parentDecisionGroups;
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
-            if (vm.decision.decisionGroups) {
+            if (vm.decisionGroupActive && vm.decision.decisionGroups) {
                 vm.decisionsChildsLoader = true;
                 vm.activeDecisionGroupsTab = {
                     id: vm.decisionGroupActive.id,

@@ -40,7 +40,7 @@
             mergeCriteriaDecision: mergeCriteriaDecision
         };
 
-        function prepareDecisionSingleToUI(decision, hideEmptyImage) {
+        function prepareDecisionSingleToUI(decision, hideEmptyImage, cutDescription) {
 
             if (!decision.imageUrl) {
                 decision.imageUrl = decision.logoUrl;
@@ -59,7 +59,7 @@
 
 
             // Move to constat
-            if (decision.description && decision.description.length > DecisionsConstant.SHORT_TEXT_LENGTH) {
+            if (cutDescription !== false && decision.description && decision.description.length > DecisionsConstant.SHORT_TEXT_LENGTH) {
                 decision.description = decision.description.substring(0, DecisionsConstant.SHORT_TEXT_LENGTH) + '...';
             }
 
