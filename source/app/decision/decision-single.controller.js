@@ -92,7 +92,7 @@
 
             if (findIndex >= 0) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[findIndex];
-            } else if (vm.decisionGroupActive && vm.decision.decisionGroups.length) {
+            } else if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
             }
 
@@ -101,7 +101,7 @@
 
         // TODO: Simplify logic
         function initSortMode(mode) {
-            if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
+            if (vm.decisionGroupActive &&vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
                 });
@@ -142,7 +142,7 @@
             vm.parentDecisionGroups = decision.parentDecisionGroups;
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
-            if (vm.decisionGroupActive && vm.decision.decisionGroups) {
+            if (vm.decision.decisionGroups) {
                 vm.decisionsChildsLoader = true;
                 vm.activeDecisionGroupsTab = {
                     id: vm.decisionGroupActive.id,
