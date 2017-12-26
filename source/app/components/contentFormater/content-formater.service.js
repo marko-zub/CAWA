@@ -66,9 +66,21 @@
             }
             // console.log(totalHistoryValues);
 
+
             var content = _.map(array, function(el, index) {
                 var result;
-                var description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
+                var description = '';
+                var value = el;
+
+                if (item.visualMode && item.visualMode.toUpperCase() === 'LINK') {
+                    // console.log(item);
+                    if (_.isArray(item.description) && item.description[index]) {
+                        value = '<a href="'+ item.description[index] +'" target="_blank">' + value + '</a>';
+                    }
+                } else {
+                    description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
+                    value += description;
+                }
 
                 var totalHistoryValueHtml = '';
                 if (totalHistoryValues[index] >= 0) {
@@ -80,7 +92,7 @@
                     ].join('\n');
                 }
 
-                result = '<li><div>' + el + description + '</div> ' + totalHistoryValueHtml + '</li>';
+                result = '<li><div>' + value + '</div> ' + totalHistoryValueHtml + '</li>';
                 return result;
             }).join('\n');
 

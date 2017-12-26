@@ -187,7 +187,7 @@
                                         </div>
 
                                         <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
-                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
+                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide" ng-if="::characteristic.display !== false">
                                                 <!-- TODO: move to component -->
 
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
