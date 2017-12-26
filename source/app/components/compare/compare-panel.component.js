@@ -29,6 +29,7 @@
 
         var compareListStorage = DecisionCompareService.getList() || [];
         var compareList = [];
+        var includeChildDecisionIds = [];
 
         function onInit() {
             compareList = []; //Not need to be displayed
@@ -81,6 +82,7 @@
                 // console.log(resp);
                 var decisionResp = resp[0];
                 createParentDecisionGroups(decisionResp);
+                includeChildDecisionIds.push(decision.id);
                 return decisionResp;
             });
         }
@@ -234,13 +236,13 @@
             vm.total = DecisionCompareService.total();
         }
 
-        function filterCompareList(list) {
-            var newList = angular.copy(list);
-            return _.map(newList, function(parentDecision) {
-                parentDecision.childDecisions = _.map(parentDecision.childDecisions, 'id');
-                return _.pick(parentDecision, 'id', 'childDecisions');
-            });
-        }
+        // function filterCompareList(list) {
+        //     var newList = angular.copy(list);
+        //     return _.map(newList, function(parentDecision) {
+        //         parentDecision.childDecisions = _.map(parentDecision.childDecisions, 'id');
+        //         return _.pick(parentDecision, 'id', 'childDecisions');
+        //     });
+        // }
 
         // TODO: simplify name
         vm.changeParentDecisionActiveDecisionGroupsIndex = changeParentDecisionActiveDecisionGroupsIndex;
@@ -253,6 +255,12 @@
         vm.selectedOwnerDecisionChildIndex = 0;
         function compareDecisions() {
             console.log(vm.selectedOwnerDecision);
+            // var parentDecision = vm.compareList[index];
+
+            // var cleanList = filterCompareList(vm.compareList);
+            // var includeChildDecisionIds = cleanList[index].childDecisions;
+
+            console.log(includeChildDecisionIds);
             $state.go('decisions.single.categories.comparison', {
                 id: vm.selectedOwnerDecision.id,
                 slug: vm.selectedOwnerDecision.nameSlug,
@@ -263,45 +271,29 @@
                 sort: null,
                 decisionId: null
             });
-            // var parentDecision = vm.compareList[index];
 
-            // var cleanList = filterCompareList(vm.compareList);
-            // var includeChildDecisionIds = cleanList[index].childDecisions;
-
-            // // TODO: pick selected vm.parentDecisionActive.decisionGroups[0]
-            // vm.parentDecisionActiveDecisionGroupsIndex = 0;
-            // $state.go('decisions.single.categories.comparison', {
-            //     id: parentDecision.id,
-            //     slug: vm.parentDecisionActive.nameSlug,
-            //     analysisId: null,
-            //     categorySlug: vm.parentDecisionActive.decisionGroups[vm.parentDecisionActiveDecisionGroupsIndex].nameSlug,
-            //     size: null,
-            //     page: null,
-            //     sort: null,
-            //     decisionId: null
-            // });
 
             // // if state !== 'decisions.single.categories.comparison'
-            // DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
-            // DecisionSharedService.filterObject.excludeChildDecisionIds = null;
+            DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
+            DecisionSharedService.filterObject.excludeChildDecisionIds = null;
 
-            // DecisionNotificationService.notifyChangeDecisionMatrixMode({
-            //     mode: 'exclusion',
-            //     ids: includeChildDecisionIds
-            // });
-            // // if ($state.current.name === 'decisions.single.categories.comparison') {
-            // //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
-            // //     // debugger
-            // // }
+            DecisionNotificationService.notifyChangeDecisionMatrixMode({
+                mode: 'exclusion',
+                ids: includeChildDecisionIds
+            });
+            // if ($state.current.name === 'decisions.single.categories.comparison') {
+            //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+            //     // debugger
+            // }
 
-            // $rootScope.$on('$stateChangeSuccess',
-            //     function() {
-            //         if ($state.current.name === 'decisions.single.categories.comparison') {
-            //             // Add notification service for compare panel
-            //             togglePanel(false);
-            //         }
-            //     }
-            // );
+            $rootScope.$on('$stateChangeSuccess',
+                function() {
+                    if ($state.current.name === 'decisions.single.categories.comparison') {
+                        // Add notification service for compare panel
+                        togglePanel(false);
+                    }
+                }
+            );
         }
 
         DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
