@@ -59,11 +59,12 @@
             // Dirty code to limit 15 parent calls
             var getDecisionsParentsArray = [];
 
-            if (ids.length > 30) ids.length = 15;
+            if (ids.length > 30) ids.length = 30;
             _.each(ids, function(id) {
                 getDecisionsParentsArray.push(getParentDecisionGroups(id));
             });
 
+            // Divide request to chunks
             $q.all(getDecisionsParentsArray).then(function() {
                 vm.compareLoader = false;
             });

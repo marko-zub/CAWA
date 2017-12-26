@@ -112,17 +112,21 @@
 
             categorySlug = categorySlug || $stateParams.categorySlug;
             if (categorySlug) {
-                var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
-                    return decisionGroup.nameSlug === categorySlug;
-                });
-
                 var data = [{
                     title: 'Categories',
                     link: 'decisions.single.categories({categorySlug: null, sort: null})'
-                }, {
-                    title: vm.decision.decisionGroups[index].name,
-                    link: null
                 }];
+
+                var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
+                    return decisionGroup.nameSlug === categorySlug;
+                });
+                if (index >= 0) {
+                    data.push({
+                        title: vm.decision.decisionGroups[index].name,
+                        link: null
+                    });
+                }
+
                 breadcrumbs = _.concat(breadcrumbs, data);
             } else {
                 breadcrumbs.push({
