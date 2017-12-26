@@ -19,7 +19,7 @@
 
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
                 <ul class="nav nav-pills nav-tabs-sm">
-                    <li ng-repeat="parentDecision in vm.selectedOwnerDecision.decisionGroups track by parentDecision.id" ng-class="{'active': vm.activeTab == $index }">
+                    <li ng-repeat="parentDecision in vm.selectedOwnerDecision.decisionGroups track by parentDecision.id" ng-class="{'active': vm.selectedOwnerDecisionChildIndex === $index }">
                         <a ng-click="vm.changeParentDecisionActiveDecisionGroupsIndex($index)">{{ ::parentDecision.name }}</a>
                     </li>
                 </ul>
@@ -29,7 +29,7 @@
      
             <div class="decision-card-group">
                 <div class="decision-card-group-content clearfix">
-                    <div class="decision-card" ng-repeat="decision in vm.selectedOwnerDecision.decisionsList track by decision.id">
+                    <div class="decision-card" ng-repeat="decision in vm.selectedOwnerDecision.decisionsList track by $index">
                         <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null, category: null})" ui-sref-opts="{reload: true}" class="img-container">
                             <div class="img-container">
                                 <img ng-src="{{::decision.imageUrl}}" class="img-responsive" '>
@@ -90,14 +90,16 @@
                     </div>
                 </div>
 
-                <div class="clearfix" translate-cloak>
+     
+            </div>
+
+           <div class="clearfix" translate-cloak>
                     <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">  {{ "CLEAR ALL" | translate }}
                     </button>
-                    <button class="btn btn-primary-2 btn-sm" ng-click="vm.compareDecisions($index)"  translate-cloak>
+                    <button class="btn btn-primary-2 btn-sm" ng-click="vm.compareDecisions()"  translate-cloak>
                         {{ "Compare" | translate }}
                     </button>
-                </div>
-            </div>
+                </div>            
             </div>
         <div ng-show="!vm.total && !vm.compareLoader">
             <h3>{{ "NOTHING TO COMPARE" | translate }}</h3>

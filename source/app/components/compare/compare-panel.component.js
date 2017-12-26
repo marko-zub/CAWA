@@ -93,10 +93,6 @@
             if (!decision.parentDecisionGroups) return;
 
             var ownerDecisions = _.map(decision.parentDecisionGroups, 'ownerDecision');
-            // _.each(parentDecisionGroups, function(childDecisionGroup) {
-            //     var childDecisionGroupCopy = _.pick(childDecisionGroup, 'id', 'name', 'nameSlug');
-            //     array.push(childDecisionGroup.ownerDecision);
-            // });
 
             var decisionItem = _.pick(decision, 'name', 'id', 'nameSlug', 'logoUrl', 'medias');
 
@@ -118,12 +114,16 @@
             })
 
             vm.selectedOwnerDecision = vm.ownerDecisions[0];
+            if (vm.selectedOwnerDecision) {
+                vm.total += 1;
+            }
             // console.log(vm.ownerDecisions);
         }
         vm.selectOwmerDecision = selectOwmerDecision;
 
         function selectOwmerDecision(index) {
            vm.selectedOwnerDecision = vm.ownerDecisions[index];
+           vm.selectedOwnerDecisionChildIndex = 0;
         }
 
         // End new 
@@ -246,51 +246,62 @@
         vm.changeParentDecisionActiveDecisionGroupsIndex = changeParentDecisionActiveDecisionGroupsIndex;
 
         function changeParentDecisionActiveDecisionGroupsIndex(index) {
-            vm.parentDecisionActiveDecisionGroupsIndex = index;
+            vm.selectedOwnerDecisionChildIndex = index;
         }
 
         vm.compareDecisions = compareDecisions;
-
-        function compareDecisions(index) {
-            var parentDecision = vm.compareList[index];
-
-            var cleanList = filterCompareList(vm.compareList);
-            var includeChildDecisionIds = cleanList[index].childDecisions;
-
-            // TODO: pick selected vm.parentDecisionActive.decisionGroups[0]
-            vm.parentDecisionActiveDecisionGroupsIndex = 0;
+        vm.selectedOwnerDecisionChildIndex = 0;
+        function compareDecisions() {
+            console.log(vm.selectedOwnerDecision);
             $state.go('decisions.single.categories.comparison', {
-                id: parentDecision.id,
-                slug: vm.parentDecisionActive.nameSlug,
+                id: vm.selectedOwnerDecision.id,
+                slug: vm.selectedOwnerDecision.nameSlug,
                 analysisId: null,
-                categorySlug: vm.parentDecisionActive.decisionGroups[vm.parentDecisionActiveDecisionGroupsIndex].nameSlug,
+                categorySlug: vm.selectedOwnerDecision.decisionGroups[vm.selectedOwnerDecisionChildIndex].nameSlug, //add index
                 size: null,
                 page: null,
                 sort: null,
                 decisionId: null
             });
+            // var parentDecision = vm.compareList[index];
 
-            // if state !== 'decisions.single.categories.comparison'
-            DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
-            DecisionSharedService.filterObject.excludeChildDecisionIds = null;
+            // var cleanList = filterCompareList(vm.compareList);
+            // var includeChildDecisionIds = cleanList[index].childDecisions;
 
-            DecisionNotificationService.notifyChangeDecisionMatrixMode({
-                mode: 'exclusion',
-                ids: includeChildDecisionIds
-            });
-            // if ($state.current.name === 'decisions.single.categories.comparison') {
-            //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
-            //     // debugger
-            // }
+            // // TODO: pick selected vm.parentDecisionActive.decisionGroups[0]
+            // vm.parentDecisionActiveDecisionGroupsIndex = 0;
+            // $state.go('decisions.single.categories.comparison', {
+            //     id: parentDecision.id,
+            //     slug: vm.parentDecisionActive.nameSlug,
+            //     analysisId: null,
+            //     categorySlug: vm.parentDecisionActive.decisionGroups[vm.parentDecisionActiveDecisionGroupsIndex].nameSlug,
+            //     size: null,
+            //     page: null,
+            //     sort: null,
+            //     decisionId: null
+            // });
 
-            $rootScope.$on('$stateChangeSuccess',
-                function() {
-                    if ($state.current.name === 'decisions.single.categories.comparison') {
-                        // Add notification service for compare panel
-                        togglePanel(false);
-                    }
-                }
-            );
+            // // if state !== 'decisions.single.categories.comparison'
+            // DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
+            // DecisionSharedService.filterObject.excludeChildDecisionIds = null;
+
+            // DecisionNotificationService.notifyChangeDecisionMatrixMode({
+            //     mode: 'exclusion',
+            //     ids: includeChildDecisionIds
+            // });
+            // // if ($state.current.name === 'decisions.single.categories.comparison') {
+            // //     // DecisionNotificationService.notifyChildDecisionExclusion(_fo);
+            // //     // debugger
+            // // }
+
+            // $rootScope.$on('$stateChangeSuccess',
+            //     function() {
+            //         if ($state.current.name === 'decisions.single.categories.comparison') {
+            //             // Add notification service for compare panel
+            //             togglePanel(false);
+            //         }
+            //     }
+            // );
         }
 
         DecisionCompareNotificationService.subscribeToggleCompare(function(event, data) {
