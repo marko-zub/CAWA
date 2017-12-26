@@ -72,9 +72,7 @@
             }
 
             if (data.id <= 0) return;
-            var findIndex = _.findIndex(vm.list, function(decision) {
-                return decision.id === data.id;
-            });
+            var findIndex = _.findIndex(vm.list, data.id);
             if (findIndex >= 0) {
                 vm.list[findIndex].isInCompareList = false;
             }

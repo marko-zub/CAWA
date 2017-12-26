@@ -51,11 +51,9 @@
 
         function checkInCompareDeicisions(decision) {
             var compareList = DecisionCompareService.getList();
-            _.each(compareList, function(parentDecision) {
-                if (_.includes(parentDecision.childDecisions, decision.id)) {
+                if (_.includes(compareList, decision.id)) {
                     decision.isInCompareList = true;
                 }
-            });
         }
 
     }

@@ -28,11 +28,9 @@
         vm.compareLoader = true;
 
         var compareListStorage = DecisionCompareService.getList() || [];
-        var compareList = [];
         var includeChildDecisionIds = [];
 
         function onInit() {
-            compareList = []; //Not need to be displayed
             initCompareList();
 
             if ($localStorage.options && $localStorage.options.comparePanel) {
@@ -48,7 +46,7 @@
         }
 
         function initCompareList() {
-            compareList = DecisionCompareService.getList();
+            includeChildDecisionIds = DecisionCompareService.getList();
             getDecisions(compareListStorage);
         }
 
@@ -57,14 +55,13 @@
                 vm.compareLoader = false;
                 return;
             }
-
-            var getDecisionsParentsArray = [];
-
             // TODO: clean code
             // Dirty code to limit 15 parent calls
-            if (ids.length > 15) ids.length = 15;
-            _.each(ids, function(parentDecision) {
-                getDecisionsParentsArray.push(getDecisionByParent(parentDecision));
+            var getDecisionsParentsArray = [];
+
+            if (ids.length > 30) ids.length = 15;
+            _.each(ids, function(id) {
+                getDecisionsParentsArray.push(getParentDecisionGroups(id));
             });
 
             $q.all(getDecisionsParentsArray).then(function() {
@@ -72,17 +69,17 @@
             });
         }
 
-        function getParentDecisionGroups(decision) {
+        function getParentDecisionGroups(id) {
             var params = {
                 fetchParentDecisionGroups: true,
                 fetchMedia: true
             };
 
-            return DecisionDataService.getDecisionInfoFull(decision.id, params).then(function(resp) {
+            return DecisionDataService.getDecisionInfoFull(id, params).then(function(resp) {
                 // console.log(resp);
                 var decisionResp = resp[0];
                 createParentDecisionGroups(decisionResp);
-                includeChildDecisionIds.push(decision.id);
+                saveDecisionCompareList(decisionResp);
                 return decisionResp;
             });
         }
@@ -113,49 +110,24 @@
                     ownerDecision.decisionsList = [decisionItem];
                     vm.ownerDecisions.push(ownerDecision);
                 }
-            })
+            });
 
             vm.selectedOwnerDecision = vm.ownerDecisions[0];
-            if (vm.selectedOwnerDecision) {
-                vm.total += 1;
-            }
-            // console.log(vm.ownerDecisions);
         }
         vm.selectOwmerDecision = selectOwmerDecision;
 
         function selectOwmerDecision(index) {
-           vm.selectedOwnerDecision = vm.ownerDecisions[index];
-           vm.selectedOwnerDecisionChildIndex = 0;
+            vm.selectedOwnerDecision = vm.ownerDecisions[index];
+            vm.selectedOwnerDecisionChildIndex = 0;
         }
 
         // End new 
 
-
-        // function getDecisionByParent(parentDecision) {
-        //     if (parentDecision.id >= 0 && !_.isEmpty(parentDecision.childDecisions)) {
-
-        //         var params = {
-        //             fetchParentDecisionGroups: true
-        //         };
-
-        //         return DecisionDataService.getDecisionInfoFull(parentDecision.id, params).then(function(respParentDecision) {
-        //             var sendIds = _.uniq(parentDecision.childDecisions);
-        //             vm.parentDecisionActive = respParentDecision[0];
-        //             // console.log(vm.parentDecisionActive);
-        //             return DecisionDataService.getDecisionsInfo(sendIds.toString()).then(function(respChildDecisions) {
-        //                 respChildDecisions = DecisionsUtils.prepareDecisionToUI(respChildDecisions);
-        //                 _.each(respChildDecisions, function(decision) {
-        //                     decision.parentDecisions = [respParentDecision[0]];
-        //                     addDecisionCompareList(decision);
-        //                 });
-        //             });
-        //         });
-        //     }
-        // }
-
         function clearCompare() {
-            compareList = []; //Not need to be displayed
-            vm.compareList = [];
+            vm.ownerDecisions = [];
+            vm.selectedOwnerDecision = null;
+            vm.compareListOwnerDecisions = [];
+            includeChildDecisionIds = [];
             vm.total = 0;
             DecisionCompareService.clearList();
             DecisionCompareNotificationService.notifyRemoveDecisionCompare(null);
@@ -173,76 +145,51 @@
         vm.compareListOwnerDecisions = [];
 
         function addDecisionCompareList(decision) {
-            getParentDecisionGroups(decision);
-            // saveDecisionCompareList(decision);
+            getParentDecisionGroups(decision.id);
         }
 
         function saveDecisionCompareList(decision) {
-            var decisionData = angular.copy(decision);
-            _.each(decision.parentDecisionGroups, function(parentDecision) {
-                // Compare panel new flow
-                // var ownerDecision = _.pick(parentDecision.ownerDecision, 'id', 'name', 'nameSlug');
-                // if (!_.includes(ownerDecision, vm.compareListOwnerDecisions)) {
-                //     vm.compareListOwnerDecisions.push(ownerDecision);
-                // } else {
-                //     var findIndexOwnerDecision = _.findIndex(vm.compareListOwnerDecisions, function(compareListOwnerDecision) {
-                //         return compareListOwnerDecision.id === ownerDecision.id;
-                //     });
-                //     if (findIndexOwnerDecision >= 0) {
-                //         // vm.compareListOwnerDecisions[findIndexOwnerDecision]
-                //     }
-                // }
-                // vm.compareListOwnerDecisions = 
-                // console.log(parentDecision);
-                var parentDecisionData = _.pick(parentDecision.ownerDecision, 'id', 'name', 'nameSlug');
-
-                var indexParentDecision = _.findIndex(vm.compareList, function(compareParentDecision) {
-                    return compareParentDecision.id === parentDecisionData.id;
-                });
-
-                console.log(parentDecision);
-                if (indexParentDecision >= 0) {
-                    vm.compareList[indexParentDecision].childDecisions.push(decisionData);
-                } else {
-                    parentDecisionData.childDecisions = [];
-                    parentDecisionData.childDecisions.push(decisionData);
-                    vm.compareList.push(parentDecisionData);
-                }
-            });
-
-            // console.log(vm.compareListOwnerDecisions);
-            updateCompareList();
+            var index = _.indexOf(includeChildDecisionIds, decision.id);
+            if (index < 0) {
+                includeChildDecisionIds.push(decision.id);
+            }
+            updateCompareList(includeChildDecisionIds);
         }
 
         vm.removeDecisionCompare = removeDecisionCompare;
 
         function removeDecisionCompare(id) {
-            vm.compareList = _.filter(vm.compareList, function(parentDecision) {
-                var index = _.findIndex(parentDecision.childDecisions, function(decision) {
+            var removeDecision;
+            // vm.ownerDecisions
+            _.each(vm.ownerDecisions, function(ownerDecision, index) {
+                var findIndex = _.findIndex(ownerDecision.decisionsList, function(decision) {
                     return decision.id === id;
                 });
-                if (index >= 0) {
-                    DecisionCompareNotificationService.notifyRemoveDecisionCompare(parentDecision.childDecisions[index]);
-                    parentDecision.childDecisions.splice(index, 1);
+                if (findIndex >= 0) {
+                    removeDecision = ownerDecision.decisionsList[findIndex];
+                    ownerDecision.decisionsList.splice(findIndex, 1);
                 }
-                return !_.isEmpty(parentDecision.childDecisions);
+
+                if (!ownerDecision.decisionsList.length) {
+                    vm.ownerDecisions.splice(index, 1);
+                }
             });
-            updateCompareList();
+
+            var findIndexDecision = _.indexOf(includeChildDecisionIds, id);
+            // debugger
+            if (findIndexDecision >= 0) {
+                includeChildDecisionIds.splice(findIndexDecision, 1);
+            }
+
+            DecisionCompareNotificationService.notifyRemoveDecisionCompare(removeDecision);
+            updateCompareList(includeChildDecisionIds);
         }
 
-        function updateCompareList() {
-            var cleanList = filterCompareList(vm.compareList);
+        function updateCompareList(list) {
+            var cleanList = _.uniq(list);
+            vm.total = cleanList.length;
             DecisionCompareService.saveList(cleanList);
-            vm.total = DecisionCompareService.total();
         }
-
-        // function filterCompareList(list) {
-        //     var newList = angular.copy(list);
-        //     return _.map(newList, function(parentDecision) {
-        //         parentDecision.childDecisions = _.map(parentDecision.childDecisions, 'id');
-        //         return _.pick(parentDecision, 'id', 'childDecisions');
-        //     });
-        // }
 
         // TODO: simplify name
         vm.changeParentDecisionActiveDecisionGroupsIndex = changeParentDecisionActiveDecisionGroupsIndex;
@@ -253,14 +200,9 @@
 
         vm.compareDecisions = compareDecisions;
         vm.selectedOwnerDecisionChildIndex = 0;
+
         function compareDecisions() {
-            console.log(vm.selectedOwnerDecision);
-            // var parentDecision = vm.compareList[index];
-
-            // var cleanList = filterCompareList(vm.compareList);
-            // var includeChildDecisionIds = cleanList[index].childDecisions;
-
-            console.log(includeChildDecisionIds);
+            
             $state.go('decisions.single.categories.comparison', {
                 id: vm.selectedOwnerDecision.id,
                 slug: vm.selectedOwnerDecision.nameSlug,
@@ -271,7 +213,6 @@
                 sort: null,
                 decisionId: null
             });
-
 
             // // if state !== 'decisions.single.categories.comparison'
             DecisionSharedService.filterObject.includeChildDecisionIds = includeChildDecisionIds;
