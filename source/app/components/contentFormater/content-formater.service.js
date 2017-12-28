@@ -126,21 +126,23 @@
 
         function prepareValueMode(value, item) {
             if (!item.valueMode) {
-                return value;
+                return prepareValuePrefSuff(value, item);
             }
             var result = value;
             switch (item.valueMode.toUpperCase()) {
                 case 'REDGREENARROWS':
                     result = prepareValueModeType(value, item);
+                    break;
                 default:
-                    // result = value || '';
+                    result = prepareValuePrefSuff(value, item) || '';
             }
 
-            console.log(result);
+            // console.log(result);
             return result;
         }
 
         function prepareValueModeType(value, item) {
+
             var result = value;
             if (item.valueType && (
                     item.valueType.toUpperCase() === 'DOUBLE' ||
@@ -153,10 +155,11 @@
                     result = '<span class="text-success"><span class="arrow-number arrow-number-positive">&#9650;</span>' + prepareValuePrefSuff(result, item) + '</span>';
                 } else if (result < 0) {
                     result = '<span class="text-danger"><span class="arrow-number arrow-number-negative">&#9660;</span>' + prepareValuePrefSuff(result, item) + '</span>';
+                } else {
+                    result = prepareValuePrefSuff(result, item);
                 }
-            } else {
-               result = prepareValuePrefSuff(value, item)
             }
+
             return result;
         }
 
