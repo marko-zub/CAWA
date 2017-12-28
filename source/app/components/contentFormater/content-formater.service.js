@@ -150,12 +150,13 @@
                 )) {
                 result = parseFloat(result, 10);
                 if (result > 0) {
-                    result = '<span class="text-success"><span class="arrow-number arrow-number-positive">&#9650;</span>' + result.toString() + '</span>';
+                    result = '<span class="text-success"><span class="arrow-number arrow-number-positive">&#9650;</span>' + prepareValuePrefSuff(result, item) + '</span>';
                 } else if (result < 0) {
-                    result = '<span class="text-danger"><span class="arrow-number arrow-number-negative">&#9660;</span>' + result.toString() + '</span>';
+                    result = '<span class="text-danger"><span class="arrow-number arrow-number-negative">&#9660;</span>' + prepareValuePrefSuff(result, item) + '</span>';
                 }
+            } else {
+               result = prepareValuePrefSuff(value, item)
             }
-            console.log(result);
             return result;
         }
 
@@ -221,8 +222,8 @@
 
             result = prepareValueMode(result, item); // Make value as string
 
-            // TODO: add only for value Types Numbers
-            result = prepareValuePrefSuff(result, item);
+            // // TODO: add only for value Types Numbers
+            // result = prepareValuePrefSuff(result, item);
 
             return {
                 html: result,
