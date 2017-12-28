@@ -14,7 +14,8 @@
 			'daterangepicker',
 			'textAngular',
 			'toastr',
-			'pascalprecht.translate'
+			'pascalprecht.translate',
+			'highcharts-ng'
 		]);
 
 })();

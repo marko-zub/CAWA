@@ -32,7 +32,8 @@
 
         function contentFormaterPrice(value) {
             var n = Number(value);
-            return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            // return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            return n;
         }
 
         function contentFormaterDate(value, mode) {
