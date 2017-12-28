@@ -1,6 +1,7 @@
 <!-- <highchart id="chart1" config="chartConfig"></highchart> -->
 <div>
-	<pre>
-		{{ vm.chartData  | json }}
-	</pre>
+	<!-- <pre>
+		{{ vm.chartConfig  | json }}
+	</pre> -->
+	<highchart id="chart1" config="vm.chartConfig"></highchart>
 </div>

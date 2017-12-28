@@ -39,7 +39,7 @@
                                             <i class="fa fa-bar-chart" aria-hidden="tr"></i> {{::characteristic.decision.totalHistoryValues || 0}}</a>
                                         <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
                                     </div>
-                                    <!-- <history-chart></history-chart> -->
+                                    <history-chart value-id="::characteristic.decision.valueIds[0]"></history-chart>
 
                                 </div>
                             </div>

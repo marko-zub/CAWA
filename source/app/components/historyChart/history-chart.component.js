@@ -7,47 +7,59 @@
         .controller('HistoryChartController', HistoryChartController)
         .component('historyChart', {
             bindings: {
-                characteristicId: '<',
+                valueId: '<',
             },
             controller: 'HistoryChartController',
             controllerAs: 'vm',
-            templateUrl: 'app/components/historyСhart/history-chart.html',
+            templateUrl: 'app/components/historyChart/history-chart.html'
         });
 
 
-    HistoryChartController.$inject = [];
+    HistoryChartController.$inject = ['DecisionDataService', '$uibModal'];
 
-    function HistoryChartController() {
+    function HistoryChartController(DecisionDataService, $uibModal) {
         var vm = this;
 
         vm.$onInit = onInit;
         // vm.$onChanges = onChanges;
 
         function onInit() {
-            console.log('init');
+            // console.log(vm.valueId);
         }
 
-        vm.openModal = openModal;
+        vm.getData = getData;
 
-        function openModal(event, criteria) {
-            console.log(vm.id);
-            // event.preventDefault();
-            // event.stopPropagation();
-            // var modalInstance = $uibModal.open({
-            //     templateUrl: 'app/components/history-chart/history-chart-modal.html',
-            //     controller: 'ChartModalController',
-            //     controllerAs: 'vm',
-            //     backdrop: 'static',
-            //     animation: false,
-            //     resolve: {
-            //         criteria: function() {
-            //             return criteria;
-            //         }
-            //     }
-            // });
-            // modalInstance.result.then(function(result) {
-            //     vm.decisionsLoader = false;
-            // });
+        function getData($event) {
+            // console.log(vm.valueId);
+            if (!vm.valueId) {
+                return;
+            }
+
+            DecisionDataService.getCharacteristicValueHistory(vm.valueId).then(function(resp) {
+                if (resp.length) {
+                    openModal($event, resp);
+                }
+            })
+        }
+
+        function openModal(event, data) {
+            event.preventDefault();
+            event.stopPropagation();
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/components/historyChart/history-chart-modal.html',
+                controller: 'HistoryChartModalController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                animation: false,
+                resolve: {
+                    data: function() {
+                        return data;
+                    }
+                }
+            });
+            modalInstance.result.then(function(result) {
+                vm.decisionsLoader = false;
+            });
         }
     }
 

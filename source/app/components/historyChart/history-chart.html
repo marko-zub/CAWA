@@ -1,6 +1,8 @@
 <div>
-	XXXXXXXXXX
-	<!-- <button ng-click="vm.openModal()">
-		Modal
-	</button> -->
+	<button ng-click="vm.getData($event)">
+		Get History {{ ::vm.valueId }}
+
+
+			<highchart id="chart1" config="vm.chartConfig"></highchart>
+	</button>
 </div>

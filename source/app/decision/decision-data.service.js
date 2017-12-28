@@ -166,8 +166,17 @@
 
             characteristicOptions = $resource(Config.endpointUrl + 'characteristics/:characteristicId/characteristicoptions', {
                 characteristicId: '@characteristicId'
-            }, {});
+            }, {}),
 
+
+            characteristicValueHistory= $resource(Config.endpointUrl + 'values/:id/history', {
+                id: '@id'
+            }, {
+                query: {
+                    method: 'GET',
+                    isArray: true
+                }
+            });
 
 
         var service = {
@@ -191,7 +200,8 @@
             getDecisionNomination: getDecisionNomination,
             searchDecisions: searchDecisions,
             searchSuggestedDecisions: searchSuggestedDecisions,
-            getDecisionsCount: getDecisionsCount
+            getDecisionsCount: getDecisionsCount,
+            getCharacteristicValueHistory: getCharacteristicValueHistory,
         };
 
         return service;
@@ -330,6 +340,10 @@
 
         function getDecisionsCount() {
             return decisionsCount.getCount().$promise;
+        }
+
+        function getCharacteristicValueHistory(id) {
+            return characteristicValueHistory.query({ id:id }).$promise;
         }
     }
 })();
