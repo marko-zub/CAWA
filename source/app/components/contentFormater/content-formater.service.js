@@ -150,9 +150,9 @@
                 )) {
                 result = parseFloat(result, 10);
                 if (result > 0) {
-                    result = '<span class="arrow-number arrow-number-positive">&#9650;</span>' + result.toString();
+                    result = '<span class="text-success"><span class="arrow-number arrow-number-positive">&#9650;</span>' + result.toString() + '</span>';
                 } else if (result < 0) {
-                    result = '<span class="arrow-number arrow-number-negative">&#9660;</span>' + result.toString();
+                    result = '<span class="text-danger"><span class="arrow-number arrow-number-negative">&#9660;</span>' + result.toString() + '</span>';
                 }
             }
             console.log(result);
