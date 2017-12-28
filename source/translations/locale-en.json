@@ -18,7 +18,7 @@
 	"Characteristics": "Characteristics",
 	"Properties": "Properties",
 	"All Options": "All Options",
-	"Comments": "Comments",
+	"COMMENTS": "COMMENTS",
 	"Comparison Matrix": "Comparison Matrix",
 	"Top Rated": "Top Rated",
 	"Compare": "Compare",
@@ -80,5 +80,6 @@
 	"NO CHARACTERISTICS": "There are no characteristics yet",
 	"NO CATEGORIES": "There are no categories yet",
 	"LIST VIEW": "List View",
-	"LIST GRID": "Grid View"
+	"LIST GRID": "Grid View",
+	"IN CONSTRUCTION": "In construction"
 }

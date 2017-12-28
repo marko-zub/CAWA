@@ -19,7 +19,7 @@
 	"Characteristics": "Характеристики",
 	"Properties": "Свойства",
 	"All Options": "Все опции",
-	"Comments": "Комментарии",
+	"COMMENTS": "Комментарии",
 	"Comparison Matrix": "Матрица сравнения",
 	"Top Rated": "Высоко оценены",
 	"Compare": "Сравнить",
@@ -80,5 +80,6 @@
 	"NO CHARACTERISTICS": "Пока нет характеристик",
 	"NO CATEGORIES": "Пока нет категорий",
 	"LIST VIEW": "Вид Списком",
-	"LIST GRID": "Вид Сеткой"
+	"LIST GRID": "Вид Сеткой",
+	"IN CONSTRUCTION": "В разработке"
 }

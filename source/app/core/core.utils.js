@@ -43,6 +43,10 @@
             return moment(date).format('YYYY');
         }
 
+        function dateTimeToUI(date) {
+            if (!date) return;
+            return moment(date).format('DD/MM/YYYY HH:mm:ss');
+        }
 
         // TODO: move to UTILS
         function findGroupItemById(id, list, property) {
@@ -76,6 +80,7 @@
             dateToDB: dateToDB,
             dateToUI: dateToUI,
             dateYearToUI: dateYearToUI,
+            dateTimeToUI: dateTimeToUI,
             findGroupItemById: findGroupItemById,
             numberToUi: numberToUi
         };

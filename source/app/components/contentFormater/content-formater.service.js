@@ -36,10 +36,14 @@
         }
 
         function contentFormaterDate(value, mode) {
+            // console.log(mode);
             var result = '';
             switch (mode.toUpperCase()) {
                 case 'YEARPICKER':
                     result = Utils.dateYearToUI(value);
+                    break;
+                case 'DATETIMERANGEPICKER':
+                    result = Utils.dateTimeToUI(value);
                     break;
                 default:
                     result = Utils.dateToUI(value);
@@ -75,7 +79,7 @@
                 if (item.visualMode && item.visualMode.toUpperCase() === 'LINK') {
                     // console.log(item);
                     if (_.isArray(item.description) && item.description[index]) {
-                        value = '<a href="'+ item.description[index] +'" target="_blank">' + value + '</a>';
+                        value = '<a href="' + item.description[index] + '" target="_blank">' + value + '</a>';
                     }
                 } else {
                     description = descriptions && descriptions[index] ? ' <div class="additional-description">' + stringBr(descriptions[index]) + '</div>' : '';
@@ -105,6 +109,54 @@
                 '</div>'
             ].join('\n');
             return html;
+        }
+
+
+        function prepareValuePrefSuff(value, item) {
+            value = value.toString();
+            if (item.valueSuffix) {
+                value = value + ' ' + '<span class="value-suffix">' + item.valueSuffix + '</span>';
+            }
+
+            if (item.valuePrefix) {
+                value = '<span class="value-prefix">' + item.valuePrefix + '</span> ' + value;
+            }
+            return value;
+        }
+
+        function prepareValueMode(value, item) {
+            if (!item.valueMode) {
+                return value;
+            }
+            var result = value;
+            switch (item.valueMode.toUpperCase()) {
+                case 'REDGREENARROWS':
+                    result = prepareValueModeType(value, item);
+                default:
+                    // result = value || '';
+            }
+
+            console.log(result);
+            return result;
+        }
+
+        function prepareValueModeType(value, item) {
+            var result = value;
+            if (item.valueType && (
+                    item.valueType.toUpperCase() === 'DOUBLE' ||
+                    item.valueType.toUpperCase() === 'LONG' ||
+                    item.valueType.toUpperCase() === 'PRICE' ||
+                    item.valueType.toUpperCase() === 'INTEGER'
+                )) {
+                result = parseFloat(result, 10);
+                if (result > 0) {
+                    result = '<span class="arrow-number arrow-number-positive">&#9650;</span>' + result.toString();
+                } else if (result < 0) {
+                    result = '<span class="arrow-number arrow-number-negative">&#9660;</span>' + result.toString();
+                }
+            }
+            console.log(result);
+            return result;
         }
 
         function getTemplate(item) {
@@ -166,6 +218,11 @@
                         result += '<div class="description">' + description + '</div>';
                 }
             }
+
+            result = prepareValueMode(result, item); // Make value as string
+
+            // TODO: add only for value Types Numbers
+            result = prepareValuePrefSuff(result, item);
 
             return {
                 html: result,
