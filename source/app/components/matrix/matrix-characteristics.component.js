@@ -50,6 +50,7 @@
                 !$($event.target).hasClass('link') &&
                 !$($event.target).hasClass('link-secondary') &&
                 !$($event.target).is('a') &&
+                !$($event.target).is('i') &&
                 !$($event.target).parents().hasClass('iScrollLoneScrollbar')) {
                 vm.isGetCommentsOpen = true;
                 DiscussionsNotificationService.notifyOpenDiscussion('data');

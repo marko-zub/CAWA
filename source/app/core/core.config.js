@@ -6,9 +6,9 @@
         .module('app.core')
         .config(configuration);
 
-    configuration.$inject = ['$animateProvider', '$provide', '$httpProvider', '$compileProvider', 'Config'];
+    configuration.$inject = ['$animateProvider', '$provide', '$httpProvider', '$compileProvider', 'Config', '$qProvider'];
 
-    function configuration($animateProvider, $provide, $httpProvider, $compileProvider, Config) {
+    function configuration($animateProvider, $provide, $httpProvider, $compileProvider, Config, $qProvider) {
         // Enable ngAnimation for specific class
         $animateProvider.classNameFilter( /\banimated\b/ );
 
@@ -21,6 +21,8 @@
         $compileProvider.debugInfoEnabled(Config.mode === 'dev');
         $compileProvider.commentDirectivesEnabled(Config.mode === 'dev');
         $compileProvider.cssClassDirectivesEnabled(Config.mode === 'dev');
+
+        $qProvider.errorOnUnhandledRejections(false);
     }
 
 

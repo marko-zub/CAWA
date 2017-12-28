@@ -7,7 +7,7 @@
         .controller('HistoryChartController', HistoryChartController)
         .component('historyChart', {
             bindings: {
-                valueId: '<',
+                decision: '<',
             },
             controller: 'HistoryChartController',
             controllerAs: 'vm',
@@ -24,18 +24,18 @@
         // vm.$onChanges = onChanges;
 
         function onInit() {
-            // console.log(vm.valueId);
+            // console.log(vm.decision.valueIds[0]);
         }
 
         vm.getData = getData;
 
         function getData($event) {
-            // console.log(vm.valueId);
-            if (!vm.valueId) {
+            // console.log(vm.decision.valueIds[0]);
+            if (!vm.decision.valueIds[0]) {
                 return;
             }
 
-            DecisionDataService.getCharacteristicValueHistory(vm.valueId).then(function(resp) {
+            DecisionDataService.getCharacteristicValueHistory(vm.decision.valueIds[0]).then(function(resp) {
                 if (resp.length) {
                     openModal($event, resp);
                 }

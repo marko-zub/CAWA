@@ -1,7 +1,15 @@
-<!-- <highchart id="chart1" config="chartConfig"></highchart> -->
-<div>
-	<!-- <pre>
-		{{ vm.chartConfig  | json }}
-	</pre> -->
-	<highchart id="chart1" config="vm.chartConfig"></highchart>
+<div class="criteria-coefficient-popup">
+    <div class="modal-header">
+        <h4 class="modal-title">Hsitorical values</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
+    </div>
+    <form class="form-horizontal" name="criteriaCoefficientForm" ng-submit="vm.apply()">
+        <div class="modal-body">
+            <nvd3 options='vm.options' data='vm.data'></nvd3>
+        </div>
+<!--         <div class="modal-footer text-right">
+            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ "CANCEL" | translate }}</button>
+            <button class="btn btn-primary" type="submit">{{ "APPLY" | translate }}</button>
+        </div> -->
+    </form>
 </div>
