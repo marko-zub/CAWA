@@ -41,7 +41,7 @@
                 }];
             }
 
-            $rootScope.pageTitle = vm.decision.decisionGroups[index].name + ' ' + vm.decision.name + ' ' + translateFilter('Comparison Matrix') + ' | DecisionWanted.com';
+            $rootScope.pageTitle = vm.decision.decisionGroups[index].name  + ' ' + translateFilter('Comparison Matrix') + ', ' + vm.decision.name + ' | DecisionWanted.com';
         }
     }
 })();
