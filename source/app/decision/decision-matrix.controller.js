@@ -5,9 +5,9 @@
     angular.module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['decisionBasicInfo', '$rootScope', 'Config', '$stateParams'];
+    DecisionMatrixController.$inject = ['decisionBasicInfo', '$rootScope', 'Config', '$stateParams', 'translateFilter'];
 
-    function DecisionMatrixController(decisionBasicInfo, $rootScope, Config, $stateParams) {
+    function DecisionMatrixController(decisionBasicInfo, $rootScope, Config, $stateParams, translateFilter) {
         var vm = this;
 
         vm.$onInit = onInit;
@@ -40,6 +40,8 @@
                     link: null
                 }];
             }
+
+            $rootScope.pageTitle = vm.decision.decisionGroups[index].name + ' ' + vm.decision.name + ' ' + translateFilter('Comparison Matrix');
         }
     }
 })();
