@@ -100,8 +100,7 @@
         }
 
         function setPageData(categorySlug) {
-            $rootScope.pageTitle = vm.decision.name + ' Categories | DecisionWanted.com';
-
+            var title = vm.decision.name;
             var breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
@@ -125,6 +124,8 @@
                         title: vm.decision.decisionGroups[index].name,
                         link: null
                     });
+
+                    title = vm.decision.decisionGroups[index].name + title;
                 }
 
                 breadcrumbs = _.concat(breadcrumbs, data);
@@ -135,6 +136,8 @@
                 });
             }
             $rootScope.breadcrumbs = breadcrumbs;
+
+            $rootScope.pageTitle = title + ' Categories' + ' | DecisionWanted.com';
         }
 
 
