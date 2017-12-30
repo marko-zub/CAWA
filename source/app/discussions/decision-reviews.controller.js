@@ -14,7 +14,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Deicision Reviews Controller');
+            // console.log('Deicision Reviews Controller');
         }
 
     }

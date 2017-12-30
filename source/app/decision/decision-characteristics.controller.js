@@ -21,7 +21,7 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            console.log('Decision Characteristics Controller');
+            // console.log('Decision Characteristics Controller');
 
             vm.decision = decisionBasicInfo || {};
             vm.criteriaGroupsLoader = true;

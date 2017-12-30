@@ -15,7 +15,7 @@
 			'textAngular',
 			'toastr',
 			'pascalprecht.translate',
-			'nvd3'
+			'highcharts-ng'
 		]);
 
 })();

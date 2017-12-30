@@ -35,7 +35,7 @@
         function onInit() {
             vm.activeTabSortChild = 0;
 
-            console.log('Decision Single Controller');
+            // console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
 

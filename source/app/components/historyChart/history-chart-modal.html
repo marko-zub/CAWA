@@ -1,15 +1,20 @@
-<div class="criteria-coefficient-popup">
+<div class="chart-popup">
     <div class="modal-header">
-        <h4 class="modal-title">Hsitorical values</h4>
+        <h4 class="modal-title">Charts</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
     </div>
-    <form class="form-horizontal" name="criteriaCoefficientForm" ng-submit="vm.apply()">
-        <div class="modal-body">
-            <nvd3 options='vm.options' data='vm.data'></nvd3>
+    <div class="modal-body">
+
+        <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+            <ul class="nav nav-pills nav-tabs-sm">
+                <li ng-repeat="haracteristic in vm.characteristicsTabs track by haracteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === haracteristic.id }">
+                    <a ng-click="vm.changeCharacteristicActive($index)">{{ ::haracteristic.name }}</a>
+                </li>
+            </ul>
         </div>
-<!--         <div class="modal-footer text-right">
-            <button class="btn btn-default" ng-click="vm.close()" type="button">{{ "CANCEL" | translate }}</button>
-            <button class="btn btn-primary" type="submit">{{ "APPLY" | translate }}</button>
-        </div> -->
-    </form>
+		<div class="chart-wrapper">
+			<highchart id="chart" config="vm.chartConfig" ng-if="vm.chartConfig"></highchart>
+		</div>
+        <div ng-show="vm.loaderChart" class="app-loader-small"><span></span></div>
+    </div>
 </div>

@@ -8,6 +8,7 @@
         .component('historyChart', {
             bindings: {
                 decision: '<',
+                characteristics: '<',
             },
             controller: 'HistoryChartController',
             controllerAs: 'vm',
@@ -30,19 +31,13 @@
         vm.getData = getData;
 
         function getData($event) {
-            // console.log(vm.decision.valueIds[0]);
-            if (!vm.decision.valueIds[0]) {
-                return;
+            if (vm.decision.valueIds[0]) {
+                openModal($event, vm.decision.valueIds[0]);
             }
-
-            DecisionDataService.getCharacteristicValueHistory(vm.decision.valueIds[0]).then(function(resp) {
-                if (resp.length) {
-                    openModal($event, resp);
-                }
-            })
         }
 
-        function openModal(event, data) {
+        function openModal(event, valueId) {
+            var characteristics = vm.characteristics;
             event.preventDefault();
             event.stopPropagation();
             var modalInstance = $uibModal.open({
@@ -52,9 +47,12 @@
                 backdrop: 'static',
                 animation: false,
                 resolve: {
-                    data: function() {
-                        return data;
-                    }
+                    valueId: function() {
+                        return valueId;
+                    },
+                    characteristics: function() {
+                        return characteristics;
+                    },
                 }
             });
             modalInstance.result.then(function(result) {

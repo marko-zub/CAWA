@@ -1,111 +1,139 @@
 (function() {
 
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.components')
-		.controller('HistoryChartModalController', HistoryChartModalController);
+    angular
+        .module('app.components')
+        .controller('HistoryChartModalController', HistoryChartModalController);
 
-	HistoryChartModalController.$inject = ['$uibModalInstance', 'data'];
+    HistoryChartModalController.$inject = ['$uibModalInstance', 'DecisionDataService', 'valueId', 'characteristics'];
 
-	function HistoryChartModalController($uibModalInstance, data) {
-		var vm = this;
+    function HistoryChartModalController($uibModalInstance, DecisionDataService, valueId, characteristics) {
+        var vm = this;
 
-		vm.apply = apply;
-		vm.close = close;
+        vm.apply = apply;
+        vm.close = close;
 
-		init();
+        init();
 
-		function apply() {
-			$uibModalInstance.close(vm.criteria);
-		}
+        function apply() {
+            $uibModalInstance.close(vm.criteria);
+        }
 
-		function close() {
-			$uibModalInstance.dismiss();
-		}
+        function close() {
+            $uibModalInstance.dismiss();
+        }
 
-		var options = {
-			chart: {
-				type: 'lineChart',
-				width: 590,
-				height: 400,
-				// margin: {
-				// 	top: 20,
-				// 	right: 20,
-				// 	bottom: 60,
-				// 	left: 55
-				// },
-				scaleExtent: [1, 10],
-				x: function(d) {
-					return d.x;
-				},
-				y: function(d) {
-					return d.y;
-				},
-				transitionDuration: 500,
-				useInteractiveGuideline: true,
-				xAxis: {
-					axisLabel: 'Dates',
-					tickFormat: function(d) {
-						return d3.time.format('%m/%d/%y')(new Date(d))
-					},
-					showMaxMin: false,
-					staggerLabels: true
-				},
-				yAxis: {
-					axisLabel: 'values',
-				}
-			}
-		};
+        function init() {
+        	vm.chartConfig;
+            vm.characteristicsTabs = prepareCharacteristics(characteristics);
 
-		vm.options = options;
-		vm.data = prepareChartData(data);
-		// console.log(vm.data);
+            var findValueId = _.findIndex(vm.characteristicsTabs, function(item) {
+                return item.valueId === valueId;
+            })
+            if (findValueId >= 0) {
+                vm.characteristicsTabActive = vm.characteristicsTabs[findValueId];
+            } else {
+                vm.characteristicsTabActive = vm.characteristicsTabs[0];
+            }
+            getCharacteristicValueHistory(vm.characteristicsTabActive.valueId);
+        }
 
-		function init() {
-			// vm.data = data;
-			// console.log(data);
-		}
+        function prepareCharacteristics(list) {
+            var newList = [];
+            _.each(list, function(item) {
+                _.each(item.characteristics, function(characteristic) {
+                	
+                    if (characteristic.decision && characteristic.decision.totalHistoryValues > 0) {
+                        newList.push({
+                            name: characteristic.name,
+                            id: characteristic.id,
+                            valueId: characteristic.decision.valueIds[0]
+                        });
 
-		function prepareChartData(data) {
-			var values = [];
-			var subscribers = [];
-			var ids = [];
-			_.each(data, function(item) {
-				var chartItem = {
-					x: item.createDate,
-					y: item.value
-				};
-				values.push(chartItem);
-				subscribers.push({
-					x: item.createDate,
-					y: item.totalSubscribers
-				});
+                    }
+                });
+            });
 
-				// ids.push({
-				// 	x: item.createDate,
-				// 	y: item.id
-				// });
-			});
+            return newList;
+        }
 
-			var chartData = [{
-				values: values,
-				key: 'Value',
-				color: '#1f77b4'
-			}, 
-			// {
-			// 	values: subscribers,
-			// 	key: 'Subscribers',
-			// 	color: '#ff7f0e'
-			// },
-			// {
-			// 	values: ids,
-			// 	key: 'ID for test',
-			// 	color: '#2ca02c'
-			// }
-			];
+        vm.changeCharacteristicActive = changeCharacteristicActive;
 
-			return chartData;
-		}
-	}
+        function changeCharacteristicActive(index) {
+            vm.characteristicsTabActive = vm.characteristicsTabs[index];
+            getCharacteristicValueHistory(vm.characteristicsTabActive.valueId);
+        }
+
+        function getCharacteristicValueHistory(id) {
+            vm.loaderChart = true;
+            DecisionDataService.getCharacteristicValueHistory(id).then(function(resp) {
+                vm.loaderChart = false;
+                initChart(resp);
+            });
+        }
+
+
+        function prepareChartData(data) {
+
+            var categories = [];
+            var chartData = [];
+
+            data = _.orderBy(data, 'createDate', 'asc');
+            _.each(data, function(item, index) {
+                var chartItem = {
+                    x: item.createDate,
+                    y: item.value
+                };
+                chartData.push(item.value);
+                categories.push(item.createDate);
+            });
+
+            return [
+                categories,
+                chartData
+            ]
+        }
+
+
+        function initChart(data) {
+            var chartDataSeries = prepareChartData(data);
+            var categories = chartDataSeries[0];
+            var series = chartDataSeries[1];
+
+            var chartConfig = {
+                chart: {
+                    height: 350,
+                    width: 560,
+                    type: 'line'
+                },
+                series: [{
+                    name: vm.characteristicsTabActive.name + ' values',
+                    data: series,
+                    id: 's1',
+                    color: '#1f77b4',
+                }],
+                title: false,
+
+                xAxis: {
+                    categories: categories,
+                    type: 'datetime',
+                    labels: {
+                        format: '{value:%d/%m/%Y}',
+                    },
+                    dateTimeLabelFormats: {
+                        day: '%e of %b'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: vm.characteristicsTabActive.name + ' values'
+                    },
+                    reversedStacks: false,
+                }
+            };
+
+            vm.chartConfig = chartConfig
+        }
+    }
 })();

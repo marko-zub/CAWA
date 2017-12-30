@@ -33,7 +33,7 @@
                                     </div>
                                     <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
                                     <div ng-if="::(!characteristic.multiValue)" class="control-panel-sm">
-                                        <history-chart ng-if="::(characteristic.historicalValue !== false && characteristic.decision.value && characteristic.decision.totalHistoryValues > 0)" decision="::characteristic.decision"></history-chart>
+                                        <history-chart ng-if="::(characteristic.historicalValue !== false && characteristic.decision.value && characteristic.decision.totalHistoryValues > 0)" decision="::characteristic.decision" characteristics="::vm.list"></history-chart>
                                         <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
                                     </div>
                                 </div>

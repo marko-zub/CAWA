@@ -14,7 +14,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Deicision Characteristics Controller');
+            // console.log('Deicision Characteristics Controller');
         }
 
     }

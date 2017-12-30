@@ -15,7 +15,7 @@
                             <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
 
-<history-chart ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" decision="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic"></history-chart>
+<history-chart ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" decision="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" characteristics="::vm.characteristics"></history-chart>
 
                                 <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
                             </span>
