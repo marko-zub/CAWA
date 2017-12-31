@@ -27,12 +27,17 @@
             </div>
             <div class="post-sub-header">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-7">
                         <decision-short-info decision="::vm.decision"></decision-short-info>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="pull-right">
-                            <compare-button decision="vm.decision" parent-decision="vm.parentDecisionGroups[0]"></compare-button>
+                    <div class="col-sm-5 text-right">
+                        <div class="inline-block">
+                            <div>
+                                <media-links list="vm.decision.medias"></media-links>
+                            </div>
+                            <div>
+                                <compare-button decision="vm.decision" parent-decision="vm.parentDecisionGroups[0]"></compare-button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,21 +50,17 @@
                     </div>
                     <div class="page-description" ng-bind-html="::vm.decision.description || 'NO DESCRIPTION'" translate translate-cloak></div>
                 </div>
-                <media-links list="vm.decision.medias"></media-links>
                 <!-- Gallery -->
                 <media list="vm.decision.medias"></media>
                 <!-- End Gallery -->
             </div>
-            
-             <history-chart characteristics="vm.characteristicGroups" decision="vm.decision"></history-chart>
-
+            <history-chart characteristics="vm.characteristicGroups" decision="vm.decision"></history-chart>
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
                     <div class="nav-tabs-wrapper tabs-left clearfix">
                         <h4 class="tabs-title" translate-cloak>
                             {{ 'CATEGORIES' | translate }}
                         </h4>
-
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.decisionGroupActive.id == item.id}" ng-if="vm.decision.decisionGroups && !vm.decisionsChildsLoader">
                                 <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }} ({{::item.totalChildDecisions}})
@@ -92,7 +93,6 @@
                 </div>
                 <div class="col-sm-12">
                     <div ng-show="vm.decisions.length">
-
                         <div class="row">
                             <div class="col-md-8">
                                 <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
@@ -103,9 +103,7 @@
                                 </a>
                             </div>
                         </div>
-
                         <div class="decisions-list mg-b-md" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
-       
                             <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
                             <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
                             <!-- TODO: remove second loader -->
@@ -127,7 +125,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
                     <ul class="nav nav-pills nav-tabs-sm">
                         <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
@@ -135,7 +132,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="clearfix mg-b-sm" ng-show="vm.criteriaGroupsCompilance">
                     <!-- Make as component -->
                     <div class="clearfix">
