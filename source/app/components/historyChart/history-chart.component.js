@@ -27,7 +27,9 @@
         vm.$onChanges = onChanges;
 
         function onChanges(changes) {
-            if (!angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
+            if (changes.characteristics &&
+                changes.characteristics.currentValue &&
+                !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
                 vm.characteristics = angular.copy(changes.characteristics.currentValue);
                 onInit();
             }
@@ -36,7 +38,9 @@
         function onInit() {
             if (vm.characteristics) {
                 vm.characteristicsTabs = prepareCharacteristics(vm.characteristics);
-                initTabs();
+                if (vm.characteristicsTabs.length) {
+                    initTabs();
+                }
             }
         }
 
@@ -53,7 +57,6 @@
                     vm.characteristicsTabActive = vm.characteristicsTabs[0];
                 }
             }
-
             getCharacteristicValueHistory(vm.characteristicsTabActive.valueId);
         }
 
@@ -67,14 +70,16 @@
                             name: characteristic.name,
                             id: characteristic.id,
                             valueId: characteristic.decision.valueIds[0],
-                            description: characteristic.description
+                            description: characteristic.description,
+                            primary: characteristic.primary
                         });
 
                     }
                 });
             });
 
-            return newList;
+
+            return _.orderBy(newList, ['primary', true], 'desc');
         }
 
         vm.changeCharacteristicActive = changeCharacteristicActive;
@@ -133,9 +138,6 @@
                 series: [{
                     name: vm.characteristicsTabActive.name,
                     data: prepareChartData(data),
-                    tooltip: {
-                        valueDecimals: 2
-                    }
                 }],
                 title: false
             });

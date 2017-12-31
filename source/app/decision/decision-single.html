@@ -1,8 +1,17 @@
 <div class="app-container-sm">
     <div class="row">
-        <div class="col-sm-9">
-            <!-- <div ng-class="vm.parentDecisionGroups.length ? 'col-sm-9' : 'col-sm-12'"> -->
-            <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+        <div class="col-sm-12">
+            <div class="app-title-table">
+                <div class="app-title-table-img" ng-if="::vm.decision.imageUrl">
+                    <div class="post-image post-image-title">
+                        <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                        <div ng-bind="vm.decision.imageBlock"> </div>
+                    </div>
+                </div>
+                <div class="app-title-table-title">
+                    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+                </div>
+            </div>
             <div class="post-header">
                 <app-votes></app-votes>
                 <div class="nav-tabs-wrapper">
@@ -42,18 +51,42 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="col-sm-12">
             <div class="post post-single with-rating">
                 <div class="clearfix text-justify">
-                    <div class="post-image">
-                        <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
-                        <div ng-bind="vm.decision.imageBlock"> </div>
-                    </div>
-                    <div class="page-description" ng-bind-html="::vm.decision.description || 'NO DESCRIPTION'" translate translate-cloak></div>
+                    <div class="page-description" ng-bind-html="::vm.decision.description" translate translate-cloak></div>
                 </div>
+
                 <!-- Gallery -->
                 <media list="vm.decision.medias"></media>
                 <!-- End Gallery -->
+            </div>            
+        </div>
+
+
+        <div class="col-sm-12" ng-if="vm.parentDecisionGroups.length">
+            <div class="nav-tabs-wrapper tabs-left mg-b-sm">
+                <ul class="nav nav-tabs nav-tabs-sm">
+                    <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.id === parent.id}">
+                        <a ng-click="vm.getParrentDecisions(parent)"> 
+                        {{ ::parent.ownerDecision.name }}</a>
+                    </li>
+                </ul>
             </div>
+            <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
+                <ul class="nav nav-pills nav-tabs-sm">
+                    <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
+                        <a ng-click="vm.getChildDecisions(child)">{{ ::child.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-sm-9">
+            <!-- <div ng-class="vm.parentDecisionGroups.length ? 'col-sm-9' : 'col-sm-12'"> -->
             <history-chart characteristics="vm.characteristicGroups" decision="vm.decision"></history-chart>
             <div class="row decision-childs">
                 <div class="col-xs-12 mg-sm-b">
@@ -117,21 +150,6 @@
         <div class="col-sm-3">
             <!-- Parent criteria & characteristics -->
             <div class="decision-aside" ng-if="vm.parentDecisionGroups.length">
-                <div class="nav-tabs-wrapper tabs-left mg-b-sm">
-                    <ul class="nav nav-tabs nav-tabs-sm">
-                        <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.id === parent.id}">
-                            <a ng-click="vm.getParrentDecisions(parent)"> 
-                                {{ ::parent.ownerDecision.name }}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
-                    <ul class="nav nav-pills nav-tabs-sm">
-                        <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
-                            <a ng-click="vm.getChildDecisions(child)">{{ ::child.name }}</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="clearfix mg-b-sm" ng-show="vm.criteriaGroupsCompilance">
                     <!-- Make as component -->
                     <div class="clearfix">

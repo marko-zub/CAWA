@@ -1,6 +1,6 @@
-<div>
+<div ng-if="vm.characteristicsTabs.length">
 	<h4 class="modal-title">Charts</h4>
-    <div class="nav-tabs-wrapper border-0 clearfix">
+    <div class="nav-tabs-wrapper border-0 clearfix mg-b-sm">
         <ul class="nav nav-pills nav-tabs-sm">
             <li ng-repeat="characteristic in vm.characteristicsTabs track by characteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === characteristic.id }">
                 <a ng-click="vm.changeCharacteristicActive($index)">{{ ::characteristic.name }}</a>
