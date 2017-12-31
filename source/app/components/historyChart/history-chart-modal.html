@@ -7,13 +7,17 @@
 
         <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
             <ul class="nav nav-pills nav-tabs-sm">
-                <li ng-repeat="haracteristic in vm.characteristicsTabs track by haracteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === haracteristic.id }">
-                    <a ng-click="vm.changeCharacteristicActive($index)">{{ ::haracteristic.name }}</a>
+                <li ng-repeat="characteristic in vm.characteristicsTabs track by characteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === characteristic.id }">
+                    <a ng-click="vm.changeCharacteristicActive($index)">{{ ::characteristic.name }}</a>
                 </li>
             </ul>
         </div>
+
+        <div ng-bind-html="vm.characteristicsTabActive.description"></div>
+
 		<div class="chart-wrapper">
-			<highchart id="chart" config="vm.chartConfig" ng-if="vm.chartConfig"></highchart>
+            <div id="container"></div>
+			<!-- <highchart id="chart" config="vm.chartConfig" ng-if="vm.chartConfig"></highchart> -->
 		</div>
         <div ng-show="vm.loaderChart" class="app-loader-small"><span></span></div>
     </div>

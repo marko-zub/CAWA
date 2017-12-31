@@ -33,8 +33,7 @@
     "angular-translate": "^2.15.2",
     "angular-translate-loader-static-files": "^2.15.2",
     "popper.js": "^1.12.5",
-    "highcharts": "^6.0.4",
-    "highcharts-ng": "^1.2.0"
+    "highcharts": "^6.0.4"
   },
   "overrides": {
     "angular": {
@@ -46,6 +45,12 @@
     "fotorama": {
       "main": [
         "fotorama.full.js"
+      ]
+    },
+    "highcharts": {
+      "main": [
+        "./highstock.js",
+        "./modules/exporting.js"
       ]
     },
     "iscroll": {

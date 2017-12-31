@@ -38,6 +38,7 @@
 
         function openModal(event, valueId) {
             var characteristics = vm.characteristics;
+            // console.log(characteristics, valueId);
             event.preventDefault();
             event.stopPropagation();
             var modalInstance = $uibModal.open({
@@ -45,6 +46,7 @@
                 controller: 'HistoryChartModalController',
                 controllerAs: 'vm',
                 backdrop: 'static',
+                windowClass: 'app-chart-popup',
                 animation: false,
                 resolve: {
                     valueId: function() {

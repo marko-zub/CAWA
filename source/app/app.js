@@ -27,7 +27,8 @@
                 authUrl: result.data.authUrl,
                 endpointUrl: result.data.endpointUrl,
                 mode: result.data.mode,
-                pagePrefix: result.data.pagePrefix
+                pagePrefix: result.data.pagePrefix,
+                title: result.data.title,
             });
         })
         .catch(function(error) {

@@ -6,9 +6,9 @@
         .module('app.components')
         .controller('HistoryChartModalController', HistoryChartModalController);
 
-    HistoryChartModalController.$inject = ['$uibModalInstance', 'DecisionDataService', 'valueId', 'characteristics'];
+    HistoryChartModalController.$inject = ['$uibModalInstance', 'DecisionDataService', 'valueId', 'characteristics', 'Config'];
 
-    function HistoryChartModalController($uibModalInstance, DecisionDataService, valueId, characteristics) {
+    function HistoryChartModalController($uibModalInstance, DecisionDataService, valueId, characteristics, Config) {
         var vm = this;
 
         vm.apply = apply;
@@ -25,7 +25,7 @@
         }
 
         function init() {
-        	vm.chartConfig;
+            vm.chartConfig;
             vm.characteristicsTabs = prepareCharacteristics(characteristics);
 
             var findValueId = _.findIndex(vm.characteristicsTabs, function(item) {
@@ -43,12 +43,13 @@
             var newList = [];
             _.each(list, function(item) {
                 _.each(item.characteristics, function(characteristic) {
-                	
+
                     if (characteristic.decision && characteristic.decision.totalHistoryValues > 0) {
                         newList.push({
                             name: characteristic.name,
                             id: characteristic.id,
-                            valueId: characteristic.decision.valueIds[0]
+                            valueId: characteristic.decision.valueIds[0],
+                            description: characteristic.description
                         });
 
                     }
@@ -81,59 +82,46 @@
 
             data = _.orderBy(data, 'createDate', 'asc');
             _.each(data, function(item, index) {
-                var chartItem = {
-                    x: item.createDate,
-                    y: item.value
-                };
-                chartData.push(item.value);
-                categories.push(item.createDate);
+                chartData.push([
+                    item.createDate,
+                    item.value
+                ]);
             });
-
-            return [
-                categories,
-                chartData
-            ]
+            return chartData;
         }
 
 
         function initChart(data) {
             var chartDataSeries = prepareChartData(data);
-            var categories = chartDataSeries[0];
-            var series = chartDataSeries[1];
+            var data = chartDataSeries;
 
-            var chartConfig = {
+            Highcharts.stockChart('container', {
                 chart: {
-                    height: 350,
-                    width: 560,
-                    type: 'line'
+                    height: 550,
                 },
+
+                rangeSelector: {
+                    selected: 1
+                },
+                credits: {
+                    text: Config.title,
+                    href: Config.baseUrl
+                },
+                title: {
+                    text: 'AAPL Stock Price'
+                },
+
                 series: [{
-                    name: vm.characteristicsTabActive.name + ' values',
-                    data: series,
-                    id: 's1',
-                    color: '#1f77b4',
+                    name: 'AAPL',
+                    data: data,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }],
-                title: false,
+                title: false
+            });
 
-                xAxis: {
-                    categories: categories,
-                    type: 'datetime',
-                    labels: {
-                        format: '{value:%d/%m/%Y}',
-                    },
-                    dateTimeLabelFormats: {
-                        day: '%e of %b'
-                    },
-                },
-                yAxis: {
-                    title: {
-                        text: vm.characteristicsTabActive.name + ' values'
-                    },
-                    reversedStacks: false,
-                }
-            };
 
-            vm.chartConfig = chartConfig
         }
     }
 })();
