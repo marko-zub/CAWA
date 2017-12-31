@@ -1,24 +1,9 @@
 <div class="chart-popup">
     <div class="modal-header">
-        <h4 class="modal-title">Charts</h4>
+        <h4 class="modal-title">{{vm.title}} Charts</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
     </div>
     <div class="modal-body">
-
-        <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
-            <ul class="nav nav-pills nav-tabs-sm">
-                <li ng-repeat="characteristic in vm.characteristicsTabs track by characteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === characteristic.id }">
-                    <a ng-click="vm.changeCharacteristicActive($index)">{{ ::characteristic.name }}</a>
-                </li>
-            </ul>
-        </div>
-
-        <div ng-bind-html="vm.characteristicsTabActive.description"></div>
-
-		<div class="chart-wrapper">
-            <div id="container"></div>
-			<!-- <highchart id="chart" config="vm.chartConfig" ng-if="vm.chartConfig"></highchart> -->
-		</div>
-        <div ng-show="vm.loaderChart" class="app-loader-small"><span></span></div>
+        <history-chart characteristics="::vm.characteristics" decision="::vm.decision"></history-chart>
     </div>
 </div>
