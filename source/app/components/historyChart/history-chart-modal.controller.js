@@ -107,12 +107,8 @@
                     text: Config.title,
                     href: Config.baseUrl
                 },
-                title: {
-                    text: 'AAPL Stock Price'
-                },
-
                 series: [{
-                    name: 'AAPL',
+                    name: vm.characteristicsTabActive.name,
                     data: data,
                     tooltip: {
                         valueDecimals: 2
