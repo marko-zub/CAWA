@@ -125,7 +125,7 @@ gulp.task('templates', function() {
 
 gulp.task('styles', ['less'], function() {
     return gulp.src(config.allCssFiles)
-        .pipe(gulpIf(argv.prod, csso()))
+        .pipe(gulpIf(argv.prod, csso({ comments: false })))
         .pipe(rev())
         .pipe(gulp.dest(config.temp));
 });
@@ -136,7 +136,7 @@ gulp.task('vendor-styles', function() {
     return gulp.src(wiredep().css)
         .pipe(gconcat('vendor.css'))
         .pipe(rev())
-        .pipe(gulpIf(argv.prod, csso()))
+        .pipe(gulpIf(argv.prod, csso({ comments: false })))
         .pipe(gulp.dest(config.temp));
 });
 
