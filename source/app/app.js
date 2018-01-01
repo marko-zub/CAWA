@@ -10,7 +10,8 @@
         'app.decision',
         'app.discussions',
         'app.users',
-        'app.tags'
+        'app.tags',
+        'app.contacts',
     ]);
 
     var initInjector = angular.injector(['ng']),

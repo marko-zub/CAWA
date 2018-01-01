@@ -17,9 +17,9 @@
         });
 
 
-    HistoryChartBtnController.$inject = ['DecisionDataService', '$uibModal'];
+    HistoryChartBtnController.$inject = [];
 
-    function HistoryChartBtnController(DecisionDataService, $uibModal) {
+    function HistoryChartBtnController() {
         var vm = this;
 
         vm.$onInit = onInit;

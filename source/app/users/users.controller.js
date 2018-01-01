@@ -14,7 +14,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            console.log('Users controller');
+            // console.log('Users controller');
         }
     }
 })();
