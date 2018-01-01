@@ -17,9 +17,9 @@
         });
 
 
-    HistoryChartBtnController.$inject = [];
+    HistoryChartBtnController.$inject = ['$uibModal'];
 
-    function HistoryChartBtnController() {
+    function HistoryChartBtnController($uibModal) {
         var vm = this;
 
         vm.$onInit = onInit;
