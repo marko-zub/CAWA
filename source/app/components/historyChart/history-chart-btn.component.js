@@ -43,7 +43,8 @@
             var characteristics = vm.characteristics;
             event.preventDefault();
             event.stopPropagation();
-            var modalInstance = $uibModal.open({
+            // var modalInstance = 
+            $uibModal.open({
                 templateUrl: 'app/components/historyChart/history-chart-modal.html',
                 controller: 'HistoryChartModalController',
                 controllerAs: 'vm',
