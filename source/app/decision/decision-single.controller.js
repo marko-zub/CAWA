@@ -205,6 +205,11 @@
                 sendData.sortDecisionPropertyDirection = 'DESC';
             }
 
+            if (vm.decisionGroupActive.inheritedDecisionGroupId) {
+                sendData.additionalDecisionGroupId = inheritedDecisionGroupId;
+                // id = inheritedDecisionGroupId;
+            }
+
             // Filter
             if (_.isNull(filter) || filter) {
                 sendData.decisionNameFilterPattern = filter;
