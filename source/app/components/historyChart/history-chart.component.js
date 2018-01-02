@@ -57,27 +57,27 @@
                     vm.characteristicsTabActive = vm.characteristicsTabs[0];
                 }
             }
-            getCharacteristicValueHistory(vm.characteristicsTabActive.valueId);
+            getCharacteristicValueHistory(vm.characteristicsTabActive);
         }
 
         function prepareCharacteristics(list) {
             var newList = [];
             _.each(list, function(item) {
                 _.each(item.characteristics, function(characteristic) {
-
                     if (characteristic.decision && characteristic.decision.totalHistoryValues > 0) {
-                        newList.push({
+                        var characteristicPicked = {
                             name: characteristic.name,
                             id: characteristic.id,
                             valueId: characteristic.decision.valueIds[0],
                             description: characteristic.description,
-                            primary: characteristic.primary
-                        });
-
+                            primary: characteristic.primary,
+                            valuePrefix: characteristic.valuePrefix,
+                            valueSuffix: characteristic.valueSuffix
+                        };
+                        newList.push(characteristicPicked);
                     }
                 });
             });
-
 
             return _.orderBy(newList, ['primary', true], 'desc');
         }
@@ -86,33 +86,45 @@
 
         function changeCharacteristicActive(index) {
             vm.characteristicsTabActive = vm.characteristicsTabs[index];
-            getCharacteristicValueHistory(vm.characteristicsTabActive.valueId);
+            getCharacteristicValueHistory(vm.characteristicsTabActive);
         }
 
-        function getCharacteristicValueHistory(id) {
+        function getCharacteristicValueHistory(characteristic) {
             vm.loaderChart = true;
+            var id = characteristic.valueId;
             DecisionDataService.getCharacteristicValueHistory(id).then(function(resp) {
                 vm.loaderChart = false;
-                initChart(resp);
+                initChart(resp, characteristic);
             });
         }
 
-
-        function prepareChartData(data) {
-
+        function prepareChartData(data, characteristic) {
             var chartData = [];
             data = _.orderBy(data, 'createDate', 'asc');
             _.each(data, function(item) {
+                var value = item.value;
                 chartData.push([
                     item.createDate,
-                    item.value
+                    value
                 ]);
             });
             return chartData;
         }
 
+        function formatPriceValue(value, item) {
+            value = value.toString();
+            if (item.valueSuffix) {
+                value = value + ' ' + '<span class="value-suffix">' + item.valueSuffix + '</span>';
+            }
 
-        function initChart(data) {
+            if (item.valuePrefix) {
+                value = '<span class="value-prefix">' + item.valuePrefix + '</span> ' + value;
+            }
+            return value;
+        }
+
+
+        function initChart(data, characteristic) {
             var constainer = $($element).find('#decision-chart')[0];
 
             if (!constainer) return false;
@@ -122,14 +134,48 @@
                     height: 550,
                     zoomType: 'x',
                 },
+                legend: {
+                    enabled: true,
+                    align: 'center',
+                    backgroundColor: 'transparent',
+                    borderColor: 'black',
+                    borderWidth: 0,
+                    layout: 'horizontal',
+                    verticalAlign: 'bottom',
+                    y: 0,
+                    shadow: false,
+                    floating: false,
+                    itemStyle: {
+                        color: '#428bca'
+                    },
+                    itemHoverStyle: {
+                        color: '#2a6496'
+                    },
+                    itemHiddenStyle: {
+                        color: '#757575'
+                    }
+                },
 
+                navigator: {
+                    adaptToUpdatedData: false
+                },
+                scrollbar: {
+                    liveRedraw: false
+                },
                 rangeSelector: {
                     selected: 1,
                     // allButtonsEnabled: true,
                     enabled: true,
                 },
+                yAxis: {
+                    labels: {
+                        formatter: function() {
+                            return formatPriceValue(this.value, characteristic);
+                        }
+                    }
+                },
                 xAxis: {
-                    minRange: 24 * 3600 * 1000
+                    minRange: 24 * 3600 * 1000,
                 },
                 credits: {
                     text: Config.title,
@@ -137,7 +183,12 @@
                 },
                 series: [{
                     name: vm.characteristicsTabActive.name,
-                    data: prepareChartData(data),
+                    data: prepareChartData(data, characteristic),
+                    showInLegend: true,
+                    tooltip: {
+                        valueSuffix: characteristic.valueSuffix,
+                        valuePrefix: characteristic.valuePrefix
+                    }
                 }],
                 title: false
             });
