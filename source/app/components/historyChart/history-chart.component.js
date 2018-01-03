@@ -116,7 +116,7 @@
             });
         }
 
-        function prepareChartData(data, characteristic) {
+        function prepareChartData(data) {
             var chartData = [];
             data = _.orderBy(data, 'createDate', 'asc');
             _.each(data, function(item) {
