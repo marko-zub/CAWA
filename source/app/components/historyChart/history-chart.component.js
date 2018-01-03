@@ -21,10 +21,14 @@
     function HistoryChartController(DecisionDataService, Config, $element) {
 
         var vm = this;
-        vm.$onInit = onInit;
 
-        // TODO: add on changes
+        vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+        vm.$onDestroy = onDestroy;
+        vm.$postLink = postLink;
+
+        var chartConstainer;
+        var chart;
 
         function onChanges(changes) {
             if (changes.characteristics &&
@@ -36,6 +40,20 @@
         }
 
         function onInit() {
+            createChart();
+        }
+
+        function onDestroy() {
+            if (chart) {
+                chart.destroy();
+            }
+        }
+
+        function postLink() {
+            chartConstainer = $($element).find('#decision-chart')[0];
+        }
+
+        function createChart() {
             if (vm.characteristics) {
                 vm.characteristicsTabs = prepareCharacteristics(vm.characteristics);
                 if (vm.characteristicsTabs.length) {
@@ -125,11 +143,10 @@
 
 
         function initChart(data, characteristic) {
-            var constainer = $($element).find('#decision-chart')[0];
 
-            if (!constainer) return false;
+            if (!chartConstainer) return false;
 
-            Highcharts.stockChart(constainer, {
+            chart = Highcharts.stockChart(chartConstainer, {
                 chart: {
                     height: 550,
                     zoomType: 'x',

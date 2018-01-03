@@ -25,11 +25,7 @@
 
         var criteriaGroupsIds = [];
         var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
-        var newState = {
-            key: 'topRated',
-            value: null,
-            label: 'Top Rated'
-        };
+        var newState = DecisionsConstant.NAVIGATON_STATES_TOP_RATED;
 
         navigationObj.unshift(newState);
 

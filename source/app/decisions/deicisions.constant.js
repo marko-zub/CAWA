@@ -18,6 +18,11 @@
                 value: 'totalViews',
                 label: 'Views'
             }],
+            NAVIGATON_STATES_TOP_RATED: {
+                key: 'topRated',
+                value: null,
+                label: 'Top Rated'
+            },
             SHORT_TEXT_LENGTH: 350,
             SORT_DECISION_PROPERTY_OPTIONS: [{
                 id: 'name',
