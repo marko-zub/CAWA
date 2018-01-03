@@ -38,11 +38,7 @@
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
 
-            var mediaLogo = _.find(vm.decision.medias, function(media) {
-                return media.type === 'LOGO';
-            });
-
-            if (mediaLogo) vm.decision.imageUrl = mediaLogo.url;
+            vm.decision = prepareDecision(vm.decision);
 
             setPageData();
 
@@ -50,11 +46,16 @@
             changeDecisionGroupsTab($stateParams.category);
             getDecisionParents(vm.decision);
             changeDecisionGroupsTab($stateParams.category);
-
-            vm.criteriaGroupsLoader = true;
-            vm.characteristicGroupsLoader = true;
-
             setImageSize();
+        }
+
+        function prepareDecision(decision) {
+            var mediaLogo = _.find(decision.medias, function(media) {
+                return media.type === 'LOGO';
+            });
+
+            if (mediaLogo) decision.imageUrl = mediaLogo.url;
+            return decision;
         }
 
         function setPageData() {
@@ -82,7 +83,6 @@
             });
         }
 
-
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
 
         function changeDecisionGroupsTab(mode) {
@@ -108,9 +108,7 @@
         function updateCharactCritData() {
             initSortMode($stateParams.sort);
             if (vm.decisionGroupActive.inheritedDecisionGroupId && vm.activeParentTab) {
-                var inheritedDecisionGroupId = vm.decisionGroupActive.inheritedDecisionGroupId;
-                getParentGroupsMatrix(vm.activeParentTab, false);
-                getParentGroupsMatrixAdditional(inheritedDecisionGroupId, vm.decisionGroupActive.id);
+                getParentGroupsMatrixAdditionalRequest();
             } else if (vm.activeParentTab) {
                 getParentGroupsMatrix(vm.activeParentTab);
             }
@@ -127,7 +125,7 @@
                     vm.tabMode = navigationObj[findIndex].value;
                     if (!vm.decisionGroupActive.inheritedDecisionGroupId) {
                         getDecisionMatrix(vm.decisionGroupActive.id);
-                    } else if(vm.activeParentTab) {
+                    } else if (vm.activeParentTab && vm.decisionGroupActive.inheritedDecisionGroupId) {
                         getParentGroupsMatrixAdditionalRequest();
                         // console.log(vm.activeParentTab);
                     }
@@ -142,7 +140,7 @@
                                 vm.criteriaGroupsLoader = false;
                             });
                         });
-                    } else if(vm.activeParentTab) {
+                    } else if (vm.activeParentTab && vm.decisionGroupActive.inheritedDecisionGroupId) {
                         getParentGroupsMatrixAdditionalRequest();
                         // console.log(vm.activeParentTab);
                     }
@@ -178,10 +176,8 @@
 
                 var sendData = {};
                 sendData.includeCharacteristicIds = [-1];
-                // sendData.sortDecisionPropertyName = vm.tabMode;
                 sendData.sortDecisionPropertyDirection = 'DESC';
                 DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
-                    // console.log(result)
                     var childDecisionGroups = [];
                     vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
                         childDecisionGroups.push(decision.decision);
