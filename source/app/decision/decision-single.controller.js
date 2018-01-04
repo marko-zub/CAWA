@@ -241,7 +241,7 @@
             }
 
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
-                vm.decisions = filterDecisionList(result.decisionMatrixs);
+                vm.decisions = angular.copy(filterDecisionList(result.decisionMatrixs));
                 vm.decisionsChildsLoader = false;
                 vm.decisionsChildsLoaderRequest = false;
 

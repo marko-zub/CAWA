@@ -23,9 +23,9 @@
         function link($scope, $el, $attrs) {
 
             var isPopoverCompiled = false;
-            var popover;
             var popoverContentId;
             var isPopoverHover = false;
+            var popover;
 
             var htmlPopover = [
                 // '<div>{{decision}}</div>',
@@ -87,6 +87,14 @@
                     }
                 });
             }
+
+            $scope.$on('$destroy', function() {
+                if (popover) {
+                    popover.destroy();
+                    $el.find('.popover-ref').off('mouseenter mouseleave');
+                    popoverContentId.off('mouseenter mouseleave');
+                }
+            });
 
             function initEvents() {
                 // TODO: avoid set timeout
