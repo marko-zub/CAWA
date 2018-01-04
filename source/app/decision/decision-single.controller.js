@@ -172,36 +172,36 @@
             // decisionGroups
             vm.parentDecisionGroups = decision.parentDecisionGroups;
             // TODO: check if we need this code
-            // if (vm.decision.decisionGroups) {
-            //     vm.decisionsChildsLoader = true;
-            //     vm.activeDecisionGroupsTab = {
-            //         id: vm.decisionGroupActive.id,
-            //         name: vm.decisionGroupActive.name,
-            //         nameSlug: vm.decisionGroupActive.nameSlug
-            //     };
+            if (vm.decision.decisionGroups) {
+                vm.decisionsChildsLoader = true;
+                vm.activeDecisionGroupsTab = {
+                    id: vm.decisionGroupActive.id,
+                    name: vm.decisionGroupActive.name,
+                    nameSlug: vm.decisionGroupActive.nameSlug
+                };
 
-            //     var sendData = {};
-            //     sendData.includeCharacteristicIds = [-1];
-            //     // sendData.sortDecisionPropertyName = vm.tabMode;
-            //     sendData.sortDecisionPropertyDirection = 'DESC';
+                var sendData = {};
+                sendData.includeCharacteristicIds = [-1];
+                // sendData.sortDecisionPropertyName = vm.tabMode;
+                sendData.sortDecisionPropertyDirection = 'DESC';
 
-            //     if (vm.decisionGroupActive && vm.decisionGroupActive.totalChildDecisions === 0) {
-            //         vm.decisions = [];
-            //         vm.decisionsChildsLoader = false;
-            //         return;
-            //     }
+                if (vm.decisionGroupActive && vm.decisionGroupActive.totalChildDecisions === 0) {
+                    vm.decisions = [];
+                    vm.decisionsChildsLoader = false;
+                    return;
+                }
 
-            //     // DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
-            //     //     // console.log(result)
-            //     //     var childDecisionGroups = [];
-            //     //     vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
-            //     //         childDecisionGroups.push(decision.decision);
-            //     //     });
+                // DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
+                //     // console.log(result)
+                //     var childDecisionGroups = [];
+                //     vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
+                //         childDecisionGroups.push(decision.decision);
+                //     });
 
-            //     //     vm.childDecisionGroups = childDecisionGroups;
-            //     //     vm.decisionsChildsLoader = false;
-            //     // });
-            // }
+                //     vm.childDecisionGroups = childDecisionGroups;
+                //     vm.decisionsChildsLoader = false;
+                // });
+            }
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
             if (vm.parentDecisionGroups && vm.parentDecisionGroups.length) {
