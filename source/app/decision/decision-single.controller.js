@@ -144,6 +144,7 @@
                 } else {
                     getCriteriaGroupsByParentId(vm.decision.id).then(function(resp) {
                         var preparedCriteriaGroups = prepareCriteriaGroups(resp);
+                        vm.criteriaGroups = preparedCriteriaGroups[0];
                         getDecisionMatrix(vm.decisionGroupActive.id, false, false, false, preparedCriteriaGroups[1]).then(function() {
                             vm.criteriaGroupsLoader = false;
                         });
