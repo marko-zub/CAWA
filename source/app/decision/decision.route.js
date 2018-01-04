@@ -183,15 +183,16 @@
                 // SLUG for Decision page
                 // Always set correct slug from server
                 // Just added new slug
+                
                 if (toState.name === 'decisions.single' &&
-                    ($stateParams.slug !== result.nameSlug)) {
+                    ($stateParams.slug !== result.nameSlug || !!$stateParams.slug)) {
 
                     // Set empty slug
                     if (!result.nameSlug) {
                         result.nameSlug = '-';
                     }
 
-                    $state.params.slug = result.nameSlug;
+                    toParams.slug = result.nameSlug;
                     $state.transitionTo($state.current.name, toParams, {
                         reload: false,
                         inherit: true,
