@@ -21,6 +21,7 @@
         vm.itemsPerPage = PaginatorConstant.ITEMS_PER_PAGE;
         vm.$onInit = onInit;
 
+        // Change every time
         var criteriaGroupsIds = [];
         var navigationObj = angular.copy(DecisionsConstant.NAVIGATON_STATES);
         navigationObj.unshift(DecisionsConstant.NAVIGATON_STATES_TOP_RATED);
@@ -141,11 +142,23 @@
 
             // null equals 'topRated';
             if (_.isNull(vm.tabMode) || vm.tabMode === 'topRated') {
-                getCriteriaGroupsByParentId(vm.decision.id).then(function(resp) {
-                    getDecisionMatrix(vm.decisionGroupActive.id).then(function() {
-                        vm.criteriaGroupsLoader = false;
+                if (vm.decisionGroupActive.inheritedDecisionGroupId) {
+                    var inheritedDecisionGroupId = vm.decisionGroupActive.inheritedDecisionGroupId;
+                    getCriteriaGroupsByParentId(inheritedDecisionGroupId).then(function(resp) {
+                        var additionalDecisionGroupId = vm.decisionGroupActive.id;
+                        var preparedCriteriaGroups = prepareCriteriaGroups(resp);
+                        getDecisionMatrix(inheritedDecisionGroupId, false, false, additionalDecisionGroupId, preparedCriteriaGroups[1]).then(function() {
+                            vm.criteriaGroupsLoader = false;
+                        });
                     });
-                });
+                } else {
+                    getCriteriaGroupsByParentId(vm.decision.id).then(function(resp) {
+                        var preparedCriteriaGroups = prepareCriteriaGroups(resp);
+                        getDecisionMatrix(vm.decisionGroupActive.id, false, false, false, preparedCriteriaGroups[1]).then(function() {
+                            vm.criteriaGroupsLoader = false;
+                        });
+                    });
+                }
             } else {
                 getDecisionMatrix(vm.decisionGroupActive.id);
             }
@@ -157,6 +170,7 @@
 
             // decisionGroups
             vm.parentDecisionGroups = decision.parentDecisionGroups;
+            // TODO: check if we need this code
             // if (vm.decision.decisionGroups) {
             //     vm.decisionsChildsLoader = true;
             //     vm.activeDecisionGroupsTab = {
@@ -197,13 +211,17 @@
             }
         }
 
-        function getDecisionMatrix(id, pagination, filter) {
+        function getDecisionMatrix(id, pagination, filter, additionalDecisionGroupId, criteriaGroupsIdsMatrix) {
             vm.decisionsChildsLoaderRequest = true;
             var sendData = {
                 sortDecisionPropertyName: 'createDate',
                 sortDecisionPropertyDirection: 'DESC',
                 includeCharacteristicIds: [-1]
             };
+
+            if (additionalDecisionGroupId) {
+                sendData.additionalDecisionGroupId = additionalDecisionGroupId;
+            }
 
             if (!pagination) {
                 pagination = _.clone(vm.pagination);
@@ -213,7 +231,7 @@
             }
             // console.log(criteriaGroupsIds);
             if (vm.tabMode === 'topRated' || _.isNull(vm.tabMode)) {
-                sendData.sortCriteriaIds = criteriaGroupsIds;
+                sendData.sortCriteriaIds = _.isArray(criteriaGroupsIdsMatrix) ? criteriaGroupsIdsMatrix : criteriaGroupsIds; //Init in header
                 sendData.sortWeightCriteriaDirection = 'DESC';
                 sendData.sortTotalVotesCriteriaDirection = 'DESC';
             } else {
@@ -253,7 +271,7 @@
                 });
             });
 
-            return DecisionsUtils.prepareDecisionToUI(result);
+            return [DecisionsUtils.prepareDecisionToUI(result), criteriaGroupsIds];
         }
 
         vm.changeFilter = changeFilter;
@@ -394,7 +412,8 @@
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
 
-                vm.criteriaGroups = prepareCriteriaGroups(values[0]);
+                var preparedCriteriaGroups = prepareCriteriaGroups(values[0])
+                vm.criteriaGroups = preparedCriteriaGroups[0];
 
                 var characteristicGroups = _.filter(values[1], function(resultEl) {
                     resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
@@ -433,7 +452,8 @@
                 });
 
                 // Display matrix
-                getDecisionMatrix(vm.decisionGroupActive.id);
+                // getDecisionMatrix(vm.decisionGroupActive.id);
+                sortModeRequest();
 
                 // Decision Index
                 getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);

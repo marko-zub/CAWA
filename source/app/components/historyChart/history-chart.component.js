@@ -201,7 +201,7 @@
                 series: [{
                     name: vm.characteristicsTabActive.name,
                     data: prepareChartData(data, characteristic),
-                    showInLegend: true,
+                    showInLegend: false,
                     tooltip: {
                         valueSuffix: characteristic.valueSuffix,
                         valuePrefix: characteristic.valuePrefix
