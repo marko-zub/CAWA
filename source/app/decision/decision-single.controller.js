@@ -47,9 +47,6 @@
             // Call only on init
             getDecisionParents(vm.decision);
 
-            vm.criteriaGroupsLoader = true;
-            vm.characteristicGroupsLoader = true;
-
             setImageSize();
         }
 
@@ -85,14 +82,6 @@
             changeDecisionGroupsTabOnly(mode);
             changeSortMode($stateParams.sort);
             sortModeRequest();
-
-            // if (vm.decisionGroupActive.inheritedDecisionGroupId) {
-            //     console.log('inheritedDecisionGroupId');
-            //     // sendData.additionalDecisionGroupId = vm.decisionGroupActive.id;
-            //     // console.log(sendData);
-            // } else {
-            //     console.log('DecisionGroupId')
-            // }
         }
 
         function changeDecisionGroupsTabOnly(mode) {
@@ -127,7 +116,7 @@
                     $state.transitionTo($state.current.name, params, {
                         reload: false,
                         inherit: true,
-                        notify: false
+                        notify: true
                     });
                 }
             }
@@ -185,11 +174,7 @@
                 // sendData.sortDecisionPropertyName = vm.tabMode;
                 sendData.sortDecisionPropertyDirection = 'DESC';
 
-                if (vm.decisionGroupActive && vm.decisionGroupActive.totalChildDecisions === 0) {
-                    vm.decisions = [];
-                    vm.decisionsChildsLoader = false;
-                    return;
-                }
+
 
                 // DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
                 //     // console.log(result)
@@ -209,6 +194,12 @@
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0]);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
                 vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
+            }
+
+            if (vm.decisionGroupActive && vm.decisionGroupActive.totalChildDecisions === 0) {
+                vm.decisions = [];
+                vm.decisionsChildsLoader = false;
+                return;
             }
         }
 
@@ -353,7 +344,7 @@
             $state.transitionTo($state.current.name, params, {
                 reload: false,
                 inherit: true,
-                notify: false
+                notify: true
             });
         }
 
@@ -407,6 +398,9 @@
 
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
+
+            vm.criteriaGroupsCompilanceInit = true;
+            vm.characteristicGroupsInit = true;
 
             $q.all([
                 getCriteriaGroupsByParentId(parentId),

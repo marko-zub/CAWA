@@ -179,11 +179,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="list-wrapper sm">
+                <div class="list-wrapper sm" ng-show="vm.criteriaGroupsCompilanceInit">
                     <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
                     <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
                 </div>
-                <div class="list-wrapper sm">
+                <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
                     <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
                     <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="false" collapsed="false"></characteristics-list>
                 </div>
