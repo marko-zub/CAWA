@@ -147,6 +147,7 @@
                     getCriteriaGroupsByParentId(inheritedDecisionGroupId).then(function(resp) {
                         var additionalDecisionGroupId = vm.decisionGroupActive.id;
                         var preparedCriteriaGroups = prepareCriteriaGroups(resp);
+                        vm.criteriaGroups = preparedCriteriaGroups[0];
                         getDecisionMatrix(inheritedDecisionGroupId, false, false, additionalDecisionGroupId, preparedCriteriaGroups[1]).then(function() {
                             vm.criteriaGroupsLoader = false;
                         });
