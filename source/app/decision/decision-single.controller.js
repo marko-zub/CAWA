@@ -169,12 +169,12 @@
                     nameSlug: vm.decisionGroupActive.nameSlug
                 };
 
-                var sendData = {};
-                sendData.includeCharacteristicIds = [-1];
-                // sendData.sortDecisionPropertyName = vm.tabMode;
-                sendData.sortDecisionPropertyDirection = 'DESC';
+                // var sendData = {};
+                // sendData.includeCharacteristicIds = [-1];
+                // // sendData.sortDecisionPropertyName = vm.tabMode;
+                // sendData.sortDecisionPropertyDirection = 'DESC';
 
-
+                // vm.decisionsChildsLoader = false;
 
                 // DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
                 //     // console.log(result)
@@ -194,6 +194,8 @@
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0]);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
                 vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
+            } else if(vm.decisionGroupActive) {
+                sortModeRequest();
             }
 
             if (vm.decisionGroupActive && vm.decisionGroupActive.totalChildDecisions === 0) {
@@ -407,7 +409,7 @@
                 getCharacteristicsGroupsById(parentId),
             ]).then(function(values) {
 
-                var preparedCriteriaGroups = prepareCriteriaGroups(values[0])
+                var preparedCriteriaGroups = prepareCriteriaGroups(values[0]);
                 vm.criteriaGroups = preparedCriteriaGroups[0];
 
                 var characteristicGroups = _.filter(values[1], function(resultEl) {
