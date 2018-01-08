@@ -482,9 +482,9 @@
             });
         }
 
-        vm.getParrentDecisions = getParrentDecisions;
+        vm.getParentDecisions = getParentDecisions;
 
-        function getParrentDecisions(parent) {
+        function getParentDecisions(parent) {
             vm.activeParentTab = parent;
             vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
             getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab);
