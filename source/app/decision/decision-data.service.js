@@ -20,15 +20,6 @@
                 },
             }),
 
-            decision = $resource(decisionUrl + '/decisions/list', {
-                id: '@id'
-            }, {
-                getDecisionById: {
-                    method: 'POST',
-                    isArray: false
-                }
-            }),
-
             decisionParents = $resource(decisionUrl + '/parents', {
                 id: '@id'
             }, {
@@ -40,15 +31,6 @@
             }),
 
             decisionsMatrix = $resource(Config.endpointUrl + 'decisiongroups/:id/decisions/matrix', {
-                id: '@id'
-            }, {
-                getDecisionById: {
-                    method: 'POST',
-                    isArray: false
-                }
-            }),
-
-            decisionsGroups = $resource(Config.endpointUrl + 'decisiongroups/:id/decisions/matrix', {
                 id: '@id'
             }, {
                 getDecisionById: {
@@ -229,7 +211,7 @@
         }
 
         function getDecisionGroups(id, data) {
-            return decisionsGroups.getDecisionById({
+            return decisionsMatrix.getDecisionById({
                 id: id
             }, data).$promise;
         }

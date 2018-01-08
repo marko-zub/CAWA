@@ -47,7 +47,30 @@
 
         function initCompareList() {
             includeChildDecisionIds = DecisionCompareService.getList();
-            getDecisions(compareListStorage);
+            // getDecisions(compareListStorage);
+            getDecisionsInit(compareListStorage);
+        }
+
+        function getDecisionsInit(ids) {
+            if (_.isEmpty(ids)) return;
+
+            var sendIds = ids.join(',');
+            vm.compareLoader = true;
+
+            var params = {
+                fetchParentDecisionGroups: true,
+                fetchMedia: true
+            };
+
+            DecisionDataService.getDecisionInfoFull(sendIds, params).then(function(resp) {
+                _.each(resp, function(decision) {
+                    createParentDecisionGroups(decision);
+                    saveDecisionCompareList(decision);
+                });
+
+                // console.log(resp);
+                vm.compareLoader = false;
+            })
         }
 
         function getDecisions(ids) {
@@ -122,7 +145,7 @@
             vm.selectedOwnerDecisionChildIndex = 0;
         }
 
-        // End new 
+        // End new
 
         function clearCompare() {
             vm.ownerDecisions = [];
@@ -203,7 +226,7 @@
         vm.selectedOwnerDecisionChildIndex = 0;
 
         function compareDecisions() {
-            
+
             $state.go('decisions.single.categories.comparison', {
                 id: vm.selectedOwnerDecision.id,
                 slug: vm.selectedOwnerDecision.nameSlug,
