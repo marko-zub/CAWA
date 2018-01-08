@@ -115,6 +115,10 @@
                 </div>
                 <div class="col-xs-12" ng-if="vm.decisions.length">
                     <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+
+                        <a ng-if="vm.decisionGroupActive.inheritedDecisionGroupId" class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null, id:vm.decisionGroupActive.id, slug: vm.decisionGroupActive.nameSlug})">See All {{ vm.decisionGroupActive.name }} ({{ vm.decisionGroupActive.totalChildDecisions }}) from {{ vm.activeParentTab.ownerDecision.name }} </a>
+
+
                         <ul class="nav nav-pills nav-tabs-sm">
                             <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
                                 <a ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
