@@ -130,6 +130,7 @@
             }
 
             // null equals 'topRated';
+            // console.log(vm.decisionGroupActive);
             if (_.isNull(vm.tabMode) || vm.tabMode === 'topRated') {
                 if (vm.decisionGroupActive.inheritedDecisionGroupId) {
                     var inheritedDecisionGroupId = vm.decisionGroupActive.inheritedDecisionGroupId;
@@ -142,7 +143,7 @@
                         });
                     });
                 } else {
-                    getCriteriaGroupsByParentId(vm.decision.id).then(function(resp) {
+                    getCriteriaGroupsByParentId(vm.decisionGroupActive.id).then(function(resp) {
                         var preparedCriteriaGroups = prepareCriteriaGroups(resp);
                         vm.criteriaGroups = preparedCriteriaGroups[0];
                         getDecisionMatrix(vm.decisionGroupActive.id, false, false, false, preparedCriteriaGroups[1]).then(function() {
