@@ -1,0 +1,57 @@
+<div class="row decision-childs">
+    <div class="col-xs-12 mg-sm-b">
+        <div class="nav-tabs-wrapper tabs-left clearfix">
+            <h4 ng-if="vm.showTitle"class="tabs-title" translate-cloak>{{ 'CATEGORIES' | translate }}</h4>
+            <ul class="nav nav-tabs nav-tabs-sm">
+                <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active':vm.decisionGroupActive.id == item.id}" ng-if="vm.decision.decisionGroups && !vm.decisionsChildsLoader">
+                    <a ui-sref="decisions.single(::{category: item.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeDecisionGroupsTab(item.nameSlug)">{{ item.name | translate }} ({{::item.totalChildDecisions}})
+                                </a>
+                </li>
+            </ul>
+            <div class="pull-right text-header">
+                <a ng-if="vm.showTitle" ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null})" class="see-all" translate-cloak>
+                                {{ 'See All' | translate }}
+                            </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="vm.decisions.length || vm.filterSearch">
+        <div class="nav-tabs-wrapper border-0 clearfix tabs-right">
+            <a ng-if="vm.inheritedDecisionGroup" class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug})">See All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.activeParentTab.ownerDecision.name }} </a>
+            <ul class="nav nav-pills nav-tabs-sm">
+                <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
+                    <a ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Tabs content -->
+    <div ng-if="!vm.decisions.length && !vm.decisionsChildsLoader && !vm.filterSearch">
+        <div class="col-sm-7">
+            <div class="mg-b-md app-action-text" translate-cloak>
+                {{ "NO OPTIONS" | translate }}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div ng-if="vm.decisions.length || vm.filterSearch">
+            <div class="row">
+                <div class="col-md-8">
+                    <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
+                </div>
+                <div class="col-md-4">
+                    <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.decisionGroupActive.nameSlug, size: null, page: null, sort: null, decisionId: null })" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>{{ 'Comparison Matrix' | translate }}</a>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.decisions.length">
+            <div class="decisions-list mg-b-md" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
+                <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision" scroll-to-id="vm.scrollToId"></decisions-list>
+                <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
+                <!-- TODO: remove second loader -->
+                <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><span></span></div>
+            </div>
+            <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
+        </div>
+    </div>
+</div>

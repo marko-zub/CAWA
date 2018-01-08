@@ -24,48 +24,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="nav-tabs-wrapper mg-b-sm clearfix" ng-if="vm.decision.decisionGroups.length">
-                <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-repeat="item in vm.decision.decisionGroups track by $index" ng-class="{'active': vm.decisionGroupActive.id == item.id }">
-                        <a ui-sref="decisions.single.categories(::{categorySlug: item.nameSlug, sort: null, category: null})">{{ item.name | translate }} ({{::item.totalChildDecisions}})</a>
-                    </li>
-                </ul>
-            </div>
-            <div ng-if="vm.decision.decisionGroups.length">
-                <div ng-show="!vm.decisionsLoader && vm.decisions.length">
-                    <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-md">
-                        <ul class="nav nav-pills nav-tabs-sm">
-                            <li ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTabSort == $index}">
-                                <a ui-sref="decisions.single.categories(::{sort:item.key, categorySlug: vm.decisionGroupActive.nameSlug})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)">{{item.label}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="loader-container decision-childs decision-childs-height">
-                    <div class="row" ng-if="vm.decision.decisionGroups.length" ng-show="!vm.decisionsLoader && vm.decisions.length">
-                        <div class="col-md-8">
-                            <filter-bar on-change-filter="vm.changeFilter(value)"></filter-bar>
-                        </div>
-                        <div class="col-md-4">
-                            <a ui-sref="decisions.single.categories.comparison({analysisId:null, categorySlug:vm.decisionGroupActive.nameSlug, size: null, page: null, sort: null, decisionId: null})" class="btn btn-primary-2 btn-comparison pull-right" translate-cloak>
-                                {{ 'Comparison Matrix' | translate }}
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Filter Name -->
-                    <div ng-show="!vm.decisionsLoader && vm.decisions.length" class="decisions-list">
-                        <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision"></decisions-list>
-                        <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
-                        <div ng-show="vm.decisionsChildsLoader" class="app-loader-small"><span></span></div>
-                    </div>
-                    <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
-                    <div ng-show="!vm.decisionsLoader && !vm.decisions.length">
-                        <span class="text-header">
-                    {{ 'NO OPTIONS' | translate }}.
-                </span>
-                    </div>
-                </div>
-            </div>
+
+            <decisions-wrapper ng-if="vm.decision.decisionGroups.length" title="false" decision="::vm.decision"></decisions-wrapper>            
+
             <div ng-if="!vm.decision.decisionGroups.length">
                 <span class="text-header" translate-cloak>
                     {{ 'NO CATEGORIES' | translate }}.
