@@ -142,6 +142,12 @@
                             vm.criteriaGroupsLoader = false;
                         });
                     });
+
+                    // vm.inheritedDecisionGroup
+                    DecisionDataService.getDecisionGroups(inheritedDecisionGroupId).then(function(inheritedDecisionGroupResp) {
+                        vm.inheritedDecisionGroup = inheritedDecisionGroupResp;
+                    });
+
                 } else {
                     getCriteriaGroupsByParentId(vm.decisionGroupActive.id).then(function(resp) {
                         var preparedCriteriaGroups = prepareCriteriaGroups(resp);
@@ -196,7 +202,7 @@
                 getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0]);
                 vm.activeParentTab = vm.parentDecisionGroups[0];
                 vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
-            } else if(vm.decisionGroupActive) {
+            } else if (vm.decisionGroupActive) {
                 sortModeRequest();
             }
 

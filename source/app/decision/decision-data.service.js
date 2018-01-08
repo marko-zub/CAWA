@@ -39,6 +39,15 @@
                 }
             }),
 
+            decisionGroups = $resource(Config.endpointUrl + 'decisiongroups/:id', {
+                id: '@id'
+            }, {
+                getDecisionById: {
+                    method: 'GET',
+                    isArray: false
+                }
+            }),
+
             decisionsPropertyGroups = $resource(decisionUrl + '/propertygroups', {
                 id: '@id'
             }, {
@@ -151,7 +160,7 @@
             }, {}),
 
 
-            characteristicValueHistory= $resource(Config.endpointUrl + 'values/:id/history', {
+            characteristicValueHistory = $resource(Config.endpointUrl + 'values/:id/history', {
                 id: '@id'
             }, {
                 query: {
@@ -211,7 +220,7 @@
         }
 
         function getDecisionGroups(id, data) {
-            return decisionsMatrix.getDecisionById({
+            return decisionGroups.getDecisionById({
                 id: id
             }, data).$promise;
         }
@@ -325,7 +334,9 @@
         }
 
         function getCharacteristicValueHistory(id) {
-            return characteristicValueHistory.query({ id:id }).$promise;
+            return characteristicValueHistory.query({
+                id: id
+            }).$promise;
         }
     }
 })();
