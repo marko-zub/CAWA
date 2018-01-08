@@ -76,6 +76,11 @@
                 </ul>
             </div>
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
+
+                <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug})">
+                Read More About {{ vm.activeParentTab.ownerDecision.name }}
+            </a>
+
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
                         <a ng-click="vm.getChildDecisions(child)">{{ ::child.name }}</a>
@@ -86,6 +91,7 @@
 
 
         <div class="col-sm-9">
+
             <!-- <div ng-class="vm.parentDecisionGroups.length ? 'col-sm-9' : 'col-sm-12'"> -->
             <history-chart characteristics="vm.characteristicGroupsChart" decision="vm.decision"></history-chart>
             <div class="row decision-childs">
