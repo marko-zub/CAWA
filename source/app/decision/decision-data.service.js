@@ -171,7 +171,6 @@
 
 
         var service = {
-            getDecision: getDecision,
             getDecisionParents: getDecisionParents,
             getDecisions: getDecisions,
             getDecisionMatrix: getDecisionMatrix,
@@ -196,12 +195,6 @@
         };
 
         return service;
-
-        function getDecision(id, data) {
-            return decision.getDecisionById({
-                id: id
-            }, data).$promise;
-        }
 
         function getDecisionParents(id) {
             return decisionParents.getDecisionParentById({

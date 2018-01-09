@@ -17,13 +17,10 @@
 
 
     DecisionsWrapperController.$inject = ['$rootScope', 'DecisionDataService', 'DecisionsConstant',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config', '$sce'
-    ];
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils'];
 
     function DecisionsWrapperController($rootScope, DecisionDataService, DecisionsConstant,
-        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config, $sce) {
+        $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils) {
         var vm = this;
 
         vm.$onInit = onInit;
@@ -35,9 +32,6 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            vm.activeTabSortChild = 0;
-
-            // console.log('Decision Single Controller');
             vm.navigation = navigationObj;
             initPagination();
             changeDecisionGroupsTabOnly($stateParams.category);
@@ -46,28 +40,11 @@
             // Call only on init
             getDecisionParents(vm.decision);
 
-            // setImageSize();
-
             if (vm.title === false) {
                 vm.showTitle = false;
             } else {
                 vm.showTitle = true;
             }
-        }
-
-        function setImageSize() {
-            // Set only for svg
-            angular.element(document).ready(function() {
-                if (vm.decision.imageStyle) {
-                    var img = $('.post-image img');
-                    if (img) {
-                        img.css({
-                            height: (img[0].naturalHeight > 0 && img[0].naturalHeight < 180) ? img[0].naturalHeight + 'px' : '180px',
-                            width: (img[0].naturalWidth > 0 && img[0].naturalWidth < 180) ? img[0].naturalWidth + 'px' : '180px'
-                        });
-                    }
-                }
-            });
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
@@ -91,7 +68,7 @@
         }
 
         // TODO: Simplify logic
-        function changeSortMode(mode, isRequest) {
+        function changeSortMode(mode) {
             if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
                 var findIndex = _.findIndex(navigationObj, function(navItem) {
                     return navItem.key === mode;
@@ -171,30 +148,12 @@
                     name: vm.decisionGroupActive.name,
                     nameSlug: vm.decisionGroupActive.nameSlug
                 };
-
-                // var sendData = {};
-                // sendData.includeCharacteristicIds = [-1];
-                // // sendData.sortDecisionPropertyName = vm.tabMode;
-                // sendData.sortDecisionPropertyDirection = 'DESC';
-
-                // vm.decisionsChildsLoader = false;
-
-                // DecisionDataService.getDecisionGroups(vm.decisionGroupActive.id, sendData).then(function(result) {
-                //     // console.log(result)
-                //     var childDecisionGroups = [];
-                //     vm.childDecisionGroups = _.filter(result.decisionMatrixs, function(decision) {
-                //         childDecisionGroups.push(decision.decision);
-                //     });
-
-                //     vm.childDecisionGroups = childDecisionGroups;
-                //     vm.decisionsChildsLoader = false;
-                // });
             }
 
             vm.parentDecisionGroupsTabs = decision.parentDecisionGroups;
             if (vm.parentDecisionGroups && vm.parentDecisionGroups.length) {
                 // getRecommendedDecisions(vm.decision.id, vm.parentDecisionGroups[0]);
-                getParentDecisionGroupsCriteriaCharacteristicts(vm.parentDecisionGroups[0]);
+                sortModeRequest();
                 vm.activeParentTab = vm.parentDecisionGroups[0];
                 vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
             } else if (vm.decisionGroupActive) {
@@ -279,46 +238,6 @@
             vm.filterSearch = true;
         }
 
-        // // TODO: move to login to recommended component
-        // // Recommended decisions
-        // vm.getRecommendedDecisions = getRecommendedDecisions;
-
-        // function getRecommendedDecisions(decisionId, parent) {
-        //     if (!parent) return;
-        //     var sendData = {
-        //         includeCharacteristicIds: [-1]
-        //     };
-        //     sendData.excludeChildDecisionIds = [decisionId];
-
-        //     vm.activeRecommendedTab = {
-        //         id: parent.id,
-        //         name: parent.name,
-        //         nameSlug: parent.nameSlug
-        //     };
-
-        //     DecisionDataService.getCriteriaGroupsById(parent.id).then(function(resultCriteria) {
-        //         sendData.sortCriteriaIds = pickCriteriaIds(resultCriteria);
-        //         vm.criteriaGroups = DecisionsUtils.prepareDecisionToUI(resultCriteria);
-        //         DecisionDataService.getDecisionMatrix(parent.id, sendData).then(function(resultDecisions) {
-        //             vm.recommendedDecisionsList = filterDecisionList(resultDecisions.decisionMatrixs);
-        //             vm.recommendedDecisionsListLoader = false;
-        //             vm.activeRecommendedTab.total = resultDecisions.totalDecisionMatrixs;
-        //         });
-        //     });
-        // }
-
-        // // TODO: move to service
-        // function pickCriteriaIds(result) {
-        //     var criteriaGroupsIdsArray = [];
-        //     _.forEach(result, function(resultEl) {
-        //         _.forEach(resultEl.criteria, function(criteria) {
-        //             criteriaGroupsIdsArray.push(criteria.id);
-        //         });
-        //     });
-        //     return criteriaGroupsIdsArray;
-        // }
-        // // End Recommended decisions
-
         function filterDecisionList(decisionMatrixs) {
             var list = [];
             _.forEach(decisionMatrixs, function(item) {
@@ -367,138 +286,6 @@
         }
         // End pagination
 
-
-        // TODO: simplify right block
-        // Remove second criteria call
-        function getCharacteristicsGroupsById(id) {
-            return DecisionDataService.getCharacteristicsGroupsById(id, {
-                options: false
-            }).then(function(result) {
-                return result;
-            });
-        }
-
-        function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
-            var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            return _.filter(characteristicsArray, function(resultEl) {
-                _.map(resultEl.characteristics, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-
-                    var elEqual = _.find(currentDecisionCharacteristics, {
-                        id: el.id
-                    });
-
-                    if (elEqual) {
-                        el.decision = elEqual;
-                        return el;
-                    }
-                });
-                if (resultEl.characteristics.length > 0) return resultEl;
-            });
-        }
-
-        function getParentDecisionGroupsCriteriaCharacteristicts(parent) {
-            var sendData = {
-                includeChildDecisionIds: [vm.decision.id]
-            };
-            var parentId = parent.id;
-
-            vm.criteriaGroupsLoader = true;
-            vm.characteristicGroupsLoader = true;
-
-            vm.criteriaGroupsCompilanceInit = true;
-            vm.characteristicGroupsInit = true;
-
-            $q.all([
-                getCriteriaGroupsByParentId(parentId),
-                getCharacteristicsGroupsById(parentId),
-            ]).then(function(values) {
-
-                var preparedCriteriaGroups = prepareCriteriaGroups(values[0]);
-                vm.criteriaGroups = preparedCriteriaGroups[0];
-
-                var characteristicGroups = _.filter(values[1], function(resultEl) {
-                    resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
-                    _.map(resultEl.characteristics, function(el) {
-                        return el;
-                    });
-                    if (resultEl.characteristics.length > 0) return resultEl;
-                });
-
-                // Criterias IDs
-                // TODO: use getDecisionMatrix
-                // console.log(criteriaGroupsIds);
-                if (vm.tabMode === 'topRated' || _.isNull(vm.tabMode)) {
-                    sendData.sortCriteriaIds = criteriaGroupsIds;
-                    sendData.sortWeightCriteriaDirection = 'DESC';
-                    sendData.sortTotalVotesCriteriaDirection = 'DESC';
-                } else {
-                    sendData.sortDecisionPropertyName = vm.tabMode;
-                    sendData.sortDecisionPropertyDirection = 'DESC';
-                }
-
-                DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
-                    criteriaGroups.totalVotes = calcTotalVotes(criteriaGroups);
-                    vm.criteriaGroupsCompilance = criteriaGroups;
-                    vm.criteriaGroupsLoader = false;
-
-                    vm.characteristicGroups = mergeCharacteristicsDecisions(resp, characteristicGroups);
-
-                    // Use different data for chart and aside panel
-                    vm.characteristicGroupsChart = angular.copy(vm.characteristicGroups);
-
-                    var decisionMatrixs = resp.decisionMatrixs;
-                    vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
-                    vm.characteristicGroupsLoader = false;
-                });
-
-                // Display matrix
-                // getDecisionMatrix(vm.decisionGroupActive.id);
-                sortModeRequest();
-
-                // Decision Index
-                getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);
-            });
-        }
-
-        function calcTotalVotes(criteriaGroups) {
-            return _.sumBy(criteriaGroups, function(group) {
-                return _.sumBy(group.criteria, 'totalVotes');
-            });
-        }
-
-        // Move to component
-        function getCriteriaByDecisionIndex(decisionId, parentDecisionId, criteriaGroupsIds) {
-            var params = {
-                sortCriteriaIds: criteriaGroupsIds,
-                sortDecisionPropertyName: 'createDate',
-                sortDecisionPropertyDirection: 'DESC',
-                sortWeightCriteriaDirection: 'DESC',
-                sortTotalVotesCriteriaDirection: 'DESC'
-            };
-            DecisionDataService.getCriteriaByDecisionIndex(decisionId, parentDecisionId, params).then(function(resp) {
-                if (_.isNumber(resp.number)) {
-                    vm.decisionIndexInParentGroup = resp.number + 1;
-                    vm.decisionIndexInParentGroupPage = _.floor(resp.number / 10) + 1;
-                }
-            });
-        }
-
-        // vm.getParentDecisions = getParentDecisions;
-
-        // function getParentDecisions(parent) {
-        //     vm.activeParentTab = parent;
-        //     vm.activeChildTab = vm.activeParentTab.ownerDecision.decisionGroups[0];
-        //     getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab);
-        // }
-
-        // vm.getChildDecisions = getChildDecisions;
-
-        // function getChildDecisions(child) {
-        //     vm.activeChildTab = child;
-        //     getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab);
-        // }
 
         function checkScrollToDecision(id) {
             if (id) {
