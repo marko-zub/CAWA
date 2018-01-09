@@ -46,7 +46,7 @@
                         link: null
                     });
 
-                    title = vm.decision.decisionGroups[index].name + title;
+                    title = vm.decision.decisionGroups[index].name + ' ' + title;
                 }
 
                 breadcrumbs = _.concat(breadcrumbs, data);
