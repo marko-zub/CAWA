@@ -52,7 +52,10 @@
         }
 
         function getDecisionsInit(ids) {
-            if (_.isEmpty(ids)) return;
+            if (_.isEmpty(ids)) {
+                vm.compareLoader = false;
+                return;
+            }
 
             var sendIds = ids.join(',');
             vm.compareLoader = true;
@@ -69,26 +72,6 @@
                 });
 
                 // console.log(resp);
-                vm.compareLoader = false;
-            })
-        }
-
-        function getDecisions(ids) {
-            if (_.isEmpty(ids)) {
-                vm.compareLoader = false;
-                return;
-            }
-            // TODO: clean code
-            // Dirty code to limit 15 parent calls
-            var getDecisionsParentsArray = [];
-
-            if (ids.length > 30) ids.length = 30;
-            _.each(ids, function(id) {
-                getDecisionsParentsArray.push(getParentDecisionGroups(id));
-            });
-
-            // Divide request to chunks
-            $q.all(getDecisionsParentsArray).then(function() {
                 vm.compareLoader = false;
             });
         }
@@ -184,17 +167,16 @@
 
         function removeDecisionCompare(id) {
             var removeDecision;
-            // vm.ownerDecisions
             _.each(vm.ownerDecisions, function(ownerDecision, index) {
-                var findIndex = _.findIndex(ownerDecision.decisionsList, function(decision) {
-                    return decision.id === id;
-                });
-                if (findIndex >= 0) {
-                    removeDecision = ownerDecision.decisionsList[findIndex];
-                    ownerDecision.decisionsList.splice(findIndex, 1);
-                }
-
-                if (!ownerDecision.decisionsList.length) {
+                if (ownerDecision && ownerDecision.decisionsList.length) {
+                    var findIndex = _.findIndex(ownerDecision.decisionsList, function(decision) {
+                        return decision.id === id;
+                    });
+                    if (findIndex >= 0) {
+                        removeDecision = ownerDecision.decisionsList[findIndex];
+                        ownerDecision.decisionsList.splice(findIndex, 1);
+                    }
+                } else {
                     vm.ownerDecisions.splice(index, 1);
                 }
             });

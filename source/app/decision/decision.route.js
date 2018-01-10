@@ -14,6 +14,7 @@
                 url: '/:id/{slug}?category',
                 abstract: false,
                 cache: false,
+                reloadOnSearch: false,
                 views: {
                     '@': {
                         templateUrl: 'app/decision/decision-single.html',

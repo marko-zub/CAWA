@@ -15,22 +15,24 @@
                 criteriaGroupsList: '<',
                 compare: '<',
                 parentDecision: '<',
-                className: '<'
+                className: '<',
+                scrollToId: '<'
             },
             controller: 'DecisionsListController',
             controllerAs: 'vm',
         });
 
 
-    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService'];
+    DecisionsListController.$inject = ['DecisionsUtils', 'DecisionCompareNotificationService', '$element'];
 
-    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService) {
+    function DecisionsListController(DecisionsUtils, DecisionCompareNotificationService, $element) {
         var vm = this;
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
+        vm.$postLink = postLink;
         var decisionsHeight = 97; // TODO: avoid height
-
+        var scrolled  = false;
         // TODO: break out to recommend list component
 
         function onInit() {
@@ -64,7 +66,7 @@
         //Subscribe to notification events
         DecisionCompareNotificationService.subscribeRemoveDecisionCompare(function(event, data) {
             if (_.isNull(data)) {
-                vm.list =_.map(vm.list, function (decision) {
+                vm.list = _.map(vm.list, function(decision) {
                     decision.isInCompareList = false;
                     return decision;
                 });
@@ -77,6 +79,32 @@
                 vm.list[findIndex].isInCompareList = false;
             }
         });
+
+        function postLink() {
+            if (vm.scrollToId) {
+                scrollToDecision(vm.scrollToId);
+            }
+        }
+
+        // TODO: move to decisions list
+        function scrollToDecision(id) {
+            if (scrolled !== true && !!id && id >= 0) {
+                // TODO: avoid set Timeout
+                // Move to decision list component
+                setTimeout(function() {
+
+                    var decision = $($element).find('#decision-' + id);
+
+                    decision.addClass('animate-highlight');
+                    $('html, body').animate({
+                        scrollTop: decision.offset().top - 100
+                    }, 350);
+
+
+                }, 0);
+            }
+            scrolled = true;
+        }
 
     }
 })();
