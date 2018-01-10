@@ -9,7 +9,8 @@
             templateUrl: 'app/components/decisionsWrapper/decisions-wrapper.html',
             bindings: {
                 decision: '<',
-                title: '<'
+                title: '<',
+                onChangeTab: '&'
             },
             controller: 'DecisionsWrapperController',
             controllerAs: 'vm',
@@ -17,7 +18,8 @@
 
 
     DecisionsWrapperController.$inject = ['$rootScope', 'DecisionDataService', 'DecisionsConstant',
-        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils'];
+        '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils'
+    ];
 
     function DecisionsWrapperController($rootScope, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils) {
@@ -54,6 +56,7 @@
             changeSortMode($stateParams.sort);
             sortModeRequest();
             vm.filterSearch = false;
+            vm.onChangeTab({tab: vm.decisionGroupActive});
         }
 
         function changeDecisionGroupsTabOnly(mode) {

@@ -31,11 +31,12 @@
 
             if (mediaLogo) vm.decision.imageUrl = mediaLogo.url;
 
-            setPageData();
+
             changeDecisionGroupsTabOnly($stateParams.category);
 
             // Call only on init
             getDecisionParents(vm.decision);
+            setPageData();
         }
 
         function setPageData() {
@@ -46,7 +47,7 @@
                 title: vm.decision.name,
                 link: null
             }];
-            $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
+            $rootScope.pageTitle = vm.decisionGroupActive.name + ', ' + vm.decision.name + ' | ' + Config.pagePrefix;
         }
 
         function changeDecisionGroupsTabOnly(mode) {
@@ -58,6 +59,13 @@
             } else if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
             }
+        }
+
+        vm.onChangeTab = onChangeTab;
+
+        function onChangeTab(tab) {
+            vm.decisionGroupActive = tab;
+            setPageData();
         }
 
         function getDecisionParents(decision) {
@@ -145,7 +153,7 @@
         //     });
         //     return criteriaGroupsIdsArray;
         // }
-        // 
+        //
 
         // function filterDecisionList(decisionMatrixs) {
         //     var list = [];
@@ -231,7 +239,7 @@
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
                 });
-                
+
                 // Decision Index
                 getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);
             });
