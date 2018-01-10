@@ -47,7 +47,7 @@
                 title: vm.decision.name,
                 link: null
             }];
-            $rootScope.pageTitle = vm.decisionGroupActive.name + ', ' + vm.decision.name + ' | ' + Config.pagePrefix;
+            $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
         }
 
         function changeDecisionGroupsTabOnly(mode) {
