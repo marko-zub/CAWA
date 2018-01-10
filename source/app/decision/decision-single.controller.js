@@ -39,7 +39,7 @@
             setPageData();
         }
 
-        function setPageData() {
+        function setPageData(tab) {
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
@@ -47,7 +47,14 @@
                 title: vm.decision.name,
                 link: null
             }];
-            $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
+
+            $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
+            // if ($stateParams.category || tab) {
+            //     $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
+            // } else {
+            //     $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;    
+            // }
+            
         }
 
         function changeDecisionGroupsTabOnly(mode) {
@@ -65,7 +72,7 @@
 
         function onChangeTab(tab) {
             vm.decisionGroupActive = tab;
-            setPageData();
+            // setPageData(tab);
         }
 
         function getDecisionParents(decision) {

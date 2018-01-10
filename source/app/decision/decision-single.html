@@ -79,7 +79,7 @@
             </div>
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
 
-                <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug})">
+                <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})">
                 Read More About {{ vm.activeParentTab.ownerDecision.name }}
             </a>
 
@@ -96,7 +96,7 @@
 
             <history-chart characteristics="vm.characteristicGroupsChart" decision="vm.decision"></history-chart>
 
-            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab);"></decisions-wrapper>
+            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
 
         </div>
         <div class="col-sm-3">
