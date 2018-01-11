@@ -47,6 +47,14 @@
             } else {
                 vm.showTitle = true;
             }
+
+
+            // Use for deteck links
+            if ($state.current.name === 'decisions.single.categories') {
+                 vm.isDecisionCategory = true;
+            } else {
+                 vm.isDecisionCategory = false;
+            }
         }
 
         vm.changeDecisionGroupsTab = changeDecisionGroupsTab;
