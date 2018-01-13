@@ -36,7 +36,16 @@
         function onInit() {
             vm.navigation = navigationObj;
             initPagination();
-            changeDecisionGroupsTabOnly($stateParams.category);
+
+            // Use for deteck links
+            if ($state.current.name === 'decisions.single.categories') {
+                 vm.isDecisionCategory = true;
+                 changeDecisionGroupsTabOnly($stateParams.categorySlug);
+            } else {
+                 vm.isDecisionCategory = false;
+                 changeDecisionGroupsTabOnly($stateParams.category);
+            }            
+            
             changeSortMode($stateParams.sort);
 
             // Call only on init
@@ -46,14 +55,6 @@
                 vm.showTitle = false;
             } else {
                 vm.showTitle = true;
-            }
-
-
-            // Use for deteck links
-            if ($state.current.name === 'decisions.single.categories') {
-                 vm.isDecisionCategory = true;
-            } else {
-                 vm.isDecisionCategory = false;
             }
         }
 
