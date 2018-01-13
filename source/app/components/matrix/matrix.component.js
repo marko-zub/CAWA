@@ -36,12 +36,12 @@
             $('body').addClass('matrix-sticky-footer');
             // console.log('Decision Matrix Controller');
             vm.filterName = null;
-            var index = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
+            var indexDecisionGroup = _.findIndex(vm.decision.decisionGroups, function(decisionGroup) {
                 return decisionGroup.nameSlug === $stateParams.categorySlug;
             });
 
-            if (index >= 0) {
-                vm.decisionGroupActive = vm.decision.decisionGroups[index];
+            if (indexDecisionGroup >= 0) {
+                vm.decisionGroupActive = vm.decision.decisionGroups[indexDecisionGroup];
             }
 
             _fo = DecisionSharedService.getFilterObject();
@@ -143,7 +143,7 @@
 
         function filterNameSend(value) {
             DecisionNotificationService.notifyFilterByName(value);
-            
+
             // Send to filter tags
             var tag = {
                 'name': 'Name',
@@ -993,7 +993,7 @@
             if (winH + scrollTopDocumnet > bodyH) {
                 $('body').removeClass('matrix-sticky-footer');
             }
-        }, 18);
+        }, 21);
 
         vm.$onDestroy = onDestroy;
 
