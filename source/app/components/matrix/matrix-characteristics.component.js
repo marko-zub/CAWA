@@ -35,7 +35,6 @@
         function setDecisions(decisions) {
             var displayDecisions = {};
             _.forEach(decisions, function(decision){
-
                 _.forEach(decision.characteristics, function(characteristic) {
                     var colId = characteristic.id + '-' + decision.decision.id;
                     displayDecisions[colId] = {};

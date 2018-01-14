@@ -22,7 +22,7 @@
 
         var vm = this;
 
-        vm.$onInit = onInit;
+        // vm.$onInit = onInit;
         vm.$onChanges = onChanges;
         vm.$onDestroy = onDestroy;
         vm.$postLink = postLink;
