@@ -1,7 +1,7 @@
 <div class="decision matrix matrix-new">
     <div class="matrix-wrapper">
 
-        <a class="matrix-all-link" ng-if="vm.inheritedDecisionGroup" class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">See All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }} 
+        <a class="matrix-all-link" ng-if="vm.inheritedDecisionGroup" class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories.comparison({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">Compare All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }} 
         </a>
 
         <div class="tabs-wrapper">
