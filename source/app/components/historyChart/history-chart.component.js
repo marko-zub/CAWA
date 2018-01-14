@@ -80,7 +80,7 @@
                     vm.characteristicsTabActive = vm.characteristicsTabs[0];
                 }
             }
-            getCharacteristicValueHistory(vm.characteristicsTabActive);
+            getCharacteristicValueHistory(vm.characteristicsTabActive, null, initChart);
         }
 
         function prepareCharacteristics(list) {
@@ -115,14 +115,15 @@
             chart.destroy();
             // initChart(vm.characteristicsTabActive);
 
-            getCharacteristicValueHistory(vm.characteristicsTabActive);
+            getCharacteristicValueHistory(vm.characteristicsTabActive, null, initChart);
         }
 
-        function getCharacteristicValueHistory(characteristic, params) {
+        function getCharacteristicValueHistory(characteristic, params, callback) {
             vm.loaderChart = true;
             var id = characteristic.valueId;
             DecisionDataService.getCharacteristicValueHistory(id, params).then(function(resp) {
-                initChart(resp, characteristic);
+                // initChart(resp, characteristic);
+                callback.call(this, resp, characteristic);
                 vm.loaderChart = false;
             });
         }
@@ -153,7 +154,7 @@
         }
 
         function setExtremes(e) {
-            if (e.dataMin != e.min || e.dataMax != e.max) {
+            if (e.dataMin !== e.min || e.dataMax !== e.max) {
                 var params = {};
 
                 if (typeof e.max !== 'undefined') {
@@ -168,7 +169,7 @@
                     params = null;
                 }
 
-                getCharacteristicValueHistory(vm.characteristicsTabActive, params);
+                getCharacteristicValueHistory(vm.characteristicsTabActive, params, updateChartData);
             }
         }
 
@@ -184,11 +185,11 @@
             };
         }
 
-        // function updateChartData(data, characteristic) {
-        //     // var data = prepareChartSerieObject(data, characteristic);
-        //     // chart.series[0].update(data, true);
-        //     initChart(data, characteristic);
-        // }
+        function updateChartData(data, characteristic) {
+            var data = prepareChartSerieObject(data, characteristic);
+            chart.series[0].update(data, true);
+            // initChart(data, characteristic);
+        }
 
         function initChart(data, characteristic) {
 
@@ -279,7 +280,7 @@
                             setExtremes(e);
                         }
                     },
-                    minRange: 24 * 3600 * 1000,
+                    minRange: 24 * 3600,
                 },
                 credits: {
                     text: Config.title,
