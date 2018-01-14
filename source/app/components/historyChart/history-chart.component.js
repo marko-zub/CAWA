@@ -35,13 +35,17 @@
                 changes.characteristics.currentValue &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
                 vm.characteristics = angular.copy(changes.characteristics.currentValue);
-                onInit();
+                createChart();
+
+                // Use to init chart first time 
+                // postLink calls before onChanges
+                // if (typeof chart === 'undefined') {
+                //     initChart(vm.characteristicsTabActive);
+                // }
             }
         }
 
-        function onInit() {
-            createChart();
-        }
+        function onInit() {}
 
         function onDestroy() {
             if (chart) {
@@ -50,6 +54,7 @@
         }
 
         function postLink() {
+            createChart();
             chartConstainer = $($element).find('#decision-chart')[0];
         }
 
@@ -104,15 +109,21 @@
 
         function changeCharacteristicActive(index) {
             vm.characteristicsTabActive = vm.characteristicsTabs[index];
+            chart.resetZoomButton;
+
+            // Reinit new chart on change tab
+            chart.destroy();
+            // initChart(vm.characteristicsTabActive);
+
             getCharacteristicValueHistory(vm.characteristicsTabActive);
         }
 
-        function getCharacteristicValueHistory(characteristic) {
+        function getCharacteristicValueHistory(characteristic, params) {
             vm.loaderChart = true;
             var id = characteristic.valueId;
-            DecisionDataService.getCharacteristicValueHistory(id).then(function(resp) {
-                vm.loaderChart = false;
+            DecisionDataService.getCharacteristicValueHistory(id, params).then(function(resp) {
                 initChart(resp, characteristic);
+                vm.loaderChart = false;
             });
         }
 
@@ -141,18 +152,55 @@
             return value;
         }
 
+        function setExtremes(e) {
+            if (e.dataMin != e.min || e.dataMax != e.max) {
+                var params = {};
+
+                if (typeof e.max !== 'undefined') {
+                    params.endDate = Math.round(e.max);
+                }
+
+                if (typeof e.min !== 'undefined') {
+                    params.startDate = Math.round(e.min);
+                }
+
+                if (e.rangeSelectorButton && e.rangeSelectorButton.type === 'all') {
+                    params = null;
+                }
+
+                getCharacteristicValueHistory(vm.characteristicsTabActive, params);
+            }
+        }
+
+        function prepareChartSerieObject(data, characteristic) {
+            return {
+                name: vm.characteristicsTabActive.name,
+                data: prepareChartData(data, characteristic),
+                showInLegend: false,
+                tooltip: {
+                    valueSuffix: characteristic.valueSuffix,
+                    valuePrefix: characteristic.valuePrefix
+                }
+            };
+        }
+
+        // function updateChartData(data, characteristic) {
+        //     // var data = prepareChartSerieObject(data, characteristic);
+        //     // chart.series[0].update(data, true);
+        //     initChart(data, characteristic);
+        // }
 
         function initChart(data, characteristic) {
 
             if (!chartConstainer) return false;
 
-            chart = Highcharts.stockChart(chartConstainer, {
+            chart = new Highcharts.stockChart(chartConstainer, {
                 chart: {
                     height: 550,
                     zoomType: 'x',
                 },
                 legend: {
-                    enabled: true,
+                    enabled: false,
                     align: 'center',
                     backgroundColor: 'transparent',
                     borderColor: 'black',
@@ -180,9 +228,43 @@
                     liveRedraw: false
                 },
                 rangeSelector: {
-                    selected: 1,
-                    // allButtonsEnabled: true,
+                    selected: 6,
                     enabled: true,
+                    inputEnabled: true,
+                    allButtonsEnabled: true,
+                    buttons: [{
+                        type: 'day',
+                        count: 1,
+                        text: '1d'
+                    }, 
+                    {
+                        type: 'week',
+                        count: 1,
+                        text: '7d'
+                    }, 
+                    {
+                        type: 'month',
+                        count: 1,
+                        text: '1m'
+                    }, 
+                    // {
+                    //     type: 'month',
+                    //     count: 3,
+                    //     text: '3m'
+                    // }, {
+                    //     type: 'year',
+                    //     count: 1,
+                    //     text: '1y'
+                    // }, 
+                    // {
+                    //     type: 'ytd',
+                    //     count: 1,
+                    //     text: 'ytd'
+                    // }, 
+                    {
+                        type: 'all',
+                        text: 'all'
+                    }],
                 },
                 yAxis: {
                     labels: {
@@ -192,21 +274,20 @@
                     }
                 },
                 xAxis: {
+                    events: {
+                        afterSetExtremes: function(e) {
+                            setExtremes(e);
+                        }
+                    },
                     minRange: 24 * 3600 * 1000,
                 },
                 credits: {
                     text: Config.title,
                     href: Config.baseUrl
                 },
-                series: [{
-                    name: vm.characteristicsTabActive.name,
-                    data: prepareChartData(data, characteristic),
-                    showInLegend: false,
-                    tooltip: {
-                        valueSuffix: characteristic.valueSuffix,
-                        valuePrefix: characteristic.valuePrefix
-                    }
-                }],
+                series: [
+                    prepareChartSerieObject(data, characteristic)
+                ],
                 title: false
             });
         }

@@ -161,7 +161,9 @@
 
 
             characteristicValueHistory = $resource(Config.endpointUrl + 'values/:id/history', {
-                id: '@id'
+                id: '@id',
+                startDate: '@startDate',
+                endDate: '@endDate',
             }, {
                 query: {
                     method: 'GET',
@@ -326,10 +328,17 @@
             return decisionsCount.getCount().$promise;
         }
 
-        function getCharacteristicValueHistory(id) {
-            return characteristicValueHistory.query({
+        function getCharacteristicValueHistory(id, params) {
+            var sendParams = {
                 id: id
-            }).$promise;
+            };
+
+            if (params && params.startDate && params.startDate) {
+                if (params.startDate === params.startDate) {
+                    sendParams = _.assign(sendParams, params);
+                }
+            }
+            return characteristicValueHistory.query(sendParams).$promise;
         }
     }
 })();
