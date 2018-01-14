@@ -16,7 +16,7 @@
                 controller: 'HomeController',
                 controllerAs: 'vm',
                 data: {
-                    pageTitle: 'Home'
+                    pageTitle: 'Decision-Making Social Network'
                 },
                 params: {
                     sort: {
