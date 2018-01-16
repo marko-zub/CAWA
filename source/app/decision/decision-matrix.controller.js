@@ -39,9 +39,9 @@
                     title: 'Comparison Matrix',
                     link: null
                 }];
-            }
 
-            $rootScope.pageTitle = vm.decision.decisionGroups[index].name + ' ' + translateFilter('Comparison Matrix') + ', ' + vm.decision.name + ' | DecisionWanted.com';
+                $rootScope.pageTitle = vm.decision.decisionGroups[index].name + ' ' + translateFilter('Comparison Matrix') + ', ' + vm.decision.name + ' | DecisionWanted.com';
+            }
         }
     }
 })();

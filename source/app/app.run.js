@@ -47,7 +47,7 @@
                     // debugger
                     var accessToken = $location.hash().split('&')[0];
                     if (accessToken) {
-                        toParams.access_token = accessToken.replace('access_token=', '');
+                        toParams.access_token = accessToken.replace('access_token=', ''); // jshint ignore:line
                     }
                 } 
 

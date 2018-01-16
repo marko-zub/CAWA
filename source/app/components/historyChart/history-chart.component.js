@@ -45,7 +45,7 @@
             }
         }
 
-        function onInit() {}
+        // function onInit() {}
 
         function onDestroy() {
             if (chart) {
@@ -54,7 +54,6 @@
         }
 
         function postLink() {
-            createChart();
             chartConstainer = $($element).find('#decision-chart')[0];
         }
 
@@ -109,7 +108,7 @@
 
         function changeCharacteristicActive(index) {
             vm.characteristicsTabActive = vm.characteristicsTabs[index];
-            chart.resetZoomButton;
+            // chart.resetZoomButton();
 
             // Reinit new chart on change tab
             chart.destroy();
@@ -123,7 +122,9 @@
             var id = characteristic.valueId;
             DecisionDataService.getCharacteristicValueHistory(id, params).then(function(resp) {
                 // initChart(resp, characteristic);
-                callback.call(this, resp, characteristic);
+                if (typeof callback === 'function') {
+                    callback(resp, characteristic);
+                }
                 vm.loaderChart = false;
             });
         }
@@ -186,8 +187,8 @@
         }
 
         function updateChartData(data, characteristic) {
-            var data = prepareChartSerieObject(data, characteristic);
-            chart.series[0].update(data, true);
+            var chartData = prepareChartSerieObject(data, characteristic);
+            chart.series[0].update(chartData, true);
             // initChart(data, characteristic);
         }
 
@@ -195,7 +196,7 @@
 
             if (!chartConstainer) return false;
 
-            chart = new Highcharts.stockChart(chartConstainer, {
+            chart = new Highcharts.stockChart(chartConstainer, { // jshint ignore:line
                 chart: {
                     height: 550,
                     zoomType: 'x',

@@ -10,20 +10,20 @@
     function configuration($stateProvider) {
         $stateProvider
             .state('login', {
-                url: '/login:access_token',
+                url: '/login:access_token', // jshint ignore:line
                 controller: 'AuthController',
                 params: {
-                    access_token: {
+                    access_token: { // jshint ignore:line
                         value: null,
                         squash: false
                     },
                 }
             })
             .state('loginsocial', {
-                url: '/login?access_token',
+                url: '/login?access_token', // jshint ignore:line
                 controller: 'AuthController',
                 params: {
-                    access_token: {
+                    access_token: { // jshint ignore:line
                         value: null,
                         squash: false
                     },

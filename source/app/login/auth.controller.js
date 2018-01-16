@@ -12,8 +12,8 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            if ($stateParams.access_token) {
-                var token = $stateParams.access_token;
+            if ($stateParams.access_token) { // jshint ignore:line
+                var token = $stateParams.access_token; // jshint ignore:line
                 LoginService.saveToken(token);
                 $window.close();
             }

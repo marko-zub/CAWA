@@ -39,7 +39,7 @@
             setPageData();
         }
 
-        function setPageData(tab) {
+        function setPageData() {
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
                 link: 'decisions'
