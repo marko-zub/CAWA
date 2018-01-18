@@ -34,12 +34,6 @@
             });
         }
 
-        return {
-            prepareDecisionSingleToUI: prepareDecisionSingleToUI,
-            prepareDecisionToUI: prepareDecisionToUI,
-            mergeCriteriaDecision: mergeCriteriaDecision
-        };
-
         function prepareDecisionSingleToUI(decision, hideEmptyImage, cutDescription) {
 
             if (!decision.imageUrl) {
@@ -74,6 +68,23 @@
 
             return decision;
         }
+
+        function prepareDecisionLogoToUI(decision) {
+            var mediaLogo = _.find(decision.medias, function(media) {
+                return media.type === 'LOGO';
+            });
+
+            if (mediaLogo) decision.imageUrl = mediaLogo.url;     
+            return decision;       
+        }
+        
+        return {
+            prepareDecisionSingleToUI: prepareDecisionSingleToUI,
+            prepareDecisionToUI: prepareDecisionToUI,
+            mergeCriteriaDecision: mergeCriteriaDecision,
+            prepareDecisionLogoToUI: prepareDecisionLogoToUI
+        };
+
     }
 
 })();

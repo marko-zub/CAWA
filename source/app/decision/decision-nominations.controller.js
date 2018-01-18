@@ -6,13 +6,13 @@
         .module('app.decision')
         .controller('DecisionNominationsController', DecisionNominationsController);
 
-    DecisionNominationsController.$inject = ['$rootScope', 'decisionBasicInfo'];
+    DecisionNominationsController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionsUtils'];
 
-    function DecisionNominationsController($rootScope, decisionBasicInfo) {
+    function DecisionNominationsController($rootScope, decisionBasicInfo, DecisionsUtils) {
 
         var vm = this;
 
-        vm.decision = decisionBasicInfo || {};
+        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decisionBasicInfo) || {};
 
         vm.$onInit = onInit;
 

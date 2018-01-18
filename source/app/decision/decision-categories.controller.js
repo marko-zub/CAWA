@@ -6,14 +6,14 @@
         .module('app.decision')
         .controller('DecisionCategoriesController', DecisionCategoriesController);
 
-    DecisionCategoriesController.$inject = ['$rootScope', 'decisionBasicInfo', '$stateParams', 'Config'];
+    DecisionCategoriesController.$inject = ['$rootScope', 'decisionBasicInfo', '$stateParams', 'Config', 'DecisionsUtils'];
 
-    function DecisionCategoriesController($rootScope, decisionBasicInfo, $stateParams, Config) {
+    function DecisionCategoriesController($rootScope, decisionBasicInfo, $stateParams, Config, DecisionsUtils) {
 
         // TODO: clean up controller
         var vm = this;
 
-        vm.decision = decisionBasicInfo || {};
+        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decisionBasicInfo) || {};
         vm.$onInit = onInit;
 
         function onInit() {

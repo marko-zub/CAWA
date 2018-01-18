@@ -17,7 +17,8 @@
 
         var vm = this;
 
-        vm.decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
+        var decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
+        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
         vm.$onInit = onInit;
 
         // Change every time
@@ -25,12 +26,6 @@
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-            var mediaLogo = _.find(vm.decision.medias, function(media) {
-                return media.type === 'LOGO';
-            });
-
-            if (mediaLogo) vm.decision.imageUrl = mediaLogo.url;
-
 
             changeDecisionGroupsTabOnly($stateParams.category);
 

@@ -236,6 +236,7 @@
         var params = {
             fetchParentDecisions: true,
             fetchParentDecisionGroups: true,
+            fetchMedia: true,
             fetchDecisionGroups: true
         };
         if ($rootScope.decisonFull) {

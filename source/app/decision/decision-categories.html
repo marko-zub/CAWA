@@ -1,7 +1,18 @@
 <div class="app-container-sm">
     <div class="app-page-content">
         <div class="app-page">
-            <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+            <div class="app-title-table">
+                <div class="app-title-table-img" ng-if="::vm.decision.imageUrl">
+                    <div class="post-image post-image-title">
+                        <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                        <div ng-bind="vm.decision.imageBlock"> </div>
+                    </div>
+                </div>
+                <div class="app-title-table-title">
+                    <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+                </div>
+            </div>
+
             <div class="post-header">
                 <div class="nav-tabs-wrapper clearfix">
                     <!-- TODO: make as dynamic navigation -->

@@ -23,7 +23,7 @@
         function onInit() {
             // console.log('Decision Characteristics Controller');
 
-            vm.decision = decisionBasicInfo || {};
+            vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decisionBasicInfo) || {};
             vm.criteriaGroupsLoader = true;
             vm.characteristicGroupsLoader = true;
 
