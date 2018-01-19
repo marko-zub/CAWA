@@ -33,8 +33,8 @@
                                     $(element).fotorama({
                                         data: fotoramaKey,
                                         nav: 'thumbs',
-                                        thumbwidth: 120,
-                                        thumbheight: 100
+                                        thumbwidth: 80,
+                                        thumbheight: 60
                                     });
                                 }
                             }, 0, false);

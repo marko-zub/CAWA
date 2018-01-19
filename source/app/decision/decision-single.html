@@ -57,12 +57,8 @@
 
         <div class="col-sm-12">
             <div class="post post-single with-rating">
-                <div class="clearfix text-justify">
-                    <div class="page-description" ng-bind-html="::vm.decision.description" translate translate-cloak></div>
-                </div>
-
                 <!-- Gallery -->
-                <media list="vm.decision.medias"></media>
+                <media decision="::vm.decision" ></media>
                 <!-- End Gallery -->
             </div>
         </div>

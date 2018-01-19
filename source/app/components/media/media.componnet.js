@@ -7,7 +7,7 @@
         .controller('MediaController', MediaController)
         .component('media', {
             bindings: {
-                list: '<'
+                decision: '<'
             },
             templateUrl: 'app/components/media/media.html',
             controller: 'MediaController',
@@ -22,7 +22,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            vm.media = prepareMedia(vm.list);
+            vm.media = prepareMedia(vm.decision.medias);
             // console.log(vm.media);
             vm.activeMediaTab = 0;
         }
