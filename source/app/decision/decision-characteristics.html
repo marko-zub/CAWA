@@ -18,7 +18,7 @@
                 <div class="nav-tabs-wrapper clearfix">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li>
-                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
+                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null})" title="" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li class="active">
                             <a href="#" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
@@ -40,7 +40,7 @@
                     <div class="nav-tabs-wrapper mg-b-sm tabs-left clearfix">
                         <ul class="nav nav-tabs nav-tabs-sm">
                             <li ng-repeat="parentDecision in vm.decision.parentDecisionGroups track by $index" ng-class="{'active':parentDecision.ownerDecision.nameSlug === vm.parent.ownerDecision.nameSlug}">
-                                <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug, category: null})" ui-sref-opts="{notify: false}" ng-click="vm.changeOwnerDecisionyTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
+                                <a ui-sref="decisions.single.characteristics(::{characteristicSlug:parentDecision.ownerDecision.nameSlug, category: null})" title="" ui-sref-opts="{notify: false}" ng-click="vm.changeOwnerDecisionyTab(parentDecision.ownerDecision.nameSlug)">{{ parentDecision.ownerDecision.name }}</a>
                             </li>
                         </ul>
                     </div>

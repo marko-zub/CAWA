@@ -17,7 +17,7 @@
 			<!-- TODO: make as dynamic navigation -->
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li>
-                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
+                    <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" title="" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
                 </li>
                 <li>
                     <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
