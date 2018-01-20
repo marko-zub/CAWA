@@ -224,7 +224,6 @@
                 sendData.decisionNameFilterPattern = vm.filterName;
             }
 
-            console.log(pagination);
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
                 vm.decisions = angular.copy(filterDecisionList(result.decisionMatrixs));
                 vm.decisionsChildsLoader = false;

@@ -20,9 +20,9 @@
         });
 
 
-    CharacteristicsListController.$inject = [];
+    CharacteristicsListController.$inject = ['CharacteristicsService'];
 
-    function CharacteristicsListController() {
+    function CharacteristicsListController(CharacteristicsService) {
         var vm = this;
 
         vm.$onInit = onInit;
@@ -38,7 +38,7 @@
         function onChanges(changes) {
             if (changes.list &&
                 !angular.equals(changes.list.currentValue, changes.list.previousValue)) {
-                vm.list = changes.list.currentValue;
+                vm.list = CharacteristicsService.filterCharacteristicsList(changes.list.currentValue);
             }
         }
 
