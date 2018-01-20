@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionCategoriesController', DecisionCategoriesController);
 
-    DecisionCategoriesController.$inject = ['$rootScope', 'decisionBasicInfo', '$stateParams', 'Config', 'DecisionsUtils'];
+    DecisionCategoriesController.$inject = ['$rootScope', 'decisionBasicInfo', '$state', '$stateParams', 'Config', 'DecisionsUtils'];
 
-    function DecisionCategoriesController($rootScope, decisionBasicInfo, $stateParams, Config, DecisionsUtils) {
+    function DecisionCategoriesController($rootScope, decisionBasicInfo, $state, $stateParams, Config, DecisionsUtils) {
 
         // TODO: clean up controller
         var vm = this;
@@ -17,7 +17,7 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            setPageData();
+            // setPageData();
         }
 
         function setPageData(categorySlug, tab) {
@@ -58,8 +58,8 @@
             }
             $rootScope.breadcrumbs = breadcrumbs;
 
-            if ($stateParams.category || tab) {
-                $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' Categories | ' + Config.pagePrefix;
+            if ($stateParams.categorySlug || tab) {
+                $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
             } else {
                 $rootScope.pageTitle = vm.decision.name + ' Categories | ' + Config.pagePrefix;
             }
