@@ -80,6 +80,9 @@
             } else if (vm.decision.decisionGroups && vm.decision.decisionGroups.length) {
                 vm.decisionGroupActive = vm.decision.decisionGroups[0];
             }
+            vm.onChangeTab({
+                tab: vm.decisionGroupActive
+            });            
         }
 
         // TODO: Simplify logic

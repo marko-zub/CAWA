@@ -9,7 +9,7 @@
     CharacteristicsService.$inject = [];
 
     function CharacteristicsService() {
-        var service = this;
+        // var service = this;
 
         function filterCharacteristicsList(list) {
             return _.filter(list, function(group) {
@@ -22,6 +22,6 @@
 
         return {
             filterCharacteristicsList: filterCharacteristicsList
-        }
+        };
     }
 })();
