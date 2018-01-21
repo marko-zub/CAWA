@@ -7,6 +7,7 @@
         .controller('HistoryChartController', HistoryChartController)
         .component('historyChart', {
             bindings: {
+                title: '<',
                 decision: '<',
                 characteristics: '<',
                 selectedValueId: '<'

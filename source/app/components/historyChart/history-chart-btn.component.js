@@ -10,7 +10,6 @@
                 decision: '<',
                 characteristics: '<',
                 selectedCharacteristicId: '<',
-                title: '<'
             },
             controller: 'HistoryChartBtnController',
             controllerAs: 'vm',
@@ -32,6 +31,10 @@
             });
             vm.totalHistoryValues = find.totalHistoryValues;
             vm.selectedValueId = find.valueIds[0];
+
+            if (vm.decision && vm.decision.decision) {
+                vm.title = vm.decision.decision.name + ' Charts';
+            }
         }
 
         vm.getData = getData;
