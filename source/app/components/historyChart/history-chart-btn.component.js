@@ -43,7 +43,8 @@
         function openModal(event, decision, title) {
             var characteristics = _.map(vm.characteristics, function(group) {
                 group.characteristics = _.map(group.characteristics, function(characteristic) {
-                    characteristic.description = characteristic.description && characteristic.description.lenght ? $sce.trustAsHtml(characteristic.description) : '';
+                                        console.log(characteristic.description);
+                    characteristic.description = characteristic.description && !_.isObject(characteristic.description) ? $sce.trustAsHtml(characteristic.description) : '';
                     return characteristic;
                 });
                 return group;

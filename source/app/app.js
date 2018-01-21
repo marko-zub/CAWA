@@ -14,6 +14,8 @@
         'app.users',
         'app.tags',
         'app.contacts',
+        'app.disclaimer',
+        'app.privacy'
     ]);
 
     var initInjector = angular.injector(['ng']),
