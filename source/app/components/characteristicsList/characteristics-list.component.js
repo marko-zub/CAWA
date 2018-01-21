@@ -13,7 +13,8 @@
                 comments: '<',
                 rating: '<',
                 collapsed: '<',
-                discussion: '<'
+                discussion: '<',
+                decision: '<'
             },
             controller: 'CharacteristicsListController',
             controllerAs: 'vm',

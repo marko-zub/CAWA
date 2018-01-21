@@ -4,6 +4,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">×</button>
     </div>
     <div class="modal-body">
-        <history-chart characteristics="::vm.characteristics" decision="::vm.decision"></history-chart>
+        <history-chart 
+        	selected-value-id="vm.selectedValueId"
+        	characteristics="::vm.characteristics" 
+        	decision="::vm.decision"></history-chart>
     </div>
 </div>

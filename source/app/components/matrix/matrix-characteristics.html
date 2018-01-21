@@ -17,7 +17,8 @@
 
                                 <history-chart-btn 
                                 ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" 
-                                decision="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" 
+                                decision="::vm.decisions[$index]"
+                                selected-characteristic-id="::characteristic.id"
                                 characteristics="::vm.characteristics"></history-chart-btn>
 
                                 <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>

@@ -6,9 +6,9 @@
         .module('app.components')
         .controller('HistoryChartModalController', HistoryChartModalController);
 
-    HistoryChartModalController.$inject = ['$uibModalInstance', 'DecisionDataService', 'title', 'decision', 'characteristics'];
+    HistoryChartModalController.$inject = ['$uibModalInstance', 'DecisionDataService', 'title', 'decision', 'characteristics', 'selectedValueId'];
 
-    function HistoryChartModalController($uibModalInstance, DecisionDataService, title, decision, characteristics) {
+    function HistoryChartModalController($uibModalInstance, DecisionDataService, title, decision, characteristics, selectedValueId) {
         var vm = this;
 
         vm.apply = apply;
@@ -28,6 +28,7 @@
             vm.title = title;
             vm.decision = decision;
             vm.characteristics = characteristics;
+            vm.selectedValueId = selectedValueId;
         }
 
     }

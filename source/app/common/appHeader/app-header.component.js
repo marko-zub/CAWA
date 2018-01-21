@@ -14,7 +14,7 @@
 	HeaderController.$inject = [];
 
 	function HeaderController() {
-		var vm = this;
+		// var vm = this;
         // vm.$onInit = onInit;
         // function onInit() {}
 	}

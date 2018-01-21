@@ -9,6 +9,7 @@
             bindings: {
                 decision: '<',
                 characteristics: '<',
+                selectedValueId: '<'
             },
             controller: 'HistoryChartController',
             controllerAs: 'vm',
@@ -66,11 +67,11 @@
         }
 
         function initTabs() {
-            if (!vm.decision.valueIds) {
+            if (!vm.selectedValueId) {
                 vm.characteristicsTabActive = vm.characteristicsTabs[0];
             } else {
                 var findValueId = _.findIndex(vm.characteristicsTabs, function(item) {
-                    return item.valueId === vm.decision.valueIds[0];
+                    return item.valueId === vm.selectedValueId;
                 });
                 if (findValueId >= 0) {
                     vm.characteristicsTabActive = vm.characteristicsTabs[findValueId];

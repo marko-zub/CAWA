@@ -9,6 +9,7 @@
             bindings: {
                 decision: '<',
                 characteristics: '<',
+                selectedCharacteristicId: '<',
                 title: '<'
             },
             controller: 'HistoryChartBtnController',
@@ -17,28 +18,37 @@
         });
 
 
-    HistoryChartBtnController.$inject = ['$uibModal'];
+    HistoryChartBtnController.$inject = ['$uibModal', '$sce'];
 
-    function HistoryChartBtnController($uibModal) {
+    function HistoryChartBtnController($uibModal, $sce) {
         var vm = this;
 
         vm.$onInit = onInit;
 
 
         function onInit() {
-            // console.log(vm.decision.valueIds[0]);
+            var find = _.find(vm.decision.characteristics, function (characteristic) {
+                return vm.selectedCharacteristicId === characteristic.id;
+            });
+            vm.totalHistoryValues = find.totalHistoryValues;
+            vm.selectedValueId = find.valueIds[0];
         }
 
         vm.getData = getData;
 
         function getData($event) {
-            if (vm.decision.valueIds[0]) {
-                openModal($event, vm.decision, vm.title);
-            }
+            openModal($event, vm.decision, vm.title);
         }
 
         function openModal(event, decision, title) {
-            var characteristics = vm.characteristics;
+            var characteristics = _.map(vm.characteristics, function(group) {
+                group.characteristics = _.map(group.characteristics, function(characteristic) {
+                    characteristic.description = characteristic.description && characteristic.description.lenght ? $sce.trustAsHtml(characteristic.description) : '';
+                    return characteristic;
+                });
+                return group;
+            });
+
             event.preventDefault();
             event.stopPropagation();
             // var modalInstance = 
@@ -58,7 +68,10 @@
                     },
                     title: function() {
                         return title;
-                    }                    
+                    },
+                    selectedValueId: function () {
+                        return vm.selectedValueId;
+                    }
                 }
             });
         }
