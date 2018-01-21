@@ -17,7 +17,7 @@
                 reloadOnSearch: false,
                 views: {
                     '@': {
-                        templateUrl: 'app/decision/decision-single.html',
+                        templateUrl: 'app/pages/decision/decision-single.html',
                         controller: 'DecisionSingleController',
                         controllerAs: 'vm',
                     }
@@ -51,108 +51,108 @@
                 }
             })
 
-        .state('decisions.single.categories', {
-            url: '/categories/{categorySlug}?decisionId',
-            cache: false,
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-categories.html',
-                    controller: 'DecisionCategoriesController',
-                    controllerAs: 'vm',
-                }
-            },
-            params: {
-                categorySlug: {
-                    value: null,
-                    squash: true
-                },                
-                page: {
-                    value: null,
-                    squash: true
+            .state('decisions.single.categories', {
+                url: '/categories/{categorySlug}?decisionId',
+                cache: false,
+                views: {
+                    '@': {
+                        templateUrl: 'app/pages/decision/decision-categories.html',
+                        controller: 'DecisionCategoriesController',
+                        controllerAs: 'vm',
+                    }
                 },
-                size: {
-                    value: null,
-                    squash: true
+                params: {
+                    categorySlug: {
+                        value: null,
+                        squash: true
+                    },
+                    page: {
+                        value: null,
+                        squash: true
+                    },
+                    size: {
+                        value: null,
+                        squash: true
+                    },
+                    sort: {
+                        value: null,
+                        squash: true
+                    },
+                    decisionId: {
+                        value: null,
+                        squash: true
+                    }
+                }
+            })
+
+            // TODO: matrix and single.parent state have some bugs
+            .state('decisions.single.categories.comparison', {
+                url: '/comparison/{analysisId}',
+                views: {
+                    '@': {
+                        templateUrl: 'app/pages/decision/decision-matrix.html',
+                        controller: 'DecisionMatrixController',
+                        controllerAs: 'vm',
+                    }
                 },
-                sort: {
-                    value: null,
-                    squash: true
+                params: {
+                    analysisId: {
+                        value: null,
+                        squash: true
+                    }
                 },
-                decisionId: {
-                    value: null,
-                    squash: true 
+                data: {
+                    bodyClass: 'matrix-page',
+                    socialScriptType: 'floating'
                 }
-            }
-        })
+            })
 
-        // TODO: matrix and single.parent state have some bugs
-        .state('decisions.single.categories.comparison', {
-            url: '/comparison/{analysisId}',
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-matrix.html',
-                    controller: 'DecisionMatrixController',
-                    controllerAs: 'vm',
+            .state('decisions.single.nominations', {
+                url: '/nominations',
+                cache: false,
+                views: {
+                    '@': {
+                        templateUrl: 'app/pages/decision/decision-nominations.html',
+                        controller: 'DecisionNominationsController',
+                        controllerAs: 'vm',
+                    }
                 }
-            },
-            params: {
-                analysisId: {
-                    value: null,
-                    squash: true
-                }
-            },
-            data: {
-                bodyClass: 'matrix-page',
-                socialScriptType: 'floating'
-            }
-        })
+            })
 
-        .state('decisions.single.nominations', {
-            url: '/nominations',
-            cache: false,
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-nominations.html',
-                    controller: 'DecisionNominationsController',
-                    controllerAs: 'vm',
+            .state('decisions.single.reviews', {
+                url: '/reviews',
+                cache: false,
+                views: {
+                    '@': {
+                        templateUrl: 'app/pages/decision/decision-reviews.html',
+                        controller: 'DecisionReviewsController',
+                        controllerAs: 'vm',
+                    }
                 }
-            }
-        })
+            })
 
-        .state('decisions.single.reviews', {
-            url: '/reviews',
-            cache: false,
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-reviews.html',
-                    controller: 'DecisionReviewsController',
-                    controllerAs: 'vm',
-                }
-            }
-        })
-
-        .state('decisions.single.characteristics', {
-            url: '/characteristics/{characteristicSlug}',
-            abstract: false,
-            cache: true,
-            views: {
-                '@': {
-                    templateUrl: 'app/decision/decision-characteristics.html',
-                    controller: 'DecisionCharacteristicsController',
-                    controllerAs: 'vm',
-                }
-            },
-            params: {
-                characteristicSlug: {
-                    value: null,
-                    squash: true
+            .state('decisions.single.characteristics', {
+                url: '/characteristics/{characteristicSlug}',
+                abstract: false,
+                cache: true,
+                views: {
+                    '@': {
+                        templateUrl: 'app/pages/decision/decision-characteristics.html',
+                        controller: 'DecisionCharacteristicsController',
+                        controllerAs: 'vm',
+                    }
                 },
-                category: {
-                    value: null,
-                    squash: true
+                params: {
+                    characteristicSlug: {
+                        value: null,
+                        squash: true
+                    },
+                    category: {
+                        value: null,
+                        squash: true
+                    }
                 }
-            }
-        });
+            });
 
     }
 
@@ -250,7 +250,7 @@
 
         return DecisionDataService.getDecisionInfoFull(id, params).then(function(result) {
             if (_.isEmpty(result) || result.error && result.error.code === 404) {
-                console.log(result.error);
+                if (result.error) console.log(result.error);
                 var errorMsg = result.error.code + ': ' + result.error.message;
                 msg.error(errorMsg);
 

@@ -12,7 +12,7 @@
         $stateProvider
             .state('home', {
                 url: '/?sort',
-                templateUrl: 'app/home/home.html',
+                templateUrl: 'app/pages/home/home.html',
                 controller: 'HomeController',
                 controllerAs: 'vm',
                 data: {

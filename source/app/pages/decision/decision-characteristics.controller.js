@@ -37,7 +37,7 @@
             if ($stateParams.characteristicSlug) {
                 // console.log($stateParams.characteristicSlug);
                 changeCharacteristicSlug($stateParams.characteristicSlug);
-            } else if(vm.decision.parentDecisionGroups) {
+            } else if (vm.decision.parentDecisionGroups) {
                 changeCharacteristicSlug();
             }
 
@@ -59,11 +59,11 @@
             var parent;
             vm.decisionIndexInParentGroupLoader = true;
 
-               var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
-                    return parentDecisionGroup.ownerDecision.nameSlug === slug;
-                });
+            var categoryIndex = _.findIndex(vm.decision.parentDecisionGroups, function(parentDecisionGroup) {
+                return parentDecisionGroup.ownerDecision.nameSlug === slug;
+            });
 
-            if (slug && categoryIndex>=0) {
+            if (slug && categoryIndex >= 0) {
                 parent = vm.decision.parentDecisionGroups[categoryIndex];
             } else if (vm.decision.parentDecisionGroups) {
                 parent = vm.decision.parentDecisionGroups[0];
@@ -178,7 +178,8 @@
                     vm.criteriaGroups = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
 
-                    vm.characteristicGroups = mergeCharacteristicsDecisions(resp, characteristicGroups);
+                    vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(resp.decisionMatrixs[0], characteristicGroups);
+
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
@@ -203,26 +204,6 @@
             });
         }
 
-        function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
-            var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            return _.filter(characteristicsArray, function(resultEl) {
-                _.map(resultEl.characteristics, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-
-                    var elEqual = _.find(currentDecisionCharacteristics, {
-                        id: el.id
-                    });
-
-                    if (elEqual) {
-                        el.decision = elEqual;
-                        return el;
-                    }
-                });
-                if (resultEl.characteristics.length > 0) return resultEl;
-            });
-        }
-
-
         // Recommended decisions
         vm.getRecommendedDecisions = getRecommendedDecisions;
 
@@ -237,11 +218,6 @@
             sendData.excludeChildDecisionIds = [decisionId];
 
             vm.activeRecommendedTab = parent;
-            // if (parent.ownerDecision) {
-            //     vm.activeRecommendedTab = parent.ownerDecision;
-            // } else {
-            //     vm.activeRecommendedTab = parent;
-            // }
 
             if (criteriaGroups) {
                 var criteriaGroupsIds = pickCriteriaIds(criteriaGroups);

@@ -14,7 +14,7 @@
                 url: '/users',
                 views: {
                     '@': {
-                        templateUrl: 'app/users/users.html',
+                        templateUrl: 'app/pages/users/users.html',
                         controller: 'UsersController',
                         controllerAs: 'vm'
                     }

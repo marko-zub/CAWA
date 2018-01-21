@@ -12,7 +12,7 @@
         $stateProvider
             .state('contacts', {
                 url: '/contact-us',
-                templateUrl: 'app/contacts/contacts.html',
+                templateUrl: 'app/pages/contacts/contacts.html',
                 controller: 'ContactsController',
                 controllerAs: 'vm',
                 data: {

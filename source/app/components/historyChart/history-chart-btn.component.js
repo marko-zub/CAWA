@@ -9,8 +9,7 @@
             bindings: {
                 decision: '<',
                 characteristics: '<',
-                title: '<',
-                active: '<',
+                title: '<'
             },
             controller: 'HistoryChartBtnController',
             controllerAs: 'vm',
@@ -39,7 +38,6 @@
         }
 
         function openModal(event, decision, title) {
-            if (vm.active === false ) return;
             var characteristics = vm.characteristics;
             event.preventDefault();
             event.stopPropagation();

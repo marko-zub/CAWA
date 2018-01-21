@@ -67,7 +67,7 @@
         <div class="col-sm-12" ng-if="vm.parentDecisionGroups.length">
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
-                    <li ng-repeat="parent in vm.parentDecisionGroups track by $index" ng-class="{'active':vm.activeParentTab.id === parent.id}">
+                    <li ng-repeat="parent in vm.parentDecisionGroups track by parent.id" ng-class="{'active':vm.activeParentTab.id === parent.id}">
                         <a ng-click="vm.getParentDecisions(parent)">
                         {{ ::parent.ownerDecision.name }}</a>
                     </li>
@@ -90,7 +90,9 @@
 
         <div class="col-sm-9">
 
-            <history-chart characteristics="vm.characteristicGroupsChart" decision="vm.decision"></history-chart>
+            <history-chart 
+                characteristics="vm.characteristicGroupsChart" 
+                decision="vm.decisionMatrixs[0]"></history-chart>
 
             <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
 
@@ -133,7 +135,14 @@
                 </div>
                 <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
                     <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
-                    <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="false" collapsed="false"></characteristics-list>
+                    <characteristics-list 
+                    ng-if="vm.characteristicGroups" 
+                    list="vm.characteristicGroups" 
+                    decision="vm.decisionMatrixs[0]"
+                    links="false" 
+                    rating="true" 
+                    discussion="false" 
+                    collapsed="false"></characteristics-list>
                 </div>
             </div>
             <!-- End Parent criteria & characteristics -->

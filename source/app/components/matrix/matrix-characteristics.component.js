@@ -9,6 +9,7 @@
             templateUrl: 'app/components/matrix/matrix-characteristics.html',
             bindings: {
                 characteristics: '<',
+                characteristicsFormated: '<',
                 decisions: '<'
             },
             controller: 'MatrixCharacteristicsController',

@@ -10,23 +10,23 @@
 
     function configuration($stateProvider) {
         $stateProvider
-            .state('search', {
-                url: '/search?page&size&query',
+            .state('decisions', {
+                url: '/decisions?page&size&sort',
                 views: {
                     '@': {
-                        templateUrl: 'app/search/search.html',
-                        controller: 'SearchController',
+                        templateUrl: 'app/pages/decisions/decisions.html',
+                        controller: 'DecisionsController',
                         controllerAs: 'vm'
                     }
                 },
                 data: {
                     breadcrumbs: [{
-                        title: 'Search',
+                        title: 'Decisions',
                         link: null
                     }]
                 },
                 params: {
-                    query: {
+                    sort: {
                         value: null,
                         squash: true
                     },

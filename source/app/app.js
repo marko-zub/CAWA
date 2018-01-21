@@ -1,6 +1,8 @@
 (function() {
     'use strict';
 
+    // TODO: 
+    // add pages module
     angular.module('app', [
         'app.core',
         'app.home',

@@ -149,7 +149,7 @@
                         });
                     });
                 }
-            } else {
+            } else if(vm.decisionGroupActive) {
                 getDecisionMatrix(vm.decisionGroupActive.id);
             }
         }

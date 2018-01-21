@@ -14,7 +14,7 @@
 //                 url: '/tags',
 //                 views: {
 //                     '@': {
-//                         templateUrl: 'app/tags/tags.html',
+//                         templateUrl: 'app/pages/tags/tags.html',
 //                         controller: 'TagsController',
 //                         controllerAs: 'vm'
 //                     }

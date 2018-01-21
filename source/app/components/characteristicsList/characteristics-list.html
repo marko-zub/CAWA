@@ -8,7 +8,7 @@
         <div class="app-list-group" ng-repeat="group in vm.list track by $id(group)" ng-class="{'closed':group.isCollapsed}">
             <h5 class="app-list-group-title app-panel-title" ng-click="vm.toggleCollapse($index)">
                 {{::group.name}}
-                <div class="controls" ng-if="vm.collapsed">
+                <div ng-if="vm.collapsed" class="controls">
                     <i class="fa fa-angle-up" aria-hidden="true"></i>
                 </div>
             </h5>

@@ -8,12 +8,12 @@
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config', '$sce'
+        'Config'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config, $sce) {
+        Config) {
 
         var vm = this;
 
@@ -49,7 +49,7 @@
             // } else {
             //     $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;    
             // }
-            
+
         }
 
         function changeDecisionGroupsTabOnly(mode) {
@@ -178,25 +178,6 @@
             });
         }
 
-        function mergeCharacteristicsDecisions(decisions, characteristicsArray) {
-            var currentDecisionCharacteristics = decisions.decisionMatrixs[0].characteristics;
-            return _.filter(characteristicsArray, function(resultEl) {
-                _.map(resultEl.characteristics, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
-
-                    var elEqual = _.find(currentDecisionCharacteristics, {
-                        id: el.id
-                    });
-
-                    if (elEqual) {
-                        el.decision = elEqual;
-                        return el;
-                    }
-                });
-                if (resultEl.characteristics.length > 0) return resultEl;
-            });
-        }
-
         function getParentDecisionGroupsCriteriaCharacteristicts(parent) {
             var parentId = parent.id;
 
@@ -227,17 +208,20 @@
                     sortDecisionPropertyDirection: 'DESC'
                 };
                 DecisionDataService.getDecisionMatrix(parentId, sendData).then(function(resp) {
-                    var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(resp.decisionMatrixs[0].criteria, values[0]);
+                    var decisionMatrixs = resp.decisionMatrixs;
+                    vm.decisionMatrixs = decisionMatrixs;
+
+                    var criteriaGroups = DecisionsUtils.mergeCriteriaDecision(decisionMatrixs[0].criteria, values[0]);
                     criteriaGroups.totalVotes = calcTotalVotes(criteriaGroups);
                     vm.criteriaGroupsCompilance = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
-
-                    vm.characteristicGroups = mergeCharacteristicsDecisions(resp, characteristicGroups);
-
+                    
                     // Use different data for chart and aside panel
-                    vm.characteristicGroupsChart = angular.copy(vm.characteristicGroups);
+                    // Pass pure chracterisctics response
+                    vm.characteristicGroupsChart = angular.copy(characteristicGroups);
 
-                    var decisionMatrixs = resp.decisionMatrixs;
+                    vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(decisionMatrixs[0], characteristicGroups);
+
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
                 });

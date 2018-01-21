@@ -74,15 +74,37 @@
                 return media.type === 'LOGO';
             });
 
-            if (mediaLogo) decision.imageUrl = mediaLogo.url;     
-            return decision;       
+            if (mediaLogo) decision.imageUrl = mediaLogo.url;
+            return decision;
         }
-        
+
+
+        function mergeCharacteristicsDecisions(decision, characteristicsArray) {
+            if (!decision) return characteristicsArray;
+            var currentDecisionCharacteristics = decision.characteristics;
+            return _.filter(characteristicsArray, function(resultEl) {
+                _.map(resultEl.characteristics, function(el) {
+                    el.description = $sce.trustAsHtml(el.description);
+
+                    var elEqual = _.find(currentDecisionCharacteristics, {
+                        id: el.id
+                    });
+
+                    if (elEqual) {
+                        el.decision = elEqual;
+                        return el;
+                    }
+                });
+                if (resultEl.characteristics.length > 0) return resultEl;
+            });
+        }
+
         return {
             prepareDecisionSingleToUI: prepareDecisionSingleToUI,
             prepareDecisionToUI: prepareDecisionToUI,
             mergeCriteriaDecision: mergeCriteriaDecision,
-            prepareDecisionLogoToUI: prepareDecisionLogoToUI
+            prepareDecisionLogoToUI: prepareDecisionLogoToUI,
+            mergeCharacteristicsDecisions: mergeCharacteristicsDecisions
         };
 
     }

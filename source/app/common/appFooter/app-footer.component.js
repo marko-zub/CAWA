@@ -5,7 +5,7 @@
     angular
         .module('app.components')
         .component('appFooter', {
-            templateUrl: 'app/components/appFooter/app-footer.html'
+            templateUrl: 'app/common/appFooter/app-footer.html'
         });
 
 })();

@@ -12,13 +12,13 @@
             </div>
             <div class="col-sm-2">
 
-                <div class="switcher pull-right" ng-if="!vm.item.multiValue">
+                <div ng-if="!vm.item.multiValue" class="switcher pull-right">
                     <div class="switcher-label">
                         <div class="switcher-text-label">{{ 'OR' | translate }}</div>
                     </div>
                 </div>
 
-                <div class="switcher pull-right" ng-if="vm.item.multiValue">
+                <div ng-if="vm.item.multiValue" class="switcher pull-right">
                     <input type="checkbox" name="toggle-{{vm.item.id}}" class="switcher-checkbox" id="toggle-{{vm.item.id}}" ng-checked="vm.selectedOperatorTrigger" ng-model="vm.selectedOperatorTrigger">
                     <label class="switcher-label" for="toggle-{{vm.item.id}}">
                         <span class="switcher-inner">

@@ -9,10 +9,10 @@
     ContactsController.$inject = [];
 
     function ContactsController() {
-        var vm = this;
+        // var vm = this;
 
-        vm.$onInit = onInit;
+        // vm.$onInit = onInit;
 
-        function onInit() {}
+        // function onInit() {}
     }
 })();

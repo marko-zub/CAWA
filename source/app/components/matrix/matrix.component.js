@@ -17,13 +17,13 @@
     MatrixController.$inject = ['DecisionDataService', 'DecisionSharedService', '$state', '$stateParams',
         'DecisionNotificationService', '$scope', 'DecisionCriteriaCoefficientsConstant', 'PaginatioService',
         '$uibModal', '$sce', 'Utils', 'DecisionsUtils', 'DiscussionsNotificationService', 'DecisionsConstant',
-        'DecisionCompareNotificationService'
+        'DecisionCompareNotificationService', 'CharacteristicsService'
     ];
 
     function MatrixController(DecisionDataService, DecisionSharedService, $state, $stateParams,
         DecisionNotificationService, $scope, DecisionCriteriaCoefficientsConstant, PaginatioService,
         $uibModal, $sce, Utils, DecisionsUtils, DiscussionsNotificationService, DecisionsConstant,
-        DecisionCompareNotificationService) {
+        DecisionCompareNotificationService, CharacteristicsService) {
         var vm = this,
             criteriaIds = [],
             _fo = DecisionSharedService.filterObject,
@@ -112,7 +112,9 @@
         function loadCharacteristics(id) {
             getCharacteristicsGroupsById(id).then(function(resp) {
                 // 3. Render characteristics
-                prepareCharacteristicsGroups(resp);
+                var visibleCharacteristics = CharacteristicsService.filterCharacteristicsList(resp);
+
+                prepareCharacteristicsGroups(visibleCharacteristics);
                 renderMatrix(true);
                 vm.characteristicGroupsContentLoader = false;
                 // Init characteristicFilterQueries
@@ -430,6 +432,8 @@
 
         function prepareCharacteristicsGroups(result) {
             var characteristicsArray = [];
+
+            vm.characteristics = result;
 
             var total = 0;
             _.forEach(result, function(resultEl) {

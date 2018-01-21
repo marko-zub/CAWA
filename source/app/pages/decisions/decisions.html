@@ -6,7 +6,7 @@
                     <div class="nav-tabs-wrapper mg-b-lg clearfix tabs-right">
                         <h4 class="tabs-title" translate-cloak> {{ 'All Decisions' | translate }} <span class="title-counter" ng-show="vm.totalCount >= 0">({{ vm.totalCount }})</span> </h4>
                         <ul class="nav nav-tabs nav-tabs-sm">
-                            <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by $index" ng-class="{'active':vm.activeTab == $index + 1}">
+                            <li ui-sref-active="active" ng-repeat="item in ::vm.navigation track by item.key" ng-class="{'active':vm.activeTab == $index + 1}">
                                 <a ui-sref="decisions({sort:item.key})" translate-cloak>{{ item.label | translate }}</a>
                             </li>
                         </ul>

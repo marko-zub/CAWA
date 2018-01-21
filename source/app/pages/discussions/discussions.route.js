@@ -14,7 +14,7 @@
                 url: '/discussions',
                 views: {
                     '@': {
-                        templateUrl: 'app/discussions/discussions.html',
+                        templateUrl: 'app/pages/discussions/discussions.html',
                         controller: 'DiscussionsController',
                         controllerAs: 'vm'
                     }
@@ -30,7 +30,7 @@
             //     url: '/characteristics/:characteristicId/:characteristicSlug',
             //     views: {
             //         '@': {
-            //             templateUrl: 'app/discussions/decision-characteristics.html',
+            //             templateUrl: 'app/pages/discussions/decision-characteristics.html',
             //             controller: 'DeicisionCharacteristicsController',
             //             controllerAs: 'vm',
             //         }
@@ -43,7 +43,7 @@
                 url: '/reviews/:reviewId/:reviewSlug',
                 views: {
                     '@': {
-                        templateUrl: 'app/discussions/decision-reviews.html',
+                        templateUrl: 'app/pages/discussions/decision-reviews.html',
                         controller: 'DeicisionReviewsController',
                         controllerAs: 'vm',
                     }

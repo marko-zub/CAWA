@@ -1,4 +1,4 @@
-<div class="matrix-g m-g-characteristics" ng-repeat="characteristic in ::vm.characteristics track by characteristic.uuid" ng-if="::characteristic.display !== false">
+<div class="matrix-g m-g-characteristics" ng-repeat="characteristic in ::vm.characteristicsFormated track by characteristic.uuid">
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap" translate-cloak>
@@ -15,7 +15,10 @@
                             <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
 
-<history-chart-btn ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" decision="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" characteristics="::vm.characteristics" active="false"></history-chart-btn>
+                                <history-chart-btn 
+                                ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" 
+                                decision="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" 
+                                characteristics="::vm.characteristics"></history-chart-btn>
 
                                 <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
                             </span>

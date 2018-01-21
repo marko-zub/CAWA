@@ -44,6 +44,7 @@
         }
 
         vm.toggleCollapse = toggleCollapse;
+
         function toggleCollapse(index) {
             if (vm.collapsed === false) return;
             vm.list[index].isCollapsed = !vm.list[index].isCollapsed;
@@ -51,13 +52,15 @@
 
         function handleChanges(list) {
             var copyList = angular.copy(list);
-            return _.map(copyList, function (group) {
-                group.criteria = _.map(group.criteria, function (criteria) {
-                    criteria.weight = _.floor(criteria.weight, 2).toFixed(2);
-                    return criteria;
-                });
+            return _.map(copyList, function(group) {
+                group.criteria = _.chain(group.criteria)
+                    .map(function(criteria) {
+                        criteria.weight = _.floor(criteria.weight, 2).toFixed(2);
+                        return criteria;
+                    }).orderBy('criterionId').value();
                 return group;
             });
         }
+
     }
 })();

@@ -6,7 +6,7 @@
 		.module('app.components')
 		.controller('HeaderController', HeaderController)
 		.component('appHeader', {
-			templateUrl: 'app/components/appHeader/app-header.html',
+			templateUrl: 'app/common/appHeader/app-header.html',
 			controller: 'HeaderController',
 			controllerAs: 'vm'
 		});
@@ -15,8 +15,8 @@
 
 	function HeaderController() {
 		var vm = this;
-        vm.$onInit = onInit;
-        function onInit() {}
+        // vm.$onInit = onInit;
+        // function onInit() {}
 	}
 
 })();

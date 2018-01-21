@@ -1,11 +1,11 @@
 <div class="app-list-panel">
-    <div class="app-header-block" ng-if="vm.criteriaTitle">
+    <div ng-if="vm.criteriaTitle" class="app-header-block">
         <div class="pull-left">
             <h4 class="app-list-title">{{vm.criteriaTitle || 'Criteria'}}</h4>
         </div>
     </div>
     <div ng-if="vm.list.length">
-        <div class="app-list-group" ng-repeat="group in vm.list track by $index" ng-class="{'closed':group.isCollapsed}">
+        <div class="app-list-group" ng-repeat="group in vm.list track by group.id" ng-class="{'closed':group.isCollapsed}">
             <h5 class="app-list-group-title app-panel-title" ng-click="vm.toggleCollapse($index)">
                 {{::group.name}}
                 <div class="controls" ng-if="vm.collapsed">
@@ -14,7 +14,7 @@
             </h5>
             <div uib-collapse="group.isCollapsed">
                 <ul class="discussions-list">
-                    <li ng-repeat="criteria in group.criteria | orderBy:'criterionId'">
+                    <li ng-repeat="criteria in group.criteria track by $id(criteria)">
                         <div class="clearfix row-eq-height">
                             <div class="col-sm-6 bg-gray-light-2 col-pr-sm">
                                 <div class="discussions-list-content">
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-pl-sm text-right" ng-if="::vm.discussion">
+                            <div ng-if="::vm.discussion" class="col-sm-6 col-pl-sm text-right">
                                 <div class="discussions-list-content">
                                     <div class="app-rating-inline">
                                         <div ng-switch="::(vm.rating && criteria.weight >= 0 && criteria.totalVotes > 0 )">
