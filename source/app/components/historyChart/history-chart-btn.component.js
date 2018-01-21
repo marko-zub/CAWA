@@ -18,16 +18,16 @@
         });
 
 
-    HistoryChartBtnController.$inject = ['$uibModal', '$sce'];
+    HistoryChartBtnController.$inject = ['$uibModal'];
 
-    function HistoryChartBtnController($uibModal, $sce) {
+    function HistoryChartBtnController($uibModal) {
         var vm = this;
 
         vm.$onInit = onInit;
 
 
         function onInit() {
-            var find = _.find(vm.decision.characteristics, function (characteristic) {
+            var find = _.find(vm.decision.characteristics, function(characteristic) {
                 return vm.selectedCharacteristicId === characteristic.id;
             });
             vm.totalHistoryValues = find.totalHistoryValues;
@@ -41,14 +41,9 @@
         }
 
         function openModal(event, decision, title) {
-            var characteristics = _.map(vm.characteristics, function(group) {
-                group.characteristics = _.map(group.characteristics, function(characteristic) {
-                                        console.log(characteristic.description);
-                    characteristic.description = characteristic.description && !_.isObject(characteristic.description) ? $sce.trustAsHtml(characteristic.description) : '';
-                    return characteristic;
-                });
-                return group;
-            });
+
+            var characteristics = vm.characteristics;
+            // console.log(vm.characteristics);
 
             event.preventDefault();
             event.stopPropagation();
@@ -70,7 +65,7 @@
                     title: function() {
                         return title;
                     },
-                    selectedValueId: function () {
+                    selectedValueId: function() {
                         return vm.selectedValueId;
                     }
                 }

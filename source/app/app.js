@@ -15,7 +15,8 @@
         'app.tags',
         'app.contacts',
         'app.disclaimer',
-        'app.privacy'
+        'app.privacy',
+        'app.dmca',
     ]);
 
     var initInjector = angular.injector(['ng']),

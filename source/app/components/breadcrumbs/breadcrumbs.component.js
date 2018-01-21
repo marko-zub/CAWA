@@ -15,32 +15,29 @@
         });
 
 
-    BreadcrumbsController.$inject = ['$translate'];
+    BreadcrumbsController.$inject = ['translateFilter'];
 
-    function BreadcrumbsController($translate) {
+    function BreadcrumbsController(translateFilter) {
         var vm = this;
         // vm.$onInit = onInit;
 
         // function onInit() {}
-        // vm.$onChanges = onChanges;
+        vm.$onChanges = onChanges;
 
-        // function onChanges(changes) {
-        //     // console.log(changes);
-        //     if (changes.items &&
-        //         !angular.equals(changes.items.currentValue, changes.items.previousValue)) {
-        //         vm.items = handle(changes.items.currentValue);
-        //     }
-        // }
+        function onChanges(changes) {
+            // console.log(changes);
+            if (changes.items &&
+                !angular.equals(changes.items.currentValue, changes.items.previousValue)) {
+                vm.items = handle(changes.items.currentValue);
+            }
+        }
 
-        // function handle(list) {
-        //     return _.map(list, function(item) {
-        //         return $translate(item.title).then(function(headline) {
-        //             return item.title = headline;
-        //         }, function(translationId) {
-        //             return item.title = translationId;
-        //         });
-        //     });
-        // }
+        function handle(list) {
+            return _.map(list, function(item) {
+                item.title = translateFilter(item.title);
+                return item;
+            });
+        }
     }
 
 })();

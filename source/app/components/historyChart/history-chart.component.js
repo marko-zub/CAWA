@@ -32,16 +32,12 @@
         var chart;
 
         function onChanges(changes) {
-            if (changes.characteristics &&
+            if (vm.decision &&
+                changes.characteristics &&
                 changes.characteristics.currentValue &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
-                var characteristics = angular.copy(changes.characteristics.currentValue);
-
-                // Expect that vm.decision exist
-                if (vm.decision) {
-                    vm.characteristics = DecisionsUtils.mergeCharacteristicsDecisions(vm.decision, characteristics);
-                    createChart();
-                }
+                vm.characteristics = DecisionsUtils.mergeCharacteristicsDecisions(vm.decision, angular.copy(changes.characteristics.currentValue));
+                createChart();
             }
         }
 
@@ -79,6 +75,7 @@
                     vm.characteristicsTabActive = vm.characteristicsTabs[0];
                 }
             }
+
             getCharacteristicValueHistory(vm.characteristicsTabActive, null, initChart);
         }
 
@@ -108,6 +105,7 @@
 
         function changeCharacteristicActive(index) {
             vm.characteristicsTabActive = vm.characteristicsTabs[index];
+
             // chart.resetZoomButton();
 
             // Reinit new chart on change tab

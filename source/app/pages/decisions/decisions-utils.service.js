@@ -84,7 +84,7 @@
             var currentDecisionCharacteristics = decision.characteristics;
             return _.filter(characteristicsArray, function(resultEl) {
                 _.map(resultEl.characteristics, function(el) {
-                    el.description = $sce.trustAsHtml(el.description);
+                    // el.description = $sce.trustAsHtml(el.description);
 
                     var elEqual = _.find(currentDecisionCharacteristics, {
                         id: el.id

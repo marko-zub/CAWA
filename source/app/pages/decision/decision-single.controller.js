@@ -8,12 +8,12 @@
 
     DecisionSingleController.$inject = ['$rootScope', 'decisionBasicInfo', 'DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils', '$q', 'ContentFormaterService',
-        'Config'
+        'Config', '$sce'
     ];
 
     function DecisionSingleController($rootScope, decisionBasicInfo, DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils, $q, ContentFormaterService,
-        Config) {
+        Config, $sce) {
 
         var vm = this;
 
@@ -196,11 +196,12 @@
                 vm.criteriaGroups = preparedCriteriaGroups[0];
 
                 var characteristicGroups = _.filter(values[1], function(resultEl) {
-                    resultEl.characteristics = _.sortBy(resultEl.characteristics, 'createDate');
-                    _.map(resultEl.characteristics, function(el) {
-                        return el;
-                    });
-                    if (resultEl.characteristics.length > 0) return resultEl;
+                    if (resultEl.characteristics.length > 0) {
+                        resultEl.characteristics = _.chain(resultEl.characteristics)
+                            .sortBy('createDate')
+                            .value();
+                        return resultEl;
+                    }
                 });
 
                 var sendData = {
@@ -215,10 +216,17 @@
                     criteriaGroups.totalVotes = calcTotalVotes(criteriaGroups);
                     vm.criteriaGroupsCompilance = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
-                    
+
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
-                    vm.characteristicGroupsChart = angular.copy(characteristicGroups);
+                    vm.characteristicGroupsChart = _.map(angular.copy(characteristicGroups), function(characteristic) {
+
+                        if (characteristic.description) {
+                            characteristic.description = $sce.trustAsHtml(characteristic.description);
+                        }
+                        return characteristic;
+
+                    });
 
                     vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(decisionMatrixs[0], characteristicGroups);
 
