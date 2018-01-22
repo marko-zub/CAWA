@@ -38,8 +38,9 @@
         function getDecisions(data) {
             vm.decisionsLoader = true;
 
-            var sendData = angular.copy(data);
-            sendData.pageNumber = sendData.pageNumber - 1;
+            var sendData = getStateParams($stateParams);
+            sendData.pageNumber = data.pageNumber - 1;
+
             DecisionDataService.getDecisions(sendData).then(function(result) {
                 vm.decisionsList = result.decisions;
                 vm.pagination = PaginatioService.initPagination(result.totalDecisions, $stateParams.page, $stateParams.size);

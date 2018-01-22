@@ -42,12 +42,11 @@
             item.visualMode = item.visualMode.toUpperCase();
             // console.log(item);
             // TODO: add to swicth
-            if (item.multiValue === true) {
-                renderControl('checkbox-group');
-                return;
-            }
             // console.log(item.name + ' : ' + item.valueType + '  ' + item.visualMode);
             switch (true) {
+                case (item.multiValue === true):
+                    renderControl('checkbox-group', item);
+                    break;
                 case (((item.valueType === 'STRING') && (item.visualMode === 'SELECT')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'SELECT'))):
                     renderControl('select');
@@ -66,7 +65,7 @@
                     ((item.valueType === 'STRINGARRAY') && (item.visualMode === 'LABEL')) ||
                     ((item.valueType === 'INTEGERARRAY') && (item.visualMode === 'LABEL'))):
                     if (item.value && !_.isArray(item.value) && !item.options) item.options = [item.value];
-                    renderControl('checkbox-group');
+                    renderControl('checkbox-group', item);
                     break;
                 case ((item.valueType === 'BOOLEAN')):
                     renderControl('radio-group');
@@ -76,12 +75,13 @@
             }
         }
 
-        function renderControl(type) {
+        function renderControl(type, item) {
             if (!type) return;
             var element = '<filter-' + type + ' selected="vm.selected" item="vm.item"></filter-' + type + '>';
 
-            // Modal full for checkboxes
-            if (type === 'checkbox-group') {
+
+            // Modal full options for checkboxes
+            if (type === 'checkbox-group' && (item.lazyOptions || item.options)) {
                 element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>' + element;
             }
 
