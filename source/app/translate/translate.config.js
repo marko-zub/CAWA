@@ -11,7 +11,7 @@
 			});
 
 			$translateProvider.useSanitizeValueStrategy('escape');
-			$translateProvider.preferredLanguage('uk');
+			$translateProvider.preferredLanguage('en');
 		}]);
 
 })();

@@ -1,7 +1,7 @@
 <div class="decision matrix matrix-new">
     <div class="matrix-wrapper">
 
-        <a class="matrix-all-link" ng-if="vm.inheritedDecisionGroup" class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories.comparison({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">Compare All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }} 
+        <a ng-if="vm.inheritedDecisionGroup" class="matrix-all-link"  class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories.comparison({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">Compare All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }} 
         </a>
 
         <div class="tabs-wrapper">
@@ -131,7 +131,7 @@
                         <div id="matrix-aside-content" class="matrix-aside-content">
 
                             <!-- Criteria Aside -->
-                            <div class="criteria-list group-wrapper" ng-if="vm.criteriaGroups.length">
+                            <div ng-if="vm.criteriaGroups.length" class="criteria-list group-wrapper">
                                 <div class="group-wrapper-title">
                                     {{ 'CRITERIA' | translate }}
                                 </div>
@@ -149,7 +149,7 @@
                                         <div class="matrix-title-wrapper">
                                             <div class="matrix-title app-sorter-wrapper">
                                                 <span ng-bind="::criteria.name"></span>
-                                            <a href ng-if="::criteria.description" class="link-secondary icon-info" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                            <a ng-if="::criteria.description" class="link-secondary icon-info" href uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
                                             </div>
                                             <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                                 <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
@@ -190,18 +190,18 @@
                                         </div>
 
                                         <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
-                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide" ng-if="::characteristic.display !== false">
+                                            <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
                                                 <!-- TODO: move to component -->
 
                                                     <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>
                                                     <filter-control item="characteristic"></filter-control>
 
-                                                    <div class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}" ng-if="::characteristic.isSortable" ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
+                                                    <div ng-if="::characteristic.isSortable" class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}"  ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
                                                         <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
                                                         <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
                                                     </div>
 
-                                                    <a href ng-if="::characteristic.description" class="link-secondary icon-info" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                                    <a ng-if="::characteristic.description" href class="link-secondary icon-info" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
 
                                             </div>
                                         </div>
@@ -229,7 +229,11 @@
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
-                                    <matrix-characteristics decisions="vm.decisions.decisionMatrixs" characteristics="vm.characteristicGroupsArray"></matrix-characteristics>
+                                    <matrix-characteristics 
+                                    decisions="vm.decisions.decisionMatrixs"
+                                    characteristics="vm.characteristics"
+                                    characteristics-formated="vm.characteristicGroupsArray"
+                                    ></matrix-characteristics>
                                 </div>
                             </div>
 

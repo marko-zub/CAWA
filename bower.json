@@ -25,7 +25,7 @@
     "textAngular": "^1.5.16",
     "font-awesome": "fontawesome#^4.7.0",
     "angular-pageslide-directive": "^2.1.4",
-    "angularjs-slider": "^6.1.1",
+    "angularjs-slider": "^6.4.3",
     "angular-daterangepicker": "^0.2.2",
     "moment": "^2.18.1",
     "angular-toastr": "^2.1.1",

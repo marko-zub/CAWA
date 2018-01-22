@@ -7,8 +7,10 @@
         .controller('HistoryChartController', HistoryChartController)
         .component('historyChart', {
             bindings: {
+                title: '<',
                 decision: '<',
                 characteristics: '<',
+                selectedValueId: '<'
             },
             controller: 'HistoryChartController',
             controllerAs: 'vm',
@@ -16,9 +18,9 @@
         });
 
 
-    HistoryChartController.$inject = ['DecisionDataService', 'Config', '$element'];
+    HistoryChartController.$inject = ['DecisionDataService', 'Config', '$element', 'DecisionsUtils'];
 
-    function HistoryChartController(DecisionDataService, Config, $element) {
+    function HistoryChartController(DecisionDataService, Config, $element, DecisionsUtils) {
 
         var vm = this;
 
@@ -31,17 +33,12 @@
         var chart;
 
         function onChanges(changes) {
-            if (changes.characteristics &&
+            if (vm.decision &&
+                changes.characteristics &&
                 changes.characteristics.currentValue &&
                 !angular.equals(changes.characteristics.currentValue, changes.characteristics.previousValue)) {
-                vm.characteristics = angular.copy(changes.characteristics.currentValue);
+                vm.characteristics = DecisionsUtils.mergeCharacteristicsDecisions(vm.decision, angular.copy(changes.characteristics.currentValue));
                 createChart();
-
-                // Use to init chart first time 
-                // postLink calls before onChanges
-                // if (typeof chart === 'undefined') {
-                //     initChart(vm.characteristicsTabActive);
-                // }
             }
         }
 
@@ -67,11 +64,11 @@
         }
 
         function initTabs() {
-            if (!vm.decision.valueIds) {
+            if (!vm.selectedValueId) {
                 vm.characteristicsTabActive = vm.characteristicsTabs[0];
             } else {
                 var findValueId = _.findIndex(vm.characteristicsTabs, function(item) {
-                    return item.valueId === vm.decision.valueIds[0];
+                    return item.valueId === vm.selectedValueId;
                 });
                 if (findValueId >= 0) {
                     vm.characteristicsTabActive = vm.characteristicsTabs[findValueId];
@@ -79,6 +76,7 @@
                     vm.characteristicsTabActive = vm.characteristicsTabs[0];
                 }
             }
+
             getCharacteristicValueHistory(vm.characteristicsTabActive, null, initChart);
         }
 
@@ -108,6 +106,7 @@
 
         function changeCharacteristicActive(index) {
             vm.characteristicsTabActive = vm.characteristicsTabs[index];
+
             // chart.resetZoomButton();
 
             // Reinit new chart on change tab
@@ -235,38 +234,37 @@
                     inputEnabled: true,
                     allButtonsEnabled: true,
                     buttons: [{
-                        type: 'day',
-                        count: 1,
-                        text: '1d'
-                    }, 
-                    {
-                        type: 'week',
-                        count: 1,
-                        text: '7d'
-                    }, 
-                    {
-                        type: 'month',
-                        count: 1,
-                        text: '1m'
-                    }, 
-                    // {
-                    //     type: 'month',
-                    //     count: 3,
-                    //     text: '3m'
-                    // }, {
-                    //     type: 'year',
-                    //     count: 1,
-                    //     text: '1y'
-                    // }, 
-                    // {
-                    //     type: 'ytd',
-                    //     count: 1,
-                    //     text: 'ytd'
-                    // }, 
-                    {
-                        type: 'all',
-                        text: 'all'
-                    }],
+                            type: 'day',
+                            count: 1,
+                            text: '1d'
+                        }, {
+                            type: 'week',
+                            count: 1,
+                            text: '7d'
+                        }, {
+                            type: 'month',
+                            count: 1,
+                            text: '1m'
+                        },
+                        // {
+                        //     type: 'month',
+                        //     count: 3,
+                        //     text: '3m'
+                        // }, {
+                        //     type: 'year',
+                        //     count: 1,
+                        //     text: '1y'
+                        // }, 
+                        // {
+                        //     type: 'ytd',
+                        //     count: 1,
+                        //     text: 'ytd'
+                        // }, 
+                        {
+                            type: 'all',
+                            text: 'all'
+                        }
+                    ],
                 },
                 yAxis: {
                     labels: {

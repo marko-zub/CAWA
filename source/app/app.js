@@ -1,6 +1,8 @@
 (function() {
     'use strict';
 
+    // TODO: 
+    // add pages module
     angular.module('app', [
         'app.core',
         'app.home',
@@ -12,6 +14,9 @@
         'app.users',
         'app.tags',
         'app.contacts',
+        'app.disclaimer',
+        'app.privacy',
+        'app.dmca',
     ]);
 
     var initInjector = angular.injector(['ng']),

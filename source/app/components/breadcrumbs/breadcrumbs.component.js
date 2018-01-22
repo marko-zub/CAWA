@@ -15,17 +15,29 @@
         });
 
 
-    BreadcrumbsController.$inject = [];
+    BreadcrumbsController.$inject = ['translateFilter'];
 
-    function BreadcrumbsController() {
+    function BreadcrumbsController(translateFilter) {
         var vm = this;
-        vm.$onInit = onInit;
-        function onInit() {}          
-        // vm.$onChanges = onChanges;
+        // vm.$onInit = onInit;
 
-        // function onChanges(changes) {
-        //     console.log(changes);
-        // }
+        // function onInit() {}
+        vm.$onChanges = onChanges;
+
+        function onChanges(changes) {
+            // console.log(changes);
+            if (changes.items &&
+                !angular.equals(changes.items.currentValue, changes.items.previousValue)) {
+                vm.items = handle(changes.items.currentValue);
+            }
+        }
+
+        function handle(list) {
+            return _.map(list, function(item) {
+                item.title = translateFilter(item.title);
+                return item;
+            });
+        }
     }
 
 })();

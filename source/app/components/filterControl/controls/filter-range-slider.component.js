@@ -16,7 +16,7 @@
 
     function renderTemplate() {
         return [
-            '<div class="filter-item-wrapper" ng-if="vm.showRange">',
+            '<div ng-if="vm.showRange" class="filter-item-wrapper">',
             '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
             '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
             '</div>'

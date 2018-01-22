@@ -1,5 +1,5 @@
 <div class="media-links text-right" ng-if="::vm.list.length">
-    <a ng-repeat="link in ::vm.list" target="_blank" href="{{ ::link.url }}">
+    <a ng-repeat="link in ::vm.list track by $id(link)" rel="nofollow" target="_blank" href="{{ ::link.url }}">
         {{ ::link.name }}
     </a>
 </div>

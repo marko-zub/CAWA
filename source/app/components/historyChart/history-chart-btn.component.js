@@ -9,8 +9,7 @@
             bindings: {
                 decision: '<',
                 characteristics: '<',
-                title: '<',
-                active: '<',
+                selectedCharacteristicId: '<',
             },
             controller: 'HistoryChartBtnController',
             controllerAs: 'vm',
@@ -27,20 +26,28 @@
 
 
         function onInit() {
-            // console.log(vm.decision.valueIds[0]);
+            var find = _.find(vm.decision.characteristics, function(characteristic) {
+                return vm.selectedCharacteristicId === characteristic.id;
+            });
+            vm.totalHistoryValues = find.totalHistoryValues;
+            vm.selectedValueId = find.valueIds[0];
+
+            if (vm.decision && vm.decision.decision) {
+                vm.title = vm.decision.decision.name + ' Charts';
+            }
         }
 
         vm.getData = getData;
 
         function getData($event) {
-            if (vm.decision.valueIds[0]) {
-                openModal($event, vm.decision, vm.title);
-            }
+            openModal($event, vm.decision, vm.title);
         }
 
         function openModal(event, decision, title) {
-            if (vm.active === false ) return;
+
             var characteristics = vm.characteristics;
+            // console.log(vm.characteristics);
+
             event.preventDefault();
             event.stopPropagation();
             // var modalInstance = 
@@ -60,7 +67,10 @@
                     },
                     title: function() {
                         return title;
-                    }                    
+                    },
+                    selectedValueId: function() {
+                        return vm.selectedValueId;
+                    }
                 }
             });
         }

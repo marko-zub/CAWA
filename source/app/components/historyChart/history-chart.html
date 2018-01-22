@@ -1,5 +1,5 @@
 <div ng-show="vm.characteristicsTabs.length">
-	<h4 class="modal-title">Charts</h4>
+	<h4 ng-bind="vm.title" class="modal-title"></h4>
     <div class="nav-tabs-wrapper border-0 clearfix mg-b-sm">
         <ul class="nav nav-pills nav-tabs-sm">
             <li ng-repeat="characteristic in vm.characteristicsTabs track by characteristic.id" ng-class="{'active': vm.characteristicsTabActive.id === characteristic.id }">
