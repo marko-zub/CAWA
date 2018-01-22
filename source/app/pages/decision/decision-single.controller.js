@@ -32,6 +32,18 @@
             // Call only on init
             getDecisionParents(vm.decision);
             setPageData();
+            checAffiliateDisclosure();
+            console.log(vm.decision.medias);
+        }
+
+        // TODO: Move to service
+        function checAffiliateDisclosure() {
+            var find = _.find(vm.decision.medias, function(media) {
+                return media.platform && media.platform.toLowerCase() === 'amazon';
+            });
+            if (find) {
+                vm.showAffiliateDisclosure = true;
+            }
         }
 
         function setPageData() {
@@ -47,7 +59,7 @@
             // if ($stateParams.category || tab) {
             //     $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
             // } else {
-            //     $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;    
+            //     $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
             // }
 
         }
