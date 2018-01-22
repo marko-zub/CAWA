@@ -33,7 +33,6 @@
             getDecisionParents(vm.decision);
             setPageData();
             checAffiliateDisclosure();
-            console.log(vm.decision.medias);
         }
 
         // TODO: Move to service
