@@ -26,14 +26,18 @@
 
 
         function onInit() {
-            var find = _.find(vm.decision.characteristics, function(characteristic) {
-                return vm.selectedCharacteristicId === characteristic.id;
-            });
-            vm.totalHistoryValues = find.totalHistoryValues;
-            vm.selectedValueId = find.valueIds[0];
+            if (vm.decision && vm.decision.characteristics) {
+                var find = _.find(vm.decision.characteristics, function(characteristic) {
+                    return vm.selectedCharacteristicId === characteristic.id;
+                });
+                vm.totalHistoryValues = find.totalHistoryValues;
+                vm.selectedValueId = find.valueIds[0];
 
-            if (vm.decision && vm.decision.decision) {
-                vm.title = vm.decision.decision.name + ' Charts';
+                if (vm.decision && vm.decision.decision) {
+                    vm.title = vm.decision.decision.name + ' Charts';
+                }
+            } else {
+                vm.totalHistoryValues = false;
             }
         }
 
