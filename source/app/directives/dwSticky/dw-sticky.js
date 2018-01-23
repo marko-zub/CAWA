@@ -18,7 +18,11 @@
 
         // TODO: add offset attr
         function link($scope, $el) {
-            var waypoint = new Waypoint({
+            var waypoint;
+
+            // TODO: avoid timeout
+            setTimeout(function() {
+                waypoint = new Waypoint({
                     element: $el[0],
                     handler: function(direction) {
                         if (direction === 'down') {
@@ -29,7 +33,7 @@
                     },
                     offset: $('#app-header').outerHeight()
                 });
-            
+            }, 200);
 
             $scope.$on('$destroy', function() {
                 waypoint.destroy();
