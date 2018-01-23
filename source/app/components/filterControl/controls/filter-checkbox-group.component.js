@@ -140,15 +140,23 @@
 
             // Allow multiply values switcher OR/AND
             // if (item.valueType === 'STRING') {
+            var switcherControl = '';
+
+            if (item.lazyOptions || _.isArray(item.options) && item.options.length) {
+                switcherControl = [
+                    '<span class="switcher-inner">',
+                    '   <span class="operator-before">{{ "OR" | translate }}</span>',
+                    '   <span class="operator-after">{{ "AND" | translate }}</span>',
+                    '</span>'
+                ].join('\n');
+            }
+
             if (item.multiValue === true) {
                 queryTypeHtml = [
                     '<div class="switcher">',
                     '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
                     '<label class="switcher-label" for="toggle-' + item.id + '">',
-                    '<span class="switcher-inner">',
-                    '   <span class="operator-before">{{ "OR" | translate }}</span>',
-                    '   <span class="operator-after">{{ "AND" | translate }}</span>',
-                    '</span>',
+                    switcherControl,
                     '<span class="switcher-switch"></span>',
                     '</label>',
                     '</div>',
