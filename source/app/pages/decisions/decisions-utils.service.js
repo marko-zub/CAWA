@@ -8,7 +8,13 @@
     DecisionsUtils.$inject = ['$sce', 'DecisionsConstant'];
 
     function DecisionsUtils($sce, DecisionsConstant) {
+        
+        // private
+        function htmlToPlaintext(text) {
+            return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+        }
 
+        // public
         // Move to Utils
         function prepareDecisionToUI(list) {
             return _.map(list, function(el) {
@@ -54,7 +60,8 @@
 
             // Move to constat
             if (cutDescription !== false && decision.description && decision.description.length > DecisionsConstant.SHORT_TEXT_LENGTH) {
-                decision.description = decision.description.substring(0, DecisionsConstant.SHORT_TEXT_LENGTH) + '...';
+                var shortText = htmlToPlaintext(decision.description.substring(0, DecisionsConstant.SHORT_TEXT_LENGTH));
+                decision.description = shortText + '...';
             }
 
             if (decision.criteriaCompliancePercentage) {
