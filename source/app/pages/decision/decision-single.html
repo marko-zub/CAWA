@@ -35,24 +35,29 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="post-sub-header">
-                <div class="row">
-                    <div class="col-sm-7">
-                        <decision-short-info decision="::vm.decision"></decision-short-info>
-                    </div>
-                    <div class="col-sm-5 text-right">
-                        <div class="inline-block">
-                            <div>
-                                <media-links list="vm.decision.medias"></media-links>
+            
+            <div class="post-sub-header-wrapper">
+                <div class="post-sub-header" dw-sticky>
+                    <div class="app-container-sm">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <decision-short-info decision="::vm.decision"></decision-short-info>
                             </div>
-                            <div>
-                                <compare-button decision="vm.decision" parent-decision="vm.parentDecisionGroups[0]"></compare-button>
+                            <div class="col-sm-5 text-right">
+                                <div class="inline-block">
+                                    <div>
+                                        <media-links list="vm.decision.medias"></media-links>
+                                    </div>
+                                    <div>
+                                        <compare-button decision="vm.decision" parent-decision="vm.parentDecisionGroups[0]"></compare-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="col-sm-12">

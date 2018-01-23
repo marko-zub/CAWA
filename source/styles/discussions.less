@@ -101,12 +101,29 @@
 
 // Author
 .post-header {
-  margin: 16px 0;
+  margin: 16px 0 0;
   position: relative;
 }
+
+.post-sub-header-wrapper {
+    min-height: 40px;
+}
+
 .post-sub-header {
-  margin: 0 0 16px;
+  background: #ffffff;
+  padding: 16px 0;
+  margin: 0 0 0;
   color: @gray-mid;
+  width: 100%;
+  &.sticky {
+    position: fixed;
+    left: 0;
+    top: @header-height;
+    z-index: @z-index-page-sub-header;
+    .info {
+        display: none;
+    }
+  }
   .clearfix;
   .author {
     float: left;
