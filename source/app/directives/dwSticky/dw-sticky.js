@@ -22,7 +22,7 @@
 
             // TODO: avoid timeout
             setTimeout(function() {
-                waypoint = new Waypoint({
+                waypoint = new Waypoint({ // jshint ignore:line
                     element: $el[0],
                     handler: function(direction) {
                         if (direction === 'down') {

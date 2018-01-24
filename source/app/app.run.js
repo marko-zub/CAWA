@@ -100,8 +100,10 @@
         function headerClass() {
             var header = $(document).scrollTop();
             if (header > 10) {
+                $('body').addClass('dw-window-scroll');
                 $('#app-header').addClass('scroll');
             } else {
+                $('body').removeClass('dw-window-scroll');
                 $('#app-header').removeClass('scroll');
             }
         }

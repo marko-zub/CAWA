@@ -94,19 +94,19 @@
 
 
         <div class="col-sm-9">
-
             <history-chart
+                ng-if="vm.isSharacteristicGroupsChart"
                 title="'Charts'"
                 characteristics="vm.characteristicGroupsChart"
                 decision="vm.decisionMatrixs[0]"></history-chart>
 
             <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
-
         </div>
-        <div class="col-sm-3">
+
+       <div ng-if="vm.parentDecisionGroups.length" ng-class="vm.isSharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
             <!-- Parent criteria & characteristics -->
-            <div class="decision-aside" ng-if="vm.parentDecisionGroups.length">
-                <div class="clearfix mg-b-sm" ng-show="vm.criteriaGroupsCompilance">
+            <div  ng-show="vm.criteriaGroupsCompilance" ng-class="vm.isSharacteristicGroupsChart ? '' : 'col-sm-5 col-sm-offset-1'">
+                <div class="clearfix mg-b-sm">
                     <!-- Make as component -->
                     <div class="clearfix">
                         <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
@@ -138,7 +138,10 @@
                 <div class="list-wrapper sm" ng-show="vm.criteriaGroupsCompilanceInit">
                     <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
                     <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
-                </div>
+                </div>                  
+            </div>
+
+            <div ng-class="vm.isSharacteristicGroupsChart ? '' : 'col-sm-5'">
                 <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
                     <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
                     <characteristics-list
@@ -150,13 +153,28 @@
                     decision="vm.decisionMatrixs[0]"
                     discussion="false"
                     collapsed="false"></characteristics-list>
-                </div>
-            </div>
+                </div>                    
+            </div>                    
             <!-- End Parent criteria & characteristics -->
+
+
+            <div ng-if="vm.isSharacteristicGroupsChart">
+                <!-- Owners -->
+                <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
+                <!-- End Owners -->
+
+                <affiliate-disclosure></affiliate-disclosure>
+            </div>                   
+       </div>
+
+        <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
             <!-- Owners -->
             <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
             <!-- End Owners -->
+
             <affiliate-disclosure></affiliate-disclosure>
-        </div>
+        </div>             
+        
+  
     </div>
 </div>

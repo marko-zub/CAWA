@@ -228,6 +228,8 @@
                     vm.criteriaGroupsCompilance = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
 
+                    vm.isSharacteristicGroupsChart = showChart(decisionMatrixs);
+                    console.log(vm.isSharacteristicGroupsChart);
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
                     vm.characteristicGroupsChart = _.map(angular.copy(characteristicGroups), function(characteristic) {
@@ -248,6 +250,20 @@
                 // Decision Index
                 getCriteriaByDecisionIndex(vm.decision.id, parentId, criteriaGroupsIds);
             });
+        }
+
+        function showChart(decisions) {
+            var showChart = false;
+            if (decisions && decisions[0]) {
+                var find = _.find(decisions[0].characteristics, function (characteristic) {
+                    return characteristic.totalHistoryValues > 0;
+                });
+                
+                if (find) {
+                    showChart = true;
+                }
+            }
+            return showChart;
         }
 
         function calcTotalVotes(criteriaGroups) {
