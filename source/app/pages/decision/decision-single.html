@@ -101,11 +101,84 @@
                 decision="vm.decisionMatrixs[0]"></history-chart>
 
             <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
+
+           <div ng-if="vm.parentDecisionGroups.length && !vm.isSharacteristicGroupsChart" >
+                <!-- Parent criteria & characteristics -->
+                <div class="col-sm-5 col-sm-offset-1" ng-show="vm.criteriaGroupsCompilance">
+                    <div class="clearfix mg-b-sm">
+                        <!-- Make as component -->
+                        <div class="clearfix">
+                            <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                                <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                                <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
+                                    {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
+                            </h5>
+                            <div class="pull-left text-header">
+                                <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                                    {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
+                                </a>
+                            </div>
+                        </div>
+                        <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
+                        <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroupsCompilance.totalVotes > 0">
+                            <div ng-switch-when="true" class="criteria-block static pull-right">
+                                <div class="counters percentage">
+                                    <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
+                                </div>
+                                <div class="counters criteria-block-votes">
+                                    <i class="dw-icon-vote"></i> {{ vm.criteriaGroupsCompilance.totalVotes }}
+                                </div>
+                                <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
+                                    <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-wrapper sm" ng-show="vm.criteriaGroupsCompilanceInit">
+                        <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
+                        <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
+                        <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
+                        <characteristics-list
+                        ng-if="vm.characteristicGroups"
+                        list="vm.characteristicGroups"
+                        decision="vm.decisionMatrixs[0]"
+                        links="false"
+                        rating="true"
+                        decision="vm.decisionMatrixs[0]"
+                        discussion="false"
+                        collapsed="false"></characteristics-list>
+                    </div>                    
+                </div>                    
+                <!-- End Parent criteria & characteristics -->
+
+
+                <div ng-if="vm.isSharacteristicGroupsChart">
+                    <!-- Owners -->
+                    <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
+                    <!-- End Owners -->
+
+                    <affiliate-disclosure></affiliate-disclosure>
+                </div>                   
+           </div>            
         </div>
 
-       <div ng-if="vm.parentDecisionGroups.length" ng-class="vm.isSharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
+        <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
+            <!-- Owners -->
+            <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
+            <!-- End Owners -->
+
+            <affiliate-disclosure></affiliate-disclosure>
+        </div>             
+        
+
+       <div ng-if="vm.parentDecisionGroups.length && vm.isSharacteristicGroupsChart" ng-class="vm.isSharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
             <!-- Parent criteria & characteristics -->
-            <div  ng-show="vm.criteriaGroupsCompilance" ng-class="vm.isSharacteristicGroupsChart ? '' : 'col-sm-5 col-sm-offset-1'">
+            <div  ng-show="vm.criteriaGroupsCompilance">
                 <div class="clearfix mg-b-sm">
                     <!-- Make as component -->
                     <div class="clearfix">
@@ -141,7 +214,7 @@
                 </div>                  
             </div>
 
-            <div ng-class="vm.isSharacteristicGroupsChart ? '' : 'col-sm-5'">
+            <div>
                 <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
                     <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
                     <characteristics-list
@@ -166,15 +239,6 @@
                 <affiliate-disclosure></affiliate-disclosure>
             </div>                   
        </div>
-
-        <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
-            <!-- Owners -->
-            <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users>
-            <!-- End Owners -->
-
-            <affiliate-disclosure></affiliate-disclosure>
-        </div>             
-        
   
     </div>
 </div>
