@@ -13,12 +13,12 @@
 
                         <!-- TODO: optimize code nav-layout -->
                         <div class="nav-layout">
-                            <a href="#" ng-click="vm.toggleLayout('list')" ng-class="{'active': vm.layoutClass === 'list'}" uib-tooltip="{{'LIST VIEW' | translate }}">
+                            <div class="nav-layout-item" ng-click="vm.toggleLayout('list')" ng-class="{'active': vm.layoutClass === 'list'}" uib-tooltip="{{'LIST VIEW' | translate }}">
                                 <i class="fa fa-list" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" ng-click="vm.toggleLayout('cards')" ng-class="{'active': vm.layoutClass === 'cards'}" uib-tooltip="{{'LIST GRID' | translate }}">
+                            </div>
+                            <div class="nav-layout-item" ng-click="vm.toggleLayout('cards')" ng-class="{'active': vm.layoutClass === 'cards'}" uib-tooltip="{{'LIST GRID' | translate }}">
                                 <i class="fa fa-th" aria-hidden="true"></i>
-                            </a>
+                            </div>
                         </div>
 
                     </div>
