@@ -1,0 +1,47 @@
+{
+  "name": "cawa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skuzmin/CAWA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skuzmin/CAWA/issues"
+  },
+  "homepage": "https://github.com/skuzmin/CAWA#readme",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-inject": "^4.1.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-json-editor": "^2.2.1",
+    "gulp-jsonminify": "^1.0.0",
+    "gulp-less": "^3.3.0",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^7.1.2",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "run-sequence": "^1.2.2",
+    "wiredep": "^4.0.0"
+  },
+  "dependencies": {
+    "gulp-ng-annotate": "^2.0.0"
+  }
+}

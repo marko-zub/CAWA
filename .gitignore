@@ -23,3 +23,6 @@ source/index.html
 release/
 source/styles/styles.css
 styles.css
+node_modules
+dist
+coverage
