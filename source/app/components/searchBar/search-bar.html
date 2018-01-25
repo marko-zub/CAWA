@@ -1,6 +1,7 @@
 <div class="app-search" ng-class="{'open':vm.searchQuery}">
     <input
-       class="form-control"
+        aria-label="Search"
+        class="form-control"
         type="text"
         ng-model="vm.searchQuery"
         typeahead-editable="true"
@@ -21,7 +22,7 @@
 
 <script type="text/ng-template" id="typeaheadTemplate.html">
   <a>
-      <img ng-src="{{match.model.logoUrl}}" width="20">
+      <img alt="" ng-src="{{match.model.logoUrl}}" width="20">
       <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></span>
   </a>
 </script>

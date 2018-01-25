@@ -1,7 +1,7 @@
 <div class="decision matrix matrix-new">
     <div class="matrix-wrapper">
 
-        <a ng-if="vm.inheritedDecisionGroup" class="matrix-all-link"  class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories.comparison({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">Compare All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }} 
+        <a ng-if="vm.inheritedDecisionGroup" class="matrix-all-link"  class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories.comparison({size: null, page: null, sort: null, category: null, categorySlug: vm.inheritedDecisionGroup.nameSlug, id:vm.inheritedDecisionGroup.ownerDecision.id, slug: vm.inheritedDecisionGroup.ownerDecision.nameSlug})">Compare All {{ vm.inheritedDecisionGroup.name }} ({{ vm.inheritedDecisionGroup.totalChildDecisions }}) from {{ vm.inheritedDecisionGroup.ownerDecision.name }}
         </a>
 
         <div class="tabs-wrapper">
@@ -75,7 +75,7 @@
                                         <div class="clearfix">
                                             <div class="decision-img-block img-link">
                                                 <div class="matrix-img-container img-sm img-wrapper">
-                                                    <img ng-src="{{::item.decision.imageUrl}}" class="img-responsive" '>
+                                                    <img alt="" ng-src="{{::item.decision.imageUrl}}" class="img-responsive" '>
                                                 </div>
                                             </div>
                                         </div>
@@ -229,7 +229,7 @@
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">
-                                    <matrix-characteristics 
+                                    <matrix-characteristics
                                     decisions="vm.decisions.decisionMatrixs"
                                     characteristics="vm.characteristics"
                                     characteristics-formated="vm.characteristicGroupsArray"

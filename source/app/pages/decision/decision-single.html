@@ -4,7 +4,7 @@
             <div class="app-title-table">
                 <div class="app-title-table-img" ng-if="::vm.decision.imageUrl">
                     <div class="post-image post-image-title">
-                        <img ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                        <img alt="" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
                         <div ng-bind="vm.decision.imageBlock"> </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="post-sub-header-wrapper">
                 <div class="post-sub-header" dw-sticky>
                     <div class="app-container-sm">
@@ -152,8 +152,8 @@
                         decision="vm.decisionMatrixs[0]"
                         discussion="false"
                         collapsed="false"></characteristics-list>
-                    </div>                    
-                </div>                    
+                    </div>
+                </div>
                 <!-- End Parent criteria & characteristics -->
 
 
@@ -163,8 +163,8 @@
                     <!-- End Owners -->
 
                     <affiliate-disclosure></affiliate-disclosure>
-                </div>                   
-           </div>            
+                </div>
+           </div>
         </div>
 
         <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
@@ -173,8 +173,8 @@
             <!-- End Owners -->
 
             <affiliate-disclosure></affiliate-disclosure>
-        </div>             
-        
+        </div>
+
 
        <div ng-if="vm.parentDecisionGroups.length && vm.isSharacteristicGroupsChart" ng-class="vm.isSharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
             <!-- Parent criteria & characteristics -->
@@ -211,7 +211,7 @@
                 <div class="list-wrapper sm" ng-show="vm.criteriaGroupsCompilanceInit">
                     <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
                     <criteria-list ng-if="vm.criteriaGroupsCompilance" list="vm.criteriaGroupsCompilance" links="false" rating="true" crteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
-                </div>                  
+                </div>
             </div>
 
             <div>
@@ -226,8 +226,8 @@
                     decision="vm.decisionMatrixs[0]"
                     discussion="false"
                     collapsed="false"></characteristics-list>
-                </div>                    
-            </div>                    
+                </div>
+            </div>
             <!-- End Parent criteria & characteristics -->
 
 
@@ -237,8 +237,8 @@
                 <!-- End Owners -->
 
                 <affiliate-disclosure></affiliate-disclosure>
-            </div>                   
+            </div>
        </div>
-  
+
     </div>
 </div>

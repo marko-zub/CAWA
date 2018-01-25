@@ -77,13 +77,17 @@
         max-width: 295px;
     }
     .post-content {
-        float: left;
-        width: calc(~"100% - 295px");
+        @media (min-width: @screen-md-min) {
+            float: left;
+            width: calc(~"100% - 295px");
+        }
     }
     .img-link {
-        float: left;
-        // width: 30%;
-        width: 295px;
+        @media (min-width: @screen-md-min) {
+            float: left;
+            // width: 30%;
+            width: 295px;
+        }
     }
     .post-description {
         margin: 0 0 22px;

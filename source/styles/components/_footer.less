@@ -1,11 +1,14 @@
 .app-footer {
-    height: @footer-height;
     background-color: @footer-bg;
     border-top: 1px solid @gray-light;
     color: #fff;
-    padding: 15px 0;
+    padding: 15px 0 60px;
     text-align: center;
     display: block;
+    @media (min-width: @screen-md-min) {
+        padding: 15px 0;
+        height: @footer-height;
+    }
     a {
     	color: #fff;
     }
