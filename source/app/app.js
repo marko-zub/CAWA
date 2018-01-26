@@ -46,5 +46,8 @@
                     strictDi: true
                 });
             });
+
+
+            $('#init-loader').remove();
         });
 })();
