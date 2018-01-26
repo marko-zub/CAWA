@@ -46,8 +46,8 @@
                                 <div class="filter-wrapper">
                                     <div class="filter-name">
                                         <input type="text" class="form-control input-sm" placeholder="{{ 'Filter by name' | translate }}" ng-model="vm.filterName" ng-model-options="vm.controlOptions" ng-keyup="vm.filterNameSubmit($event, vm.filterName)">
-                                        <i class="filter-btn fa dw-icon-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
-                                        <i class="fa dw-icon-cancel icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
+                                        <i class="filter-btn dw-icon-search" aria-hidden="true" ng-click="vm.filterNameSubmitClick(vm.filterName)"></i>
+                                        <i class="dw-icon-cancel icon-remove" aria-hidden="true" ng-click="vm.clearFilterName()" ng-show="vm.filterName.length > 0"></i>
                                     </div>
                                 </div>
                                 <!-- Filter Name -->
@@ -140,7 +140,7 @@
                                         <div class="matrix-g-title" ng-click="vm.toggleGroupName($event, group.id, 'criteria')">
                                             <span class="group-title-line" ng-bind="::group.name"></span>
                                             <div class="controls">
-                                                <i class="fa dw-icon-angle-up" aria-hidden="true"></i>
+                                                <i class="dw-icon-angle-up" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@
                                                 <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  characteristic.id, 'characteristic')">
                                                     <span class="group-title-line" ng-bind="::characteristic.name"></span>
                                                     <div class="controls">
-                                                        <i class="fa dw-icon-angle-up" aria-hidden="true"></i>
+                                                        <i class="dw-icon-angle-up" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                             </div>

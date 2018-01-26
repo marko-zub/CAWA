@@ -91,8 +91,8 @@
                 if (totalHistoryValues[index] >= 0) {
                     totalHistoryValueHtml = [
                         '<div class="control-panel-sm clearfix">',
-                        (item.historicalValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa dw-icon-chart-bar" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '',
-                        (item.flaggableValue !== false) ? '   <a href="#" class="control pull-left"><i class="fa dw-icon-flag" aria-hidden="true"></i> 0</a>' : '',
+                        (item.historicalValue !== false) ? '   <a href="#" class="control pull-left"><i class="dw-icon-chart-bar" aria-hidden="true"></i> ' + totalHistoryValues[index] + '</a>' : '',
+                        (item.flaggableValue !== false) ? '   <a href="#" class="control pull-left"><i class="dw-icon-flag" aria-hidden="true"></i> 0</a>' : '',
                         '</div>'
                     ].join('\n');
                 }
@@ -276,9 +276,9 @@
             val = val.toLowerCase();
             // Switch ?!
             if (val === 'yes' || val === 'true') {
-                html = '<i class="fa dw-icon-ok color-green" aria-hidden="true"></i>';
+                html = '<i class="dw-icon-ok color-green" aria-hidden="true"></i>';
             } else if (val === 'no' || val === 'false') {
-                html = '<i class="fa dw-icon-cancel color-light-red" aria-hidden="true"></i>';
+                html = '<i class="dw-icon-cancel color-light-red" aria-hidden="true"></i>';
             }
 
             return html;

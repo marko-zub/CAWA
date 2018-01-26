@@ -12,7 +12,7 @@
 			'pageslide-directive',
 			'rzModule',
 			'daterangepicker',
-			// 'textAngular',
+			'textAngular',
 			'toastr',
 			'pascalprecht.translate'
 		]);

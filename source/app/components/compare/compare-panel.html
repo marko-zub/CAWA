@@ -1,6 +1,6 @@
 <pageslide class="compare-panel-wrapper" ps-size="290px" ps-open="vm.isPanelOpen" ps-speed="0.35" ps-side="bottom" ps-click-outside="false">
     <div class="compare-panel-toggle" ng-click="vm.togglePanel()" translate-cloak>
-        <i class="fa dw-icon-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
+        <i class="dw-icon-balance-scale" aria-hidden="true"></i> {{ 'Compare' | translate }}
         <span ng-show="vm.total">({{vm.total}})</span>
     </div>
     <div class="compare-panel">
@@ -35,7 +35,7 @@
                             <a class="post-title" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null, category: null})" title="{{::decision.name}}" ui-sref-opts="{reload: true}" ng-bind="::decision.name"></a>
                         </div>
                         <div class="app-controls">
-                            <i ng-click="vm.removeDecisionCompare(decision.id)" class="app-control link-secondary-light fa dw-icon-cancel" aria-hidden="true"></i>
+                            <i ng-click="vm.removeDecisionCompare(decision.id)" class="app-control link-secondary-light dw-icon-cancel" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
