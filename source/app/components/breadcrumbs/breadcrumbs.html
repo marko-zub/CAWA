@@ -4,7 +4,7 @@
             <li ng-repeat="item in vm.items track by $id(item)">
                 <a ng-if="item.link" translate-cloak ui-sref="{{item.link}}" ng-bind="item.title | translate" title="" ui-sref-opts="{reload: true}"></a>
                 <span ng-if="!item.link" ng-bind="item.title" translate-cloak></span>
-                <span ng-if="!$last" class="breadcrumb-divider" ><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span ng-if="!$last" class="breadcrumb-divider" ><i class="fa dw-icon-angle-right" aria-hidden="true"></i></span>
             </li>
         </ul>
     </div>

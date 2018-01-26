@@ -15,15 +15,13 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
-    "angular": "^1.6.7",
+    "angular": "1.6.7",
     "angular-ui-router": "^0.4.2",
     "angular-resource": "^1.6.7",
     "angular-bootstrap": "^2.5.0",
     "ngstorage": "^0.3.11",
     "angular-jwt": "^0.1.9",
     "iscroll": "^5.2.0",
-    "textAngular": "^1.5.16",
-    "font-awesome": "fontawesome#^4.7.0",
     "angular-pageslide-directive": "^2.1.4",
     "angularjs-slider": "^6.4.3",
     "angular-daterangepicker": "^0.2.2",
@@ -57,11 +55,6 @@
     "iscroll": {
       "main": [
         "./build/iscroll-probe.js"
-      ]
-    },
-    "font-awesome": {
-      "main": [
-        "./css/font-awesome.min.css"
       ]
     },
     "angular-bootstrap": {

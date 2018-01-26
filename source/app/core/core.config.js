@@ -12,7 +12,7 @@
         // Enable ngAnimation for specific class
         $animateProvider.classNameFilter( /\banimated\b/ );
 
-        $provide.decorator('taOptions', taOptions);
+        // $provide.decorator('taOptions', taOptions);
 
         // Call $digest after all request finshed
         $httpProvider.useApplyAsync(true);
@@ -27,17 +27,17 @@
 
 
     // textArea angular
-    taOptions.$inject = ['taRegisterTool', '$delegate'];
+    // taOptions.$inject = ['taRegisterTool', '$delegate'];
 
-    function taOptions(taRegisterTool, taOptions) {
-        // $delegate is the taOptions we are decorating
-        taOptions.forceTextAngularSanitize = false;
-        taOptions.toolbar = [
-            ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-            ['html', 'insertImage', 'insertLink', 'insertVideo']
-        ];
+    // function taOptions(taRegisterTool, taOptions) {
+    //     // $delegate is the taOptions we are decorating
+    //     taOptions.forceTextAngularSanitize = false;
+    //     taOptions.toolbar = [
+    //         ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+    //         ['html', 'insertImage', 'insertLink', 'insertVideo']
+    //     ];
 
-        // ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'], ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'], ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'], ['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
-        return taOptions;
-    }
+    //     // ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'], ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'], ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'], ['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
+    //     return taOptions;
+    // }
 })();

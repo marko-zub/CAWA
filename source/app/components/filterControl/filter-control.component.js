@@ -82,7 +82,7 @@
 
             // Modal full options for checkboxes
             if (type === 'checkbox-group' && (item.lazyOptions || _.isArray(item.options) && item.options.length)) {
-                element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>' + element;
+                element = '<span class="filter-control-full-mode link-secondary" ng-click="vm.filterControlModalOpen(vm.item, vm.selected)"><i class="fa dw-icon-resize-full-alt" aria-hidden="true"></i></span>' + element;
             }
 
             $element.html(element);

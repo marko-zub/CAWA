@@ -22,9 +22,9 @@
         return '<div ng-bind-html="::vm.html"></div>';
     }
 
-    RatingStarController.$inject = ['$element', 'AppRatingStarConstant'];
+    RatingStarController.$inject = ['$element', 'AppRatingStarConstant', '$sce'];
 
-    function RatingStarController($element, AppRatingStarConstant) {
+    function RatingStarController($element, AppRatingStarConstant, $sce) {
         var
             vm = this,
             value;
@@ -69,7 +69,7 @@
                     vm.weight = vm.weight || 0;
                 }
             }
-            vm.html = renderStars(vm.rating, votes);
+            vm.html = $sce.trustAsHtml(renderStars(vm.rating, votes));
 
         }
 

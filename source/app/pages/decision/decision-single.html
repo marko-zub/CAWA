@@ -102,24 +102,29 @@
 
             <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
 
-           <div ng-if="vm.parentDecisionGroups.length && !vm.isSharacteristicGroupsChart" >
+           <div ng-if="vm.parentDecisionGroups.length && !vm.isSharacteristicGroupsChart" class="decision-singe-additional">
                 <!-- Parent criteria & characteristics -->
                 <div class="col-sm-5 col-sm-offset-1" ng-show="vm.criteriaGroupsCompilance">
                     <div class="clearfix mg-b-sm">
                         <!-- Make as component -->
                         <div class="clearfix">
-                            <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
-                                <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
-                                <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
-                                    {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
-                            </h5>
-                            <div class="pull-left text-header">
-                                <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
-                                    {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
-                                </a>
-                            </div>
+
+                                <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>                                    
+      
+                                <div class="pull-right">
+                                    <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
+                                        <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                                        <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
+                                            {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
+                                    </h5>
+                                    <div class="pull-left text-header">
+                                        <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                                            {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
+                                        </a>
+                                    </div>                                
+                                </div>
+
                         </div>
-                        <h4 class="app-list-title pull-left" translate-cloak>{{ 'CRITERIA COMPLIANCE' | translate }}</h4>
                         <div ng-switch="vm.decision.criteriaCompliancePercentage >= 0 && vm.criteriaGroupsCompilance.totalVotes > 0">
                             <div ng-switch-when="true" class="criteria-block static pull-right">
                                 <div class="counters percentage">

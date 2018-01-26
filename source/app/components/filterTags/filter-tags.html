@@ -9,21 +9,21 @@
                 <div ng-click="vm.showCriteriaPopup($event, tag)" uib-tooltip="{{ 'FACTOR OF IMPORTANCE' | translate }}: {{ tag.coefficient.name || 'normal' }}" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip-class="tooltip-light" class="criteria-coefficient-indicator-new">
                     <span class="indicator bg-color-{{ tag.coefficient.name }}"></span>
                 </div>
-                {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="fa dw-icon-cancel" aria-hidden="true"></i></span>
             </div><span ng-show="!$last" class="tag-divider">{{ 'AND' | translate }}</span>
         </div>
         <div class="tag-wrapper" ng-show="vm.sortByCharacteristic.name">
             <div class="tag">
                 {{ vm.sortByCharacteristic.name }}
                 <span class="app-link text-bold" ng-click="vm.changeCharacteristicsOrder(vm.sortByCharacteristic.order, vm.sortByCharacteristic.id)">{{ vm.sortByCharacteristic.order }}</span>
-                <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <span ng-click="vm.changeCharacteristicsOrder(null)" class="icon-remove"><i class="fa dw-icon-cancel" aria-hidden="true"></i></span>
             </div>
         </div>
         <div class="tag-wrapper" ng-show="vm.sortByDecisionProperty.name">
             <div class="tag">
                 {{ vm.sortByDecisionProperty.name | translate}}
                 <span class="app-link text-bold" ng-click="vm.changeSortByDecisionPropertyOrder(vm.sortByDecisionProperty, $event)">{{ vm.sortByDecisionProperty.order }}</span>
-                <span ng-click="vm.changeSortByDecisionPropertyOrder(null)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <span ng-click="vm.changeSortByDecisionPropertyOrder(null)" class="icon-remove"><i class="fa dw-icon-cancel" aria-hidden="true"></i></span>
             </div>
         </div>
         <!-- TODO: simplify conditions move to conroller -->
@@ -39,7 +39,7 @@
         <span ng-repeat-start="tag in vm.tagsFilter track by tag.characteristicId">{{::tag.name}}:</span>
         <div class="tag-wrapper" ng-repeat-end ng-repeat="tagVal in tag.data track by $index">
             <div class="tag">
-                {{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                {{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="fa dw-icon-cancel" aria-hidden="true"></i></span>
             </div><span ng-show="tag.data.length > 1 && !$last" class="tag-divider">
                     {{ tag.operator | translate }}
                 </span>

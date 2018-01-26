@@ -9,7 +9,7 @@
             <h5 class="app-list-group-title app-panel-title" ng-click="vm.toggleCollapse($index)">
                 {{::group.name}}
                 <div ng-if="vm.collapsed" class="controls">
-                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                    <i class="fa dw-icon-angle-up" aria-hidden="true"></i>
                 </div>
             </h5>
             <div uib-collapse="group.isCollapsed">
@@ -39,7 +39,7 @@
                                             selected-characteristic-id="::characteristic.id"
                                             characteristics="::vm.list"
                                             ></history-chart-btn>
-                                        <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa fa-flag" aria-hidden="true"></i> 0</a>
+                                        <a ng-if="::characteristic.flaggableValue !== false" href="#" class="control"><i class="fa dw-icon-flag" aria-hidden="true"></i> 0</a>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                 <div class="discussions-list-content">
                                     <div class="pull-right discussions-link" ng-if="::vm.discussion">
                                         <a ui-sref="decisions.single.characteristics.characteristics(::{characteristicId: characteristic.id,characteristicSlug: characteristic.nameSlug})">
-                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                            <i class="fa dw-icon-link" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </div>

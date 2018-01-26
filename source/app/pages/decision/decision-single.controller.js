@@ -229,7 +229,7 @@
                     vm.criteriaGroupsLoader = false;
 
                     vm.isSharacteristicGroupsChart = showChart(decisionMatrixs);
-                    console.log(vm.isSharacteristicGroupsChart);
+                    // console.log(vm.isSharacteristicGroupsChart);
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
                     vm.characteristicGroupsChart = _.map(angular.copy(characteristicGroups), function(characteristic) {
