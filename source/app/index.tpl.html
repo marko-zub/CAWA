@@ -30,7 +30,7 @@
                     </a>
                 </div>
 
-                <nav class="header-nav">
+                <nav class="header-nav" ng-cloak>
                     <a ui-sref="decisions({size: null, page: null})" translate-cloak ui-sref-active="active" title="Decisions" ui-sref-opts="{reload: true}">{{ 'Decisions' | translate }}</a>
                     <a ui-sref="users" translate-cloak ui-sref-active="active" title="Users" ui-sref-opts="{reload: true}">{{ 'Users' | translate }}</a>
                     <a ui-sref="contacts" translate-cloak ui-sref-active="active" title="Contact Us" ui-sref-opts="{reload: true}">{{ 'CONTACT US' | translate }}</a>
@@ -71,8 +71,8 @@
         <div class="app-container-sm">
             <div class="app-footer-info">
                 &copy; 2018 DecisionWanted.com
-                <nav class="footer-nav">
-                    <a href="http://decisionwanted.com/sitemaps" target="_self" translate-cloak>{{ 'Sitemaps' | translate }}</a>
+                <nav class="footer-nav" ng-cloak>
+                    <a href="http://decisionwanted.com/sitemaps" target="_self" title="Sitemaps" translate-cloak>{{ 'Sitemaps' | translate }}</a>
                     <a title="Privacy Policy" ui-sref="privacy" translate-cloak ui-sref-active="active">Privacy Policy</a>
                     <a title="Disclaimer" ui-sref="disclaimer" translate-cloak ui-sref-active="active">Disclaimer</a>
                     <a title="DMCA" ui-sref="dmca" translate-cloak ui-sref-active="active">DMCA</a>
