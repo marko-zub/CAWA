@@ -29,7 +29,7 @@
 
         <div id="matrix-table" class="main-panel matrix-table js-matrix-table">
             <div id="panel" class="app-panel matrix-panel">
-                <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
+                <div ng-show="vm.decisionsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
                 <!-- Header -->
                 <div class="matrix-header">
                     <div class="matrix-row">
@@ -53,8 +53,8 @@
                                 <!-- Filter Name -->
 
                                 <div class="app-sorter active" ng-class="vm.fo.sortByDecisionProperty.order.toLowerCase()" ng-click="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty)">
-                                    <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                                    <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                    <span class="app-sorter-top dw-icon-triangle-top"></span>
+                                    <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
                                 </div>
 
                             </div>
@@ -155,8 +155,8 @@
                                                 <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                             </div>
                                             <div class="app-sorter active" ng-click="vm.orderByCriteriaProperty(vm.fo.sortByCriteria.order, $event)" ng-class="vm.fo.sortByCriteria.order.toLowerCase()">
-                                                <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                                                <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                                <span class="app-sorter-top dw-icon-triangle-top"></span>
+                                                <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
                                             </div>
 
                                         </div>
@@ -197,8 +197,8 @@
                                                     <filter-control item="characteristic"></filter-control>
 
                                                     <div ng-if="::characteristic.isSortable" class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}"  ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
-                                                        <span class="app-sorter-top glyphicon glyphicon-triangle-top"></span>
-                                                        <span class="app-sorter-bottom glyphicon glyphicon-triangle-bottom"></span>
+                                                        <span class="app-sorter-top dw-icon-triangle-top"></span>
+                                                        <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
                                                     </div>
 
                                                     <a ng-if="::characteristic.description" href class="link-secondary icon-info" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
@@ -225,7 +225,7 @@
                             </div>
 
                             <div class="characteristic-groups-content">
-                                <div ng-show="!vm.decisionsLoader && vm.characteristicGroupsContentLoader" class="app-loader-small"><span></span></div>
+                                <div ng-show="!vm.decisionsLoader && vm.characteristicGroupsContentLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
 
                                 <!-- Hide to avoid reflow -->
                                 <div ng-class="{'el-loaded1': vm.characteristicGroupsContentLoader}">

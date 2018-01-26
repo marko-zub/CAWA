@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skuzmin/CAWA.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/skuzmin/CAWA/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/skuzmin/CAWA#readme",
+  "homepage": "",
   "devDependencies": {
     "del": "^2.2.2",
     "express": "^4.14.0",
@@ -39,7 +39,8 @@
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
     "run-sequence": "^1.2.2",
-    "wiredep": "^4.0.0"
+    "wiredep": "^4.0.0",
+    "yargs": "^11.0.0"
   },
   "dependencies": {
     "gulp-ng-annotate": "^2.0.0"

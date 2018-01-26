@@ -50,7 +50,7 @@
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
             '   <a href="#" translate-cloak class="sm-link">{{ "RATE IT" | translate }}</a>',
-            '   <span class="app-rating-votes-likes"><span class="glyphicon glyphicon-thumbs-up"></span>0</span>',
+            '   <span class="app-rating-votes-likes"><span class="dw-icon-thumbs-up"></span>0</span>',
             '</div>',
         ].join('\n');
 
@@ -60,7 +60,7 @@
             '</div>',
             '<div class="dw-additional-wrapper dw-comments">',
             '   <a class="control" href="#">',
-            '       <span class="glyphicon glyphicon-comment"></span>0',
+            '       <span class="dw-icon-comment"></span>0',
             '   </a>',
             '</div>',
             '<span class="app-rating-votes-likes control">',

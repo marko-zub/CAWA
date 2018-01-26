@@ -12,11 +12,11 @@
                         <a ng-if="::(!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && characteristic.acceptUserValues !== false)" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                         <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" characteristic="::characteristic"></content-formater>
                         <div class="dw-additional-wrapper dw-comments control-panel-sm">
-                            <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="glyphicon glyphicon-comment"></i>0</a>
+                            <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="dw-icon-comment"></i>0</a>
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
 
-                                <history-chart-btn 
-                                ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)" 
+                                <history-chart-btn
+                                ng-if="::(characteristic.historicalValue !== false && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.totalHistoryValues > 0)"
                                 decision="::vm.decisions[$index]"
                                 selected-characteristic-id="::characteristic.id"
                                 characteristics="::vm.characteristics"></history-chart-btn>

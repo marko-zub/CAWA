@@ -96,13 +96,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><span></span></div>
+                                <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
                                 <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="list-wrapper">
-                                <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><span></span></div>
+                                <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
                                 <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                 </ul>
             </div>
             <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><span></span></div>
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
         </div>
         <!-- End Recommended Start -->
     </div>

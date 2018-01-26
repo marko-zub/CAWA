@@ -30,7 +30,7 @@
                 <div class="col-sm-12">
                     <div class="container-desisions">
                         <decisions-list compare="true" list="vm.decisionsList" class-name="vm.layoutClass"></decisions-list>
-                        <div ng-show="vm.decisionsLoader" class="app-loader-small"><span></span></div>
+                        <div ng-show="vm.decisionsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
                     </div>
 
                     <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
