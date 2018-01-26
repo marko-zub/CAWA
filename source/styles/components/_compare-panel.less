@@ -31,15 +31,43 @@
       }
     }
   }
-  .nav-tabs-wrapper.tabs-right {
-    margin-top: 4px;
-  }
-}
 
-.compare-panel-wrapper {
-  background-color: #fff;
-  z-index: @z-index-popup + 5 !important;
-  box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
+  .nav-tabs-wrapper {
+    margin: 0;
+    &.tabs-right {
+      margin-top: 4px;
+    }
+  } 
+
+  &-footer {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    padding: 9px 16px;
+    bottom: 0;
+    z-index: 111;
+    background-color: #fff;
+  }
+
+  &-toggle {
+    position: absolute;
+    bottom: 100%;
+    padding: 4px 16px;
+    background-color: @color-orange;
+    display: inline-block;
+    right: 110px;
+    z-index: 100;
+    cursor: pointer;
+    color: #fff;
+  } 
+
+  &-wrapper {
+    background-color: #fff;
+    z-index: @z-index-popup + 5 !important;
+    box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
+  }
+
 }
 
 .decision-card {
@@ -79,25 +107,4 @@
       display: block;
   }
 }
-.compare-panel-footer {
-  margin: 0;
-  position: absolute;
-  right: 0;
-  width: 100%;
-  padding: 9px 16px;
-  bottom: 0;
-  z-index: 111;
-  background-color: #fff;
-}
 
-.compare-panel-toggle {
-  position: absolute;
-  bottom: 100%;
-  padding: 4px 16px;
-  background-color: @color-orange;
-  display: inline-block;
-  right: 110px;
-  z-index: 100;
-  cursor: pointer;
-  color: #fff;
-}
