@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    // TODO: 
+    // TODO:
     // add pages module
     angular.module('app', [
         'app.core',
@@ -41,12 +41,11 @@
             console.log(error);
         })
         .finally(function() {
-            $(document).ready(function() {
+            // $(document).ready(function() {
                 angular.bootstrap(document, ['app'], {
                     strictDi: true
                 });
-            });
-
+            // });
 
             $('#init-loader').remove();
         });
