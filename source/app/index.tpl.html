@@ -16,18 +16,67 @@
 
 <body ng-class="bodyClass">
 
-    <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
+    <header id="app-header" class="app-header">
 
-    <app-header></app-header>
+        <div class="row">
+            <div class="col-xs-6 col-sm-9 col-lg-9 header-menu-btn clearfix pr-0">
+                <div class="navbar-brand">
+                    <a ui-sref="home" title="Home" ui-sref-opts="{reload: true}">
+                    <!-- Decision<span class="app-light">Wanted</span> -->
+                    <img src="/images/logo.png" alt="" class="img-responsive">
+                    </a>
+                </div>
+
+                <nav class="header-nav">
+                    <a ui-sref="decisions({size: null, page: null})" translate-cloak ui-sref-active="active" title="Decisions" ui-sref-opts="{reload: true}">{{ 'Decisions' | translate }}</a>
+                    <a ui-sref="users" translate-cloak ui-sref-active="active" title="Users" ui-sref-opts="{reload: true}">{{ 'Users' | translate }}</a>
+                    <a ui-sref="contacts" translate-cloak ui-sref-active="active" title="Contact Us" ui-sref-opts="{reload: true}">{{ 'CONTACT US' | translate }}</a>
+                </nav>
+
+                <div class="app-panel-search hidden-xs">
+                    <search-bar translate-cloak placeholder="{{'SEARCH' | translate}}"></search-bar>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-lg-3 header-login pl-0 text-right">
+         <!--        <div class="dib">
+                    <translate-switcher></translate-switcher>
+                </div> -->
+    <!--             <div class="dib" translate-cloak>
+                    <a href class="btn btn-primary-2 btn-sm btn-header">{{ 'Ask for Decision' | translate }}</a>
+                </div> -->
+                <div class="dib">
+                    <app-login></app-login>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
 
     <div class="content container-fluid">
+
+        <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
+
         <div ng-if="breadcrumbs.length" class="breadcrumbs-wrapper">
             <breadcrumbs items="breadcrumbs"></breadcrumbs>
         </div>
 
         <div ui-view></div>
     </div>
-    <app-footer></app-footer>
+
+    <footer class="app-footer container-fluid">
+        <div class="app-container-sm">
+            <div class="app-footer-info">
+                &copy; 2018 DecisionWanted.com
+                <nav class="footer-nav">
+                    <a href="http://decisionwanted.com/sitemaps" target="_self" translate-cloak>{{ 'Sitemaps' | translate }}</a>
+                    <a title="Privacy Policy" ui-sref="privacy" translate-cloak ui-sref-active="active">Privacy Policy</a>
+                    <a title="Disclaimer" ui-sref="disclaimer" translate-cloak ui-sref-active="active">Disclaimer</a>
+                    <a title="DMCA" ui-sref="dmca" translate-cloak ui-sref-active="active">DMCA</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
 
     <compare-panel></compare-panel>
 
