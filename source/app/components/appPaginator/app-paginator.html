@@ -5,7 +5,7 @@
 
 			<div class="app-pagination-pages">
 				<span class="app-pagination-pages-label">Page:</span>
-				<input type="number" class="form-control input-sm pagination-control form-number" ng-keyup="vm.goToPage($event)" min="1" step="1" ng-model="vm.pageField" ng-disabled="vm.pagination.totalDecisions < vm.pagination.pageSize">
+				<input aria-label="Go to page" type="number" class="form-control input-sm pagination-control form-number" ng-keyup="vm.goToPage($event)" min="1" step="1" ng-model="vm.pageField" ng-disabled="vm.pagination.totalDecisions < vm.pagination.pageSize">
 			</div>
 			<div class="app-pagination-pages">
 				<span class="app-pagination-pages-label">On page:</span>
