@@ -18,11 +18,11 @@
     function AdditionalScriptController() {
         var vm = this;
 
-        vm.$onInit = onInit;
+        vm.$postLink = postLink;
         vm.$onChanges = onChanges;
         var addThisUrl = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-593e99ada6e43adc';
 
-        function onInit () {
+        function postLink() {
             $.getScript(addThisUrl, function() {
                 toggleSharesByType(vm.socialType);
             });
@@ -46,7 +46,7 @@
 
         function toggleShares(enableFloating) {
             if (enableFloating === true) {
-               $('body').removeClass('addthis-floating').addClass('addthis-expanding');
+                $('body').removeClass('addthis-floating').addClass('addthis-expanding');
             } else {
                 $('body').addClass('addthis-floating').removeClass('addthis-expanding');
             }
