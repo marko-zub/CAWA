@@ -45,8 +45,8 @@
                 angular.bootstrap(document, ['app'], {
                     strictDi: true
                 });
+                $('#init-loader').remove();
             });
 
-            $('#init-loader').remove();
         });
 })();
