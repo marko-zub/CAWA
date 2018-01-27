@@ -69,15 +69,26 @@
     <!-- Footer -->
     <footer class="app-footer container-fluid">
         <div class="app-container-sm">
-            <div class="app-footer-info">
-                &copy; 2018 DecisionWanted.com
-                <nav class="footer-nav" ng-cloak>
-                    <a href="http://decisionwanted.com/sitemaps" target="_self" title="Sitemaps" translate-cloak>{{ 'Sitemaps' | translate }}</a>
-                    <a href="http://decisionwanted.com/rss" target="_self" title="RSS" translate-cloak>RSS</a>
-                    <a title="Privacy Policy" ui-sref="privacy" translate-cloak ui-sref-active="active">Privacy Policy</a>
-                    <a title="Disclaimer" ui-sref="disclaimer" translate-cloak ui-sref-active="active">Disclaimer</a>
-                    <a title="DMCA" ui-sref="dmca" translate-cloak ui-sref-active="active">DMCA</a>
-                </nav>
+            <div class="row">
+                <div class="col-sm-3">  
+                    &copy; 2018 DecisionWanted.com
+                </div>
+                <div class="col-sm-6">
+                    <div class="app-footer-info text-center">
+                        <nav class="footer-nav" ng-cloak>
+                            <a href="http://decisionwanted.com/sitemaps" target="_self" title="Sitemaps" translate-cloak>{{ 'Sitemaps' | translate }}</a>
+                            <a href="http://decisionwanted.com/rss" target="_self" title="RSS" translate-cloak>RSS</a>
+                            <a title="Privacy Policy" ui-sref="privacy" translate-cloak ui-sref-active="active">Privacy Policy</a>
+                            <a title="Disclaimer" ui-sref="disclaimer" translate-cloak ui-sref-active="active">Disclaimer</a>
+                            <a title="DMCA" ui-sref="dmca" translate-cloak ui-sref-active="active">DMCA</a>
+                        </nav>
+                    </div>     
+                </div>
+                <div class="col-sm-3 text-right">
+                    <a href="https://twitter.com/decisionwanted" target="_blank" title="Twitter" >
+                        <i class="dw-icon-twitter"></i>
+                    </a>                    
+                </div>
             </div>
         </div>
     </footer>

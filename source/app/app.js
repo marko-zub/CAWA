@@ -41,11 +41,11 @@
             console.log(error);
         })
         .finally(function() {
-            // $(document).ready(function() {
+            $(document).ready(function() {
                 angular.bootstrap(document, ['app'], {
                     strictDi: true
                 });
-            // });
+            });
 
             $('#init-loader').remove();
         });
