@@ -13,7 +13,7 @@
                 <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
             </div>
             <div class="counters criteria-block-votes">
-                <i class="dw-icon-vote"></i>
+                <i class="dw-icon-vote" aria-hidden="true"></i>
                 {{ vm.decision.totalVotes }}
             </div>
             <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">

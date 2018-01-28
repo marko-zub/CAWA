@@ -172,7 +172,7 @@
                 content,
                 '   </div>',
                 '</div>',
-                '<div ng-show="vm.filterSpinner" class="app-loader-small"><i class="dw-icon-refresh"></i></div>'
+                '<div ng-show="vm.filterSpinner" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>'
             ].join('\n');
 
             return html;

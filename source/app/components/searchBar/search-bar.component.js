@@ -40,7 +40,7 @@
             });
 
         function search() {
-            changeState(vm.searchQuer);
+            changeState(vm.searchQuery);
         }
 
         function clearValue($event) {

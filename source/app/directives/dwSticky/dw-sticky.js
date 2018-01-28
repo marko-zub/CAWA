@@ -33,7 +33,7 @@
                     },
                     offset: $('#app-header').outerHeight()
                 });
-            }, 200);
+            }, 50);
 
             $scope.$on('$destroy', function() {
                 waypoint.destroy();

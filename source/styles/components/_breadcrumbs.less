@@ -1,10 +1,14 @@
 .breadcrumbs-wrapper {
-    height: @breadcrumbs-height;
+    min-height: @breadcrumbs-height;
     display: block;
     .container-fluid;
     background-color: #fff;
     padding: 0;
-    margin: 0 0 32px;
+    margin: 0 0 6px;
+    @media (min-width: @screen-sm-min) {
+        height: @breadcrumbs-height;
+        margin: 0 0 32px;
+    }
 }
 .breadcrumbs {
     margin: 5px 0;

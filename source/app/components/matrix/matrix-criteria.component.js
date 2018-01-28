@@ -50,7 +50,7 @@
         var ratingEmptyHtml = [
             '<div class="app-rating-votes">',
             '   <a href="#" translate-cloak class="sm-link">{{ "RATE IT" | translate }}</a>',
-            '   <span class="app-rating-votes-likes"><span class="dw-icon-thumbs-up"></span>0</span>',
+            '   <span class="app-rating-votes-likes"><span class="dw-icon-thumbs-up" aria-hidden="true"></span>0</span>',
             '</div>',
         ].join('\n');
 
@@ -60,7 +60,7 @@
             '</div>',
             '<div class="dw-additional-wrapper dw-comments">',
             '   <a class="control" href="#">',
-            '       <span class="dw-icon-comment"></span>0',
+            '       <span class="dw-icon-comment" aria-hidden="true"></span>0',
             '   </a>',
             '</div>',
             '<span class="app-rating-votes-likes control">',
@@ -77,7 +77,7 @@
                 _.each(decision.criteria, function(criteria) {
                     var id = '#m-criteria-' + decisionIndex + '-' + criteria.id;
                     var rating = '<rating-star class="text-left" weight="' + criteria.weight + '" total-votes="' + criteria.totalVotes + '" popover-placement="bottom" popover-append-to-body="true" popover-animation="false" uib-popover="Average vote ' + _.floor(criteria.weight, 2).toFixed(2) + ' out of 5" popover-trigger="\'mouseenter\'"></rating-star>';
-                    // rating += '<span class="app-rating-votes-likes control"><i class="dw-icon-vote"></i>' + criteria.totalVotes + '</span>';
+                    // rating += '<span class="app-rating-votes-likes control"><i class="dw-icon-vote" aria-hidden="true"></i>' + criteria.totalVotes + '</span>';
                     $(id).find('.rating').html(rating);
                     $(id).find('.app-rating-votes-likes-count').html(criteria.totalVotes);
                 });

@@ -57,9 +57,9 @@
                 <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision" scroll-to-id="vm.scrollToId"></decisions-list>
                 <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
                 <!-- TODO: remove second loader -->
-                <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
+                <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
             </div>
-            <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
+            <div ng-show="vm.isDecisionsParent && vm.decisionsChildsLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
         </div>
     </div>
 </div>

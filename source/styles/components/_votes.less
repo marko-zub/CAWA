@@ -1,9 +1,12 @@
 // Votes
 .app-votes {
   position: absolute;
-  left: -40px;
+  left: -20px;
   text-align: center;
   color: @color-vote-star;
+  @media (min-width: @screen-sm-min) {
+    left: -40px;
+  }
   .app-vote-control {
     font-size: 27px;
     color: @color-vote-star;

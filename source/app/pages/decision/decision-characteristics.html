@@ -88,7 +88,7 @@
                                                 <strong ng-bind="vm.decision.criteriaCompliancePercentage"></strong>%
                                             </div>
                                             <div class="counters criteria-block-votes">
-                                                <i class="dw-icon-vote"></i> {{ vm.criteriaGroups.totalVotes }}
+                                                <i class="dw-icon-vote" aria-hidden="true"></i> {{ vm.criteriaGroups.totalVotes }}
                                             </div>
                                             <div ng-if="vm.decision.criteriaCompliancePercentage >= 0" class="criteria-block-rating">
                                                 <rating-star class="text-left" percentage="::vm.decision.criteriaCompliancePercentage"></rating-star>
@@ -96,13 +96,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
+                                <div ng-show="vm.criteriaGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
                                 <criteria-list ng-if="vm.criteriaGroups" list="vm.criteriaGroups" links="false" rating="true" criteria-title="false" discussion="true" discussion-link="false" collapsed="false"></criteria-list>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="list-wrapper">
-                                <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
+                                <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
                                 <characteristics-list ng-if="vm.characteristicGroups" list="vm.characteristicGroups" links="false" rating="true" discussion="true" discussion-link="false" collapsed="false"></characteristics-list>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                 </ul>
             </div>
             <decisions-list class-name="'cards'" compare="true" list="vm.recommendedDecisionsList" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.activeRecommendedTab"></decisions-list>
-            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><i class="dw-icon-refresh"></i></div>
+            <div ng-show="vm.recommendedDecisionsListLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
         </div>
         <!-- End Recommended Start -->
     </div>

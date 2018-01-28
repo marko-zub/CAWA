@@ -53,8 +53,8 @@
                                 <!-- Filter Name -->
 
                                 <div class="app-sorter active" ng-class="vm.fo.sortByDecisionProperty.order.toLowerCase()" ng-click="vm.orderByDecisionProperty(vm.fo.sortByDecisionProperty)">
-                                    <span class="app-sorter-top dw-icon-triangle-top"></span>
-                                    <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
+                                    <i class="app-sorter-top dw-icon-triangle-top" aria-hidden="true"></i>
+                                    <i class="app-sorter-bottom dw-icon-triangle-bottom" aria-hidden="true"></i>
                                 </div>
 
                             </div>
@@ -91,7 +91,7 @@
                                                 </div>
                                                 <div class="counters">
                                                     <span ng-bind="item.decision.criteriaCompliancePercentage"></span>%
-                                                    <i class="dw-icon-vote"></i><span ng-bind="item.decision.totalVotes"></span>
+                                                    <i class="dw-icon-vote" aria-hidden="true"></i><span ng-bind="item.decision.totalVotes"></span>
                                                 </div>
                                             </a>
                                         </div>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="app-panel-controls">
                                         <span ng-click="vm.updateExclusionList(item.decision.id)" class="app-control">
-                                            <i class="fa" ng-class="{'dw-icon-ok' : vm.matrixMode == 'inclusion', 'dw-icon-cancel': vm.matrixMode == 'exclusion'}"></i>
+                                            <i class="fa" ng-class="{'dw-icon-ok' : vm.matrixMode == 'inclusion', 'dw-icon-cancel': vm.matrixMode == 'exclusion'}" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -155,8 +155,8 @@
                                                 <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
                                             </div>
                                             <div class="app-sorter active" ng-click="vm.orderByCriteriaProperty(vm.fo.sortByCriteria.order, $event)" ng-class="vm.fo.sortByCriteria.order.toLowerCase()">
-                                                <span class="app-sorter-top dw-icon-triangle-top"></span>
-                                                <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
+                                                <i class="app-sorter-top dw-icon-triangle-top" aria-hidden="true"></i>
+                                                <i class="app-sorter-bottom dw-icon-triangle-bottom" aria-hidden="true"></i>
                                             </div>
 
                                         </div>
@@ -197,8 +197,8 @@
                                                     <filter-control item="characteristic"></filter-control>
 
                                                     <div ng-if="::characteristic.isSortable" class="app-sorter {{vm.fo.sortByCharacteristic.order.toLowerCase()}}"  ng-click="vm.orderByCharacteristicProperty(characteristic.id, vm.fo.sortByCharacteristic.order)" ng-class="{'active': vm.fo.sortByCharacteristic.id == characteristic.id}">
-                                                        <span class="app-sorter-top dw-icon-triangle-top"></span>
-                                                        <span class="app-sorter-bottom dw-icon-triangle-bottom"></span>
+                                                        <i class="app-sorter-top dw-icon-triangle-top" aria-hidden="true"></i>
+                                                        <i class="app-sorter-bottom dw-icon-triangle-bottom" aria-hidden="true"></i>
                                                     </div>
 
                                                     <a ng-if="::characteristic.description" href class="link-secondary icon-info" uib-popover-html="::characteristic.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>

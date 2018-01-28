@@ -34,7 +34,7 @@
 
         function handle(list) {
             return _.map(list, function(item) {
-                item.title = translateFilter(item.title);
+                item.title = _.unescape(translateFilter(item.title));
                 return item;
             });
         }
