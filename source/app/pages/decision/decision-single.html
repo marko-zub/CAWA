@@ -100,7 +100,6 @@
                 characteristics="vm.characteristicGroupsChart"
                 decision="vm.decisionMatrixs[0]"></history-chart>
 
-            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
 
            <div ng-if="vm.parentDecisionGroups.length && !vm.isSharacteristicGroupsChart" class="decision-singe-additional">
                 <!-- Parent criteria & characteristics -->
@@ -170,6 +169,8 @@
                     <affiliate-disclosure></affiliate-disclosure>
                 </div>
            </div>
+
+            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
         </div>
 
         <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
