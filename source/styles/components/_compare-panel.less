@@ -60,7 +60,7 @@
     z-index: 100;
     cursor: pointer;
     color: #fff;
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
     @media (min-width: @screen-md-min) {
       margin-bottom: 0;
       right: 19%;
@@ -74,6 +74,10 @@
     background-color: #fff;
     z-index: @z-index-popup + 5 !important;
     box-shadow: 0px 0 11px rgba(0, 0, 0, 0.2);
+    margin-bottom: @share-buttons-h-xs;
+    @media (min-width: @screen-md-min) {
+      margin-bottom: 0;
+    }
   }
 
 }

@@ -2,9 +2,10 @@
     background-color: @footer-bg;
     border-top: 1px solid @gray-light;
     color: #fff;
-    padding: 15px 0 60px;
+    padding: 15px 0 90px;
     text-align: center;
     display: block;
+    overflow: hidden;
     @media (min-width: @screen-md-min) {
         padding: 15px 0;
         height: @footer-height;
@@ -28,10 +29,15 @@
 }
 
 .social-nav {
-    display: inline-block;
-    .clearfix;
+    text-align: center;
+    display: block;
+    font-size: 0;
+    @media (min-width: @screen-md-min) {
+        display: inline-block;
+    }
     a {
-        float: left;
+        display: inline-block;
+        font-size: 14px;
         margin: 0 4px;
         border-radius: 2px;
         padding: 2px 3px;
