@@ -17,7 +17,9 @@
         vm.$onInit = onInit;
 
         function onInit() {
-            // setPageData();
+            if (!vm.decision.decisionGroups) {
+                setPageData();
+            }
         }
 
         function setPageData(categorySlug, tab) {
@@ -56,6 +58,7 @@
                     link: null
                 });
             }
+            
             $rootScope.breadcrumbs = breadcrumbs;
 
             if ($stateParams.categorySlug || tab) {

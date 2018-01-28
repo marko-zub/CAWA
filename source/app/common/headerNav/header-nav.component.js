@@ -20,10 +20,11 @@
 		var vm = this;
 
 		vm.$onInit = onInit;
-		vm.$postLink = postLink;
 
 		function onInit() {
 			vm.isOpen = true;
+			checkSize();
+			$(window).on('resize', _.throttle(checkSize, 300));
 		}
 
 		vm.toggleNav = toggleNav;
@@ -36,11 +37,6 @@
 			if ($(window).width() < 992) {
 				vm.isOpen = false;
 			}
-		}
-
-		function postLink() {
-			checkSize();
-			$(window).on('resize', _.throttle(checkSize, 300));
 		}
 	}
 })();
