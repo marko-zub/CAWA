@@ -20,6 +20,7 @@
                     }
                 },
                 data: {
+                    pageTitle: 'Users',
                     breadcrumbs: [{
                         title: 'Users',
                         link: null
