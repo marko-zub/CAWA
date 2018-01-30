@@ -81,6 +81,7 @@
                 }
 
                 $rootScope.ogImage = '/images/og_image.jpg';
+                $rootScope.oggDescription = '';
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
 

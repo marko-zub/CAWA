@@ -8,7 +8,7 @@
     DecisionsUtils.$inject = ['$sce', 'DecisionsConstant'];
 
     function DecisionsUtils($sce, DecisionsConstant) {
-        
+
         // private
         function htmlToPlaintext(text) {
             return text ? String(text).replace(/<[^>]+>/gm, '') : '';
@@ -48,7 +48,6 @@
                     decision.imageUrl = '/images/noimage.jpg';
                 }
             }
-
             var url = decision.imageUrl;
             if (decision.imageUrl) {
                 var ulrArray = url.split('.');
@@ -70,6 +69,10 @@
 
             if (decision.description && typeof decision.description === 'string') {
                 decision.description = _.unescape(decision.description.replace(/(&#13;)?&#10;/g, '<br/>'));
+
+                var oggDescription = htmlToPlaintext(decision.description.substring(0, DecisionsConstant.OG_TEXT_LENGTH));
+                decision.oggDescription = oggDescription;
+
                 decision.description = $sce.trustAsHtml(decision.description);
             }
 

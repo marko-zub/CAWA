@@ -5,15 +5,16 @@
     angular.module('app.decision')
         .controller('DecisionMatrixController', DecisionMatrixController);
 
-    DecisionMatrixController.$inject = ['decisionBasicInfo', '$rootScope', 'Config', '$stateParams', 'translateFilter', '$state'];
+    DecisionMatrixController.$inject = ['decisionBasicInfo', '$rootScope', 'Config', '$stateParams', 'translateFilter', '$state', 'DecisionsUtils'];
 
-    function DecisionMatrixController(decisionBasicInfo, $rootScope, Config, $stateParams, translateFilter, $state) {
+    function DecisionMatrixController(decisionBasicInfo, $rootScope, Config, $stateParams, translateFilter, $state, DecisionsUtils) {
         var vm = this;
 
         vm.$onInit = onInit;
 
         function onInit() {
-            vm.decision = decisionBasicInfo || {};
+            var decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
+            vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
             setPageData();
         }
 
@@ -42,8 +43,9 @@
                         title: 'Comparison Matrix',
                         link: null
                     }];
-                    $rootScope.ogImage = vm.decision.imageUrl;
-                    $rootScope.pageTitle = vm.decision.name  + ' ' + vm.decision.decisionGroups[index].name + ' ' + translateFilter('Comparison Matrix') + ' | DecisionWanted.com';
+                    $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+                    $rootScope.oggDescription = vm.decision.oggDescription ? vm.decision.oggDescription : '';
+                    $rootScope.pageTitle = vm.decision.name + ' ' + vm.decision.decisionGroups[index].name + ' ' + translateFilter('Comparison Matrix') + ' | DecisionWanted.com';
                 } else {
                     $state.go('404');
                 }

@@ -55,7 +55,8 @@
             }];
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
-            $rootScope.ogImage = vm.decision.imageUrl;
+            $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+            $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
             // if ($stateParams.category || tab) {
             //     $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
             // } else {

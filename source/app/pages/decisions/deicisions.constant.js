@@ -23,6 +23,7 @@
                 value: null,
                 label: 'Top Rated'
             },
+            OG_TEXT_LENGTH: 300,
             SHORT_TEXT_LENGTH: 350,
             SORT_DECISION_PROPERTY_OPTIONS: [{
                 id: 'name',

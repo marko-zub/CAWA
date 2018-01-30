@@ -12,7 +12,8 @@
 
         var vm = this;
 
-        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decisionBasicInfo) || {};
+        var decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
+        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
 
         vm.$onInit = onInit;
 
@@ -29,6 +30,8 @@
 
         function setPageData() {
             $rootScope.pageTitle = vm.decision.name + ' Reviews | DecisionWanted.com';
+            $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+            $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',

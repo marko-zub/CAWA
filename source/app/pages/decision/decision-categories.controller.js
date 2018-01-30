@@ -13,7 +13,8 @@
         // TODO: clean up controller
         var vm = this;
 
-        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decisionBasicInfo) || {};
+        var decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
+        vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
         vm.$onInit = onInit;
 
         function onInit() {
@@ -60,7 +61,9 @@
             }
 
             $rootScope.breadcrumbs = breadcrumbs;
-            $rootScope.ogImage = vm.decision.imageUrl;
+            $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+            console.log(vm.decision);
+            $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
 
             if ($stateParams.categorySlug || tab) {
                 $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
