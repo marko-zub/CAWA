@@ -61,8 +61,7 @@
             }
 
             $rootScope.breadcrumbs = breadcrumbs;
-            $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
-            console.log(vm.decision);
+            $rootScope.ogImage = vm.decision.metaOgImage;
             $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
 
             if ($stateParams.categorySlug || tab) {

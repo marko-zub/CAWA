@@ -67,6 +67,14 @@
                 decision.criteriaCompliancePercentage = _.floor(decision.criteriaCompliancePercentage, 2).toFixed(2);
             }
 
+
+            if (decision.medias && decision.medias.length) {
+                var findLogo = _.find(decision.medias, function(media) {
+                    return media.type === 'IMAGE';
+                });
+                decision.metaOgImage = findLogo ? findLogo.url : decision.imageUrl;
+            }
+
             if (decision.description && typeof decision.description === 'string') {
                 decision.description = _.unescape(decision.description.replace(/(&#13;)?&#10;/g, '<br/>'));
 

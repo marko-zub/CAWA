@@ -30,7 +30,7 @@
 
         function setPageData() {
             $rootScope.pageTitle = vm.decision.name + ' Reviews | DecisionWanted.com';
-            $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+            $rootScope.ogImage = vm.decision.metaOgImage;
             $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
 
             $rootScope.breadcrumbs = [{

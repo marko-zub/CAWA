@@ -43,7 +43,7 @@
                         title: 'Comparison Matrix',
                         link: null
                     }];
-                    $rootScope.ogImage = vm.decision.imageUrl || vm.decision.imageUrl;
+                    $rootScope.ogImage = vm.decision.metaOgImage;
                     $rootScope.oggDescription = vm.decision.oggDescription ? vm.decision.oggDescription : '';
                     $rootScope.pageTitle = vm.decision.name + ' ' + vm.decision.decisionGroups[index].name + ' ' + translateFilter('Comparison Matrix') + ' | DecisionWanted.com';
                 } else {
