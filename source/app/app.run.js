@@ -49,7 +49,7 @@
                     if (accessToken) {
                         toParams.access_token = accessToken.replace('access_token=', ''); // jshint ignore:line
                     }
-                } 
+                }
 
                 if (toState && fromState && toState.name === fromState.name ||
                     (fromState.name === 'decisions.single' && toState.name.indexOf('decisions.single') >= 0)) {
@@ -79,6 +79,8 @@
                 } else {
                     $rootScope.pageTitle = pageTitle;
                 }
+
+                $rootScope.ogImage = '/images/og_image.jpg';
 
                 $rootScope.breadcrumbs = $stateParams.data.breadcrumbs;
 

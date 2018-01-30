@@ -28,6 +28,7 @@
 
         function setPageData() {
             $rootScope.pageTitle = vm.decision.name + ' Nominations | DecisionWanted.com';
+            $rootScope.ogImage = vm.decision.imageUrl;
 
             $rootScope.breadcrumbs = [{
                 title: 'Decisions',
@@ -39,6 +40,7 @@
                 title: 'Nominations',
                 link: null
             }];
+
         }
 
     }

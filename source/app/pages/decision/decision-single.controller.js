@@ -55,6 +55,7 @@
             }];
 
             $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
+            $rootScope.ogImage = vm.decision.imageUrl;
             // if ($stateParams.category || tab) {
             //     $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
             // } else {
@@ -258,7 +259,7 @@
                 var find = _.find(decisions[0].characteristics, function (characteristic) {
                     return characteristic.totalHistoryValues > 0;
                 });
-                
+
                 if (find) {
                     showChart = true;
                 }

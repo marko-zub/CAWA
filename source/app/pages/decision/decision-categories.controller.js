@@ -58,14 +58,16 @@
                     link: null
                 });
             }
-            
+
             $rootScope.breadcrumbs = breadcrumbs;
+            $rootScope.ogImage = vm.decision.imageUrl;
 
             if ($stateParams.categorySlug || tab) {
                 $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
             } else {
                 $rootScope.pageTitle = vm.decision.name + ' Categories | ' + Config.pagePrefix;
             }
+
         }
 
         vm.onChangeTab = onChangeTab;

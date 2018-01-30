@@ -149,7 +149,6 @@ body {
       margin: 0 0 10px;
       display: block;
       .img-container {
-        // width: 90px;
         max-width: 100%;
       }
     }
@@ -316,6 +315,10 @@ a {
   float: right;
   font-size: 0;
   margin: 3px 10px 0;
+  display: none;
+  @media (min-width: @screen-sm-min) {
+    display: block;
+  }
   .nav-layout-item,
   a {
     display: inline-block;
@@ -333,6 +336,10 @@ a {
 
 .btn-comparison {
   margin-top: 10px;
+  margin-bottom: 16px;
+  @media (min-width: @screen-sm-min) {
+    margin-bottom: 0;
+  }
 }
 
 .app-page {
