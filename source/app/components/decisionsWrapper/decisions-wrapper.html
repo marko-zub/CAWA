@@ -56,6 +56,12 @@
             <div class="decisions-list mg-b-md" ng-style="{'min-height': vm.decisionsHeight}" ng-if="!vm.decisionsChildsLoader">
                 <decisions-list compare="true" list="vm.decisions" criteria-groups-list="vm.criteriaGroups" criteria-list="true" parent-decision="vm.decision" scroll-to-id="vm.scrollToId"></decisions-list>
                 <app-paginator total="vm.pagination.totalDecisions" page-size="vm.pagination.pageSize" page-number="vm.pagination.pageNumber" on-change-page="vm.changePage(pagination)"></app-paginator>
+                
+                <div class="rss-wrapper">
+                    <a href="http://decisionwanted.com/api/v1.0/decisiongroups/{{vm.decisionGroupActive.id}}/rss" target="_blank" title="Rss feed {{vm.decisionGroupActive.name}}">
+                        <i class="dw-icon-rss-squared" aria-label="false"></i>
+                    </a>
+                </div>
                 <!-- TODO: remove second loader -->
                 <div ng-show="vm.decisionsChildsLoaderRequest" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
             </div>
