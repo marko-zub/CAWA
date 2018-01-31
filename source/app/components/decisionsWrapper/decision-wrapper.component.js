@@ -99,6 +99,8 @@
                     vm.activeTabSort = findIndex;
                     // Hide criterias
                     vm.criteriaGroups = [];
+
+                    vm.urlRss = 'http://decisionwanted.com/api/v1.0/decisiongroups/' + vm.decisionGroupActive.id + '/rss' + (navigationObj[findIndex].value ? '?sort=' + navigationObj[findIndex].value : '');
                 } else {
                     vm.tabMode = 'topRated';
                     vm.activeTabSort = 0;
@@ -110,6 +112,7 @@
                         inherit: true,
                         notify: true
                     });
+                    vm.urlRss = 'http://decisionwanted.com/api/v1.0/decisiongroups/' + vm.decisionGroupActive.id + '/rss';
                 }
             }
         }

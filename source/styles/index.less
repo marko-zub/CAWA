@@ -732,12 +732,17 @@ a {
   position: absolute;
   right: 0;
   bottom: 12px;
-  font-size: 19px;
-  a {
-    color: #f48024;
-    &:hover {
+  vertical-align: middle;
+  &:hover {
+    a i {
       color: darken(#f48024, 10%);
     }
+  }
+  a > i {
+    font-size: 19px;
+    color: #f48024;
+    line-height: 15px;
+    vertical-align: middle;
   }
 }
 
