@@ -21,7 +21,7 @@
 </div>
 
 <script type="text/ng-template" id="typeaheadTemplate.html">
-  <a>
+  <a title="">
       <img alt="" ng-src="{{match.model.logoUrl}}" width="20">
       <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></span>
   </a>

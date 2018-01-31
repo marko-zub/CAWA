@@ -209,7 +209,7 @@
 
                 // Send page only if pagination exist
                 // Don't call in when page without params
-                if (pagination.pageNumber - 1 > 0) {
+                if (pagination && pagination.pageNumber - 1 > 0) {
                     sendData.pageNumber = pagination.pageNumber - 1;
                     sendData.pageSize = pagination.pageSize;
                 }

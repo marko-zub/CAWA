@@ -20,12 +20,12 @@
     <!-- New user -->
     <ul class="nav navbar-nav pull-right nav-side" ng-if="!vm.loginService.getLoginStatus()">
         <li>
-            <a href="#" translate-cloak>
+            <a href="#" translate-cloak title="Sign up">
                 {{ 'SIGN UP' | translate }}
             </a>
         </li>
         <li>
-            <a ng-click="vm.loginService.login()" class="item-btn">
+            <a title="" ng-click="vm.loginService.login()" class="item-btn">
                 <span class="dw-icon-user" aria-hidden="true"></span>
             </a>
         </li>
