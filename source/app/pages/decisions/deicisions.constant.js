@@ -12,11 +12,11 @@
             }, {
                 key: 'active',
                 value: 'updateDate',
-                label: 'Active'
+                label: 'Recently Updated'
             }, {
                 key: 'views',
                 value: 'totalViews',
-                label: 'Views'
+                label: 'Most Viewed'
             }],
             NAVIGATON_STATES_TOP_RATED: {
                 key: 'topRated',
