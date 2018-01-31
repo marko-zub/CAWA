@@ -96,6 +96,7 @@
 
                 if (findIndex >= 0 && !_.isNull(mode)) {
                     vm.tabMode = navigationObj[findIndex].value;
+                    vm.activeTab = navigationObj[findIndex];
                     vm.activeTabSort = findIndex;
                     // Hide criterias
                     vm.criteriaGroups = [];
@@ -112,6 +113,7 @@
                         inherit: true,
                         notify: true
                     });
+                    vm.activeTab = navigationObj[0];
                     vm.urlRss = 'http://decisionwanted.com/api/v1.0/decisiongroups/' + vm.decisionGroupActive.id + '/rss?sort=topRated';
                 }
             }
