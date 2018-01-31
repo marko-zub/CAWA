@@ -112,7 +112,7 @@
                         inherit: true,
                         notify: true
                     });
-                    vm.urlRss = 'http://decisionwanted.com/api/v1.0/decisiongroups/' + vm.decisionGroupActive.id + '/rss';
+                    vm.urlRss = 'http://decisionwanted.com/api/v1.0/decisiongroups/' + vm.decisionGroupActive.id + '/rss?sort=topRated';
                 }
             }
         }
