@@ -752,3 +752,16 @@ a {
 .decisions-list {
   position: relative;
 }
+
+.panel-cookie {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: lighten(#ffa, 10%);
+  padding: 4px 20%;
+  @media (min-width: @screen-lgx-min) {
+    text-align: center;
+  }
+}
