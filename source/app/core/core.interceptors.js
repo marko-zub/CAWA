@@ -12,9 +12,9 @@
         $httpProvider.interceptors.push(appInterceptor);
     }
 
-    appInterceptor.$inject = ['$injector'];
+    appInterceptor.$inject = ['$injector', '$rootScope'];
 
-    function appInterceptor($injector) {
+    function appInterceptor($injector, $rootScope) {
         return {
             request: function(config) {
                 return config;
@@ -59,13 +59,19 @@
                 return resp;
             },
             responseError: function(rejection) {
-                console.log(rejection);
+                
                 // $state.go('404');
 
                 var notification = $injector.get('MsgService');
                 // var msg = rejection.status + ': ' + rejection.statusText;
-                if(rejection.status === -1){
-                    notification.error('No API connection ' + rejection.statusText);
+                if(rejection.status === -1) {
+                    // console.log(rejection);
+                    const error = {
+                        code: '1', 
+                        message: 'We are aware of service issues and we are working to resolve this asap. Apologies for any inconvenience and thanks for your patience'
+                    };
+                    $rootScope.errors = [error];
+                    notification.error('API error ' + rejection.statusText);
                 }
 
                 return rejection;

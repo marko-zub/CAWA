@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html ng-csp lang=en>
 <head>
+    <title ng-bind="pageTitle | translate" translate-cloak>DecisionWanted.com</title>
     <base href="/">
     <meta charset="UTF-8">
-    <title ng-bind="pageTitle | translate" translate-cloak>DecisionWanted.com</title>
     <meta name="viewport" content="width=device-width">
     <meta name="fragment" content="!">
 
@@ -90,12 +90,22 @@
     <main class="content">
 
         <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
-
-        <div ng-if="breadcrumbs.length" class="breadcrumbs-wrapper">
-            <breadcrumbs items="breadcrumbs"></breadcrumbs>
+        
+        <div ng-if="errors.length" class="alert" ng-cloak>
+            <div class="alert-content">
+                <div ng-repeat="error in errors track by error.code">
+                    {{ ::error.message }}
+                </div>
+            </div>
         </div>
+        
+        <div ng-show="!errors">
+            <div ng-if="breadcrumbs.length" class="breadcrumbs-wrapper" ng-cloak>
+                <breadcrumbs items="breadcrumbs"></breadcrumbs>
+            </div>
 
-        <div ui-view></div>
+            <div ui-view></div>
+        </div>
     </main>
     <!-- End Content -->
 

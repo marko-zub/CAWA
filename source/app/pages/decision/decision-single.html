@@ -18,19 +18,19 @@
                 <div class="nav-tabs-wrapper">
                     <ul class="nav nav-tabs nav-tabs-sm">
                         <li class="active">
-                            <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" translate-cloak>{{ 'General Info' | translate }}</a>
+                            <a title="" ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})" translate-cloak>{{ 'General Info' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
+                            <a title="" ui-sref="decisions.single.characteristics(::{sort: null, category: null})" translate-cloak>{{ 'CHARACTERISTICS' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.reviews({sort: null, category: null})" translate-cloak>{{ 'Reviews' | translate }}</a>
+                            <a title="" ui-sref="decisions.single.reviews({sort: null, category: null})" translate-cloak>{{ 'Reviews' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.categories({sort: null, category: null})" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
+                            <a title="" ui-sref="decisions.single.categories({sort: null, category: null})" translate-cloak>{{ 'CATEGORIES' | translate }}</a>
                         </li>
                         <li>
-                            <a ui-sref="decisions.single.nominations({sort: null, category: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
+                            <a title="" ui-sref="decisions.single.nominations({sort: null, category: null})" translate-cloak>{{ 'Nominations' | translate }}</a>
                         </li>
                     </ul>
                 </div>
@@ -73,20 +73,19 @@
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.parentDecisionGroups track by parent.id" ng-class="{'active':vm.activeParentTab.id === parent.id}">
-                        <a ng-click="vm.getParentDecisions(parent)">
+                        <a ng-click="vm.getParentDecisions(parent)" title="">
                         {{ ::parent.ownerDecision.name }}</a>
                     </li>
                 </ul>
             </div>
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
-
-                <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})">
+                <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})" title="Read More About {{ vm.activeParentTab.ownerDecision.name }}">
                 Read More About {{ vm.activeParentTab.ownerDecision.name }}
             </a>
 
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
-                        <a ng-click="vm.getChildDecisions(child)">{{ ::child.name }}</a>
+                        <a ng-click="vm.getChildDecisions(child)" title="">{{ ::child.name }}</a>
                     </li>
                 </ul>
             </div>
@@ -112,12 +111,12 @@
 
                                 <div class="pull-right">
                                     <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
-                                        <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                                        <a title="" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
                                         <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
                                             {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
                                     </h5>
                                     <div class="pull-left text-header">
-                                        <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                                        <a title="" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
                                             {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
                                         </a>
                                     </div>
@@ -189,12 +188,12 @@
                     <!-- Make as component -->
                     <div class="clearfix">
                         <h5 ng-show="vm.decisionIndexInParentGroup >= 0" class="pull-left">
-                            <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
+                            <a title="" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: 'topRated', page: vm.decisionIndexInParentGroupPage, size: 10, categorySlug: vm.activeParentTab.nameSlug, decisionId: vm.decision.id})">
                             <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
                                 {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
                         </h5>
                         <div class="pull-left text-header">
-                            <a ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
+                            <a title="" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
                                 {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
                             </a>
                         </div>
@@ -226,7 +225,6 @@
                     <characteristics-list
                     ng-if="vm.characteristicGroups"
                     list="vm.characteristicGroups"
-                    decision="vm.decisionMatrixs[0]"
                     links="false"
                     rating="true"
                     decision="vm.decisionMatrixs[0]"

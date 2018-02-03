@@ -54,7 +54,7 @@
                 if (!vm.totalVotes) {
                     vm.totalVotes = 0;
                     // TODO: add compile
-                    votes = '<a class="js-rating-rate" href>Rate it</a>';
+                    votes = '<a class="js-rating-rate" href="#" title="">Rate it</a>';
                 } else {
                     votes = [
                         '<div class="app-rating-votes">',
