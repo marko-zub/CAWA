@@ -3,16 +3,6 @@
     'use strict';
 
     angular
-        .module('app.tags')
-        .controller('DisclaimerController', DisclaimerController);
+        .module('app.tags');
 
-    DisclaimerController.$inject = [];
-
-    function DisclaimerController() {
-        // var vm = this;
-
-        // vm.$onInit = onInit;
-
-        // function onInit() {}
-    }
 })();

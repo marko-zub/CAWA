@@ -91,7 +91,7 @@
 
         <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
         
-        <div ng-if="errors.length" class="alert" ng-cloak>
+        <div ng-show="errors" class="alert" ng-cloak>
             <div class="alert-content">
                 <div ng-repeat="error in errors track by error.code">
                     {{ ::error.message }}

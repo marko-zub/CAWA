@@ -13,8 +13,6 @@
             .state('dmca', {
                 url: '/dmca',
                 templateUrl: 'app/pages/dmca/dmca.html',
-                controller: 'DmcaController',
-                controllerAs: 'vm',
                 data: {
                     pageTitle: 'DMCA',
                     breadcrumbs: [{

@@ -72,6 +72,7 @@
                 };
                 allowed = _.find(allowedTabParams, checkObj);
                 if (_.isObject(allowed)) {
+                    $rootScope.pageTitle = allowed.label + ' ' + 'Decision-Making Social Network' + ' | DecisionWanted.com';
                     data.sort = allowed.value;
                 } else {
                     $state.go($state.current.name, {

@@ -13,8 +13,6 @@
             .state('privacy', {
                 url: '/privacy-policy',
                 templateUrl: 'app/pages/privacy/privacy.html',
-                controller: 'PrivacyController',
-                controllerAs: 'vm',
                 data: {
                     pageTitle: 'Privacy Policy',
                     breadcrumbs: [{

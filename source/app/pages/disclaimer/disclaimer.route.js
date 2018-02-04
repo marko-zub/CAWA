@@ -13,8 +13,6 @@
             .state('disclaimer', {
                 url: '/disclaimer',
                 templateUrl: 'app/pages/disclaimer/disclaimer.html',
-                controller: 'DisclaimerController',
-                controllerAs: 'vm',
                 data: {
                     pageTitle: 'Disclaimer',
                     breadcrumbs: [{

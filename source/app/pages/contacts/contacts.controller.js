@@ -3,16 +3,16 @@
     'use strict';
 
     angular
-        .module('app.tags')
-        .controller('ContactsController', ContactsController);
+        .module('app.tags');
+        // .controller('ContactsController', ContactsController);
 
-    ContactsController.$inject = [];
+    // ContactsController.$inject = [];
 
-    function ContactsController() {
-        // var vm = this;
+    // function ContactsController() {
+    //     // var vm = this;
 
-        // vm.$onInit = onInit;
+    //     // vm.$onInit = onInit;
 
-        // function onInit() {}
-    }
+    //     // function onInit() {}
+    // }
 })();
