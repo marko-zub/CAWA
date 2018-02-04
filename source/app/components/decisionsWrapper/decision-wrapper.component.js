@@ -26,6 +26,7 @@
         var vm = this;
 
         vm.$onInit = onInit;
+        var pageTitle = '';
 
         var criteriaGroupsIds = []; // Change every time
 
@@ -56,6 +57,7 @@
             } else {
                 vm.showTitle = true;
             }
+
             vm.pagination = initPagination(10, $stateParams.page, $stateParams.size);
         }
 
@@ -87,6 +89,7 @@
             });
         }
 
+        var pageTitle;
         // TODO: Simplify logic
         function changeSortMode(mode) {
             if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
@@ -98,6 +101,11 @@
                     vm.tabMode = navigationObj[findIndex].value;
                     vm.activeTab = navigationObj[findIndex];
                     vm.activeTabSort = findIndex;
+
+                    if (!pageTitle) {
+                        pageTitle = $rootScope.pageTitle;
+                    }
+                    $rootScope.pageTitle = vm.activeTab.label + ' ' + pageTitle;
                     // Hide criterias
                     vm.criteriaGroups = [];
 
@@ -154,7 +162,7 @@
                         });
                     });
                 }
-            } else if(vm.decisionGroupActive) {
+            } else if (vm.decisionGroupActive) {
                 getDecisionMatrix(vm.decisionGroupActive.id);
             }
         }
