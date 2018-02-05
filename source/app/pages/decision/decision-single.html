@@ -79,9 +79,16 @@
                 </ul>
             </div>
             <div class="nav-tabs-wrapper border-0 clearfix tabs-right mg-b-sm">
+
+                <div ng-if="vm.parentDecisionGroups.length && !vm.isCharacteristicGroupsChart" class="dib">
+                    <a class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})">
+                        {{ 'See All' | translate }} {{ vm.activeParentTab.name }} ({{ vm.activeParentTab.totalChildDecisions }})
+                    </a> or
+                </div>
+
                 <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})" title="Read More About {{ vm.activeParentTab.ownerDecision.name }}">
-                Read More About {{ vm.activeParentTab.ownerDecision.name }}
-            </a>
+                    Read More About {{ vm.activeParentTab.ownerDecision.name }}
+                </a>
 
                 <ul class="nav nav-pills nav-tabs-sm">
                     <li ng-repeat="child in vm.activeParentTab.ownerDecision.decisionGroups track by child.id" ng-class="{'active':vm.activeChildTab.id === child.id}">
@@ -94,13 +101,13 @@
 
         <div class="col-sm-9">
             <history-chart
-                ng-if="vm.isSharacteristicGroupsChart"
+                ng-if="vm.isCharacteristicGroupsChart"
                 title="'Charts'"
                 characteristics="vm.characteristicGroupsChart"
                 decision="vm.decisionMatrixs[0]"></history-chart>
 
 
-           <div ng-if="vm.parentDecisionGroups.length && !vm.isSharacteristicGroupsChart" class="decision-singe-additional clearfix">
+           <div ng-if="vm.parentDecisionGroups.length && !vm.isCharacteristicGroupsChart" class="decision-singe-additional clearfix">
                 <!-- Parent criteria & characteristics -->
                 <div class="col-sm-5 col-sm-offset-1" ng-show="vm.criteriaGroupsCompilance">
                     <div class="clearfix mg-b-sm">
@@ -115,11 +122,6 @@
                                         <strong>#{{ vm.decisionIndexInParentGroup }}</strong></a>
                                             {{ 'IN' | translate }} {{ vm.activeParentTab.name }}
                                     </h5>
-                                    <div class="pull-left text-header">
-                                        <a title="" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})" class="see-all">
-                                            {{ 'See All' | translate }} <span class="info">({{ vm.activeParentTab.totalChildDecisions }})</span>
-                                        </a>
-                                    </div>
                                 </div>
 
                         </div>
@@ -160,7 +162,7 @@
                 <!-- End Parent criteria & characteristics -->
 
 
-                <div ng-if="vm.isSharacteristicGroupsChart">
+                <div ng-if="vm.isCharacteristicGroupsChart">
                     <!-- Owners -->
        <!--              <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
                     <!-- End Owners -->
@@ -172,7 +174,7 @@
             <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
         </div>
 
-        <div ng-if="!vm.isSharacteristicGroupsChart" class="col-sm-3">
+        <div ng-if="!vm.isCharacteristicGroupsChart" class="col-sm-3">
             <!-- Owners -->
             <!-- <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
             <!-- End Owners -->
@@ -181,7 +183,7 @@
         </div>
 
 
-       <div ng-if="vm.parentDecisionGroups.length && vm.isSharacteristicGroupsChart" ng-class="vm.isSharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
+       <div ng-if="vm.parentDecisionGroups.length && vm.isCharacteristicGroupsChart" ng-class="vm.isCharacteristicGroupsChart ? 'col-sm-3' : 'col-sm-9'">
             <!-- Parent criteria & characteristics -->
             <div  ng-show="vm.criteriaGroupsCompilance">
                 <div class="clearfix mg-b-sm">
@@ -235,7 +237,7 @@
             <!-- End Parent criteria & characteristics -->
 
 
-            <div ng-if="vm.isSharacteristicGroupsChart">
+            <div ng-if="vm.isCharacteristicGroupsChart">
                 <!-- Owners -->
                 <!-- <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
                 <!-- End Owners -->

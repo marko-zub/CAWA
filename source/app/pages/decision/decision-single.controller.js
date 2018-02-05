@@ -230,8 +230,8 @@
                     vm.criteriaGroupsCompilance = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
 
-                    vm.isSharacteristicGroupsChart = showChart(decisionMatrixs);
-                    // console.log(vm.isSharacteristicGroupsChart);
+                    vm.isCharacteristicGroupsChart = showChart(decisionMatrixs);
+                    // console.log(vm.isCharacteristicGroupsChart);
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
                     vm.characteristicGroupsChart = _.map(angular.copy(characteristicGroups), function(characteristic) {
