@@ -26,7 +26,6 @@
         var vm = this;
 
         vm.$onInit = onInit;
-        var pageTitle = '';
 
         var criteriaGroupsIds = []; // Change every time
 
@@ -89,7 +88,7 @@
             });
         }
 
-        var pageTitle;
+        var pageTitle = '';
         // TODO: Simplify logic
         function changeSortMode(mode) {
             if (vm.decisionGroupActive && vm.decisionGroupActive.id) {

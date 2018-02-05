@@ -27,7 +27,7 @@
             <ul class="nav nav-pills nav-tabs-sm">
                 <li ng-repeat="item in ::vm.navigation track by item.key" ng-class="{'active':vm.activeTabSort == $index}" ng-switch="::(vm.isDecisionCategory === true)">
                     <a ng-switch-when="true" ui-sref="decisions.single.categories({categorySlug: vm.decisionGroupActive.nameSlug, sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)" title="{{ ::item.label }}">{{ ::item.label }}</a>
-                    <a ng-switch-when="false" ui-sref="decisions.single(::{sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)" title="{{ ::item.label }}">{{ ::item.label }}</a>
+                    <a ng-switch-when="false" ui-sref="decisions.single({category:vm.decisionGroupActive.nameSlug,sort:item.key})" ui-sref-opts="{notify: false}" ng-click="vm.changeOptionTab(item.key)" title="{{ ::item.label }}">{{ ::item.label }}</a>
                 </li>
             </ul>
         </div>
