@@ -83,7 +83,7 @@
                 <div ng-if="vm.parentDecisionGroups.length && !vm.isCharacteristicGroupsChart" class="dib">
                     <a class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})">
                         {{ 'See All' | translate }} {{ vm.activeParentTab.name }} ({{ vm.activeParentTab.totalChildDecisions }})
-                    </a> or
+                    </a> or&bnsp;
                 </div>
 
                 <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})" title="Read More About {{ vm.activeParentTab.ownerDecision.name }}">
