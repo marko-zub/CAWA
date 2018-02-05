@@ -95,7 +95,12 @@
                                                 </div>
                                             </a>
                                         </div>
-
+                                        
+                                        <div ng-if="::item.decision.url">
+                                            <a class="btn btn-primary-2 btn-outline view-more btn-sm" href="{{ ::item.decision.url }}" target="_blank">
+                                                View Details
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="clearfix">
                                         <div class="info">

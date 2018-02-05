@@ -528,6 +528,12 @@ a {
         height: 50%;
         padding: 1px 5px 9px 5px;
         overflow: hidden;
+        &:before {
+            display: block;
+        }
+        &:hover {
+            color: lighten(@basic-active, 20%);
+        }
         &.selected {
             color: @basic-active;
         }
@@ -542,6 +548,12 @@ a {
         height: 50%;
         padding: 9px 5px 1px 5px;
         overflow: hidden;
+        &:before {
+            display: block;
+        }
+        &:hover {
+            color:lighten( @basic-active, 20%);
+        }
         &.selected {
             color: @basic-active;
         }
@@ -640,7 +652,11 @@ a {
 }
 
 
-@matrix-header: 120px;
+.view-more {
+    margin: 5px 0;
+}
+
+@matrix-header: 160px;
 .matrix-header {
     position: relative;
     height: @matrix-header;
@@ -723,18 +739,17 @@ a {
         z-index: 85;
         left: 15px;
         right: 15px;
-        top: 120px + 38px;
+        top: @matrix-header + 38px;
     }
 
     .matrix-header {
         top: 38px;
         position: fixed;
-        left: 0;
         z-index: 88;
-        left: 15px;
+        left: 0;
+        right: 0;
         width: auto;
-        right: 15px;
-        height: 120px;
+        height: @matrix-header + 1;
         border-bottom: 1px solid #ebebeb;
     }
 }

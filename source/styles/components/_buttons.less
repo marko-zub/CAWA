@@ -10,7 +10,21 @@
     &:hover {
       background-color: @color-orange-darken;
     }
-  }          
+
+    &.btn-outline {
+      border-color: @color-orange;
+      background-color: transparent;
+      color: @color-orange;
+      &:hover {
+        color: #fff;
+        background: @color-orange;
+      }
+    }    
+  }  
+
+  &-sm {
+    padding: 3px 12px;
+  }        
 }
 
 .btn-sm,
