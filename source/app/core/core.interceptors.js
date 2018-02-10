@@ -75,7 +75,7 @@
                         $rootScope.errors = [error];
                     }
 
-                    var msg = 'API error: ' + rejection.status;
+                    var msg = 'API error' + rejection.status ? ': ' + rejection.status : '';
                     if (rejection.statusText) {
                         msg = msg + ' ' + rejection.statusText;
                     }
