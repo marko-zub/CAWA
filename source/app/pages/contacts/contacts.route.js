@@ -13,8 +13,8 @@
             .state('contacts', {
                 url: '/contact-us',
                 templateUrl: 'app/pages/contacts/contacts.html',
-                controller: 'ContactsController',
-                controllerAs: 'vm',
+                // controller: 'ContactsController',
+                // controllerAs: 'vm',
                 data: {
                     pageTitle: 'Contact Us',
                     breadcrumbs: [{
