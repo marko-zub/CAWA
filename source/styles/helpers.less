@@ -39,7 +39,6 @@
 
 .text-header {
   font-size: 12px;
-  // margin-top: 15px;
   margin-top: 9px;
   margin-left: 15px;
   display: inline-block;
@@ -121,4 +120,45 @@
 
 .border-0 {
   border: 0 !important;
+}
+
+.app-sticky {
+    position: fixed !important;
+}
+
+.text-light {
+    color: @gray-mid;
+}
+
+.el-loaded {
+    position: absolute !important;
+    visibility: hidden;
+}
+
+.icon-sm {
+    font-size: 70%;
+}
+
+.sm-link {
+    font-size: 11px;
+    color: @icon-color;
+    &:hover {
+        color: @basic-active;
+    }
+}
+
+.view-more {
+    margin: 5px 0;
+}
+
+.app-title-inline {
+    display: inline-block;
+    margin: 0 4px 5px 0;
+}
+
+.btns-view {
+    margin: 5px 0;
+    & + .btn {
+        margin-left: 10px;
+    }
 }

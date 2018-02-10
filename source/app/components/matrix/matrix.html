@@ -82,6 +82,13 @@
                                     </a>
                                     <div class="decision-content-block">
                                         <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="vm.decisionGroupActive" dw-popover-direction="bottom">
+
+                                            <div ng-if="::item.decision.url">
+                                                <a class="btn btn-primary-2 btn-outline view-more btn-sm" href="{{ ::item.decision.url }}" target="_blank">
+                                                    View Details
+                                                </a>
+                                            </div>
+                                                                                
                                             <a
                                                 class="decision-criteria-compilance popover-ref"
                                                 ng-show="item.decision.criteriaCompliancePercentage >= 0"
@@ -96,11 +103,6 @@
                                             </a>
                                         </div>
                                         
-                                        <div ng-if="::item.decision.url">
-                                            <a class="btn btn-primary-2 btn-outline view-more btn-sm" href="{{ ::item.decision.url }}" target="_blank">
-                                                View Details
-                                            </a>
-                                        </div>
                                     </div>
                                     <div class="clearfix">
                                         <div class="info">

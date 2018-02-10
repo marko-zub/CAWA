@@ -33,6 +33,8 @@
                var layoutMode = $localStorage.options.view.layoutMode || 'list';
                toggleLayout(layoutMode);
             }
+
+            $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
         }
 
         function getDecisions(data) {
@@ -92,7 +94,7 @@
                 if (_.isObject(allowed)) {
                     data.sort = allowed.value;
 
-                    $rootScope.pageTitle = allowed.label + translateFilter('Decisions') + ' | DecisionWanted.com';
+                    // $rootScope.pageTitle = allowed.label + translateFilter('Decisions') + ' | DecisionWanted.com';
                 } else {
                     $state.go($state.current.name, {
                         sort: null
