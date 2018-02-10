@@ -502,6 +502,12 @@
         }
     }
 
+    &.list {
+        .decision {
+            min-height: 190px;
+        }
+    }
+
     .post-inner {
         .clearfix;
         .box-shadow(2px 2px 8px 2px rgba(0,0,0,.11));
@@ -678,6 +684,7 @@ li {
 .app-title-table {
     display: table;
     width: 100%;
+    min-height: 65px;
     @media (min-width: @screen-sm-min) {
         margin: 0 0 0 -40px;
     }
@@ -689,5 +696,12 @@ li {
     .app-title-table-title {
         display: table-cell;
         vertical-align: middle;
+    }
+}
+
+.body-decisions-single, 
+.body-decisions-single-categories {
+    .nav-tabs-wrapper {
+        min-height: 38px;
     }
 }
