@@ -59,19 +59,27 @@
                 return resp;
             },
             responseError: function(rejection) {
-                
+
                 // $state.go('404');
 
                 var notification = $injector.get('MsgService');
                 // var msg = rejection.status + ': ' + rejection.statusText;
-                if(rejection.status === -1) {
+                // console.log(rejection);
+                if (rejection) {
                     // console.log(rejection);
-                    const error = {
-                        code: '1', 
-                        message: 'We are aware of service issues and we are working to resolve this asap. Apologies for any inconvenience and thanks for your patience'
-                    };
-                    $rootScope.errors = [error];
-                    notification.error('API error ' + rejection.statusText);
+                    if (rejection.status >= 500 && rejection.status < 600) {
+                        const error = {
+                            code: '1',
+                            message: 'We are aware of service issues and we are working to resolve this asap. Apologies for any inconvenience and thanks for your patience'
+                        };
+                        $rootScope.errors = [error];
+                    }
+
+                    var msg = 'API error: ' + rejection.status;
+                    if (rejection.statusText) {
+                        msg = msg + ' ' + rejection.statusText;
+                    }
+                    notification.error(msg);
                 }
 
                 return rejection;
