@@ -79,12 +79,11 @@
                                     </div>
                                 </a>
                                 <div class="decision-content-block">
-                                    <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="vm.decisionGroupActive" dw-popover-direction="bottom">
-
-                                        <a ng-if="::item.decision.url" class="btn btn-primary-2 btn-outline view-more btn-sm" href="{{ ::item.decision.url }}" target="_blank">
-                                            View Details
-                                        </a>
-                                                 
+                                    <a ng-if="::item.decision.url" class="btn btn-primary-2 btn-outline view-more btn-sm" href="{{ ::item.decision.url }}" target="_blank">
+                                        View Details
+                                    </a>
+                                                                    
+                                    <div dw-popover dw-popover-id="criteria-{{::item.decision.id}}" decision="item.decision" parent-decision="vm.decisionGroupActive" dw-popover-direction="bottom">                                                 
                                         <a ng-show="item.decision.criteriaCompliancePercentage >= 0" class="decision-criteria-compilance popover-ref"
                                             ui-sref="decisions.single.characteristics(::{id:item.decision.id, slug: item.decision.nameSlug, parentId:vm.decision.id, parentSlug:vm.decision.nameSlug, sort: null, category: vm.decisionGroupActive.nameSlug, characteristicSlug:vm.decision.nameSlug})">
                                             <div class="text-uppercase" translate-cloak>
