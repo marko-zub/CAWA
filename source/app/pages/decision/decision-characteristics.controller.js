@@ -101,13 +101,12 @@
                 title: 'Characteristics',
                 link: null
             }];
-
-            slug = $stateParams.characteristicSlug || slug;
+            slug = $state.params.characteristicSlug || slug;
             if (slug) {
                 // vm.parent.name
                 breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics({characteristicSlug:null, category: null})';
 
-                if ($stateParams.category) {
+                if ($state.params.category) {
                     breadcrumbs.push({
                         title: vm.parent.ownerDecision.name,
                         link: 'decisions.single.characteristics({characteristicSlug: "' + slug + '", category: null})'
