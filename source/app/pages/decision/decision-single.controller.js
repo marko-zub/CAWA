@@ -21,12 +21,13 @@
         vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
         vm.$onInit = onInit;
 
+        var pageTitle = '';
         // Change every time
         var criteriaGroupsIds = [];
 
         // TODO: clean up separete for 2 template parent and child
         function onInit() {
-
+            pageTitle = vm.decision.name;
             changeDecisionGroupsTabOnly($stateParams.category);
 
             // Call only on init
@@ -54,7 +55,7 @@
                 link: null
             }];
 
-            $rootScope.pageTitle = vm.decision.name + ' | ' + Config.pagePrefix;
+            setPageTitle();
             $rootScope.ogImage = vm.decision.metaOgImage;
             $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
         }
@@ -299,5 +300,35 @@
             vm.activeChildTab = child;
             getParentDecisionGroupsCriteriaCharacteristicts(vm.activeParentTab);
         }
+
+        var pageTitlePreffix = '';
+
+        function setPageTitle(setPageNumber, pageNumber, tabName) {
+            pageNumber = pageNumber || $stateParams.page;
+            var pageTitleSuffix = '';
+            if (setPageNumber !== false) {
+                pageTitleSuffix = pageNumber > 1 ? ' - Page ' + pageNumber : '';
+            }
+            if (tabName) {
+                pageTitlePreffix = tabName + ' ';
+            }
+            $rootScope.pageTitle = pageTitlePreffix + pageTitle + pageTitleSuffix + ' | ' + Config.pagePrefix;
+        }
+
+        vm.onChangePage = onChangePage;
+
+        function onChangePage(pagination) {
+            if (pagination) {
+                setPageTitle(true, pagination.pageNumber);
+            }
+        }
+
+        vm.onChangeSortMode = onChangeSortMode;
+
+        function onChangeSortMode(tab) {
+            if (tab) {
+                setPageTitle(true, null, tab.label);
+            }
+        }        
     }
 })();

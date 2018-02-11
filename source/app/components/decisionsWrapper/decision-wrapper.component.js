@@ -10,18 +10,20 @@
             bindings: {
                 decision: '<',
                 title: '<',
-                onChangeTab: '&'
+                onChangeTab: '&',
+                onChangePagination: '&',
+                onChangeSortMode: '&',
             },
             controller: 'DecisionsWrapperController',
             controllerAs: 'vm',
         });
 
 
-    DecisionsWrapperController.$inject = ['$rootScope', 'DecisionDataService', 'DecisionsConstant',
+    DecisionsWrapperController.$inject = ['DecisionDataService', 'DecisionsConstant',
         '$stateParams', 'DecisionSharedService', 'PaginatorConstant', '$state', 'DecisionsUtils'
     ];
 
-    function DecisionsWrapperController($rootScope, DecisionDataService, DecisionsConstant,
+    function DecisionsWrapperController(DecisionDataService, DecisionsConstant,
         $stateParams, DecisionSharedService, PaginatorConstant, $state, DecisionsUtils) {
         var vm = this;
 
@@ -88,7 +90,6 @@
             });
         }
 
-        var pageTitle = '';
         // TODO: Simplify logic
         function changeSortMode(mode) {
             if (vm.decisionGroupActive && vm.decisionGroupActive.id) {
@@ -101,10 +102,8 @@
                     vm.activeTab = navigationObj[findIndex];
                     vm.activeTabSort = findIndex;
 
-                    if (!pageTitle) {
-                        pageTitle = $rootScope.pageTitle;
-                    }
-                    $rootScope.pageTitle = vm.activeTab.label + ' ' + pageTitle;
+
+                    vm.onChangeSortMode({tab: vm.activeTab});
                     // Hide criterias
                     vm.criteriaGroups = [];
 
@@ -301,6 +300,9 @@
         function changePage(pagination) {
             getDecisionMatrix(vm.decisionGroupActive.id, pagination);
             updateStateParams(pagination);
+            vm.onChangePagination({
+                pagination: pagination
+            });
         }
 
         function updateStateParams(pagination) {

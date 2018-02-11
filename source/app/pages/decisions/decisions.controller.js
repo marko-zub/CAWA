@@ -6,9 +6,9 @@
         .module('app.decision')
         .controller('DecisionsController', DecisionsController);
 
-    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage', 'PaginatioService'];
+    DecisionsController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'DecisionsConstant', 'DecisionsService', 'translateFilter', '$localStorage', 'PaginatioService', 'Config'];
 
-    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, DecisionsConstant, DecisionsService, translateFilter, $localStorage, PaginatioService) {
+    function DecisionsController(DecisionDataService, $rootScope, $state, $stateParams, DecisionsConstant, DecisionsService, translateFilter, $localStorage, PaginatioService, Config) {
         var vm = this;
         vm.itemsPerPage = PaginatioService.itemsPerPage();
 
@@ -16,10 +16,10 @@
         var decisionsData = DecisionsService.getData();
 
         vm.$onInit = onInit;
+        var pageTitle = '';
 
         function onInit() {
             vm.navigation = navigationObj;
-            $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
             var data = getStateParams($stateParams);
             getDecisions(data);
             getTotalDecisions();
@@ -29,12 +29,17 @@
                 vm.activeTab = 1;
             }
 
-            if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
-               var layoutMode = $localStorage.options.view.layoutMode || 'list';
-               toggleLayout(layoutMode);
+            pageTitle = translateFilter('Decisions');
+            if ($stateParams && $stateParams.page) {
+                setPageTitle($state.params.page);
+            } else {
+                $rootScope.pageTitle = pageTitle + ' | ' + Config.pagePrefix;
             }
 
-            $rootScope.pageTitle = translateFilter('Decisions') + ' | DecisionWanted.com';
+            if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
+                var layoutMode = $localStorage.options.view.layoutMode || 'list';
+                toggleLayout(layoutMode);
+            }
         }
 
         function getDecisions(data) {
@@ -59,6 +64,12 @@
         function changePage(pagination) {
             getDecisions(pagination); // TODO: make as callback
             updateStateParams(pagination);
+            setPageTitle(pagination.pageNumber);
+        }
+
+        function setPageTitle(pageNumber) {
+            var pageTitleSuffix = pageNumber > 1 ? ' - Page ' + pageNumber : '';
+            $rootScope.pageTitle = pageTitle + pageTitleSuffix + ' | ' + Config.pagePrefix;
         }
 
         function updateStateParams(pagination) {
@@ -78,7 +89,7 @@
             var data = {},
                 allowedSortParams;
 
-            data.pageNumber =  stateParams.page || 1;
+            data.pageNumber = stateParams.page || 1;
             data.pageSize = stateParams.size || 10;
 
             allowedSortParams = navigationObj;
@@ -94,7 +105,7 @@
                 if (_.isObject(allowed)) {
                     data.sort = allowed.value;
 
-                    // $rootScope.pageTitle = allowed.label + translateFilter('Decisions') + ' | DecisionWanted.com';
+                    // $rootScope.pageTitle = allowed.label + translateFilter('Decisions') + ' | ' + Config.pagePrefix;
                 } else {
                     $state.go($state.current.name, {
                         sort: null

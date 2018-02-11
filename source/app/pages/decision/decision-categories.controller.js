@@ -16,6 +16,7 @@
         var decision = DecisionsUtils.prepareDecisionSingleToUI(decisionBasicInfo, true, false) || {};
         vm.decision = DecisionsUtils.prepareDecisionLogoToUI(decision);
         vm.$onInit = onInit;
+        var pageTitle;
 
         function onInit() {
             if (!vm.decision.decisionGroups) {
@@ -62,14 +63,33 @@
 
             $rootScope.breadcrumbs = breadcrumbs;
             $rootScope.ogImage = vm.decision.metaOgImage;
-            $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
+            $rootScope.oggDescription = vm.decision.oggDescription ? vm.decision.oggDescription : '';
 
-            if ($stateParams.categorySlug || tab) {
-                $rootScope.pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name + ' | ' + Config.pagePrefix;
+            if (tab) {
+                pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name;
+                setPageTitle(false);
+            } else if ($stateParams.categorySlug) {
+                // TODO: check if we need this if
+                pageTitle = vm.decision.name + ' ' + vm.decisionGroupActive.name;
+                setPageTitle();
             } else {
-                $rootScope.pageTitle = vm.decision.name + ' Categories | ' + Config.pagePrefix;
+                pageTitle = vm.decision.name + ' Categories';
+                setPageTitle();
             }
+        }
 
+        var pageTitlePreffix = '';
+
+        function setPageTitle(setPageNumber, pageNumber, tabName) {
+            pageNumber = pageNumber || $stateParams.page;
+            var pageTitleSuffix = '';
+            if (setPageNumber !== false) {
+                pageTitleSuffix = pageNumber > 1 ? ' - Page ' + pageNumber : '';
+            }
+            if (tabName) {
+                pageTitlePreffix = tabName + ' ';
+            }
+            $rootScope.pageTitle = pageTitlePreffix + pageTitle + pageTitleSuffix + ' | ' + Config.pagePrefix;
         }
 
         vm.onChangeTab = onChangeTab;
@@ -77,6 +97,22 @@
         function onChangeTab(tab) {
             vm.decisionGroupActive = tab;
             setPageData(null, tab);
+        }
+
+        vm.onChangePage = onChangePage;
+
+        function onChangePage(pagination) {
+            if (pagination) {
+                setPageTitle(true, pagination.pageNumber);
+            }
+        }
+
+        vm.onChangeSortMode = onChangeSortMode;
+
+        function onChangeSortMode(tab) {
+            if (tab) {
+                setPageTitle(true, null, tab.label);
+            }
         }
     }
 })();

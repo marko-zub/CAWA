@@ -171,7 +171,11 @@
                 </div>
            </div>
 
-            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
+            <decisions-wrapper 
+                decision="::vm.decision" 
+                on-change-tab="vm.onChangeTab(tab)"
+                on-change-pagination="vm.onChangePage(pagination)" 
+                on-change-sort-mode="vm.onChangeSortMode(tab)"></decisions-wrapper>
         </div>
 
         <div ng-if="!vm.isCharacteristicGroupsChart" class="col-sm-3">
