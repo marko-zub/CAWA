@@ -104,7 +104,7 @@
 
         function renderCheckboxes(item) {
             // String Array type
-            var options = _.sortBy(item.options, 'name');
+            var options = _.sortBy(item.options, 'value');
 
             // console.log(item);
             var isValuesLinkedToOption = false;
