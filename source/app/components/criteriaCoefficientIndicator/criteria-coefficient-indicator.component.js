@@ -40,7 +40,7 @@
             if (!vm.coefficient) {
                 vm.coefficient = DecisionCriteriaCoefficientsConstant.COEFFICIENT_DEFAULT;
             }
-            vm.coefficientList = angular.copy(DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST);
+            vm.coefficientList = DecisionCriteriaCoefficientsConstant.COEFFICIENT_LIST;
             setCoefficientIndicator(vm.coefficient);
         }
 
@@ -52,11 +52,6 @@
         }
 
         function renderComponent(coefficientList, coefficient) {
-            // TODO: optimize loop
-            // var content = _(coefficientList).chain().map(function(coefficient) {
-            //     return '<div class="criteria-coefficient-item ' + coefficient.class + '"></div>';
-            // }).sortBy('value').reverse().value().join('\n');
-
             // TOOD: move tooltip options to obj
             // Create factory for tooltip?!
             var html = [
