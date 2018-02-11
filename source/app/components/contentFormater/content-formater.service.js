@@ -31,9 +31,8 @@
         }
 
         function contentFormaterPrice(value) {
-            // var n = Number(value);
-            // return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-            return value;
+            var n = Number(value);
+            return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         }
 
         function contentFormaterDate(value, mode) {
@@ -115,6 +114,10 @@
 
         function prepareValuePrefSuff(value, item) {
             value = value.toString();
+            if (item.valueType.toUpperCase() === 'PRICE') {
+                value = contentFormaterPrice(value);
+            }
+
             if (item.valueSuffix) {
                 value = value + ' ' + '<span class="value-suffix">' + item.valueSuffix + '</span>';
             }
@@ -214,7 +217,7 @@
                             result = contentFormaterLink(value);
                             break;
                         case 'PRICE':
-                            result = contentFormaterPrice(value);
+                            result = value;
                             break;
                         default:
                             result = value || '';

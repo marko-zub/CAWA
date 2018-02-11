@@ -15,8 +15,8 @@
                 views: {
                     '@': {
                         templateUrl: 'app/pages/users/users.html',
-                        controller: 'UsersController',
-                        controllerAs: 'vm'
+                        // controller: 'UsersController',
+                        // controllerAs: 'vm'
                     }
                 },
                 data: {
