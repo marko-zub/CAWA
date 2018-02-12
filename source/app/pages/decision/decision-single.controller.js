@@ -83,7 +83,9 @@
             vm.decisionParents = decision.parentDecisions;
 
             // decisionGroups
-            vm.parentDecisionGroups = decision.parentDecisionGroups;
+            vm.parentDecisionGroups = filterInheritedParentDecisionGroups(decision.parentDecisionGroups);
+            vm.parentDecisionGroupsRelated = pickInheritedParentDecisionGroups(decision.parentDecisionGroups);
+
             // TODO: check if we need this code
             if (vm.decision.decisionGroups) {
                 vm.decisionsChildsLoader = true;
@@ -103,6 +105,18 @@
             } else if (vm.decisionGroupActive) {
                 // sortModeRequest();
             }
+        }
+
+        function filterInheritedParentDecisionGroups(decisionGroups) {
+            return _.filter(decisionGroups, function(decisionGroup) {
+                return !decisionGroup.inheritedDecisionGroupId;
+            });
+        }
+
+        function pickInheritedParentDecisionGroups(decisionGroups){
+            return _.filter(decisionGroups, function(decisionGroup) {
+                return decisionGroup.inheritedDecisionGroupId;
+            });            
         }
 
         function getCriteriaGroupsByParentId(id) {

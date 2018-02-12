@@ -12,7 +12,10 @@
                     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
                 </div>
             </div>
-
+        </div>
+        
+        
+        <div ng-class="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length) ? 'col-sm-9' : 'col-sm-12'">
             <div class="post-header">
                 <app-votes></app-votes>
                 <div class="nav-tabs-wrapper">
@@ -38,7 +41,7 @@
 
             <div class="post-sub-header-wrapper">
                 <div class="post-sub-header" dw-sticky>
-                    <div class="app-container-sm">
+                    <div class="app-container-sm-sticky">
                         <div class="row">
                             <div class="col-sm-7">
                                 <decision-short-info decision="::vm.decision"></decision-short-info>
@@ -57,19 +60,30 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="col-sm-12">
+   
             <div class="post post-single with-rating">
                 <!-- Gallery -->
                 <media decision="::vm.decision" ></media>
                 <!-- End Gallery -->
             </div>
+
+
+            <!-- Related -->
+            <div class="col-sm-3" ng-if="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length)">
+                <h4 class="app-list-title">
+                    Related
+                </h4>
+
+                <div ng-repeat="item in ::vm.parentDecisionGroupsRelated track by item.id">
+                    <a ui-sref="decisions.single.categories(::{id: item.ownerDecision.id, slug: item.ownerDecision.nameSlug, size: null, page: null, sort: null, categorySlug: item.nameSlug})" title="">
+                        {{ ::item.ownerDecision.name }} {{ ::item.name }}
+                    </a>
+                </div>
+            </div>
+            <!-- End Related -->
         </div>
 
-
-        <div class="col-sm-12" ng-if="vm.parentDecisionGroups.length">
+        <div class="col-sm-12" ng-if="::vm.parentDecisionGroups.length">
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.parentDecisionGroups track by parent.id" ng-class="{'active':vm.activeParentTab.id === parent.id}">
