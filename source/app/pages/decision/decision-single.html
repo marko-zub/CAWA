@@ -14,7 +14,6 @@
             </div>
         </div>
         
-        
         <div ng-class="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length) ? 'col-sm-9' : 'col-sm-12'">
             <div class="post-header">
                 <app-votes></app-votes>
@@ -67,21 +66,22 @@
                 <!-- End Gallery -->
             </div>
 
-
-            <!-- Related -->
-            <div class="col-sm-3" ng-if="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length)">
-                <h4 class="app-list-title">
-                    Related
-                </h4>
-
-                <div ng-repeat="item in ::vm.parentDecisionGroupsRelated track by item.id">
-                    <a ui-sref="decisions.single.categories(::{id: item.ownerDecision.id, slug: item.ownerDecision.nameSlug, size: null, page: null, sort: null, categorySlug: item.nameSlug})" title="">
-                        {{ ::item.ownerDecision.name }} {{ ::item.name }}
-                    </a>
-                </div>
-            </div>
-            <!-- End Related -->
         </div>
+
+        <!-- Related -->
+        <div class="col-sm-3" ng-if="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length)">
+            <h4 class="app-list-title">
+                Related
+            </h4>
+
+            <div ng-repeat="item in ::vm.parentDecisionGroupsRelated track by item.id">
+                <a ui-sref="decisions.single.categories(::{id: item.ownerDecision.id, slug: item.ownerDecision.nameSlug, size: null, page: null, sort: null, categorySlug: item.nameSlug})" title="">
+                    {{ ::item.ownerDecision.name }} {{ ::item.name }}
+                </a>
+            </div>
+        </div>
+        <!-- End Related -->
+
 
         <div class="col-sm-12" ng-if="::vm.parentDecisionGroups.length">
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
