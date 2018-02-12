@@ -241,7 +241,7 @@
             }
 
             return DecisionDataService.getDecisionMatrix(id, sendData).then(function(result) {
-                vm.decisions = angular.copy(filterDecisionList(result.decisionMatrixs));
+                vm.decisions = filterDecisionList(result.decisionMatrixs);
                 vm.decisionsChildsLoader = false;
                 vm.decisionsChildsLoaderRequest = false;
 
@@ -283,7 +283,7 @@
                 item.decision.criteria = item.criteria;
                 list.push(item.decision);
             });
-            return angular.copy(list);
+            return list;
         }
 
         // Change tab by click without reload page

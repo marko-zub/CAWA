@@ -84,12 +84,6 @@
             changeCharacteristicSlug(slug);
         }
 
-        // function findParentId(slug) {
-        //     return _.find(vm.decision.parentDecisionGroups, function(parentDecision) {
-        //         return parentDecision.nameSlug === slug;
-        //     });
-        // }
-
         function setPageData(slug) {
             var breadcrumbs = [{
                 title: 'Decisions',

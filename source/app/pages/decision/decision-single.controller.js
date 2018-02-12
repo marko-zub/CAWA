@@ -229,7 +229,7 @@
                     // console.log(vm.isCharacteristicGroupsChart);
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
-                    vm.characteristicGroupsChart = _.map(angular.copy(characteristicGroups), function(characteristic) {
+                    vm.characteristicGroupsChart = _.map(characteristicGroups, function(characteristic) {
 
                         if (characteristic.description) {
                             characteristic.description = $sce.trustAsHtml(characteristic.description);
