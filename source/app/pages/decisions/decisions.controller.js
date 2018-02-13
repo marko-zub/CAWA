@@ -30,16 +30,18 @@
             }
 
             pageTitle = translateFilter('Decisions');
-            if ($stateParams && $stateParams.page) {
-                setPageTitle($state.params.page);
-            } else {
-                $rootScope.pageTitle = pageTitle + ' | ' + Config.pagePrefix;
-            }
+            setPageTitle();
 
             if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
                 var layoutMode = $localStorage.options.view.layoutMode || 'list';
                 toggleLayout(layoutMode);
             }
+        }
+
+        function findTab(key) {
+            return _.find(navigationObj, function(item) {
+                return item.key === key;
+            });
         }
 
         function getDecisions(data) {
@@ -64,12 +66,23 @@
         function changePage(pagination) {
             getDecisions(pagination); // TODO: make as callback
             updateStateParams(pagination);
-            setPageTitle(pagination.pageNumber);
+            setPageTitle(true, pagination.pageNumber);
         }
 
-        function setPageTitle(pageNumber) {
-            var pageTitleSuffix = pageNumber > 1 ? ' - Page ' + pageNumber : '';
-            $rootScope.pageTitle = pageTitle + pageTitleSuffix + ' | ' + Config.pagePrefix;
+        var pageTitlePreffix = '';
+
+        function setPageTitle(setPageNumber, pageNumber) {
+            pageNumber = pageNumber || $stateParams.page;
+            var pageTitleSuffix = '';
+            if (setPageNumber !== false) {
+                pageTitleSuffix = pageNumber > 1 ? ' - Page ' + pageNumber : '';
+            }
+
+            var find = findTab($stateParams.sort);
+            if (find) {
+                pageTitlePreffix = find.label + ' ';
+            }
+            $rootScope.pageTitle = pageTitlePreffix + pageTitle + pageTitleSuffix + ' | ' + Config.pagePrefix;
         }
 
         function updateStateParams(pagination) {

@@ -196,8 +196,8 @@
                 } else {
                     switch (type.toUpperCase()) {
                         case 'STRING':
-                            result = stringFullDescr(value).result;
-                            compile = stringFullDescr(value).compile;
+                            result = item.descriptionFull ? stringFullDescr(value).result : stringFullDescrExcerpt(value).result;
+                            compile = item.descriptionFull ? stringFullDescr(value).compile : stringFullDescrExcerpt(value).compile;;
                             break;
                         case 'DATETIME':
                             result = contentFormaterDate(value, visualMode);
@@ -238,7 +238,7 @@
             };
         }
 
-        function stringFullDescr(val) {
+        function stringFullDescrExcerpt(val) {
             var html, valCopy, compile = false;
 
             html = '';
@@ -253,6 +253,13 @@
                 compile: compile
             };
         }
+
+        function stringFullDescr(val) {
+            return {
+                result: val,
+                compile: false
+            };
+        }        
 
         function contentFormaterLink(text, description) {
             if (description) {

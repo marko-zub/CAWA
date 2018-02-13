@@ -57,7 +57,7 @@
 
             setPageTitle();
             $rootScope.ogImage = vm.decision.metaOgImage;
-            $rootScope.oggDescription = vm.decision.oggDescription ?  vm.decision.oggDescription : '';
+            $rootScope.oggDescription = vm.decision.oggDescription ? vm.decision.oggDescription : '';
         }
 
         function changeDecisionGroupsTabOnly(mode) {
@@ -113,10 +113,10 @@
             });
         }
 
-        function pickInheritedParentDecisionGroups(decisionGroups){
+        function pickInheritedParentDecisionGroups(decisionGroups) {
             return _.filter(decisionGroups, function(decisionGroup) {
                 return decisionGroup.inheritedDecisionGroupId;
-            });            
+            });
         }
 
         function getCriteriaGroupsByParentId(id) {
@@ -244,15 +244,14 @@
                     // Use different data for chart and aside panel
                     // Pass pure chracterisctics response
                     vm.characteristicGroupsChart = _.map(characteristicGroups, function(characteristic) {
-
                         if (characteristic.description) {
                             characteristic.description = $sce.trustAsHtml(characteristic.description);
                         }
                         return characteristic;
-
                     });
 
-                    vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(decisionMatrixs[0], characteristicGroups);
+                    vm.characteristicGroups = DecisionsUtils.characteristicGroupsFullDescription(DecisionsUtils.mergeCharacteristicsDecisions(decisionMatrixs[0], characteristicGroups));
+
 
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
                     vm.characteristicGroupsLoader = false;
@@ -266,7 +265,7 @@
         function showChart(decisions) {
             var showChart = false;
             if (decisions && decisions[0]) {
-                var find = _.find(decisions[0].characteristics, function (characteristic) {
+                var find = _.find(decisions[0].characteristics, function(characteristic) {
                     return characteristic.totalHistoryValues > 0;
                 });
 
@@ -343,6 +342,6 @@
             if (tab) {
                 setPageTitle(true, null, tab.label);
             }
-        }        
+        }
     }
 })();

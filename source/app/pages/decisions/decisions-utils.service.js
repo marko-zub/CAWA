@@ -117,12 +117,24 @@
             });
         }
 
+        function characteristicGroupsFullDescription(list) {
+            return _.map(list, function(characteristicGroup) {
+                characteristicGroup.characteristics = _.map(characteristicGroup.characteristics, function(characteristic) {
+                    var characteristicNew = Object.assign(characteristic);
+                    characteristicNew.descriptionFull = true;
+                    return characteristicNew;
+                });
+                return characteristicGroup;
+            });
+        }
+
         return {
             prepareDecisionSingleToUI: prepareDecisionSingleToUI,
             prepareDecisionToUI: prepareDecisionToUI,
             mergeCriteriaDecision: mergeCriteriaDecision,
             prepareDecisionLogoToUI: prepareDecisionLogoToUI,
-            mergeCharacteristicsDecisions: mergeCharacteristicsDecisions
+            mergeCharacteristicsDecisions: mergeCharacteristicsDecisions,
+            characteristicGroupsFullDescription: characteristicGroupsFullDescription,
         };
 
     }
