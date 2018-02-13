@@ -171,7 +171,7 @@
                     vm.criteriaGroups = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
 
-                    vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(resp.decisionMatrixs[0], characteristicGroups);
+                    vm.characteristicGroups = DecisionsUtils.characteristicGroupsFullDescription(DecisionsUtils.mergeCharacteristicsDecisions(resp.decisionMatrixs[0], characteristicGroups));
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);
