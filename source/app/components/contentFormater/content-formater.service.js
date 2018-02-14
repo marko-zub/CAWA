@@ -196,8 +196,9 @@
                 } else {
                     switch (type.toUpperCase()) {
                         case 'STRING':
-                            result = item.descriptionFull ? stringFullDescr(value).result : stringFullDescrExcerpt(value).result;
-                            compile = item.descriptionFull ? stringFullDescr(value).compile : stringFullDescrExcerpt(value).compile;
+                            var res = stringFullDescr(value);
+                            result = res.result; //item.descriptionFull ? stringFullDescr(value).result : stringFullDescrExcerpt(value).result;
+                            compile = res.compile; //item.descriptionFull ? stringFullDescr(value).compile : stringFullDescrExcerpt(value).compile;
                             break;
                         case 'DATETIME':
                             result = contentFormaterDate(value, visualMode);
@@ -238,28 +239,45 @@
             };
         }
 
-        function stringFullDescrExcerpt(val) {
-            var html, valCopy, compile = false;
+        // Not use now
+        // function stringFullDescrExcerpt(val) {
+        //     var html, valCopy, compile = false;
 
-            html = '';
-            valCopy = angular.copy(val);
-            if (valCopy && valCopy.length >= 40) {
-                valCopy = valCopy.substring(0, 40) + '...<span class="link-secondary" uib-popover="' + val + '" popover-placement="top" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0">read more</span>';
+        //     html = '';
+        //     valCopy = angular.copy(val);
+        //     if (valCopy && valCopy.length >= 40) {
+        //         valCopy = valCopy.substring(0, 40) + '...<span class="link-secondary" uib-popover="' + val + '" popover-placement="top" popover-append-to-body="true" popover-trigger="\'outsideClick\'" tabindex="0">read more</span>';
+        //         compile = true;
+        //     }
+
+        //     return {
+        //         result: valCopy,
+        //         compile: compile
+        //     };
+        // }
+
+        function stringFullDescr(val) {
+            var result;
+            var compile;
+            if (val && val.length > 350) {
+                result = [
+                    '<div class="app-iscroll-wrapper" dw-scroll-bar>',
+                    '   <div>',
+                    val,
+                    '   </div>',
+                    '</div>'
+                ].join('\n');
                 compile = true;
+            } else {
+                result = val;
+                compile = false;
             }
 
             return {
-                result: valCopy,
-                compile: compile
+                result: result,
+                compile: true
             };
         }
-
-        function stringFullDescr(val) {
-            return {
-                result: val,
-                compile: false
-            };
-        }        
 
         function contentFormaterLink(text, description) {
             if (description) {
