@@ -197,7 +197,7 @@
                     switch (type.toUpperCase()) {
                         case 'STRING':
                             result = item.descriptionFull ? stringFullDescr(value).result : stringFullDescrExcerpt(value).result;
-                            compile = item.descriptionFull ? stringFullDescr(value).compile : stringFullDescrExcerpt(value).compile;;
+                            compile = item.descriptionFull ? stringFullDescr(value).compile : stringFullDescrExcerpt(value).compile;
                             break;
                         case 'DATETIME':
                             result = contentFormaterDate(value, visualMode);

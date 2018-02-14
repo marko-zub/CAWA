@@ -12,14 +12,18 @@
         var vm = this;
         vm.noResult = false;
 
-        vm.query = $stateParams.query || '';
         $rootScope.pageTitle = 'Search' + ' | DecisionWanted.com';
 
         vm.$onInit = onInit;
 
         function onInit() {
+            vm.query = $stateParams.query || '';
             var pagination = PaginatioService.initPagination();
-            getSearch(vm.query, pagination);
+            if (vm.query) {
+                getSearch(vm.query, pagination);
+            } else {
+                vm.noResult = true;
+            }
         }
 
         function getSearch(query, pagination) {
@@ -51,7 +55,7 @@
         }
 
         vm.changePage = changePage;
-        
+
         function changePage(pagination) {
             getSearch(vm.query, pagination);
         }
