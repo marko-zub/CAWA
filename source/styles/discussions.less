@@ -168,7 +168,10 @@
    .info-divider {
       border-left: 1px solid @gray-light;
       float: left;
-      padding: 0 8px;
+      padding: 0 3px;
+      @media (min-width: @screen-md-min) {
+        padding: 0 8px;
+      }      
       &:first-child {
         border-left-color: transparent;
         margin-left: 0;
