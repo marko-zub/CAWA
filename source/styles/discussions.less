@@ -185,29 +185,33 @@
 }
 
 .img-link {
-    &:hover {
-        .img-wrapper,
-        .img-container {
-            &:before {
-                visibility: visible;
-                opacity: 1;
+    @media (min-width: @screen-md-min) {
+        &:hover {
+            .img-wrapper,
+            .img-container {
+                &:before {
+                    visibility: visible;
+                    opacity: 1;
+                }
             }
         }
     }
     .img-wrapper,
     .img-container {
         position: relative;
-        &:before {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.3);
-            opacity: 0;
-            content: '';
-            visibility: hidden;
-            .transition(opacity 0.2s ease-in-out);
+        @media (min-width: @screen-md-min) {
+            &:before {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(255, 255, 255, 0.3);
+                opacity: 0;
+                content: '';
+                visibility: hidden;
+                .transition(opacity 0.2s ease-in-out);
+            }
         }
     }
 }
