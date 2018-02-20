@@ -90,16 +90,16 @@
     <main class="content">
 
         <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
-        
-        <div ng-show="errors" class="alert" ng-cloak>
+
+        <div ng-if="errors && errors.length" class="alert" ng-cloak>
             <div class="alert-content">
                 <div ng-repeat="error in errors track by error.code">
                     {{ ::error.message }}
                 </div>
             </div>
         </div>
-        
-        <div ng-show="!errors">
+
+        <div ng-if="!errors">
             <div ng-if="breadcrumbs.length" class="breadcrumbs-wrapper" ng-cloak>
                 <breadcrumbs items="breadcrumbs"></breadcrumbs>
             </div>
@@ -184,9 +184,9 @@
     </script>
 
     <additional-script social-type="socialScriptType"></additional-script>
-    
+
     <cookie-policy></cookie-policy>
-    
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
 </body>
 

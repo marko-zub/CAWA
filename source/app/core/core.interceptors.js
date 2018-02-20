@@ -59,17 +59,19 @@
                 return resp;
             },
             responseError: function(rejection) {
-                
+
                 // $state.go('404');
 
                 var notification = $injector.get('MsgService');
                 // var msg = rejection.status + ': ' + rejection.statusText;
+
                 if(rejection.status === -1) {
                     // console.log(rejection);
                     const error = {
-                        code: '1', 
+                        code: '1',
                         message: 'We are aware of service issues and we are working to resolve this asap. Apologies for any inconvenience and thanks for your patience'
                     };
+                    console.log(rejection);
                     $rootScope.errors = [error];
                     notification.error('API error ' + rejection.statusText);
                 }

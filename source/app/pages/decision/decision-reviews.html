@@ -1,22 +1,20 @@
 <div class="app-container-sm">
-
-    <div class="post-header">
-        <div class="app-title-table">
-            <div class="app-title-table-img" ng-if="::vm.decision.imageUrl">
-                <div class="post-image post-image-title">
-                    <img alt="" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
-                    <div ng-bind="vm.decision.imageBlock"> </div>
-                </div>
-            </div>
-            <div class="app-title-table-title">
-                <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+    <div class="app-title-table">
+        <div class="app-title-table-img" ng-if="::vm.decision.imageUrl">
+            <div class="post-image post-image-title">
+                <img alt="" ng-src="{{::vm.decision.imageUrl}}" class="img-responsive">
+                <div ng-bind="vm.decision.imageBlock"> </div>
             </div>
         </div>
+        <div class="app-title-table-title">
+            <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
+        </div>
+    </div>
 
-
+    <div class="post-header">
         <div class="nav-tabs-wrapper clearfix">
 
-			<!-- TODO: make as dynamic navigation -->
+    		<!-- TODO: make as dynamic navigation -->
             <ul class="nav nav-tabs nav-tabs-sm">
                 <li>
                     <a ui-sref="decisions.single(::{id:vm.decision.id, slug:vm.decision.nameSlug, size: null, page: null, sort: null, category: null})"  title="" ui-sref-opts="{reload: true}" translate-cloak>{{ 'General Info' | translate }}</a>
@@ -37,11 +35,6 @@
         </div>
     </div>
 
-<!--
-    <pre>
-        {{ vm.decision.parentDecisionGroups | json }}
-    </pre>
- -->
     <div class="post post-single with-rating">
         <span class="text-header" translate-cloak>
             {{ "NO REVIEWS" | translate }}.
