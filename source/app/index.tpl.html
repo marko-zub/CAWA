@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-csp lang=en>
+<html lang=en>
 <head>
     <title ng-bind="pageTitle | translate" translate-cloak>DecisionWanted.com</title>
     <base href="/">
@@ -48,6 +48,15 @@
     <!-- endinject -->
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-6272752342376666",
+        enable_page_level_ads: true
+      });
+</script>
+    
 </head>
 
 <body ng-class="bodyClass">
@@ -91,6 +100,7 @@
 
         <div id="init-loader" style="text-align: center; margin: 30px 0;">Loading...</div>
 
+<<<<<<< HEAD
         <div ng-if="errors && errors.length" class="alert" ng-cloak>
             <div class="alert-content">
                 <div ng-repeat="error in errors track by error.code">
@@ -99,6 +109,8 @@
             </div>
         </div>
 
+=======
+>>>>>>> 540955412d85f0ddce6115e0221403fb8ece2d3b
         <div ng-if="!errors">
             <div ng-if="breadcrumbs.length" class="breadcrumbs-wrapper" ng-cloak>
                 <breadcrumbs items="breadcrumbs"></breadcrumbs>
@@ -106,6 +118,15 @@
 
             <div ui-view></div>
         </div>
+
+        <div ng-if="errors" class="alert" ng-cloak>
+            <div class="alert-content">
+                <div ng-repeat="error in errors track by error.code">
+                    {{ ::error.message }}
+                </div>
+            </div>
+        </div>
+                
     </main>
     <!-- End Content -->
 

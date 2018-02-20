@@ -84,12 +84,6 @@
             changeCharacteristicSlug(slug);
         }
 
-        // function findParentId(slug) {
-        //     return _.find(vm.decision.parentDecisionGroups, function(parentDecision) {
-        //         return parentDecision.nameSlug === slug;
-        //     });
-        // }
-
         function setPageData(slug) {
             var breadcrumbs = [{
                 title: 'Decisions',
@@ -101,13 +95,12 @@
                 title: 'Characteristics',
                 link: null
             }];
-
-            slug = $stateParams.characteristicSlug || slug;
+            slug = $state.params.characteristicSlug || slug;
             if (slug) {
                 // vm.parent.name
                 breadcrumbs[breadcrumbs.length - 1].link = 'decisions.single.characteristics({characteristicSlug:null, category: null})';
 
-                if ($stateParams.category) {
+                if ($state.params.category) {
                     breadcrumbs.push({
                         title: vm.parent.ownerDecision.name,
                         link: 'decisions.single.characteristics({characteristicSlug: "' + slug + '", category: null})'
@@ -178,7 +171,7 @@
                     vm.criteriaGroups = criteriaGroups;
                     vm.criteriaGroupsLoader = false;
 
-                    vm.characteristicGroups = DecisionsUtils.mergeCharacteristicsDecisions(resp.decisionMatrixs[0], characteristicGroups);
+                    vm.characteristicGroups = DecisionsUtils.characteristicGroupsFullDescription(DecisionsUtils.mergeCharacteristicsDecisions(resp.decisionMatrixs[0], characteristicGroups));
 
                     var decisionMatrixs = resp.decisionMatrixs;
                     vm.decision.criteriaCompliancePercentage = _.floor(decisionMatrixs[0].decision.criteriaCompliancePercentage, 2).toFixed(2);

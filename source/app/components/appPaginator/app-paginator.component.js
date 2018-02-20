@@ -48,15 +48,15 @@
             }
             if (changes.pageNumber &&
                 !angular.equals(changes.pageNumber.currentValue, changes.pageNumber.previousValue)) {
-                vm.pagination.pageNumber = angular.copy(changes.pageNumber.currentValue);
+                vm.pagination.pageNumber = changes.pageNumber.currentValue;
             }
             if (changes.pageSize &&
                 !angular.equals(changes.pageSize.currentValue, changes.pageSize.previousValue)) {
-                vm.pagination.pageSize = angular.copy(changes.pageSize.currentValue);
+                vm.pagination.pageSize = changes.pageSize.currentValue;
             }
             if (changes.total &&
                 !angular.equals(changes.total.currentValue, changes.total.previousValue)) {
-                vm.pagination.totalDecisions = angular.copy(changes.total.currentValue);
+                vm.pagination.totalDecisions = changes.total.currentValue;
             }
         }
 

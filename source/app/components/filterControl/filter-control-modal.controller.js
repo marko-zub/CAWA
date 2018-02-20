@@ -36,9 +36,11 @@
 
         function init() {
             vm.selectedOptions = [];
-            vm.item = angular.copy(item);
-            vm.item.options = _.sortBy(vm.item.options, 'name');
+            
+            item.options = _.sortBy(item.options, 'name');
             vm.filterQuery = '';
+
+            vm.item = angular.copy(item);
 
             if (!vm.item.selectedOperator || vm.item.selectedOperator === 'OR') {
                 vm.selectedOperatorTrigger = true;

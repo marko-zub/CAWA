@@ -1,8 +1,8 @@
-(function() {
+// (function() {
 
-    'use strict';
+//     'use strict';
 
-    angular
-        .module('app.tags', ['app.core']);
+//     angular
+//         .module('app.tags', ['app.core']);
 
-})();
+// })();

@@ -22,27 +22,10 @@
         vm.$onChanges = onChanges;
 
         function onChanges(changes) {
-            if (changes.item && !angular.equals(changes.item.currentValue, changes.previousValue)) {
-                // console.log(changes.item.currentValue);
-                var item = {
-                    value: changes.item.currentValue.value,
-                    multiValue: vm.characteristic.multiValue,
-                    valueType: vm.characteristic.valueType,
-                    description: changes.item.currentValue.description,
-                    totalHistoryValues: changes.item.currentValue.totalHistoryValues,
-                    visualMode: vm.characteristic.visualMode,
-                    valuePrefix: vm.characteristic.valuePrefix,
-                    valueSuffix: vm.characteristic.valueSuffix,
-                    valueMode: vm.characteristic.valueMode,
-                    historicalValue: vm.characteristic.historicalValue,
-                    acceptUserValues: vm.characteristic.acceptUserValues,
-                    commentableValue: vm.characteristic.commentableValue,
-                    flaggableValue: vm.characteristic.flaggableValue
-                };
-                // if (vm.characteristic.hasOwnProperty('historicalValue')) {
-                //     console.log(vm.characteristic);
-                // }
-
+            if (changes.item &&
+                !angular.equals(changes.item.currentValue, changes.previousValue)) {
+                var characteristic = _.omit(vm.characteristic, 'description');
+                var item = _.merge(changes.item.currentValue, characteristic);
                 var renderContent = ContentFormaterService.getTemplate(item);
                 renderHtml(renderContent);
             }

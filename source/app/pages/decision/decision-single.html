@@ -12,7 +12,9 @@
                     <h3 class="app-title-inline" ng-bind="::vm.decision.name"></h3>
                 </div>
             </div>
-
+        </div>
+        
+        <div ng-class="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length) ? 'col-sm-9' : 'col-sm-12'">
             <div class="post-header">
                 <app-votes></app-votes>
                 <div class="nav-tabs-wrapper">
@@ -38,7 +40,7 @@
 
             <div class="post-sub-header-wrapper">
                 <div class="post-sub-header" dw-sticky>
-                    <div class="app-container-sm">
+                    <div class="app-container-sm-sticky">
                         <div class="row">
                             <div class="col-sm-7">
                                 <decision-short-info decision="::vm.decision"></decision-short-info>
@@ -57,19 +59,31 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="col-sm-12">
+   
             <div class="post post-single with-rating">
                 <!-- Gallery -->
                 <media decision="::vm.decision" ></media>
                 <!-- End Gallery -->
             </div>
+
         </div>
 
+        <!-- Related -->
+        <div class="col-sm-3" ng-if="::(vm.parentDecisionGroupsRelated && vm.parentDecisionGroupsRelated.length)">
+            <h4>
+                Related
+            </h4>
 
-        <div class="col-sm-12" ng-if="vm.parentDecisionGroups.length">
+            <div ng-repeat="item in ::vm.parentDecisionGroupsRelated track by item.id">
+                <a ui-sref="decisions.single.categories(::{id: item.ownerDecision.id, slug: item.ownerDecision.nameSlug, size: null, page: null, sort: null, categorySlug: item.nameSlug})" title="">
+                    {{ ::item.ownerDecision.name }} {{ ::item.name }}
+                </a>
+            </div>
+        </div>
+        <!-- End Related -->
+
+
+        <div class="col-sm-12" ng-if="::vm.parentDecisionGroups.length">
             <div class="nav-tabs-wrapper tabs-left mg-b-sm">
                 <ul class="nav nav-tabs nav-tabs-sm">
                     <li ng-repeat="parent in vm.parentDecisionGroups track by parent.id" ng-class="{'active':vm.activeParentTab.id === parent.id}">
@@ -83,7 +97,7 @@
                 <div ng-if="vm.parentDecisionGroups.length && !vm.isCharacteristicGroupsChart" class="dib">
                     <a class="nav-tabs-wrapper-link" ui-sref="decisions.single.categories({id: vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, sort: 'topRated', categorySlug: vm.activeParentTab.nameSlug})">
                         {{ 'See All' | translate }} {{ vm.activeParentTab.name }} ({{ vm.activeParentTab.totalChildDecisions }})
-                    </a> or&bnsp;
+                    </a> or&nbsp;
                 </div>
 
                 <a class="nav-tabs-wrapper-link" ui-sref="decisions.single({id:vm.activeParentTab.ownerDecision.id, slug: vm.activeParentTab.ownerDecision.nameSlug, size: null, page: null, category: null, sort: null})" title="Read More About {{ vm.activeParentTab.ownerDecision.name }}">
@@ -149,14 +163,14 @@
                     <div class="list-wrapper sm" ng-show="vm.characteristicGroupsInit">
                         <div ng-show="vm.characteristicGroupsLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
                         <characteristics-list
-                        ng-if="vm.characteristicGroups"
-                        list="vm.characteristicGroups"
-                        decision="vm.decisionMatrixs[0]"
-                        links="false"
-                        rating="true"
-                        decision="vm.decisionMatrixs[0]"
-                        discussion="false"
-                        collapsed="false"></characteristics-list>
+                            ng-if="vm.characteristicGroups"
+                            list="vm.characteristicGroups"
+                            decision="vm.decisionMatrixs[0]"
+                            links="false"
+                            rating="true"
+                            decision="vm.decisionMatrixs[0]"
+                            discussion="false"
+                            collapsed="false"></characteristics-list>
                     </div>
                 </div>
                 <!-- End Parent criteria & characteristics -->
@@ -167,11 +181,15 @@
        <!--              <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
                     <!-- End Owners -->
 
-                    <affiliate-disclosure></affiliate-disclosure>
+                    <!-- <affiliate-disclosure></affiliate-disclosure> -->
                 </div>
            </div>
 
-            <decisions-wrapper decision="::vm.decision" on-change-tab="vm.onChangeTab(tab)"></decisions-wrapper>
+            <decisions-wrapper 
+                decision="::vm.decision" 
+                on-change-tab="vm.onChangeTab(tab)"
+                on-change-pagination="vm.onChangePage(pagination)" 
+                on-change-sort-mode="vm.onChangeSortMode(tab)"></decisions-wrapper>
         </div>
 
         <div ng-if="!vm.isCharacteristicGroupsChart" class="col-sm-3">
@@ -179,7 +197,7 @@
             <!-- <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
             <!-- End Owners -->
 
-            <affiliate-disclosure></affiliate-disclosure>
+            <!-- <affiliate-disclosure></affiliate-disclosure> -->
         </div>
 
 
@@ -242,7 +260,7 @@
                 <!-- <owner-users list="vm.decision.ownerUsers" become-title="vm.decision.name"></owner-users> -->
                 <!-- End Owners -->
 
-                <affiliate-disclosure></affiliate-disclosure>
+                <!-- <affiliate-disclosure></affiliate-disclosure> -->
             </div>
        </div>
 

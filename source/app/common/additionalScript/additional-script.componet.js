@@ -7,7 +7,7 @@
         .controller('AdditionalScriptController', AdditionalScriptController)
         .component('additionalScript', {
             bindings: {
-                socialType: '<',
+                socialType: '@',
             },
             controller: 'AdditionalScriptController',
             controllerAs: 'vm'

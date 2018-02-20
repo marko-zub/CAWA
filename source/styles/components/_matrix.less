@@ -4,24 +4,9 @@
     padding-right: @resizer-width;
 }
 
-.btns-view {
-    margin: 5px 0;
-    & + .btn {
-        margin-left: 10px;
-    }
-}
-
-
-.app-sticky {
-    position: fixed !important;
-}
-
 .body-matrix-page {
     .app-header {
         position: absolute;
-    }
-    .app-footer {
-        // display: none !important;
     }
     .matrix {
         .main-panel {
@@ -42,9 +27,6 @@
 .characteristic-content-aside {
     .icon-info {
         margin: 0 0 10px;
-        // position: absolute;
-        // bottom: 0;
-        // left: 0;
     }
 }
 
@@ -215,7 +197,6 @@
         overflow: hidden;
         position: relative;
         z-index: 2;
-        // height: calc(~"100vh - 170px");
         margin-bottom: -46px; //Pagination height
         padding-bottom: 46px;
     }
@@ -230,6 +211,13 @@
             top: 70px; //TODO: use variable
         }
     }
+    .nav-tabs {
+        .badge {
+            padding: 3px 5px;
+            font-size: 9px;
+            background-color: @gray-mid;
+        }
+    }    
 }
 
 .martix-footer {
@@ -251,10 +239,10 @@
 #matrix-fake-scroll {
     display: none;
 }
+
 .matrix-sticky-footer {
     #matrix-fake-scroll {
         display: block;
-        // height: 20px;
         position: absolute;
         top: 0;
         left: 215px;
@@ -287,7 +275,6 @@
     position: relative;
     width: 2000px;
     top: 0;
-    // padding: 0 10px 0 0;
     .matrix-col {
         cursor: pointer;
         &:hover {
@@ -381,15 +368,12 @@
 
     .description {
         font-size: 90%;
-        // display: inline-block;
-        // margin: 0 2px;
         color: @gray-mid;
     }
 }
 
 .dw-additional-wrapper {
     display: inline-block;
-    // width: 100%;
     position: absolute;
     bottom: 5px;
     left: 3px;
@@ -420,7 +404,6 @@
     }
 }
 
-
 .link-full {
     position: absolute;
     left: 0;
@@ -444,7 +427,6 @@ a {
     .group-title-line {
         pointer-events: none;
     }
-    // border-bottom: 1px solid @gray-light;
     .group-title-line {
         display: inline-block;
         position: relative;
@@ -562,16 +544,8 @@ a {
 
 // Criteria App sorters
 .criteria-col {
-    .app-sorter {
-        span {
-            // pointer-events: none;
-        }
-    }
     &.selected {
        .app-sorter {
-            span {
-                // pointer-events: auto;
-            }
             .app-sorter-bottom {
                 &.selected {
                     color: @basic-active;
@@ -651,12 +625,7 @@ a {
     height: 100%;
 }
 
-
-.view-more {
-    margin: 5px 0;
-}
-
-@matrix-header: 160px;
+@matrix-header: 165px;
 .matrix-header {
     position: relative;
     height: @matrix-header;
@@ -730,8 +699,6 @@ a {
         width: 100%;
         z-index: 85;
         background: #fff;
-        padding-left: 15px;
-        padding-right: 15px;
     }
 
     .filter-tags {
@@ -782,7 +749,10 @@ a {
 
 .matrix-wrapper {
     position: relative;
-    // overflow: hidden;
+    .tabs-wrapper {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
 .matrix-body-scroll {
@@ -811,22 +781,22 @@ a {
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
-}
-#scroller ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    text-align: left;
-}
-#scroller li {
-    padding: 0 10px;
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #fff;
-    background-color: #fafafa;
-    font-size: 14px;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        text-align: left;
+    }
+    li {
+        padding: 0 10px;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #ccc;
+        border-top: 1px solid #fff;
+        background-color: #fafafa;
+        font-size: 14px;
+    }    
 }
 
 
@@ -906,16 +876,6 @@ a {
     margin: -10px 0;
 }
 
-
-.matrix {
-    .nav-tabs {
-        .badge {
-            padding: 3px 5px;
-            font-size: 9px;
-            background-color: @gray-mid;
-        }
-    }
-}
 
 .nav-tabs {
     &.nav-tabs-sm {
@@ -1031,13 +991,16 @@ a {
         width: 200px;
         max-width: 200px;
         min-height: 49px;
-        // min-height: 100%;
         height: 100%;
+        .app-iscroll-wrapper {
+            max-height: 180px;
+        }
     }
     .app-iscroll-wrapper {
         max-height: @scroll-height;
         min-height: 100%;
         overflow: hidden;
+        position: relative;
     }
     .matrix-aside {
         width: 200px;
@@ -1079,6 +1042,30 @@ a {
     .matrix-g-title {
         font-size: 13px;
     }
+
+    .characteristic-groups-content {
+        position: relative;
+        min-height: 100px;
+        border-right: 1px solid @gray-light;
+        .app-loader-small {
+            left: -200px;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+        }
+        .matrix-item {
+            min-height: 60px;
+        }
+    }
+
+    .scroll-group {
+        .clearfix;
+        display: table;
+
+        .matrix-col {
+            border-bottom: 0;
+        }
+    }      
 }
 
 .popover-content {
@@ -1098,6 +1085,7 @@ a {
             visibility: hidden !important;
         }
     }
+
     .group-wrapper-title {
         position: absolute;
         font-size: 10px;
@@ -1218,7 +1206,8 @@ a {
         vertical-align: top;
         margin-top: 0px;
     }
-    input[type="radio"], input[type="checkbox"] {
+    input[type="radio"], 
+    input[type="checkbox"] {
         margin: 0;
         vertical-align: top;
     }
@@ -1231,6 +1220,7 @@ a {
     vertical-align: top;
     margin-top: 0px;
 }
+
 @scroll-height: 200px;
 .filter-item.checkbox-list {
     min-height: 94px;
@@ -1248,12 +1238,6 @@ a {
     line-height: 1;
     padding: 3px 10px;
     display: inline-block;
-}
-
-.filter-item-content {
-    padding: 10px 8px 5px 0;
-    overflow: auto;
-    width: 100%;
 }
 
 .filter-item {
@@ -1287,6 +1271,11 @@ a {
             padding-right: 5px;
         }
     }
+    &-content {
+        padding: 10px 8px 5px 0;
+        overflow: auto;
+        width: 100%;
+    }    
 }
 
 .filter-list {
@@ -1362,23 +1351,6 @@ a {
     }
 }
 
-.matrix.matrix-new {
-    .characteristic-groups-content {
-        position: relative;
-        min-height: 100px;
-        // overflow: hidden;
-        border-right: 1px solid @gray-light;
-        .app-loader-small {
-            left: -200px;
-            width: 100vw;
-            position: absolute;
-            top: 0;
-        }
-        .matrix-item {
-            min-height: 60px;
-        }
-    }
-}
 .query-type-wrapper {
     display: block;
     margin-bottom: 2px;
@@ -1392,43 +1364,41 @@ a {
     }
 }
 
-
-
 @matrix-col-hover: lighten(@color-blue, 50%);
 // Move table to absolute
-.m-group-content {
-    position: relative;
-}
-
-.m-group-row {
-    min-height: 49px;
-    position: relative;
-    left: 0;
-    width: 100%;
-    border-bottom: 1px solid @gray-light;
-}
-.m-group-col {
-    position: absolute;
-    width: 200px;
-    height: 100%;
-    font-size: 13px;
-    padding: 2px 4px 24px;
-    cursor: pointer;
-    border-right: 1px solid @gray-light;
-    transition: background-color 0.1s ease-in-out;
-    &:hover {
-        background-color: @matrix-col-hover;
-    }
-}
 .m-group {
     position: relative;
-}
-.m-group-title {
-    height: 24px !important;
-    min-height: 24px !important; // Remove it
-    line-height: 24px;
-    background-color: @color-gray-light-2;
-    white-space: nowrap;
+    &-title {
+        height: 24px !important;
+        min-height: 24px !important; // Remove it
+        line-height: 24px;
+        background-color: @color-gray-light-2;
+        white-space: nowrap;
+    }    
+    &-content {
+        position: relative;
+    }
+
+    &-row {
+        min-height: 49px;
+        position: relative;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px solid @gray-light;
+    }
+    &-col {
+        position: absolute;
+        width: 200px;
+        height: 100%;
+        font-size: 13px;
+        padding: 2px 4px 24px;
+        cursor: pointer;
+        border-right: 1px solid @gray-light;
+        transition: background-color 0.1s ease-in-out;
+        &:hover {
+            background-color: @matrix-col-hover;
+        }
+    }    
 }
 
 .matrix-body-wrapper {
@@ -1448,11 +1418,26 @@ a {
         }
     }
 }
+
 .matrix {
     .app-panel-title {
         cursor: pointer;
     }
+    .filter-wrapper {
+        padding: 0 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+    } 
+    .criteria-popover {
+        .app-rating-votes-likes {
+            border-left: 0px;
+        }
+    }       
 }
+
 .app-panel-title {
     position: relative;
     .controls {
@@ -1476,30 +1461,14 @@ a {
     margin: 0 0 20px;
 }
 
-.text-light {
-    color: @gray-mid;
-}
-
 .matrix-criteria-wrapper {
     display: block;
-}
-
-.matrix {
-    .filter-wrapper {
-        padding: 0 10px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        margin: 0;
-    }
 }
 
 // Filter Name
 .filter-name {
     position: relative;
     margin: 8px 0 15px;
-    // padding: 0 10px;
     width: 350px;
     .form-control {
         width: 100%;
@@ -1522,7 +1491,7 @@ a {
         cursor: pointer;
         color: #fff;
         background-color: @color-gray-light;
-         .transition(background-color 0 ease 0;);
+        .transition(background-color 0 ease 0;);
         &:hover {
             color: @gray-mid;
             background-color: @color-gray;
@@ -1549,23 +1518,6 @@ a {
     display: inline-block;
 }
 
-.iScrollVerticalScrollbar.iScrollLoneScrollbar {
-
-}
-
-.el-loaded {
-    position: absolute !important;
-    visibility: hidden;
-}
-
-.matrix.matrix-new .scroll-group {
-    .clearfix;
-    display: table;
-    .matrix-col {
-        border-bottom: 0;
-    }
-}
-
 .characteristic-content-aside {
     .matrix-item-block {
         position: relative;
@@ -1578,57 +1530,23 @@ a {
     position: relative;
 }
 
-.app-title-inline {
-    display: inline-block;
-    margin: 0 4px 5px 0;
-}
-
-.mg-sm-b {
-    margin-bottom: 8px;
-}
-
-.icon-sm {
-    font-size: 70%;
-}
-
 .decision-childs {
     margin-top: 16px;
     margin-bottom: 16px;
 }
 
 
-.sm-link {
-    font-size: 11px;
-    color: @icon-color;
-    &:hover {
-        color: @basic-active;
-    }
-}
-
 .tooltip {
     &.tooltip-light {
         white-space: nowrap;
         .tooltip-inner {
             border-radius: 0;
-            // background-color: rgba(0, 0, 0, 0.6);
-        }
-        .tooltip-arrow {
-            // border-left-color: rgba(0, 0, 0, 0.6);
         }
     }
 }
-
 
 .matrix-mode-tabs {
     min-height: 38px;
-}
-
-.matrix {
-    .criteria-popover {
-        .app-rating-votes-likes {
-            border-left: 0px;
-        }
-    }
 }
 
 .matrix-all-link {

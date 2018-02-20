@@ -51,8 +51,7 @@
         }
 
         function handleChanges(list) {
-            var copyList = angular.copy(list);
-            return _.map(copyList, function(group) {
+            return _.map(list, function(group) {
                 group.criteria = _.chain(group.criteria)
                     .map(function(criteria) {
                         criteria.weight = _.floor(criteria.weight, 2).toFixed(2);

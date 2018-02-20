@@ -36,7 +36,13 @@
                 </div>
             </div>
 
-            <decisions-wrapper on-change-tab="vm.onChangeTab(tab)" ng-if="vm.decision.decisionGroups.length" title="false" decision="::vm.decision"></decisions-wrapper>
+            <decisions-wrapper 
+                ng-if="vm.decision.decisionGroups.length" 
+                on-change-tab="vm.onChangeTab(tab)" 
+                on-change-pagination="vm.onChangePage(pagination)" 
+                on-change-sort-mode="vm.onChangeSortMode(tab)"
+                title="false" 
+                decision="::vm.decision"></decisions-wrapper>
 
             <div ng-if="!vm.decision.decisionGroups.length">
                 <span class="text-header" translate-cloak>
