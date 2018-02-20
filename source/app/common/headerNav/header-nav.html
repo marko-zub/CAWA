@@ -1,12 +1,26 @@
 <div ng-cloak ng-class="{'open': vm.isOpen}">
-    <nav class="header-nav">
-        <a ui-sref="decisions({size: null, page: null})" translate-cloak ui-sref-active="active" title="Decisions" ui-sref-opts="{reload: true}">{{ 'Decisions' | translate }}</a>
-        <a ui-sref="users" translate-cloak ui-sref-active="active" title="Users" ui-sref-opts="{reload: true}">{{ 'Users' | translate }}</a>
-        <a ui-sref="contacts" translate-cloak ui-sref-active="active" title="Contact Us" ui-sref-opts="{reload: true}">{{ 'CONTACT US' | translate }}</a>
-    </nav>
+    <div class="header-nav-wrapper">
+
+        <!-- Search mobile -->
+        <div ng-if="vm.isOpen" class="clearfix visible-xs">
+            <div class="app-panel-search">
+                <search-bar translate-cloak placeholder="{{'SEARCH' | translate}}"></search-bar>
+            </div>
+        </div>
+        <!-- End Search mobile -->
+        
+        <!-- Header nav -->
+        <nav class="header-nav">
+            <a ui-sref="decisions({size: null, page: null})" translate-cloak ui-sref-active="active" title="Decisions" ui-sref-opts="{reload: true}">{{ 'Decisions' | translate }}</a>
+            <a ui-sref="users" translate-cloak ui-sref-active="active" title="Users" ui-sref-opts="{reload: true}">{{ 'Users' | translate }}</a>
+            <a ui-sref="contacts" translate-cloak ui-sref-active="active" title="Contact Us" ui-sref-opts="{reload: true}">{{ 'CONTACT US' | translate }}</a>
+        </nav>
+        <!-- End Header nav -->
+
+     </div>
      <div class="header-nav-toggle" ng-click="vm.toggleNav()">
         <span class="icon-bar icon-bar-top"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar icon-bar-bottom"></span>
-     </div>
+     </div>        
  </div>
