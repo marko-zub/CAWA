@@ -25,11 +25,7 @@
 
         // Control DATERANGEPICKER
         function createDateRangePicker(item) {
-            vm.dateRange = {
-                startDate: null,
-                endDate: null
-            };
-            vm.dateRangeOptions = {
+            var options = {
                 locale: {
                     format: 'DD/MM/YYYY'
                 },
@@ -40,6 +36,24 @@
                         changeDate(vm.dateRange, item);
                     }
                 }
+            };
+
+            if (item.visualMode.toUpperCase() === 'DATETIMERANGEPICKER') {
+                options = _.merge(options, {
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerSeconds: true,
+                    locale: {
+                        format: 'DD/MM/YYYY HH:mm:ss'
+                    }
+                });
+            }
+
+            vm.dateRangeOptions = options;
+
+            vm.dateRange = {
+                startDate: null,
+                endDate: null
             };
 
             var html = '<div class="filter-item-content"><input date-range-picker options="vm.dateRangeOptions" class="form-control input-sm date-picker" type="text" ng-model="vm.dateRange" /></div>';
@@ -55,8 +69,8 @@
             if (!model.startDate && !model.endDate) {
                 queries = null;
             } else {
-                var startDate = parseInt(model.startDate.valueOf());
-                var endDate = parseInt(model.endDate.valueOf());
+                var startDate = model.startDate.valueOf();
+                var endDate = model.endDate.valueOf();
                 queries = [startDate, endDate];
             }
 
@@ -66,6 +80,10 @@
                 'operator': 'AND',
                 'value': queries
             };
+            console.log(model.startDate);
+            console.log(model.startDate.valueOf());
+            console.log(model.startDate.format());
+            console.log(model.startDate.unix());
 
             FilterControlsDataService.characteristicChange(item.id, query);
         }
