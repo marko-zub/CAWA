@@ -16,7 +16,7 @@
                 <ul class="discussions-list characteristic-list">
                     <li ng-repeat="characteristic in ::group.characteristics track by characteristic.id">
                         <div class="clearfix row-eq-height">
-                            <div class="col-sm-5 clearfix bg-gray-light-2">
+                            <div class="col-xs-6 col-sm-5 clearfix bg-gray-light-2">
                                 <div class="discussions-list-content clearfix">
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
                                         <a ng-switch-when="true" ui-sref="decisions.single.categories.comparison.child.option(::{critOrCharId:characteristic.id, critOrCharSlug:characteristic.nameSlug})" ng-bind="::characteristic.name"></a>
@@ -26,15 +26,15 @@
                                 </div>
                             </div>
                             <!-- <div class="col-sm-6 text-right"> -->
-                            <div class="col-sm-7">
+                            <div class="col-xs-6 col-sm-7">
                                 <div class="discussions-list-content">
                                     <div ng-if="(!characteristic.decision.value && characteristic.acceptUserValues !== false)">
                                         <a href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
                                     </div>
                                     <content-formater ng-if="::characteristic.decision.value" item="::characteristic.decision" characteristic="::characteristic"></content-formater>
                                     <div ng-if="::(!characteristic.multiValue)" class="control-panel-sm">
-                                        <history-chart-btn 
-                                            ng-if="::(characteristic.historicalValue !== false && characteristic.decision.value && characteristic.decision.totalHistoryValues > 0)" 
+                                        <history-chart-btn
+                                            ng-if="::(characteristic.historicalValue !== false && characteristic.decision.value && characteristic.decision.totalHistoryValues > 0)"
                                             decision="::vm.decision"
                                             selected-characteristic-id="::characteristic.id"
                                             characteristics="::vm.list"
