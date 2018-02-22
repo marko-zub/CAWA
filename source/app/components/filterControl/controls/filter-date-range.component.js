@@ -80,10 +80,8 @@
                 'operator': 'AND',
                 'value': queries
             };
-            console.log(model.startDate);
-            console.log(model.startDate.valueOf());
-            console.log(model.startDate.format());
-            console.log(model.startDate.unix());
+
+            // console.log(moment(model.startDate.valueOf()).format('DD/MM/YYYY HH:mm:ss'));
 
             FilterControlsDataService.characteristicChange(item.id, query);
         }
