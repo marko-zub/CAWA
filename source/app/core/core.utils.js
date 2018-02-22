@@ -5,7 +5,9 @@
         .module('app.core')
         .service('Utils', Utils);
 
-    function Utils() {
+    Utils.$inject = ['Config'];
+
+    function Utils(Config) {
 
         function addItemToArray(itemId, array) {
             if (!itemId || _.includes(array, itemId)) return;
@@ -23,7 +25,7 @@
 
         function removeEmptyFromArray(array) {
             return _.filter(array, function(el) {
-                if (el) return el; //can use just if(el); !_.isNull(el) && !_.isUndefined(el) && !_.isNaN(el)
+                return el;
             });
         }
 
@@ -35,7 +37,7 @@
 
         function dateToUI(date) {
             if (!date) return;
-            return moment(date).format('DD/MM/YYYY');
+            return moment(date).format(Config.FORMAT_DATE);
         }
 
         function dateYearToUI(date) {
@@ -45,7 +47,7 @@
 
         function dateTimeToUI(date) {
             if (!date) return;
-            return moment(date).format('DD/MM/YYYY HH:mm:ss');
+            return moment(date).format(Config.FORMAT_DATETIME);
         }
 
         // TODO: move to UTILS
@@ -60,10 +62,6 @@
             return findItem;
 
         }
-        // function isDate(date) {
-        //     var isValueDate = (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
-        //     return isValueDate;
-        // }
 
         function numberToUi(n, d) {
             var x = ('' + n).length;

@@ -10,9 +10,9 @@
             controllerAs: 'vm'
         });
 
-    FilterDateRangeController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope'];
+    FilterDateRangeController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Config'];
 
-    function FilterDateRangeController(FilterControlsDataService, $element, $compile, $scope) {
+    function FilterDateRangeController(FilterControlsDataService, $element, $compile, $scope, Config) {
         var vm = this;
 
         vm.$onInit = onInit;
@@ -27,7 +27,7 @@
         function createDateRangePicker(item) {
             var options = {
                 locale: {
-                    format: 'DD/MM/YYYY'
+                    format: Config.FORMAT_DATE
                 },
                 showDropdowns: true, // some bug
                 linkedCalendars: false,
@@ -44,7 +44,7 @@
                     timePicker24Hour: true,
                     timePickerSeconds: true,
                     locale: {
-                        format: 'DD/MM/YYYY HH:mm:ss'
+                        format: Config.FORMAT_DATETIME
                     }
                 });
             }
@@ -77,11 +77,14 @@
             var query = {
                 'type': 'RangeQuery',
                 'characteristicId': item.id,
-                'operator': 'AND',
                 'value': queries
             };
 
-            // console.log(moment(model.startDate.valueOf()).format('DD/MM/YYYY HH:mm:ss'));
+            if (item.visualMode.toUpperCase() !== 'DATETIMERANGEPICKER') {
+                query.operator = 'AND';
+            }
+
+            // console.log(moment(model.startDate.valueOf()).format(Config.FORMAT_DATETIME));
 
             FilterControlsDataService.characteristicChange(item.id, query);
         }

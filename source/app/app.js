@@ -35,6 +35,8 @@
                 mode: result.data.mode,
                 pagePrefix: result.data.pagePrefix,
                 title: result.data.title,
+                FORMAT_DATETIME: 'DD/MM/YYYY HH:mm:ss',
+                FORMAT_DATE: 'DD/MM/YYYY',
             });
         })
         .catch(function(error) {
