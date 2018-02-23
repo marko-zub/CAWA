@@ -37,17 +37,17 @@
 
         function dateToUI(date) {
             if (!date) return;
-            return moment(date).format(Config.FORMAT_DATE);
+            return moment(parseInt(date, 10)).format(Config.FORMAT_DATE);
         }
 
         function dateYearToUI(date) {
             if (!date) return;
-            return moment(date).format('YYYY');
+            return moment(parseInt(date, 10)).format('YYYY');
         }
 
         function dateTimeToUI(date) {
             if (!date) return;
-            return moment(date).format(Config.FORMAT_DATETIME);
+            return moment(parseInt(date, 10)).format(Config.FORMAT_DATETIME);
         }
 
         // TODO: move to UTILS
