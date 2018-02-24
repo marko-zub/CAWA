@@ -300,7 +300,7 @@
                 if (item.valueTemp === true) data[0] = 'Yes';
                 if (item.valueTemp === false) data[0] = 'No';
             } else if (item.type && item.type.toLowerCase() === 'rangequery') {
-                data[0] = item.valueTemp[0] + ' - ' + item.valueTemp[1];
+                data[0] = _.isArray(item.valueTemp) ? item.valueTemp[0] + ' - ' + item.valueTemp[1] : null;
             } else {
                 data = _.isArray(item.valueTemp) ? item.valueTemp : [item.valueTemp];
             }

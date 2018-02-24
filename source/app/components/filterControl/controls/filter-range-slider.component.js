@@ -18,7 +18,15 @@
         return [
             '<div ng-if="vm.showRange" class="filter-item-wrapper">',
             '<rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-model="vm.slider.value" rz-slider-options="vm.slider.options"></rzslider>',
-            '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
+            // '<small>{{vm.slider.min}} - {{vm.slider.max}}</small>',
+            '   <div class="clearfix">',
+            '       <div class="range-input-label">min: </div>',
+            '       <input ng-change="vm.changeRangeSliderInput()" ng-model-options="{debounce: 250}" ng-model="vm.slider.min" type="number" class="form-control range-input" min="{{::vm.minVal}}" max="{{::vm.maxVal}}"/>',
+            '   </div>',
+            '   <div class="clearfix">',
+            '       <div class="range-input-label">max: </div>',
+            '       <input ng-change="vm.changeRangeSliderInput()" ng-model-options="{debounce: 250}" ng-model="vm.slider.max" type="number" class="form-control range-input" min="{{::vm.minVal}}" max="{{::vm.slider.max}}"/>',
+            '   </div>',
             '</div>'
         ].join('\n');
     }
@@ -65,9 +73,13 @@
             var minVal = Number(item.minValue);
             var maxVal = Number(item.maxValue);
 
-            if(!_.isNaN(minVal) && !_.isNaN(maxVal)) {
+            if (!_.isNaN(minVal) && !_.isNaN(maxVal)) {
                 vm.showRange = true;
             }
+
+            vm.minVal = minVal;
+            vm.maxVal = maxVal;
+
             vm.slider = {
                 min: minVal,
                 max: maxVal,
@@ -92,6 +104,25 @@
                 'value': value
             };
             FilterControlsDataService.characteristicChange(vm.item.id, query);
+        }
+
+        vm.changeRangeSliderInput = changeRangeSliderInput;
+
+        function changeRangeSliderInput() {
+
+            var sendMin = vm.slider.min;
+            var sendMax = vm.slider.max;
+            if (sendMin < vm.minVal) {
+                sendMin = vm.minVal;
+                vm.slider.min = vm.minVal;
+            }
+
+            if (sendMax > vm.maxVal) {
+                sendMax = vm.maxVal;
+                vm.slider.max = vm.maxVal;
+            }
+
+            changeRangeSlider('slider-' + vm.item.id, sendMin, sendMax);
         }
 
     }
