@@ -337,6 +337,16 @@
             });
 
             if (find >= 0) {
+                // if (!value && characteristicCopy.optionIds) {
+                //     var valuex = _.chain(characteristicGroups[find].options).filter(function(option) {
+                //         return _.includes(characteristicCopy.optionIds, option.id);
+                //     }).map(function(option) {
+                //         return option.value;
+                //     }).value();
+                //     console.log(valuex);
+                // }
+
+                characteristicGroups[find].optionIds = characteristicCopy.optionIds;
                 characteristicGroups[find].selectedValue = value;
                 characteristicGroups[find].selectedOperator = (characteristic.type === 'AnyInQuery') ? 'OR' : 'AND';
                 if (optionId >= 0) characteristicGroups[find].optionId = optionId;

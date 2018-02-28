@@ -202,7 +202,21 @@
                 return;
             }
 
+            if (itemCopy.optionIds && itemCopy.optionIds.length) {
+                var findOption = _.find(itemCopy.options, function(option) {
+                    return option.value === value;
+                });
+
+                if (findOption) {
+                    itemCopy.optionIds = _.remove(itemCopy.optionIds, function(optionId) {
+                        return optionId !== findOption.id;
+                    });
+                }
+                
+            }
+
             var sendItemCopy = _.omit(itemCopy, 'data', 'name', 'valueType');
+
             updateFilterObject(sendItemCopy);
         }
 
@@ -213,12 +227,17 @@
         }
 
         function updateFilterObject(query) {
+            // query = _.omit(query, 'valueTemp', 'options');
+            // if (query.optionIds && query.optionIds.length) {
+            //     delete query.value;
+            // }
 
             var sendData = {
                 query: {
                     'filterQueries': query
                 }
             };
+
             DecisionNotificationService.notifySelectCharacteristic(sendData);
         }
 

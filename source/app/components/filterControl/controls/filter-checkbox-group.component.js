@@ -100,6 +100,19 @@
                     }
                 });
             }
+
+            // } else if (list.optionIds) {
+            //     // checkedValues = list.optionIds;
+            //     // optionIds = list.optionIds;
+            //     $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
+            //         var val = $(this).data('option-id');
+            //         if (_.includes(list, list.optionIds)) {
+            //             $(this).prop('checked', true);
+            //         } else {
+            //             $(this).prop('checked', false);
+            //         }
+            //     });
+            // }            
         }
 
         function renderCheckboxes(item) {
@@ -115,7 +128,9 @@
 
                 var dataOptionId = '';
                 var checked = '';
-                if (_.includes(item.selectedValue, option.value)) {
+                if (_.includes(item.selectedValue, option.value) || 
+                    !item.selectedValue && item.optionIds && _.includes(item.optionIds, option.id)
+                    ) {
                     checked = ' checked';
                 }
                 if (isValuesLinkedToOption === true) {
