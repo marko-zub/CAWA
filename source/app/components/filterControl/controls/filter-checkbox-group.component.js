@@ -5,7 +5,7 @@
         .component('filterCheckboxGroup', {
             bindings: {
                 item: '<',
-                selected: '<'
+                selected: '<',
             },
             controller: 'FilterCheckboxGroupController',
             controllerAs: 'vm'
@@ -47,7 +47,8 @@
             }
 
             // TODO: check and/or, simplify logic
-            if (changes.item && !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
+            if (changes.item && 
+                !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
 
                 if (changes.item.previousValue.selectedOperator === changes.item.currentValue.selectedOperator) {
                     return;
@@ -61,6 +62,17 @@
                     switcherEl.prop('checked', true);
                     sendObj.operator = 'OR';
                 }
+
+                if (changes.item.currentValue && changes.item.currentValue.optionIds) {
+                    handleSelectedOptionIds(changes.item.currentValue.optionIds);
+                }
+            }
+
+        }
+
+        function handleSelectedOptionIds(changesOptionIds) {
+            if (_.isArray(optionIds)) {
+                optionIds = changesOptionIds;
             }
         }
 

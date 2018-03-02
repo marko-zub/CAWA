@@ -338,9 +338,13 @@
 
             if (find >= 0) {
                 // if (!value && characteristicCopy.optionIds) {
+                //     console.log(characteristicCopy.optionIds);
+                //     console.log(characteristicGroups[find].options);
                 //     var valuex = _.chain(characteristicGroups[find].options).filter(function(option) {
+                //         console.log(option.id, _.includes(characteristicCopy.optionIds, option.id));
                 //         return _.includes(characteristicCopy.optionIds, option.id);
                 //     }).map(function(option) {
+                //         console.log(option);
                 //         return option.value;
                 //     }).value();
                 //     console.log(valuex);

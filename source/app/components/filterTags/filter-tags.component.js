@@ -227,10 +227,10 @@
         }
 
         function updateFilterObject(query) {
-            // query = _.omit(query, 'valueTemp', 'options');
-            // if (query.optionIds && query.optionIds.length) {
-            //     delete query.value;
-            // }
+            query = _.omit(query, 'valueTemp', 'options');
+            if (query.optionIds && query.optionIds.length) {
+                delete query.value;
+            }
 
             var sendData = {
                 query: {
@@ -288,8 +288,19 @@
                     if (_.isEmpty(item.valueTemp)) {
                         item.valueTemp = [];
                     }
+
+                    // console.log(item.optionIds);
+                    // // console.log(item);
+                    // console.log(vm.characteristics);
+
+                    var findCharacteristicEl = _.find(vm.characteristics, function(characteristic) {
+                        return characteristic.id === item.characteristicId;
+                    });
+
+                    // console.log(findCharacteristicEl);
+                    // console.log(vm.characteristics);
                     _.forEach(item.optionIds, function(option) {
-                        var findOption = _.find(item.options, function(itemOption) {
+                        var findOption = _.find(findCharacteristicEl.options, function(itemOption) {
                             return itemOption.id === option;
                         });
 
