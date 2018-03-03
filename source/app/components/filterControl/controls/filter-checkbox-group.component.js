@@ -36,9 +36,9 @@
                 vm.filterSpinner = true;
                 getLazyOptions(vm.item.id);
                 return;
+            } else {
+                renderItem(vm.item);
             }
-
-            renderItem(vm.item);
         }
 
         function onChanges(changes) {
@@ -47,7 +47,7 @@
             }
 
             // TODO: check and/or, simplify logic
-            if (changes.item && 
+            if (changes.item &&
                 !angular.equals(changes.item.currentValue, changes.item.previousValue)) {
 
                 if (changes.item.previousValue.selectedOperator === changes.item.currentValue.selectedOperator) {
@@ -96,7 +96,18 @@
         // TODO:
         // jQuery because slow ng-repeat
         function selectCheckboxes(list) {
-            if (_.isEmpty(list)) {
+            if (!_.isNull(vm.item.selectedValue) && vm.item.optionIds && vm.item.optionIds.length) {
+                // checkedValues = list;
+                optionIds = vm.item.optionIds;
+                $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
+                    var val = parseInt($(this).data('option-id'), 10);
+                    if (_.includes(vm.item.optionIds, val)) {
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                });
+            } else if (_.isEmpty(list)) {
                 checkedValues = [];
                 optionIds = [];
                 $($element).find('.filter-item-checkbox input.js-checkbox:checked').prop('checked', false);
@@ -111,7 +122,7 @@
                         $(this).prop('checked', false);
                     }
                 });
-            }           
+            }
         }
 
         function renderCheckboxes(item) {
@@ -121,14 +132,14 @@
             if (item.valuesLinkedToOption) {
                 isValuesLinkedToOption = true;
             }
-            
+
             var content = _.map(options, function(option) {
 
                 var dataOptionId = '';
                 var checked = '';
-                if (_.includes(item.selectedValue, option.value) || 
+                if (_.includes(item.selectedValue, option.value) ||
                     !item.selectedValue && item.optionIds && _.includes(item.optionIds, option.id)
-                    ) {
+                ) {
                     checked = ' checked';
                 }
                 if (isValuesLinkedToOption === true) {
@@ -210,7 +221,7 @@
                 }
 
                 sendObj.optionIds = optionIds;
-                // sendRequestDebounce(angular.copy(sendObj));
+                sendRequestDebounce(angular.copy(sendObj));
 
             } else {
                 value = checkbox.val();
