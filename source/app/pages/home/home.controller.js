@@ -6,12 +6,13 @@
         .module('app.home')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams', 'PaginatorConstant', 'DecisionsConstant', '$localStorage'];
+    HomeController.$inject = ['DecisionDataService', '$rootScope', '$state', '$stateParams',
+        'PaginatorConstant', 'DecisionsConstant', '$localStorage'
+    ];
 
-    function HomeController(DecisionDataService, $rootScope, $state, $stateParams, PaginatorConstant, DecisionsConstant, $localStorage) {
-        // TODO: this controller copy of
-        // Decisions view
-        // Move decisions for separete component
+    function HomeController(DecisionDataService, $rootScope, $state, $stateParams,
+        PaginatorConstant, DecisionsConstant, $localStorage) {
+
         var vm = this;
         vm.search = search;
 
@@ -36,8 +37,8 @@
             }
 
             if ($localStorage.options && !_.isEmpty($localStorage.options.view)) {
-               var layoutMode = $localStorage.options.view.layoutMode;
-               toggleLayout(layoutMode);
+                var layoutMode = $localStorage.options.view.layoutMode;
+                toggleLayout(layoutMode);
             }
         }
 
@@ -90,7 +91,6 @@
             vm.showTrigger = true;
         }
 
-        // TODO: clean up
         vm.toggleLayout = toggleLayout;
         var allowedLayoutClass = ['list', 'cards'];
 

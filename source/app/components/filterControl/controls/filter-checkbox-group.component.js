@@ -94,7 +94,7 @@
         }
 
         // TODO:
-        // Realy need jQuery? or slow ng-repeat
+        // jQuery because slow ng-repeat
         function selectCheckboxes(list) {
             if (_.isEmpty(list)) {
                 checkedValues = [];
@@ -111,31 +111,17 @@
                         $(this).prop('checked', false);
                     }
                 });
-            }
-
-            // } else if (list.optionIds) {
-            //     // checkedValues = list.optionIds;
-            //     // optionIds = list.optionIds;
-            //     $($element).find('.filter-item-checkbox input.js-checkbox').each(function() {
-            //         var val = $(this).data('option-id');
-            //         if (_.includes(list, list.optionIds)) {
-            //             $(this).prop('checked', true);
-            //         } else {
-            //             $(this).prop('checked', false);
-            //         }
-            //     });
-            // }            
+            }           
         }
 
         function renderCheckboxes(item) {
             // String Array type
             var options = _.sortBy(item.options, 'value');
-
-            // console.log(item);
             var isValuesLinkedToOption = false;
             if (item.valuesLinkedToOption) {
                 isValuesLinkedToOption = true;
             }
+            
             var content = _.map(options, function(option) {
 
                 var dataOptionId = '';
@@ -224,8 +210,7 @@
                 }
 
                 sendObj.optionIds = optionIds;
-                // console.log(sendObjCopy)
-                sendRequestDebounce(angular.copy(sendObj));
+                // sendRequestDebounce(angular.copy(sendObj));
 
             } else {
                 value = checkbox.val();
@@ -267,6 +252,7 @@
                 }
             }
         });
+
         // END Control Checkboxes
         var sendRequestDebounce = _.debounce(sendRequest, 100);
 
