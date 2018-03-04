@@ -1,7 +1,7 @@
 <div id="filter-tags" class="filter-tags">
     <div class="filter-tags-group sorted-panel clearfix">
         <!-- Sorters -->
-        <div class="filter-tags-label" ng-show="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name">{{ "SORTED BY" | translate }}: <span ng-show="vm.tagsSort.length > 0" class="display-inline-block">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span> for
+        <div class="filter-tags-label" ng-show="vm.tagsSort.length > 0 || vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name">{{ 'SORTED BY' | translate }}: <span ng-show="vm.tagsSort.length > 0" class="display-inline-block">weighted average vote <span class="app-link" ng-click="vm.changeCriteriaOrder(vm.filterObject.sortByCriteria.order, $event)" ng-bind="vm.filterObject.sortByCriteria.order"></span> for
             </span>
         </div>
         <div class="tag-wrapper" ng-repeat="tag in vm.tagsSort track by tag.id" ng-show="vm.tagsSort.length > 0">
@@ -9,7 +9,7 @@
                 <div ng-click="vm.showCriteriaPopup($event, tag)" uib-tooltip="{{ 'FACTOR OF IMPORTANCE' | translate }}: {{ tag.coefficient.name || 'normal' }}" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip-class="tooltip-light" class="criteria-coefficient-indicator-new">
                     <span class="indicator bg-color-{{ tag.coefficient.name }}"></span>
                 </div>
-                {{::tag.name}}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="dw-icon-cancel" aria-hidden="true"></i></span>
+                {{ ::tag.name }}<span ng-click="vm.removeCriteriaTag(tag)" class="icon-remove"><i class="dw-icon-cancel" aria-hidden="true"></i></span>
             </div><span ng-show="!$last" class="tag-divider">{{ 'AND' | translate }}</span>
         </div>
         <div class="tag-wrapper" ng-show="vm.sortByCharacteristic.name">
@@ -29,17 +29,17 @@
         <!-- TODO: simplify conditions move to conroller -->
         <div class="tag-wrapper tag-clear-wrapper" ng-show="vm.tagsSort.length > 1 || (vm.sortByCharacteristic.name || vm.sortByDecisionProperty.name) && vm.tagsSort.length > 0">
             <div class="tag tag-btn" ng-click="vm.clearAllCriteria()" translate-cloak>
-                {{ "CLEAR ALL SORTERS" | translate }}
+                {{ 'CLEAR ALL SORTERS' | translate }}
             </div>
         </div>
         <!-- End Sorters -->
 
         <!-- Filters -->
-        <div class="filter-tags-label" ng-show="vm.tagsFilter.length > 0">{{ "FILTERED BY" | translate }}: </div>
-        <span ng-repeat-start="tag in vm.tagsFilter track by tag.characteristicId">{{::tag.name}}:</span>
+        <div class="filter-tags-label" ng-show="vm.tagsFilter.length > 0">{{ 'FILTERED BY' | translate }}: </div>
+        <span ng-repeat-start="tag in vm.tagsFilter track by tag.characteristicId">{{ ::tag.name }}:</span>
         <div class="tag-wrapper" ng-repeat-end ng-repeat="tagVal in tag.data track by $index">
             <div class="tag">
-                {{tagVal}}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="dw-icon-cancel" aria-hidden="true"></i></span>
+                {{ tagVal }}<span ng-click="vm.removeTag(tag, tagVal)" class="icon-remove"><i class="dw-icon-cancel" aria-hidden="true"></i></span>
             </div><span ng-show="tag.data.length > 1 && !$last" class="tag-divider">
                     {{ tag.operator | translate }}
                 </span>

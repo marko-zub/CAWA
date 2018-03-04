@@ -855,6 +855,7 @@ a {
 }
 
 .app-control {
+    display: inline-block;
     -webkit-border-radius: @border-radius;
     border-radius: @border-radius;
     border: 1px solid transparent;
@@ -1223,11 +1224,11 @@ a {
 
 @scroll-height: 200px;
 .filter-item.checkbox-list {
-    min-height: 94px;
+    // min-height: 94px;
     max-height: @scroll-height;
     overflow: hidden;
     position: relative;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
 }
 
 .filter-control-full-mode {
@@ -1554,4 +1555,34 @@ a {
     right: 0;
     top: 0;
     margin: -50px 0;
+}
+
+
+// Sizes
+.c {
+    &-checkbox {
+        height: 280px !important;
+    }
+
+    &-link {
+        min-height: 50px !important;
+    }
+    
+    &-integerrangeslider,
+    &-doublerangeslider {
+        height: 160px !important;
+    }
+
+    &-select {
+        min-height: 88px !important;
+    }
+
+    &-radiogroup {
+        height: 101px !important;
+    }
+
+    &-daterangepicker {
+        height: 87px !important;
+    }
+
 }

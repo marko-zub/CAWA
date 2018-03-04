@@ -4,7 +4,7 @@
             <h4 class="app-list-title">{{vm.criteriaTitle || 'Criteria'}}</h4>
         </div>
     </div>
-    <div ng-if="vm.list.length">
+    <div ng-if="vm.list && vm.list.length">
         <div class="app-list-group" ng-repeat="group in vm.list track by group.id" ng-class="{'closed':group.isCollapsed}">
             <h5 class="app-list-group-title app-panel-title" ng-click="vm.toggleCollapse($index)">
                 {{::group.name}}
@@ -21,12 +21,12 @@
                                     <div ng-switch="::(vm.links == true)" class="pull-left">
                                         <div ng-switch-when="true">
                                             <a ui-sref="decisions.single.categories.comparison.child.option(::{critOrCharId:criteria.criterionId, critOrCharSlug:criteria.nameSlug})">{{ ::criteria.name }}</a>
-                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="::criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
 
                                         <div ng-switch-when="false">
                                             {{ ::criteria.name }}
-                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{::criteria.name}}" uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                            <span ng-if="::criteria.description" class="icon-info link-secondary icon-info" popover-title="{{ ::criteria.name }}" uib-popover-html="::criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                         </div>
                                     </div>
                                 </div>

@@ -97,7 +97,7 @@
                                     </div>
                                     
                                 </div>
-                                <span ng-show="::item.decision.description" class="link-secondary icon-info info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{ ($last && $index === vm.pagination.pageSize) ?'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
+                                <span ng-show="::item.decision.description" class="link-secondary icon-info info" popover-title="{{::item.decision.name}}" uib-popover-html="::item.decision.description" popover-placement="{{ ($last && $index === vm.pagination.pageSize) ? 'bottom-right' : 'bottom'}}" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></span>
                                 <div class="app-panel-controls">
                                     <span ng-click="vm.updateExclusionList(item.decision.id)" class="app-control">
                                         <i class="fa" ng-class="{'dw-icon-ok' : vm.matrixMode == 'inclusion', 'dw-icon-cancel': vm.matrixMode == 'exclusion'}" aria-hidden="true"></i>
@@ -131,7 +131,7 @@
                             <div class="group-wrapper-title">
                                 {{ 'CRITERIA' | translate }}
                             </div>
-                            <div data-criteria-group="{{::group.id}}" class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
+                            <div data-criteria-group="{{ ::group.id }}" class="matrix-g matrix-g-criteria" ng-repeat="group in vm.criteriaGroups track by group.criteriaGroupId">
                                 <div class="matrix-item matrix-g-item">
                                     <div class="matrix-g-title" ng-click="vm.toggleGroupName($event, group.id, 'criteria')">
                                         <span class="group-title-line" ng-bind="::group.name"></span>
@@ -145,7 +145,7 @@
                                     <div class="matrix-title-wrapper">
                                         <div class="matrix-title app-sorter-wrapper">
                                             <span ng-bind="::criteria.name"></span>
-                                        <a ng-if="::criteria.description" class="link-secondary icon-info" href uib-popover-html="criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
+                                        <a ng-if="::criteria.description" class="link-secondary icon-info" href uib-popover-html="::criteria.description" popover-placement="right" popover-append-to-body="true" popover-trigger="'outsideClick'" tabindex="0"></a>
                                         </div>
                                         <div class="btn matrix-criteria-coefficient" ng-click="vm.editCriteriaCoefficient($event, criteria)">
                                             <criteria-coefficient-indicator coefficient="criteria.coefficient"></criteria-coefficient-indicator>
@@ -165,7 +165,6 @@
                         <div class="group-wrapper characteristic-content-aside">
 
                            <div class="group-wrapper-title">
-
                                 {{ 'CHARACTERISTICS' | translate }}
                             </div>
 
@@ -174,19 +173,18 @@
 
                                     <!-- Title-->
 
-                                    <div ng-switch-when="false">
-                                        <div class="matrix-item matrix-g-item">
-                                            <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  characteristic.id, 'characteristic')">
-                                                <span class="group-title-line" ng-bind="::characteristic.name"></span>
-                                                <div class="controls">
-                                                    <i class="dw-icon-angle-up" aria-hidden="true"></i>
-                                                </div>
+                                    <div class="matrix-item matrix-g-item" ng-switch-when="false">
+                                        <div class="matrix-g-title" ng-click="vm.toggleGroupName($event,  characteristic.id, 'characteristic')">
+                                            <span class="group-title-line" ng-bind="::characteristic.name"></span>
+                                            <div class="controls">
+                                                <i class="dw-icon-angle-up" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
+                           
 
                                     <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
-                                        <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide">
+                                        <div class="matrix-item matrix-item-block js-item-aside js-toggle-hide c-{{ ::characteristic.visualMode.toLowerCase() }}">
                                             <!-- TODO: move to component -->
 
                                                 <div class="matrix-title app-sorter-wrapper" ng-bind="::characteristic.name"></div>

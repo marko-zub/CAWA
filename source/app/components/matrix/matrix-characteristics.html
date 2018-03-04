@@ -2,17 +2,20 @@
     <div ng-switch="::characteristic.characteristicGroupId >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap" translate-cloak>
-                {{ "CHARACTERISTICS" | translate }}
+                {{ 'CHARACTERISTICS' | translate }}
             </div>
         </div>
-        <div ng-switch-when="true" data-characteristic-group="{{::characteristic.parentId}}">
-            <div class="matrix-row js-matrix-item-content js-toggle-hide">
+        <div ng-switch-when="true" data-characteristic-group="{{ ::characteristic.parentId }}">
+            <div class="matrix-row js-matrix-item-content js-toggle-hide c-{{ ::characteristic.visualMode.toLowerCase() }}">
                 <div class="matrix-col matrix-criteria-group" data-connect="{{::characteristic.id}}-{{::decisionCol.decision.id}}" ng-repeat="decisionCol in vm.decisions track by decisionCol.decision.id" ng-click="vm.getComments($event)">
                     <div class="m-col-content">
-                        <a ng-if="::(!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && characteristic.acceptUserValues !== false)" class="sm-link" href="#" translate-cloak>{{ "PROVIDE VALUE" | translate }}</a>
+                        <a ng-if="::(!vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.value && characteristic.acceptUserValues !== false)" class="sm-link" href="#" translate-cloak>{{ 'PROVIDE VALUE' | translate }}</a>
+
                         <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" characteristic="::characteristic"></content-formater>
-                        <div class="dw-additional-wrapper dw-comments control-panel-sm">
+
+                        <div ng-class="dw-additional-wrapper dw-comments control-panel-sm">
                             <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="dw-icon-comment" aria-hidden="true"></i>0</a>
+
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
 
                                 <history-chart-btn

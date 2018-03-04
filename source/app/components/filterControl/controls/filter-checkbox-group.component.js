@@ -11,16 +11,20 @@
             controllerAs: 'vm'
         });
 
-    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile', '$scope', 'Utils', 'DecisionDataService', '$state', 'DecisionNotificationService'];
+    FilterCheckboxGroupController.$inject = ['FilterControlsDataService', '$element', '$compile',
+        '$scope', 'Utils', 'DecisionDataService', '$state', 'DecisionNotificationService'
+    ];
 
-    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile, $scope, Utils, DecisionDataService, $state, DecisionNotificationService) {
+    function FilterCheckboxGroupController(FilterControlsDataService, $element, $compile,
+        $scope, Utils, DecisionDataService, $state, DecisionNotificationService) {
         var
             vm = this,
             sendObj = {
                 'operator': 'OR'
             },
             checkedValues = [],
-            optionIds = [];
+            optionIds = [],
+            sendRequestDebounce = _.debounce(sendRequest, 100);
 
         vm.$onInit = onInit;
         vm.$onChanges = onChanges;
@@ -54,20 +58,24 @@
                     return;
                 }
 
-                var switcherEl = $($element).find('.js-switcher-checkbox');
-                if (changes.item.currentValue.selectedOperator === 'AND') {
-                    switcherEl.prop('checked', false);
-                    sendObj.operator = changes.item.currentValue.selectedOperator;
-                } else {
-                    switcherEl.prop('checked', true);
-                    sendObj.operator = 'OR';
-                }
+                handleChangesSwitcher(changes.item.currentValue.selectedOperator);
 
                 if (changes.item.currentValue && changes.item.currentValue.optionIds) {
                     handleSelectedOptionIds(changes.item.currentValue.optionIds);
                 }
             }
 
+        }
+
+        function handleChangesSwitcher(selectedOperator) {
+            var switcherEl = $($element).find('.js-switcher-checkbox');
+            if (selectedOperator === 'AND') {
+                switcherEl.prop('checked', false);
+                sendObj.operator = selectedOperator;
+            } else {
+                switcherEl.prop('checked', true);
+                sendObj.operator = 'OR';
+            }
         }
 
         function handleSelectedOptionIds(changesOptionIds) {
@@ -178,11 +186,11 @@
             if (item.multiValue === true) {
                 queryTypeHtml = [
                     '<div class="switcher">',
-                    '<input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
-                    '<label class="switcher-label" for="toggle-' + item.id + '">',
+                    '   <input type="checkbox" name="switcher" class="switcher-checkbox js-switcher-checkbox" id="toggle-' + item.id + '" checked>',
+                    '   <label class="switcher-label" for="toggle-' + item.id + '">',
                     switcherControl,
-                    '<span class="switcher-switch"></span>',
-                    '</label>',
+                    '       <span class="switcher-switch"></span>',
+                    '   </label>',
                     '</div>',
                 ].join('\n');
             }
@@ -242,11 +250,8 @@
         });
 
         $($element).on('change', '.query-type-wrapper input.js-switcher-checkbox', function() {
-            if ($(this).is(':checked')) {
-                sendObj.operator = 'OR';
-            } else {
-                sendObj.operator = 'AND';
-            }
+            sendObj.operator = ($(this).is(':checked')) ? 'OR' : 'AND';
+
             if (vm.item.valuesLinkedToOption) {
                 delete sendObj.value;
                 sendObj.optionIds = optionIds;
@@ -263,9 +268,6 @@
                 }
             }
         });
-
-        // END Control Checkboxes
-        var sendRequestDebounce = _.debounce(sendRequest, 100);
 
         function sendRequest(sendObjCopy) {
             FilterControlsDataService.createFilterQuery(sendObjCopy);
