@@ -55,6 +55,10 @@
             } else if (!_.isEmpty(query.optionIds)) {
                 delete query.value;
             }
+
+            if (query.operator) {
+                delete query.operator;
+            }
             characteristicChange(sendData.characteristicId, query, optionId);
         }
 

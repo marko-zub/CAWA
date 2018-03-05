@@ -243,8 +243,8 @@
 
         // TODO: clean up find
         function findCharacteristic(id) {
-            var find = _.findLast(vm.characteristics, function(characteristic) {
-                return characteristic.id === id;
+            var find = _.find(vm.characteristics, function(characteristic) {
+                return characteristic.id === id && characteristic.visualMode;
             });
 
             if (find) return _.pick(find, 'name', 'valueType', 'options');
@@ -277,7 +277,6 @@
         function addToTagsList(item) {
             if (!_.isEmpty(item)) {
                 var find = findCharacteristic(item.characteristicId);
-                // console.log(item, find);
                 item = _.merge(item, find);
 
                 if (item.value) {
@@ -289,16 +288,10 @@
                         item.valueTemp = [];
                     }
 
-                    // console.log(item.optionIds);
-                    // // console.log(item);
-                    // console.log(vm.characteristics);
-
                     var findCharacteristicEl = _.find(vm.characteristics, function(characteristic) {
                         return characteristic.id === item.characteristicId;
                     });
 
-                    // console.log(findCharacteristicEl);
-                    // console.log(vm.characteristics);
                     _.forEach(item.optionIds, function(option) {
                         var findOption = _.find(findCharacteristicEl.options, function(itemOption) {
                             return itemOption.id === option;
@@ -308,7 +301,6 @@
                             item.valueTemp.push(findOption.value);
                         }
                     });
-                    // console.log(item);
                 }
 
                 item.operator = (item.type === 'AnyInQuery') ? 'OR' : 'AND';

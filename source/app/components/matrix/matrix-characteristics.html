@@ -13,7 +13,7 @@
 
                         <content-formater item="::vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic" characteristic="::characteristic"></content-formater>
 
-                        <div ng-class="dw-additional-wrapper dw-comments control-panel-sm">
+                        <div class="dw-additional-wrapper dw-comments control-panel-sm">
                             <a ng-if="::characteristic.commentableValue !== false" ng-href="#" class="control"><i class="dw-icon-comment" aria-hidden="true"></i>0</a>
 
                             <span ng-if="::(!characteristic.multiValue || characteristic.multiValue && !vm.decisionsDisplay[characteristic.id + '-' + decisionCol.decision.id].characteristic.description.length)">
