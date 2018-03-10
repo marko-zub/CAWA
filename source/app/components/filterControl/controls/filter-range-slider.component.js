@@ -86,7 +86,7 @@
                     step: step,
                     floor: Number(item.minValue),
                     ceil: Number(item.maxValue),
-                    precision: 1,
+                    precision: 2,
                     id: 'slider-' + item.id,
                     onEnd: vm.changeRangeSlider,
                     hidePointerLabels: true,
@@ -96,13 +96,14 @@
         }
 
         function changeRangeSlider(sliderId, min, max) {
-            var value = (_.isNumber(max) && _.isNumber(min)) ? [min, max] : null;
-            var query = {
-                'type': 'RangeQuery',
-                'characteristicId': vm.item.id,
-                'value': value
-            };
-            FilterControlsDataService.characteristicChange(vm.item.id, query);
+            if (_.isNumber(max) && _.isNumber(min)) {
+                var query = {
+                    'type': 'RangeQuery',
+                    'characteristicId': vm.item.id,
+                    'value': [min, max]
+                };
+                FilterControlsDataService.characteristicChange(vm.item.id, query);
+            }
         }
 
         vm.changeRangeSliderInput = changeRangeSliderInput;
@@ -111,12 +112,12 @@
 
             var sendMin = vm.slider.min;
             var sendMax = vm.slider.max;
-            if (sendMin < vm.minVal) {
+            if (sendMin < vm.minVal || !_.isNumber(vm.slider.min)) {
                 sendMin = vm.minVal;
                 vm.slider.min = vm.minVal;
             }
 
-            if (sendMax > vm.maxVal) {
+            if (sendMax > vm.maxVal || !_.isNumber(vm.slider.max)) {
                 sendMax = vm.maxVal;
                 vm.slider.max = vm.maxVal;
             }
