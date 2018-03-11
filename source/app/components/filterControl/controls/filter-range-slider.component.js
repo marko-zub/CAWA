@@ -70,6 +70,11 @@
             // }
 
             var minVal = Number(item.minValue);
+
+            if (Math.abs(minVal) < 1e-6) {
+                minVal = 0;
+            }
+
             var maxVal = Number(item.maxValue);
 
             if (!_.isNaN(minVal) && !_.isNaN(maxVal)) {
@@ -84,13 +89,14 @@
                 max: maxVal,
                 options: {
                     step: step,
-                    floor: Number(item.minValue),
-                    ceil: Number(item.maxValue),
+                    floor: minVal,
+                    ceil: maxVal,
                     precision: 2,
                     id: 'slider-' + item.id,
                     onEnd: vm.changeRangeSlider,
                     hidePointerLabels: true,
-                    hideLimitLabels: true
+                    hideLimitLabels: true,
+                    enforceRange: true
                 }
             };
         }
