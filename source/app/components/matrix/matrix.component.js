@@ -331,7 +331,7 @@
 
             var characteristicGroups = angular.copy(vm.characteristicGroupsArray);
             var find = _.findIndex(characteristicGroups, function(characteristicFind) {
-                if (characteristicFind.characteristicGroupId && characteristicFind.characteristicGroupId >= 0) {
+                if (characteristicFind.groupIds && characteristicFind.groupIds >= 0) {
                     return characteristicFind.id === characteristic.characteristicId;
                 }
             });
@@ -808,7 +808,7 @@
             });
             modalInstance.result.then(function(result) {
                 var groupIndex = _.findIndex(vm.criteriaGroups, {
-                    id: result.criterionGroupId
+                    id: result.groupIds
                 });
                 var criteriaIndex = _.findIndex(vm.criteriaGroups[groupIndex].criteria, {
                     id: result.id

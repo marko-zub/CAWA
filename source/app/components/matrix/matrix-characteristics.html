@@ -1,5 +1,5 @@
 <div class="matrix-g m-g-characteristics" ng-repeat="characteristic in ::vm.characteristicsFormated track by characteristic.uuid">
-    <div ng-switch="::characteristic.characteristicGroupId >= 0">
+    <div ng-switch="::characteristic.groupIds >= 0">
         <div ng-switch-when="false">
             <div class="matrix-item matrix-g-item matrix-item-content text-center no-wrap" translate-cloak>
                 {{ 'CHARACTERISTICS' | translate }}
