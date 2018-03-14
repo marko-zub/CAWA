@@ -22,10 +22,10 @@
                     </li>
                 </ul>
             </div>
-            <!-- {{ vm.selectedOwnerDecision.decisionsList | json }} -->
+            {{ vm.selectedOwnerDecision.decisionsList | json }}
             <div class="decision-card-group">
                 <div class="decision-card-group-content clearfix">
-                    <div class="decision-card" ng-repeat="decision in vm.selectedOwnerDecision.decisionsList track by decision.id">
+                    <div class="decision-card" ng-repeat="decision in vm.selectedOwnerDecision.decisionGroups[vm.selectedOwnerDecisionChildIndex].decisionsList track by decision.id">
                         <a class="img-link" ui-sref="decisions.single(::{id:decision.id, slug:decision.nameSlug, size: null, page: null, sort: null, category: null})" title="Logo {{::decision.name}}" ui-sref-opts="{reload: true}" class="img-container">
                             <div class="img-container">
                                 <img alt="" ng-src="{{::decision.imageUrl}}" class="img-responsive">
@@ -46,16 +46,16 @@
         <div ng-show="!vm.compareLoader && vm.total" class="compare-panel-footer">
 
            <div class="clearfix" translate-cloak>
-                    <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">  {{ "CLEAR ALL" | translate }}
+                    <button type="button" class="btn btn-default btn-sm" ng-click="vm.clearCompare()">  {{ 'CLEAR ALL' | translate }}
                     </button>
                     <button class="btn btn-primary-2 btn-sm" ng-click="vm.compareDecisions()"  translate-cloak>
-                        {{ "Compare" | translate }}
+                        {{ 'Compare' | translate }}
                     </button>
                 </div>
             </div>
         <div ng-show="!vm.total && !vm.compareLoader">
-            <h3>{{ "NOTHING TO COMPARE" | translate }}</h3>
-            <span>{{ "PLEASE ADD DECISIONS TO COMPARE" | translate }}</span>
+            <h3>{{ 'NOTHING TO COMPARE' | translate }}</h3>
+            <span>{{ 'PLEASE ADD DECISIONS TO COMPARE' | translate }}</span>
         </div>
 
         <div ng-show="vm.compareLoader" class="app-loader-small"><i class="dw-icon-refresh" aria-hidden="true"></i></div>
